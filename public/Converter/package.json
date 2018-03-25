@@ -5,10 +5,10 @@
     "babel-cli": "^6.26.0",
     "bignumber.js": "^5.0.0",
     "capitalize": "^1.0.0",
-    "create-react-class": "^15.6.2",
-    "mathjs": "^3.17.0",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "create-react-class": "^15.6.3",
+    "mathjs": "^3.20.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
