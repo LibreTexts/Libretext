@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Libretext" uploadOnCheckin="7aef5a43-7ddb-4082-9a95-f8e24e5c7f47" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
+    <serverData>
+      <paths name="Libretext">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/awesomefiles" local="$PROJECT_DIR$/public" web="/whatever" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="LibretextS">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/awesomefiles" local="$PROJECT_DIR$/public" web="/whatever" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="Libretext" />
+  </component>
+</project>

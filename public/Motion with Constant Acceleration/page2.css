@@ -1,0 +1,155 @@
+/* ================================================ =================================================
+  Stylesheet for HTML5 app pages
+  Last change: 2016-03-24
+  ================================================== =============================================== */
+
+/* ------------------------------------------------ -------------------------------------------------
+  General specifications
+  -------------------------------------------------- ----------------------------------------------- */
+
+/* Entire app */
+
+div#total {
+  position: relative;
+  margin-top: 20px;
+  /* Distance upwards */
+  margin-left: auto;
+  margin-right: auto;
+  /* Horizontal centering */
+}
+
+/* Artboard */
+
+div#canvas {
+  position: absolute;
+  background-color: #ffff00;
+  /* Background color */
+  border: 1px solid#000000;
+  /* Edge */
+}
+
+/* Button */
+
+div#panel, div#panel1, div#panel2 {
+  position: absolute;
+  background-color: #00ff00;
+  /* Background color */
+  border: 1px solid#000000;
+  /* Edge */
+  font-size: 12px;
+  /* Font size */
+  font-weight: bold;
+  /* Bold */
+}
+
+/* Line of a button */
+
+div#panel div, div#panel1 div, div#panel2 div {
+  position: absolute;
+}
+
+/* Inline element of a button */
+
+div#panel span, div#panel1 span, div#panel2 span {
+  position: absolute;
+  white-space: nowrap;
+  /* No line break with spaces */
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+/* Switch button */
+
+button {
+  height: 30px;
+  /* Height */
+  border-radius: 0px;
+  /* Prevent rounded corners */
+  margin-left: 10px;
+  /* Distance from the left edge */
+  font-family: sans-serif;
+  /* Font */
+  font-size: 12px;
+  /* Font size */
+  font-weight: bold;
+  /* Bold */
+}
+
+/* Radio button */
+
+input[type="checkbox"] {
+  margin-left: 10px;
+  /* Distance from the left edge */
+  border-radius: 0px;
+  /* Prevent rounded corners */
+}
+
+/* Radio button */
+
+input[type="radio"] {
+  margin-left: 10px;
+  /* Distance from the left edge */
+}
+
+/* Text for radio button or radio button */
+
+label {
+  margin-left: 5px;
+  /* Distance to radio button or radio button */
+  vertical-align: 2px;
+  /* Small correction of height */
+  display: inline;
+}
+
+/* Input box */
+
+input[type="text"] {
+  position: absolute;
+  padding-left: 2px;
+  /* Inner distance left */
+  height: 14px;
+  /* Prevent rounded corners */
+  font-family: sans-serif;
+  /* Font */
+  font-size: 12px;
+  /* Font size */
+  font-weight: bold;
+  /* Bold */
+}
+
+/* Selection box */
+
+select {
+  position: absolute;
+  top: -2px;
+  /* Small correction of height */
+  left: 10px;
+  /* Distance to the left edge */
+  height: 20px;
+  /* Height */
+  border-radius: 0px;
+  /* Prevent rounded corners */
+  font-family: sans-serif;
+  /* Font */
+  font-size: 12px;
+  /* Font size */
+  font-weight: bold;
+  /* Bold */
+}
+
+/* Slider */
+
+input [type="range"] {
+  position: absolute;
+  left: 10px;
+}
+
+textarea {
+  position: absolute;
+  padding: 3px; /* Padding */
+  left: 10px; /* Distance to the left edge */
+  border-radius: 0px; /* Prevent rounded corners */
+  font-family: sans-serif; /* Font */
+  font-size: 12px; /* Font size */
+  font-weight: bold; /* Bold */
+}

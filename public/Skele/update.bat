@@ -1,0 +1,1 @@
+bash -c "time ./update.sh %1"

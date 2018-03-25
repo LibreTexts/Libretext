@@ -1,0 +1,1613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Updated Converter">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitattributes" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/webServers.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/.firebaserc" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/Converter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/bundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/firebase.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/package-lock.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/package.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/twelve.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/update.bat" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Converter/update.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/I3.pdb" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/LICENSE-GPL3.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/LICENSE-LGPL3.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/LICENSE.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/README.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/embedding-examplesEN.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/index.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/index0.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/js/GLmol.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/js/Three49custom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/js/jquery-1.7.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/GLMol/viewer.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/JSmol.GLmol.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/JSmol.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/JSmol.min.nojq.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/index.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/Jmol.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/aflow/AFLOWReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/Cif2DataParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/Cif2Reader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/CifReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/MMCifReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/MMCifValidationParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/MMTFReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/MSCifParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/MSRdr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/cif/Subsystem.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/molxyz/Mol3DReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/molxyz/MolReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/molxyz/V3000Rdr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/molxyz/XyzReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/BinaryDcdReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/ForceFieldReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/GromacsReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/JcampdxReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/MdCrdReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/MdTopReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/Mol2Reader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/more/TlsDataOnlyReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pdb/JmolDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pdb/P2nReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pdb/PdbReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pdb/PqrReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/JmolObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/PickleReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/PyMOL.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/PyMOLGroup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/PyMOLReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/pymol/PyMOLScene.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/AdfReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/BasisFunctionReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/CsfReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/DgridReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GamessReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GamessUKReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GamessUSReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GaussianFchkReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GaussianReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GaussianWfnReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/GenNBOReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/JaguarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/MOReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/MoldenReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/MopacGraphfReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/MopacSlaterReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/NBOParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/NWChemReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/PsiReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/QCJSONReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/QchemReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/SlaterReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/quantum/WebMOReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/AlchemyReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/AmpacReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/CubeReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/FoldingXyzReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/GhemicalMMReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/HyperChemReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/InputReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/JSONReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/JmeReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/MopacArchiveReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/MopacReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/simple/TinkerReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/OdysseyReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/SpartanArchive.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/SpartanInputReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/SpartanReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/SpartanSmolReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/spartan/SpartanUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlArgusReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlChem3dReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlCmlReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlHandler.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlMOReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlMagResReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlMolproReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlOdysseyReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlQEReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlVaspReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xml/XmlXsdReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/AbinitReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/AimsReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/BilbaoReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/CastepReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/CgdReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/CrystalReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/DmolReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/EspressoReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/GulpReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/JanaReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/MagresReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/ShelxReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/SiestaReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/VaspChgcarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/VaspOutcarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/VaspPoscarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/Wien2kReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/readers/xtal/XcrysdenReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/Atom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/AtomIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/AtomSetCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/AtomSetCollectionReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/AtomSetObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/Bond.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/BondIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/MSInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/Resolver.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/SmarterJmolAdapter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/Structure.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/StructureIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/smarter/XtalSymmetry.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/adapter/writers/QCJSONWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/AtomIndexIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/GenericGraphics.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/Interface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JSVInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAbstractButton.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAdapter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAdapterAtomIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAdapterBondIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAdapterStructureIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAnnotationParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAppAPI.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAppConsoleInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAppletInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolAudioPlayer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolCallbackListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolDataManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolDialogInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolDomReaderInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolDropEditor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolEnvCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolFilesReaderInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolGestureServerInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolGraphicsInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolJDXMOLParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolJDXMOLReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolJSpecView.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolMeasurementClient.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolModulationSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolMovieCreatorInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolNMRInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolNavigatorInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolParallelProcessor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolPatternMatcher.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolPdfCreatorInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolPropertyManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolRendererInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolRepaintManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolSceneGenerator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolScriptEditorInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolScriptEvaluator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolScriptFunction.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolScriptManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolSelectionListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolStatusListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolSyncInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolToJSmolInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolTouchSimulatorInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolViewer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/JmolZipUtilities.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/PymolAtomReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/SmilesMatcherInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/SymmetryInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/api/Translator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/appletjs/Jmol.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/atomdata/AtomData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/atomdata/AtomDataServer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/atomdata/RadiusData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs/Platform.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/Display.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/Image.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/JSFile.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/JSFont.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/JSModelKitPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/JmolJSPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/JsG2D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/Mouse.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/awtjs2d/Platform.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/Bspf.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/Bspt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/CubeIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/Element.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/Leaf.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/Node.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/bspt/PointIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/CBK.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/FIL.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/HB.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/PAL.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/STER.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/STR.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/c/VDW.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/console/GenericConsole.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/console/GenericTextArea.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/consolejs/AppletConsole.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/consolejs/JSConsole.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/dssx/AnnotationParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/dssx/Bridge.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/dssx/DSSP.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/dssx/DSSR0.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/dssx/DSSR1.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/Export3D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/JSExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/MeshData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/UseTable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_IdtfExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_MayaExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_ObjExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_PovrayExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_StlExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_TachyonExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_VrmlExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/_X3dExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/__CartesianExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/__RayTracerExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/export/___Exporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/CircleRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/CylinderRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/G3DRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/Graphics3D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/HermiteRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/LineRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/Pixelator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/PixelatorScreened.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/PixelatorShaded.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/PixelatorT.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/Platform3D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/PrecisionRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/SphereRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/TextRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/TextString.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/g3d/TriangleRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/geodesic/EnvelopeCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/i18n/GT.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/i18n/Language.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/i18n/Resource.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/image/AviCreator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/io/DOMReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/io/FileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/io/FilesReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/io/JmolUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jsv/JDXMOLParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jsv/JSpecView.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/api/MeshDataServer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/api/VertexDataServer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/calc/MarchingCubes.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/calc/MarchingSquares.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/data/JvxlCoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/data/JvxlData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/data/MeshData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/data/VolumeData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/ApbsReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/AtomDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/AtomPropertyMapper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/BCifDensityReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/CastepDensityReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/CifDensityReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/CubeReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/DelPhiBinaryReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/Dsn6BinaryReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/EfvetReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoFxyReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoFxyzReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoIntersectReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoMOReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoMepReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoMlpReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoPlaneReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoShapeReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/IsoSolventReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/JaguarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/JvxlReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/JvxlXmlReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/KinemageReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/MapFileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/MrcBinaryReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/MsmsReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/NffReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/ObjReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/Parameters.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/PeriodicVolumeFileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/PltFormattedReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/Pmesh4Reader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/PmeshReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/PolygonFileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/PyMOLMeshReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/Ras3DReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/SurfaceFileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/SurfaceGenerator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/SurfaceReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/UhbdReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/VaspChgcarReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/VolumeDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/VolumeFileReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/XmlReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/XplorReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/jvxl/readers/XsfReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/modelkit/ModelKitPopupResourceBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/modelkit/images/atoms.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/modelkit/images/bonds.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/modelkit/images/dotdotdot.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/modelkit/images/undoButton.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/navigate/Navigator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/GenericSwingPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/JSSwingPopupHelper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/JmolGenericPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/MainPopupResourceBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/PopupHelper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/popup/PopupResource.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/MOCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/MepCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/MlpCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/NMRCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/NciCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/QMAtom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/QS.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/QuantumCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/QuantumPlaneCalculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/SlaterData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/atomicLipophilicity.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/quantum/nmr_data.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/AxesRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/BallsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/BbcageRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/CageRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/EchoRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/FontLineShapeRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/FrankRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/HalosRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/HoverRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/LabelsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/MeasuresRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/MeshRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/RepaintManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/ShapeRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/StarsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/SticksRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/TextRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/render/UccageRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/BackboneRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/BioMeshRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/BioShapeRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/CartoonRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/MeshRibbonRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/NucleicRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/RibbonsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/RocketRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/RocketsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/StrandsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderbio/TraceRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendercgo/CGORenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/DipolesRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/DotsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/DrawRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/EllipsoidsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/GeoSurfaceRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/PolyhedraRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/renderspecial/VectorsRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/ContactRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/IsosurfaceRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/LcaoCartoonRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/MolecularOrbitalRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/NBORenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/Plot3DRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/rendersurface/PmeshRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/AtomShape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Axes.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Balls.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Bbcage.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Echo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/FontLineShape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Frank.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Halos.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Hover.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Labels.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Measures.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Mesh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/MeshCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Shape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Stars.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Sticks.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/TextShape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shape/Uccage.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Backbone.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/BioShape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/BioShapeCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Cartoon.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/MeshRibbon.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Ribbons.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Rockets.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Strands.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapebio/Trace.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapecgo/CGO.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapecgo/CGOMesh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Dipole.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Dipoles.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Dots.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Draw.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/DrawMesh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Ellipsoid.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Ellipsoids.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/GeoSurface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Polyhedra.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Polyhedron.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapespecial/Vectors.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/Contact.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/Isosurface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/IsosurfaceMesh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/LcaoCartoon.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/MolecularOrbital.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/NBO.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/PMeshWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/Plot3D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/shapesurface/Pmesh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/AnimationThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/HoverWatcherThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/JmolThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/MoveToThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/SpinThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/TimeoutThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/J/thread/VibrationThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AlphaMonomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AlphaPolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AminoMonomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AminoPolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Annotation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Atom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AtomCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AtomIteratorWithinModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/AtomIteratorWithinModelSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BasePair.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BioExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BioModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BioModelSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BioPolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BioResolver.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Bond.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BondCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BondIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BondIteratorSelected.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/BondSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/CarbohydrateMonomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/CarbohydratePolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Chain.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/AtomType.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/Calculation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/Calculations.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/CalculationsMMFF.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/CalculationsUFF.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/FFParam.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/ForceField.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/ForceFieldMMFF.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/ForceFieldUFF.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFAngleCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFDistanceCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFESCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFOOPCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFSBCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFTorsionCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/MMFFVDWCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/UFFAngleCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/UFFDistanceCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/UFFOOPCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/UFFTorsionCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/UFFVDWCalc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/data/MMFF94-smarts.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/data/UFF.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/FF/data/mmff94.par.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Group.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/HBond.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Helix.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/LabelToken.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Measurement.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MeasurementData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MeasurementPending.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinAngle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinAtom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinBond.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinPosition.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinTorsion.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/MinimizationThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Minimizer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Model.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/ModelLoader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/ModelSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Monomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/NucleicMonomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/NucleicPolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Orientation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/PhosphorusMonomer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/PhosphorusPolymer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/ProteinStructure.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Sheet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/StateScript.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Structure.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Text.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/TickInfo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Trajectory.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Turn.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JM/Util.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/CIPChirality.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/CIPData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/CmdExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/CommandWatcherThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ContextToken.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/FileLoadThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/HallInfo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/HallRotation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/HallRotationTerm.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/HallTranslation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/InvalidSmilesException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/IsoExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/MathExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/PointGroup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/PolyhedronStereoSorter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SV.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptCompiler.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptContext.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptDelayThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptEval.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptExpr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptFlowContext.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptFunction.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptInterruption.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptMathProcessor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptParallelProcessor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptParam.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptProcess.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptProcessRunnable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptQueueThread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/ScriptTokenParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesAromatic.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesAtom.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesBond.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesGenerator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesMatcher.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesMeasure.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesRing.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesRingSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesSearch.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SmilesStereo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SpaceGroup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/Symmetry.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SymmetryDesc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SymmetryInfo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/SymmetryOperation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/T.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/UnitCell.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/UnitCellIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JS/VTemp.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/AnnotationData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/AppletFrame.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/ExportInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVAppInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVAppletInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVFileDropper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVFileHelper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVMainPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVPdfWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVPopupMenu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVPrintDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVTree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVTreeNode.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVTreePath.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVViewPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVZipInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/JSVZipReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/PanelListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/PlatformDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/ScriptInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/SourceReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/api/VisibleInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/app/GenericMouse.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/app/JSVApp.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/app/JSVAppPro.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/appletjs/JSVApplet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/appletjs/JSVAppletPro.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Annotation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ColorParameters.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ColoredAnnotation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/CoordComparator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Coordinate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ExportType.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/GraphSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ImageView.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Integral.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/IntegralComparator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/IntegralData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/JSVFileManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/JSVZipFileSequentialReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/JSVZipUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/JSVersion.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/JSViewer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Measurement.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/MeasurementData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PDFWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PanelData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PanelNode.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Parameters.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PeakData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PeakInfo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PeakPick.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PeakPickEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PlotWidget.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/PrintLayout.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/RepaintManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ScaleData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ScriptToken.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ScriptTokenizer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Spectrum.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/SubSpecChangeEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/TODO.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ViewData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/Visible.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/XYScaleConverter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/common/ZoomEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/DialogManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/DialogParams.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/IntegrationDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/JSVDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/MeasurementsDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/OverlayLegendDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/PeakListDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/dialog/ViewsDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/exception/JSVException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/AMLExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/CMLExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/ExportInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/Exporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/FormContext.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/FormExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/JDXCompressor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/JDXExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/SVGExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/XMLExporter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/animl_nmr.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/animl_tmp.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/cml_nmr.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/cml_tmp.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/plot.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/export/resources/plot_ink.vm" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/DialogTableModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/Display.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/Image.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsDialogManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsFile.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsFileHelper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsFont.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsG2D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsMainPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsParameters.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsPlatform.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/js2d/JsPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/popup/JSVGenericPopup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/popup/JSVPopupResourceBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/AnIMLReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/CMLReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXDataObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXDecompressor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXHeader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXSource.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/JDXSourceStreamTokenizer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/XMLParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/source/XMLReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/tree/SimpleTree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/tree/SimpleTreeEnumeration.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/tree/SimpleTreeModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/tree/SimpleTreeNode.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JSV/tree/SimpleTreePath.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/A4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/AU.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Adler32.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/AjaxURLConnection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/AjaxURLStreamHandler.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/AjaxURLStreamHandlerFactory.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ArrayDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BArray.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BC.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BS.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BSUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BZone.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Base64.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BinaryDocument.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/BoxInfo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/C.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CRC32.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CU.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Checksum.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CifDataParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ColorEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CommandHistory.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CompoundDocDirEntry.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CompoundDocHeader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/CompoundDocument.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ContactPair.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/DF.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/DataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/DebugJS.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/DefaultLogger.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Deflate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Deflater.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/DeflaterOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Edge.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Eigen.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/EigenSort.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Elements.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Encoding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Escape.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GZIPException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GZIPHeader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GZIPInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GZIPOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/GenericApplet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Geodesic.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/InfBlocks.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/InfCodes.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/InfTree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Inflate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Inflater.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/InflaterInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Int2IntHash.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JSJSONParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JSONException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JSONWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JZlib.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JmolAudio.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/JmolMolecule.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/LimitedLineReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ListDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Logger.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/LoggerInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Lst.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/M3.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/M34.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/M4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Matrix.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Measure.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/MeshCapper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/MeshSlicer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/MeshSurface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/MessagePackReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Modulation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ModulationSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Node.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Normix.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/OC.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/P3.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/P3i.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/P4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/PT.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Parser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/PatternMatcher.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Point3fi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Quat.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Rdr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Rectangle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Rgb16.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/SB.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Shader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/SimpleEdge.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/SimpleNode.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/SimpleUnitCell.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/StaticTree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/StringDataReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/T3.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/T3d.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/T3i.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/T4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/TempArray.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Tensor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Tree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/TriangleData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Triangulator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Txt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/V3.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/V3d.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/Vibration.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/XmlUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ZStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ZStreamException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ZipData.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/ZipTools.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JU/package.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/ActionManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/AnimationManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/ChimeMessenger.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/ColorManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/DataManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/FileManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/GlobalSettings.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/JC.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/JmolAsyncException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/JmolChimeMessenger.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/JmolStateCreator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/ModelManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/MouseState.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/OutputManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/OutputManagerJS.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/PropertyManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/SelectionManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/ShapeManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/StateCreator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/StateManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/StatusManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/TransformManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/TransformManager4D.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/Viewer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/binding/Binding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/binding/DragBinding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/binding/JmolBinding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/binding/PfaatBinding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/binding/RasmolBinding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/JV/package.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/Jmol.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corebinary.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corebinary.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corebio.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corebio.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreconsole.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreconsole.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejmol.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejmol.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejmoljsv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejmoljsv.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsv.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvdialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvdialog.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvexport.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvexport.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvmenu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corejsvmenu.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coremenu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coremenu.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coremin.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coremin.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreprop.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreprop.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corepymol.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corepymol.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescript.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescript.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescriptcmd.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescriptcmd.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescriptmath.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corescriptmath.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresmiles.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresmiles.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corestate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corestate.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresurface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresurface.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreswing.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coreswing.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresym.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coresym.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coretext.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/coretext.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corezip.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/corezip.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/core/package.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/img/JSmol_spinner.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/img/cursor_wait.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/img/play_make_live.jpg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/awt/Event.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/awt/event/InputEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/awt/event/KeyEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/awt/event/MouseEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/awt/event/MouseWheelEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/error.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/BufferedInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/BufferedOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/BufferedReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/BufferedWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/ByteArrayInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/ByteArrayOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/CharArrayReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/CharArrayWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/CharConversionException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Closeable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/DataInput.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/DataInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/DataOutput.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/EOFException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Externalizable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/FileInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/FileNotFoundException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/FileOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/FilterInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/FilterOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Flushable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/IOException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/InputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/InputStreamReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/InterruptedIOException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/InvalidClassException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/InvalidObjectException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/NotActiveException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/NotSerializableException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/ObjectStreamException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/ObjectStreamField.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/OptionalDataException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/OutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/PushbackInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Reader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/SequenceInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Serializable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/StreamCorruptedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/StringBufferInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/StringReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/StringWriter.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/SyncFailedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/UTFDataFormatException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/UnsupportedEncodingException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/WriteAbortedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/io/Writer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/AbstractMethodError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/AbstractStringBuilder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Appendable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ArithmeticException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ArrayIndexOutOfBoundsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ArrayStoreException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/AssertionError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Boolean.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Byte.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/CharSequence.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Character.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Class.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassCastException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassCircularityError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassExt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassFormatError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassLoader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassLoaderProgressMonitor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ClassNotFoundException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/CloneNotSupportedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Cloneable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Comparable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Console.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Double.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Encoding.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Enum.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Error.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Exception.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ExceptionInInitializerError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Float.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalAccessError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalAccessException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalArgumentException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalMonitorStateException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalStateException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IllegalThreadStateException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IncompatibleClassChangeError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/IndexOutOfBoundsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/InstantiationError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/InstantiationException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Integer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/InternalError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/InterruptedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Iterable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/LinkageError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Long.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NegativeArraySizeException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NoClassDefFoundError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NoSuchFieldError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NoSuchFieldException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NoSuchMethodError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NoSuchMethodException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NullPointerException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Number.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/NumberFormatException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/OutOfMemoryError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Readable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Runnable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/RuntimeException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/SecurityException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Short.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StackOverflowError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StackTraceElement.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StrictMath.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/String.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StringBuffer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StringBuilder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StringBuilder.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/StringIndexOutOfBoundsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Thread.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ThreadDeath.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/ThreadGroup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Throwable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/TypeNotPresentException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/UnknownError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/UnsatisfiedLinkError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/UnsupportedClassVersionError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/UnsupportedOperationException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/VerifyError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/VirtualMachineError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/Void.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect.z.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/AccessibleObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/AnnotatedElement.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Array.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Constructor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Field.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/GenericDeclaration.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/GenericSignatureFormatError.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/InvocationHandler.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/InvocationTargetException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/MalformedParameterizedTypeException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Member.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Method.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Modifier.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/Proxy.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/ReflectPermission.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/TypeVariable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/lang/reflect/UndeclaredThrowableException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/MalformedURLException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/Parts.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URL.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URLConnection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URLDecoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URLEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URLStreamHandler.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/URLStreamHandlerFactory.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/net/UnknownServiceException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/text/Annotation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/text/MessageFormat.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractCollection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractList.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractQueue.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractSequentialList.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/AbstractSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/ArrayList.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Arrays.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/BitSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Collection.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Collections.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Comparator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/ConcurrentModificationException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Date.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Dictionary.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/DuplicateFormatFlagsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/EmptyStackException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Enumeration.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/EventListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/EventListenerProxy.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/EventObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/FormatFlagsConversionMismatchException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/FormatterClosedException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/HashMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/HashSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Hashtable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IdentityHashMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatCodePointException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatConversionException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatFlagsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatPrecisionException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/IllegalFormatWidthException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/InputMismatchException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/InvalidPropertiesFormatException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Iterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/LinkedHashMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/LinkedHashSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/LinkedList.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/List.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/ListIterator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/ListResourceBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Locale.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Map.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/MapEntry.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/MissingFormatArgumentException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/MissingFormatWidthException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/MissingResourceException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/NoSuchElementException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Observable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Observer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Properties.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Queue.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Random.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/RandomAccess.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/ResourceBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Set.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/SortedMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/SortedSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Stack.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/StringTokenizer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/TooManyListenersException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/TreeMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/TreeSet.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/UnknownFormatConversionException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/UnknownFormatFlagsException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/Vector.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/WeakHashMap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/regex/MatchResult.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/regex/Matcher.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/regex/Pattern.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/regex/PatternSyntaxException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/CRC32.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/CheckedInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/Checksum.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/Deflater.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/DeflaterOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/GZIPInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/Inflater.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/InflaterInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZStreamRef.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipConstants.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipConstants64.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipEntry.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipException.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/java/util/zip/ZipOutputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/J2SIgnoreImport.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/J2SRequireImport.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/BytePoster.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/EigenInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/EventManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/FontManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericBinaryDocument.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericBinaryDocumentReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericCifDataParser.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericColor.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericFileInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericImageDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericImageEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericLineReader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericMenuInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericMouseInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericOutputChannel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericPlatform.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericZipInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/GenericZipTools.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/HTMLElement.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/HTMLWindowEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/Interface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/JSInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/JSONEncodable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/JmolObjectInterface.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/PlatformViewer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/SC.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/SwingController.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/api/ZInputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/BorderLayout.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/Color.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/Component.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/Container.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/Dimension.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/Font.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/LayoutManager.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/ActionEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/ActionListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/Event.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/ItemEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/WindowEvent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/awt/event/WindowListener.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/export/PDFCreator.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/export/PDFObject.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/BMPDecoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/CRCEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/GifEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/ImageEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/Jpg64Encoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/JpgEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/PdfEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/PngEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/PpmEncoder.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/img/package.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/AbstractButton.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/AbstractTableModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/ButtonGroup.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/Cell.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/ColumnSelectionModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/Document.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/FlowLayout.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/Grid.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/GridBagConstraints.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/GridBagLayout.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/Insets.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JButton.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JCheckBox.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JCheckBoxMenuItem.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JComboBox.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JComponent.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JComponentImp.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JContentPane.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JDialog.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JEditorPane.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JLabel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JMenu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JMenuItem.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JPanel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JPopupMenu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JRadioButtonMenuItem.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JScrollPane.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JSplitPane.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JTable.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JTextField.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/JTextPane.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/ListSelectionModel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/SwingConstants.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/TableCellRenderer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/javajs/swing/TableColumn.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/org/apache/tools/bzip2/BZip2Constants.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/org/apache/tools/bzip2/CBZip2InputStream.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/org/apache/tools/bzip2/CBZip2InputStreamFactory.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/j2s/org/apache/tools/bzip2/CRC.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/jquery/jquery-1.10.2.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/jquery/jquery-1.11.0.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/jquery/jquery.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/JSMol/jquery/jquery.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Motion with Constant Acceleration/acceleration.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Motion with Constant Acceleration/acceleration_en.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Motion with Constant Acceleration/javaphys.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Motion with Constant Acceleration/page2.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Motion with Constant Acceleration/page_phen.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/Skele.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/SkeleBundle.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/CTMLoader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/OBJLoader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/OrbitControls.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/Projector.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/Skele.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/ctm.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/jquery-2.2.1.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/lzma.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/dependencies/wikipedia.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/index.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/package-lock.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/package.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/update.bat" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/Skele/update.sh" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="600" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/Libretext.iml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-13" />
+    <option name="y" value="-13" />
+    <option name="width" value="2762" />
+    <option name="height" value="1770" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="Libretext" type="cbb8eebc:String" user="Libretext" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="Libretext" type="cbb8eebc:String" user="Libretext" />
+              <item name="public" type="cbb8eebc:String" user="public" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="Libretext" type="cbb8eebc:String" user="Libretext" />
+              <item name="public" type="cbb8eebc:String" user="public" />
+              <item name="Converter" type="cbb8eebc:String" user="Converter" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="Libretext" type="cbb8eebc:String" user="Libretext" />
+              <item name="public" type="cbb8eebc:String" user="public" />
+              <item name="Skele" type="cbb8eebc:String" user="Skele" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Converter/node_modules" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="" />
+      <created>1521930690203</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1521930690203</updated>
+      <workItem from="1521930691734" duration="87000" />
+      <workItem from="1521931947873" duration="22000" />
+      <workItem from="1521932034094" duration="1237000" />
+      <workItem from="1521933324356" duration="7661000" />
+    </task>
+    <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
+      <created>1521932859968</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1521932859968</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updated files">
+      <created>1521949800370</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1521949800371</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated Converter">
+      <created>1521951066507</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1521951066507</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated Converter">
+      <created>1521951496731</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1521951496731</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="9007000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-13" y="-13" width="2762" height="1770" extended-state="6" />
+    <layout>
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25830814" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40560874" sideWeight="0.50151056" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40560874" sideWeight="0.49848944" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983926" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7945493" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/public/Converter" />
+      <path value="$PROJECT_DIR$/public/Skele" />
+    </ignored-roots>
+    <MESSAGE value="Preparing for Libretext Deployment" />
+    <MESSAGE value="Updated files" />
+    <MESSAGE value="Updated Converter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Converter" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.idea/Libretext.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Converter/Converter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/webServers.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Converter/Converter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-126">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLMol/js/GLmol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-882">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Converter/bundle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Converter/test/energy.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Converter/out/energy.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLMol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/Libretext.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Skele/Skele.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
