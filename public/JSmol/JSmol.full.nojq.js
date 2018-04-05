@@ -1043,7 +1043,7 @@ if (!Jmol._version)
 		if (applet._cacheFiles && Jmol._fileCache && !fileName.endsWith(".js")) {
 			var data = Jmol._fileCache[fileName];
 			if (data) {
-				System.out.println("using " + data.length + " bytes of cached data for " + fileName);
+				console.log("using " + data.length + " bytes of cached data for " + fileName);
 				fSuccess(data);
 				return null;
 			} else {
@@ -1305,7 +1305,7 @@ if (!Jmol._version)
 			}
 		} catch (e) {
 			var s = "JSmolCore.js: synchronous binary file transfer is requested but not available";
-			System.out.println(s);
+			console.log(s);
 			if (Jmol._alertNoBinary && !isSilent)
 				alert(s)
 			return Jmol._syncBinaryOK = false;
@@ -2360,24 +2360,24 @@ if (!Jmol._version)
 //  var btns = $("#" + dialog.id + " *[id^='J']"); // add descendents with id starting with "J"
 //  for (var i = btns.length; --i >= 0;)
 //    delete Dialog.htDialogs[btns[i].id]
-			//System.out.println("JSmolCore.js: dispose " + dialog.id)
+			//console.log("JSmolCore.js: dispose " + dialog.id)
 		}
 		
 		Swing.register = function (dialog, type) {
 			dialog.id = type + (++Swing.count);
 			Swing.htDialogs[dialog.id] = dialog;
-			//System.out.println("JSmolCore.js: register " + dialog.id)
+			//console.log("JSmolCore.js: register " + dialog.id)
 			
 		}
 		
 		Swing.setDialog = function (dialog) {
 			Jmol._setMouseOwner(null);
 			Jmol.$remove(dialog.id);
-			//System.out.println("removed " + dialog.id)
+			//console.log("removed " + dialog.id)
 			var id = dialog.id + "_mover";
 			var container = Jmol._$(id);
 			var jd;
-			//System.out.println("JSmolCore.js: setDialog " + dialog.id);
+			//console.log("JSmolCore.js: setDialog " + dialog.id);
 			if (container[0]) {
 				container.html(dialog.html);
 				jd = container[0].jd;
@@ -2442,7 +2442,7 @@ if (!Jmol._version)
 		Swing.click = function (element, keyEvent) {
 			var component = Swing.htDialogs[element.id];
 			if (component) {
-				//System.out.println("click " + element + " " + component)
+				//console.log("click " + element + " " + component)
 				var info = component.toString();
 				// table cells will have an id but are not registered
 				if (info.indexOf("JCheck") >= 0) {
@@ -2457,7 +2457,7 @@ if (!Jmol._version)
 			}
 			var dialog = Swing.htDialogs[Jmol.$getAncestorDiv(element.id, "JDialog").id];
 			var key = (component ? component.name : dialog.registryKey + "/" + element.id);
-			//System.out.println("JSmolCore.js: click " + key);
+			//console.log("JSmolCore.js: click " + key);
 			dialog.manager.actionPerformed(key);
 		}
 		
@@ -2480,10 +2480,10 @@ if (!Jmol._version)
 		Swing.windowClosing = function (element) {
 			var dialog = Swing.htDialogs[Jmol.$getAncestorDiv(element.id, "JDialog").id];
 			if (dialog.registryKey) {
-				//System.out.println("JSmolCore.js: windowClosing " + dialog.registryKey);
+				//console.log("JSmolCore.js: windowClosing " + dialog.registryKey);
 				dialog.manager.processWindowClosing(dialog.registryKey);
 			} else {
-				//System.out.println("JSmolCore.js: windowClosing " + dialog.title);
+				//console.log("JSmolCore.js: windowClosing " + dialog.title);
 				dialog.dispose();
 			}
 		}
@@ -2878,7 +2878,7 @@ Jmol._debugCode = false;
 		e.push("done");
 		var s = "JSmol exec " + e[0]._id + " " + e[3] + " " + e[2];
 		if (self.System)
-			System.out.println(s);
+			console.log(s);
 		//alert(s)
 		if (self.console) console.log(s + " -- OK")
 		__execLog.push(s);
@@ -3197,7 +3197,7 @@ Jmol._debugCode = false;
 			try {
 				applet._newApplet(viewerOptions);
 			} catch (e) {
-				System.out.println((Jmol._isAsync ? "normal async abort from " : "") + e);
+				console.log((Jmol._isAsync ? "normal async abort from " : "") + e);
 				return;
 			}
 			
@@ -3291,7 +3291,7 @@ Jmol._debugCode = false;
 		} else {
 			f();
 		}
-		// System.out.println(applet._appletPanel.getFullName())
+		// console.log(applet._appletPanel.getFullName())
 	}
 	
 	/**
@@ -3304,7 +3304,7 @@ Jmol._debugCode = false;
 		// JmolObjectInterface
 		var id = "echo_" + echoName + path + (bytes ? "_" + bytes.length : "");
 		var canvas = Jmol._getHiddenCanvas(platform.vwr.html5Applet, id, 0, 0, false, true);
-//    System.out.println(["JSmol.js loadImage ",id,path,canvas,image])
+//    console.log(["JSmol.js loadImage ",id,path,canvas,image])
 		if (canvas == null) {
 			if (image == null) {
 				image = new Image();
@@ -3315,7 +3315,7 @@ Jmol._debugCode = false;
 					image.src = path;
 					return null;
 				}
-				System.out.println("Jsmol.js Jmol._loadImage using data URI for " + id)
+				console.log("Jsmol.js Jmol._loadImage using data URI for " + id)
 				image.src = (typeof bytes == "string" ? bytes :
 					"data:" + JU.Rdr.guessMimeTypeForBytes(bytes) + ";base64," + JU.Base64.getBase64(bytes));
 			}
@@ -3334,7 +3334,7 @@ Jmol._debugCode = false;
 			Jmol._setCanvasImage(canvas, width, height);
 			// return a null canvas and the error in path if there is a problem
 		} else {
-			System.out.println("Jsmol.js Jmol._loadImage reading cached image for " + id)
+			console.log("Jsmol.js Jmol._loadImage reading cached image for " + id)
 		}
 		return (bytes == null ? fOnload(canvas, path) : canvas);
 	};
@@ -3353,7 +3353,7 @@ Jmol._debugCode = false;
 			d.height = d.style.height = height;
 			d.id = id;
 			Jmol._canvasCache[id] = d;
-			//System.out.println("JSmol.js loadImage setting cache" + id + " to " + d)
+			//console.log("JSmol.js loadImage setting cache" + id + " to " + d)
 		}
 		
 		return d;
@@ -3669,7 +3669,7 @@ Jmol._debugCode = false;
 		}
 		
 		proto._restoreState = function (clazzName, state) {
-			System.out.println("\n\nasynchronous restore state for " + clazzName + " " + state)
+			console.log("\n\nasynchronous restore state for " + clazzName + " " + state)
 			var applet = this;
 			var vwr = applet._applet && applet._applet.viewer;
 			switch (state) {
@@ -3696,7 +3696,7 @@ Jmol._debugCode = false;
 					//return function() {setTimeout(function(){vwr.refresh(2)},10)};
 					if (vwr && vwr.isScriptExecuting && vwr.isScriptExecuting()) {
 						if (Jmol._asyncCallbacks[clazzName]) {
-							System.out.println("...ignored");
+							console.log("...ignored");
 							return 1;
 						}
 						var sc = vwr.getEvalContextAndHoldQueue(vwr.eval);
@@ -3704,17 +3704,17 @@ Jmol._debugCode = false;
 						sc.asyncID = clazzName;
 						Jmol._asyncCallbacks[clazzName] = function (pc) {
 							sc.pc = pc;
-							System.out.println("sc.asyncID=" + sc.asyncID + " sc.pc = " + sc.pc);
+							console.log("sc.asyncID=" + sc.asyncID + " sc.pc = " + sc.pc);
 							vwr.eval.resumeEval(sc)
 						};
 						vwr.eval.pc = vwr.eval.pcEnd;
-						System.out.println("setting resume for pc=" + sc.pc + " " + clazzName + " to " + Jmol._asyncCallbacks[clazzName] + "//")
+						console.log("setting resume for pc=" + sc.pc + " " + clazzName + " to " + Jmol._asyncCallbacks[clazzName] + "//")
 						return function () {
-							System.out.println("resuming " + clazzName + " " + Jmol._asyncCallbacks[clazzName]);
+							console.log("resuming " + clazzName + " " + Jmol._asyncCallbacks[clazzName]);
 							Jmol._asyncCallbacks[clazzName](pc)
 						};
 					}
-					System.out.println(clazzName + "?????????????????????" + state)
+					console.log(clazzName + "?????????????????????" + state)
 					return function () {
 						setTimeout(function () {
 							vwr.refresh(2)
@@ -6224,7 +6224,7 @@ LoadClazz = function () {
 			if (clazz == Error) {
 				if (("" + e).indexOf("Error") < 0)
 					return false;
-				System.out.println(Clazz.getStackTrace());
+				console.log(Clazz.getStackTrace());
 				return true;
 				// everything here is a Java Exception, not a Java Error
 			}
@@ -6399,7 +6399,7 @@ LoadClazz = function () {
 				var m = duplicatedMethods[key];
 				if (m) {
 					var s = "Warning! Duplicate method found for " + key;
-					System.out.println(s);
+					console.log(s);
 					Clazz.alert(s);
 					duplicatedMethods[key] = m + 1;
 				} else {
@@ -6418,7 +6418,7 @@ LoadClazz = function () {
 					n++;
 				}
 			s = "Duplicates: " + n + "\n\n" + s;
-			System.out.println(s);
+			console.log(s);
 			if (!quiet)
 				alert(s);
 		}
@@ -6636,7 +6636,7 @@ LoadClazz = function () {
 			
 			if (!fx)
 				try {
-					System.out.println(Clazz.getStackTrace(5))
+					console.log(Clazz.getStackTrace(5))
 				} catch (e) {
 				}
 			_profile && addProfile(claxxRef, fxName, params, id);
@@ -7251,7 +7251,7 @@ LoadClazz = function () {
 				Clazz._Loader._classCountPending--;
 			}
 			if (Clazz._Loader && Clazz._Loader._checkLoad) {
-				System.out.println("decorating class " + prefixName + "." + name);
+				console.log("decorating class " + prefixName + "." + name);
 			}
 			var cf = Clazz.unloadedClasses[qName];
 			if (cf) {
@@ -8041,7 +8041,7 @@ Clazz.getMixedCallerMethod = function (args) {
 					+ " has a superclass method by the same name (possibly with the same parameters) that is private and "
 					+ " therefore might be called improperly from this class. If your "
 					+ " code does not run properly, or you want to make it run faster, change the name of this method to something else."
-				System.out.println(me.privateNote);
+				console.log(me.privateNote);
 				alert(me.privateNote);
 			}
 			/*
@@ -8287,7 +8287,7 @@ Clazz.load = function (musts, clazz, optionals, declaration) {
 		};
 		System.out.printf = function () {
 		};
-		System.out.println = function () {
+		console.log = function () {
 		};
 		System.out.write = function () {
 		};
@@ -9028,7 +9028,7 @@ var cleanDelegateMethod = function (m) {
 			/* public */
 			_Loader.loadClass = function (name, onLoaded, forced, async, mode) {
 				
-				//System.out.println("loadClass " + name)
+				//console.log("loadClass " + name)
 				
 				mode || (mode = 0); // BH: not implemented
 				(async == null) && (async = false);
@@ -9066,7 +9066,7 @@ var cleanDelegateMethod = function (m) {
 					queueBe4KeyClazz.push([name, onLoaded]);
 					
 					
-					System.out.println("loadclass-queuing" + name + runtimeKeyClass + " " + isClassDefined(runtimeKeyClass))
+					console.log("loadclass-queuing" + name + runtimeKeyClass + " " + isClassDefined(runtimeKeyClass))
 					
 					return;
 				}
@@ -9464,7 +9464,7 @@ _Loader.multipleSites = function (path) {
 				
 				
 				if (_Loader._checkLoad) {
-					System.out.println("\t" + file + (why ? "\n -- required by " + why : "") + "  ajax=" + isUsingXMLHttpRequest + " async=" + isAsynchronousLoading)
+					console.log("\t" + file + (why ? "\n -- required by " + why : "") + "  ajax=" + isUsingXMLHttpRequest + " async=" + isAsynchronousLoading)
 				}
 				
 				var file0 = file;
@@ -9473,7 +9473,7 @@ _Loader.multipleSites = function (path) {
 				}
 				
 				if (!isLoaded)
-					System.out.println("loadScript " + file)
+					console.log("loadScript " + file)
 				
 				_Loader.onScriptLoading(file);
 				if (isUsingXMLHttpRequest && !isAsynchronousLoading) {
@@ -9488,7 +9488,7 @@ _Loader.multipleSites = function (path) {
 						alert(e + " loading file " + file + " " + node.name + " " + Clazz.getStackTrace());
 					}
 					if (fSuccess) {
-//      System.out.println("firing in loadScript " + file + " " + (fSuccess && fSuccess.toString()))
+//      console.log("firing in loadScript " + file + " " + (fSuccess && fSuccess.toString()))
 						fSuccess();
 					}
 					return;
@@ -9715,14 +9715,14 @@ _Loader.multipleSites = function (path) {
 				}
 				
 				
-				//System.out.println(node.name + " loaded completely" + _Loader.onGlobalLoaded + "\n\n")
+				//console.log(node.name + " loaded completely" + _Loader.onGlobalLoaded + "\n\n")
 				if (fSuccess) {
-					//System.out.println("tryToLoadNext firing " + _Loader._classCountOK + "/" + _Loader._classCountPending + " "   + fSuccess.toString() + " " + Clazz.getStackTrace())
+					//console.log("tryToLoadNext firing " + _Loader._classCountOK + "/" + _Loader._classCountPending + " "   + fSuccess.toString() + " " + Clazz.getStackTrace())
 					fSuccess();
 				} else if (_Loader._classCountPending) {
 					for (var name in _Loader._classPending) {
 						var n = findNode(name);
-						System.out.println("class left pending " + name + " " + n);
+						console.log("class left pending " + name + " " + n);
 						if (n) {
 							updateNode(n);
 							break;
@@ -9730,12 +9730,12 @@ _Loader.multipleSites = function (path) {
 					}
 				} else {
 					
-					// System.out.println("I think I'm done "
+					// console.log("I think I'm done "
 					// + _Loader._classCountOK + "/" + _Loader._classCountPending + " "
 					//+ _Loader.onGlobalLoaded.toString() + " " + Clazz.getStackTrace()
 					//  )
 					if (_Loader._checkLoad) {
-						System.out.println("I think I'm done: SAEM call count: " + SAEMid);
+						console.log("I think I'm done: SAEM call count: " + SAEMid);
 						Clazz.showDuplicates(true);
 					}
 				}
@@ -9765,7 +9765,7 @@ _Loader.multipleSites = function (path) {
 					// then clear tracks and return true (keep checking)
 					if (_Loader._checkLoad) {
 						var msg = "cycle found loading " + file + " for " + node;
-						System.out.println(msg)
+						console.log(msg)
 					}
 					for (; i < len; i++) {
 						var n = ts[i];
@@ -9777,7 +9777,7 @@ _Loader.multipleSites = function (path) {
 						var f = n.onLoaded;
 						if (_Loader._checkLoad) {
 							var msg = "cycle setting status to LOAD_COMPLETE for " + n.name + (f ? " firing " + f.toString() : "");
-							System.out.println(msg)
+							console.log(msg)
 						}
 						if (f)
 							n.onLoaded = null, f();
@@ -9809,7 +9809,7 @@ _Loader.multipleSites = function (path) {
 						continue;
 					}
 					a.push(n);
-					System.out.println(showNode("", "", n, "", 0));
+					console.log(showNode("", "", n, "", 0));
 				}
 				return a;
 			}
@@ -9904,7 +9904,7 @@ _Loader.multipleSites = function (path) {
 							delete _Loader._classPending[node.name];
 							_Loader._classCountOK;
 							_Loader._classCountPending--;
-//              System.out.println("OK " + (_Loader._classCountOK) + " FOR " + node.name)
+//              console.log("OK " + (_Loader._classCountOK) + " FOR " + node.name)
 						}
 					}
 					node.status = Node.STATUS_DECLARED;
@@ -10118,7 +10118,7 @@ _Loader.multipleSites = function (path) {
 						_Loader._classPending[name] = 1;
 						if (_Loader._classCountPending++ == 0)
 							_Loader._classCountOK = 0;
-						System.out.println("Loading class " + name);
+						console.log("Loading class " + name);
 					}
 				}
 
