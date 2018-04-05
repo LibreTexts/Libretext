@@ -12835,7 +12835,7 @@ if (!Jmol._version)
 		// By default it tracks to a page at St. Olaf College, but you can change that.
 		// and you can use
 		//
-		// delete Jmol._tracker
+		delete Jmol._tracker
 		//
 		// yourself to not have you page execute this
 		//

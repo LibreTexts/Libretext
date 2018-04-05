@@ -1,39 +1,62 @@
-
 var currentScript = document.currentScript;
 var molecule = currentScript.dataset.id;
+var orbital = currentScript.dataset.orbital;
 
-// logic is set by indicating order of USE -- default is HTML5 for this test page, though
-var use = "HTML5";
 
-jmol_isReady = function(applet) {
-	Jmol._getElement(applet, "appletdiv").style.border="1px dashed blue"
+jmol_isReady = function (applet) {
+	Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
+	if (currentScript.dataset.multiple) {
+		Jmol._getElement(applet, "appletinfotablediv").style.display = "inline-block";
+	}
 };
+var tempHeight = cutEnd(currentScript.dataset.height);
+var tempWidth = cutEnd(currentScript.dataset.width);
 
-myCallback = function(a,b,c,d) {
-	console.log("Error",a,b,c,d)
-};
-
-script = 'set zoomlarge false;set antialiasDisplay;'
-+'set errorCallback "myCallback";'
-+'set echo top left; echo loading '+molecule.substr(1)+'...; refresh;  cartoons on;'
-+'load ASYNC '+molecule+'; cartoons on;set spinY 10; set echo top center; echo '+molecule.substr(1)+';';
-
-if(currentScript.dataset.cartoon){
-	script +="cartoons on; spacefill off; wireframe off; color structure;"
+function cutEnd(input) {
+	if (input && input.endsWith("px"))
+		input.replace("px", "");
+	return input;
 }
 
-if(currentScript.dataset.spin){
-	 script +="spin ON;";
+var height = tempHeight ? tempHeight : "400";
+var width = tempWidth ? tempWidth : height;
+
+myCallback = function (a, b, c, d) {
+	console.log("Error", a, b, c, d)
+};
+
+var script = "";
+if (molecule) {
+	script = 'set zoomlarge false; set antialiasDisplay;'
+		+ 'set errorCallback "myCallback";'
+		+ 'load ASYNC ' + molecule + '; set spinY 10;';
+	
+	if (currentScript.dataset.symmetry) {
+	
+	}
+	else if (currentScript.dataset.cartoon) {
+		script += "cartoons on; spacefill off; wireframe off; color structure;"
+	}
+}
+else if (orbital) {
+	script = 'set zoomlarge false; set antialiasDisplay;'
+		+ 'set errorCallback "myCallback";'
+		+ 'isosurface phase atomicOrbital ' + orbital + ' translucent;' +
+		'set axesMolecular; set axesScale 0.5; axes on; zoom 200; set spinY 10;';
+}
+
+if (currentScript.dataset.spin) {
+	script += "spin ON;";
 }
 
 var Info = {
-	width: 450,
-	height: 450,
+	width: width,
+	height: height,
 	debug: false,
 	color: "white",
 	addSelectionOptions: false,
-	serverURL: "https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
-	use: use,
+	// serverURL: "https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
+	use: currentScript.dataset.webgl ? "WEBGL" : "HTML5",
 	j2sPath: "https://libretexts.org/awesomefiles/JSmol/j2s",
 	readyFunction: jmol_isReady,
 	script: script,
@@ -46,4 +69,4 @@ var Info = {
 	//console: "none", // default will be jmolApplet0_infodiv
 };
 
-jmolApplet0 = Jmol.getApplet("jmolApplet"+Math.floor(Math.random()*100000), Info);
+jmolApplet0 = Jmol.getApplet("jmolApplet" + Math.floor(Math.random() * 100000), Info);
