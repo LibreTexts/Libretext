@@ -5,8 +5,12 @@ var orbital = currentScript.dataset.orbital;
 
 jmol_isReady = function (applet) {
 	Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
+	Jmol._getElement(applet, "appletinfotablediv").style.breakInside="avoid";
 	if (currentScript.dataset.multiple) {
 		Jmol._getElement(applet, "appletinfotablediv").style.display = "inline-block";
+	}
+	else {
+		Jmol._getElement(applet, "appletinfotablediv").style.margin = "auto";
 	}
 };
 var tempHeight = cutEnd(currentScript.dataset.height);
@@ -19,7 +23,7 @@ function cutEnd(input) {
 }
 
 var height = tempHeight ? tempHeight : "400";
-var width = tempWidth ? tempWidth : height;
+var width = tempWidth ? tempWidth : "400";
 
 myCallback = function (a, b, c, d) {
 	console.log("Error", a, b, c, d)
