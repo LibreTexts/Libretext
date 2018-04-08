@@ -18,6 +18,8 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 var label = document.createElement("div");
 label.style.cssText = "position: absolute; right:5px; bottom:5px; color: dodgerblue; font-family:Segoe UI,Arial,sans-serif; font-size: 20px";
 label.appendChild(document.createTextNode("GLmol"));
+label.title = "(C) Copyright 2011 biochem_fan (biochem_fan at users.sourceforge.jp). \n" +
+	"This program is released under LGPL3.";
 target.appendChild(label, document.currentScript);
 
 var label2 = document.createElement("div");

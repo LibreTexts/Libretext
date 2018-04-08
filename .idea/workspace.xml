@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLmol/js/GLmol.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/GLmol.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,12 +20,49 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="JSmolWrapper.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+    <leaf>
+      <file leaf-file-name="JSmol.full.nojq.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="68" lean-forward="true" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
+            <state relative-caret-position="34">
+              <caret line="4" selection-start-line="4" selection-end-line="5" selection-end-column="30" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#nobr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#image#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#image#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#image#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GLmol.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="421">
+              <caret line="2266" column="1" selection-start-line="2266" selection-start-column="1" selection-end-line="2266" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Three49custom.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="2" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -49,6 +90,9 @@
       <find>mouse</find>
       <find>slider</find>
       <find>println</find>
+      <find>viewer_</find>
+      <find>viewerdiv</find>
+      <find>style</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -63,9 +107,12 @@
         <option value="$PROJECT_DIR$/public/JSmol/index.html" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmol.min.nojq.js" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
-        <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
+        <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
+        <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
       </list>
     </option>
   </component>
@@ -76,10 +123,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="756" />
-    <option name="y" value="-32" />
-    <option name="width" value="2762" />
-    <option name="height" value="1770" />
+    <option name="x" value="1012" />
+    <option name="y" value="740" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -105,14 +152,26 @@
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="JSmol" type="462c0819:PsiDirectoryNode" />
+              <item name="3Dmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="JSmol" type="462c0819:PsiDirectoryNode" />
-              <item name="symmetry" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -156,7 +215,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Converter/node_modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ECS162" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
     <property name="node.js.selected.package.prettier" value="" />
@@ -199,7 +258,10 @@
       <workItem from="1522723292441" duration="470000" />
       <workItem from="1522958647598" duration="3585000" />
       <workItem from="1522968241727" duration="2692000" />
-      <workItem from="1522974519006" duration="265000" />
+      <workItem from="1522974519006" duration="456000" />
+      <workItem from="1523059265084" duration="21000" />
+      <workItem from="1523216217914" duration="1026000" />
+      <workItem from="1523217557529" duration="3095000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -250,18 +312,25 @@
       <option name="project" value="LOCAL" />
       <updated>1522970749967</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added Print Styles">
+      <created>1522974964285</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1522974964285</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35407000" />
+    <option name="totallyTimeSpent" value="39740000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Remote Host" order="3" weight="0.32930514" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30234316" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31519273" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
@@ -301,9 +370,24 @@
     <MESSAGE value="Updated Converter" />
     <MESSAGE value="Added data-multiple, data-width, and data-height" />
     <MESSAGE value="Added Responsive Sizes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Responsive Sizes" />
+    <MESSAGE value="Added Print Styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Print Styles" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -467,11 +551,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-882" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/Libretext.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -539,24 +618,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="42" lean-forward="true" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="2522" column="20" selection-start-line="2522" selection-start-column="20" selection-end-line="2522" selection-end-column="20" />
+        <state relative-caret-position="34">
+          <caret line="4" selection-start-line="4" selection-end-line="5" selection-end-column="30" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#nobr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#image#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#image#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#image#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+          <caret line="29" selection-start-line="29" selection-end-line="29" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="68" lean-forward="true" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="2" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="2266" column="1" selection-start-line="2266" selection-start-column="1" selection-end-line="2266" selection-end-column="1" />
         </state>
       </provider>
     </entry>
