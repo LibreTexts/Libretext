@@ -32,7 +32,7 @@ download(molecule, index);
 
 
 function download(query, index) {
-	var baseURL = '';
+	var uri = '';
 	
 	query = query ? query : '=2POR';
 	
@@ -57,6 +57,9 @@ function download(query, index) {
 			}
 			uri = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/" + query +
 				"/SDF?record_type=3d";
+			break;
+		default:
+			uri = query;
 			break;
 	}
 	
