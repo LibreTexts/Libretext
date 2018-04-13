@@ -16453,7 +16453,7 @@ $3Dmol.autoload = function (viewer) {
 					glviewer = $3Dmol.viewers[this.id || nviewers++] = $3Dmol.createViewer(viewerdiv, {defaultcolors: $3Dmol.rasmolElementColors});
 				glviewer.setBackgroundColor(bgcolor);
 				if (viewerdiv[0].dataset.spin) {
-					glviewer.spin(true, 'x', 50)
+					glviewer.spin('y', 100)
 				}
 			} catch (error) {
 				console.log(error);
@@ -24906,7 +24906,7 @@ $3Dmol.GLViewer = (function () {
 			return ret;
 		};
 		var spinInterval;
-		this.spin = function (axis) {
+		this.spin = function (axis, per) {
 			clearInterval(spinInterval)
 			if (typeof axis == 'undefined')
 				axis = 'y';
@@ -24923,12 +24923,12 @@ $3Dmol.GLViewer = (function () {
 			//out of bounds check
 
 			var viewer = this;
-
+			var resolution = 2;
 			spinInterval = setInterval(
 				function () {
-					viewer.rotate(1, axis)
+					viewer.rotate(1 / 2, axis);
 				}
-				, 25);
+				, per / resolution);
 
 		}
 

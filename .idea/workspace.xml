@@ -4,8 +4,6 @@
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +20,8 @@
       <file leaf-file-name="3Dmol-nojquery.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="16379" column="35" lean-forward="true" selection-start-line="16379" selection-start-column="35" selection-end-line="16379" selection-end-column="35" />
+            <state relative-caret-position="176">
+              <caret line="32854" lean-forward="true" selection-start-line="32854" selection-end-line="32854" />
             </state>
           </provider>
         </entry>
@@ -252,7 +250,8 @@
       <workItem from="1523588871478" duration="47000" />
       <workItem from="1523588982233" duration="4788000" />
       <workItem from="1523594142761" duration="323000" />
-      <workItem from="1523598212992" duration="718000" />
+      <workItem from="1523598212992" duration="830000" />
+      <workItem from="1523600440296" duration="690000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -331,11 +330,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523597214239</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Implemented 3Dmol spin">
+      <created>1523599092785</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1523599092786</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60145000" />
+    <option name="totallyTimeSpent" value="60947000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -346,7 +352,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.370317" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" visible="true" weight="0.370317" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -386,7 +392,8 @@
     <MESSAGE value="Updated 3Dmol download" />
     <MESSAGE value="Inital MoleculeGenerator" />
     <MESSAGE value="Added in noborder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added in noborder" />
+    <MESSAGE value="Implemented 3Dmol spin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented 3Dmol spin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -394,6 +401,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278443">
+          <caret line="16379" column="35" lean-forward="true" selection-start-line="16379" selection-start-column="35" selection-end-line="16379" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224961">
@@ -682,8 +696,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="16379" column="35" lean-forward="true" selection-start-line="16379" selection-start-column="35" selection-end-line="16379" selection-end-column="35" />
+        <state relative-caret-position="176">
+          <caret line="32854" lean-forward="true" selection-start-line="32854" selection-end-line="32854" />
         </state>
       </provider>
     </entry>
