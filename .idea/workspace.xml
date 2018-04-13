@@ -2,25 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Inital MoleculeGenerator">
-      <change afterPath="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/I3.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/I3.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE-GPL3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE-GPL3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE-LGPL3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE-LGPL3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/embedding-examplesEN.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/embedding-examplesEN.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/index0.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/index0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLmol.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/GLmol.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/Three49custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/jquery-1.7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/viewer.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/viewer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLmol.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLMol/js/GLmol.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,20 +18,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="3Dmol-nojquery.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <file leaf-file-name="GLWrapper.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="12712" column="27" selection-start-line="12712" selection-start-column="27" selection-end-line="12712" selection-end-column="27" />
+            <state relative-caret-position="306">
+              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GLWrapper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <file leaf-file-name="3Dmol-nojquery.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="40" selection-start-line="40" selection-end-line="65" selection-end-column="5" />
+            <state relative-caret-position="484">
+              <caret line="13227" column="47" lean-forward="true" selection-start-line="13227" selection-start-column="47" selection-end-line="13227" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -63,8 +47,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_tracker</find>
-      <find>script</find>
       <find>proto</find>
       <find>mouse</find>
       <find>slider</find>
@@ -93,7 +75,12 @@
       <find>//auto-initialization</find>
       <find>&lt;&lt;&lt;</find>
       <find>Henry Custom</find>
+      <find>currentScript</find>
+      <find>rendered in</find>
     </findStrings>
+    <replaceStrings>
+      <replace>viewerdiv[0]</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -116,10 +103,10 @@
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
         <option value="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
         <option value="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" />
         <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
       </list>
     </option>
   </component>
@@ -182,6 +169,12 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="GLmol" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="JSmol" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -360,7 +353,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57292000" />
+    <option name="totallyTimeSpent" value="58461000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -371,7 +364,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.370945" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" visible="true" weight="0.16784203" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -379,14 +372,26 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.32904884" />
       <window_info anchor="bottom" id="Inspection Results" order="7" weight="0.7945493" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16773778" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.33138686" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.370945" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32853025" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32853025" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -669,8 +674,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js">
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" column="78" selection-start-line="16" selection-start-column="78" selection-end-line="16" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/README.txt">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="6924" column="1" lean-forward="true" selection-start-line="6924" selection-start-column="1" selection-end-line="6924" selection-end-column="1" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -679,38 +698,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" column="78" selection-start-line="16" selection-start-column="78" selection-end-line="16" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117283">
-          <caret line="6899" column="9" selection-start-line="6899" selection-start-column="9" selection-end-line="6899" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="18" selection-start-line="18" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="40" selection-start-line="40" selection-end-line="65" selection-end-column="5" />
+        <state relative-caret-position="364">
+          <caret line="2259" column="10" lean-forward="true" selection-start-line="2259" selection-start-column="10" selection-end-line="2259" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12712" column="27" selection-start-line="12712" selection-start-column="27" selection-end-line="12712" selection-end-column="27" />
+        <state relative-caret-position="484">
+          <caret line="13227" column="47" lean-forward="true" selection-start-line="13227" selection-start-column="47" selection-end-line="13227" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
         </state>
       </provider>
     </entry>

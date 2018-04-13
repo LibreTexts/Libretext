@@ -13218,7 +13218,13 @@ $3Dmol.autoload = function (viewer) {
 				"3Dmol.js: molecular visualization with WebGL\n" +
 				"Bioinformatics (2015) 31 (8): 1322-1324 doi:10.1093/bioinformatics/btu829";
 			viewerdiv[0].appendChild(label);
-			viewerdiv[0].style.border = "1px solid green";
+			if(!viewerdiv[0].dataset.noborder) {
+				viewerdiv[0].style.border = "1px solid green";
+			}
+			var height = viewerdiv[0].dataset.height ? viewerdiv[0].dataset.height : "400px";
+			var width = viewerdiv[0].dataset.width ? viewerdiv[0].dataset.width : "400px";
+			viewerdiv[0].style.height = height;
+			viewerdiv[0].style.width = width;
 			viewerdiv[0].style.margin = "auto";
 
 			if (viewerdiv[0].dataset.multiple) {
