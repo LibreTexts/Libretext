@@ -7,9 +7,12 @@ var width = currentScript.dataset.width ? currentScript.dataset.width : "400px";
 
 var target = document.createElement("div");
 target.id = 'glmol' + index;
-var style = "position: relative; " + (width ? (" width: " + width + "; ") : "max-width: 80%; ") + "height:" + height + "; margin: auto; border: 1px solid dodgerblue; ";
+var style = "position: relative; " + (width ? (" width: " + width + "; ") : "max-width: 80%; ") + "height:" + height + "; margin: auto; ";
+if (!currentScript.dataset.noborder) {
+	style += "border: 1px solid dodgerblue; ";
+}
 if (currentScript.dataset.multiple) {
-	style += "display: inline-block;"
+	style += "display: inline-block; ";
 }
 
 target.style.cssText = style;
@@ -20,16 +23,37 @@ label.style.cssText = "position: absolute; right:5px; bottom:5px; color: dodgerb
 label.appendChild(document.createTextNode("GLmol"));
 label.title = "(C) Copyright 2011 biochem_fan (biochem_fan at users.sourceforge.jp). \n" +
 	"This program is released under LGPL3.";
-target.appendChild(label, document.currentScript);
+target.appendChild(label);
 
 var label2 = document.createElement("div");
 label2.style.cssText = "position: absolute; top:5px; left:5px; color: dodgerblue; font-family:Segoe UI,Arial,sans-serif; font-size: 20px";
 label2.id = 'glmol' + index + 'title';
-target.appendChild(label2, document.currentScript);
+target.appendChild(label2);
 
 window['GL' + index] = new GLmol('glmol' + index, true);
 download(molecule, index);
 
+window['GL' + index].rotate = function (dx, dy) {
+	var r = Math.sqrt(dx * dx + dy * dy);
+	var rs = Math.sin(r * Math.PI) / r;
+	this.dq.x = Math.cos(r * Math.PI);
+	this.dq.y = 0;
+	this.dq.z = rs * dx;
+	this.dq.w = rs * dy;
+	this.rotationGroup.quaternion = new THREE.Quaternion(1, 0, 0, 0);
+	this.rotationGroup.quaternion.multiplySelf(this.dq);
+	this.rotationGroup.quaternion.multiplySelf(this.cq);
+	this.show();
+};
+
+var dx = 0;
+
+var step = function (timestamp, index) {
+	dx += 0.0005;
+
+	window['GL' + index].rotate(dx, 0);
+	window.requestAnimationFrame((timestamp) => step(timestamp, index));
+};
 
 function download(query, index) {
 	var uri = '';
@@ -66,6 +90,8 @@ function download(query, index) {
 	$.get(uri, function (ret) {
 		// console.log(ret);
 		window['GL' + index].loadMoleculeStr(ret);
+		if (currentScript.dataset.spin)
+			window.requestAnimationFrame((timestamp) => step(timestamp, index));
 	});
 }
 
