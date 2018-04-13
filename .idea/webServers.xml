@@ -5,7 +5,7 @@
       <webServer id="7aef5a43-7ddb-4082-9a95-f8e24e5c7f47" name="Libretext" url="http://108.167.152.254/awesomefiles">
         <fileTransfer host="108.167.152.254" port="21">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
           </advancedOptions>
           <option name="port" value="21" />
         </fileTransfer>

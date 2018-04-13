@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/.babelrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/.eslintrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/Counter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/Layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/all.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/webpack.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/webpack.config.production.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/MoleculeGenerator/yarn.lock" afterDir="false" />
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Inital MoleculeGenerator">
+      <change afterPath="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/I3.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/I3.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE-GPL3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE-GPL3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE-LGPL3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE-LGPL3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/embedding-examplesEN.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/embedding-examplesEN.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/index0.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/index0.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLmol.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/GLmol.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/Three49custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/jquery-1.7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/viewer.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLmol/viewer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,7 +33,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="3Dmol-nojquery.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="12712" column="27" selection-start-line="12712" selection-start-column="27" selection-end-line="12712" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GLWrapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="40" selection-start-line="40" selection-end-line="65" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -42,16 +63,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>local</find>
-      <find>isLocal</find>
-      <find>a._getFileData</find>
-      <find>_getFileData</find>
-      <find>db</find>
-      <find>_isDatabaseCall</find>
-      <find>console.log</find>
-      <find>Clazz</find>
-      <find>loadNext</find>
-      <find>stolaf</find>
       <find>_tracker</find>
       <find>script</find>
       <find>proto</find>
@@ -64,14 +75,24 @@
       <find>pdb</find>
       <find>custom</find>
       <find>const</find>
-      <find>Henry</find>
       <find>viewers</find>
-      <find>Henry Custom</find>
-      <find>auto</find>
       <find>background</find>
-      <find>autoload</find>
       <find>bgcolor</find>
       <find>download</find>
+      <find>')</find>
+      <find>div</find>
+      <find>1px solid</find>
+      <find>stick</find>
+      <find>autoload</find>
+      <find>render</find>
+      <find>this.camera</find>
+      <find>console.warn</find>
+      <find>&quot;DEPRECATED: Camera hasn't been added to a Scene. Adding it...&quot;</find>
+      <find>Henry</find>
+      <find>auto</find>
+      <find>//auto-initialization</find>
+      <find>&lt;&lt;&lt;</find>
+      <find>Henry Custom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -86,19 +107,19 @@
         <option value="$PROJECT_DIR$/public/JSmol/index.html" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmol.min.nojq.js" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.js" />
-        <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
         <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
-        <option value="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" />
         <option value="$PROJECT_DIR$/public/3Dmol/temp.js" />
-        <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/all.css" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/webpack.config.production.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/index.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/tooltips.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" />
+        <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" />
+        <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
       </list>
     </option>
   </component>
@@ -119,7 +140,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+    <option name="x" value="793" />
     <option name="width" value="814" />
     <option name="height" value="867" />
   </component>
@@ -131,6 +152,41 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="3Dmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -159,35 +215,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="MoleculeGenerator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="MoleculeGenerator" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -208,6 +235,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\GLmol\js" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
     </key>
   </component>
@@ -251,7 +279,12 @@
       <workItem from="1523216217914" duration="1026000" />
       <workItem from="1523217557529" duration="3095000" />
       <workItem from="1523507409304" duration="1903000" />
-      <workItem from="1523509568537" duration="4972000" />
+      <workItem from="1523509568537" duration="5109000" />
+      <workItem from="1523514721766" duration="1130000" />
+      <workItem from="1523584667729" duration="4160000" />
+      <workItem from="1523588871478" duration="47000" />
+      <workItem from="1523588982233" duration="4788000" />
+      <workItem from="1523594142761" duration="323000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -316,36 +349,44 @@
       <option name="project" value="LOCAL" />
       <updated>1523509601503</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Inital MoleculeGenerator">
+      <created>1523514582601</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1523514582601</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46707000" />
+    <option name="totallyTimeSpent" value="57292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Remote Host" order="3" weight="0.32904884" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32390746" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16773778" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.14553314" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32968536" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.370945" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32853025" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.33138686" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Inspection Results" order="7" weight="0.7945493" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32983926" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32853025" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32853025" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,9 +409,57 @@
     <MESSAGE value="Added Responsive Sizes" />
     <MESSAGE value="Added Print Styles" />
     <MESSAGE value="Updated 3Dmol download" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated 3Dmol download" />
+    <MESSAGE value="Inital MoleculeGenerator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inital MoleculeGenerator" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="78" lean-forward="true" selection-start-line="16" selection-start-column="78" selection-end-line="16" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227919">
+          <caret line="13407" lean-forward="true" selection-start-line="13407" selection-end-line="13407" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="90" column="31" lean-forward="true" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1649">
+          <caret line="97" selection-start-line="97" selection-end-line="120" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="54" column="38" lean-forward="true" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/JSmol/symmetry/js/molsym.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
@@ -517,42 +606,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" selection-start-line="4" selection-end-line="5" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLMol/js/Three49custom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="2" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLMol/js/GLmol.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="2266" column="1" selection-start-line="2266" selection-start-column="1" selection-end-line="2266" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/3Dmol/temp.js" />
-    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1194">
-          <caret line="5511" column="18" lean-forward="true" selection-start-line="5511" selection-start-column="18" selection-end-line="5511" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -561,25 +615,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/dist/static/bundle.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/Layout.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/Counter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-51" />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Converter/public/astro.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/webpack.config.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -595,40 +634,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/.babelrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Converter/Converter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3009">
           <caret line="181" column="80" selection-start-line="181" selection-start-column="74" selection-end-line="181" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/dist/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/all.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="19" column="81" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLMol/js/GLWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="41" column="106" lean-forward="true" selection-start-line="41" selection-start-column="106" selection-end-line="41" selection-end-column="106" />
         </state>
       </provider>
     </entry>
@@ -639,8 +648,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/tooltips.js">
+    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Skele/Skele.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="98" column="44" lean-forward="true" selection-start-line="98" selection-start-column="17" selection-end-line="98" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="120" column="22" lean-forward="true" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" column="78" selection-start-line="16" selection-start-column="78" selection-end-line="16" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117283">
+          <caret line="6899" column="9" selection-start-line="6899" selection-start-column="9" selection-end-line="6899" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="18" selection-start-line="18" selection-end-line="19" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="40" selection-start-line="40" selection-end-line="65" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12712" column="27" selection-start-line="12712" selection-start-column="27" selection-end-line="12712" selection-end-column="27" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

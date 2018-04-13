@@ -4,7 +4,9 @@ var orbital = currentScript.dataset.orbital;
 
 
 jmol_isReady = function (applet) {
-	Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
+	if(!currentScript.dataset.noborder) {
+		Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
+	}
 	Jmol._getElement(applet, "appletinfotablediv").style.breakInside="avoid";
 	if (currentScript.dataset.multiple) {
 		Jmol._getElement(applet, "appletinfotablediv").style.display = "inline-block";
