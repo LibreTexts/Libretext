@@ -31,10 +31,10 @@ export default class App extends Component {
 			}}>
 				<h1 style={{textAlign: "center"}}>Molecule Generator</h1>
 
-				<div style={{display: "flex"}}>
-					<div onClick={() => this.setState({type: "GLmol"})}>GLmol</div>
-					<div onClick={() => this.setState({type: "3Dmol"})}>3Dmol</div>
-					<div onClick={() => this.setState({type: "JSmol"})}>JSmol</div>
+				<div style={{display: "flex", justifyContent:"space-evenly", width:"100%"}}>
+					<div onClick={() => this.setState({type: "GLmol"})} style={{backgroundColor:"dodgerblue"}}>GLmol</div>
+					<div onClick={() => this.setState({type: "3Dmol"})} style={{backgroundColor:"green"}}>3Dmol</div>
+					<div onClick={() => this.setState({type: "JSmol"})} style={{backgroundColor:"orange"}}>JSmol</div>
 				</div>
 				<div style={{
 					margin: 10,
@@ -73,23 +73,13 @@ export default class App extends Component {
 
 		switch (this.state.type) {
 			case "3Dmol":
-				return "//3Dmol\n" +
-					"<script src=\"https://libretexts.org/awesomefiles/3Dmol/3Dmol-nojquery.js\"></script>\n" +
-					"\n" +
-					"//Edit below\n" +
+				return 'wiki.page("Media_Repo/EmbeddedViewing/Embed3DmolJS");\n' +
 					"<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
 			case "GLmol":
-				return "//GLmol\n" +
-					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/Three49custom.js\"></script>\n" +
-					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/GLmol.js\"></script>\n" +
-					"\n" +
-					"//Edit below\n" +
+				return 'wiki.page("Media_Repo/EmbeddedViewing/EmbedGLmolJS");\n' +
 					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js\" ('data-id')=\"=1ugu\" ('data-multiple')=\"true\"></script>";
 			case "JSmol":
-				return "//JSmol\n" +
-					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/JSmol/JSmol.full.nojq.js\"></script>\n" +
-					"\n" +
-					"//Edit below\n" +
+				return 'wiki.page("Media_Repo/EmbeddedViewing/EmbedJSmolJS");\n' +
 					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
 		}
 	}

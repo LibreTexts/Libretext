@@ -16319,7 +16319,7 @@ $3Dmol.autoload = function (viewer) {
 
 			//Henry Custom Code
 			const label = document.createElement("div");
-			label.style.cssText = "position: absolute; right:5px; bottom:5px; color: green; font-family:Segoe UI,Arial,sans-serif; font-size: 20px; z-index:1;";
+			label.style.cssText = "position: absolute; right:5px; bottom:5px; color: "+(currentScript.dataset.showLabel?"green":"white")+"; font-family:Segoe UI,Arial,sans-serif; font-size: 20px; z-index:1;";
 			label.appendChild(document.createTextNode("3Dmol"));
 			label.title = "Nicholas Rego and David Koes\n" +
 				"3Dmol.js: molecular visualization with WebGL\n" +
