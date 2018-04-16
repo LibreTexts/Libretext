@@ -6,8 +6,8 @@ var height = currentScript.dataset.height ? currentScript.dataset.height : "400p
 var width = currentScript.dataset.width ? currentScript.dataset.width : "400px";
 
 var target = document.createElement("div");
-target.id = 'glmol' + index;
-var style = "position: relative; " + (width ? (" width: " + width + "; ") : "max-width: 80%; ") + "height:" + height + "; margin: auto; ";
+target.id = 'GL' + index;
+var style = "position: relative; width: " + width + "; " + (currentScript.dataset.width ? "" : " max-width: 80%; ") + "height:" + height + "; margin: auto; ";
 if (!currentScript.dataset.noborder) {
 	style += "border: 1px solid dodgerblue; ";
 }
@@ -15,14 +15,20 @@ if (currentScript.dataset.multiple) {
 	style += "display: inline-block; ";
 }
 if (currentScript.attributes.alt) {
-	target.setAttribute("alt",currentScript.attributes.alt.textContent);
+	target.setAttribute("alt", currentScript.attributes.alt.textContent);
 }
-
+target.onclick = function(){
+	var current = window[this.id];
+	current.change = 0;
+	// clearTimeout(current.timeout);
+	// current.timeout = setTimeout(function(){current.change = 0.0005;
+	// 	window.requestAnimationFrame((timestamp) => step(timestamp, current.id.substr(2)));},5000);
+};
 target.style.cssText = style;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 var label = document.createElement("div");
-label.style.cssText = "position: absolute; right:5px; bottom:5px; color: "+(currentScript.dataset.showLabel?"dodgerblue":"white")+"; font-family:Segoe UI,Arial,sans-serif; font-size: 20px";
+label.style.cssText = "position: absolute; right:5px; bottom:5px; color: " + (currentScript.dataset.showLabel ? "dodgerblue" : "white") + "; font-family:Segoe UI,Arial,sans-serif; font-size: 20px";
 label.appendChild(document.createTextNode("GLmol"));
 label.title = "(C) Copyright 2011 biochem_fan (biochem_fan at users.sourceforge.jp). \n" +
 	"This program is released under LGPL3.";
@@ -30,10 +36,10 @@ target.appendChild(label);
 
 var label2 = document.createElement("div");
 label2.style.cssText = "position: absolute; top:5px; left:5px; color: dodgerblue; font-family:Segoe UI,Arial,sans-serif; font-size: 20px";
-label2.id = 'glmol' + index + 'title';
+label2.id = 'GL' + index + 'title';
 target.appendChild(label2);
 
-window['GL' + index] = new GLmol('glmol' + index, true);
+window['GL' + index] = new GLmol('GL' + index, true);
 download(molecule, index);
 
 window['GL' + index].rotate = function (dx, dy) {
@@ -49,13 +55,15 @@ window['GL' + index].rotate = function (dx, dy) {
 	this.show();
 };
 
-var dx = 0;
-
+window['GL' + index].dx = 0;
+window['GL' + index].change = 0.0005;
 var step = function (timestamp, index) {
-	dx += 0.0005;
+	if(window['GL' + index].change) {
+		window['GL' + index].dx += window['GL' + index].change;
 
-	window['GL' + index].rotate(dx, 0);
-	window.requestAnimationFrame((timestamp) => step(timestamp, index));
+		window['GL' + index].rotate(window['GL' + index].dx, 0);
+		window.requestAnimationFrame((timestamp) => step(timestamp, index));
+	}
 };
 
 function download(query, index) {
