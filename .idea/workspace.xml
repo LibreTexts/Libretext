@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/JSmol/temp.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.woff" afterDir="false" />
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Finished GLmol Spin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JSMol/JSmolWrapper.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,23 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="social-share-kit.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+      <file leaf-file-name="GLWrapper.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="social-share-kit.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="241" column="26" selection-start-line="241" selection-start-column="18" selection-end-line="241" selection-end-column="26" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="385">
+              <caret line="58" column="98" selection-start-line="58" selection-start-column="98" selection-end-line="58" selection-end-column="98" />
             </state>
           </provider>
         </entry>
@@ -51,16 +34,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>download</find>
-      <find>')</find>
-      <find>div</find>
-      <find>1px solid</find>
       <find>stick</find>
       <find>render</find>
       <find>this.camera</find>
@@ -74,22 +52,27 @@
       <find>currentScript</find>
       <find>rendered in</find>
       <find>autoload</find>
-      <find>spin</find>
       <find>uri</find>
       <find>try {</find>
       <find>repressZoom</find>
-      <find>zoom</find>
       <find>this.zoomInto</find>
       <find>zoomInto</find>
       <find>3dmol</find>
       <find>&quot;3Dmol</find>
-      <find>.ui</find>
-      <find>ui-menu</find>
-      <find>.ssk.ssk-sm</find>
-      <find>.ssk-sm</find>
+      <find>camera</find>
+      <find>zoom</find>
+      <find>mouse</find>
+      <find>scroll</find>
+      <find>slab</find>
+      <find>width</find>
+      <find>spin</find>
+      <find>var</find>
+      <find>target</find>
+      <find>onclick</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
+      <replace>const</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -110,15 +93,14 @@
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/webpack.config.production.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/index.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/tooltips.js" />
-        <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
         <option value="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" />
         <option value="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" />
-        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
         <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
-        <option value="$PROJECT_DIR$/public/JSmol/temp.css" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" />
+        <option value="$PROJECT_DIR$/public/JSmol/JSmolWrapper.js" />
+        <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
       </list>
     </option>
   </component>
@@ -139,9 +121,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="587" />
+    <option name="y" value="101" />
     <option name="width" value="814" />
-    <option name="height" value="868" />
+    <option name="height" value="728" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -151,6 +134,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="3Dmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="JSmol" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -179,28 +190,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -212,7 +201,6 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
     <property name="node.js.selected.package.prettier" value="" />
@@ -222,9 +210,6 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\GLmol\js" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
@@ -280,12 +265,10 @@
       <workItem from="1523600440296" duration="690000" />
       <workItem from="1523771837139" duration="868000" />
       <workItem from="1523819235085" duration="3179000" />
-      <workItem from="1523828190199" duration="718000" />
-      <workItem from="1523917277745" duration="319000" />
-      <workItem from="1523919645827" duration="489000" />
-      <workItem from="1523921160788" duration="23000" />
-      <workItem from="1523988209856" duration="973000" />
-      <workItem from="1524008479564" duration="3004000" />
+      <workItem from="1523828190199" duration="655000" />
+      <workItem from="1523860234060" duration="698000" />
+      <workItem from="1523862591506" duration="59000" />
+      <workItem from="1523935739287" duration="4801000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -371,33 +354,33 @@
       <option name="project" value="LOCAL" />
       <updated>1523599092786</updated>
     </task>
-    <task id="LOCAL-00013" summary="Quick fixes">
-      <created>1523828868212</created>
+    <task id="LOCAL-00013" summary="Finished GLmol Spin">
+      <created>1523859777491</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1523828868212</updated>
+      <updated>1523859777491</updated>
     </task>
     <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71081000" />
+    <option name="totallyTimeSpent" value="77807000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Remote Host" order="3" weight="0.32904884" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21617536" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.35941646" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" visible="true" weight="0.3700565" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.4509804" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.68603045" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.43361583" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -413,6 +396,32 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -434,8 +443,8 @@
     <MESSAGE value="Inital MoleculeGenerator" />
     <MESSAGE value="Added in noborder" />
     <MESSAGE value="Implemented 3Dmol spin" />
-    <MESSAGE value="Quick fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Quick fixes" />
+    <MESSAGE value="Finished GLmol Spin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished GLmol Spin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -443,6 +452,41 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="105" selection-start-line="30" selection-start-column="105" selection-end-line="30" selection-end-column="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227919">
+          <caret line="13407" lean-forward="true" selection-start-line="13407" selection-end-line="13407" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="90" column="31" lean-forward="true" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1649">
@@ -652,6 +696,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" column="78" selection-start-line="16" selection-start-column="78" selection-end-line="16" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/Three49custom.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -673,74 +724,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="16321" column="136" selection-start-line="16321" selection-start-column="136" selection-end-line="16321" selection-end-column="136" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="2042" selection-start-line="2042" selection-end-line="2042" />
+          <caret line="163" column="33" selection-start-line="163" selection-start-column="33" selection-end-line="163" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="16453" column="25" selection-start-line="16453" selection-start-column="25" selection-end-line="16453" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-618">
-          <caret line="9" column="48" lean-forward="true" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+        <state relative-caret-position="102">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-555">
-          <caret line="7294" column="66" selection-start-line="7294" selection-start-column="66" selection-end-line="7294" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/j2s/core/coremenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-819">
-          <caret line="122" column="324" selection-start-line="122" selection-start-column="317" selection-end-line="122" selection-end-column="324" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/j2s/core/coremenu.z.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2519" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="24" column="129" selection-start-line="24" selection-start-column="129" selection-end-line="24" selection-end-column="129" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/JSmol/temp.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="241" column="26" selection-start-line="241" selection-start-column="18" selection-end-line="241" selection-end-column="26" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+        <state relative-caret-position="385">
+          <caret line="58" column="98" selection-start-line="58" selection-start-column="98" selection-end-line="58" selection-end-column="98" />
         </state>
       </provider>
     </entry>

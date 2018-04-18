@@ -16,7 +16,7 @@
  */
 
 // Workaround for Intel GMA series (gl_FrontFacing causes compilation error)
-if(!window["GLloaded"]) {
+if (!window["GLloaded"]) {
 	window["GLloaded"] = true;
 
 	THREE.ShaderLib.lambert.fragmentShader = THREE.ShaderLib.lambert.fragmentShader.replace("gl_FrontFacing", "true");
@@ -113,6 +113,7 @@ if(!window["GLloaded"]) {
 			// setting this.aaScale = 2 will enable antialias in older Firefox but GPU load increases.
 			this.renderer.domElement.style.width = "100%";
 			this.renderer.domElement.style.height = "100%";
+			this.renderer.domElement.style.position = "absolute";
 			this.container.append(this.renderer.domElement);
 			this.renderer.setSize(this.WIDTH, this.HEIGHT);
 
@@ -2052,16 +2053,17 @@ if(!window["GLloaded"]) {
 				y = tmp[1][1] - tmp[0][1],
 				z = tmp[1][2] - tmp[0][2];
 
-			var maxD = Math.sqrt(x * x + y * y + z * z);
-			if (maxD < 25)
-				maxD = 25;
+			var minDistance = Math.sqrt(x * x + y * y + z * z);
+			if (minDistance < 15)
+				minDistance = 15;
 
+			keepSlab = false;
 			if (!keepSlab) {
-				this.slabNear = -maxD / 1.9;
-				this.slabFar = maxD / 3;
+				this.slabNear = -minDistance * 1.9;
+				this.slabFar = minDistance * 3;
 			}
 
-			this.rotationGroup.position.z = maxD * 0.35 / Math.tan(Math.PI / 180.0 * this.camera.fov / 2) - 150;
+			this.rotationGroup.position.z = minDistance * 0.35 / Math.tan(Math.PI / 180.0 * this.camera.fov / 2) - 150;
 			this.rotationGroup.quaternion = new THREE.Quaternion(1, 0, 0, 0);
 		};
 
