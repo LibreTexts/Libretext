@@ -1,0 +1,18 @@
+ul.jmolPopupMenu {
+	overflow: initial;
+	float: initial;
+	max-height: none;
+	opacity: initial;
+}
+ul.jmolPopupMenu .ui-menu, .ui-selectmenu-button {
+	overflow: initial;
+}
+
+ul.jmolPopupMenu .ui-menu, ul.jmolPopupMenu .ui-menu-item {
+	float: initial;
+	max-height: none;
+}
+
+ul.jmolPopupMenu .ui-state-disabled {
+	opacity: initial;
+}
