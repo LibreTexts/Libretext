@@ -12,12 +12,13 @@
 	font-weight: normal;
 	font-style: normal
 }
+
 .optimize, #elm-main-content ol.elm-meta-data {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-#elm-main-content ol.elm-meta-data .elm-last-modified {
+#elm-main-content ol.elm-meta-data .elm-page-restriction, #elm-main-content ol.elm-meta-data .elm-last-modified {
 	flex: 1;
 }
 
@@ -25,13 +26,18 @@
 	margin: 0;
 }
 
-
 #donate {
 	background-color: green;
 	color: white;
 	display: inline-block;
 	padding: 7px;
 	font-size: 80%;
+	width: auto;
+	margin: 0;
+}
+
+#donate:hover {
+	background-color: #005E00;
 }
 
 .ssk:before {
