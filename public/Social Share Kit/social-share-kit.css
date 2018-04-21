@@ -13,13 +13,9 @@
 	font-style: normal
 }
 
-.optimize, #elm-main-content ol.elm-meta-data {
+.optimize{
 	display: flex;
 	flex-wrap: wrap;
-}
-
-#elm-main-content ol.elm-meta-data .elm-page-restriction, #elm-main-content ol.elm-meta-data .elm-last-modified {
-	flex: 1;
 }
 
 #elm-main-content ol.elm-meta-data .elm-social-share {
@@ -174,7 +170,7 @@
 	-webkit-transition: background-color .1s;
 	-moz-transition: background-color .1s;
 	-ms-transition: background-color .1s;
-	-o-transition: background-color .1s
+	-o-transition: background-color .1s;
 }
 
 .ssk:before, .ssk .glyphicon, .ssk .fa {
