@@ -3,11 +3,14 @@ var molecule = currentScript.dataset.id;
 var orbital = currentScript.dataset.orbital;
 
 
+var identificationNumber = Math.floor(Math.random() * 100000);
+
 jmol_isReady = function (applet) {
-	if(currentScript.dataset.border) {
+	console.log("I'm ready!");
+	if (currentScript.dataset.border) {
 		Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
 	}
-	Jmol._getElement(applet, "appletinfotablediv").style.breakInside="avoid";
+	Jmol._getElement(applet, "appletinfotablediv").style.breakInside = "avoid";
 	if (currentScript.dataset.multiple) {
 		Jmol._getElement(applet, "appletinfotablediv").style.display = "inline-block";
 	}
@@ -36,9 +39,9 @@ if (molecule) {
 	script = 'set zoomlarge false; set antialiasDisplay;'
 		+ 'set errorCallback "myCallback";'
 		+ 'load ASYNC ' + molecule + '; set spinY 10;';
-	
+
 	if (currentScript.dataset.symmetry) {
-	
+
 	}
 	else if (currentScript.dataset.cartoon) {
 		script += "cartoons on; spacefill off; wireframe off; color structure;"
@@ -75,4 +78,5 @@ var Info = {
 	//console: "none", // default will be jmolApplet0_infodiv
 };
 
-jmolApplet0 = Jmol.getApplet("jmolApplet" + Math.floor(Math.random() * 100000), Info);
+window["JS" + identificationNumber] = Jmol.getApplet("jmolApplet" + identificationNumber, Info);
+console.log(window["jmolApplet" + identificationNumber]);

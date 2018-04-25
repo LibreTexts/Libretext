@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import ScriptTag from 'react-script-tag';
 import ClipboardJS from "clipboard";
+import InputField from "./InputField.js";
 
 // If you use React Router, make this component
 // render <Router> with your routes. Currently,
@@ -16,10 +18,11 @@ export default class App extends Component {
 		}
 	}
 
-	componentDidMount(){
-		var temp = this.sample();
-		document.getElementById("sample").innerHTML = this.sample();
+	componentDidMount() {
+		this.sample();
 	}
+
+	componentDidUpdate = this.componentDidMount;
 
 	render() {
 		return (<div style={{
@@ -31,29 +34,50 @@ export default class App extends Component {
 			}}>
 				<h1 style={{textAlign: "center"}}>Molecule Generator</h1>
 
-				<div style={{display: "flex", justifyContent:"space-evenly", width:"100%"}}>
-					<div onClick={() => this.setState({type: "GLmol"})} style={{backgroundColor:"dodgerblue"}}>GLmol</div>
-					<div onClick={() => this.setState({type: "3Dmol"})} style={{backgroundColor:"green"}}>3Dmol</div>
-					<div onClick={() => this.setState({type: "JSmol"})} style={{backgroundColor:"orange"}}>JSmol</div>
+				<div style={{display: "flex", justifyContent: "space-evenly", width: "100%"}}>
+					<div onClick={() => this.setState({type: "GLmol"})} style={{backgroundColor: "dodgerblue"}}>GLmol
+					</div>
+					<div onClick={() => this.setState({type: "3Dmol"})} style={{backgroundColor: "green"}}>3Dmol</div>
+					<div onClick={() => this.setState({type: "JSmol"})} style={{backgroundColor: "orange"}}>JSmol</div>
 				</div>
 				<div style={{
-					margin: 10,
-					border: "2px solid red",
-					whiteSpace: "pre",
-					font: "100%/1.5 'Source Code Pro',monospace",
+					display: "flex",
 					padding: 10,
-					overflowX: "scroll",
-					userSelect: "none",
-					alignSelf: "normal"
+					alignItems: "center"
 				}}>
-					{this.generateMolecule()}
+					<div>
+						<h1>
+							ID:
+							<input/>
+						</h1>
+						{$.map(GLoptions, (object, key) => <InputField key={key} item={key} options={object}/>)}
+						<div id="copy" data-clipboard-text={this.generateMolecule()}
+						     onClick={() => alert("Copied!\nPaste into a Dekiscript block!")}
+						     style={{
+							     backgroundColor: this.getColor(),
+							     padding: 5,
+							     borderRadius: 5
+						     }}>Copy {this.state.type} to
+							Clipboard
+						</div>
+					</div>
+					<div>
+						<div id="sample">
+						</div>
+						{/*						<div style={{
+							margin: 10,
+							border: "2px solid red",
+							whiteSpace: "pre",
+							font: "100%/1.5 'Source Code Pro',monospace",
+							padding: 10,
+							overflowX: "scroll",
+							userSelect: "none",
+							alignSelf: "normal"
+						}}>
+							{this.generateMolecule()}
+						</div>*/}
+					</div>
 				</div>
-				<div id="copy" data-clipboard-text={this.generateMolecule()}
-				     onClick={() => alert("Copied!\nPaste into a Dekiscript block!")}
-				     style={{backgroundColor: this.getColor(), padding: 5, borderRadius: 5}}>Copy {this.state.type} to
-					Clipboard
-				</div>
-				<div id="sample"></div>
 			</div>
 		);
 	}
@@ -85,30 +109,63 @@ export default class App extends Component {
 	}
 
 	sample() {
+		let sampleContent = document.createElement("script");
+
+		console.log(this.state.type);
 		switch (this.state.type) {
 			case "3Dmol":
-				return <div>
-					<script src="https://libretexts.org/awesomefiles/3Dmol/3Dmol-nojquery.js"></script>
-					<div class="viewer_3Dmoljs" data-id="=1YCR" data-select1="chain:A" data-select2="chain:B"
-					     data-style1="cartoon:color=spectrum" data-style2="stick" data-surface1="opacity:.7;color:white"
-					     style="height: 400px; width: 400px;"></div>
-				</div>;
-			case "GLmol":
-				return <div>
-					<script type="text/javascript"
-					        src="https://libretexts.org/awesomefiles/GLmol/js/Three49custom.js"></script>
-					<script type="text/javascript" src="https://libretexts.org/awesomefiles/GLmol/js/GLmol.js"></script>
+				sampleContent = document.createElement("div");
+				sampleContent.classList.add("viewer_3Dmoljs");
 
-					<script type="text/javascript" src="https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js"
-					        data-id="=1ugu" data-multiple="true"></script>
-				</div>;
+				sampleContent.dataset.id = "=1YCR";
+				sampleContent.dataset.select1 = "chain:A";
+				sampleContent.dataset.select2 = "chain:B";
+				sampleContent.dataset.style1 = "cartoon:color=spectrum";
+				sampleContent.dataset.style2 = "stick";
+				sampleContent.dataset.surface1 = "opacity:.7;color:white";
+
+				sampleContent.style.height = "400px";
+				sampleContent.style.width = "400px";
+				break;
+			case "GLmol":
+				sampleContent.src = "https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js";
+				sampleContent.dataset.id = "=1ugu";
+				break;
 			case "JSmol":
-				return <div>
-					<script type="text/javascript"
-					        src="https://libretexts.org/awesomefiles/JSmol/JSmol.full.nojq.js"></script>
-					<script type="text/javascript" src="https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js"
-					        data-id="=1blu" data-cartoon="true"></script>
-				</div>;
+				sampleContent.src = "https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js";
+				sampleContent.dataset.id = "=1blu";
+				break;
+		}
+
+		const sample = document.getElementById("sample");
+		sample.innerHTML = "";
+		sample.appendChild(sampleContent);
+
+
+		switch (this.state.type) {
+			case "3Dmol":
+				$3Dmol.autoload();
+				break;
 		}
 	}
 }
+const GLoptions = {
+	height: "text",
+	width: "text",
+	border: "border",
+	label: "bool",
+	multiple: "bool",
+	colormode: ["chainbow", "chain", "b", "polarity", "ss"],
+	mainchain: ["thickRibbon", "ribbon", "strand", "chain", "cylinderHelix", "tube", "bonds", "none"],
+	sidechains: "bool",
+	roughBeta: "bool",
+	hetamMode: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"],
+	baseHetatmMode: ["line", "stick", "polygon", "none"],
+	nonbonded: ["none", "sphere", "cross"],
+	projectionmode: ["perspective", "orthoscopic"],
+	unitcell: "bool",
+	bioassembly: "bool",
+	crystalpacking: "bool",
+	symmetry: "bool",
+	speed: "integer"
+};
