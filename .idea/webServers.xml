@@ -2,18 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="7aef5a43-7ddb-4082-9a95-f8e24e5c7f47" name="Libretext" url="http://108.167.152.254/awesomefiles">
+      <webServer id="6d997646-4f52-4f26-b1e4-908a7e47c861" name="Libretext" url="http://108.167.152.254/awesomefiles">
         <fileTransfer host="108.167.152.254" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
-          </advancedOptions>
-          <option name="port" value="21" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="8ea9601e-1a99-425f-a9d5-a2fc14cde3a0" name="LibretextS" url="http://108.167.152.254/whatever">
-        <fileTransfer host="108.167.152.254" port="21" accessType="FTPS">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
           <option name="port" value="21" />
         </fileTransfer>

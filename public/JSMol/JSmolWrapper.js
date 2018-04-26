@@ -6,7 +6,6 @@ var orbital = currentScript.dataset.orbital;
 var identificationNumber = Math.floor(Math.random() * 100000);
 
 jmol_isReady = function (applet) {
-	console.log("I'm ready!");
 	if (currentScript.dataset.border) {
 		Jmol._getElement(applet, "appletdiv").style.border = "1px solid orange";
 	}
@@ -64,19 +63,12 @@ var Info = {
 	debug: false,
 	color: "white",
 	addSelectionOptions: false,
-	// serverURL: "https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
 	use: currentScript.dataset.webgl ? "WEBGL" : "HTML5",
 	j2sPath: "https://libretexts.org/awesomefiles/JSmol/j2s",
 	readyFunction: jmol_isReady,
 	script: script,
-	//jarPath: "java",
-	//jarFile: (useSignedApplet ? "JmolAppletSigned.jar" : "JmolApplet.jar"),
-	//isSigned: useSignedApplet,
-	disableJ2SLoadMonitor: true,
-	// disableInitialConsole: false,
-	//defaultModel: "$dopamine",
-	//console: "none", // default will be jmolApplet0_infodiv
+	// disableJ2SLoadMonitor: false,
 };
 
-window["JS" + identificationNumber] = Jmol.getApplet("jmolApplet" + identificationNumber, Info);
+Jmol.getApplet("jmolApplet" + identificationNumber, Info);
 console.log(window["jmolApplet" + identificationNumber]);

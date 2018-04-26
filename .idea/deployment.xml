@@ -12,16 +12,6 @@
           </excludedPaths>
         </serverdata>
       </paths>
-      <paths name="LibretextS">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/public_html/awesomefiles" local="$PROJECT_DIR$/public" web="/whatever" />
-          </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
-          </excludedPaths>
-        </serverdata>
-      </paths>
     </serverData>
     <option name="myUploadOnCheckinName" value="Libretext" />
     <option name="myAutoUpload" value="ALWAYS" />

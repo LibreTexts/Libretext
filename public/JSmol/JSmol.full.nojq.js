@@ -589,9 +589,9 @@ if(!window['JSloaded']) {
 		// There should be no other references to jQuery in all the JSmol libraries.
 		
 		// automatically switch to returning HTML after the page is loaded
-		$(document).ready(function () {
+/*		$(document).ready(function () {
 			Jmol._document = null
-		});
+		});*/
 		
 		Jmol.$ = function (objectOrId, subdiv) {
 			// if a subdiv, then return $("#objectOrId._id_subdiv")
