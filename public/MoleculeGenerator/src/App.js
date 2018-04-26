@@ -31,8 +31,8 @@ export default class App extends Component {
 		this.sample();
 	}
 
-	onChange(field, value) {
-		let update = mainApp.state.options;
+	onChange = (field, value)=> {
+		let update = this.state.options;
 		update[field] = value;
 		mainApp.setState({options: update});
 	}

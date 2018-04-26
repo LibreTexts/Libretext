@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/GLMol/js/GLWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/src/App.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +19,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="212" column="9" selection-start-line="212" selection-start-column="9" selection-end-line="212" selection-end-column="9" />
+            <state relative-caret-position="171">
+              <caret line="203" column="19" selection-start-line="203" selection-start-column="19" selection-end-line="203" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -32,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="140" column="56" lean-forward="true" selection-start-line="140" selection-start-column="56" selection-end-line="140" selection-end-column="56" />
+              <caret line="140" column="56" selection-start-line="140" selection-start-column="56" selection-end-line="140" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -196,19 +193,6 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="3Dmol" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -333,7 +317,7 @@
       <workItem from="1524268536828" duration="510000" />
       <workItem from="1524717417720" duration="4743000" />
       <workItem from="1524723205134" duration="82000" />
-      <workItem from="1524723620678" duration="434000" />
+      <workItem from="1524723620678" duration="668000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -440,22 +424,28 @@
       <option name="project" value="LOCAL" />
       <updated>1524722337574</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Bugfix hetam to hetatm">
+      <created>1524724283477</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1524724283477</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99305000" />
+    <option name="totallyTimeSpent" value="99539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Remote Host" order="3" weight="0.32904884" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2281491" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2281491" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" visible="true" weight="0.4481268" />
+      <window_info active="true" anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" visible="true" weight="0.4481268" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3299712" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -525,7 +515,8 @@
     <MESSAGE value="Finished GLmol Spin" />
     <MESSAGE value="Finished donation" />
     <MESSAGE value="Molecule Generator working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Molecule Generator working" />
+    <MESSAGE value="Bugfix hetam to hetatm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix hetam to hetatm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -824,14 +815,14 @@
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
-          <caret line="140" column="56" lean-forward="true" selection-start-line="140" selection-start-column="56" selection-end-line="140" selection-end-column="56" />
+          <caret line="140" column="56" selection-start-line="140" selection-start-column="56" selection-end-line="140" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="212" column="9" selection-start-line="212" selection-start-column="9" selection-end-line="212" selection-end-column="9" />
+        <state relative-caret-position="171">
+          <caret line="203" column="19" selection-start-line="203" selection-start-column="19" selection-end-line="203" selection-end-column="19" />
         </state>
       </provider>
     </entry>
