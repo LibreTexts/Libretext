@@ -7,6 +7,11 @@ var width = currentScript.dataset.width ? currentScript.dataset.width : "400px";
 
 var target = document.createElement("div");
 target.id = 'GL' + index;
+
+if(!window["GLloaded"]){
+	alert('Make sure to tag the "Embed GLmol" tag to "yes"  under \'Page settings\' at top of page to work');
+}
+
 var style = "position: relative; width: " + width + "; " + (currentScript.dataset.width ? "" : " max-width: 80%; ") + "height:" + height + "; margin: auto; ";
 if (currentScript.dataset.border) {
 	style += "border: 1px solid dodgerblue; ";
@@ -110,7 +115,7 @@ function download(query, index) {
 	});
 }
 
-window['GL' + index].defineRepresentation = oldRepresentation;
+window['GL' + index].defineRepresentation = defineRepFromController;
 
 function oldRepresentation() {
 	var all = this.getAllAtoms();
@@ -134,9 +139,9 @@ function defineRepFromController() {
 	const mainchainMode = currentScript.dataset.mainchain;
 	const doNotSmoothen = currentScript.dataset.roughBeta;
 	const sidechains = currentScript.dataset.sidechains;
-	const baseHetatmMode = currentScript.dataset.hetatmMode;
+	const  hetatmMode= currentScript.dataset.hetatmMode;
 	const showNonBonded = currentScript.dataset.nonbonded;
-	const hetatmMode = currentScript.dataset.baseHetatmMode;
+	const  baseHetatmMode= currentScript.dataset.baseHetatmMode;
 	const projectionMode = currentScript.dataset.projectionmode;
 
 	const unitCell = currentScript.dataset.unitcell;

@@ -210,7 +210,7 @@ const GLoptions = {
 	mainchain: ["thickRibbon", "ribbon", "strand", "chain", "cylinderHelix", "tube", "bonds", "none"],
 	sidechains: "bool",
 	roughBeta: "bool",
-	hetamMode: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"],
+	hetatmMode: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"],
 	baseHetatmMode: ["line", "stick", "polygon", "none"],
 	nonbonded: ["none", "sphere", "cross"],
 	projectionmode: ["perspective", "orthoscopic"],
