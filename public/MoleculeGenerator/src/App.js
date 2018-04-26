@@ -62,6 +62,7 @@ export default class App extends Component {
 						</div>
 					</div>
 					<div>
+						<ScriptTag src="https://libretexts.org/awesomefiles/JSmol/JSWrapper.js" data-id="=1ugu" />
 						<div id="sample">
 						</div>
 						{/*						<div style={{
@@ -97,14 +98,11 @@ export default class App extends Component {
 
 		switch (this.state.type) {
 			case "3Dmol":
-				return 'wiki.page("Media_Repo/EmbeddedViewing/Embed3DmolJS");\n' +
-					"<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
+				return "<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
 			case "GLmol":
-				return 'wiki.page("Media_Repo/EmbeddedViewing/EmbedGLmolJS");\n' +
-					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js\" ('data-id')=\"=1ugu\" ('data-multiple')=\"true\"></script>";
+				return "<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js\" ('data-id')=\"=1ugu\" ('data-multiple')=\"true\"></script>";
 			case "JSmol":
-				return 'wiki.page("Media_Repo/EmbeddedViewing/EmbedJSmolJS");\n' +
-					"<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
+				return "<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
 		}
 	}
 
@@ -152,7 +150,7 @@ export default class App extends Component {
 const GLoptions = {
 	height: "text",
 	width: "text",
-	border: "border",
+	border: "bool",
 	label: "bool",
 	multiple: "bool",
 	colormode: ["chainbow", "chain", "b", "polarity", "ss"],
