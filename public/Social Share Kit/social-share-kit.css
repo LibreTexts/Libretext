@@ -17,6 +17,18 @@
 	display: flex;
 	flex-wrap: wrap;
 }
+@media print {
+	.elm-meta-top .mt-article-pagination *{
+		display: none;
+	}
+}
+.elm-meta-top .mt-article-pagination a {
+	width:auto;
+}
+
+.elm-meta-top .elm-article-pagination{
+	float: unset;
+}
 
 #elm-main-content ol.elm-meta-data .elm-social-share {
 	margin: 0;
