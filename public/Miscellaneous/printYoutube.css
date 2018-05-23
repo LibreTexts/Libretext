@@ -1,22 +1,13 @@
-.youtubeImage {
-	display: none
+.youtubeImageContainer {
+	display: none;
+	page-break-inside: avoid;
 }
 
-@media print {
-	.youtubeIFrame {
-		display: none
-	}
-
-	.youtubeImage {
-		display: block;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-	}
-
-	.ytp-button {
-		display: block;
-	}
+.youtubeImage {
+	position: absolute;
+	width: 100%;
+	height: inherit;
+	object-fit: cover;
 }
 
 .ytp-large-play-button {
@@ -45,4 +36,21 @@
 	cursor: default;
 	line-height: inherit;
 	outline: 0
+}
+
+@media print {
+	.youtubeIFrame {
+		display: none
+	}
+
+	.youtubeImageContainer {
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+
+	.ytp-button {
+		display: block;
+	}
 }
