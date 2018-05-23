@@ -1,0 +1,48 @@
+.youtubeImage {
+	display: none
+}
+
+@media print {
+	.youtubeIFrame {
+		display: none
+	}
+
+	.youtubeImage {
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+
+	.ytp-button {
+		display: block;
+	}
+}
+
+.ytp-large-play-button {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 68px;
+	height: 48px;
+	margin-left: -34px;
+	margin-top: -24px;
+	-moz-transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
+	-webkit-transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
+	transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
+	z-index: 63;
+	display: none;
+}
+
+.ytp-button:focus, .ytp-button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	color: inherit;
+	text-align: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	cursor: default;
+	line-height: inherit;
+	outline: 0
+}
