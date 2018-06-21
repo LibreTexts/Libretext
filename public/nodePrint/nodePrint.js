@@ -1,5 +1,5 @@
 const http = require('http');
-const static = require('node-static');
+const nodeStatic = require('node-static');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const filenamify = require('filenamify');
@@ -7,10 +7,10 @@ const baseIMG = require("./baseIMG.js");
 
 
 const server = http.createServer(handler);
-const staticFileServer = new static.Server('./public');
+const staticFileServer = new nodeStatic.Server('./public');
 
 function handler(request, response) {
-	var url = request.url;
+	const url = request.url;
 
 
 	if (url.includes("/print")) { //dynamic server
@@ -30,6 +30,9 @@ function handler(request, response) {
 function dynamicServer(request, response, url) {
 	if (url.startsWith("/print/url=")) { //single page
 		url = url.split('/print/url=')[1];
+		if(url.endsWith(".pdf")){
+			url = url.slice(0, -4);
+		}
 		console.log(url);
 		const escapedURL = filenamify(url);
 
@@ -68,13 +71,14 @@ function dynamicServer(request, response, url) {
 			}, url);
 
 
-			var cssb = [];
+			const cssb = [];
 			cssb.push('<style>');
-			cssb.push('h1 { font-size:10px; margin-left:30px;}');
+			cssb.push('h1 { font-size:10px;}');
 			// cssb.push('* { border: 1px solid blue}');
+			cssb.push('* { -webkit-print-color-adjust: exact}');
 			cssb.push('#pageNumber {width:100vw; color:red}');
 			cssb.push('</style>');
-			var css = cssb.join('');
+			const css = cssb.join('');
 
 
 			const escapedURL = filenamify(url);
@@ -88,21 +92,28 @@ function dynamicServer(request, response, url) {
 			else {
 				topIMG = baseIMG["default"];
 			}
-			prefix = prefix ? prefix + "." :"";
+			prefix = prefix ? prefix + "." : "";
 
-				await page.pdf({
-					path: "./public/PDF/" + escapedURL + '.pdf',
-					displayHeaderFooter: true,
-					headerTemplate: css + '<h1><a href="https://libretexts.org"><img src="data:image/png;base64,' + topIMG + '" height="30"/></a></h1>',
-					footerTemplate: css + '<h1 style="width:70vw; font-size:8px; text-align:center">' + prefix + '<div style="display:inline-block;" class="pageNumber"></div></h1>',
-					printBackground: true,
-					margin: {
-						top: "80px",
-						bottom: "70px",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
+			const style1 = '<div style="background-color: #38CBFD; margin-left: 40px; margin-top: -1px; width: 100vw">' +
+				'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30"; style="padding:5px; background-color: white"/></a>' +
+				'<div style="width: 0; height: 0; display: inline-block; border-top: 40px solid white;border-right: 40px solid transparent;"></div></div>';
+			const style2 = '<div style="background-color: #38CBFD; margin-top: -1px; width: 100vw">' +
+				'<a href="https://libretexts.org" style="margin-left: 40px; display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30"; style="padding:5px; background-color: white"/></a>' +
+				'</div>';
+
+			await page.pdf({
+				path: "./public/PDF/" + escapedURL + '.pdf',
+				displayHeaderFooter: true,
+				headerTemplate: css + style1,
+				footerTemplate: css + '<h1 style="width:100vw; font-size:8px; text-align:center">' + prefix + '<div style="display:inline-block;" class="pageNumber"></div></h1>',
+				printBackground: true,
+				margin: {
+					top: "90px",
+					bottom: "50px",
+					right: "0.5in",
+					left: "0.5in",
+				}
+			});
 			await browser.close();
 
 			/*	response.writeHead(200);
