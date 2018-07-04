@@ -5,15 +5,16 @@ const fs = require('fs');
 const filenamify = require('filenamify');
 const baseIMG = require("./baseIMG.js");
 
-
 const server = http.createServer(handler);
 const staticFileServer = new nodeStatic.Server('./public');
+console.log("Restarted");
 
 function handler(request, response) {
+	request.url = request.url.replace("print/","");
 	const url = request.url;
 
 
-	if (url.includes("/print")) { //dynamic server
+	if (url.includes("url=")) { //dynamic server
 		dynamicServer(request, response, url);
 	}
 	else { //static server
@@ -28,9 +29,9 @@ function handler(request, response) {
 }
 
 function dynamicServer(request, response, url) {
-	if (url.startsWith("/print/url=")) { //single page
-		url = url.split('/print/url=')[1];
-		if(url.endsWith(".pdf")){
+	if (url.startsWith("/url=")) { //single page
+		url = url.split('/url=')[1];
+		if (url.endsWith(".pdf")) {
 			url = url.slice(0, -4);
 		}
 		console.log(url);
@@ -38,17 +39,17 @@ function dynamicServer(request, response, url) {
 
 
 		fs.stat('./public/PDF/' + escapedURL + '.pdf', (err, stats) => {
-			if (!err && false) { //file exists
-				console.log(new Date(stats.mtime));
-				staticFileServer.serveFile('./PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+			if (!err) { //file exists
+				response.writeHead(200);
+				response.write(escapedURL);
+				response.end();
 			}
 			else {
-				getPDF(url);
+				getPDF(url).then(()=>{},(err)=>console.log(err));
 			}
 		});
 
 		async function getPDF(url) {
-			// url = "https://chem.libretexts.org/LibreTexts/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)/2%3A_Measurement_and_Problem_Solving/2.1%3A_Taking_Measurements";
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
@@ -114,14 +115,14 @@ function dynamicServer(request, response, url) {
 					left: "0.5in",
 				}
 			});
-			await browser.close();
 
-			/*	response.writeHead(200);
-				response.write(url);
-				response.end();*/
-			// console.log(escapedURL);
-			staticFileServer.serveFile('./PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-			return escapedURL + '.pdf';
+			response.writeHead(200);
+			response.write(escapedURL);
+			response.end();
+			console.log(escapedURL);
+			await browser.close();
+			// staticFileServer.serveFile('./PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+			// return escapedURL + '.pdf';
 		}
 	}
 	else {
@@ -137,4 +138,4 @@ function dynamicServer(request, response, url) {
 	}
 }
 
-server.listen(80);
+server.listen(3001);

@@ -10,6 +10,14 @@
           <option name="port" value="21" />
         </fileTransfer>
       </webServer>
+      <webServer id="6e3a07ad-cba4-4bc2-a24c-238c71c84b9f" name="DigitalOcean" url="http://159.89.226.126">
+        <fileTransfer host="159.89.226.126" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

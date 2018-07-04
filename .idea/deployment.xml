@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Libretext" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
+  <component name="PublishConfigData" autoUpload="Always" serverName="DigitalOcean" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
     <serverData>
+      <paths name="DigitalOcean">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/awesomefiles" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Libretext">
         <serverdata>
           <mappings>

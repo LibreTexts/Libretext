@@ -13,26 +13,40 @@
 	font-style: normal
 }
 
-.optimize{
+#printme {
+	display: none;
+	padding: 4px;
+	background-color: #c53030;
+	color: white;
+	margin-right: 2px;
+	cursor: pointer;
+}
+
+#printme:hover {
+	background-color: #952727;
+}
+
+.optimize {
 	display: flex;
 	flex-wrap: wrap;
 }
+
 @media print {
-	.elm-meta-top .mt-article-pagination *{
+	.elm-meta-top .mt-article-pagination * {
 		display: none;
 	}
 }
+
 .elm-meta-top .mt-article-pagination a {
-	width:auto;
-	color:#30b3f6;
+	width: auto;
+	color: #30b3f6;
 }
 
 .elm-meta-top .mt-article-pagination a:hover {
-	color:#b4b4b4;
+	color: #b4b4b4;
 }
 
-
-.elm-meta-top .elm-article-pagination{
+.elm-meta-top .elm-article-pagination {
 	float: unset;
 }
 
