@@ -10,7 +10,7 @@ const staticFileServer = new nodeStatic.Server('./public');
 console.log("Restarted");
 
 function handler(request, response) {
-	request.url = request.url.replace("print/","");
+	request.url = request.url.replace("print/", "");
 	const url = request.url;
 
 
@@ -22,7 +22,7 @@ function handler(request, response) {
 		staticFileServer.serve(request, response, function (error, res) {
 			//on error
 			if (error && error.status === 404) {//404 File not Found
-				staticFileServer.serveFile("logo.png", 404, {}, request, response);
+				staticFileServer.serveFile("404.html", 404, {}, request, response);
 			}
 		});
 	}
@@ -34,26 +34,26 @@ function dynamicServer(request, response, url) {
 		if (url.endsWith(".pdf")) {
 			url = url.slice(0, -4);
 		}
-		console.log(url);
 		const escapedURL = filenamify(url);
 
 
-		fs.stat('./public/PDF/' + escapedURL + '.pdf', (err, stats) => {
+		fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
 			if (!err) { //file exists
-				response.writeHead(200);
-				response.write(escapedURL);
-				response.end();
+				console.log("CACHE " + url);
+				staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 			}
 			else {
-				getPDF(url).then(()=>{},(err)=>console.log(err));
+				getPDF(url).then(() => {
+				}, (err) => console.log(err));
 			}
 		});
 
 		async function getPDF(url) {
+			console.log("NEW " + url);
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
-			await page.goto(url, {waitUntil: ["load", "domcontentloaded", 'networkidle0']});
+			await page.goto(url, {timeout: 15000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 
 
 			let prefix = await page.evaluate((url) => {
@@ -103,7 +103,7 @@ function dynamicServer(request, response, url) {
 				'</div>';
 
 			await page.pdf({
-				path: "./public/PDF/" + escapedURL + '.pdf',
+				path: "./PDF/" + escapedURL + '.pdf',
 				displayHeaderFooter: true,
 				headerTemplate: css + style1,
 				footerTemplate: css + '<h1 style="width:100vw; font-size:8px; text-align:center">' + prefix + '<div style="display:inline-block;" class="pageNumber"></div></h1>',
@@ -111,18 +111,19 @@ function dynamicServer(request, response, url) {
 				margin: {
 					top: "90px",
 					bottom: "50px",
-					right: "0.5in",
-					left: "0.5in",
+					right: "0.75in",
+					left: "0.75in",
 				}
 			});
 
-			response.writeHead(200);
-			response.write(escapedURL);
-			response.end();
-			console.log(escapedURL);
+			/*			response.writeHead(200);
+						response.write(escapedURL);
+						response.end();*/
+
+			console.log("RENDERED "+escapedURL);
 			await browser.close();
-			// staticFileServer.serveFile('./PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-			// return escapedURL + '.pdf';
+			staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+			return escapedURL + '.pdf';
 		}
 	}
 	else {

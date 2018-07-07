@@ -60,8 +60,6 @@
 	display: inline-block;
 	padding: 7px;
 	font-size: 80%;
-	width: auto;
-	margin: 0;
 }
 
 #donate:hover {
@@ -1027,4 +1025,10 @@
 
 .ssk-black:hover {
 	background-color: #1a1a1a
+}
+
+a.notSS{
+	width:auto;
+	height: auto;
+	margin-top: 0;
 }
