@@ -8,7 +8,8 @@ if (!window["youtubeIFrame"]) {
 			let iframe = candidates[i];
 			if (iframe && iframe.src && !iframe.classList.contains("youtubeIFrame")) {
 				let videoID = iframe.src.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
-				if (videoID != null) {
+				console.log(videoID);
+				if (iframe.src.includes("www.youtube.com")) {
 					videoID = videoID[2];
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");

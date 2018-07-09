@@ -1,0 +1,15 @@
+{
+  "bio": "#00b224",
+  "biz": "#156D2D",
+  "chem":"#00bfff",
+  "eng": "#ff6a00",
+  "geo": "#e5a800",
+  "human": "#00BB93",
+  "default":"",
+  "math":"#3737bf",
+  "med":"#e52817",
+  "photon": "#f2de00",
+  "phys": "#841fcc",
+  "socialsci": "#f20c92",
+  "stats": "#00bd94"
+}

@@ -4,6 +4,8 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const filenamify = require('filenamify');
 const baseIMG = require("./baseIMG.js");
+const colors = require("./colors");
+const { performance } = require('perf_hooks');
 
 const server = http.createServer(handler);
 const staticFileServer = new nodeStatic.Server('./public');
@@ -29,26 +31,30 @@ function handler(request, response) {
 }
 
 function dynamicServer(request, response, url) {
-	if (url.startsWith("/url=")) { //single page
+	if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
 		url = url.split('/url=')[1];
 		if (url.endsWith(".pdf")) {
 			url = url.slice(0, -4);
 		}
 		const escapedURL = filenamify(url);
 
+		// response.setHeader("Content-Disposition","attachment");
 
 		fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
-			if (!err) { //file exists
+			if (!err && false) { //file exists
 				console.log("CACHE " + url);
 				staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 			}
 			else {
 				getPDF(url).then(() => {
+					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}, (err) => console.log(err));
 			}
 		});
 
+
 		async function getPDF(url) {
+			const start = performance.now();
 			console.log("NEW " + url);
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
@@ -71,35 +77,33 @@ function dynamicServer(request, response, url) {
 				return prefix;
 			}, url);
 
+			const escapedURL = filenamify(url);
+			const host = url.split("/")[2].split(".");
+			const subdomain = host[0];
+			const topIMG = baseIMG[subdomain];
+			const color = colors[subdomain];
+			prefix = prefix ? prefix + "." : "";
+
 
 			const cssb = [];
 			cssb.push('<style>');
 			cssb.push('h1 { font-size:10px;}');
-			// cssb.push('* { border: 1px solid blue}');
+			cssb.push('#main {display:flex; margin: -1px 60px 0 60px; width: 100vw}');
+			// cssb.push('#main {border: 1px solid blue;}');
+			cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; }`);
 			cssb.push('* { -webkit-print-color-adjust: exact}');
 			cssb.push('#pageNumber {width:100vw; color:red}');
+			cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 30px solid ${color}; border-right: 0px solid transparent; border-left: 12px solid transparent; width: 9px; top: -5px; left: 0px; }`);
+			cssb.push(`.trapezoid:before{ content:\' \'; left:-12px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:21px; height:8px; }`);
+			cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:5px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 			cssb.push('</style>');
 			const css = cssb.join('');
 
 
-			const escapedURL = filenamify(url);
-			const host = url.split("/")[2].split(".");
-			let topIMG = "";
-			let subdomain = "";
-			if (host[1] === "libretexts") {
-				topIMG = baseIMG[host[0]];
-				subdomain = host[0] + ".";
-			}
-			else {
-				topIMG = baseIMG["default"];
-			}
-			prefix = prefix ? prefix + "." : "";
-
-			const style1 = '<div style="background-color: #38CBFD; margin-left: 40px; margin-top: -1px; width: 100vw">' +
-				'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30"; style="padding:5px; background-color: white"/></a>' +
-				'<div style="width: 0; height: 0; display: inline-block; border-top: 40px solid white;border-right: 40px solid transparent;"></div></div>';
-			const style2 = '<div style="background-color: #38CBFD; margin-top: -1px; width: 100vw">' +
-				'<a href="https://libretexts.org" style="margin-left: 40px; display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30"; style="padding:5px; background-color: white"/></a>' +
+			const style1 = '<div id="main">' +
+				'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30"; style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
+				'<div class="trapezoid"></div>' +
+				'<div id="library"><img src="data:image/png;base64,' + baseIMG["phys"] + '" height="20" style="padding:10px;"/></div>' +
 				'</div>';
 
 			await page.pdf({
@@ -120,9 +124,14 @@ function dynamicServer(request, response, url) {
 						response.write(escapedURL);
 						response.end();*/
 
-			console.log("RENDERED "+escapedURL);
+			const end = performance.now();
+			let time = end - start;
+			time /= 100;
+			time = Math.round(time);
+			time /= 10;
+
+			console.log("RENDERED " + time + "s " + escapedURL);
 			await browser.close();
-			staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 			return escapedURL + '.pdf';
 		}
 	}
