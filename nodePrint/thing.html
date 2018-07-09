@@ -1,0 +1,45 @@
+<style>
+	#main {
+		display: flex;
+		margin: -1px 40px 0 40px;
+		width: 100vw;
+		border: 1px solid black;
+		height: 40px;
+	}
+
+	.trapezoid {
+		position: relative;
+		display: inline-block;
+		border-bottom: 20px solid blue;
+		border-right: 0px solid transparent;
+		border-left: 8px solid transparent;
+		width: 9px;
+		top: -10px;
+		left: 0px;
+	}
+
+	.trapezoid:before {
+		content: '';
+		left: -8px;
+		top: 27px;
+		position: absolute;
+		background: blue;
+		border-radius: 80px 0px 0px 80px;
+		width: 17px;
+		height: 8px;
+	}
+
+	.trapezoid:after {
+		content: '';
+		left: -1px;
+		top: 5px;
+		position: absolute;
+		background: blue;
+		border-radius: 75px 0px 0px 80px;
+		width: 10px;
+		height: 19px;
+	}
+</style>
+<div id="main">
+	<div class="trapezoid"></div>
+</div>
