@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/BUGS.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/Gaegu.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/Lato.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/Gaegu.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/Lato.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/thing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Libretext.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BUGS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/BUGS.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -29,8 +22,8 @@
       <file leaf-file-name="nodePrint.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="119" column="57" lean-forward="true" selection-start-line="119" selection-start-column="57" selection-end-line="119" selection-end-column="57" />
+            <state relative-caret-position="431">
+              <caret line="66" column="29" lean-forward="true" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -42,15 +35,6 @@
                 <element signature="n#style#0;n#div#0;n#h1#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#h1#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BUGS.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BUGS.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -182,10 +166,9 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="484" />
-    <option name="y" value="-20" />
-    <option name="width" value="1302" />
-    <option name="height" value="1392" />
+    <option name="x" value="1270" />
+    <option name="width" value="1301" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -201,6 +184,11 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -265,19 +253,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\PDF" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -401,7 +389,7 @@
       <workItem from="1531028441474" duration="6226000" />
       <workItem from="1531101632562" duration="3797000" />
       <workItem from="1531113362790" duration="4536000" />
-      <workItem from="1531169244463" duration="2440000" />
+      <workItem from="1531169244463" duration="6182000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -585,14 +573,21 @@
       <option name="project" value="LOCAL" />
       <updated>1531102079848</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Attempted to increase memory efficiency">
+      <created>1531172147014</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1531172147014</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="208369000" />
+    <option name="totallyTimeSpent" value="212111000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="847" y="0" width="867" height="927" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -601,10 +596,10 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
       <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.14457831" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2423841" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2423841" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3483444" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.37507525" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1270319" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.26022306" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -684,7 +679,8 @@
     <MESSAGE value="Initial Page PDF Live" />
     <MESSAGE value="V2 printme&#10;&#10;Uses links instead of popups" />
     <MESSAGE value="Added 404" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added 404" />
+    <MESSAGE value="Attempted to increase memory efficiency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attempted to increase memory efficiency" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -972,14 +968,14 @@
     <entry file="file://$PROJECT_DIR$/BUGS.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="119" column="57" lean-forward="true" selection-start-line="119" selection-start-column="57" selection-end-line="119" selection-end-column="57" />
+        <state relative-caret-position="431">
+          <caret line="66" column="29" lean-forward="true" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
           <folding>
             <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />

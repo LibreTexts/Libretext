@@ -50,7 +50,7 @@ puppeteer.launch().then((browser) => {
 				else {
 					getPDF(url).then(() => {
 						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-					}, (err) => console.log(err));
+					}, (err) => responseError("Server Timeout Error",500));
 				}
 			});
 
@@ -61,87 +61,105 @@ puppeteer.launch().then((browser) => {
 				// const browser = await puppeteer.launch();
 				const page = await browser.newPage();
 				const timeout = setTimeout(() => {
-					if (!page.isClosed) page.close();
-				}, 30000);
+					if (!page.isClosed)
+						page.close();
+				}, 70000);
 				// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
-				await page.goto(url, {timeout: 15000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
+				let failed = false;
 
 
-				let prefix = await page.evaluate((url) => {
-					let prefix = "";
-					let title = document.getElementById("title");
+				try {
+					await page.goto(url, {timeout: 60000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 
-					if (title) {
-						let innerText = title.textContent;
-						if (innerText && innerText.includes(":")) {
-							prefix = innerText.split(":")[0];
+					let prefix = await page.evaluate((url) => {
+						let prefix = "";
+						let title = document.getElementById("title");
+
+						if (title) {
+							let innerText = title.textContent;
+							if (innerText && innerText.includes(":")) {
+								prefix = innerText.split(":")[0];
+							}
+							console.log(innerText);
+							title.innerHTML = `<a style="color: DarkOliveGreen" href="${url}">${innerText}</a>`
 						}
-						console.log(innerText);
-						title.innerHTML = `<a style="color: DarkOliveGreen" href="${url}">${innerText}</a>`
-					}
-					return prefix;
-				}, url);
+						return prefix;
+					}, url);
 
-				const escapedURL = filenamify(url);
-				const host = url.split("/")[2].split(".");
-				const subdomain = host[0];
-				const topIMG = baseIMG[subdomain];
-				const color = colors[subdomain];
-				prefix = prefix ? prefix + "." : "";
+					const escapedURL = filenamify(url);
+					const host = url.split("/")[2].split(".");
+					const subdomain = host[0];
+					const topIMG = baseIMG[subdomain];
+					const color = colors[subdomain];
+					prefix = prefix ? prefix + "." : "";
 
 
-				const cssb = [];
-				cssb.push('<style>');
-				// cssb.push('@font-face{font-family:Lato;src:url(/Lato.tff) format("truetype")}');
-				// cssb.push('@font-face{font-family:Gaegu;src:url(/nodePrint/Gaegu.tff) format("truetype")}');
-				cssb.push('h1 { font-size:10px;}');
-				// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Lato\');');
-				// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Gaegu\');');
-				cssb.push('#main {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-				// cssb.push('#main {border: 1px solid blue;}');
-				cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0 5px 0}`);
-				cssb.push('* { -webkit-print-color-adjust: exact}');
-				// cssb.push('i { font-family: \'Gaegu\', serif}"');
-				cssb.push('#pageNumber {width:100vw; color:red}');
-				cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 0px; }`);
-				cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
-				cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
-				cssb.push('</style>');
-				const css = cssb.join('');
+					const cssb = [];
+					cssb.push('<style>');
+					// cssb.push('@font-face{font-family:Lato;src:url(/Lato.tff) format("truetype")}');
+					// cssb.push('@font-face{font-family:Gaegu;src:url(/nodePrint/Gaegu.tff) format("truetype")}');
+					cssb.push('h1 { font-size:10px;}');
+					// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Lato\');');
+					// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Gaegu\');');
+					cssb.push('#main {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
+					// cssb.push('#main {border: 1px solid blue;}');
+					cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0 5px 0}`);
+					cssb.push('* { -webkit-print-color-adjust: exact}');
+					// cssb.push('i { font-family: \'Gaegu\', serif}"');
+					cssb.push('#pageNumber {width:100vw; color:red}');
+					cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 0px; }`);
+					cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
+					cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
+					cssb.push('</style>');
+					const css = cssb.join('');
 
 
-				const style1 = '<div id="main">' +
-					'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-					'<div class="trapezoid"></div>' +
-					'<div id="library"><img src="data:image/png;base64,' + baseIMG["phys"] + '" height="20" style="padding:5px;"/></div>' +
-					'</div>';
+					const style1 = '<div id="main">' +
+						'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
+						'<div class="trapezoid"></div>' +
+						'<div id="library"><img src="data:image/png;base64,' + baseIMG["phys"] + '" height="20" style="padding:5px;"/></div>' +
+						'</div>';
 
-				await page.pdf({
-					path: "./PDF/" + escapedURL + '.pdf',
-					displayHeaderFooter: true,
-					headerTemplate: css + style1,
-					footerTemplate: css + `<h1 style="width:100vw; font-size:8px; display:flex;justify-content: center;"><div style=" background-color: ${color}; color: white; padding: 3px; border-radius: 10px; min-width: 10px; text-align: center">` + prefix + '<div style="display:inline-block;" class="pageNumber"></div></div></h1>',
-					printBackground: true,
-					margin: {
-						top: "90px",
-						bottom: "60px",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
+					await page.pdf({
+						path: "./PDF/" + escapedURL + '.pdf',
+						displayHeaderFooter: true,
+						headerTemplate: css + style1,
+						footerTemplate: css + `<h1 style="width:100vw; font-size:8px; display:flex;justify-content: center;"><div style=" background-color: ${color}; color: white; padding: 3px; border-radius: 10px; min-width: 10px; text-align: center">` + prefix + '<div style="display:inline-block;" class="pageNumber"></div></div></h1>',
+						printBackground: true,
+						margin: {
+							top: "90px",
+							bottom: "60px",
+							right: "0.75in",
+							left: "0.75in",
+						}
+					});
 
-				/*			response.writeHead(200);
-							response.write(escapedURL);
-							response.end();*/
+					/*			response.writeHead(200);
+								response.write(escapedURL);
+								response.end();*/
 
+
+				} catch (err) {
+					failed = err;
+				}
 				const end = performance.now();
 				let time = end - start;
 				time /= 100;
 				time = Math.round(time);
 				time /= 10;
-
-				console.log("RENDERED " + time + "s " + escapedURL);
 				await page.close();
+				clearTimeout(timeout);
+				let pages = await browser.pages();
+				// pages = pages.map(page=>page.url);
+
+				if (failed) {
+					console.error(pages.length + " FAILED " + time + "s " + escapedURL);
+					throw err;
+				}
+				else {
+					console.log(pages.length + " RENDERED " + time + "s " + escapedURL);
+				}
+
 				return escapedURL + '.pdf';
 			}
 		}
@@ -150,9 +168,9 @@ puppeteer.launch().then((browser) => {
 		}
 
 
-		function responseError(message) {
+		function responseError(message, status) {
 			//else fall through to error
-			response.writeHead(400, {"Content-Type": "text/html"});
+			response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
 			response.write(("Bad Request\n" + (message ? message : url)));
 			response.end();
 		}
