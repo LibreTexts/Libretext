@@ -153,8 +153,9 @@ puppeteer.launch().then((browser) => {
 				// pages = pages.map(page=>page.url);
 
 				if (failed) {
+					console.error(failed);
 					console.error(pages.length + " FAILED " + time + "s " + escapedURL);
-					throw err;
+					throw failed;
 				}
 				else {
 					console.log(pages.length + " RENDERED " + time + "s " + escapedURL);
