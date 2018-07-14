@@ -2,14 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/install/cors" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/default" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/ecosystem.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/install.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/baseIMG.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/baseIMG.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/bio.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/bio.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/biz.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/biz.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/chem.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/eng.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/eng.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/geo.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/geo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/human.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/human.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/math.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/math.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/med.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/med.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/photon.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/photon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/phys.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/phys.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/socialsci.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/socialsci.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/stats.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/stats.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,13 +35,14 @@
       <file leaf-file-name="nodePrint.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="138" column="8" lean-forward="true" selection-start-line="138" selection-start-column="8" selection-end-line="138" selection-end-column="8" />
+            <state relative-caret-position="119">
+              <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h1#0;n#!!top" expanded="true" />
@@ -141,7 +150,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/nodePrint/colors.js" />
         <option value="$PROJECT_DIR$/nodePrint/baseIMG.json" />
-        <option value="$PROJECT_DIR$/nodePrint/baseIMG.js" />
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/404.html" />
         <option value="$PROJECT_DIR$/nodePrint/public/404.html" />
@@ -149,8 +157,9 @@
         <option value="$PROJECT_DIR$/nodePrint/thing.html" />
         <option value="$PROJECT_DIR$/BUGS.txt" />
         <option value="$PROJECT_DIR$/install.sh" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/install/install.sh" />
+        <option value="$PROJECT_DIR$/nodePrint/baseIMG.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
     </option>
   </component>
@@ -175,8 +184,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-11" />
     <option name="y" value="-11" />
-    <option name="width" value="2582" />
-    <option name="height" value="1403" />
+    <option name="width" value="1226" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
@@ -234,8 +243,13 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-              <item name="PDF" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -406,6 +420,8 @@
       <workItem from="1531169244463" duration="6426000" />
       <workItem from="1531195260251" duration="1765000" />
       <workItem from="1531197201283" duration="3227000" />
+      <workItem from="1531269872343" duration="3912000" />
+      <workItem from="1531538203710" duration="2652000" />
     </task>
     <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
       <created>1521932859968</created>
@@ -607,11 +623,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217347000" />
+    <option name="totallyTimeSpent" value="223911000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="DB Browser" order="2" />
@@ -619,10 +634,10 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50151056" side_tool="true" weight="0.40560874" />
       <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49848944" weight="0.38955823" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32853025" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2397351" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3576159" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3483444" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.18181819" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26851293" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.78145695" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -939,13 +954,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -957,13 +965,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/baseIMG.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1821" column="90" selection-start-line="1821" selection-start-column="90" selection-end-line="1821" selection-end-column="90" />
         </state>
       </provider>
     </entry>
@@ -995,15 +996,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/baseIMG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="2184" column="63" selection-start-line="2184" selection-start-column="63" selection-end-line="2184" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="138" column="8" lean-forward="true" selection-start-line="138" selection-start-column="8" selection-end-line="138" selection-end-column="8" />
+        <state relative-caret-position="119">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
           <folding>
             <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h1#0;n#!!top" expanded="true" />

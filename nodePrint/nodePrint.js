@@ -43,7 +43,7 @@ puppeteer.launch().then((browser) => {
 			// response.setHeader("Content-Disposition","attachment");
 
 			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
-				if (!err && false) { //file exists
+				if (!err) { //file exists
 					console.log("CACHE " + url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
@@ -107,7 +107,7 @@ puppeteer.launch().then((browser) => {
 					cssb.push('* { -webkit-print-color-adjust: exact}');
 					// cssb.push('i { font-family: \'Gaegu\', serif}"');
 					cssb.push('#pageNumber {width:100vw; color:red}');
-					cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 0px; }`);
+					cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
 					cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
 					cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 					cssb.push('</style>');
@@ -117,7 +117,7 @@ puppeteer.launch().then((browser) => {
 					const style1 = '<div id="main">' +
 						'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
 						'<div class="trapezoid"></div>' +
-						'<div id="library"><img src="data:image/png;base64,' + baseIMG["phys"] + '" height="20" style="padding:5px;"/></div>' +
+						`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
 						'</div>';
 
 					await page.pdf({
