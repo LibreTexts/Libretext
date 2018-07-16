@@ -11,11 +11,10 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 	}});*/
 
 let request = new XMLHttpRequest();
-request.open("PUT", "https://dynamic.libretexts.org/print/Libretext="+window["TOCName"], true); //async get
+request.open("PUT", "https://dynamic.libretexts.org/print/Libretext=" + window["TOCName"], true); //async get
 request.addEventListener("load", receive);
-request.send(JSON.stringify({Hello:"Hello ",World:"World!"}));
-
+request.send(JSON.stringify({Hello: "Hello ", World: "World!"}));
 
 function receive(data) {
-	console.log(data);
+	console.log(this.responseText);
 }

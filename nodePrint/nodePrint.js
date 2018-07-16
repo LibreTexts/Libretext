@@ -155,6 +155,12 @@ puppeteer.launch().then((browser) => {
 				return escapedURL + '.pdf';
 			}
 		}
+		else if(url.startsWith("/Libretext=")){
+
+			response.writeHead(200);
+			response.write("Hello!");
+			response.end();
+		}
 		else { //static server
 			console.log(url);
 			staticFileServer.serve(request, response, function (error, res) {
