@@ -15,25 +15,15 @@ puppeteer.launch().then((browser) => {
 
 	function handler(request, response) {
 		request.url = request.url.replace("print/", "");
-		const url = request.url;
+		let url = request.url;
 
 
-		if (url.includes("url=")) { //dynamic server
-			dynamicServer(request, response, url);
-		}
-		else { //static server
-			console.log(url);
-			staticFileServer.serve(request, response, function (error, res) {
-				//on error
-				if (error && error.status === 404) {//404 File not Found
-					staticFileServer.serveFile("404.html", 404, {}, request, response);
-				}
-			});
-		}
-	}
-
-	function dynamicServer(request, response, url) {
 		if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
+			let nocache = false;
+			if (url.includes("?nocache")) {
+				nocache = true;
+				url = url.replace("?nocache", "");
+			}
 			url = url.split('/url=')[1];
 			if (url.endsWith(".pdf")) {
 				url = url.slice(0, -4);
@@ -43,14 +33,14 @@ puppeteer.launch().then((browser) => {
 			// response.setHeader("Content-Disposition","attachment");
 
 			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
-				if (!err) { //file exists
+				if (!nocache && (!err && Date.now() - stats.mtime < 4.32e+7) && false) { //file exists
 					console.log("CACHE " + url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 				else {
 					getPDF(url).then(() => {
 						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-					}, (err) => responseError("Server Timeout Error",500));
+					}, (err) => responseError("Server Timeout Error", 500));
 				}
 			});
 
@@ -74,6 +64,7 @@ puppeteer.launch().then((browser) => {
 					let prefix = await page.evaluate((url) => {
 						let prefix = "";
 						let title = document.getElementById("title");
+						let color = window.getComputedStyle(title).color;
 
 						if (title) {
 							let innerText = title.textContent;
@@ -81,7 +72,7 @@ puppeteer.launch().then((browser) => {
 								prefix = innerText.split(":")[0];
 							}
 							console.log(innerText);
-							title.innerHTML = `<a style="color: DarkOliveGreen" href="${url}">${innerText}</a>`
+							title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 						}
 						return prefix;
 					}, url);
@@ -164,8 +155,14 @@ puppeteer.launch().then((browser) => {
 				return escapedURL + '.pdf';
 			}
 		}
-		else {
-			responseError();
+		else { //static server
+			console.log(url);
+			staticFileServer.serve(request, response, function (error, res) {
+				//on error
+				if (error && error.status === 404) {//404 File not Found
+					staticFileServer.serveFile("404.html", 404, {}, request, response);
+				}
+			});
 		}
 
 
@@ -176,5 +173,4 @@ puppeteer.launch().then((browser) => {
 			response.end();
 		}
 	}
-
 });

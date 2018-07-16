@@ -40,6 +40,7 @@ function getChildren(HTML) {
 		link = HTML[i].children[0];
 		JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
 	}
-
+	window["TOCTable"] = JSON;
+	window["TOCName"] = URL;
 	console.log(JSON);
 }());
