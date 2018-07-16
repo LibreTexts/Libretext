@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="DigitalOcean" uploadOnCheckin="6d997646-4f52-4f26-b1e4-908a7e47c861" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
+  <component name="PublishConfigData" autoUpload="Always" serverName="DigitalOcean" uploadOnCheckin="6d997646-4f52-4f26-b1e4-908a7e47c861" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
     <serverData>
       <paths name="DigitalOcean">
         <serverdata>
@@ -34,5 +34,6 @@
       </paths>
     </serverData>
     <option name="myUploadOnCheckinName" value="Libretext" />
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

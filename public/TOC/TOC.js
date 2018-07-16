@@ -24,7 +24,7 @@ function getChildren(HTML) {
 	HTML = HTML[0].children[0].children;
 	let link;
 
-/*	//Find Current Libretext
+	//Find Current Libretext
 	for (let i = 0; i < HTML.length; i++) {
 		link = HTML[i].children[1].children;
 
@@ -34,7 +34,7 @@ function getChildren(HTML) {
 				break;
 			}
 		}
-	}*/
+	}
 
 	for (let i = 0; i < HTML.length; i++) {
 		link = HTML[i].children[0];

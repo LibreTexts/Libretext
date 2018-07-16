@@ -14,6 +14,7 @@ puppeteer.launch().then((browser) => {
 	console.log("Restarted");
 
 	function handler(request, response) {
+		const ip = request.headers['x-forwarded-for'];
 		request.url = request.url.replace("print/", "");
 		let url = request.url;
 
@@ -47,7 +48,7 @@ puppeteer.launch().then((browser) => {
 
 			async function getPDF(url) {
 				const start = performance.now();
-				console.log("NEW " + url);
+				console.log("NEW "  + ip + " "+ url);
 				// const browser = await puppeteer.launch();
 				const page = await browser.newPage();
 				const timeout = setTimeout(() => {
@@ -155,7 +156,7 @@ puppeteer.launch().then((browser) => {
 				return escapedURL + '.pdf';
 			}
 		}
-		else if(url.startsWith("/Libretext=")){
+		else if (url.startsWith("/Libretext=")) {
 
 			response.writeHead(200);
 			response.write("Hello!");
