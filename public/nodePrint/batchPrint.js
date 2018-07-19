@@ -11,10 +11,49 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 	}});*/
 
 let request = new XMLHttpRequest();
+let requestJSON = {
+	root: window.location.url,
+	batchName: window["BatchName"],
+	subpages: window["BatchTable"],
+};
 request.open("PUT", "https://dynamic.libretexts.org/print/Libretext=" + window["TOCName"], true); //async get
 request.addEventListener("load", receive);
-request.send(JSON.stringify({Hello: "Hello ", World: "World!"}));
+request.send(JSON.stringify(requestJSON));
 
 function receive(data) {
 	console.log(this.responseText);
 }
+
+function getChildren(HTML) {
+	let JSON = {};
+	if (HTML.children[1]) {
+		HTML = HTML.children[1].children;
+
+		for (let i = 0; i < HTML.length; i++) {
+			let link = HTML[i].children[0];
+			JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
+		}
+	}
+	return JSON;
+}
+
+(function HTMLtoJSON() {
+	let HTML = $("#batchTreeHolder .wiki-tree");
+	let JSON = {};
+	let URL = window.location.href;
+	const title = document.getElementById("titleHolder").textContent;
+
+	//get content root
+	URL = URL.split("/").slice(0, 6).join("/");
+
+	HTML = HTML[0].children[0].children;
+	let link;
+
+	for (let i = 0; i < HTML.length; i++) {
+		link = HTML[i].children[0];
+		JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
+	}
+	window["BatchTable"] = JSON;
+	window["BatchName"] = URL + title;
+	console.log(window["BatchTable"], window["BatchName"]);
+}());
