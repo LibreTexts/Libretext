@@ -6,6 +6,7 @@ const filenamify = require('filenamify');
 const baseIMG = require("./baseIMG.js");
 const colors = require("./colors");
 const {performance} = require('perf_hooks');
+const timestamp = require("console-timestamp");
 
 puppeteer.launch().then((browser) => {
 	const server = http.createServer(handler);
@@ -89,7 +90,8 @@ puppeteer.launch().then((browser) => {
 					const topIMG = baseIMG[subdomain];
 					const color = colors[subdomain];
 					prefix = prefix ? prefix + "." : "";
-					const attribution = "<a href='https://openstax.org/'>Content from OpenStax:</a>";
+					const attribution = "";
+					// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
 
 					const cssb = [];
 					cssb.push('<style>');
@@ -158,14 +160,15 @@ puppeteer.launch().then((browser) => {
 				clearTimeout(timeout);
 				let pages = await browser.pages();
 				// pages = pages.map(page=>page.url);
+				const now = new Date();
 
 				if (failed) {
 					console.error(failed);
-					console.error(pages.length + " FAILED " + time + "s " + escapedURL);
+					console.error(timestamp('MM/DD hh:mm', now) + " " + pages.length + " FAILED " + time + "s " + escapedURL);
 					throw failed;
 				}
 				else {
-					console.log(pages.length + " RENDERED " + time + "s " + escapedURL);
+					console.log(timestamp('MM/DD hh:mm', now) + " " + pages.length + " RENDERED " + time + "s " + escapedURL);
 				}
 
 				return escapedURL + '.pdf';

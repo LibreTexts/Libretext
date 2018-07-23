@@ -15,7 +15,7 @@
       <paths name="Libretext">
         <serverdata>
           <mappings>
-            <mapping deploy="/public_html/awesomefiles" local="$PROJECT_DIR$/public" web="/awesomefiles" />
+            <mapping deploy="/public" local="$PROJECT_DIR$/public" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
