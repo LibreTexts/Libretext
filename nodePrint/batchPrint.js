@@ -78,6 +78,7 @@ puppeteer.launch().then((browser) => {
 							"Access-Control-Allow-Origin": "*",
 							"Access-Control-Allow-Methods": "PUT",
 							"Transfer-Encoding": "chunked",
+							"Content-Type": " text/plain"
 						});
 
 						let count = 0;
@@ -91,7 +92,7 @@ puppeteer.launch().then((browser) => {
 							response.write(JSON.stringify({
 								message: "progress",
 								percent: (Math.round(count / urlArray.length * 1000) / 10),
-								eta: eta.format("{{eta}}")
+								eta: eta.format("{{etah}}")
 							}));
 						}, (err, results) => {
 							if (err) throw err;
@@ -183,17 +184,17 @@ puppeteer.launch().then((browser) => {
 				const out = await page.evaluate((url) => {
 					let prefix = "";
 					let title = document.getElementById("title");
+					let innerText;
 
 					if (title) {
 						let color = window.getComputedStyle(title).color;
-						let innerText = title.textContent;
-						escapedURL = innerText;
+						innerText = title.textContent;
 						if (innerText && innerText.includes(":")) {
 							prefix = innerText.split(":")[0];
 						}
 						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 					}
-					return [prefix, escapedURL];
+					return [prefix, innerText];
 				}, url);
 				let prefix = out[0];
 				escapedURL = filenamify(out[1] ? out[1] : url);

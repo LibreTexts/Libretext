@@ -30,12 +30,12 @@ function batch() {
 	let last = "";
 
 	function receive(data) {
-		console.log(this.responseText.replace(last, ""));
-		last = this.responseText.replace(last, "");
-
+		console.log(this.responseText.replace(last, "").match(/\{[^{}]+\}(?=[^{}]*$)/));
+		last = this.responseText;
 	}
 
 	function download(data) {
+		last = this.responseText.match(/\{[^{}]+\}(?=[^{}]*$)/);
 		const out = JSON.parse(last);
 		setTimeout(() => window.location = "https://home.miniland1333.com/print/ZIP/" + out.filename, 2000);
 	}
