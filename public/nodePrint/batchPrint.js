@@ -10,19 +10,37 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 		}
 	}});*/
 
+HTMLtoJSON();
 let request = new XMLHttpRequest();
 let requestJSON = {
-	root: window.location.url,
+	root: window.location.href,
 	batchName: window["BatchName"],
 	subpages: window["BatchTable"],
 };
-request.open("PUT", "https://dynamic.libretexts.org/print/Libretext=" + window["TOCName"], true); //async get
-request.addEventListener("load", receive);
-request.send(JSON.stringify(requestJSON));
 
-function receive(data) {
-	console.log(this.responseText);
+const batchPrint = document.getElementById("batchPrint");
+
+batchPrint.innerHTML = '<button onclick="batch()">Batch</button>';
+
+function batch() {
+	request.open("PUT", "https://home.miniland1333.com/print/Libretext=" + window["BatchName"], true); //async get
+	request.addEventListener("progress", receive);
+	request.addEventListener("load", download);
+	request.send(JSON.stringify(requestJSON));
+	let last = "";
+
+	function receive(data) {
+		console.log(this.responseText.replace(last, ""));
+		last = this.responseText.replace(last, "");
+
+	}
+
+	function download(data) {
+		const out = JSON.parse(last);
+		setTimeout(() => window.location = "https://home.miniland1333.com/print/ZIP/" + out.filename, 2000);
+	}
 }
+
 
 function getChildren(HTML) {
 	let JSON = {};
@@ -37,7 +55,7 @@ function getChildren(HTML) {
 	return JSON;
 }
 
-(function HTMLtoJSON() {
+function HTMLtoJSON() {
 	let HTML = $("#batchTreeHolder .wiki-tree");
 	let JSON = {};
 	let URL = window.location.href;
@@ -54,6 +72,6 @@ function getChildren(HTML) {
 		JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
 	}
 	window["BatchTable"] = JSON;
-	window["BatchName"] = URL + title;
+	window["BatchName"] = title + URL.length;
 	console.log(window["BatchTable"], window["BatchName"]);
-}());
+};

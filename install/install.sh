@@ -11,12 +11,12 @@ sudo apt-get update >/dev/null 2>&1
 sudo apt-get upgrade -y >/dev/null 2>&1
 
 echo "Installing nodejs"
-sudo apt-get install nodejs -y  >/dev/null 2>&1
-sudo apt-get install npm -y  >/dev/null 2>&1
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs >/dev/null 2>&1
 echo "nginx"
 sudo apt-get install nginx -y  >/dev/null 2>&1
 echo "PM2"
-sudo npm install -g pm2@latest /dev/null  2>&1
+npm install -g pm2@latest /dev/null  2>&1
 EOF
 
 

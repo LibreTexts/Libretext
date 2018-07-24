@@ -7,6 +7,9 @@ const baseIMG = require("./baseIMG.js");
 const colors = require("./colors");
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
+const async = require("async");
+const AdmZip = require('adm-zip');
+
 
 puppeteer.launch().then((browser) => {
 	const server = http.createServer(handler);
@@ -176,7 +179,7 @@ puppeteer.launch().then((browser) => {
 		}
 		else if (url.startsWith("/Libretext=")) {
 
-			response.writeHead(200);
+			response.writeHead(200,{"Access-Control-Allow-Origin":"*", "Access-Control-Allow-Methods":"PUT"});
 			response.write("Hello!");
 			response.end();
 		}

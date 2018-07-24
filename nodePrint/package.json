@@ -6,10 +6,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.4.11",
+    "async": "^2.6.1",
     "console-timestamp": "^0.3.0",
     "filenamify": "^2.0.0",
+    "mkdirp": "^0.5.1",
+    "node-eta": "^0.9.0",
     "node-static": "^0.7.10",
     "nodemailer": "^4.6.7",
-    "puppeteer": "^1.5.0"
+    "puppeteer": "^1.5.0",
+    "zip-folder": "^1.0.0"
   }
 }

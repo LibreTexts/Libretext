@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6d997646-4f52-4f26-b1e4-908a7e47c861" name="Libretext" url="https://awesomefiles.libretexts.org">
+      <webServer id="6d997646-4f52-4f26-b1e4-908a7e47c861" name="Static" url="https://awesomefiles.libretexts.org">
         <fileTransfer host="static.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
@@ -10,7 +10,7 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
-      <webServer id="6e3a07ad-cba4-4bc2-a24c-238c71c84b9f" name="DigitalOcean" url="http://dynamic.libretexts.org">
+      <webServer id="6e3a07ad-cba4-4bc2-a24c-238c71c84b9f" name="Dynamic" url="http://dynamic.libretexts.org">
         <fileTransfer host="dynamic.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
