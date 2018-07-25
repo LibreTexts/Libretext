@@ -128,7 +128,7 @@ puppeteer.launch().then((browser) => {
 					const style2 = `<div id="mainF">` +
 						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}<div  class='added'><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/">CC BY-NC-SA 3.0 US</a></div></div>` +
 						`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-						`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
+						`<div style="flex:1; display:inline-flex; align-items: center;  justify-content: flex-end; color:#F5F5F5;">` +
 						(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 						'</div>';
 

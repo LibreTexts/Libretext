@@ -17,7 +17,8 @@ puppeteer.launch().then((browser) => {
 	const server = http.createServer(handler);
 	const staticFileServer = new nodeStatic.Server('./public');
 	server.listen(80);
-	console.log("Restarted");
+	const now1 = new Date();
+	console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
 	function handler(request, response) {
 		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -53,7 +54,7 @@ puppeteer.launch().then((browser) => {
 		}
 		else if (url.startsWith("/Libretext=")) {
 			if (request.headers.origin.endsWith("libretexts.org")) {
-				if (request.method === "OPTIONS") { //options checking
+				if (request.headers.host === "home.miniland1333.com" && request.method === "OPTIONS") { //options checking
 					response.writeHead(200, {
 						"Access-Control-Allow-Origin": request.headers.origin,
 						"Access-Control-Allow-Methods": "PUT",
@@ -74,12 +75,18 @@ puppeteer.launch().then((browser) => {
 						urlArray = urlArray.concat(addLinks(contents.subpages));
 
 
-						response.writeHead(200, {
-							"Access-Control-Allow-Origin": "*",
+						response.writeHead(200, request.headers['host'] === "home.miniland1333.com" ? {
+							"Access-Control-Allow-Origin": request.headers.origin,
 							"Access-Control-Allow-Methods": "PUT",
-							"Transfer-Encoding": "chunked",
-							"Content-Type": " text/plain"
-						});
+							// "Transfer-Encoding": "chunked",
+							"Content-Type": " application/json",
+						} : {"Content-Type": " application/json"});
+
+						response.write(JSON.stringify({
+							message: "start",
+							percent: 0,
+							eta: "Loading...",
+						}) + "\r\n");
 
 						let count = 0;
 						const start = performance.now();
@@ -92,8 +99,9 @@ puppeteer.launch().then((browser) => {
 							response.write(JSON.stringify({
 								message: "progress",
 								percent: (Math.round(count / urlArray.length * 1000) / 10),
-								eta: eta.format("{{etah}}")
-							}));
+								eta: eta.format("{{etah}}"),
+								// count: count,
+							}) + "\r\n");
 						}, (err, results) => {
 							if (err) throw err;
 
@@ -197,7 +205,9 @@ puppeteer.launch().then((browser) => {
 					return [prefix, innerText];
 				}, url);
 				let prefix = out[0];
-				escapedURL = filenamify(out[1] ? out[1] : url);
+				if (directory) {
+					escapedURL = filenamify(out[1] ? out[1] : url);
+				}
 
 
 				const host = url.split("/")[2].split(".");
