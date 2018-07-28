@@ -20,12 +20,12 @@ let requestJSON = {
 const email = document.getElementById("userEmailHolder").textContent;
 const batchPrint = document.getElementById("batchPrint");
 
-batchPrint.innerHTML = '<button id="batchButton" onclick="batch()">Batch</button>';
+batchPrint.innerHTML = '<button id="batchButton" onclick="batch()" style="margin-right: 2px">Batch</button>';
 
-const targetComputer = email === "hdagnew@ucdavis.ed" ? "home.miniland1333.com" : "batch.libretexts.org";
+const targetComputer = email === "hdagnew@ucdavis.edu" ? "home.miniland1333.com" : "batch.libretexts.org";
 
 function batch() {
-	if(window["batchComplete"]){
+	if (window["batchComplete"]) {
 		window.location = window["batchComplete"];
 	}
 	else {
@@ -41,14 +41,15 @@ function batch() {
 			newText = newText.match(/\{[^{}]+\}(?=[^}]*$)/);
 			if (newText) {
 				console.log(newText[0]);
-				batchButton.innerText = "ETA: "+JSON.parse(newText[0]).eta
+				const json = JSON.parse(newText[0]);
+				batchButton.innerText = json.percent + "%" + "\n" + json.eta;
 			}
 		}
 
 		function download(data) {
 			let newText = this.responseText.match(/\{[^{}]+\}(?=[^}]*$)/)[0];
 			const out = JSON.parse(newText);
-			batchButton.innerText = "Complete!";
+			batchButton.innerText = "Redownload";
 			window.location = "https://" + targetComputer + "/print/ZIP/" + out.filename;
 			window["batchComplete"] = "https://" + targetComputer + "/print/ZIP/" + out.filename;
 		}

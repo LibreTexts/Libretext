@@ -8,9 +8,10 @@ const colors = require("./colors");
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
 const mapLimit = require("async/mapLimit");
-const zipFolder = require('zip-folder');
+const zipLocal = require('zip-local');
 const mkdirp = require('mkdirp');
 const Eta = require('node-eta');
+const md5 = require('md5');
 
 
 puppeteer.launch().then((browser) => {
@@ -36,12 +37,14 @@ puppeteer.launch().then((browser) => {
 			if (url.endsWith(".pdf")) {
 				url = url.slice(0, -4);
 			}
-			const escapedURL = filenamify(url);
+			const escapedURL = md5(url);
 
 			// response.setHeader("Content-Disposition","attachment");
 
 			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
-				if (!nocache && (!err && Date.now() - stats.mtime < 4.32e+7) && false) { //file exists
+				const hoursCache = .5;
+				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
+					// 4.32e+7 12 hr
 					console.log("CACHE " + url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
@@ -113,14 +116,14 @@ puppeteer.launch().then((browser) => {
 
 							console.log(time);
 							mkdirp.sync('./public/ZIP/');
-							zipFolder('./PDF/libretexts/' + zipFilename, './public/ZIP/' + zipFilename + '.zip', () => {
-								response.write(JSON.stringify({
-									message: "complete",
-									filename: zipFilename + '.zip',
-									timeTaken: time
-								}));
-								response.end();
-							});
+							zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
+
+							response.write(JSON.stringify({
+								message: "complete",
+								filename: zipFilename + '.zip',
+								timeTaken: time
+							}));
+							response.end();
 						});
 					});
 				}
@@ -174,7 +177,7 @@ puppeteer.launch().then((browser) => {
 			}, 40000);
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
-			let escapedURL = filenamify(url);
+			let escapedURL = md5(url);
 
 			if (!directory)
 				directory = "";
@@ -206,7 +209,7 @@ puppeteer.launch().then((browser) => {
 				}, url);
 				let prefix = out[0];
 				if (directory) {
-					escapedURL = filenamify(out[1] ? out[1] : url);
+					escapedURL = filenamify(out[1] ? out[1] : md5(url));
 				}
 
 
