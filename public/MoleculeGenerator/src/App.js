@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ScriptTag from 'react-script-tag';
 import ClipboardJS from "clipboard";
 import InputField from "./InputField.js";
+import "./all.css";
 
 // If you use React Router, make this component
 // render <Router> with your routes. Currently,
@@ -16,9 +17,9 @@ export default class App extends Component {
 		super(props);
 		this.state = {
 			type: "GLmol",
-			path: window.location.host === "localhost" ? "http://localhost:3000/public" : "https://libretexts.org/awesomefiles",
-			options: {}
-		}
+			path: window.location.host === "localhost" ? "http://localhost:3000/public" : "https://awesomefiles.libretexts.org/",
+			options: {prefix: "$"},
+		};
 		mainApp = this;
 	}
 
@@ -31,56 +32,81 @@ export default class App extends Component {
 		this.sample();
 	}
 
-	onChange = (field, value)=> {
+	onChange = (field, value) => {
 		let update = this.state.options;
 		update[field] = value;
-		mainApp.setState({options: update});
-	}
+		// if (!this.state.options[field] || this.state.options[field] !== value) {
+			mainApp.setState({options: update});
+		// }
+	};
 
 	render() {
+		const example = {"$": "caffeine or 2-propanol", "=": "2POR", ":": "2519"};
+		// noinspection JSJQueryEfficiency
+		// document.addEventListener("GLzoom", (e) => this.onChange("defaultZoom", Math.round(e.detail)));
 		return (<div style={{
 				display: "flex",
 				flexDirection: "column",
 				padding: 10,
 				border: "5px solid " + this.getColor(),
-				alignItems: "center"
+				alignItems: "center",
+				backgroundColor: "#f6f6f6"
 			}}>
 				<h1 style={{textAlign: "center"}}>Molecule Generator</h1>
 
-				<div style={{display: "flex", justifyContent: "space-evenly", width: "100%"}}>
+				{/*				<div style={{display: "flex", justifyContent: "space-evenly", width: "100%"}}>
 					<div onClick={() => this.setState({type: "GLmol"})} style={{backgroundColor: "dodgerblue"}}>GLmol
 					</div>
-					{/*<div onClick={() => this.setState({type: "3Dmol"})} style={{backgroundColor: "green"}}>3Dmol</div>*/}
-					{/*<div onClick={() => this.setState({type: "JSmol"})} style={{backgroundColor: "orange"}}>JSmol</div>*/}
+					<div onClick={() => this.setState({type: "3Dmol"})} style={{backgroundColor: "green"}}>3Dmol</div>
+					<div onClick={() => this.setState({type: "JSmol"})} style={{backgroundColor: "orange"}}>JSmol</div>
+				</div>*/}
+				<div style={{display: "flex", flexDirection: "column"}}>
+					<div>For molecules enter its common or IUPAC name. <br/>
+						If it does not show up try to find it at &nbsp;
+						<a href={"https://pubchem.ncbi.nlm.nih.gov/"}>https://pubchem.ncbi.nlm.nih.gov/</a>
+						&nbsp; or for proteins at &nbsp;
+						<a href={"https://www.rcsb.org/"}>https://www.rcsb.org/</a>
+						&nbsp; to find a molecule ID number.<br/><br/>
+					</div>
+					<select onChange={(e) => this.onChange("prefix", e.target.value)}>
+						{$.map([{title: "common or IUPAC molecule name", prefix: "$"},
+								{title: "www.rcsb.org PDB ID", prefix: "="},
+								{title: "pubchem.ncbi.nlm.nih.gov CID", prefix: ":"}],
+							(option, index) =>
+								<option key={index} value={option.prefix}>{option.title}</option>)}
+					</select>
+					<input onChange={(e) => {
+						this.onChange("id", e.target.value);
+					}}
+					       placeholder={"ex. " + example[this.state.options.prefix]}/>
+					<br/><br/>
+					<button onClick={() => $(".help").slideToggle()}>Show/Hide Help</button>
+					<img className={"help"} style={{display: "none"}}
+					     src={"https://awesomefiles.libretexts.org/MoleculeGenerator/help.png"}/>
+					<button className={"help"} style={{display: "none"}} onClick={() => $(".help").slideUp()}>Hide
+						Help
+					</button>
+
 				</div>
 				<div style={{
-					display: "flex",
+					display: this.state.options.id ? "flex" : "none",
 					padding: 10,
-					alignItems: "center"
+					marginTop: 20,
+					alignItems: "center",
+					borderTop: "2px solid " + this.getColor(),
+					alignSelf: "stretch"
 				}}>
-					<div>
-						<h1>
-							ID:
-							<input onBlur={(e) => this.onChange("id", e.target.value)}/>
-						</h1>
+					<div style={{width: "250px", marginRight: "20px"}}>
 						{$.map(GLoptions, (object, key) => <InputField key={key} item={key} options={object}
+						                                               color={this.getColor()}
 						                                               onChange={this.onChange}/>)}
-						<div id="copy" data-clipboard-text={this.generateMolecule()}
-						     onClick={() => alert("Copied!\nPaste into a Dekiscript block and enable the correct tag.")}
-						     style={{
-							     backgroundColor: this.getColor(),
-							     padding: 5,
-							     borderRadius: 5
-						     }}>Copy {this.state.type} to
-							Clipboard
-						</div>
 					</div>
-					<div style={{flex:1}}>
+					<div style={{flex: 1, padding: 5}}>
 						{/*<ScriptTag src={this.state.path + "/JSmol/JSmolWrapper.js"} data-id="=1ugu"/>*/}
-						<div id="sample">
+						<div id="sample" style={{marginBottom: "10px"}}>
 						</div>
 						<div style={{
-							margin: 10,
+							marginBottom: 10,
 							border: "2px solid red",
 							// whiteSpace: "pre",
 							font: "100%/1.5 'Source Code Pro',monospace",
@@ -90,6 +116,17 @@ export default class App extends Component {
 							alignSelf: "normal",
 						}}>
 							{this.generateMolecule()}
+						</div>
+						<div id="copy" data-clipboard-text={this.generateMolecule()}
+						     onClick={() => alert("Copied!\nPaste into a Dekiscript block and enable the correct tag.")}
+						     style={{
+							     backgroundColor: this.getColor(),
+							     padding: 5,
+							     borderRadius: 5,
+							     textAlign: "center",
+							     fontSize: "20px",
+						     }}>Copy {this.state.type} to
+							Clipboard
 						</div>
 					</div>
 				</div>
@@ -113,7 +150,7 @@ export default class App extends Component {
 			let returnString = "";
 			for (let i = 0; i < key.length; i++) {
 				let letter = key.charAt(i);
-				if (letter == letter.toUpperCase()) {
+				if (letter === letter.toUpperCase()) {
 					returnString += "-" + letter.toLowerCase();
 				}
 				else {
@@ -125,8 +162,9 @@ export default class App extends Component {
 
 		function generateOptions(options, allowedOptions) {
 			let outputString = "";
+			outputString += "('data-id')=\"" + options["prefix"] + options["id"] + "\" ";
 			for (let key in options) {
-				if (allowedOptions[key] !== undefined || key === "id") {
+				if (options.hasOwnProperty(key) && (allowedOptions[key] !== undefined || !["id", "prefix"].includes(key))) {
 
 					if (options[key]) {
 						outputString += "('data-" + processKey(key) + "')=\"" + options[key] + "\" ";
@@ -140,9 +178,9 @@ export default class App extends Component {
 			case "3Dmol":
 				return "//Make sure to tag the \"Embed 3Dmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
 			case "GLmol":
-				return "//Make sure to tag the \"Embed GLmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/GLmol/js/GLWrapper.js\" " + generateOptions(this.state.options, GLoptions) + "></script>";
+				return "//Make sure to tag the \"Embed GLmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://awesomefiles.libretexts.org/GLmol/js/GLWrapper.js\" " + generateOptions(this.state.options, GLoptions) + "></script>";
 			case "JSmol":
-				return "//Make sure to tag the \"Embed JSmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://libretexts.org/awesomefiles/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
+				return "//Make sure to tag the \"Embed JSmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://awesomefiles.libretexts.org/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
 		}
 	}
 
@@ -190,34 +228,45 @@ export default class App extends Component {
 
 	processDataset(options, allowedOptions, sampleContent) {
 		for (let key in options) {
-			if (allowedOptions[key] !== undefined || key === "id") {
+			if (options.hasOwnProperty(key) && (allowedOptions[key] !== undefined || !["id", "prefix"].includes(key))) {
 
 				if (options[key]) {
 					sampleContent.dataset[key] = options[key];
 				}
 			}
 		}
+		sampleContent.dataset["id"] = options["prefix"] + options["id"];
 		return sampleContent;
 	}
 }
 const GLoptions = {
-	height: "text",
-	width: "text",
-	border: "bool",
-	label: "bool",
-	multiple: "bool",
-	colormode: ["chainbow", "chain", "b", "polarity", "ss"],
-	mainchain: ["thickRibbon", "ribbon", "strand", "chain", "cylinderHelix", "tube", "bonds", "none"],
-	sidechains: "bool",
-	roughBeta: "bool",
-	hetatmMode: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"],
-	baseHetatmMode: ["line", "stick", "polygon", "none"],
-	nonbonded: ["none", "sphere", "cross"],
-	projectionmode: ["perspective", "orthoscopic"],
-	unitcell: "bool",
-	bioassembly: "bool",
-	crystalpacking: "bool",
-	symmetry: "bool",
-	spin: "bool",
-	speed: "integer"
+	height: {name: "Custom height", help: "", type: "text", placeholder: "ex. 10px, 50%, or 75vw"},
+	width: {name: "Custom width", help: "", type: "text", placeholder: "ex. 10px, 50%, or 75vw"},
+	border: {name: "Show border", help: "", type: "bool"},
+	label: {name: "Show GLmol label", help: "", type: "bool"},
+	multiple: {name: "Multiple molecules", help: "", type: "bool"},
+	spin: {name: "Enable spinning", help: "", type: "bool"},
+	speed: {name: "Spin speed", help: "", type: "text", placeholder: "any number"},
+	// defaultZoom: {name: "Default Zoom", help: "", type: "text", placeholder: "zoom molecule to set", disabled: true},
+	note1: {name: "The below options are only useful for molecules", type: "note"},
+	mainchain: {
+		name: "Mainchain style",
+		help: "",
+		type: ["thickRibbon", "ribbon", "strand", "chain", "cylinderHelix", "tube", "bonds", "none"]
+	},
+	colormode: {name: "Mainchain color", help: "", type: ["chainbow", "chain", "b", "polarity", "ss"]},
+	sidechains: {name: "Show sidechains", help: "", type: "bool"},
+	roughBeta: {name: "Rough Beta sheets", help: "", type: "bool"},
+	hetatmMode: {
+		name: "Show heteroatoms",
+		help: "",
+		type: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"]
+	},
+	baseHetatmMode: {name: "Heteroatoms style", help: "", type: ["line", "stick", "polygon", "none"]},
+	nonbonded: {name: "Show nonbonded", help: "", type: ["none", "sphere", "cross"]},
+	// projectionmode: {name:"", help:"", type:["perspective", "orthoscopic"]},
+	unitcell: {name: "Show as unitcell", help: "", type: "bool"},
+	bioassembly: {name: "Show as bioassembly", help: "", type: "bool"},
+	crystalpacking: {name: "Show as crystal packing", help: "", type: "bool"},
+	// symmetry: {name:"", help:"", type:"bool"},
 };

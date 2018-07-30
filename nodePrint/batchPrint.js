@@ -135,6 +135,37 @@ puppeteer.launch().then((browser) => {
 				responseError(403, "CORS Error " + request.headers.origin);
 			}
 		}
+		else if(url.includes("test")){
+			async function testr(){
+				const start = performance.now();
+				const page = await browser.newPage();
+				const html = '<h1>Generating a page!</h1><img src="https://chem.libretexts.org/@api/deki/files/85425/libretexts_section_complete_chem_sm_124.png?revision=1&size=bestfit&width=289&height=124">';
+
+				await page.goto(`data:text/html,${html}`, { waitUntil: ["load", "domcontentloaded"] });
+
+				await page.pdf({
+					path: './PDF/testr.pdf',
+					displayHeaderFooter: true,
+					printBackground: true,
+					margin: {
+						top: "90px",
+						bottom: "60px",
+						right: "0.75in",
+						left: "0.75in",
+					}
+				});
+
+				await page.close();
+				const end = performance.now();
+				let time = end - start;
+				time /= 1;
+				time = Math.round(time);
+				time /= 1000;
+				console.log(time);
+				staticFileServer.serveFile('../PDF/testr.pdf', 200, {}, request, response);
+			}
+			testr();
+		}
 		else { //static server
 			console.log(url);
 			staticFileServer.serve(request, response, function (error, res) {
