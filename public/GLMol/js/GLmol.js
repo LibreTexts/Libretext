@@ -332,13 +332,15 @@ if (!window["GLloaded"]) {
 						'bondOrder': [],
 						'b': b/*', altLoc': altLoc*/
 					};
-				} else if (recordName == 'SHEET ') {
+				}
+				else if (recordName == 'SHEET ') {
 					var startChain = line.substr(21, 1);
 					var startResi = parseInt(line.substr(22, 4));
 					var endChain = line.substr(32, 1);
 					var endResi = parseInt(line.substr(33, 4));
 					protein.sheet.push([startChain, startResi, endChain, endResi]);
-				} else if (recordName == 'CONECT') {
+				}
+				else if (recordName == 'CONECT') {
 					// MEMO: We don't have to parse SSBOND, LINK because both are also
 					// described in CONECT. But what about 2JYT???
 					var from = parseInt(line.substr(6, 5));
@@ -351,13 +353,15 @@ if (!window["GLloaded"]) {
 							atoms[from].bondOrder.push(1);
 						}
 					}
-				} else if (recordName == 'HELIX ') {
+				}
+				else if (recordName == 'HELIX ') {
 					var startChain = line.substr(19, 1);
 					var startResi = parseInt(line.substr(21, 4));
 					var endChain = line.substr(31, 1);
 					var endResi = parseInt(line.substr(33, 4));
 					protein.helix.push([startChain, startResi, endChain, endResi]);
-				} else if (recordName == 'CRYST1') {
+				}
+				else if (recordName == 'CRYST1') {
 					protein.a = parseFloat(line.substr(6, 9));
 					protein.b = parseFloat(line.substr(15, 9));
 					protein.c = parseFloat(line.substr(24, 9));
@@ -366,7 +370,8 @@ if (!window["GLloaded"]) {
 					protein.gamma = parseFloat(line.substr(47, 7));
 					protein.spacegroup = line.substr(55, 11);
 					this.defineCell();
-				} else if (recordName == 'REMARK') {
+				}
+				else if (recordName == 'REMARK') {
 					var type = parseInt(line.substr(7, 3));
 					if (type == 290 && line.substr(13, 5) == 'SMTRY') {
 						var n = parseInt(line[18]) - 1;
@@ -377,7 +382,8 @@ if (!window["GLloaded"]) {
 						protein.symMat[m].elements[n + 4] = parseFloat(line.substr(34, 9));
 						protein.symMat[m].elements[n + 8] = parseFloat(line.substr(44, 9));
 						protein.symMat[m].elements[n + 12] = parseFloat(line.substr(54, 10));
-					} else if (type == 350 && line.substr(13, 5) == 'BIOMT') {
+					}
+					else if (type == 350 && line.substr(13, 5) == 'BIOMT') {
 						var n = parseInt(line[18]) - 1;
 						var m = parseInt(line.substr(21, 2));
 						if (protein.biomtMatrices[m] == undefined)
@@ -386,19 +392,24 @@ if (!window["GLloaded"]) {
 						protein.biomtMatrices[m].elements[n + 4] = parseFloat(line.substr(34, 9));
 						protein.biomtMatrices[m].elements[n + 8] = parseFloat(line.substr(44, 9));
 						protein.biomtMatrices[m].elements[n + 12] = parseFloat(line.substr(54, 10));
-					} else if (type == 350 && line.substr(11, 11) == 'BIOMOLECULE') {
+					}
+					else if (type == 350 && line.substr(11, 11) == 'BIOMOLECULE') {
 						protein.biomtMatrices = [];
 						protein.biomtChains = '';
-					} else if (type == 350 && line.substr(34, 6) == 'CHAINS') {
+					}
+					else if (type == 350 && line.substr(34, 6) == 'CHAINS') {
 						protein.biomtChains += line.substr(41, 40);
 					}
-				} else if (recordName == 'HEADER') {
+				}
+				else if (recordName == 'HEADER') {
 					protein.pdbID = line.substr(62, 4);
-				} else if (recordName == 'TITLE ') {
+				}
+				else if (recordName == 'TITLE ') {
 					if (protein.title == undefined)
 						protein.title = "";
 					protein.title += line.substr(10, 70) + "\n"; // CHECK: why 60 is not enough???
-				} else if (recordName == 'COMPND') {
+				}
+				else if (recordName == 'COMPND') {
 					// TODO: Implement me!
 				}
 			}
@@ -743,7 +754,8 @@ if (!window["GLloaded"]) {
 			if (!found || Math.abs(dot - 1) < 0.001 || Math.abs(dot + 1) < 0.001) {
 				if (axis.x < 0.01 && axis.y < 0.01) {
 					delta = new TV3(0, -axis.z, axis.y);
-				} else {
+				}
+				else {
 					delta = new TV3(-axis.y, axis.x, 0);
 				}
 			}
@@ -944,7 +956,8 @@ if (!window["GLloaded"]) {
 					}
 					prevAxis1 = axis1;
 					prevAxis2 = axis2;
-				} else {
+				}
+				else {
 					axis1 = prevAxis1;
 					axis2 = prevAxis2;
 				}
@@ -1038,7 +1051,8 @@ if (!window["GLloaded"]) {
 							(atom.b > 0)
 								? atom.b / 100
 								: 0.3);
-					} else {
+					}
+					else {
 						radii.push(radius);
 					}
 					colors.push(atom.color);
@@ -1256,7 +1270,8 @@ if (!window["GLloaded"]) {
 						ss = atom.ss;
 						ssborder = atom.ssstart || atom.ssend;
 						colors.push(atom.color);
-					} else { // O
+					}
+					else { // O
 						var O = new TV3(atom.x, atom.y, atom.z);
 						O.subSelf(currentCA);
 						O.normalize(); // can be omitted for performance
@@ -1483,7 +1498,8 @@ if (!window["GLloaded"]) {
 						currentChain = atom.chain;
 						currentResi = atom.resi;
 						colors.push(atom.color);
-					} else { // OP2
+					}
+					else { // OP2
 						if (!currentO3) {
 							prevOO = null;
 							continue;
@@ -2071,6 +2087,7 @@ if (!window["GLloaded"]) {
 			time = new Date();
 
 			var view = this.getView();
+			console.log("One", view);
 			this.initializeScene();
 			this.defineRepresentation();
 			this.setView(view);
@@ -2078,11 +2095,11 @@ if (!window["GLloaded"]) {
 			console.log("builded scene in " + (+new Date() - time) + "ms");
 		};
 
-		GLmol.prototype.loadMolecule = function (repressZoom) {
-			this.loadMoleculeStr($('#' + this.id + '_src').val(), repressZoom);
+		GLmol.prototype.loadMolecule = function (defaultZoom) {
+			this.loadMoleculeStr($('#' + this.id + '_src').val(), defaultZoom);
 		};
 
-		GLmol.prototype.loadMoleculeStr = function (source, repressZoom) {
+		GLmol.prototype.loadMoleculeStr = function (source, defaultZoom) {
 			if (!source) {
 				source = this.source;
 			}
@@ -2117,9 +2134,12 @@ if (!window["GLloaded"]) {
 			title.html(titleStr);*/
 
 			this.rebuildScene(true);
-			if (repressZoom == undefined || !repressZoom)
+			if (!defaultZoom)
 				this.zoomInto(this.getAllAtoms());
-
+			else {
+				this.rotationGroup.position.z = defaultZoom;
+				console.log(this.rotationGroup.position.z);
+			}
 			this.show();
 		};
 
@@ -2135,7 +2155,8 @@ if (!window["GLloaded"]) {
 				this.camera.far = this.camera.near + 1;
 			if (this.camera instanceof THREE.PerspectiveCamera) {
 				this.camera.fov = this.fov;
-			} else {
+			}
+			else {
 				this.camera.right = center * Math.tan(Math.PI / 180 * this.fov);
 				this.camera.left = -this.camera.right;
 				this.camera.top = this.camera.right / this.ASPECT;
@@ -2183,10 +2204,13 @@ if (!window["GLloaded"]) {
 				var scaleFactor = (me.rotationGroup.position.z - me.CAMERA_Z) * 0.85;
 				if (ev.originalEvent.detail) { // Webkit
 					me.rotationGroup.position.z += scaleFactor * ev.originalEvent.detail / 10;
-				} else if (ev.originalEvent.wheelDelta) { // Firefox
+				}
+				else if (ev.originalEvent.wheelDelta) { // Firefox
 					me.rotationGroup.position.z -= scaleFactor * ev.originalEvent.wheelDelta / 400;
 				}
 				console.log(ev.originalEvent.wheelDelta, ev.originalEvent.detail, me.rotationGroup.position.z);
+				const event = new CustomEvent('GLzoom', {detail: me.rotationGroup.position.z});
+				document.dispatchEvent(event);
 				me.show();
 			});
 			glDOM.bind("contextmenu", function (ev) {
@@ -2221,12 +2245,14 @@ if (!window["GLloaded"]) {
 				if (mode == 3 || (me.mouseButton == 3 && ev.ctrlKey)) { // Slab
 					me.slabNear = me.cslabNear + dx * 100;
 					me.slabFar = me.cslabFar + dy * 100;
-				} else if (mode == 2 || me.mouseButton == 3 || ev.shiftKey) { // Zoom
+				}
+				else if (mode == 2 || me.mouseButton == 3 || ev.shiftKey) { // Zoom
 					var scaleFactor = (me.rotationGroup.position.z - me.CAMERA_Z) * 0.85;
 					if (scaleFactor < 80)
 						scaleFactor = 80;
 					me.rotationGroup.position.z = me.cz - dy * scaleFactor;
-				} else if (mode == 1 || me.mouseButton == 2 || ev.ctrlKey) { // Translate
+				}
+				else if (mode == 1 || me.mouseButton == 2 || ev.ctrlKey) { // Translate
 					var scaleFactor = (me.rotationGroup.position.z - me.CAMERA_Z) * 0.85;
 					if (scaleFactor < 20)
 						scaleFactor = 20;
@@ -2237,7 +2263,8 @@ if (!window["GLloaded"]) {
 					me.modelGroup.position.x = me.currentModelPos.x + translation.x;
 					me.modelGroup.position.y = me.currentModelPos.y + translation.y;
 					me.modelGroup.position.z = me.currentModelPos.z + translation.z;
-				} else if ((mode == 0 || me.mouseButton == 1) && r != 0) { // Rotate
+				}
+				else if ((mode == 0 || me.mouseButton == 1) && r != 0) { // Rotate
 					var rs = Math.sin(r * Math.PI) / r;
 					me.dq.x = Math.cos(r * Math.PI);
 					me.dq.y = 0;

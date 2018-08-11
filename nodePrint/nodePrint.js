@@ -45,7 +45,7 @@ puppeteer.launch().then((browser) => {
 				const hoursCache = .5;
 				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
 					// 4.32e+7 12 hr
-					console.log("CACHE " + url);
+					console.log("CACHE " + ip + " "+ url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 				else {
@@ -168,7 +168,7 @@ puppeteer.launch().then((browser) => {
 
 		async function getPDF(url, directory) {
 			const start = performance.now();
-			console.log("NEW " + ip + " " + url);
+			console.log("NEW   " + ip + " " + url);
 			// const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
@@ -295,7 +295,7 @@ puppeteer.launch().then((browser) => {
 				throw failed;
 			}
 			else {
-				console.log(timestamp('MM/DD hh:mm', now) + " " + pages.length + " RENDERED " + time + "s " + escapedURL);
+				console.log(timestamp('MM/DD hh:mm', now) + " " + pages.length + " RENDER " + time + "s " + escapedURL);
 			}
 
 			return escapedURL + '.pdf';

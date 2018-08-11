@@ -242,13 +242,18 @@ export default class App extends Component {
 const GLoptions = {
 	height: {name: "Custom height", help: "", type: "text", placeholder: "ex. 10px, 50%, or 75vw"},
 	width: {name: "Custom width", help: "", type: "text", placeholder: "ex. 10px, 50%, or 75vw"},
+	hetatmMode: {
+		name: "Heteroatoms style",
+		help: "",
+		type: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"]
+	},
 	border: {name: "Show border", help: "", type: "bool"},
 	label: {name: "Show GLmol label", help: "", type: "bool"},
 	multiple: {name: "Multiple molecules", help: "", type: "bool"},
 	spin: {name: "Enable spinning", help: "", type: "bool"},
 	speed: {name: "Spin speed", help: "", type: "text", placeholder: "any number"},
 	// defaultZoom: {name: "Default Zoom", help: "", type: "text", placeholder: "zoom molecule to set", disabled: true},
-	note1: {name: "The below options are only useful for molecules", type: "note"},
+	note1: {name: "The below options are only useful for proteins", type: "note"},
 	mainchain: {
 		name: "Mainchain style",
 		help: "",
@@ -257,12 +262,7 @@ const GLoptions = {
 	colormode: {name: "Mainchain color", help: "", type: ["chainbow", "chain", "b", "polarity", "ss"]},
 	sidechains: {name: "Show sidechains", help: "", type: "bool"},
 	roughBeta: {name: "Rough Beta sheets", help: "", type: "bool"},
-	hetatmMode: {
-		name: "Show heteroatoms",
-		help: "",
-		type: ["ballAndStick2", "stick", "line", "icosahedron", "sphere", "ballAndStick"]
-	},
-	baseHetatmMode: {name: "Heteroatoms style", help: "", type: ["line", "stick", "polygon", "none"]},
+	baseHetatmMode: {name: "Base heteroatoms style", help: "", type: ["line", "stick", "polygon", "none"]},
 	nonbonded: {name: "Show nonbonded", help: "", type: ["none", "sphere", "cross"]},
 	// projectionmode: {name:"", help:"", type:["perspective", "orthoscopic"]},
 	unitcell: {name: "Show as unitcell", help: "", type: "bool"},

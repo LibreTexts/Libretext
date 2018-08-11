@@ -45,7 +45,7 @@ puppeteer.launch().then((browser) => {
 				const hoursCache = .5;
 				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
 					// 4.32e+7 12 hr
-					console.log("CACHE " + url);
+					console.log("CACHE " + ip + " "+ url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 				else {
@@ -199,7 +199,7 @@ puppeteer.launch().then((browser) => {
 
 		async function getPDF(url, directory) {
 			const start = performance.now();
-			console.log("NEW " + ip + " " + url);
+			console.log("NEW   " + ip + " " + url);
 			// const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
@@ -285,7 +285,7 @@ puppeteer.launch().then((browser) => {
 					`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}<div  class='added'><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/">CC BY-NC-SA 3.0 US</a></div></div>` +
 					`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 					`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
+					(true ? "<div class='added'>Powered by Mindtouch:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 					'</div>';
 
 				await page.pdf({

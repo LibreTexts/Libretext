@@ -35,7 +35,7 @@ function batch() {
 		request.send(JSON.stringify(requestJSON));
 		const batchButton = document.getElementById("batchButton");
 
-		function receive(data) {
+		function receive() {
 			let newText = this.responseText;
 			// console.log(newText);
 			newText = newText.match(/\{[^{}]+\}(?=[^}]*$)/);
@@ -46,7 +46,7 @@ function batch() {
 			}
 		}
 
-		function download(data) {
+		function download() {
 			let newText = this.responseText.match(/\{[^{}]+\}(?=[^}]*$)/)[0];
 			const out = JSON.parse(newText);
 			batchButton.innerText = "Redownload";

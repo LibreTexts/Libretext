@@ -48,3 +48,5 @@ Temporary Items
 /public/nodePrint/node_modules/
 /nodePrint/node_modules/
 /nodePrint/PDF/
+/Jupyter/node_modules/
+/nodePrint/public/ZIP/

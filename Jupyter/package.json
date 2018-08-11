@@ -1,0 +1,21 @@
+{
+  "name": "jupyter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Jupyter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "console-timestamp": "^0.3.0",
+    "copy-dir": "^0.4.0",
+    "filenamify": "^2.1.0",
+    "md5": "^2.2.1",
+    "mkdirp": "^0.5.1",
+    "node-static": "^0.7.10",
+    "perf_hooks": "0.0.1",
+    "zip-local": "^0.3.4"
+  }
+}

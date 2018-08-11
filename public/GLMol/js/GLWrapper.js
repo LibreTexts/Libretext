@@ -9,7 +9,7 @@ var target = document.createElement("div");
 target.id = 'GL' + index;
 
 if(!window["GLloaded"]){
-	alert('Make sure to tag the "Embed GLmol" tag to "yes"  under \'Page settings\' at top of page to work');
+	alert('Make sure to set the "Embed GLmol" tag to "yes"  under \'Page settings\' at top of page for this to work');
 }
 
 var style = "position: relative; width: " + width + "; " + (currentScript.dataset.width ? "" : " max-width: 80%; ") + "height:" + height + "; margin: auto; ";
@@ -85,7 +85,7 @@ function download(query, index) {
 		case "=":
 			query = query.substr(1).toUpperCase();
 			if (!query.match(/^[1-9][A-Za-z0-9]{3}$/)) {
-				alert("Wrong PDB ID");
+				// alert("Wrong PDB ID");
 				return;
 			}
 			uri = "https://files.rcsb.org/view/" + query + ".pdb";
@@ -109,7 +109,7 @@ function download(query, index) {
 
 	$.get(uri, function (ret) {
 		// console.log(ret);
-		window['GL' + index].loadMoleculeStr(ret);
+		window['GL' + index].loadMoleculeStr(ret, -parseFloat(currentScript.dataset.defaultZoom));
 		if (currentScript.dataset.spin)
 			window.requestAnimationFrame((timestamp) => step(timestamp, index));
 	});
@@ -148,6 +148,7 @@ function defineRepFromController() {
 	const bioAssembly = currentScript.dataset.bioassembly;
 	const crystalPacking = currentScript.dataset.crystalpacking;
 	const symmetry = currentScript.dataset.symmetry;
+	const defaultZoom = currentScript.dataset.defaultZoom;
 	var all = this.getAllAtoms();
 	if (bioAssembly && this.protein.biomtChains != "") all = this.getChain(all, this.protein.biomtChains);
 	var allHet = this.getHetatms(all);
@@ -273,5 +274,6 @@ function defineRepFromController() {
 	if (crystalPacking) {
 		this.drawSymmetryMatesWithTranslation2(this.modelGroup, asu, this.protein.symMat);
 	}
+
 	this.modelGroup.add(asu);
 }
