@@ -1,7 +1,10 @@
+var test = window.location.href.includes("Under_Construction/Users/Henry/1.02AB%3A_Chemistry_as_a_Science");
 if (window.matchMedia("screen").matches) {
 	setKernel();
-	deleteServiceWorker();
-	setInterval(deleteServiceWorker, 100);
+	if (!test) {
+		deleteServiceWorker();
+		setInterval(deleteServiceWorker, 100);
+	}
 	activateThebelab();
 }
 
@@ -38,44 +41,50 @@ function setKernel() {
 	config.type = "text/x-thebe-config";
 	config.id = "thebeConfig";
 
-	switch (kernel) {
-		case "python":
-			kernel = "python3";
-			break;
-		case "r":
-			kernel = "r";
-			break;
-		case "octave":
-			kernel = "octave";
-			break;
-	}
+	/*	switch (kernel) {
+			case "python":
+				kernel = "python";
+				break;
+			case "r":
+				kernel = "r";
+				break;
+			case "octave":
+				kernel = "octave";
+				break;
+		}*/
 
 
 	config.textContent = '{requestKernel: true, ' +
-		'binderOptions: {repo: \"binder-examples/requirements\"},' +
+		'binderOptions: {repo: \"binder-examples/requirements\"' + (test ? ',binderUrl: "http://127.0.0.1"':"") +'},' +
 		`kernelOptions: {name: "${kernel}"},` +
 		'selector: "[data-jupyter]",}';
 
 	if (kernel) {
 		document.currentScript.appendChild(config);
+
+		$("[data-jupyter]").each((index, element) => element.dataset["language"] = kernel);
 	}
 }
 
 function activateThebelab() {
 	const top = document.currentScript;
 
+	const requirejs = document.createElement("script");
 	const unpkg = document.createElement("script");
+	requirejs.type = "text/javascript";
 	unpkg.type = "text/javascript";
+	requirejs.src = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js";
 	unpkg.src = "https://unpkg.com/thebelab@^0.3.0";
+	top.appendChild(requirejs);
 	top.appendChild(unpkg);
 	unpkg.onload = activateLoader;
 
 	let str = '<span class="thebe_status_field"><span class="thebe-status-field" title="ThebeLab status.\n' +
 		'Click `run` to execute code cells.\n' +
-		'Computations courtesy of mybinder.org.">"Jupyter"</span></span>';
+		'Computations courtesy of mybinder.org.">Jupyter</span></span>';
 
 	str = $.parseHTML(str)[0];
-	top.insertAdjacentElement('afterend',str);
+	top.insertAdjacentElement('afterend', str);
 
 
 	function activateLoader() {
