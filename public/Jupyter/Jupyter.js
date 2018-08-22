@@ -1,42 +1,26 @@
-var test = window.location.href.includes("Under_Construction/Users/Henry/1.02AB%3A_Chemistry_as_a_Science");
 if (window.matchMedia("screen").matches) {
 	setKernel();
-	if (!test) {
-		deleteServiceWorker();
-		setInterval(deleteServiceWorker, 100);
-	}
+	// deleteServiceWorker();
+	// setInterval(deleteServiceWorker, 100);
 	activateThebelab();
 }
 
-function deleteServiceWorker() {
-	try {
-		var serviceScript = document.querySelector('script[src*=\"serviceworker\"]');
-		if (serviceScript) {
-			// console.log(serviceScript);
-			serviceScript.remove();
-		}
+function parseJupyterConfig() {
+	let options = document.getElementById("jupyterConfig");
+	if(options) {
+		options = option.text;
+		options = options.replace("/*<![CDATA[*/\n", "").replace("/*]]>*/", "");
+		let newRepo;
+
+
+		return newRepo;
 	}
-	catch (e) {
-	}
-	navigator.serviceWorker.getRegistrations().then(function (registrations) {
-		if (!registrations.length) {
-			return
-		}
-		for (let registration of registrations) {
-			registration.unregister().then(function (boolean) {
-				/*				console.log(
-								 (boolean ? 'Successfully unregistered' : 'Failed to unregister'), 'ServiceWorkerRegistration' +
-								 (registration.installing ? '  .installing.scriptURL = ' + registration.installing.scriptURL  : '') +
-								 (registration.waiting ? '  .waiting.scriptURL = ' + registration.waiting.scriptURL  : '') +
-								 (registration.active ? '  .active.scriptURL = ' + registration.active.scriptURL  : '') +
-							 '  .scope: ' + registration.scope)*/
-			})
-		}
-	})
+	return undefined;
 }
 
 function setKernel() {
 	let kernel = document.currentScript.dataset["kernel"];
+	let newRepo = parseJupyterConfig();
 	let config = document.createElement("script");
 	config.type = "text/x-thebe-config";
 	config.id = "thebeConfig";
@@ -54,8 +38,9 @@ function setKernel() {
 		}*/
 
 
-	config.textContent = '{requestKernel: true, ' +
-		'binderOptions: {repo: \"binder-examples/requirements\"' + (test ? ',binderUrl: "http://127.0.0.1"':"") +'},' +
+	config.textContent = '{' +
+		// 'requestKernel: true, ' +
+		`binderOptions: {repo: "${newRepo ? newRepo : "binder-examples/requirements"}"},` +
 		`kernelOptions: {name: "${kernel}"},` +
 		'selector: "[data-jupyter]",}';
 
@@ -75,7 +60,7 @@ function activateThebelab() {
 	unpkg.type = "text/javascript";
 	requirejs.src = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js";
 	unpkg.src = "https://unpkg.com/thebelab@^0.3.0";
-	top.appendChild(requirejs);
+	// top.appendChild(requirejs);
 	top.appendChild(unpkg);
 	unpkg.onload = activateLoader;
 
@@ -106,6 +91,32 @@ function activateThebelab() {
 
 }
 
+function deleteServiceWorker() {
+	try {
+		var serviceScript = document.querySelector('script[src*=\"serviceworker\"]');
+		if (serviceScript) {
+			// console.log(serviceScript);
+			serviceScript.remove();
+		}
+	}
+	catch (e) {
+	}
+	navigator.serviceWorker.getRegistrations().then(function (registrations) {
+		if (!registrations.length) {
+			return
+		}
+		for (let registration of registrations) {
+			registration.unregister().then(function (boolean) {
+				/*				console.log(
+								 (boolean ? 'Successfully unregistered' : 'Failed to unregister'), 'ServiceWorkerRegistration' +
+								 (registration.installing ? '  .installing.scriptURL = ' + registration.installing.scriptURL  : '') +
+								 (registration.waiting ? '  .waiting.scriptURL = ' + registration.waiting.scriptURL  : '') +
+								 (registration.active ? '  .active.scriptURL = ' + registration.active.scriptURL  : '') +
+							 '  .scope: ' + registration.scope)*/
+			})
+		}
+	})
+}
 
 function sendToJupyter() {
 	const targetComputer = email === "hdagnew@ucdavis.edu" ? "home.miniland1333.com" : "jupyter.libretexts.org";
