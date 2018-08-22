@@ -13,6 +13,9 @@
 
 # Default server configuration
 #
+limit_req_zone $binary_remote_addr zone=reqlimit:10m rate=30r/m;
+limit_conn_zone $binary_remote_addr zone=conLimit:10m;
+
 server {
 	#listen 80 default_server;
 	#listen [::]:80 default_server;
@@ -36,6 +39,7 @@ server {
 
 
 	server_name dynamic.libretexts.org;
+	#enable after Aug 3
 
 	location / {
 		# First attempt to serve request as file, then
@@ -45,36 +49,35 @@ server {
 	}
 
 	location /print {
-		proxy_pass http://localhost:3001;
+        	limit_req zone=reqlimit burst=1;
+		limit_conn conLimit 3;
+
+		proxy_pass http://backend;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection 'upgrade';
 		proxy_set_header Host $host;
 		proxy_cache_bypass $http_upgrade;
-		proxy_request_buffering off;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		include cors;
 
+		deny 213.55.76.173;
 	}
-
-	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-	#
-	#location ~ \.php$ {
-	#	include snippets/fastcgi-php.conf;
-	#
-	#	# With php7.0-cgi alone:
-	#	fastcgi_pass 127.0.0.1:9000;
-	#	# With php7.0-fpm:
-	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-	#}
-
-	# deny access to .htaccess files, if Apache's document root
-	# concurs with nginx's one
-	#
+	#deny access to .htaccess files, if Apache's document root
+	#concurs with nginx's one
+	
 	location ~ /\.ht {
 		deny all;
 	}
 
+    ssl_certificate /etc/letsencrypt/live/dynamic.libretexts.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/dynamic.libretexts.org/privkey.pem; # managed by Certbot
 }
+
+upstream backend {
+	server localhost:3001 max_conns=8;
+}
+
 
 
 # Virtual Host configuration for example.com

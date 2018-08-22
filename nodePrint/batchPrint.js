@@ -12,6 +12,7 @@ const zipLocal = require('zip-local');
 const mkdirp = require('mkdirp');
 const Eta = require('node-eta');
 const md5 = require('md5');
+const events = require('events');
 
 
 puppeteer.launch().then((browser) => {
@@ -20,6 +21,9 @@ puppeteer.launch().then((browser) => {
 	server.listen(80);
 	const now1 = new Date();
 	console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+	let working = {};
+	const eventEmitter = new events.EventEmitter();
+
 
 	function handler(request, response) {
 		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -33,6 +37,10 @@ puppeteer.launch().then((browser) => {
 				nocache = true;
 				url = url.replace("?nocache", "");
 			}
+			if (url.includes("?no-cache")) {
+				nocache = true;
+				url = url.replace("?no-cache", "");
+			}
 			url = url.split('/url=')[1];
 			if (url.endsWith(".pdf")) {
 				url = url.slice(0, -4);
@@ -43,10 +51,23 @@ puppeteer.launch().then((browser) => {
 
 			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
 				const hoursCache = .5;
+				if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
+					delete working[escapedURL];					//5 min timeout for DUPE
+				}
+
 				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
 					// 4.32e+7 12 hr
-					console.log("CACHE " + ip + " "+ url);
+					console.log("CACHE  " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+				}
+				else if (working[escapedURL]) { //another thread is already working
+					eventEmitter.on(escapedURL, () => {
+						console.log("DUPE   " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url + " ");
+						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+					});
+					setTimeout(() => {
+						responseError("Request is duplicate.\nPlease try again.");
+					}, 60000);
 				}
 				else {
 					getPDF(url).then(() => {
@@ -135,37 +156,6 @@ puppeteer.launch().then((browser) => {
 				responseError(403, "CORS Error " + request.headers.origin);
 			}
 		}
-		else if(url.includes("test")){
-			async function testr(){
-				const start = performance.now();
-				const page = await browser.newPage();
-				const html = '<h1>Generating a page!</h1><img src="https://chem.libretexts.org/@api/deki/files/85425/libretexts_section_complete_chem_sm_124.png?revision=1&size=bestfit&width=289&height=124">';
-
-				await page.goto(`data:text/html,${html}`, { waitUntil: ["load", "domcontentloaded"] });
-
-				await page.pdf({
-					path: './PDF/testr.pdf',
-					displayHeaderFooter: true,
-					printBackground: true,
-					margin: {
-						top: "90px",
-						bottom: "60px",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-
-				await page.close();
-				const end = performance.now();
-				let time = end - start;
-				time /= 1;
-				time = Math.round(time);
-				time /= 1000;
-				console.log(time);
-				staticFileServer.serveFile('../PDF/testr.pdf', 200, {}, request, response);
-			}
-			testr();
-		}
 		else { //static server
 			console.log(url);
 			staticFileServer.serve(request, response, function (error, res) {
@@ -179,9 +169,11 @@ puppeteer.launch().then((browser) => {
 
 		function responseError(message, status) {
 			//else fall through to error
-			response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
-			response.write(("Bad Request\n" + (message ? message : url)));
-			response.end();
+			if (!response.finished) {
+				response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
+				response.write(message ? message : "Bad Request\n" + url);
+				response.end();
+			}
 		}
 
 		function addLinks(object) {
@@ -199,7 +191,7 @@ puppeteer.launch().then((browser) => {
 
 		async function getPDF(url, directory) {
 			const start = performance.now();
-			console.log("NEW   " + ip + " " + url);
+			console.log("NEW    " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
 			// const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
@@ -215,6 +207,8 @@ puppeteer.launch().then((browser) => {
 			else
 				directory = "libretexts/" + directory + "/";
 
+			working[escapedURL] = Date.now();
+			let PDFname = escapedURL;
 			try {
 				try {
 					await page.goto(url, {timeout: 30000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
@@ -240,7 +234,7 @@ puppeteer.launch().then((browser) => {
 				}, url);
 				let prefix = out[0];
 				if (directory) {
-					escapedURL = filenamify(out[1] ? out[1] : md5(url));
+					PDFname = filenamify(out[1] ? out[1] : escapedURL);
 				}
 
 
@@ -285,11 +279,12 @@ puppeteer.launch().then((browser) => {
 					`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}<div  class='added'><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/">CC BY-NC-SA 3.0 US</a></div></div>` +
 					`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 					`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-					(true ? "<div class='added'>Powered by Mindtouch:</div>" : "") + `<div>Updated <div class="date"/></div>` +
+					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 					'</div>';
 
+				mkdirp.sync("./PDF/" + directory);
 				await page.pdf({
-					path: "./PDF/" + directory + escapedURL + '.pdf',
+					path: "./PDF/" + directory + PDFname + '.pdf',
 					displayHeaderFooter: true,
 					headerTemplate: css + style1,
 					footerTemplate: css + style2,
@@ -320,16 +315,18 @@ puppeteer.launch().then((browser) => {
 			let pages = await browser.pages();
 			const now = new Date();
 
+			eventEmitter.emit(escapedURL);
+			delete working[escapedURL];
 			if (failed) {
 				console.error(failed);
-				console.error(timestamp('MM/DD hh:mm', now) + " " + pages.length + " FAILED " + time + "s " + escapedURL);
+				console.error("FAILED " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
 				throw failed;
 			}
 			else {
-				console.log(timestamp('MM/DD hh:mm', now) + " " + pages.length + " RENDERED " + time + "s " + escapedURL);
+				console.log("RENDER " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
 			}
 
-			return escapedURL + '.pdf';
+			return PDFname + '.pdf';
 		}
 	}
 });

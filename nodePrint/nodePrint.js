@@ -12,6 +12,7 @@ const zipLocal = require('zip-local');
 const mkdirp = require('mkdirp');
 const Eta = require('node-eta');
 const md5 = require('md5');
+const events = require('events');
 
 
 puppeteer.launch().then((browser) => {
@@ -20,6 +21,9 @@ puppeteer.launch().then((browser) => {
 	server.listen(3001);
 	const now1 = new Date();
 	console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+	let working = {};
+	const eventEmitter = new events.EventEmitter();
+
 
 	function handler(request, response) {
 		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -33,6 +37,10 @@ puppeteer.launch().then((browser) => {
 				nocache = true;
 				url = url.replace("?nocache", "");
 			}
+			if (url.includes("?no-cache")) {
+				nocache = true;
+				url = url.replace("?no-cache", "");
+			}
 			url = url.split('/url=')[1];
 			if (url.endsWith(".pdf")) {
 				url = url.slice(0, -4);
@@ -43,10 +51,23 @@ puppeteer.launch().then((browser) => {
 
 			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
 				const hoursCache = .5;
+				if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
+					delete working[escapedURL];					//5 min timeout for DUPE
+				}
+
 				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
 					// 4.32e+7 12 hr
-					console.log("CACHE " + ip + " "+ url);
+					console.log("CACHE  " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+				}
+				else if (working[escapedURL]) { //another thread is already working
+					eventEmitter.on(escapedURL, () => {
+						console.log("DUPE   " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url + " ");
+						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+					});
+					setTimeout(() => {
+						responseError("Request is duplicate.\nPlease try again.");
+					}, 60000);
 				}
 				else {
 					getPDF(url).then(() => {
@@ -148,9 +169,11 @@ puppeteer.launch().then((browser) => {
 
 		function responseError(message, status) {
 			//else fall through to error
-			response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
-			response.write(("Bad Request\n" + (message ? message : url)));
-			response.end();
+			if (!response.finished) {
+				response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
+				response.write(message ? message : "Bad Request\n" + url);
+				response.end();
+			}
 		}
 
 		function addLinks(object) {
@@ -168,7 +191,7 @@ puppeteer.launch().then((browser) => {
 
 		async function getPDF(url, directory) {
 			const start = performance.now();
-			console.log("NEW   " + ip + " " + url);
+			console.log("NEW    " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
 			// const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
@@ -184,6 +207,8 @@ puppeteer.launch().then((browser) => {
 			else
 				directory = "libretexts/" + directory + "/";
 
+			working[escapedURL] = Date.now();
+			let PDFname = escapedURL;
 			try {
 				try {
 					await page.goto(url, {timeout: 30000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
@@ -209,7 +234,7 @@ puppeteer.launch().then((browser) => {
 				}, url);
 				let prefix = out[0];
 				if (directory) {
-					escapedURL = filenamify(out[1] ? out[1] : md5(url));
+					PDFname = filenamify(out[1] ? out[1] : escapedURL);
 				}
 
 
@@ -257,8 +282,9 @@ puppeteer.launch().then((browser) => {
 					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 					'</div>';
 
+				mkdirp.sync("./PDF/" + directory);
 				await page.pdf({
-					path: "./PDF/" + directory + escapedURL + '.pdf',
+					path: "./PDF/" + directory + PDFname + '.pdf',
 					displayHeaderFooter: true,
 					headerTemplate: css + style1,
 					footerTemplate: css + style2,
@@ -289,16 +315,18 @@ puppeteer.launch().then((browser) => {
 			let pages = await browser.pages();
 			const now = new Date();
 
+			eventEmitter.emit(escapedURL);
+			delete working[escapedURL];
 			if (failed) {
 				console.error(failed);
-				console.error(timestamp('MM/DD hh:mm', now) + " " + pages.length + " FAILED " + time + "s " + escapedURL);
+				console.error("FAILED " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
 				throw failed;
 			}
 			else {
-				console.log(timestamp('MM/DD hh:mm', now) + " " + pages.length + " RENDER " + time + "s " + escapedURL);
+				console.log("RENDER " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
 			}
 
-			return escapedURL + '.pdf';
+			return PDFname + '.pdf';
 		}
 	}
 });
