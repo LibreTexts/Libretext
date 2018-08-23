@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "nodePrint.js",
+  "scripts": {
+    "start": "node nodePrint.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -18,9 +18,13 @@ const events = require('events');
 puppeteer.launch().then((browser) => {
 	const server = http.createServer(handler);
 	const staticFileServer = new nodeStatic.Server('./public');
-	server.listen(3001);
+	let port = 3001;
+	if (process.argv.length >= 3 && parseInt(process.argv[2])) {
+		port = parseInt(process.argv[2]);
+	}
+	server.listen(port);
 	const now1 = new Date();
-	console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+	console.log("Restarted " + timestamp('MM/DD hh:mm', now1)+" Port:"+port);
 	let working = {};
 	const eventEmitter = new events.EventEmitter();
 
