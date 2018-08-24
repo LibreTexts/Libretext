@@ -1,4 +1,4 @@
-const expect = require('Chai').expect;
+const expect = require('chai').expect;
 require('./nodePrint');
 const request = require('request');
 
@@ -8,6 +8,8 @@ describe('basic response', function () {
 });
 
 describe('dynamic response', function () {
+	this.timeout(15000);
+	customTest('should return 200', 'print/url=https://chem.libretexts.org/?no-cache', 200);
 	customTest('should return 200', 'print/url=https://chem.libretexts.org/', 200);
 });
 
