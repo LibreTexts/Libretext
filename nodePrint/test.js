@@ -1,5 +1,5 @@
+const string = require('./nodePrint');
 const expect = require('chai').expect;
-require('./nodePrint');
 const request = require('request');
 
 describe('basic response', function () {

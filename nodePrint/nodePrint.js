@@ -339,3 +339,5 @@ puppeteer.launch({
 		}
 	}
 });
+
+module.exports = "nodePrint.js";
