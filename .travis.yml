@@ -1,8 +1,6 @@
-sudo: required
-
-language: node
-
-services: docker
+language: node_js
+node_js:
+- "lts/*"
 
 before_install:
-  docker build -t hagnew/nodeprint.js ./nodePrint
+  - cd nodePrint
