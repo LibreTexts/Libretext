@@ -15,7 +15,12 @@ const md5 = require('md5');
 const events = require('events');
 
 
-puppeteer.launch().then((browser) => {
+puppeteer.launch({
+	args: [
+		'--no-sandbox',
+		'--disable-setuid-sandbox'
+	]
+}).then((browser) => {
 	const server = http.createServer(handler);
 	const staticFileServer = new nodeStatic.Server('./public');
 	let port = 3001;
@@ -24,7 +29,7 @@ puppeteer.launch().then((browser) => {
 	}
 	server.listen(port);
 	const now1 = new Date();
-	console.log("Restarted " + timestamp('MM/DD hh:mm', now1)+" Port:"+port);
+	console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 	let working = {};
 	const eventEmitter = new events.EventEmitter();
 
