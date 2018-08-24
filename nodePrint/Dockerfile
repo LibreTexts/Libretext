@@ -34,15 +34,15 @@ WORKDIR /app/
 
 RUN npm install
 
-# Add user so we don't need --no-sandbox.
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser ./node_modules \
-    && chown -R pptruser:pptruser /app
-
-# Run everything after as non-privileged user.
-USER pptruser
+## Add user so we don't need --no-sandbox.
+#RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
+#    && mkdir -p /home/pptruser/Downloads \
+#    && chown -R pptruser:pptruser /home/pptruser \
+#    && chown -R pptruser:pptruser ./node_modules \
+#    && chown -R pptruser:pptruser /app
+#
+## Run everything after as non-privileged user.
+#USER pptruser
 
 EXPOSE 3001
 ENTRYPOINT ["dumb-init", "--"]

@@ -66,12 +66,12 @@ puppeteer.launch({
 
 				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
 					// 4.32e+7 12 hr
-					console.log("CACHE  " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
+					console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 				else if (working[escapedURL]) { //another thread is already working
 					eventEmitter.on(escapedURL, () => {
-						console.log("DUPE   " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url + " ");
+						console.log(`DUPE   ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 					});
 					setTimeout(() => {
@@ -200,7 +200,7 @@ puppeteer.launch({
 
 		async function getPDF(url, directory) {
 			const start = performance.now();
-			console.log("NEW    " + timestamp('MM/DD hh:mm', Date.now()) + " " + ip + " " + url);
+			console.log(`NEW    ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 			// const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
@@ -223,7 +223,7 @@ puppeteer.launch({
 					await page.goto(url, {timeout: 30000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 				}
 				catch (err) {
-					console.error("Timeout Exceeded " + url);
+					console.error(`ERROR  ${timestamp('MM/DD hh:mm', Date.now())} Timeout Exceeded ${url}`);
 				}
 
 				const out = await page.evaluate((url) => {
@@ -328,11 +328,11 @@ puppeteer.launch({
 			delete working[escapedURL];
 			if (failed) {
 				console.error(failed);
-				console.error("FAILED " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
+				console.error(`FAILED ${timestamp('MM/DD hh:mm', now)} ${ip} [${pages.length}] ${time}s ${PDFname}`);
 				throw failed;
 			}
 			else {
-				console.log("RENDER " + timestamp('MM/DD hh:mm', now) + " " + pages.length + " " + time + "s " + PDFname);
+				console.log(`RENDER ${timestamp('MM/DD hh:mm', now)} ${ip} [${pages.length}] ${time}s ${PDFname}`);
 			}
 
 			return PDFname + '.pdf';

@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/public/Jupyter/Hub/octave" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/public/Jupyter/Hub/python" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/public/Jupyter/Hub/r" vcs="Git" />
   </component>
 </project>
