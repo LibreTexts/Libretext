@@ -2,6 +2,10 @@ const stop = require('./nodePrint');
 const expect = require('chai').expect;
 const request = require('request');
 
+before(function(){
+	this.timeout(1000);
+});
+
 describe('basic response', function () {
 	customTest('should return 404', '', 404);
 	customTest('should return 200', 'logo.png', 200);
