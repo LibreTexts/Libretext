@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/nodePrint/PDF" />
+      <excludeFolder url="file://$MODULE_DIR$/nodePrint/public/ZIP" />
       <excludeFolder url="file://$MODULE_DIR$/public/Converter/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/public/Skele/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />

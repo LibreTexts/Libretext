@@ -11,14 +11,21 @@ describe('dynamic response', function () {
 	this.timeout(15000);
 	customTest('should return 200', 'print/url=https://chem.libretexts.org/?no-cache', 200);
 	customTest('should return 200', 'print/url=https://chem.libretexts.org/', 200);
-	after(function(){stop()})
+
+});
+
+after(function () {
+	stop()
 });
 
 function customTest(string, path, status) {
 	const port = 3001;
 	it(string, function (done) {
 		request.get(`http://localhost:${port}/${path}`, function (err, res, body) {
-			expect(res.statusCode).to.equal(status);
+			if (err)
+				expect(false).to.equal(true);
+			else
+				expect(res.statusCode).to.equal(status);
 			done();
 		});
 	});

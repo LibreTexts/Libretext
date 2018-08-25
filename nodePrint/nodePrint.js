@@ -39,7 +39,8 @@ puppeteer.launch({
 	Gserver = server;
 
 	function handler(request, response) {
-		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+		let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+		ip = ip.padEnd(15);
 		request.url = request.url.replace("print/", "");
 		let url = request.url;
 
