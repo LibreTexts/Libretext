@@ -14,6 +14,8 @@ const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
 
+var Gbrowser;
+var Gserver;
 
 puppeteer.launch({
 	args: [
@@ -33,6 +35,8 @@ puppeteer.launch({
 	let working = {};
 	const eventEmitter = new events.EventEmitter();
 
+	Gbrowser = browser;
+	Gserver = server;
 
 	function handler(request, response) {
 		const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -340,4 +344,9 @@ puppeteer.launch({
 	}
 });
 
-module.exports = "nodePrint.js";
+
+function stop(){
+	Gserver.close();
+	Gbrowser.close();
+}
+module.exports = stop;

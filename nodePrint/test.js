@@ -1,4 +1,4 @@
-const string = require('./nodePrint');
+const stop = require('./nodePrint');
 const expect = require('chai').expect;
 const request = require('request');
 
@@ -11,6 +11,7 @@ describe('dynamic response', function () {
 	this.timeout(15000);
 	customTest('should return 200', 'print/url=https://chem.libretexts.org/?no-cache', 200);
 	customTest('should return 200', 'print/url=https://chem.libretexts.org/', 200);
+	after(function(){stop()})
 });
 
 function customTest(string, path, status) {
