@@ -3,7 +3,9 @@ const expect = require('chai').expect;
 const request = require('request');
 
 before(function(){
-	this.timeout(1000);
+	console.log("1");
+	this.timeout(10000);
+	console.log("2");
 });
 
 describe('basic response', function () {

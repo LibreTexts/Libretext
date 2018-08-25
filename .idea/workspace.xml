@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Added travis-ci termination">
-      <change beforePath="$PROJECT_DIR$/.idea/Libretext.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Added mandatory waiting period">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/test.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -43,10 +37,10 @@
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="10483" />
+          <entry key="js" value="10576" />
           <entry key="json" value="37" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="418" />
+          <entry key="txt" value="474" />
           <entry key="yml" value="84" />
         </counts>
       </usages-collector>
@@ -58,8 +52,8 @@
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="37" />
-          <entry key="JavaScript" value="10480" />
-          <entry key="PLAIN_TEXT" value="471" />
+          <entry key="JavaScript" value="10573" />
+          <entry key="PLAIN_TEXT" value="527" />
           <entry key="YAML" value="84" />
         </counts>
       </usages-collector>
@@ -105,13 +99,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="299">
               <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="69">
@@ -120,11 +114,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+            <state relative-caret-position="184">
+              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -242,9 +236,9 @@
         <option value="$PROJECT_DIR$/.gitmodules" />
         <option value="$PROJECT_DIR$/nodePrint/Makefile" />
         <option value="$PROJECT_DIR$/.travis.yml" />
-        <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/test.js" />
       </list>
     </option>
   </component>
@@ -636,14 +630,7 @@
       <workItem from="1535132858377" duration="2214000" />
       <workItem from="1535146912039" duration="367000" />
       <workItem from="1535147904117" duration="2475000" />
-      <workItem from="1535151030008" duration="6215000" />
-    </task>
-    <task id="LOCAL-00001" summary="Preparing for Libretext Deployment">
-      <created>1521932859968</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1521932859968</updated>
+      <workItem from="1535151030008" duration="7026000" />
     </task>
     <task id="LOCAL-00002" summary="Updated files">
       <created>1521949800370</created>
@@ -974,19 +961,24 @@
       <option name="project" value="LOCAL" />
       <updated>1535155448999</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Moved test to package.json">
+      <created>1535157412645</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1535157412645</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Added mandatory waiting period">
+      <created>1535157941551</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1535157941552</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="nodePrintTest - 2018.08.24 at 16h 58m 07s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 16h 58m 18s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 16h 58m 32s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="nodePrintTest - 2018.08.24 at 16h 58m 58s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -1008,12 +1000,22 @@
     <history-entry file="nodePrintTest - 2018.08.24 at 17h 17m 59s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 39m 09s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 44m 20s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 44m 45s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="396742000" />
+    <option name="totallyTimeSpent" value="397553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32269716" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
@@ -1021,7 +1023,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3276316" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35657895" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29342106" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5302632" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1031,7 +1033,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.14473684" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" visible="true" weight="0.33684212" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" visible="true" weight="0.18421052" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1123,8 +1125,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added PDF emailing" />
-    <MESSAGE value="Initial Page PDF Live" />
     <MESSAGE value="V2 printme&#10;&#10;Uses links instead of popups" />
     <MESSAGE value="Added 404" />
     <MESSAGE value="Attempted to increase memory efficiency" />
@@ -1148,7 +1148,9 @@
     <MESSAGE value="Fixed mocha tests" />
     <MESSAGE value="Attempt to synchronize travis-ci builds" />
     <MESSAGE value="Added travis-ci termination" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added travis-ci termination" />
+    <MESSAGE value="Moved test to package.json" />
+    <MESSAGE value="Added mandatory waiting period" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added mandatory waiting period" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
@@ -1351,24 +1353,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+        <state relative-caret-position="69">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
+        <state relative-caret-position="299">
           <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
+    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="184">
+          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
         </state>
       </provider>
     </entry>
