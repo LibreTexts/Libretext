@@ -3,4 +3,7 @@ node_js:
 - "lts/*"
 
 before_install:
-  - cd nodePrint
+- cd nodePrint
+
+notifications:
+  slack: libretexts:hXjfcY7jkwpmvJ2xzQ0cEtHl

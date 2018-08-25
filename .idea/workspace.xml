@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Added mandatory waiting period">
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Fixed timeout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,11 +37,11 @@
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="10576" />
+          <entry key="js" value="10764" />
           <entry key="json" value="37" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="474" />
-          <entry key="yml" value="84" />
+          <entry key="txt" value="498" />
+          <entry key="yml" value="86" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -52,9 +52,9 @@
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="37" />
-          <entry key="JavaScript" value="10573" />
-          <entry key="PLAIN_TEXT" value="527" />
-          <entry key="YAML" value="84" />
+          <entry key="JavaScript" value="10761" />
+          <entry key="PLAIN_TEXT" value="551" />
+          <entry key="YAML" value="86" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -105,20 +105,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="184">
+              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+            <state relative-caret-position="207">
+              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -235,10 +235,10 @@
         <option value="$PROJECT_DIR$/install/default" />
         <option value="$PROJECT_DIR$/.gitmodules" />
         <option value="$PROJECT_DIR$/nodePrint/Makefile" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
       </list>
     </option>
   </component>
@@ -263,9 +263,9 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-7" />
+    <option name="width" value="867" />
+    <option name="height" value="927" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -630,21 +630,7 @@
       <workItem from="1535132858377" duration="2214000" />
       <workItem from="1535146912039" duration="367000" />
       <workItem from="1535147904117" duration="2475000" />
-      <workItem from="1535151030008" duration="7026000" />
-    </task>
-    <task id="LOCAL-00002" summary="Updated files">
-      <created>1521949800370</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1521949800371</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Updated Converter">
-      <created>1521951066507</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1521951066507</updated>
+      <workItem from="1535151030008" duration="8680000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Converter">
       <created>1521951496731</created>
@@ -975,55 +961,69 @@
       <option name="project" value="LOCAL" />
       <updated>1535157941552</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Lengthened mandatory waiting period">
+      <created>1535158081170</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1535158081171</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Fixed timeout">
+      <created>1535158829383</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1535158829383</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="nodePrintTest - 2018.08.24 at 16h 58m 58s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 56m 23s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 02m 37s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 56m 49s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 03m 05s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 57m 06s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 10m 59s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 57m 11s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 13m 45s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 58m 38s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 15m 21s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 59m 09s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 17m 59s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 59m 19s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 39m 09s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 59m 37s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 44m 20s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 17h 59m 42s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="nodePrintTest - 2018.08.24 at 17h 44m 45s.xml">
+    <history-entry file="nodePrintTest - 2018.08.24 at 18h 00m 08s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="397553000" />
+    <option name="totallyTimeSpent" value="399207000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32269716" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.38395417" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3276316" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.29342106" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.45657894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5302632" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1033,7 +1033,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.14473684" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" visible="true" weight="0.18421052" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.18421052" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1125,8 +1125,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="V2 printme&#10;&#10;Uses links instead of popups" />
-    <MESSAGE value="Added 404" />
     <MESSAGE value="Attempted to increase memory efficiency" />
     <MESSAGE value="Partial Stress test" />
     <MESSAGE value="Added new logos" />
@@ -1150,7 +1148,9 @@
     <MESSAGE value="Added travis-ci termination" />
     <MESSAGE value="Moved test to package.json" />
     <MESSAGE value="Added mandatory waiting period" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added mandatory waiting period" />
+    <MESSAGE value="Lengthened mandatory waiting period" />
+    <MESSAGE value="Fixed timeout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed timeout" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
@@ -1353,13 +1353,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -1369,8 +1362,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
-          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
         </state>
       </provider>
     </entry>
