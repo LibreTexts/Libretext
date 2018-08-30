@@ -262,10 +262,6 @@ puppeteer.launch({
 
 				const cssb = [];
 				cssb.push('<style>');
-				// cssb.push('@font-face{font-family:Lato;src:url(/Lato.tff) format("truetype")}');
-				// cssb.push('@font-face{font-family:Gaegu;src:url(/nodePrint/Gaegu.tff) format("truetype")}');
-				// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Lato\');');
-				// cssb.push('@import url(\'https://fonts.googleapis.com/css?family=Gaegu\');');
 				cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
 				cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
 				cssb.push('#main {border: 1px solid blue;}');
@@ -274,8 +270,6 @@ puppeteer.launch({
 				cssb.push('.date, .pageNumber {display: inline-block}');
 				cssb.push('.added {padding: 0px 4px}');
 				cssb.push('a {text-decoration:none; color: white}');
-				// cssb.push('* { border: 1px solid red}');
-				// cssb.push('i { font-family: \'Gaegu\', serif}"');
 				cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
 				cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
 				cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);

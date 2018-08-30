@@ -39,7 +39,7 @@
 }
 
 @media print {
-	.youtubeIFrame {
+	.youtubeIFrame, .noPrint {
 		display: none
 	}
 

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Fixed timeout">
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="git update-server-info">
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/1.index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/1.index.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/2.index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/2.index.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/43bb4cbf1d0ecfdb1309e4cb67264f35.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/5a0856eb52623ae94b09dbbf31a27b95.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Jupyter/lib/index.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/Gaegu.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/Lato.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/Gaegu.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/Lato.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Jupyter/Jupyter.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Jupyter/Jupyter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,41 +35,42 @@
     <session id="1881897902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="51" />
+          <entry key="project.closed" value="56" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.5" value="3" />
-          <entry key="project.open.time.6" value="27" />
+          <entry key="project.open.time.6" value="30" />
           <entry key="project.open.time.7" value="21" />
           <entry key="project.open.time.8" value="5" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="58" />
+          <entry key="project.opened" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="DOCKERFILE" value="133" />
-          <entry key="css" value="152" />
+          <entry key="css" value="175" />
           <entry key="default" value="19" />
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="10764" />
+          <entry key="js" value="11066" />
           <entry key="json" value="37" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="498" />
+          <entry key="txt" value="528" />
           <entry key="yml" value="86" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="152" />
+          <entry key="CSS" value="175" />
           <entry key="Docker file" value="3" />
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="37" />
-          <entry key="JavaScript" value="10761" />
-          <entry key="PLAIN_TEXT" value="551" />
+          <entry key="JavaScript" value="11063" />
+          <entry key="PLAIN_TEXT" value="581" />
           <entry key="YAML" value="86" />
         </counts>
       </usages-collector>
@@ -64,13 +81,13 @@
           <entry key="Makefile" value="3" />
           <entry key="R" value="1" />
           <entry key="cors" value="1" />
-          <entry key="css" value="6" />
+          <entry key="css" value="10" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
           <entry key="gitignore" value="1" />
           <entry key="gitmodules" value="1" />
           <entry key="html" value="6" />
-          <entry key="js" value="76" />
+          <entry key="js" value="84" />
           <entry key="json" value="13" />
           <entry key="log" value="2" />
           <entry key="sh" value="2" />
@@ -81,13 +98,13 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="6" />
+          <entry key="CSS" value="10" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
           <entry key="Git file" value="1" />
           <entry key="HTML" value="6" />
           <entry key="JSON" value="13" />
-          <entry key="JavaScript" value="76" />
+          <entry key="JavaScript" value="84" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="YAML" value="4" />
         </counts>
@@ -97,30 +114,26 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+            <state relative-caret-position="198">
+              <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.travis.yml">
+        <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+            <state relative-caret-position="345">
+              <caret line="64" column="92" selection-start-line="64" selection-start-column="92" selection-end-line="64" selection-end-column="92" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/index.js">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -136,7 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>alert</find>
       <find>event</find>
       <find>auto</find>
       <find>henry</find>
@@ -166,6 +178,7 @@
       <find>ip</find>
       <find>console</find>
       <find>browser</find>
+      <find>no</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -188,7 +201,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/nodePrint/public/baseIMG.js" />
         <option value="$PROJECT_DIR$/public/nodePrint/base64/photon.txt" />
         <option value="$PROJECT_DIR$/public/nodePrint/baseIMG.js" />
         <option value="$PROJECT_DIR$/public/nodePrint/nodePrint.js" />
@@ -202,7 +214,6 @@
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/404.html" />
         <option value="$PROJECT_DIR$/nodePrint/public/404.html" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" />
         <option value="$PROJECT_DIR$/nodePrint/thing.html" />
         <option value="$PROJECT_DIR$/install.sh" />
         <option value="$PROJECT_DIR$/nodePrint/baseIMG.js" />
@@ -227,7 +238,6 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/Jupyter.js" />
         <option value="$PROJECT_DIR$/Jupyter/ts.js" />
         <option value="$PROJECT_DIR$/BUGS.txt" />
-        <option value="$PROJECT_DIR$/public/Jupyter/Jupyter.js" />
         <option value="$PROJECT_DIR$/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/.dockerignore" />
         <option value="$PROJECT_DIR$/nodePrint/DOCKERFILE" />
@@ -236,9 +246,12 @@
         <option value="$PROJECT_DIR$/.gitmodules" />
         <option value="$PROJECT_DIR$/nodePrint/Makefile" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
+        <option value="$PROJECT_DIR$/public/Jupyter/Jupyter.js" />
       </list>
     </option>
   </component>
@@ -263,9 +276,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="867" />
-    <option name="height" value="927" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="960" />
+    <option name="height" value="567" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -337,7 +351,45 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="Jupyter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Jupyter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Jupyter" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Jupyter" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="index.js" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -370,19 +422,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter\lib" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public\eb8e5853014e270c80130f9b267b0f6b" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\install" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -630,14 +682,12 @@
       <workItem from="1535132858377" duration="2214000" />
       <workItem from="1535146912039" duration="367000" />
       <workItem from="1535147904117" duration="2475000" />
-      <workItem from="1535151030008" duration="8680000" />
-    </task>
-    <task id="LOCAL-00004" summary="Updated Converter">
-      <created>1521951496731</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1521951496731</updated>
+      <workItem from="1535151030008" duration="8708000" />
+      <workItem from="1535173223119" duration="970000" />
+      <workItem from="1535228478937" duration="602000" />
+      <workItem from="1535392021173" duration="2555000" />
+      <workItem from="1535414522455" duration="46000" />
+      <workItem from="1535657695865" duration="4867000" />
     </task>
     <task id="LOCAL-00005" summary="Updated Converter">
       <created>1521954592629</created>
@@ -975,7 +1025,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535158829383</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Added Travis-Slack integration">
+      <created>1535161183916</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1535161183917</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1011,13 +1068,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="399207000" />
+    <option name="totallyTimeSpent" value="408275000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.38395417" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13485852" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1032,7 +1089,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32853025" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.14473684" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.27631578" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.18421052" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
@@ -1044,13 +1101,13 @@
       <window_info anchor="right" id="R Packages" order="5" weight="0.32992172" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24142084" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15616046" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3276316" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.44078946" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.45657894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5302632" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1059,8 +1116,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32853025" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.14473684" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.31318682" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.15714286" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.18421052" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1068,7 +1125,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.22456351" />
       <window_info anchor="right" id="R Graphics" order="4" />
-      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" id="R Packages" order="5" weight="0.32992172" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1125,7 +1182,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Attempted to increase memory efficiency" />
     <MESSAGE value="Partial Stress test" />
     <MESSAGE value="Added new logos" />
     <MESSAGE value="Started batchPrint.js" />
@@ -1150,7 +1206,8 @@
     <MESSAGE value="Added mandatory waiting period" />
     <MESSAGE value="Lengthened mandatory waiting period" />
     <MESSAGE value="Fixed timeout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed timeout" />
+    <MESSAGE value="Added Travis-Slack integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Travis-Slack integration" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
@@ -1275,13 +1332,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="473">
@@ -1329,23 +1379,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1587">
-          <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="9" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/Makefile" />
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -1353,17 +1390,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state relative-caret-position="345">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -1371,6 +1401,57 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="254" column="44" selection-start-line="254" selection-start-column="44" selection-end-line="254" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1518">
+          <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/printme.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1220">
+          <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="64" column="92" selection-start-line="64" selection-start-column="92" selection-end-line="64" selection-end-column="92" />
         </state>
       </provider>
     </entry>

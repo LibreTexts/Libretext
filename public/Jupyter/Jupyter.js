@@ -1,3 +1,4 @@
+const test = window.location.href === "https://chem.libretexts.org/Under_Construction/Users/Henry/1.02AB%3A_Chemistry_as_a_Science";
 if (window.matchMedia("screen").matches) {
 	setKernel();
 	// deleteServiceWorker();
@@ -7,24 +8,26 @@ if (window.matchMedia("screen").matches) {
 
 function parseJupyterConfig() {
 	let options = document.getElementById("jupyterConfig");
-	if(options) {
-		options = option.text;
+	if (options) {
+		options = options.text;
 		options = options.replace("/*<![CDATA[*/\n", "").replace("/*]]>*/", "");
-		let newRepo;
-
-
-		return newRepo;
+		return JSON.parse(options);
 	}
 	return undefined;
 }
 
 function setKernel() {
 	let kernel = document.currentScript.dataset["kernel"];
-	let newRepo = parseJupyterConfig();
+	let {repo = "binder-examples/requirements", ref, repoProvider}= parseJupyterConfig();
+	console.log(repo, ref, repoProvider);
 	let config = document.createElement("script");
 	config.type = "text/x-thebe-config";
 	config.id = "thebeConfig";
-
+	const binderOptions = {
+		repo: repo,
+		ref: ref,
+		repoProvider: repoProvider
+	};
 	/*	switch (kernel) {
 			case "python":
 				kernel = "python";
@@ -40,7 +43,7 @@ function setKernel() {
 
 	config.textContent = '{' +
 		// 'requestKernel: true, ' +
-		`binderOptions: {repo: "${newRepo ? newRepo : "binder-examples/requirements"}"},` +
+		`binderOptions: ${JSON.stringify(binderOptions)},` +
 		`kernelOptions: {name: "${kernel}"},` +
 		'selector: "[data-jupyter]",}';
 
@@ -58,9 +61,9 @@ function activateThebelab() {
 	const unpkg = document.createElement("script");
 	requirejs.type = "text/javascript";
 	unpkg.type = "text/javascript";
-	requirejs.src = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js";
-	unpkg.src = "https://unpkg.com/thebelab@^0.3.0";
-	// top.appendChild(requirejs);
+	// requirejs.src = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js";
+	unpkg.src = test ? "https://awesomefiles.libretexts.org/Jupyter/lib/index.js" : "https://unpkg.com/thebelab@^0.3.0";
+	top.appendChild(requirejs);
 	top.appendChild(unpkg);
 	unpkg.onload = activateLoader;
 
