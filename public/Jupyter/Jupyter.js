@@ -13,21 +13,16 @@ function parseJupyterConfig() {
 		options = options.replace("/*<![CDATA[*/\n", "").replace("/*]]>*/", "");
 		return JSON.parse(options);
 	}
-	return undefined;
+	return {};
 }
 
 function setKernel() {
 	let kernel = document.currentScript.dataset["kernel"];
-	let {repo = "binder-examples/requirements", ref, repoProvider}= parseJupyterConfig();
-	console.log(repo, ref, repoProvider);
+	let preload = document.currentScript.dataset["preload"];
+	let {repo, ref, repoProvider} = parseJupyterConfig();
 	let config = document.createElement("script");
 	config.type = "text/x-thebe-config";
 	config.id = "thebeConfig";
-	const binderOptions = {
-		repo: repo,
-		ref: ref,
-		repoProvider: repoProvider
-	};
 	/*	switch (kernel) {
 			case "python":
 				kernel = "python";
@@ -39,10 +34,32 @@ function setKernel() {
 				kernel = "octave";
 				break;
 		}*/
+	if (!repo) {
+		switch (kernel) {
 
+			case "python":
+				repo = "LibreTexts/jupyter-python";
+				break;
+			case "r":
+				repo = "LibreTexts/jupyter-r";
+				break;
+			case "octave":
+				repo = "LibreTexts/jupyter-octave";
+				break;
+			case "sagemath":
+				repo = "LibreTexts/jupyter-sagemath";
+				break;
+		}
+	}
+	console.log(repo, ref, repoProvider);
+	const binderOptions = {
+		repo: repo,
+		ref: ref,
+		repoProvider: repoProvider
+	};
 
 	config.textContent = '{' +
-		// 'requestKernel: true, ' +
+		(preload ? 'requestKernel: true,' : '') +
 		`binderOptions: ${JSON.stringify(binderOptions)},` +
 		`kernelOptions: {name: "${kernel}"},` +
 		'selector: "[data-jupyter]",}';

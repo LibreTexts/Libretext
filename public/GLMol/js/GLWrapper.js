@@ -8,7 +8,7 @@ var width = currentScript.dataset.width ? currentScript.dataset.width : "400px";
 var target = document.createElement("div");
 target.id = 'GL' + index;
 
-if(!window["GLloaded"]){
+if (!window["GLloaded"]) {
 	alert('Make sure to set the "Embed GLmol" tag to "yes"  under \'Page settings\' at top of page for this to work');
 }
 
@@ -22,13 +22,15 @@ if (currentScript.dataset.multiple) {
 if (currentScript.attributes.alt) {
 	target.setAttribute("alt", currentScript.attributes.alt.textContent);
 }
-target.onclick = function () {
+function stopSpin() {
 	var current = window[this.id];
 	current.change = 0;
 	// clearTimeout(current.timeout);
 	// current.timeout = setTimeout(function(){current.change = current.speed;
 	// 	window.requestAnimationFrame((timestamp) => step(timestamp, current.id.substr(2)));},5000);
 };
+target.onclick = stopSpin;
+target.ontouchstart = stopSpin;
 target.style.cssText = style;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
@@ -61,7 +63,7 @@ window['GL' + index].rotate = function (dx, dy) {
 };
 
 window['GL' + index].dx = 0;
-window['GL' + index].speed = (currentScript.dataset.speed ? currentScript.dataset.speed : 5)/10000;
+window['GL' + index].speed = (currentScript.dataset.speed ? currentScript.dataset.speed : 5) / 10000;
 window['GL' + index].change = window['GL' + index].speed;
 var step = function (timestamp, index) {
 	if (window['GL' + index].change) {
@@ -77,34 +79,39 @@ function download(query, index) {
 
 	query = query ? query : '=2POR';
 
-	switch (query.substr(0, 1)) {
-		case "$":
-			query = query.substr(1).toUpperCase();
-			uri = "https://cactus.nci.nih.gov/chemical/structure/" + query + "/file?format=sdf&get3d=true";
-			break;
-		case "=":
-			query = query.substr(1).toUpperCase();
-			if (!query.match(/^[1-9][A-Za-z0-9]{3}$/)) {
-				// alert("Wrong PDB ID");
-				return;
-			}
-			uri = "https://files.rcsb.org/view/" + query + ".pdb";
-			break;
-		case ":":
-			query = query.substr(1);
-			if (query.match(/^[0-9]+$/)) {
-				uri = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/" + query +
-					"/record/SDF/";
+	if (query.startsWith("http")) {
+		uri = query;
+	}
+	else {
+		switch (query.substr(0, 1)) {
+			case "$":
+				query = query.substr(1).toUpperCase();
+				uri = "https://cactus.nci.nih.gov/chemical/structure/" + query + "/file?format=sdf&get3d=true";
 				break;
-			}
-			else {
-				uri = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/" + query +
-					"/record/SDF/";
+			case "=":
+				query = query.substr(1).toUpperCase();
+				if (!query.match(/^[1-9][A-Za-z0-9]{3}$/)) {
+					// alert("Wrong PDB ID");
+					return;
+				}
+				uri = "https://files.rcsb.org/view/" + query + ".pdb";
 				break;
-			}
-		default:
-			uri = query;
-			break;
+			case ":":
+				query = query.substr(1);
+				if (query.match(/^[0-9]+$/)) {
+					uri = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/" + query +
+						"/record/SDF/";
+					break;
+				}
+				else {
+					uri = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/" + query +
+						"/record/SDF/";
+					break;
+				}
+			default:
+				uri = query;
+				break;
+		}
 	}
 
 	$.get(uri, function (ret) {
@@ -139,9 +146,9 @@ function defineRepFromController() {
 	const mainchainMode = currentScript.dataset.mainchain;
 	const doNotSmoothen = currentScript.dataset.roughBeta;
 	const sidechains = currentScript.dataset.sidechains;
-	const  hetatmMode= currentScript.dataset.hetatmMode;
+	const hetatmMode = currentScript.dataset.hetatmMode;
 	const showNonBonded = currentScript.dataset.nonbonded;
-	const  baseHetatmMode= currentScript.dataset.baseHetatmMode;
+	const baseHetatmMode = currentScript.dataset.baseHetatmMode;
 	const projectionMode = currentScript.dataset.projectionmode;
 
 	const unitCell = currentScript.dataset.unitcell;
