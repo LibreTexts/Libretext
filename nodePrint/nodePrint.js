@@ -69,7 +69,7 @@ puppeteer.launch({
 					delete working[escapedURL];					//5 min timeout for DUPE
 				}
 
-				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 3.6e6)) { //file exists
+				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 4.32e+7)) { //file exists
 					// 4.32e+7 12 hr
 					console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);

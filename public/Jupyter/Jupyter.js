@@ -18,8 +18,7 @@ function parseJupyterConfig() {
 
 function setKernel() {
 	let kernel = document.currentScript.dataset["kernel"];
-	let preload = document.currentScript.dataset["preload"];
-	let {repo, ref, repoProvider} = parseJupyterConfig();
+	let {repo, ref, repoProvider, preload = document.currentScript.dataset["preload"]} = parseJupyterConfig();
 	let config = document.createElement("script");
 	config.type = "text/x-thebe-config";
 	config.id = "thebeConfig";
@@ -51,7 +50,7 @@ function setKernel() {
 				break;
 		}
 	}
-	console.log(repo, ref, repoProvider);
+	console.log(repo, ref, repoProvider, preload);
 	const binderOptions = {
 		repo: repo,
 		ref: ref,
