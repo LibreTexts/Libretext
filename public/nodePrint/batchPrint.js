@@ -114,7 +114,7 @@ if (!window["batchPrint.js"]) {
 						else {
 							resourceArray.push({
 								title: property,
-								url: object[property].link
+								url: object[property].link +"?contentOnly"
 							});
 						}
 					}
@@ -129,7 +129,7 @@ if (!window["batchPrint.js"]) {
 					title: title,
 					resources: [{
 						title: title,
-						url: root
+						url: root +"?contentOnly"
 					}],
 				});
 			}
