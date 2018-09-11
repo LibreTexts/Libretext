@@ -44,13 +44,13 @@ if (!window["GLloaded"]) {
 	};
 
 	var GLmol = (function () {
-		function GLmol(id, suppressAutoload) {
+		function GLmol(id, suppressAutoload, enabled) {
 			if (id)
-				this.create(id, suppressAutoload);
+				this.create(id, suppressAutoload, enabled);
 			return true;
 		}
 
-		GLmol.prototype.create = function (id, suppressAutoload) {
+		GLmol.prototype.create = function (id, suppressAutoload, enabled) {
 			this.Nucleotides = [
 				'  G',
 				'  A',
@@ -171,7 +171,8 @@ if (!window["GLloaded"]) {
 			this.mouseStartY = 0;
 			this.currentModelPos = 0;
 			this.cz = 0;
-			this.enableMouse();
+			if (enabled)
+				this.enableMouse();
 
 			if (suppressAutoload)
 				return;

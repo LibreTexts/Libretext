@@ -2,8 +2,9 @@ var currentScript = document.currentScript;
 var molecule = currentScript.dataset.id;
 var index = Math.floor(Math.random() * 100000);
 
-var height = currentScript.dataset.height ? currentScript.dataset.height : "400px";
-var width = currentScript.dataset.width ? currentScript.dataset.width : "400px";
+var height = currentScript.dataset.height || "400px";
+var width = currentScript.dataset.width || "400px";
+var enabled = !currentScript.dataset.disabled;
 
 var target = document.createElement("div");
 target.id = 'GL' + index;
@@ -22,6 +23,7 @@ if (currentScript.dataset.multiple) {
 if (currentScript.attributes.alt) {
 	target.setAttribute("alt", currentScript.attributes.alt.textContent);
 }
+
 function stopSpin() {
 	var current = window[this.id];
 	current.change = 0;
@@ -29,8 +31,10 @@ function stopSpin() {
 	// current.timeout = setTimeout(function(){current.change = current.speed;
 	// 	window.requestAnimationFrame((timestamp) => step(timestamp, current.id.substr(2)));},5000);
 };
-target.onclick = stopSpin;
-target.ontouchstart = stopSpin;
+if (enabled) {
+	target.onclick = stopSpin;
+	target.ontouchstart = stopSpin;
+}
 target.style.cssText = style;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
@@ -46,7 +50,7 @@ label2.style.cssText = "position: absolute; top:5px; left:5px; color: dodgerblue
 label2.id = 'GL' + index + 'title';
 target.appendChild(label2);
 
-window['GL' + index] = new GLmol('GL' + index, true);
+window['GL' + index] = new GLmol('GL' + index, true, enabled);
 download(molecule, index);
 
 window['GL' + index].rotate = function (dx, dy) {

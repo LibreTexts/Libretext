@@ -4,6 +4,14 @@ var request = require('request');
 var app = express();
 const nodemailer = require("nodemailer");
 const credentials = require("./credentials.json");
+const md5 = require("md5");
+//credentials.json format
+/*{
+	"secretKey":"recaptcha key",
+	"host":"host",
+	"auth": {"user":"username","pass":"password"},
+	"recipient": "recipient"
+}*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -48,12 +56,12 @@ app.post('/', function (req, res) {
 
 // This will handle 404 requests.
 app.use("*", function (req, res) {
-	console.log("404 "+req.href);
+	console.log("404 " + req.href);
 	res.status(404).send("404");
 });
 
 function send(body) {
-	let {sender, senderName, message, plainMessage, subject} = formatForm(body);
+	let {sender, senderName, message, plainMessage, subject, signature} = formatForm(body);
 	const config = {
 		secure: false, //Required due to misconfigured TLS
 		ignoreTLS: true,
@@ -80,19 +88,22 @@ function send(body) {
 	});
 
 	function formatForm(body) {
+		const signature = md5(JSON.stringify(body)).substring(0,12);
 		let top = body.reason;
 		if (body.library !== "none") {
 			top += " - " + body.library;
 		}
-		const message = `<h3>${body.name}: ${top}</h3><p>${body.message}</p><p>${body.name}</p>`;
+		top += " [" + signature + "]";
+		const message = `<h3>${body.name}: ${top}</h3><p>${body.message}</p><p>From ${body.name}</p>`;
 		const subject = body.name + ": " + top;
-		const plainMessage = subject+"\n"+body.message+"\n\n"+body.name;
+		const plainMessage = subject + "\n" + body.message + "\n\nFrom " + body.name;
 		return {
 			sender: body.email,
 			senderName: body.name,
 			message: message,
 			plainMessage: plainMessage,
-			subject: subject
+			subject: subject,
+			signature: signature
 		};
 	}
 }
