@@ -23,8 +23,8 @@ if (!window["batchPrint.js"]) {
 	const batchPrint = document.getElementById("batchPrint");
 
 	batchPrint.innerHTML = '<button id="batchButton" onclick="batch()" style="margin-right: 2px">Batch</button><button id="batchButton" onClick="thinCC()" style="margin-right: 2px">ThinCC</button>';
-
-	const targetComputer = email === "hdagnew@ucdavis.edu" ? "home.miniland1333.com" : "batch.libretexts.org";
+//email === "hdagnew@ucdavis.edu" ? "home.miniland1333.com" :
+	const targetComputer = "batch.libretexts.org";
 
 	function batch() {
 		if (window["batchComplete"]) {

@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Implemented contact form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ContactForm/contactForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/ContactForm/contactForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ContactForm/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ContactForm/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ContactForm/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ContactForm/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,9 +20,9 @@
     <session id="1881897902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="83" />
-          <entry key="project.open.time.0" value="13" />
-          <entry key="project.open.time.1" value="7" />
+          <entry key="project.closed" value="86" />
+          <entry key="project.open.time.0" value="14" />
+          <entry key="project.open.time.1" value="9" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.5" value="3" />
@@ -31,7 +30,7 @@
           <entry key="project.open.time.7" value="24" />
           <entry key="project.open.time.8" value="8" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="91" />
+          <entry key="project.opened" value="94" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -42,7 +41,7 @@
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="15262" />
+          <entry key="js" value="15276" />
           <entry key="json" value="255" />
           <entry key="sh" value="2" />
           <entry key="txt" value="685" />
@@ -58,7 +57,7 @@
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="255" />
-          <entry key="JavaScript" value="15259" />
+          <entry key="JavaScript" value="15273" />
           <entry key="PLAIN_TEXT" value="738" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="86" />
@@ -74,10 +73,10 @@
           <entry key="css" value="11" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
-          <entry key="gitignore" value="2" />
+          <entry key="gitignore" value="3" />
           <entry key="gitmodules" value="1" />
           <entry key="html" value="6" />
-          <entry key="js" value="127" />
+          <entry key="js" value="129" />
           <entry key="json" value="19" />
           <entry key="log" value="2" />
           <entry key="sh" value="2" />
@@ -92,10 +91,10 @@
           <entry key="CSS" value="11" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
-          <entry key="Git file" value="2" />
+          <entry key="Git file" value="3" />
           <entry key="HTML" value="6" />
           <entry key="JSON" value="19" />
-          <entry key="JavaScript" value="127" />
+          <entry key="JavaScript" value="129" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="XML" value="2" />
           <entry key="YAML" value="4" />
@@ -105,20 +104,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="45" column="26" lean-forward="true" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+            <state relative-caret-position="122">
+              <caret line="86" column="48" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2839">
-              <caret line="46" column="48" lean-forward="true" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+            <state relative-caret-position="56">
+              <caret line="9586" lean-forward="true" selection-start-line="9586" selection-end-line="9586" />
             </state>
           </provider>
         </entry>
@@ -136,8 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>one</find>
-      <find>two</find>
       <find>Updated</find>
       <find>logoclear</find>
       <find>img</find>
@@ -166,6 +163,8 @@
       <find>enableMouse</find>
       <find>suppress</find>
       <find>glmol</find>
+      <find>label</find>
+      <find>define(</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -189,7 +188,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/colors.js" />
         <option value="$PROJECT_DIR$/nodePrint/baseIMG.json" />
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/404.html" />
@@ -234,12 +232,13 @@
         <option value="$PROJECT_DIR$/public/nodePrint/sendPDF.js" />
         <option value="$PROJECT_DIR$/nodePrint/sendPDF.js" />
         <option value="$PROJECT_DIR$/ContactForm/sendPDF.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/ContactForm/contactForm.js" />
         <option value="$PROJECT_DIR$/ContactForm/credentials.json" />
-        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/public/GLmol/js/GLmol.js" />
         <option value="$PROJECT_DIR$/public/GLmol/js/GLWrapper.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
+        <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
       </list>
     </option>
   </component>
@@ -266,10 +265,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="531" />
-    <option name="y" value="-9" />
-    <option name="width" value="822" />
-    <option name="height" value="567" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="2582" />
+    <option name="height" value="1403" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -347,14 +346,13 @@
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
+              <item name="3Dmol" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="GLmol" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="Jupyter" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -371,7 +369,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/ContactForm/credentials.json" />
+    <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.7.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../academy" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -694,7 +692,10 @@
       <workItem from="1536634336769" duration="360000" />
       <workItem from="1536635076796" duration="9000" />
       <workItem from="1536635348440" duration="525000" />
-      <workItem from="1536698810721" duration="536000" />
+      <workItem from="1536698810721" duration="811000" />
+      <workItem from="1536774826838" duration="933000" />
+      <workItem from="1536873028120" duration="660000" />
+      <workItem from="1536886672057" duration="673000" />
     </task>
     <task id="LOCAL-00010" summary="Inital MoleculeGenerator">
       <created>1523514582601</created>
@@ -1075,13 +1076,12 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="453718000" />
+    <option name="totallyTimeSpent" value="456259000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="7" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24924745" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30403373" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1096,7 +1096,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32853025" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.26447368" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.2868421" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.18421052" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
@@ -1228,9 +1228,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/dist/static/bundle.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4148">
@@ -1363,13 +1360,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1196">
-          <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -1401,9 +1391,6 @@
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1482,33 +1469,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="196" selection-start-line="196" selection-end-line="196" />
-          <folding>
-            <element signature="e#499#601#0" />
-            <element signature="e#1058#2144#0" />
-            <element signature="e#2174#2442#0" />
-            <element signature="e#2463#3037#0" />
-            <element signature="e#3040#3069#0" />
-            <element signature="e#3092#6653#0" />
-            <element signature="e#6678#7334#0" />
-          </folding>
+        <state relative-caret-position="184">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2839">
-          <caret line="46" column="48" lean-forward="true" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+        <state relative-caret-position="713">
+          <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="45" column="26" lean-forward="true" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+        <state relative-caret-position="73">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="86" column="48" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="9586" lean-forward="true" selection-start-line="9586" selection-end-line="9586" />
         </state>
       </provider>
     </entry>

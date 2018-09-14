@@ -5321,7 +5321,7 @@ exports.inflateUndermine = inflateUndermine;
 	if (typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if (typeof define === 'function' && define.amd)
-		define([], factory);
+		define("3Dmol", factory);
 	else if (typeof exports === 'object')
 		exports["netcdfjs"] = factory();
 	else
@@ -16319,7 +16319,7 @@ $3Dmol.autoload = function (viewer) {
 
 			//Henry Custom Code
 			const label = document.createElement("div");
-			label.style.cssText = "position: absolute; right:5px; bottom:5px; color: "+(viewerdiv[0].dataset.showLabel?"green":"white")+"; font-family:Segoe UI,Arial,sans-serif; font-size: 20px; z-index:1;";
+			label.style.cssText = "position: absolute; right:5px; bottom:5px; color: "+(viewerdiv[0].dataset.label?"green":"white")+"; font-family:Segoe UI,Arial,sans-serif; font-size: 20px; z-index:1;";
 			label.appendChild(document.createTextNode("3Dmol"));
 			label.title = "Nicholas Rego and David Koes\n" +
 				"3Dmol.js: molecular visualization with WebGL\n" +
