@@ -7,7 +7,7 @@
 	 * @file utf8-utils
 	 * @private
 	 * @author Alexander Rose <alexander.rose@weirdbyte.de>
-	 * mostly copied from https://github.com/creationix/msgpack-js-browser
+	 * mostly copied from https://github.com/creationix/msgpack-js-browser1
 	 * by Tim Caswell <tim@creationix.com>, MIT License, Copyright (c) 2013
 	 */
 

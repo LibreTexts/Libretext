@@ -18,6 +18,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="bd8ae14e-20c9-4b98-b7d8-0d5951748072" name="Batch" url="http://batch.libretexts.org">
+        <fileTransfer host="batch.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

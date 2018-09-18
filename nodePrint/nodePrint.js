@@ -108,10 +108,6 @@ puppeteer.launch({
 						const contents = JSON.parse(body);
 						const zipFilename = filenamify(contents.batchName);
 
-						mkdirp.sync('./PDF/libretexts/' + zipFilename);
-						let urlArray = [contents.root];
-						urlArray = urlArray.concat(addLinks(contents.subpages));
-
 
 						response.writeHead(200, request.headers['host'] === "home.miniland1333.com" ? {
 							"Access-Control-Allow-Origin": request.headers.origin,
@@ -120,45 +116,66 @@ puppeteer.launch({
 							"Content-Type": " application/json",
 						} : {"Content-Type": " application/json"});
 
-						response.write(JSON.stringify({
-							message: "start",
-							percent: 0,
-							eta: "Loading...",
-						}) + "\r\n");
 
-						let count = 0;
-						const start = performance.now();
-						const eta = new Eta(urlArray.length, true);
+						mkdirp.sync('./PDF/libretexts/' + zipFilename);
+						let urlArray = [contents.root];
+						urlArray = urlArray.concat(addLinks(contents.subpages));
 
-						mapLimit(urlArray, 4, async (url) => {
-							await getPDF(url, zipFilename);
-							count++;
-							eta.iterate();
-							response.write(JSON.stringify({
-								message: "progress",
-								percent: (Math.round(count / urlArray.length * 1000) / 10),
-								eta: eta.format("{{etah}}"),
-								// count: count,
-							}) + "\r\n");
-						}, (err, results) => {
-							if (err) throw err;
 
-							const end = performance.now();
-							let time = end - start;
-							time /= 100;
-							time = Math.round(time);
-							time /= 10;
+						fs.stat('./public/ZIP/' + zipFilename + '.zip', (err, stats) => {
+							const hoursCache = 12;
+							if ((!err && Date.now() - stats.mtime < hoursCache * 4.32e+7)) { //file exists
+								// 4.32e+7 12 hr
+								console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${'./PDF/libretexts/' + zipFilename}`);
+								response.write(JSON.stringify({
+									message: "complete",
+									filename: zipFilename + '.zip',
+									timeTaken: "Cache"
+								}));
+								response.end();
+							}
+							else {
+								response.write(JSON.stringify({
+									message: "start",
+									percent: 0,
+									eta: "Loading...",
+								}) + "\r\n");
 
-							console.log(time);
-							mkdirp.sync('./public/ZIP/');
-							zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
+								let count = 0;
+								const start = performance.now();
+								const eta = new Eta(urlArray.length, true);
 
-							response.write(JSON.stringify({
-								message: "complete",
-								filename: zipFilename + '.zip',
-								timeTaken: time
-							}));
-							response.end();
+								mapLimit(urlArray, 2, async (url) => {
+									await getPDF(url, zipFilename);
+									count++;
+									eta.iterate();
+									response.write(JSON.stringify({
+										message: "progress",
+										percent: (Math.round(count / urlArray.length * 1000) / 10),
+										eta: eta.format("{{etah}}"),
+										// count: count,
+									}) + "\r\n");
+								}, (err, results) => {
+									if (err) throw err;
+
+									const end = performance.now();
+									let time = end - start;
+									time /= 100;
+									time = Math.round(time);
+									time /= 10;
+
+									console.log(time);
+									mkdirp.sync('./public/ZIP/');
+									zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
+
+									response.write(JSON.stringify({
+										message: "complete",
+										filename: zipFilename + '.zip',
+										timeTaken: time
+									}));
+									response.end();
+								});
+							}
 						});
 					});
 				}
@@ -225,7 +242,10 @@ puppeteer.launch({
 			let PDFname = escapedURL;
 			try {
 				try {
-					await page.goto(url, {timeout: 30000, waitUntil: ["load", "domcontentloaded", 'networkidle0']});
+					await page.goto(url + "?no-cache", {
+						timeout: 30000,
+						waitUntil: ["load", "domcontentloaded", 'networkidle0']
+					});
 				}
 				catch (err) {
 					console.error(`ERROR  ${timestamp('MM/DD hh:mm', Date.now())} Timeout Exceeded ${url}`);
@@ -340,8 +360,9 @@ puppeteer.launch({
 });
 
 
-function stop(){
+function stop() {
 	Gserver.close();
 	Gbrowser.close();
 }
+
 module.exports = stop;

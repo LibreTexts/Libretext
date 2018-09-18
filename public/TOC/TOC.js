@@ -1,47 +1,73 @@
-function getChildren(HTML) {
-	let JSON = {};
-	if (HTML.children[1]) {
-		HTML = HTML.children[1].children;
+TOC();
 
-		for (let i = 0; i < HTML.length; i++) {
-			let link = HTML[i].children[0];
-			JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
-		}
-	}
-	return JSON;
-}
-
-(function HTMLtoJSON() {
-	let HTML = $("#treeHolder .wiki-tree");
-	let JSON = {};
-	let URL = window.location.href;
-
-	//get content root
-	URL = URL.split("/").slice(0, 6).join("/");
-	if (window.location.href === URL) {
-		//at content root already
-	}
-	HTML = HTML[0].children[0].children;
-	let link;
-
-	//Find Current Libretext
-	for (let i = 0; i < HTML.length; i++) { //for each college
-		if (HTML[i].children[1] && HTML[i].children[1].children) {
-			link = HTML[i].children[1].children; //if contains libretexts
-			for (let j = 0; j < link.length; j++) {
-				if (link[j].children[0].href === URL) {
-					HTML = link[j].children[1].children;
-					break;
+function TOC() {
+	const urlArray = window.location.href.split("/");
+	let coverpage;
+	let coverTitle;
+	let content;
+	if (!window.matchMedia('print').matches) {
+		for (let i = 3; i < urlArray.length; i++) {
+			let path = urlArray.slice(3, i + 1).join("/");
+			let getURL = window.location.origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json";
+			$.get(getURL).done((tags) => {
+				tags = tags.tag.map((tag) => tag["@value"]);
+				if (tags.includes("coverpage:yes") && !coverpage) {
+					coverpage = window.location.origin + path;
+					makeTOC(window.location.origin, path);
 				}
-			}
+			});
 		}
 	}
 
-	for (let i = 0; i < HTML.length; i++) {
-		link = HTML[i].children[0];
-		JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
+	function makeTOC(origin, path) {
+		//get coverpage title & subpages;
+		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").done((info) =>
+			coverTitle = info.title
+		);
+		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json").done((info) =>
+			subpageCallback(info, true)
+		);
+
+		async function subpageCallback(info, isRoot) {
+			const subpageArray = info["page.subpage"];
+			const result = {};
+			const promiseArray = [];
+			for (let i = 0; i < subpageArray.length; i++) {
+				promiseArray.push(subpage(subpageArray[i]));
+			}
+
+			async function subpage(subpage) {
+				let url = subpage["uri.ui"];
+				let path = subpage.path["#text"];
+				let currentPage = url === window.location.href;
+				let defaultOpen = window.location.href.includes(url) && !currentPage;
+				let children = undefined;
+				if (defaultOpen) { //recurse down
+					children = await
+						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+					children = await children.json();
+					children = await
+						subpageCallback(children, false);
+				}
+				result[subpage.title] = {
+					title: subpage.title,
+					link: url,
+					currentPage: currentPage,
+					defaultOpen: defaultOpen,
+					children: children
+				};
+			}
+			await Promise.all(promiseArray);
+			if (isRoot) {
+				content = result;
+				console.log(JSON.stringify(content));
+			}
+			else
+				return result;
+		}
 	}
-	window["TOCTable"] = JSON;
-	window["TOCName"] = URL;
-	console.log(JSON);
-}());
+
+	function initializeFancyTree() {
+
+	}
+}
