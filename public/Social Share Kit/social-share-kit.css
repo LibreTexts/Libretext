@@ -1042,7 +1042,9 @@ a.notSS{
 span.fancytree-has-children >.fancytree-icon:before {
 	content: "\e8b3";
 }
-
+.fancytree-title a{
+	color: #666;
+}
 span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-icon {
 	color: #1a9003;
 }

@@ -10,10 +10,19 @@ function TOC() {
 			let path = urlArray.slice(3, i + 1).join("/");
 			let getURL = window.location.origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json";
 			$.get(getURL).done((tags) => {
-				tags = tags.tag.map((tag) => tag["@value"]);
-				if (tags.includes("coverpage:yes") && !coverpage) {
-					coverpage = window.location.origin + path;
-					makeTOC(window.location.origin, path);
+				if (tags.tag.length) {
+					tags = tags.tag.map((tag) => tag["@value"]);
+					if (tags.includes("coverpage:yes") && !coverpage) {
+						coverpage = window.location.origin + path;
+						makeTOC(window.location.origin, path, true);
+					}
+				}
+				else if (tags.tag) {
+					tags = tags.tag["@value"];
+					if (tags.includes("coverpage:yes") && !coverpage) {
+						coverpage = window.location.origin + path;
+						makeTOC(window.location.origin, path, true);
+					}
 				}
 			});
 		}
@@ -40,9 +49,10 @@ function TOC() {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
 				let currentPage = url === window.location.href;
-				let defaultOpen = full || window.location.href.includes(url) && !currentPage;
-				let children = subpage["@subpages"] === "false" ? [] : undefined;
-				if (defaultOpen) { //recurse down
+				const hasChildren = subpage["@subpages"] === "true";
+				let defaultOpen = window.location.href.includes(url) && !currentPage;
+				let children = hasChildren ? [] : undefined;
+				if (hasChildren && (full || defaultOpen)) { //recurse down
 					children = await
 						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 					children = await children.json();
@@ -50,12 +60,12 @@ function TOC() {
 						subpageCallback(children, false);
 				}
 				result[index] = {
-					title: subpage.title,
+					title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
 					url: url,
 					selected: currentPage,
 					expanded: defaultOpen,
 					children: children,
-					lazy: true
+					lazy: !full
 				};
 			}
 
@@ -72,11 +82,13 @@ function TOC() {
 
 	function initializeFancyTree() {
 		const target = $(".elm-hierarchy.mt-hierarchy");
-		target.addClass("toc-hierarchy");
-		// target.removeClass("elm-hierarchy mt-hierarchy");
-		target.innerHTML = "";
-		target.fancytree({
-			source: content
-		})
+		if (content) {
+			target.addClass("toc-hierarchy");
+			// target.removeClass("elm-hierarchy mt-hierarchy");
+			target.innerHTML = "";
+			target.fancytree({
+				source: content
+			})
+		}
 	}
 }
