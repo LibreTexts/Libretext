@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="RequireJS compatibility fix">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="initial TOC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/TOC/TOC.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/TOC/TOC.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -30,25 +27,25 @@
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.5" value="3" />
-          <entry key="project.open.time.6" value="34" />
+          <entry key="project.open.time.6" value="35" />
           <entry key="project.open.time.7" value="24" />
           <entry key="project.open.time.8" value="8" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="97" />
+          <entry key="project.opened" value="98" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="DOCKERFILE" value="133" />
-          <entry key="css" value="175" />
+          <entry key="css" value="331" />
           <entry key="default" value="19" />
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="17564" />
+          <entry key="js" value="17877" />
           <entry key="json" value="255" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="712" />
+          <entry key="txt" value="723" />
           <entry key="xml" value="1" />
           <entry key="yml" value="86" />
         </counts>
@@ -56,13 +53,13 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="175" />
+          <entry key="CSS" value="331" />
           <entry key="Docker file" value="3" />
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="255" />
-          <entry key="JavaScript" value="17561" />
-          <entry key="PLAIN_TEXT" value="765" />
+          <entry key="JavaScript" value="17874" />
+          <entry key="PLAIN_TEXT" value="776" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="86" />
         </counts>
@@ -74,7 +71,7 @@
           <entry key="Makefile" value="3" />
           <entry key="R" value="1" />
           <entry key="cors" value="1" />
-          <entry key="css" value="11" />
+          <entry key="css" value="12" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
           <entry key="gitignore" value="3" />
@@ -92,7 +89,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="11" />
+          <entry key="CSS" value="12" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
           <entry key="Git file" value="3" />
@@ -108,25 +105,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2898">
-              <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-              <folding>
-                <element signature="e#499#601#0" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#1;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+            <state relative-caret-position="532">
+              <caret line="76" column="30" lean-forward="true" selection-start-line="76" selection-start-column="30" selection-end-line="76" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -197,7 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/baseIMG.json" />
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/404.html" />
         <option value="$PROJECT_DIR$/nodePrint/public/404.html" />
@@ -247,6 +229,7 @@
         <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" />
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
       </list>
     </option>
@@ -356,6 +339,12 @@
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -701,14 +690,8 @@
       <workItem from="1536886672057" duration="813000" />
       <workItem from="1536951323873" duration="4946000" />
       <workItem from="1537154349005" duration="76000" />
-      <workItem from="1537211340828" duration="14030000" />
-    </task>
-    <task id="LOCAL-00011" summary="Added in noborder">
-      <created>1523597214239</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1523597214239</updated>
+      <workItem from="1537211340828" duration="14925000" />
+      <workItem from="1537236498822" duration="5454000" />
     </task>
     <task id="LOCAL-00012" summary="Implemented 3Dmol spin">
       <created>1523599092785</created>
@@ -1046,7 +1029,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536888237153</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="initial TOC">
+      <created>1537232666869</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1537232666870</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1082,13 +1072,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="475451000" />
+    <option name="totallyTimeSpent" value="481800000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26610476" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26971704" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1100,13 +1090,13 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" weight="0.18700266" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32853025" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3276316" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.2631579" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.66973686" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
-      <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3276316" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1196,7 +1186,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added timestamp" />
     <MESSAGE value="Prototype batchPrint" />
     <MESSAGE value="Upgraded message receiving" />
     <MESSAGE value="Added button loader" />
@@ -1221,7 +1210,8 @@
     <MESSAGE value="Initial Recaptcha" />
     <MESSAGE value="Implemented contact form" />
     <MESSAGE value="RequireJS compatibility fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="RequireJS compatibility fix" />
+    <MESSAGE value="initial TOC" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial TOC" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1357,13 +1347,6 @@
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1484">
@@ -1494,9 +1477,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2806">
           <caret line="147" column="70" selection-start-line="147" selection-start-column="70" selection-end-line="147" selection-end-column="70" />
-          <folding>
-            <element signature="e#1932#3019#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1509,7 +1489,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2898">
+        <state relative-caret-position="23">
           <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
           <folding>
             <element signature="e#499#601#0" />
@@ -1519,10 +1499,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="1047" column="1" lean-forward="true" selection-start-line="1047" selection-start-column="1" selection-end-line="1047" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+        <state relative-caret-position="532">
+          <caret line="76" column="30" lean-forward="true" selection-start-line="76" selection-start-column="30" selection-end-line="76" selection-end-column="30" />
         </state>
       </provider>
     </entry>

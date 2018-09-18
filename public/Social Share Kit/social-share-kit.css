@@ -1032,3 +1032,20 @@ a.notSS{
 	height: auto;
 	margin-top: 0;
 }
+
+.mt-icon-hierarchy-trigger-closed:before {
+    content: "\e8a6";
+}
+.fancytree-icon:before {
+	content: "\e8aa";
+}
+span.fancytree-has-children >.fancytree-icon:before {
+	content: "\e8b3";
+}
+
+span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-icon {
+	color: #1a9003;
+}
+.toc-hierarchy > div {
+	display: none;
+}

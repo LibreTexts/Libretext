@@ -19,7 +19,7 @@ function TOC() {
 		}
 	}
 
-	function makeTOC(origin, path) {
+	function makeTOC(origin, path, full) {
 		//get coverpage title & subpages;
 		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").done((info) =>
 			coverTitle = info.title
@@ -30,18 +30,18 @@ function TOC() {
 
 		async function subpageCallback(info, isRoot) {
 			const subpageArray = info["page.subpage"];
-			const result = {};
+			const result = [];
 			const promiseArray = [];
 			for (let i = 0; i < subpageArray.length; i++) {
-				promiseArray.push(subpage(subpageArray[i]));
+				promiseArray[i] = subpage(subpageArray[i], i);
 			}
 
-			async function subpage(subpage) {
+			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
 				let currentPage = url === window.location.href;
-				let defaultOpen = window.location.href.includes(url) && !currentPage;
-				let children = undefined;
+				let defaultOpen = full || window.location.href.includes(url) && !currentPage;
+				let children = subpage["@subpages"] === "false" ? [] : undefined;
 				if (defaultOpen) { //recurse down
 					children = await
 						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
@@ -49,18 +49,21 @@ function TOC() {
 					children = await
 						subpageCallback(children, false);
 				}
-				result[subpage.title] = {
+				result[index] = {
 					title: subpage.title,
-					link: url,
-					currentPage: currentPage,
-					defaultOpen: defaultOpen,
-					children: children
+					url: url,
+					selected: currentPage,
+					expanded: defaultOpen,
+					children: children,
+					lazy: true
 				};
 			}
+
 			await Promise.all(promiseArray);
 			if (isRoot) {
 				content = result;
-				console.log(JSON.stringify(content));
+				console.log(content);
+				initializeFancyTree();
 			}
 			else
 				return result;
@@ -68,6 +71,12 @@ function TOC() {
 	}
 
 	function initializeFancyTree() {
-
+		const target = $(".elm-hierarchy.mt-hierarchy");
+		target.addClass("toc-hierarchy");
+		// target.removeClass("elm-hierarchy mt-hierarchy");
+		target.innerHTML = "";
+		target.fancytree({
+			source: content
+		})
 	}
 }
