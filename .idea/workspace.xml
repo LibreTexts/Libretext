@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="needs lazyloading">
+    <list default="true" id="d92aacc3-b7f9-42a7-b5d4-10a1acb5e96b" name="Default" comment="Disabled Lazyloading for now">
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/headerfooter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/TOC/TOC.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/TOC/TOC.js" afterDir="false" />
@@ -20,32 +22,32 @@
     <session id="1881897902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="89" />
-          <entry key="project.open.time.0" value="14" />
+          <entry key="project.closed" value="93" />
+          <entry key="project.open.time.0" value="17" />
           <entry key="project.open.time.1" value="9" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.5" value="3" />
-          <entry key="project.open.time.6" value="35" />
+          <entry key="project.open.time.6" value="36" />
           <entry key="project.open.time.7" value="24" />
           <entry key="project.open.time.8" value="8" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="98" />
+          <entry key="project.opened" value="103" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="DOCKERFILE" value="133" />
-          <entry key="css" value="375" />
+          <entry key="css" value="698" />
           <entry key="default" value="19" />
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="18063" />
+          <entry key="js" value="18511" />
           <entry key="json" value="255" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="740" />
+          <entry key="txt" value="770" />
           <entry key="xml" value="1" />
           <entry key="yml" value="86" />
         </counts>
@@ -53,13 +55,13 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="375" />
+          <entry key="CSS" value="698" />
           <entry key="Docker file" value="3" />
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="57" />
           <entry key="JSON" value="255" />
-          <entry key="JavaScript" value="18060" />
-          <entry key="PLAIN_TEXT" value="793" />
+          <entry key="JavaScript" value="18508" />
+          <entry key="PLAIN_TEXT" value="823" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="86" />
         </counts>
@@ -71,13 +73,13 @@
           <entry key="Makefile" value="3" />
           <entry key="R" value="1" />
           <entry key="cors" value="1" />
-          <entry key="css" value="14" />
+          <entry key="css" value="16" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
           <entry key="gitignore" value="3" />
           <entry key="gitmodules" value="1" />
           <entry key="html" value="6" />
-          <entry key="js" value="137" />
+          <entry key="js" value="139" />
           <entry key="json" value="19" />
           <entry key="log" value="2" />
           <entry key="sh" value="2" />
@@ -89,13 +91,13 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="14" />
+          <entry key="CSS" value="16" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
           <entry key="Git file" value="3" />
           <entry key="HTML" value="6" />
           <entry key="JSON" value="19" />
-          <entry key="JavaScript" value="137" />
+          <entry key="JavaScript" value="139" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="XML" value="2" />
           <entry key="YAML" value="4" />
@@ -108,17 +110,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+            <state relative-caret-position="368">
+              <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="33" selection-start-column="33" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="1049" column="1" lean-forward="true" selection-start-line="1049" selection-start-column="1" selection-end-line="1049" selection-end-column="1" />
+            <state relative-caret-position="334">
+              <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -128,8 +139,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -189,8 +200,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/colors.json" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/404.html" />
         <option value="$PROJECT_DIR$/nodePrint/public/404.html" />
         <option value="$PROJECT_DIR$/nodePrint/thing.html" />
         <option value="$PROJECT_DIR$/install.sh" />
@@ -238,8 +247,10 @@
         <option value="$PROJECT_DIR$/public/3Dmol/3Dmol-nojquery.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
-        <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.js" />
+        <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
       </list>
     </option>
   </component>
@@ -266,9 +277,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-1448" />
+    <option name="y" value="-8" />
+    <option name="width" value="1456" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -346,13 +358,13 @@
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
+              <item name="TOC" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -699,14 +711,12 @@
       <workItem from="1536951323873" duration="4946000" />
       <workItem from="1537154349005" duration="76000" />
       <workItem from="1537211340828" duration="14925000" />
-      <workItem from="1537236498822" duration="8873000" />
-    </task>
-    <task id="LOCAL-00013" summary="Finished GLmol Spin">
-      <created>1523859777491</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1523859777491</updated>
+      <workItem from="1537236498822" duration="9115000" />
+      <workItem from="1537255690303" duration="11000" />
+      <workItem from="1537288033292" duration="75000" />
+      <workItem from="1537291278732" duration="2671000" />
+      <workItem from="1537296683428" duration="134000" />
+      <workItem from="1537305998309" duration="8150000" />
     </task>
     <task id="LOCAL-00014" summary="Finished donation">
       <created>1524068668165</created>
@@ -1044,7 +1054,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537245053654</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Disabled Lazyloading for now">
+      <created>1537248501455</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1537248501455</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1080,18 +1097,18 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="485219000" />
+    <option name="totallyTimeSpent" value="496502000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="7" />
+    <frame x="-1448" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26971704" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27936962" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3276316" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32714286" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.15657894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.37763157" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1101,7 +1118,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3276316" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.2631579" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.26285714" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.66973686" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.40131578" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
@@ -1194,7 +1211,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Upgraded message receiving" />
     <MESSAGE value="Added button loader" />
     <MESSAGE value="Merged batch and node Print" />
     <MESSAGE value="Polished up Molecule Generator&#10;DefaultZoom disabled" />
@@ -1219,7 +1235,8 @@
     <MESSAGE value="RequireJS compatibility fix" />
     <MESSAGE value="initial TOC" />
     <MESSAGE value="needs lazyloading" />
-    <option name="LAST_COMMIT_MESSAGE" value="needs lazyloading" />
+    <MESSAGE value="Disabled Lazyloading for now" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disabled Lazyloading for now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1233,16 +1250,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Jupyter/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Jupyter/public/503.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="471" column="20" selection-start-line="471" selection-start-column="20" selection-end-line="471" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jupyter/public/404.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -1499,25 +1506,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-          <folding>
-            <element signature="e#499#601#0" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="1049" column="1" lean-forward="true" selection-start-line="1049" selection-start-column="1" selection-end-line="1049" selection-end-column="1" />
+        <state relative-caret-position="22195">
+          <caret line="1037" column="1" selection-start-line="1037" selection-start-column="1" selection-end-line="1037" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="33" selection-start-column="33" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
         </state>
       </provider>
     </entry>

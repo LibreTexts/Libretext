@@ -10,18 +10,20 @@ function TOC() {
 			let path = urlArray.slice(3, i + 1).join("/");
 			let getURL = window.location.origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json";
 			$.get(getURL).done((tags) => {
-				if (tags.tag.length) {
-					tags = tags.tag.map((tag) => tag["@value"]);
-					if (tags.includes("coverpage:yes") && !coverpage) {
-						coverpage = window.location.origin + path;
-						makeTOC(window.location.origin, path, true);
+				if (tags.tag) {
+					if (tags.tag.length) {
+						tags = tags.tag.map((tag) => tag["@value"]);
+						if (tags.includes("coverpage:yes") && !coverpage) {
+							coverpage = window.location.origin + path;
+							makeTOC(window.location.origin, path, true);
+						}
 					}
-				}
-				else if (tags.tag) {
-					tags = tags.tag["@value"];
-					if (tags.includes("coverpage:yes") && !coverpage) {
-						coverpage = window.location.origin + path;
-						makeTOC(window.location.origin, path, true);
+					else {
+						tags = tags.tag["@value"];
+						if (tags.includes("coverpage:yes") && !coverpage) {
+							coverpage = window.location.origin + path;
+							makeTOC(window.location.origin, path, true);
+						}
 					}
 				}
 			});
@@ -72,23 +74,29 @@ function TOC() {
 			await Promise.all(promiseArray);
 			if (isRoot) {
 				content = result;
-				console.log(content);
+				// console.log(content);
 				initializeFancyTree();
 			}
 			else
 				return result;
 		}
-	}
 
-	function initializeFancyTree() {
-		const target = $(".elm-hierarchy.mt-hierarchy");
-		if (content) {
-			target.addClass("toc-hierarchy");
-			// target.removeClass("elm-hierarchy mt-hierarchy");
-			target.innerHTML = "";
-			target.fancytree({
-				source: content
-			})
+		function initializeFancyTree() {
+			const target = $(".elm-hierarchy.mt-hierarchy");
+			if (content) {
+				const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
+				button.text("TOC");
+				button.attr('id',"TOCbutton");
+				button.attr('title',"Expand/Contract Table of Contents");
+				button.addClass("toc-button");
+				target.addClass("toc-hierarchy");
+				// target.removeClass("elm-hierarchy mt-hierarchy");
+				target.innerHTML = "";
+				target.prepend(`<a href="${origin+"/"+path}"><h6>${coverTitle}</h6></a>`);
+				target.fancytree({
+					source: content
+				})
+			}
 		}
 	}
 }

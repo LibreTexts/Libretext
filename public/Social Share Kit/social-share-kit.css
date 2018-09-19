@@ -1033,7 +1033,7 @@ a.notSS{
 	margin-top: 0;
 }
 
-.mt-icon-hierarchy-trigger-closed:before {
+.toc-button.mt-icon-hierarchy-trigger-closed:before {
     content: "\e8a6";
 }
 .fancytree-icon:before {
@@ -1050,4 +1050,17 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 }
 .toc-hierarchy > div {
 	display: none;
+}
+.toc-hierarchy h6 {
+	margin-top: 0;
+	color: #137ac3
+}
+
+@media (min-width: 1000px) {
+	nav.elm-header-global-nav ol.mt-breadcrumbs {
+		max-width: 85% !important;
+	}
+	#TOCbutton {
+		width: auto;
+	}
 }

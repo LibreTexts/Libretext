@@ -1,0 +1,57 @@
+/* Partner Area CSS */
+.partners-logo {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	position: relative;
+	z-index: 1;
+}
+
+.partners-logo a {
+	display: inline-block;
+	max-width: 15%;
+	margin-bottom: 15px;
+}
+#topHeader > ol {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#topHeader > ol > li > a {
+	display: flex;
+	align-items: center;
+	border: 2px solid white;
+	border-radius: 10px;
+	padding: 5px;
+	color: #127bc4;
+	font-size: 0px;
+	transition-duration: .5s;
+}#topHeader > ol > li:last-child {
+	margin-right: 1rem;
+ }
+#topHeader > ol > li > a:hover {
+	font-size: 100%;
+}
+
+#topHeader > ol > li > a > img {
+	width: 25px;
+	height: 25px;
+	margin-right: 2px;
+	object-fit: contain;
+}
+
+@media only screen and (max-width: 767px) {
+	.partners-logo a {
+		max-width: 30%;
+	}
+	#topHeader > ol {
+		flex-wrap: wrap;
+	 }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	.partners-logo a {
+		max-width: 150px;
+	}
+}
