@@ -180,6 +180,9 @@ async function copy() {
 <pre class="script">
 wiki.page("${child.path}", NULL)</pre>
 </div>`;
+
+				let tags = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
+
 				let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/contents?abort=exists", {
 					method: "POST",
 					body: content
@@ -199,6 +202,29 @@ wiki.page("${child.path}", NULL)</pre>
 						break;
 
 				}
+
+				//tags handling
+				tags = await tags;
+				tags = await tags.json();
+				if (tags["@count"] !== "0") {
+					if (tags.tag) {
+						if (tags.tag.length) {
+							tags = tags.tag.map((tag) => tag["@value"]);
+						}
+						else {
+							tags = [tags.tag["@value"]];
+						}
+					}
+					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+					tags = "<tags>" + tags + "</tags>";
+
+					response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
+						method: "PUT",
+						body: tags,
+						headers: new Headers({"Content-Type": "text/xml; charset=utf-8"})
+					});
+				}
+
 				counter++;
 				results.innerText = "Processing: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
 				errors.innerText = errorText;
