@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 const nodemailer = require("nodemailer");
-const credentials = require("./credentials.json");
+const credentials = require("../Bots/credentials.json");
 const md5 = require("md5");
 //credentials.json format
 /*{

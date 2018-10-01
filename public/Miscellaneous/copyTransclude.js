@@ -1,104 +1,133 @@
-display();
+class copyTransclude {
+	static display() {
+		const target = document.createElement("div");
+		let originalURL = "";
+		if(window.location.href.includes("Copy_Transclude?")){
+			originalURL = decodeURIComponent(window.location.href.split("Copy_Transclude?")[1]);
+		}
 
-function display() {
-	const target = document.createElement("div");
-	target.innerHTML = '<div>Source Root URL: <input id="copySource" oninput="reset()"/></div><div>Destination Root URL: <input id="copyDestination" oninput="verify()"/></div><div id="copyOutput"></div><div id="copyResults"></div><div id="copyErrors"></div>';
-	target.id = "copyTranscludeContainer";
-	document.currentScript.parentNode.insertBefore(target, document.currentScript);
-}
+		target.innerHTML = `<div>Source Root URL: <input id="copySource" oninput="copyTransclude.reset()" value="${originalURL}" placeholder="Paste source address here"/></div><div>Destination Root URL: <input id="copyDestination" oninput="copyTransclude.verify()" placeholder="Paste destination address here"/></div><div id="copyOutput"></div><div id="copyResults"></div><div id="copyErrors"></div>`;
+		target.id = "copyTranscludeContainer";
+		document.currentScript.parentNode.insertBefore(target, document.currentScript);
+	}
 
-function reset() {
-	document.getElementById("copyOutput").innerHTML = "";
-	window["copyTree"] = null;
-}
+	static reset() {
+		document.getElementById("copyOutput").innerHTML = "";
+		this.copyTree = null;
+	}
 
-async function verify() {
-	const sourceURL = document.getElementById("copySource").value;
-	const destURL = document.getElementById("copyDestination").value;
-	const sourceArray = sourceURL.split("/");
-	const destArray = destURL.split("/");
+	static getCredentials(subdomain, otherheaders) {
+		let result = otherheaders || {};
+		if (subdomain !== window.location.origin.split("/")[2].split(".")[0]) {
+			result = Object.assign({'X-Deki-Token': this.credentials[subdomain]}, result);
+		}
+		return result;
+	}
 
-	// Valid URL check
-	const sourceValid = checkURL(sourceURL);
+	static async verify() {
+		this.sourceURL = document.getElementById("copySource").value;
+		this.destURL = document.getElementById("copyDestination").value;
+		const sourceArray = this.sourceURL.split("/");
+		const destArray = this.destURL.split("/");
 
-	const destValid = checkURL(destURL);
-	if (sourceValid && destValid) {
+		if (!this.credentials) {
+			let credentials = await fetch("https://awesomefiles.libretexts.org/Miscellaneous/credentials.json");
+			this.credentials = await credentials.json();
+		}
+		const instance = this;
 
-		//Cross Origin Check
-		const crossOrigin = sourceArray.slice(0, 3).join("/") !== destArray.slice(0, 3).join("/");
-		window['copyCrossOrigin'] = crossOrigin;
+		// Valid URL check
+		const sourceValid = checkURL(this.sourceURL);
+		const destValid = checkURL(this.destURL);
 
-		//Check if coverpage
-		let origin = sourceArray.slice(0, 3).join("/");
-		let path = sourceArray.slice(3, sourceArray.length).join("/");
-		const isCover = isCoverpage(origin, path);
+		if (sourceValid && destValid) {
+			//Cross Origin Check
+			this.Sorigin = sourceArray.slice(0, 3).join("/");
+			this.Dorigin = destArray.slice(0, 3).join("/");
+			this.Ssubdomain = this.Sorigin.split("/")[2].split(".")[0];
+			this.Dsubdomain = this.Dorigin.split("/")[2].split(".")[0];
+			this.crossOrigin = this.Sorigin !== this.Dorigin;
 
-		const tree = getTree(origin, path);
+			//Check if coverpage
+			let path = sourceArray.slice(3, sourceArray.length).join("/");
+			const isCover = isCoverpage(this.Sorigin, path);
 
-		let coverTitle = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json");
+			const tree = getTree(this.Sorigin, path);
 
-		document.getElementById("copyOutput").innerHTML = `<div>Confirmed LibreText coverpage: ${await isCover}</div>
-<div>Cross Library: ${crossOrigin}</div>
+			let coverTitle = fetch(this.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json", {
+				headers: this.getCredentials(instance.Ssubdomain)
+			});
+
+			document.getElementById("copyOutput").innerHTML = `<div>Confirmed LibreText coverpage: ${await isCover}</div>
+<div>Cross Library: ${this.crossOrigin}</div>
 <div id="copyTreeHolder"></div>
 <div>Pages under the Destination Root URL that already exist <i>will not be overwritten</i> for safety reasons.</div>
-<button id="copyVerify" onclick="copy()">Copy to Destination Root</button>`;
+<button id="copyVerify" onclick="copyTransclude.copy()">Copy to Destination Root</button>`;
 
-		await initializeFancyTree(origin, path, await tree, await coverTitle);
-	}
-	else {
-		const bothInvalid = !sourceValid && !destValid;
-		let endText = "";
-		if (bothInvalid)
-			endText = "both URLs";
-		else if (!sourceValid)
-			endText = "source URL";
-		else if (!destValid)
-			endText = "destination URL";
-		document.getElementById("copyOutput").innerText = "URLs are not valid LibreTexts URLs. Please check " + endText + ".";
-	}
-
-
-	/*Function Zone*/
-	function checkURL(url) {
-		if (url) {
-			let urlArray = url.split("/");
-			if (urlArray && urlArray.length >= 2) {
-				return urlArray[2].includes("libretexts.org");
-			}
+			await this.initializeFancyTree(this.Sorigin, path, await tree, await coverTitle);
 		}
-		return false;
-	}
-
-	async function isCoverpage(origin, path) {
-		let tags = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json");
-		tags = await
-			tags.json();
-		if (tags.tag) {
-			if (tags.tag.length) {
-				tags = tags.tag.map((tag) => tag["@value"]);
-			}
-			else {
-				tags = tags.tag["@value"];
-			}
-			return tags.includes("coverpage:yes")
+		else {
+			const bothInvalid = !sourceValid && !destValid;
+			let endText = "";
+			if (bothInvalid)
+				endText = "both URLs";
+			else if (!sourceValid)
+				endText = "source URL";
+			else if (!destValid)
+				endText = "destination URL";
+			document.getElementById("copyOutput").innerText = "URLs are not valid LibreTexts URLs. Please check " + endText + ".";
 		}
-		return false;
-	}
 
-	async function getTree(origin, path) {
-		let tree = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
-		const relativePath = path;
-		tree = await tree.json();
-		return await subpageCallback(tree, true);
 
-		async function subpageCallback(info, isRoot) {
-			const subpageArray = info["page.subpage"];
-			const result = [];
-			const promiseArray = [];
-			if (subpageArray && subpageArray.length) {
-				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
+		/*Function Zone*/
+		function checkURL(url) {
+			if (url) {
+				let urlArray = url.split("/");
+				if (urlArray && urlArray.length >= 2) {
+					return urlArray[2].includes("libretexts.org");
 				}
+			}
+			return false;
+		}
+
+		async function isCoverpage(origin, path) {
+
+			let tags = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json", {
+				headers: instance.getCredentials(instance.Ssubdomain)
+			});
+			tags = await
+				tags.json();
+			if (tags.tag) {
+				if (tags.tag.length) {
+					tags = tags.tag.map((tag) => tag["@value"]);
+				}
+				else {
+					tags = tags.tag["@value"];
+				}
+				return tags.includes("coverpage:yes")
+			}
+			return false;
+		}
+
+		async function getTree(origin, path) {
+			let tree = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json", {
+				headers: instance.getCredentials(instance.Ssubdomain)
+			});
+			const relativePath = path;
+			tree = await tree.json();
+			return await subpageCallback(tree, true);
+
+			async function subpageCallback(info, isRoot) {
+				const subpageArray = info["page.subpage"];
+				const result = [];
+				const promiseArray = [];
+				if (subpageArray && subpageArray.length) {
+					for (let i = 0; i < subpageArray.length; i++) {
+						promiseArray[i] = subpage(subpageArray[i], i);
+					}
+					await Promise.all(promiseArray);
+				}
+				return result;
 
 				async function subpage(subpage, index) {
 					let url = subpage["uri.ui"];
@@ -107,7 +136,9 @@ async function verify() {
 					let children = [];
 					if (hasChildren) { //recurse down
 						children = await
-							fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+							fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json", {
+								headers: instance.getCredentials(instance.Ssubdomain)
+							});
 						children = await children.json();
 						children = await
 							subpageCallback(children, false);
@@ -122,14 +153,11 @@ async function verify() {
 						children: children
 					};
 				}
-
-				await Promise.all(promiseArray);
 			}
-			return result;
 		}
 	}
 
-	async function initializeFancyTree(origin, path, tree, coverTitle) {
+	static async initializeFancyTree(origin, path, tree, coverTitle) {
 		const target = $("#copyTreeHolder");
 		if (tree) {
 			target.innerHTML = "";
@@ -144,48 +172,101 @@ async function verify() {
 				expanded: true,
 				children: tree
 			}];
-			window["copyTree"] = source;
+			this.copyTree = source;
 			target.fancytree({
 				source: source
 			});
 			console.log(source);
 		}
 	}
-}
 
 
-async function copy() {
-	let destRoot = document.getElementById("copyDestination").value;
-	destRoot = destRoot.replace(/\/$/, ""); //removes trailing slash if any
-	const tree = window["copyTree"];
-	const results = document.getElementById("copyResults");
-	const errors = document.getElementById("copyErrors");
-	results.innerText = "Processing";
-	let counter = 0;
-	let failedCounter = 0;
-	let errorText = "";
+	static async copy() {
+		let destRoot = this.destURL;
+		destRoot = destRoot.replace(/\/$/, ""); //removes trailing slash if any
+		const tree = this.copyTree;
+		const results = document.getElementById("copyResults");
+		const errors = document.getElementById("copyErrors");
+		results.innerText = "Processing";
+		let counter = 0;
+		let failedCounter = 0;
+		let errorText = "";
 
-	await doCopy(destRoot, tree);
-	results.innerText = "Finished: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
 
-	async function doCopy(destRoot, tree) {
-		for (let i = 0; i < tree.length; i++) {
-			const child = tree[i];
-			if (!window["copyCrossOrigin"]) {
+		const instance = this;
+		await doCopy(destRoot, tree);
+		results.innerText = "Finished: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
+
+		function decodeHTML(content) {
+			let ret = content.replace(/&gt;/g, '>');
+			ret = ret.replace(/&lt;/g, '<');
+			ret = ret.replace(/&quot;/g, '"');
+			ret = ret.replace(/&apos;/g, "'");
+			ret = ret.replace(/&amp;/g, '&');
+			return ret;
+		}
+
+		async function doCopy(destRoot, tree) {
+
+			for (let i = 0; i < tree.length; i++) {
+				const child = tree[i];
 				const destArray = destRoot.split("/");
-				let origin = destArray.slice(0, 3).join("/");
 				let path = destArray.slice(3, destArray.length).join("/");
 
-				const content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
+				//get pageID
+				let pageID = fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json", {
+					headers: instance.getCredentials(instance.Ssubdomain)
+				});
+
+				//get Tags
+				let copyContent = false;
+				let tags = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json", {
+					headers: instance.getCredentials(instance.Ssubdomain)
+				});
+				tags = await tags.json();
+				if (tags["@count"] !== "0") {
+					if (tags.tag) {
+						if (tags.tag.length) {
+							tags = tags.tag.map((tag) => tag["@value"]);
+						}
+						else {
+							tags = [tags.tag["@value"]];
+						}
+					}
+					copyContent = tags.includes("article:topic-category") || tags.includes("article:topic-guide");
+					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+					tags = "<tags>" + tags + "</tags>";
+				}
+
+				//copy Content
+				let content;
+				pageID = await pageID;
+				pageID = await pageID.json();
+
+				if (copyContent) {
+					content = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw", {
+						headers: instance.getCredentials(instance.Ssubdomain)
+					});
+					content = await content.text();
+					content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+					content = decodeHTML(content);
+				}
+				else {
+					content = !instance.crossOrigin ? `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
 <pre class="script">
 wiki.page("${child.path}", NULL)</pre>
-</div>`;
+</div>` :
+						`<p class="mt-script-commentclassNamess Library Transclusion</p>
 
-				let tags = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
+<pre class="script">
+templateclassNamessTransclude/Web',{'Library':'${instance.Ssubdomain}','PageID':${pageID});
+template('TranscludeAutoNumTitle');</pre>`;
+				}
 
-				let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/contents?abort=exists", {
+				let response = await fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/contents?abort=exists", {
 					method: "POST",
-					body: content
+					body: content,
+					headers: instance.getCredentials(instance.Dsubdomain)
 				});
 				if (response.status >= 400) {
 					failedCounter++;
@@ -203,34 +284,76 @@ wiki.page("${child.path}", NULL)</pre>
 
 				}
 
-				//tags handling
-				tags = await tags;
-				tags = await tags.json();
-				if (tags["@count"] !== "0") {
-					if (tags.tag) {
-						if (tags.tag.length) {
-							tags = tags.tag.map((tag) => tag["@value"]);
-						}
-						else {
-							tags = [tags.tag["@value"]];
+				//copy Tags
+				fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
+					method: "PUT",
+					body: tags,
+					headers: instance.getCredentials(instance.Dsubdomain, {"Content-Type": "text/xml; charset=utf-8"})
+				}).then();
+
+				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json", {
+					headers: instance.getCredentials(instance.Ssubdomain)
+				}).then(async (response) => {
+					let content = await response.json();
+					if (content["@count"] !== "0") {
+						if (content.property) {
+							if (content.property.length) {
+								content = content.property.map((property) => {
+									return {name: property["@name"], value: property["contents"]["#text"]}
+								});
+							}
+							else {
+								content = [{
+									name: content.property["@name"],
+									value: content.property["contents"]["#text"]
+								}];
+							}
 						}
 					}
-					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
-					tags = "<tags>" + tags + "</tags>";
+					for (let i = 0; i < content.length; i++) {
+						switch (content[i].name) {
+							//subpageListing check
+							case "mindtouch.idf#subpageListing":
+								if (tags.includes("article:topic-category")) {
+									fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+										method: "POST",
+										body: content[i].value,
+										headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+									}).then();
+								}
+								break;
+							//subpageListing check
+							case "mindtouch.idf#guideDisplay":
+								if (tags.includes("article:topic-guide")) {
+									fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+										method: "POST",
+										body: content[i].value,
+										headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+									}).then();
+								}
+								break;
+							//pagecontent
+							case "mindtouch.page#overview":
+							case "mindtouch#idf.guideTabs":
+							// case "mindtouch.idf#product-image": NEED FILE TRANSFER
+								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+									method: "POST",
+									body: content[i].value,
+									headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+								}).then();
+								break;
+						}
+					}
+				});
 
-					response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
-						method: "PUT",
-						body: tags,
-						headers: new Headers({"Content-Type": "text/xml; charset=utf-8"})
-					});
-				}
 
 				counter++;
 				results.innerText = "Processing: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
 				errors.innerText = errorText;
 				await doCopy(destRoot, child.children);
-
 			}
 		}
 	}
 }
+
+copyTransclude.display();
