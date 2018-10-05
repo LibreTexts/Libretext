@@ -15,7 +15,7 @@
 	function copyTranscludeOption() {
 		let copy = document.getElementsByClassName("mt-user-menu-copy-page");
 		if (copy.length) {
-			let original = document.getElementsByClassName("mt-user-menu-copy-page")[0]
+			let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
 			copy = original.cloneNode(true);
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Copy_Transclude?" + encodeURIComponent(window.location.href);
