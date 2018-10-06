@@ -13,6 +13,7 @@ const mkdirp = require('mkdirp');
 const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
+const fetch = require('node-fetch');
 
 var Gbrowser;
 var Gserver;
@@ -92,7 +93,7 @@ puppeteer.launch({
 		}
 		else if (url.startsWith("/Libretext=")) {
 			if (request.headers.origin.endsWith("libretexts.org")) {
-				if (request.headers.host === "home.miniland1333.com" && request.method === "OPTIONS") { //options checking
+				if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 					response.writeHead(200, {
 						"Access-Control-Allow-Origin": request.headers.origin,
 						"Access-Control-Allow-Methods": "PUT",
@@ -109,7 +110,7 @@ puppeteer.launch({
 						const zipFilename = filenamify(contents.batchName);
 
 
-						response.writeHead(200, request.headers['host'] === "home.miniland1333.com" ? {
+						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 							"Access-Control-Allow-Origin": request.headers.origin,
 							"Access-Control-Allow-Methods": "PUT",
 							// "Transfer-Encoding": "chunked",
@@ -220,10 +221,61 @@ puppeteer.launch({
 			return array;
 		}
 
+		async function getCC(url, subdomain) {
+			let sourceArray = url.split("/");
+			let path = sourceArray.slice(3, sourceArray.length).join("/");
+			let tags = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags?dream.out.format=json`);
+			tags = await tags.text();
+			if (tags) {
+				tags = JSON.parse(tags);
+				if (tags.tag) {
+					if (tags.tag.length) {
+						tags = tags.tag.map((tag) => tag["@value"]);
+					}
+					else {
+						tags = tags.tag["@value"];
+					}
+				}
+
+				for (let i = 0; i < tags.length; i++) {
+					if (tags[i].includes("license")) {
+						let tag = tags[i].split(":")[1];
+						switch (tag) {
+							case "publicdomain":
+								return {label: "CC-PublicDomain", link: "#"};
+							case "ccby":
+								return {label: "CC-BY", link: "https://creativecommons.org/licenses/by/4.0/"};
+							case "ccbysa":
+								return {label: "CC-BY-SA", link: "https://creativecommons.org/licenses/by-sa/4.0/"};
+							case "ccbyncsa":
+								return {
+									label: "CC-BY-NC-SA",
+									link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+								};
+							case "ccbync":
+								return {label: "CC-BY-NC", link: "https://creativecommons.org/licenses/by-nc/4.0/"};
+							case "ccbynd":
+								return {label: "CC-BY-ND", link: "https://creativecommons.org/licenses/by-nd/4.0/"};
+							case "ccbyncnd":
+								return {
+									label: "CC-BY-NC-ND",
+									link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+								};
+							case "gnu":
+								return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
+
+						}
+					}
+				}
+			}
+			return null; //not found
+		}
+
 		async function getPDF(url, directory) {
 			const start = performance.now();
 			console.log(`NEW    ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 			// const browser = await puppeteer.launch();
+
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
 				if (!page.isClosed)
@@ -279,6 +331,7 @@ puppeteer.launch({
 				prefix = prefix ? prefix + "." : "";
 				const attribution = "";
 				// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
+				let license = getCC(url, subdomain);
 
 				const cssb = [];
 				cssb.push('<style>');
@@ -303,9 +356,13 @@ puppeteer.launch({
 					`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
 					'</div>';
 
-				//<div  class='added'><a href="hclassName//creativecommons.org/licenses/by-nc-sa/3.0/us/">CC BY-NC-SA 3.0 US</a></div>
+
+				license = await license;
+
 				const style2 = `<div id="mainF">` +
-					`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>` +
+					// `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>` +
+					(license ? `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'><a href="${license.link}">${license.label}</a></div>`
+						: `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>`) +
 					`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 					`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
 					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
