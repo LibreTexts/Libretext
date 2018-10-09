@@ -9,7 +9,7 @@
     "three": "^0.89.0"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify-css": "^0.14.0"

@@ -85,7 +85,7 @@ function TOC() {
 			const target = $(".elm-hierarchy.mt-hierarchy");
 			if (content) {
 				const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
-				button.text("TOC");
+				button.text("Contents");
 				button.attr('id',"TOCbutton");
 				button.attr('title',"Expand/Contract Table of Contents");
 				button.addClass("toc-button");
