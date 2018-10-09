@@ -2,7 +2,7 @@ const stop = require('./nodePrint');
 const expect = require('chai').expect;
 const request = require('request');
 
-before(function(done){
+before(function (done) {
 	setTimeout(function () {
 		console.log("Done!");
 		done();
@@ -32,11 +32,8 @@ function customTest(string, path, status) {
 		request.get(`http://localhost:${port}/${path}`, function (err, res, body) {
 			if (err) {
 				console.error(err);
-				expect(false).to.equal(true);
 			}
-			else {
-				expect(res.statusCode).to.equal(status);
-			}
+			expect(res.statusCode).to.equal(status);
 			done();
 		});
 	});
