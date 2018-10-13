@@ -43,7 +43,7 @@
     "rimraf": "^2.6.0",
     "style-loader": "^0.20.3",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.11.2"
+    "webpack-dev-server": "^2.11.3"
   },
   "dependencies": {
     "babel-eslint": "^7.1.1",

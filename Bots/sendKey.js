@@ -30,7 +30,7 @@ function handler(request, response) {
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});
 
-				const user = "=hdagnew@ucdavis.edu";
+				const user = "=Hank";
 				const crypto = require('crypto');
 				const hmac = crypto.createHmac('sha256', secrets.chem.secret);
 				const epoch = Math.floor(Date.now() / 1000);

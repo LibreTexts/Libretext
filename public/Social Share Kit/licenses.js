@@ -26,6 +26,7 @@
 		let tags = document.getElementById("pageTagsHolder");
 		if (tags) {
 			tags = tags.innerText;
+			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
 			for (let i = 0; i < tags.length; i++) {
 				if (tags[i].includes("license")) {
@@ -46,7 +47,7 @@
 						case "ccbyncnd":
 							return {label: "cc-by-nc-nd", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"};
 						case "gnu":
-							return {label: "gnu", link:"https://www.gnu.org/licenses/gpl-3.0.en.html"};
+							return {label: "gnu", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
 
 					}
 				}
@@ -57,7 +58,7 @@
 
 	function socialShareConfig() {
 		if ($(".elm-social-share").length) {
-			$(".elm-social-share")[0].innerHTML = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><a id="printme" class="material-icons notSS" href="" target="_blank">picture_as_pdf</a><div id="batchPrint"></div><a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate">Donate</a></div>';
+			$(".elm-social-share")[0].innerHTML = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><a id="printme" class="material-icons notSS" href="" target="_blank" title="Get a PDF of this page">picture_as_pdf</a><div id="batchPrint"></div><a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
 			SocialShareKit.init();
 			window.DonorBox = {widgetLinkClassName: 'custom-dbox-popup'};
 		}

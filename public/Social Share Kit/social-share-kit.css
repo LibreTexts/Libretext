@@ -57,8 +57,9 @@
 #donate {
 	background-color: green;
 	color: white;
-	display: inline-block;
-	padding: 7px;
+	display: flex;
+	padding: 5px;
+	align-items: center;
 	font-size: 80%;
 }
 
@@ -1072,6 +1073,27 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 	display: none;
 }
 
+#batchPrint{
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+}
+
+#thinCC {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: darkred;
+	padding: 5px;
+	color: white;
+	font-size: 80%;
+	margin: 0;
+	width: unset;
+	height: unset;
+}
+#thinCC:hover {
+	background: #650000;
+}
 
 #TOCbutton {
 	margin: 2px;
