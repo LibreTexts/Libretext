@@ -1,12 +1,14 @@
 (function () {
 	function fn() {
 		const cc = getCC();
-		if (cc !== null) {
+		if (cc) {
 			const thing = document.createElement("li");
 			thing.classList.add("pageInfo");
 			if (cc.label === "gnu") {
 				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><img style="height: 30px" src="https://awesomefiles.libretexts.org/Social Share Kit/gpl.png"/></a>`;
-
+			}
+			if (cc.label === "gnudls") {
+				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><p style="color: black; font-size: small">GNU Design Science License</p></a>`;
 			}
 			else {
 				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><i class='cc ${cc.label}'></i></a>`;
@@ -48,6 +50,8 @@
 							return {label: "cc-by-nc-nd", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"};
 						case "gnu":
 							return {label: "gnu", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
+						case "gnudls":
+							return {label: "gnudls", link: "https://www.gnu.org/licenses/dsl.html"};
 
 					}
 				}

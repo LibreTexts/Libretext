@@ -181,11 +181,11 @@ puppeteer.launch({
 					});
 				}
 				else {
-					responseError(406, request.method + " Not Acceptable")
+					responseError(request.method + " Not Acceptable",406)
 				}
 			}
 			else {
-				responseError(403, "CORS Error " + request.headers.origin);
+				responseError("CORS Error " + request.headers.origin, 403);
 			}
 		}
 		else { //static server
@@ -263,7 +263,8 @@ puppeteer.launch({
 								};
 							case "gnu":
 								return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
-
+							case "gnudls":
+								return {label: "gnudls", link: "https://www.gnu.org/licenses/dsl.html"};
 						}
 					}
 				}
