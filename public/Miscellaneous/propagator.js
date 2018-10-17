@@ -32,21 +32,20 @@ class propagator {
 					}
 
 					//Get Contents
-					let content = await propagator.getContent(subdomain, path);
+					try {
+						let content = await propagator.getContent(subdomain, path);
 
-					//Propagatate
-					let promiseArray = [];
-					this.reset();
-					const authen = atob(document.getElementById("user").value + ":" + document.getElementById("password").value);
-					for (let i = 0; i < otherArray.length; i++) {
-						this.loader(otherArray[i], "Propagating...");
-						promiseArray.push(propagator.propagatePage(otherArray[i], path, content, authen));
-					}
-					await Promise.all(promiseArray);
-
-					// this.reset();
-					for (let i = 0; i < otherArray.length; i++) {
-						// this.loader(otherArray[i], "Complete!");
+						//Propagatate
+						let promiseArray = [];
+						this.reset();
+						const authen = btoa(document.getElementById("user").value + ":" + document.getElementById("password").value);
+						for (let i = 0; i < otherArray.length; i++) {
+							this.loader(otherArray[i], "Propagating...");
+							promiseArray.push(propagator.propagatePage(otherArray[i], path, content, authen));
+						}
+						await Promise.all(promiseArray);
+					} catch (e) {
+						alert(e);
 					}
 				}
 			}
@@ -58,6 +57,9 @@ class propagator {
 
 	static async getContent(subdomain, path) {
 		let content = await fetch("https://" + subdomain + ".libretexts.org/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?mode=raw");
+		if (!content.ok) {
+			throw "Could not get content from https://" + subdomain + ".libretexts.org" + path;
+		}
 		content = await content.text();
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		return decodeHTML(content);
@@ -73,19 +75,27 @@ class propagator {
 	}
 
 	static async propagatePage(subdomain, path, content, authenticate) {
-		this.loader(subdomain, content);
-
-		let response = await fetch(subdomain + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/contents", {
+		let response = await fetch("https://" + subdomain + ".libretexts.org/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?authenticate=true", {
 			method: "POST",
 			body: content,
-			headers: {"Authentication": "Basic "}
+			credentials: 'include',
+			headers: {"Authorization": "Basic " + authenticate}
 		});
+		let target = document.getElementById("results" + subdomain);
+		target = target.getElementsByClassName("loaderStatus")[0];
+		if (response.ok) {
+			target.innerHTML = `Propagated to ${subdomain}.libretexts.org/${path}!`;
+		}
+		else {
+			target.innerHTML = "Error propagating to " + subdomain;
+		}
 	}
 
 	static loader(subdomain, status) {
 		let thing = document.createElement("div");
 		thing.id = "results" + subdomain;
-		thing.innerHTML = `<img src="https://static.libretexts.org/img/LibreTexts/glyphs_blue/${subdomain}.png"><div>${status}</div>`;
+		thing.classList.add("propagatorLoader");
+		thing.innerHTML = `<img src="https://static.libretexts.org/img/LibreTexts/glyphs_blue/${subdomain}.png"><div class="loaderStatus">${status}</div>`;
 		document.getElementById("copyResults").appendChild(thing);
 	}
 

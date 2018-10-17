@@ -1114,3 +1114,14 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 		width: auto;
 	}
 }
+
+div.propagatorLoader {
+    display: flex;
+    margin: 10px;
+}
+
+.loaderStatus {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+}
