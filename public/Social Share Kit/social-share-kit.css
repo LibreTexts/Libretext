@@ -35,7 +35,16 @@
 	.elm-meta-top .mt-article-pagination * {
 		display: none;
 	}
+	.mt-author-container {
+		background: #f0f0f0;
+		border-radius: .5em;
+	}
 }
+/*GeoGebra fix*/
+section.mt-content-container {
+	height: auto!important
+}
+
 
 .elm-meta-top .mt-article-pagination a {
 	width: auto;

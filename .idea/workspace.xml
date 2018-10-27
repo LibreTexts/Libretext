@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,37 +23,37 @@
     <session id="1881897902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="148" />
+          <entry key="project.closed" value="159" />
           <entry key="project.open.time.0" value="26" />
-          <entry key="project.open.time.1" value="16" />
-          <entry key="project.open.time.10" value="4" />
-          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.1" value="18" />
+          <entry key="project.open.time.10" value="6" />
+          <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.2" value="3" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="6" />
           <entry key="project.open.time.6" value="43" />
-          <entry key="project.open.time.7" value="33" />
-          <entry key="project.open.time.8" value="16" />
+          <entry key="project.open.time.7" value="36" />
+          <entry key="project.open.time.8" value="19" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="155" />
+          <entry key="project.opened" value="167" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="DOCKERFILE" value="133" />
-          <entry key="css" value="1117" />
+          <entry key="css" value="1154" />
           <entry key="default" value="19" />
           <entry key="dockerignore" value="3" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="30290" />
+          <entry key="js" value="30431" />
           <entry key="json" value="271" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="1073" />
+          <entry key="txt" value="1109" />
           <entry key="xml" value="1" />
           <entry key="yml" value="86" />
         </counts>
@@ -58,13 +61,13 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="CSS" value="1117" />
+          <entry key="CSS" value="1154" />
           <entry key="Docker file" value="3" />
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="69" />
           <entry key="JSON" value="271" />
-          <entry key="JavaScript" value="30275" />
-          <entry key="PLAIN_TEXT" value="1126" />
+          <entry key="JavaScript" value="30416" />
+          <entry key="PLAIN_TEXT" value="1162" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="86" />
         </counts>
@@ -76,13 +79,13 @@
           <entry key="Makefile" value="3" />
           <entry key="R" value="1" />
           <entry key="cors" value="1" />
-          <entry key="css" value="22" />
+          <entry key="css" value="25" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
           <entry key="gitignore" value="5" />
           <entry key="gitmodules" value="1" />
           <entry key="html" value="10" />
-          <entry key="js" value="219" />
+          <entry key="js" value="230" />
           <entry key="json" value="44" />
           <entry key="log" value="2" />
           <entry key="png" value="1" />
@@ -95,14 +98,14 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="3" />
-          <entry key="CSS" value="22" />
+          <entry key="CSS" value="25" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
           <entry key="Git file" value="5" />
           <entry key="HTML" value="10" />
           <entry key="Image" value="1" />
           <entry key="JSON" value="44" />
-          <entry key="JavaScript" value="219" />
+          <entry key="JavaScript" value="230" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="XML" value="2" />
           <entry key="YAML" value="4" />
@@ -112,29 +115,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="81" column="36" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
+            <state relative-caret-position="3404">
+              <caret line="148" column="52" selection-start-line="148" selection-start-column="51" selection-end-line="148" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+            <state relative-caret-position="358">
+              <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+        <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
-              <caret line="8" column="105" selection-start-line="8" selection-start-column="105" selection-end-line="8" selection-end-column="128" />
+              <caret line="201" column="103" selection-start-line="201" selection-start-column="103" selection-end-line="201" selection-end-column="103" />
+              <folding>
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,8 +160,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pagesc</find>
-      <find>path</find>
       <find>added</find>
       <find>tags</find>
       <find>console.log</find>
@@ -162,19 +167,16 @@
       <find>request</find>
       <find>tocbu</find>
       <find>batch</find>
-      <find>print</find>
       <find>batchPrint</find>
       <find>hover</find>
       <find>thincc</find>
       <find>replace</find>
       <find>img</find>
       <find>license</find>
-      <find>miniland</find>
       <find>responseerror</find>
       <find>display</find>
       <find>ok</find>
       <find>error</find>
-      <find>copySource</find>
       <find>split</find>
       <find>array</find>
       <find>raw</find>
@@ -183,6 +185,11 @@
       <find>atob</find>
       <find>copy</find>
       <find>child</find>
+      <find>relativePath</find>
+      <find>copySource</find>
+      <find>miniland</find>
+      <find>print</find>
+      <find>contentOnly</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -247,18 +254,18 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/license.js" />
         <option value="$PROJECT_DIR$/Bots/test.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/test.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" />
-        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/Bots/credentials.json" />
         <option value="$PROJECT_DIR$/Bots/sendKey.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/propagator.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css" />
       </list>
     </option>
   </component>
@@ -269,6 +276,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/Bots/node_modules" />
+    <handled-path value="$PROJECT_DIR$/ContactForm/node_modules" />
+    <handled-path value="$PROJECT_DIR$/Jupyter/node_modules" />
+    <handled-path value="$PROJECT_DIR$/nodePrint/node_modules" />
     <handled-path value="$PROJECT_DIR$/public/MoleculeGenerator/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
@@ -283,10 +294,9 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="418" />
-    <option name="y" value="-26" />
-    <option name="width" value="2762" />
-    <option name="height" value="1770" />
+    <option name="y" value="-33" />
+    <option name="width" value="2586" />
+    <option name="height" value="1467" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -374,7 +384,7 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Bots" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -385,7 +395,7 @@
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Social Share Kit" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -438,120 +448,6 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/Converter/package-lock.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/Miscellaneous/propagator.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/Skele/package-lock.json</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -900,13 +796,18 @@
       <workItem from="1539666989670" duration="1469000" />
       <workItem from="1539668688513" duration="2704000" />
       <workItem from="1539721561315" duration="3068000" />
-    </task>
-    <task id="LOCAL-00024" summary="Initial Page PDF Live">
-      <created>1530738730335</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1530738730335</updated>
+      <workItem from="1539750079569" duration="456000" />
+      <workItem from="1539754727675" duration="472000" />
+      <workItem from="1539820200004" duration="1619000" />
+      <workItem from="1539828486590" duration="43000" />
+      <workItem from="1539979364211" duration="1516000" />
+      <workItem from="1539997041273" duration="5000" />
+      <workItem from="1540343048775" duration="66000" />
+      <workItem from="1540353009719" duration="472000" />
+      <workItem from="1540436595554" duration="9000" />
+      <workItem from="1540505283747" duration="513000" />
+      <workItem from="1540505866630" duration="561000" />
+      <workItem from="1540682518039" duration="650000" />
     </task>
     <task id="LOCAL-00025" summary="V2 printme&#10;&#10;Uses links instead of popups">
       <created>1530993465788</created>
@@ -1244,7 +1145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539457614935</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Waiting on Carlo for Authentication">
+      <created>1539743590837</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1539743590838</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1280,13 +1188,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="598115000" />
+    <option name="totallyTimeSpent" value="604522000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14449127" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16616496" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" weight="0.32992172" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1394,7 +1302,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added travis-ci termination" />
     <MESSAGE value="Moved test to package.json" />
     <MESSAGE value="Added mandatory waiting period" />
     <MESSAGE value="Lengthened mandatory waiting period" />
@@ -1419,7 +1326,8 @@
     <MESSAGE value="npm update" />
     <MESSAGE value="Another npm update" />
     <MESSAGE value="ThinCC launched" />
-    <option name="LAST_COMMIT_MESSAGE" value="ThinCC launched" />
+    <MESSAGE value="Waiting on Carlo for Authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Waiting on Carlo for Authentication" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1433,10 +1341,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/imsmanifest.xml" />
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/ContactForm/sendPDF.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-362">
@@ -1471,20 +1375,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="67" column="22" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1978">
-          <caret line="86" column="48" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jupyter/public/Terminal+Usage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-391">
@@ -1513,22 +1403,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ContactForm/credentials.json" />
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/testr.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
     <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1565,24 +1441,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/printme.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
         </state>
       </provider>
     </entry>
@@ -1632,40 +1494,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="201" column="30" selection-start-line="201" selection-start-column="17" selection-end-line="201" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Bots/404.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-897" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bots/credentials.json" />
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="51" column="104" selection-start-line="51" selection-start-column="104" selection-end-line="53" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="647">
-          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Bots/sendKey.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="383">
@@ -1673,24 +1507,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="1633">
+          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="105" selection-start-line="8" selection-start-column="105" selection-end-line="8" selection-end-column="128" />
+        <state relative-caret-position="7958">
+          <caret line="346" column="19" selection-start-line="346" selection-start-column="19" selection-end-line="346" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1863">
+          <caret line="81" column="7" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="28" column="19" lean-forward="true" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="81" column="36" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
+        <state relative-caret-position="164">
+          <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1541">
+          <caret line="67" column="22" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-710" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="13" column="31" lean-forward="true" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3404">
+          <caret line="148" column="52" selection-start-line="148" selection-start-column="51" selection-end-line="148" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="201" column="103" selection-start-line="201" selection-start-column="103" selection-end-line="201" selection-end-column="103" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
         </state>
       </provider>
     </entry>

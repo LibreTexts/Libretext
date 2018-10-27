@@ -75,7 +75,8 @@ class propagator {
 	}
 
 	static async propagatePage(subdomain, path, content, authenticate) {
-		let response = await fetch("https://" + subdomain + ".libretexts.org/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?authenticate=true", {
+		// let response = await fetch("https://" + subdomain + ".libretexts.org/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?authenticate=true", {
+		let response = await fetch("https://" + subdomain + ".libretexts.org/@api/deki/users/authenticate", {
 			method: "POST",
 			body: content,
 			credentials: 'include',

@@ -37,7 +37,7 @@
 						case "publicdomain":
 							return {label: "cc-publicdomain", link: "#"};
 						case "ccby":
-							return {label: "cc-by", link: "https://creativecommons.org/licenses/by/4.0/"};
+							return {label: "cc-BY", link: "https://creativecommons.org/licenses/by/4.0/"};
 						case "ccbysa":
 							return {label: "cc-by-sa", link: "https://creativecommons.org/licenses/by-sa/4.0/"};
 						case "ccbyncsa":
@@ -66,6 +66,12 @@
 			SocialShareKit.init();
 			window.DonorBox = {widgetLinkClassName: 'custom-dbox-popup'};
 		}
+
+		const donor = document.createElement("script");
+		donor.type = "text/javascript";
+		donor.src = "https://donorbox.org/install-popup-button.js";
+		if (document.getElementById("donate"))
+			document.getElementById("donate").appendChild(donor);
 
 		let printme = document.getElementById("printme");
 		if (printme)

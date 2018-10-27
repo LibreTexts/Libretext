@@ -2,7 +2,7 @@ class copyTransclude {
 	static display() {
 		const target = document.createElement("div");
 		let originalURL = "";
-		if(window.location.href.includes("Copy_Transclude?")){
+		if (window.location.href.includes("Copy_Transclude?")) {
 			originalURL = decodeURIComponent(window.location.href.split("Copy_Transclude?")[1]);
 		}
 
@@ -25,8 +25,8 @@ class copyTransclude {
 	}
 
 	static async verify() {
-		this.sourceURL = document.getElementById("copySource").value;
-		this.destURL = document.getElementById("copyDestination").value;
+		this.sourceURL = document.getElementById("copySource").value.replace(/\/$/, "");
+		this.destURL = document.getElementById("copyDestination").value.replace(/\/$/, "");
 		const sourceArray = this.sourceURL.split("/");
 		const destArray = this.destURL.split("/");
 
@@ -146,7 +146,7 @@ class copyTransclude {
 					result[index] = {
 						title: `<a href="${url}">${subpage.title}</a>`,
 						url: url,
-						relativePath: path.replace(relativePath, ""),
+						relativePath: path.replace(relativePath, "").replace(decodeURIComponent(decodeURIComponent(relativePath)), ""),
 						path: path,
 						selected: false,
 						expanded: true,
@@ -335,7 +335,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 							//pagecontent
 							case "mindtouch.page#overview":
 							case "mindtouch#idf.guideTabs":
-							// case "mindtouch.idf#product-image": NEED FILE TRANSFER
+								// case "mindtouch.idf#product-image": NEED FILE TRANSFER
 								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
 									method: "POST",
 									body: content[i].value,
