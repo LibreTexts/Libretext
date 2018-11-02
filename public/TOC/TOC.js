@@ -1,7 +1,7 @@
 TOC();
 
 function TOC() {
-	const urlArray = window.location.href.split("/");
+	const urlArray = window.location.href.replace("?action=edit","").split("/");
 	let coverpage;
 	let coverTitle;
 	let content;
