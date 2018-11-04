@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const credentials = require("../Bots/credentials.json");
+const credentials = require("../API/credentials.json");
 
 send("henryd.agnew@gmail.com",'<p>HTML version of the message</p>');
 

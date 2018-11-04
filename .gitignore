@@ -50,7 +50,7 @@ Temporary Items
 /nodePrint/PDF/
 /Jupyter/node_modules/
 /nodePrint/public/ZIP/
-/Bots/credentials.json
+/API/credentials.json
 /ContactForm/node_modules/
 /ContactForm/credentials.json
 /public/Miscellaneous/credentials.json
