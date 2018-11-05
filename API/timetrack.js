@@ -13,7 +13,7 @@ function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 
-	if (url.startsWith("/receive")) {
+	if (url.startsWith("/timetrack/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
@@ -26,7 +26,7 @@ function handler(request, response) {
 			else if (request.method === "PUT") {
 				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 					"Access-Control-Allow-Origin": request.headers.origin,
-					"Access-Control-Allow-Methods": "GET",
+					"Access-Control-Allow-Methods": "PUT",
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});
 				let body = [];
@@ -62,18 +62,49 @@ function handler(request, response) {
 			}
 		}
 	}
-
-	else { //static server
-		console.log(url);
-		staticFileServer.serve(request, response, function (error, res) {
-			//on error
-			if (error) {//404 File not Found
-				if (error.status === 404)
-					staticFileServer.serveFile("404.html", 404, {}, request, response);
-				else
-					console.error(error);
+	else if (url.startsWith("/timetrack/ping")) {
+		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
+			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+				response.writeHead(200, {
+					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Methods": "GET",
+					"Content-Type": " text/plain",
+				});
+				response.end();
 			}
-		});
+			else if (request.method === "GET") {
+				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Methods": "GET",
+					"Content-Type": " text/plain",
+				} : {"Content-Type": " text/plain"});
+					response.end();
+			}
+			else {
+				responseError(request.method + " Not Acceptable", 406)
+			}
+		}
+	}
+	else if (url.startsWith("/timetrack/editorStats?user=")) {
+		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": " text/plain",
+			});
+			response.end();
+		}
+		else if (request.method === "GET") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": " text/plain",
+			} : {"Content-Type": " text/plain"});
+			let user = url.split("?user=")[1];
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
 	}
 
 	function responseError(message, status) {

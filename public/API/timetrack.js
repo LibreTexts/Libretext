@@ -1,6 +1,15 @@
 if (!window["timeTrack"]) {
 	window["timeTrack"] = true;
-	track();
+	fetch("https://computer.miniland1333.com/timetrack/ping").then((response) => {
+		if (response.ok) {
+			console.log("Student Editor");
+			track();
+		}
+		else {
+			console.error(response.status)
+		}
+	});
+
 
 	function track() {
 		let hidden, state, visibilityChange;
@@ -76,14 +85,14 @@ if (!window["timeTrack"]) {
 				$.ajax({
 					type: "PUT",
 					async: false,
-					url: "https://computer.miniland1333.com/receive",
+					url: "https://computer.miniland1333.com/timetrack/receive",
 					data: JSON.stringify(data)
 				});
 				if (editorOpen) {
 					$.ajax({
 						type: "PUT",
 						async: false,
-						url: "https://computer.miniland1333.com/receive",
+						url: "https://computer.miniland1333.com/timetrack/receive",
 						data: JSON.stringify(data)
 					});
 				}
@@ -120,7 +129,7 @@ if (!window["timeTrack"]) {
 				let inactiveEnd = new Date();
 				if (inactiveStart !== -1) {
 					let inactiveTime = inactiveEnd - inactiveStart;
-					fetch("https://computer.miniland1333.com/receive", {
+					fetch("https://computer.miniland1333.com/timetrack/receive", {
 						method: "PUT",
 						body: JSON.stringify({
 							messageType: "Inactivity",
@@ -147,7 +156,7 @@ if (!window["timeTrack"]) {
 
 		function reportInterval(message, time_spent, editorOpen) {
 			if (time_spent > 1) {
-				fetch("https://computer.miniland1333.com/receive", {
+				fetch("https://computer.miniland1333.com/timetrack/receive", {
 					method: "PUT",
 					body: JSON.stringify({
 						messageType: "Activity",

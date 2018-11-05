@@ -6,7 +6,7 @@ class copyTransclude {
 			originalURL = decodeURIComponent(window.location.href.split("Copy_Transclude?")[1]);
 		}
 
-		target.innerHTML = `<div>Source Root URL: <input id="copySource" oninput="copyTransclude.reset()" value="${originalURL}" placeholder="Paste source address here"/></div><div>Destination Root URL: <input id="copyDestination" oninput="copyTransclude.verify()" placeholder="Paste destination address here"/></div><div id="copyOutput"></div><div id="copyResults"></div><div id="copyErrors"></div>`;
+		target.innerHTML = `<div>Source Root URL: <input id="copySource" oninput="copyTransclude.reset()" value="${originalURL}" placeholder="Paste source address here"/></div><div>Destination Root URL: <input id="copyDestination" oninput="copyTransclude.reset()" placeholder="Paste destination address here"/></div><button id="copyVerify" onclick="copyTransclude.verify()">Verify</button><div id="copyOutput"></div><div id="copyResults"></div><div id="copyErrors"></div>`;
 		target.id = "copyTranscludeContainer";
 		document.currentScript.parentNode.insertBefore(target, document.currentScript);
 	}
@@ -62,7 +62,7 @@ class copyTransclude {
 <div>Cross Library: ${this.crossOrigin}</div>
 <div id="copyTreeHolder"></div>
 <div>Pages under the Destination Root URL that already exist <i>will not be overwritten</i> for safety reasons.</div>
-<button id="copyVerify" onclick="copyTransclude.copy()">Copy to Destination Root</button>`;
+<button id="copyExecute" onclick="copyTransclude.copy()">Copy to Destination Root</button>`;
 
 			await this.initializeFancyTree(this.Sorigin, path, await tree, await coverTitle);
 		}
@@ -213,8 +213,8 @@ class copyTransclude {
 				const destArray = destRoot.split("/");
 				let path = destArray.slice(3, destArray.length).join("/");
 
-				//get pageID
-				let pageID = fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json", {
+				//get info
+				let info = fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json", {
 					headers: instance.getCredentials(instance.Ssubdomain)
 				});
 
@@ -240,8 +240,8 @@ class copyTransclude {
 
 				//copy Content
 				let content;
-				pageID = await pageID;
-				pageID = await pageID.json();
+				info = await info;
+				info = await info.json();
 
 				if (copyContent) {
 					content = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw", {
@@ -256,10 +256,10 @@ class copyTransclude {
 <pre class="script">
 wiki.page("${child.path}", NULL)</pre>
 </div>` :
-						`<p class="mt-script-commentclassNamess Library Transclusion</p>
+						`<p class="mt-script-comment">Cross Library Transclusion</p>
 
 <pre class="script">
-templateclassNamessTransclude/Web',{'Library':'${instance.Ssubdomain}','PageID':${pageID});
+templateclassNamessTransclude/Web',{'Library':'${instance.Ssubdomain}','PageID':${info["@id"]});
 template('TranscludeAutoNumTitle');</pre>`;
 				}
 
@@ -335,7 +335,8 @@ template('TranscludeAutoNumTitle');</pre>`;
 							//pagecontent
 							case "mindtouch.page#overview":
 							case "mindtouch#idf.guideTabs":
-								// case "mindtouch.idf#product-image": NEED FILE TRANSFER
+							case "mindtouch.page#welcomeHidden":
+							case "mindtouch.idf#product-image": //NEED FILE TRANSFER
 								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
 									method: "POST",
 									body: content[i].value,
@@ -346,6 +347,28 @@ template('TranscludeAutoNumTitle');</pre>`;
 					}
 				});
 
+				// Title cleanup
+				const endPath = (path + child.relativePath).split("/").pop();
+				if (info.title !== endPath) {
+					fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/move?title=" + info.title + "&name=" + path + child.relativePath, {
+						method: "POST",
+						headers: instance.getCredentials(instance.Dsubdomain)
+					}).then();
+				}
+
+				//Thumbnail
+/*				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
+					headers: instance.getCredentials(instance.Ssubdomain)
+				}).then(async (response) => {
+					if (response.ok) {
+						let image = await response.blob();
+						fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
+							method: "PUT",
+							body: image,
+							headers: instance.getCredentials(instance.Dsubdomain)
+						}).then();
+					}
+				});*/
 
 				counter++;
 				results.innerText = "Processing: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
