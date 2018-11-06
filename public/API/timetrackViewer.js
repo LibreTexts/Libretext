@@ -2,6 +2,10 @@ fetch("https://chem.libretexts.org/@api/deki/users/current/feed?format=raw&dream
 	if (response.ok) {
 		let json = await response.json();
 		let array = json.change;
+		json = await fetch("https://chem.libretexts.org/@api/deki/users/current/feed?format=raw&dream.out.format=json&offset=100");
+		json = await json.json();
+		array = array.concat(json.change);
+
 		let result = [];
 		for (let i = 0; i < array.length; i++) {
 			let time = "" + array[i].rc_timestamp;
@@ -14,9 +18,10 @@ fetch("https://chem.libretexts.org/@api/deki/users/current/feed?format=raw&dream
 		window["reloadViewer"] = result;
 	}
 });
+const viewerDays = 30;
 
 //https://chem.libretexts.org/Special:UserContributions?user=hdagnew%40ucdavis.edu
-function reload(){
+function reload() {
 	dataLoad(window["reloadViewer"]);
 }
 
@@ -26,7 +31,7 @@ function dataLoad(data) {
 	let result = [];
 	let today = new Date();
 
-	for (let i = 6; i >= 0; i--) {
+	for (let i = viewerDays; i >= 0; i--) {
 		labelsX = [];
 		let values = [];
 		let currentDay = new Date();
@@ -52,7 +57,7 @@ function dataLoad(data) {
 
 			if (activity > result[0].date) {
 				//Find Date
-				for (let i = 0; i < 7; i++) {
+				for (let i = 0; i <= viewerDays; i++) {
 					if (activity.getMonth() === result[i].date.getMonth() && activity.getDate() === result[i].date.getDate() && activity.getFullYear() === result[i].date.getFullYear()) {
 						//Find Time
 						result[i].values[activity.getHours()]++;
@@ -68,7 +73,7 @@ function dataLoad(data) {
 
 const margin = {top: 10, right: 10, bottom: 10, left: 15};
 const width = 960 - margin.left - margin.right;
-const height = 405 - margin.top - margin.bottom;
+const height = 960 - margin.top - margin.bottom;
 const padding = 3;
 const xLabelHeight = 30;
 const yLabelWidth = 80;
