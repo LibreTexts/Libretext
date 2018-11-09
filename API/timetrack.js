@@ -36,9 +36,10 @@ function handler(request, response) {
 					body = Buffer.concat(body).toString();
 					console.log(body);
 					try {
+						let date = new Date();
 						let event = JSON.parse(body);
-
-						if (event.messageType === "Activity") {
+						fs.appendFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${event.username}`,body);
+/*						if (event.messageType === "Activity") {
 							if (event.editorOpen) {
 
 							}
@@ -48,9 +49,9 @@ function handler(request, response) {
 						}
 						else {
 
-						}
+						}*/
 					} catch (e) {
-
+						console.error(e)
 					}
 
 
@@ -101,6 +102,10 @@ function handler(request, response) {
 				"Content-Type": " text/plain",
 			} : {"Content-Type": " text/plain"});
 			let user = url.split("?user=")[1];
+			getUserData(user).then((result)=>{
+				response.write(result);
+				response.end();
+			});
 		}
 		else {
 			responseError(request.method + " Not Acceptable", 406)
@@ -112,5 +117,10 @@ function handler(request, response) {
 		response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
+	}
+
+	async function getUserData(user) {
+		let date = new Date();
+
 	}
 }

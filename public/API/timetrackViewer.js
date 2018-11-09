@@ -1,79 +1,148 @@
-fetch("https://chem.libretexts.org/@api/deki/users/current/feed?format=raw&dream.out.format=json").then(async response => {
-	if (response.ok) {
-		let json = await response.json();
-		let array = json.change;
-		json = await fetch("https://chem.libretexts.org/@api/deki/users/current/feed?format=raw&dream.out.format=json&offset=100");
-		json = await json.json();
-		array = array.concat(json.change);
+class timetrackViewer {
+	constructor() {
+		this.user = "current";
+		this.dataset = "contributions";
 
-		let result = [];
-		for (let i = 0; i < array.length; i++) {
-			let time = "" + array[i].rc_timestamp;
-			let date = `${time.substring(0, 4)}-${time.substring(4, 6)}-${time.substring(6, 8)}T${time.substring(8, 10)}:${time.substring(10, 12)}:${time.substring(12, 14)}`;
-			date = new Date(date);
-			date.setHours(date.getHours() - 8);
-			result.push(date);
-		}
-		dataLoad(result);
-		window["reloadViewer"] = result;
-	}
-});
-const viewerDays = 30;
-
-//https://chem.libretexts.org/Special:UserContributions?user=hdagnew%40ucdavis.edu
-function reload() {
-	dataLoad(window["reloadViewer"]);
-}
-
-function dataLoad(data) {
-
-	let labelsX;
-	let result = [];
-	let today = new Date();
-
-	for (let i = viewerDays; i >= 0; i--) {
-		labelsX = [];
-		let values = [];
-		let currentDay = new Date();
-		currentDay.setDate(today.getDate() - i);
-		for (let j = 0; j < 24; j++) {
-			labelsX.push(j === 12 ? 12 : j % 12);
-			values[j] = 0;
-		}
-
-		result.push({
-			label: currentDay.toDateString(),
-			date: currentDay,
-			values: values
-		});
+		const chartHeader = document.getElementById("chartHeader");
+		chartHeader.innerHTML = `
+			<div style="border: 2px solid green; padding: 10px; border-radius: 10px">
+				<div>Administrative Authentication required</div>
+<!--				<div>Username to Authenticate: <input id="user" placeholder="Username"/></div>
+				<div>Password to Authenticate: <input id="password" placeholder="Password" type="password"/></div>-->
+			</div>`;
+		const chartButtons = document.getElementById("chartButtons");
+		chartButtons.innerHTML = `
+			<div>
+				<button onClick="timetrack.loadContributions()">Contributions</button>
+				<button onClick="load('sample1.csv')">data1</button>
+				<button onClick="load('sample2.csv')">data2</button>
+				<button onClick="load('sample3.csv')">data3</button>
+				<button onClick="load('sample4.csv')">data4</button>
+				<button onClick="load('sample5.csv')">battleship</button>
+			</div>
+			<div style="display: flex">
+				<input id="searchUsername" placeholder="Search by Student Username"/>
+				<button onClick="timetrack.searchUser()">Look up user</button>
+			</div>`
 	}
 
-	result = parseData(data, result);
-	update(result, labelsX);
+	async searchUser() {
+		let username = document.getElementById("searchUsername");
+		if (username && username.value) {
+			this.user = "=" + encodeURIComponent(encodeURIComponent(username.value));
+		}
 
-	function parseData(data, result) {
-		for (let i = 0; i < data.length; i++) {
-			let activity = data[i];
+		await Promise.all([this.getContributions()]);
+		switch (this.dataset) {
+			case "contributions":
+				this.loadContributions();
+				break;
 
-			if (activity > result[0].date) {
-				//Find Date
-				for (let i = 0; i <= viewerDays; i++) {
-					if (activity.getMonth() === result[i].date.getMonth() && activity.getDate() === result[i].date.getDate() && activity.getFullYear() === result[i].date.getFullYear()) {
-						//Find Time
-						result[i].values[activity.getHours()]++;
-						break;
+		}
+	}
+
+	async getContributions() {
+/*		let getOffset = async(number) =>{
+			let result = [];
+			if (number < 500) {
+				let json = await fetch(`https://chem.libretexts.org/@api/deki/users/${this.user}/feed?format=raw&dream.out.format=json&offset=${number}`);
+				json = await json.json();
+				if (json.change) {
+					result = json.change;
+					if (json.change.length === 100) {
+						result = result.concat(await getOffset(number + 100));
 					}
 				}
 			}
+			return result;
+		};*/
+
+		const response = await fetch(`https://chem.libretexts.org/@api/deki/users/${this.user}/feed?limit=500&format=raw&dream.out.format=json`);
+		if (response.ok) {
+			let json = await response.json();
+			let array = json.change;
+			let result = [];
+			if (array) {
+/*				if (array.length === 100) {
+					array = array.concat(await getOffset(100));
+				}*/
+				console.log(array.length);
+				for (let i = 0; i < array.length; i++) {
+					let time = "" + array[i].rc_timestamp;
+					let date = `${time.substring(0, 4)}-${time.substring(4, 6)}-${time.substring(6, 8)}T${time.substring(8, 10)}:${time.substring(10, 12)}:${time.substring(12, 14)}`;
+					date = new Date(date);
+					date.setHours(date.getHours() - 8);
+					result.push(date);
+				}
+			}
+			else {
+				alert("No known contributions");
+			}
+			this.contributions = result;
 		}
-		return result;
+		else {
+			alert("Lookup failed! Error " + response.status + " " + response.statusText);
+		}
+	}
+
+	loadContributions() {
+		this.dataLoad(this.contributions);
+	}
+
+	dataLoad(data) {
+		const viewerDays = 14;
+
+		let labelsX;
+		let result = [];
+		let today = new Date();
+
+		for (let i = viewerDays; i >= 0; i--) {
+			labelsX = [];
+			let values = [];
+			let currentDay = new Date();
+			currentDay.setDate(today.getDate() - i);
+			for (let j = 0; j < 24; j++) {
+				labelsX.push(j === 12 ? 12 : j % 12);
+				values[j] = 0;
+			}
+
+			result.push({
+				label: currentDay.toDateString(),
+				date: currentDay,
+				values: values
+			});
+		}
+
+		result = parseData(data, result);
+		update(result, labelsX);
+
+		function parseData(data, result) {
+			for (let i = 0; i < data.length; i++) {
+				let activity = data[i];
+
+				if (activity > result[0].date) {
+					//Find Date
+					for (let i = 0; i <= viewerDays; i++) {
+						if (activity.getMonth() === result[i].date.getMonth() && activity.getDate() === result[i].date.getDate() && activity.getFullYear() === result[i].date.getFullYear()) {
+							//Find Time
+							result[i].values[activity.getHours()]++;
+							break;
+						}
+					}
+				}
+			}
+			return result;
+		}
 	}
 }
 
+const timetrack = new timetrackViewer();
+timetrack.searchUser();
 
+//Punchcard code
 const margin = {top: 10, right: 10, bottom: 10, left: 15};
-const width = 960 - margin.left - margin.right;
-const height = 960 - margin.top - margin.bottom;
+const width = 900 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
 const padding = 3;
 const xLabelHeight = 30;
 const yLabelWidth = 80;
@@ -94,7 +163,7 @@ const border = chart.append('rect')
 	.style('stroke-width', borderWidth)
 	.style('shape-rendering', 'crispEdges');
 
-load('sample1.csv');
+// load('sample1.csv');
 
 function load(name) {
 	name = "http://awesomefiles.libretexts.org/API/" + name;

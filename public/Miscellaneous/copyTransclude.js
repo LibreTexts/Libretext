@@ -281,94 +281,96 @@ template('TranscludeAutoNumTitle');</pre>`;
 					case 409:
 						errorText += "409 Conflict - Page already exists " + child.relativePath + "\n";
 						break;
-
-				}
-
-				//copy Tags
-				fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
-					method: "PUT",
-					body: tags,
-					headers: instance.getCredentials(instance.Dsubdomain, {"Content-Type": "text/xml; charset=utf-8"})
-				}).then();
-
-				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json", {
-					headers: instance.getCredentials(instance.Ssubdomain)
-				}).then(async (response) => {
-					let content = await response.json();
-					if (content["@count"] !== "0") {
-						if (content.property) {
-							if (content.property.length) {
-								content = content.property.map((property) => {
-									return {name: property["@name"], value: property["contents"]["#text"]}
-								});
-							}
-							else {
-								content = [{
-									name: content.property["@name"],
-									value: content.property["contents"]["#text"]
-								}];
-							}
-						}
-					}
-					for (let i = 0; i < content.length; i++) {
-						switch (content[i].name) {
-							//subpageListing check
-							case "mindtouch.idf#subpageListing":
-								if (tags.includes("article:topic-category")) {
-									fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
-										method: "POST",
-										body: content[i].value,
-										headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
-									}).then();
-								}
-								break;
-							//subpageListing check
-							case "mindtouch.idf#guideDisplay":
-								if (tags.includes("article:topic-guide")) {
-									fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
-										method: "POST",
-										body: content[i].value,
-										headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
-									}).then();
-								}
-								break;
-							//pagecontent
-							case "mindtouch.page#overview":
-							case "mindtouch#idf.guideTabs":
-							case "mindtouch.page#welcomeHidden":
-							case "mindtouch.idf#product-image": //NEED FILE TRANSFER
-								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
-									method: "POST",
-									body: content[i].value,
-									headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
-								}).then();
-								break;
-						}
-					}
-				});
-
-				// Title cleanup
-				const endPath = (path + child.relativePath).split("/").pop();
-				if (info.title !== endPath) {
-					fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/move?title=" + info.title + "&name=" + path + child.relativePath, {
-						method: "POST",
-						headers: instance.getCredentials(instance.Dsubdomain)
-					}).then();
-				}
-
-				//Thumbnail
-/*				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
-					headers: instance.getCredentials(instance.Ssubdomain)
-				}).then(async (response) => {
-					if (response.ok) {
-						let image = await response.blob();
-						fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
+					default:
+						errorText += "Error " + response.status + " " + child.relativePath + "\n";
+						break;
+					case 200:
+						//copy Tags
+						fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
 							method: "PUT",
-							body: image,
-							headers: instance.getCredentials(instance.Dsubdomain)
+							body: tags,
+							headers: instance.getCredentials(instance.Dsubdomain, {"Content-Type": "text/xml; charset=utf-8"})
 						}).then();
-					}
-				});*/
+
+						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json", {
+							headers: instance.getCredentials(instance.Ssubdomain)
+						}).then(async (response) => {
+							let content = await response.json();
+							if (content["@count"] !== "0") {
+								if (content.property) {
+									if (content.property.length) {
+										content = content.property.map((property) => {
+											return {name: property["@name"], value: property["contents"]["#text"]}
+										});
+									}
+									else {
+										content = [{
+											name: content.property["@name"],
+											value: content.property["contents"]["#text"]
+										}];
+									}
+								}
+							}
+							for (let i = 0; i < content.length; i++) {
+								switch (content[i].name) {
+									//subpageListing check
+									case "mindtouch.idf#subpageListing":
+										if (tags.includes("article:topic-category")) {
+											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+												method: "POST",
+												body: content[i].value,
+												headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+											}).then();
+										}
+										break;
+									//subpageListing check
+									case "mindtouch.idf#guideDisplay":
+										if (tags.includes("article:topic-guide")) {
+											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+												method: "POST",
+												body: content[i].value,
+												headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+											}).then();
+										}
+										break;
+									//pagecontent
+									case "mindtouch.page#overview":
+									case "mindtouch#idf.guideTabs":
+									case "mindtouch.page#welcomeHidden":
+									case "mindtouch.idf#product-image": //NEED FILE TRANSFER
+										fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
+											method: "POST",
+											body: content[i].value,
+											headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+										}).then();
+										break;
+								}
+							}
+						});
+
+						// Title cleanup
+						const endPath = (path + child.relativePath).split("/").pop();
+						if (info.title !== endPath) {
+							fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/move?title=" + info.title + "&name=" + path + child.relativePath, {
+								method: "POST",
+								headers: instance.getCredentials(instance.Dsubdomain)
+							}).then();
+						}
+
+					//Thumbnail
+					/*				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
+										headers: instance.getCredentials(instance.Ssubdomain)
+									}).then(async (response) => {
+										if (response.ok) {
+											let image = await response.blob();
+											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
+												method: "PUT",
+												body: image,
+												headers: instance.getCredentials(instance.Dsubdomain)
+											}).then();
+										}
+									});*/
+				}
 
 				counter++;
 				results.innerText = "Processing: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
