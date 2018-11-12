@@ -32,7 +32,7 @@ class timetrackViewer {
 			this.user = "=" + encodeURIComponent(encodeURIComponent(username.value));
 		}
 
-		await Promise.all([this.getContributions()]);
+		await Promise.all([this.getContributions(),this.getTracking()]);
 		switch (this.dataset) {
 			case "contributions":
 				this.loadContributions();
@@ -42,21 +42,6 @@ class timetrackViewer {
 	}
 
 	async getContributions() {
-/*		let getOffset = async(number) =>{
-			let result = [];
-			if (number < 500) {
-				let json = await fetch(`https://chem.libretexts.org/@api/deki/users/${this.user}/feed?format=raw&dream.out.format=json&offset=${number}`);
-				json = await json.json();
-				if (json.change) {
-					result = json.change;
-					if (json.change.length === 100) {
-						result = result.concat(await getOffset(number + 100));
-					}
-				}
-			}
-			return result;
-		};*/
-
 		const response = await fetch(`https://chem.libretexts.org/@api/deki/users/${this.user}/feed?limit=500&format=raw&dream.out.format=json`);
 		if (response.ok) {
 			let json = await response.json();
@@ -133,6 +118,10 @@ class timetrackViewer {
 			}
 			return result;
 		}
+	}
+
+	async getTracking() {
+		const response = await fetch(`https://api.libretexts.org/timetrack/editorStats?user=${this.user}`);
 	}
 }
 

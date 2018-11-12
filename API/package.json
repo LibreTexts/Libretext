@@ -4,6 +4,7 @@
   "dependencies": {
     "btoa": "^1.2.1",
     "console-timestamp": "^0.3.0",
+    "deepcopy": "^1.0.0",
     "fs-extra": "^7.0.0",
     "node-fetch": "^2.2.0",
     "node-static": "^0.7.11"

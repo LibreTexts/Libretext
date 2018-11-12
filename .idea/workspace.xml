@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/libretexts.com.2019.lic.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/timetrack.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/timetrack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/timetrackViewer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/timetrackViewer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/cors" beforeDir="false" afterPath="$PROJECT_DIR$/install/cors" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API/timetrack.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/timetrack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Skele/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Skele/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Skele/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Skele/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,14 +29,14 @@
     <session id="1881897902">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="152" />
+          <entry key="project.closed" value="155" />
           <entry key="project.open.time.0" value="26" />
           <entry key="project.open.time.1" value="16" />
           <entry key="project.open.time.10" value="4" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.17" value="2" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
@@ -38,21 +44,23 @@
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="6" />
           <entry key="project.open.time.6" value="43" />
-          <entry key="project.open.time.7" value="33" />
-          <entry key="project.open.time.8" value="16" />
+          <entry key="project.open.time.7" value="34" />
+          <entry key="project.open.time.8" value="17" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="158" />
+          <entry key="project.opened" value="161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="DOCKERFILE" value="133" />
+          <entry key="cors" value="1" />
           <entry key="css" value="1117" />
           <entry key="default" value="19" />
           <entry key="dockerignore" value="3" />
+          <entry key="edu" value="4" />
           <entry key="gitmodules" value="34" />
           <entry key="html" value="54" />
-          <entry key="js" value="31794" />
+          <entry key="js" value="32991" />
           <entry key="json" value="271" />
           <entry key="sh" value="2" />
           <entry key="txt" value="1073" />
@@ -68,8 +76,8 @@
           <entry key="Dockerfile" value="133" />
           <entry key="HTML" value="86" />
           <entry key="JSON" value="271" />
-          <entry key="JavaScript" value="31762" />
-          <entry key="PLAIN_TEXT" value="1126" />
+          <entry key="JavaScript" value="32959" />
+          <entry key="PLAIN_TEXT" value="1131" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="86" />
         </counts>
@@ -80,19 +88,21 @@
           <entry key="Dockerfile" value="3" />
           <entry key="Makefile" value="3" />
           <entry key="R" value="1" />
-          <entry key="cors" value="1" />
-          <entry key="css" value="20" />
+          <entry key="cors" value="2" />
+          <entry key="css" value="21" />
           <entry key="default" value="5" />
           <entry key="dockerignore" value="2" />
+          <entry key="edu" value="9" />
           <entry key="gitignore" value="5" />
           <entry key="gitmodules" value="1" />
           <entry key="html" value="10" />
-          <entry key="js" value="225" />
-          <entry key="json" value="44" />
+          <entry key="js" value="236" />
+          <entry key="json" value="46" />
           <entry key="log" value="2" />
           <entry key="png" value="1" />
           <entry key="sh" value="3" />
           <entry key="txt" value="1" />
+          <entry key="undefined" value="1" />
           <entry key="xml" value="2" />
           <entry key="yml" value="4" />
         </counts>
@@ -100,15 +110,15 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="3" />
-          <entry key="CSS" value="20" />
+          <entry key="CSS" value="21" />
           <entry key="Docker file" value="2" />
           <entry key="Dockerfile" value="4" />
           <entry key="Git file" value="5" />
           <entry key="HTML" value="10" />
           <entry key="Image" value="1" />
-          <entry key="JSON" value="44" />
-          <entry key="JavaScript" value="225" />
-          <entry key="PLAIN_TEXT" value="14" />
+          <entry key="JSON" value="46" />
+          <entry key="JavaScript" value="236" />
+          <entry key="PLAIN_TEXT" value="25" />
           <entry key="XML" value="2" />
           <entry key="YAML" value="4" />
         </counts>
@@ -118,10 +128,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+        <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="40" column="112" lean-forward="true" selection-start-line="40" selection-start-column="112" selection-end-line="40" selection-end-column="112" />
+            <state relative-caret-position="46">
+              <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -140,24 +150,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pagesc</find>
-      <find>path</find>
-      <find>added</find>
-      <find>tags</find>
-      <find>console.log</find>
-      <find>email</find>
-      <find>request</find>
-      <find>tocbu</find>
-      <find>batch</find>
-      <find>print</find>
-      <find>batchPrint</find>
-      <find>hover</find>
       <find>thincc</find>
       <find>replace</find>
       <find>img</find>
       <find>license</find>
       <find>miniland</find>
-      <find>responseerror</find>
       <find>display</find>
       <find>ok</find>
       <find>error</find>
@@ -169,6 +166,19 @@
       <find>getcredentials</find>
       <find>pass</find>
       <find>lookup</find>
+      <find>left page</find>
+      <find>editoropen</find>
+      <find>body: JSON.stringify({</find>
+      <find>inactivity</find>
+      <find>80</find>
+      <find>merge</find>
+      <find>message</find>
+      <find>port</find>
+      <find>400</find>
+      <find>responseerror</find>
+      <find>set</find>
+      <find>edit</find>
+      <find>activeTime</find>
       <find>date</find>
     </findStrings>
     <replaceStrings>
@@ -183,6 +193,7 @@
       <replace>timestamp('MM/DD hh:mm', Date.now()) + &quot; &quot;</replace>
       <replace>&quot;</replace>
       <replace>computer</replace>
+      <replace>time</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -190,14 +201,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/nodePrint/node_modules/node-eta/index.js" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Jupyter/public/eb8e5853014e270c80130f9b267b0f6b/index.html" />
-        <option value="$PROJECT_DIR$/Jupyter/Jupyter.js" />
-        <option value="$PROJECT_DIR$/Jupyter/public/ipython-in-depth/index.html" />
-        <option value="$PROJECT_DIR$/Jupyter/public/Terminal+Usage.html" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Jupyter.js" />
         <option value="$PROJECT_DIR$/Jupyter/ts.js" />
         <option value="$PROJECT_DIR$/BUGS.txt" />
@@ -244,7 +252,11 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/propagator.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
+        <option value="$PROJECT_DIR$/install/cors" />
+        <option value="$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
         <option value="$PROJECT_DIR$/API/timetrack.js" />
+        <option value="$PROJECT_DIR$/public/API/timetrack.js" />
       </list>
     </option>
   </component>
@@ -256,6 +268,9 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/API/node_modules" />
+    <handled-path value="$PROJECT_DIR$/ContactForm/node_modules" />
+    <handled-path value="$PROJECT_DIR$/Jupyter/node_modules" />
+    <handled-path value="$PROJECT_DIR$/nodePrint/node_modules" />
     <handled-path value="$PROJECT_DIR$/public/MoleculeGenerator/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
@@ -265,15 +280,187 @@
       <path value="$PROJECT_DIR$/Jupyter/package.json" />
       <path value="$PROJECT_DIR$/nodePrint/package.json" />
       <path value="$PROJECT_DIR$/public/Converter/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/@sindresorhus/is/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/abbrev/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/adm-zip/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ansi-regex/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/aproba/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/archive-type/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/archive-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/are-we-there-yet/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/balanced-match/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/base64-js/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/bl/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/brace-expansion/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/buffer-alloc-unsafe/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/buffer-alloc/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/buffer-crc32/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/buffer-fill/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/buffer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/cacheable-request/node_modules/lowercase-keys/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/cacheable-request/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/caw/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/chownr/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/clone-response/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/code-point-at/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/commander/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/concat-map/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/config-chain/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/console-control-strings/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/content-disposition/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/core-util-is/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/debug/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decode-uri-component/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-response/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-tar/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-tar/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-tarbz2/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-tarbz2/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-targz/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-targz/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-unzip/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-unzip/node_modules/get-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-unzip/node_modules/pify/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress-unzip/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress/node_modules/pify/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/decompress/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/deep-extend/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/delegates/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/detect-libc/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/download/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/duplexer3/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/end-of-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/epub/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/escape-string-regexp/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ext-list/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ext-name/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/fd-slicer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/file-type/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/filename-reserved-regex/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/filenamify/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/from2/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/fs-constants/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/fs-minipass/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/fs.realpath/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/gauge/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/get-proxy/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/get-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/glob/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/got/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/graceful-fs/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/graceful-readlink/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/has-symbol-support-x/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/has-to-string-tag-x/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/has-unicode/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/http-cache-semantics/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/iconv-lite/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ieee754/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ignore-walk/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/inflight/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/inherits/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ini/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/into-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-fullwidth-code-point/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-natural-number/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-object/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-plain-obj/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-retry-allowed/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/is-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/isarray/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/isurl/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/json-buffer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/keyv/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/lowercase-keys/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/make-dir/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/mime-db/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/mimic-response/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/minimatch/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/minimist/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/minipass/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/minizlib/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/mkdirp/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/ms/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/nan/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/nan/tools/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/needle/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/node-pre-gyp/lib/util/nw-pre-gyp/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/node-pre-gyp/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/nopt/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/normalize-url/node_modules/sort-keys/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/normalize-url/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/npm-bundled/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/npm-conf/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/npm-packlist/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/npmlog/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/number-is-nan/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/object-assign/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/once/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/os-homedir/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/os-tmpdir/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/osenv/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/p-cancelable/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/p-event/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/p-finally/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/p-is-promise/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/p-timeout/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/path-is-absolute/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/pend/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/pify/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/pinkie-promise/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/pinkie/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/prepend-http/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/process-nextick-args/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/proto-list/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/query-string/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/rc/node_modules/minimist/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/rc/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/readable-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/responselike/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/rimraf/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/safe-buffer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/safer-buffer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/sax/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/seek-bzip/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/semver/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/set-blocking/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/signal-exit/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/sort-keys-length/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/sort-keys/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/strict-uri-encode/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/string-width/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/string_decoder/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/strip-ansi/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/strip-dirs/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/strip-json-comments/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/strip-outer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/tar-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/tar/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/through/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/timed-out/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/to-buffer/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/trim-repeated/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/tunnel-agent/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/unbzip2-stream/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/url-parse-lax/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/url-to-options/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/util-deprecate/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/wide-align/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/wrappy/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/xml2js/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/xmlbuilder/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/xtend/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/yallist/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/yauzl/package.json" />
+      <path value="$PROJECT_DIR$/public/Miscellaneous/node_modules/zipfile/package.json" />
       <path value="$PROJECT_DIR$/public/MoleculeGenerator/package.json" />
       <path value="$PROJECT_DIR$/public/Skele/package.json" />
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1301" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -311,31 +498,10 @@
     <OptionsSetting value="false" id="Update" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -360,7 +526,7 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Bots" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -371,19 +537,28 @@
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Social Share Kit" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="TOC" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -402,7 +577,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.7.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Bots/sendKey.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -412,23 +587,23 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter\lib" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\ContactForm" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter\lib" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Jupyter\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\MoleculeGenerator" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -450,10 +625,7 @@
     <configuration name="nodePrint" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
-    <configuration name="sendKey" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="80" path-to-js-file="sendKey.js" working-dir="$PROJECT_DIR$/Bots">
-      <method v="2" />
-    </configuration>
-    <configuration name="timetrack.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="timetrack.js" working-dir="$PROJECT_DIR$/API">
+    <configuration name="timetrack.js" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="80" nameIsGenerated="true" path-to-js-file="timetrack.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -527,16 +699,10 @@
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.Jupyter" />
-      <item itemvalue="Node.js.sendKey" />
+      <item itemvalue="Node.js.timetrack.js" />
       <item itemvalue="npm.Build" />
       <item itemvalue="npm.Serve" />
-      <item itemvalue="Node.js.timetrack.js" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Node.js.timetrack.js" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -790,6 +956,9 @@
       <workItem from="1540608866508" duration="595000" />
       <workItem from="1541699605087" duration="5151000" />
       <workItem from="1541707377975" duration="2133000" />
+      <workItem from="1541824518821" duration="1914000" />
+      <workItem from="1541962963709" duration="204000" />
+      <workItem from="1541994556570" duration="10519000" />
     </task>
     <task id="LOCAL-00024" summary="Initial Page PDF Live">
       <created>1530738730335</created>
@@ -1170,20 +1339,20 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="606540000" />
+    <option name="totallyTimeSpent" value="620048000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.45478722" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20409392" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" weight="0.32992172" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32714286" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35235378" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.28818062" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32325888" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.41787124" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1191,14 +1360,14 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3266762" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.22824536" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.37166667" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.22339028" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4984949" weight="0.37056506" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50150514" side_tool="true" weight="0.43" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.22428748" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.22396147" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
     </layout>
@@ -1321,12 +1490,62 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="NodeJSConfigurationType">
+        <watch expression="result.Inactivity[&quot;14&quot;].values[&quot;21&quot;]" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>result[type][0].date</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.parse(&quot;[&quot;+month0.trim().replace(/\n/g,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.parse(&quot;[&quot;+month0.replace(/\n/g,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>&quot;[&quot;+month0.replace(/\n/g,&quot;,&quot;)+&quot;]&quot;;</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>&quot;[&quot;+month0.replace(&quot;\n&quot;,&quot;,&quot;)+&quot;]&quot;;</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.parse(&quot;[&quot;+month0.replace(&quot;\n&quot;,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.parse(month0.replace(&quot;\n&quot;,&quot;,&quot;));</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.parse(month0);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>JSON.stringify(month0);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ContactForm/node_modules/nodemailer/lib/smtp-connection/index.js" />
-    <entry file="file://$PROJECT_DIR$/ContactForm/node_modules/express/lib/application.js" />
-    <entry file="file://$PROJECT_DIR$/ContactForm/node_modules/raw-body/index.js" />
-    <entry file="file://$PROJECT_DIR$/ContactForm/node_modules/body-parser/lib/read.js" />
     <entry file="file://$PROJECT_DIR$/ContactForm/node_modules/express/lib/router/route.js" />
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -1420,16 +1639,6 @@
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/gpl.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Skele/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-207">
-          <caret line="63" column="22" lean-forward="true" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Skele/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -1442,13 +1651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/printme.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -1512,13 +1714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="201" column="30" selection-start-line="201" selection-start-column="17" selection-end-line="201" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Bots/404.html" />
     <entry file="file://$PROJECT_DIR$/Bots/credentials.json" />
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
@@ -1543,13 +1738,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bots/sendKey.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="8" column="145" selection-start-line="8" selection-start-column="145" selection-end-line="8" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -1557,29 +1745,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4784">
+          <caret line="208" column="38" selection-start-line="208" selection-start-column="38" selection-end-line="208" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/printme.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="176" column="18" selection-start-line="176" selection-start-column="18" selection-end-line="176" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/Data/10-2018/undefined">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Skele/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1993">
+          <caret line="1324" column="14" selection-start-line="1324" selection-start-column="9" selection-end-line="1324" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Skele/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/install/cors">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="62" selection-start-line="1" selection-start-column="62" selection-end-line="1" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1251">
+          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="32" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/API/timetrackViewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="73" lean-forward="true" selection-start-line="20" selection-start-column="73" selection-end-line="20" selection-end-column="73" />
-          <folding>
-            <element signature="n#!!block;n#parseData#0;n#!!block;n#dataLoad#0;n#timetrackViewer#0" />
-            <element signature="n#!!block;n#load#0" />
-            <element signature="n#!!block;n#update#0" />
-          </folding>
+        <state relative-caret-position="1173">
+          <caret line="119" column="33" lean-forward="true" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4324">
+          <caret line="188" column="8" selection-start-line="188" selection-start-column="8" selection-end-line="188" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3657">
-          <caret line="159" column="34" lean-forward="true" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="40" column="112" lean-forward="true" selection-start-line="40" selection-start-column="112" selection-end-line="40" selection-end-column="112" />
+        <state relative-caret-position="46">
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
         </state>
       </provider>
     </entry>

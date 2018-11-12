@@ -155,10 +155,11 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 div.propagatorLoader {
 	display: flex;
 	margin: 10px;
+	justify-content: center;
 }
 
 .loaderStatus {
-	flex: 1;
+	/* flex: 1; */
 	justify-content: center;
 	text-align: center;
 }
@@ -167,4 +168,14 @@ figure {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+}
+
+.mt-video-widget:not(.cke_widget_element) {
+	margin: 0 auto !important;
+}
+
+#copyResults img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }

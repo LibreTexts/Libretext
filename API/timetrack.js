@@ -4,7 +4,12 @@ const timestamp = require("console-timestamp");
 const fs = require("fs-extra");
 const server = http.createServer(handler);
 const staticFileServer = new nodeStatic.Server('./public');
-server.listen(80);
+const deepcopy = require('deepcopy');
+let port = 3001;
+if (process.argv.length >= 3 && parseInt(process.argv[2])) {
+	port = parseInt(process.argv[2]);
+}
+server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 const fetch = require("node-fetch");
@@ -32,24 +37,25 @@ function handler(request, response) {
 				let body = [];
 				request.on('data', (chunk) => {
 					body.push(chunk);
-				}).on('end', () => {
+				}).on('end', async () => {
 					body = Buffer.concat(body).toString();
 					console.log(body);
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						fs.appendFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${event.username}`,body);
-/*						if (event.messageType === "Activity") {
-							if (event.editorOpen) {
+						await fs.ensureDir(`./Data/${date.getMonth()}-${date.getFullYear()}`);
+						await fs.appendFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${event.username}`, body + "\n");
+						/*						if (event.messageType === "Activity") {
+													if (event.editorOpen) {
 
-							}
-							else {
+													}
+													else {
 
-							}
-						}
-						else {
+													}
+												}
+												else {
 
-						}*/
+												}*/
 					} catch (e) {
 						console.error(e)
 					}
@@ -79,7 +85,7 @@ function handler(request, response) {
 					"Access-Control-Allow-Methods": "GET",
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});
-					response.end();
+				response.end();
 			}
 			else {
 				responseError(request.method + " Not Acceptable", 406)
@@ -102,8 +108,8 @@ function handler(request, response) {
 				"Content-Type": " text/plain",
 			} : {"Content-Type": " text/plain"});
 			let user = url.split("?user=")[1];
-			getUserData(user).then((result)=>{
-				response.write(result);
+			getUserData(user).then((result) => {
+				response.write(JSON.stringify(result));
 				response.end();
 			});
 		}
@@ -120,7 +126,73 @@ function handler(request, response) {
 	}
 
 	async function getUserData(user) {
-		let date = new Date();
+		let month0 = await getFileCheck(0);
+		let month1 = await getFileCheck(1);
+		let month2 = await getFileCheck(2);
 
+		let events = month0.concat(month1).concat(month2);
+
+		return dataLoad(events);
+
+		async function getFileCheck(monthOffset) {
+			let date = new Date();
+			date.setDate(1);
+			date.setMonth(date.getMonth() - monthOffset);
+			let data = (await fs.pathExists(`./Data/${date.getMonth()}-${date.getFullYear()}/${user}`)) ? await fs.readFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${user}`, "utf8") : undefined;
+			if (data) {
+				return JSON.parse("[" + data.trim().replace(/\n/g, ",") + "]");
+			}
+			else {
+				return [];
+			}
+		}
+
+		function dataLoad(data) {
+			const viewerDays = 14;
+
+			let labelsX;
+			let intermediate = [];
+			let today = new Date();
+
+			for (let i = viewerDays; i >= 0; i--) {
+				labelsX = [];
+				let values = [];
+				let currentDay = new Date();
+				currentDay.setDate(today.getDate() - i);
+				for (let j = 0; j < 24; j++) {
+					labelsX.push(j === 12 ? 12 : j % 12);
+					values[j] = 0;
+				}
+
+				intermediate.push({
+					label: currentDay.toDateString(),
+					date: currentDay,
+					values: values
+				});
+			}
+			let result = {
+				Inactivity: deepcopy(intermediate),
+				Activity: deepcopy(intermediate),
+				Editor: deepcopy(intermediate),
+			};
+
+			for (let i = 0; i < data.length; i++) {
+				let activity = data[i];
+				let type = activity.messageType;
+				activity.timestamp = new Date(activity.timestamp);
+
+				if (activity.timestamp >= result[type][0].date) {
+					//Find Date
+					for (let i = 0; i <= viewerDays; i++) {
+						if (activity.timestamp.getMonth() === result[type][i].date.getMonth() && activity.timestamp.getDate() === result[type][i].date.getDate() && activity.timestamp.getFullYear() === result[type][i].date.getFullYear()) {
+							//Find Time
+							result[type][i].values[activity.timestamp.getHours()] += (activity.time / 60);
+							break;
+						}
+					}
+				}
+			}
+			return result;
+		}
 	}
 }

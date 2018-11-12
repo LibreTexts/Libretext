@@ -1,6 +1,7 @@
 if (!window["timeTrack"]) {
 	window["timeTrack"] = true;
-	fetch("https://computer.miniland1333.com/timetrack/ping").then((response) => {
+	const root = "api.libretexts.org";
+	fetch(`https://${root}/timetrack/ping`).then((response) => {
 		if (response.ok) {
 			console.log("Student Editor");
 			track();
@@ -74,25 +75,24 @@ if (!window["timeTrack"]) {
 			end = new Date();
 			var time_spent = Math.round((end - start) / 1000);
 			if (time_spent > 1) {
-				var data = JSON.stringify({
-					messageType: "Activity",
+				var data = {
+					messageType: editorOpen?"Editor":"Activity",
+					time: time_spent,
 					message: "[Left Page]",
-					activeTime: time_spent,
-					editorOpen: editorOpen,
 					timestamp: new Date(),
 					username: username
-				});
+				};
 				$.ajax({
 					type: "PUT",
 					async: false,
-					url: "https://computer.miniland1333.com/timetrack/receive",
+					url: `https://${root}/timetrack/receive`,
 					data: JSON.stringify(data)
 				});
 				if (editorOpen) {
 					$.ajax({
 						type: "PUT",
 						async: false,
-						url: "https://computer.miniland1333.com/timetrack/receive",
+						url: `https://${root}/timetrack/receive`,
 						data: JSON.stringify(data)
 					});
 				}
@@ -129,23 +129,23 @@ if (!window["timeTrack"]) {
 				let inactiveEnd = new Date();
 				if (inactiveStart !== -1) {
 					let inactiveTime = inactiveEnd - inactiveStart;
-					fetch("https://computer.miniland1333.com/timetrack/receive", {
+					fetch(`https://${root}/timetrack/receive`, {
 						method: "PUT",
 						body: JSON.stringify({
 							messageType: "Inactivity",
-							inactiveTime: inactiveTime,
+							time: Math.round(inactiveTime / 1000),
 							timestamp: new Date(),
 							username: username
 						})
 					}).then();
 				}
-
+				const minutes = 5;
 				clearTimeout(t);
 				inactiveStart = -1; //reset start
 				t = setTimeout(function () {
 					inactiveStart = new Date(); //set start
 					console.log(inactiveStart);
-				}, 10000);
+				}, minutes * 60 * 1000);
 			}
 
 			window.onload = resetTimer;
@@ -156,13 +156,12 @@ if (!window["timeTrack"]) {
 
 		function reportInterval(message, time_spent, editorOpen) {
 			if (time_spent > 1) {
-				fetch("https://computer.miniland1333.com/timetrack/receive", {
+				fetch(`https://${root}/timetrack/receive`, {
 					method: "PUT",
 					body: JSON.stringify({
-						messageType: "Activity",
+						messageType: editorOpen?"Editor":"Activity",
+						time: time_spent,
 						message: "[" + message + "]",
-						activeTime: time_spent,
-						editorOpen: editorOpen,
 						timestamp: new Date(),
 						username: username
 					})

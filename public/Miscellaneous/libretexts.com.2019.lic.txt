@@ -1,0 +1,11 @@
+# ChemWriter
+# (c) 2018 Metamolecular, LLC
+# info@metamolecular.com
+# http://metamolecular.com
+
+Licensed To: Libretexts Project
+License Type: website
+Licensed Host: libretexts.org
+Issued On: November 6, 2018
+Deployment Expires: November 6, 2019
+Signature: e479ccad293143974326a62960177cac02f0229f
