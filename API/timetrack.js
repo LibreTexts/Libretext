@@ -12,6 +12,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(now1.toString());
 const fetch = require("node-fetch");
 
 function handler(request, response) {
@@ -43,8 +44,8 @@ function handler(request, response) {
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						await fs.ensureDir(`./Data/${date.getMonth()}-${date.getFullYear()}`);
-						await fs.appendFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${event.username}`, body + "\n");
+						await fs.ensureDir(`./Data/${date.getMonth()+1}-${date.getFullYear()}`);
+						await fs.appendFile(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${event.username}`, body + "\n");
 						/*						if (event.messageType === "Activity") {
 													if (event.editorOpen) {
 
@@ -108,6 +109,7 @@ function handler(request, response) {
 				"Content-Type": " text/plain",
 			} : {"Content-Type": " text/plain"});
 			let user = url.split("?user=")[1];
+			user = decodeURIComponent(user);
 			getUserData(user).then((result) => {
 				response.write(JSON.stringify(result));
 				response.end();
@@ -138,7 +140,7 @@ function handler(request, response) {
 			let date = new Date();
 			date.setDate(1);
 			date.setMonth(date.getMonth() - monthOffset);
-			let data = (await fs.pathExists(`./Data/${date.getMonth()}-${date.getFullYear()}/${user}`)) ? await fs.readFile(`./Data/${date.getMonth()}-${date.getFullYear()}/${user}`, "utf8") : undefined;
+			let data = (await fs.pathExists(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${user}`)) ? await fs.readFile(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${user}`, "utf8") : undefined;
 			if (data) {
 				return JSON.parse("[" + data.trim().replace(/\n/g, ",") + "]");
 			}
@@ -153,6 +155,7 @@ function handler(request, response) {
 			let labelsX;
 			let intermediate = [];
 			let today = new Date();
+			today.setHours(today.getHours() - 8);
 
 			for (let i = viewerDays; i >= 0; i--) {
 				labelsX = [];
@@ -192,6 +195,18 @@ function handler(request, response) {
 					}
 				}
 			}
+			for (let i = 0; i <= viewerDays; i++) {
+				for (let h = 0; h < 24; h++) {
+					result.Inactivity[i].values[h] =  Math.round(result.Inactivity[i].values[h]);
+					result.Activity[i].values[h] =  Math.round(result.Activity[i].values[h]);
+					result.Editor[i].values[h] =  Math.round(result.Editor[i].values[h]);
+				}
+			}
+
+			result.Inactivity[viewerDays].values[23] = 60;
+			result.Activity[viewerDays].values[23] = 60;
+			result.Editor[viewerDays].values[23] = 60;
+
 			return result;
 		}
 	}

@@ -1,6 +1,6 @@
 class timetrackViewer {
 	constructor() {
-		this.user = "current";
+		this.user = document.getElementById("usernameHolder").innerText;
 		this.dataset = "contributions";
 
 		const chartHeader = document.getElementById("chartHeader");
@@ -13,50 +13,99 @@ class timetrackViewer {
 		const chartButtons = document.getElementById("chartButtons");
 		chartButtons.innerHTML = `
 			<div>
-				<button onClick="timetrack.loadContributions()">Contributions</button>
-				<button onClick="load('sample1.csv')">data1</button>
-				<button onClick="load('sample2.csv')">data2</button>
-				<button onClick="load('sample3.csv')">data3</button>
-				<button onClick="load('sample4.csv')">data4</button>
-				<button onClick="load('sample5.csv')">battleship</button>
+				<button onClick="timetrack.loadDataset('contributions')">Contributions</button>
+				<button onClick="timetrack.loadDataset('edit')">Edit</button>
+				<button onClick="timetrack.loadDataset('view')">View</button>
+				<button onClick="timetrack.loadDataset('idle')">Idle</button>
 			</div>
 			<div style="display: flex">
 				<input id="searchUsername" placeholder="Search by Student Username"/>
-				<button onClick="timetrack.searchUser()">Look up user</button>
-			</div>`
+				<button onClick="timetrack.searchUser()">Search for user</button>
+			</div>`;
+
+		var options = {
+			url: function (username) {
+				return `${window.location.origin}/@api/deki/users/search?fullname=${encodeURIComponent(username)}&dream.out.format=json`;
+			},
+
+			getValue: function (json) {
+				console.log(json);
+				let user = json.user;
+				if (user) {
+					if (user.length) {
+						return $.map(user, (item) => item.fullname);
+					}
+					return user.fullname;
+				}
+				return [];
+			},
+			requestDelay: 500,
+
+			list: {
+				match: {
+					enabled: true
+				}
+			}
+		};
+
+		$("#searchUsername").easyAutocomplete(options);
+		this.searchUser();
 	}
 
 	async searchUser() {
 		let username = document.getElementById("searchUsername");
 		if (username && username.value) {
-			this.user = "=" + encodeURIComponent(encodeURIComponent(username.value));
+			this.user = username.value;
 		}
 
-		await Promise.all([this.getContributions(),this.getTracking()]);
+		await Promise.all([this.getContributions(), this.getTracking()]);
+		this.loadDataset();
+	}
+
+	loadDataset(set) {
+		if (set) {
+			this.dataset = set;
+		}
 		switch (this.dataset) {
 			case "contributions":
-				this.loadContributions();
+				this.parseContributions(this.contributions);
+				break;
+			case "edit":
+				this.loadTracking(this.edit);
+				break;
+			case "idle":
+				this.loadTracking(this.idle);
+				break;
+			case "view":
+				this.loadTracking(this.view);
 				break;
 
 		}
 	}
 
 	async getContributions() {
-		const response = await fetch(`https://chem.libretexts.org/@api/deki/users/${this.user}/feed?limit=500&format=raw&dream.out.format=json`);
+		const response = await fetch(`${window.location.origin}/@api/deki/users/=${encodeURIComponent(encodeURIComponent(this.user))}/feed?limit=500&format=raw&dream.out.format=json`);
 		if (response.ok) {
 			let json = await response.json();
 			let array = json.change;
 			let result = [];
 			if (array) {
-/*				if (array.length === 100) {
-					array = array.concat(await getOffset(100));
-				}*/
+				/*				if (array.length === 100) {
+									array = array.concat(await getOffset(100));
+								}*/
 				console.log(array.length);
 				for (let i = 0; i < array.length; i++) {
 					let time = "" + array[i].rc_timestamp;
 					let date = `${time.substring(0, 4)}-${time.substring(4, 6)}-${time.substring(6, 8)}T${time.substring(8, 10)}:${time.substring(10, 12)}:${time.substring(12, 14)}`;
+
 					date = new Date(date);
-					date.setHours(date.getHours() - 8);
+
+/*					date = new Date(Date.UTC(parseInt(time.substring(0, 4)), //Year
+						parseInt(time.substring(4, 6)), //Month
+						parseInt(time.substring(6, 8)), //Day
+						parseInt(time.substring(8, 10)), //Hour
+						parseInt(time.substring(10, 12)), //Minute
+						parseInt(time.substring(12, 14)))); //Second*/
 					result.push(date);
 				}
 			}
@@ -70,11 +119,24 @@ class timetrackViewer {
 		}
 	}
 
-	loadContributions() {
-		this.dataLoad(this.contributions);
+	loadTracking(data) {
+		const viewerDays = 14;
+
+		let labelsX;
+		let today = new Date();
+
+		for (let i = viewerDays; i >= 0; i--) {
+			labelsX = [];
+			let currentDay = new Date();
+			currentDay.setDate(today.getDate() - i);
+			for (let j = 0; j < 24; j++) {
+				labelsX.push(j === 12 ? 12 : j % 12);
+			}
+		}
+		update(data, labelsX);
 	}
 
-	dataLoad(data) {
+	parseContributions(data) { //for parsing contributions
 		const viewerDays = 14;
 
 		let labelsX;
@@ -122,11 +184,19 @@ class timetrackViewer {
 
 	async getTracking() {
 		const response = await fetch(`https://api.libretexts.org/timetrack/editorStats?user=${this.user}`);
+		if (response.ok) {
+			const json = await response.json();
+			this.idle = json.Inactivity;
+			this.view = json.Activity;
+			this.edit = json.Editor;
+		}
+		else {
+			alert("Tracking lookup failed! Error " + response.status + " " + response.statusText);
+		}
 	}
 }
 
 const timetrack = new timetrackViewer();
-timetrack.searchUser();
 
 //Punchcard code
 const margin = {top: 10, right: 10, bottom: 10, left: 15};

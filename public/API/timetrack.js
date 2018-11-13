@@ -75,11 +75,12 @@ if (!window["timeTrack"]) {
 			end = new Date();
 			var time_spent = Math.round((end - start) / 1000);
 			if (time_spent > 1) {
+				let timestamp = new Date();
 				var data = {
 					messageType: editorOpen?"Editor":"Activity",
 					time: time_spent,
 					message: "[Left Page]",
-					timestamp: new Date(),
+					timestamp: timestamp.toUTCString(),
 					username: username
 				};
 				$.ajax({
@@ -129,12 +130,13 @@ if (!window["timeTrack"]) {
 				let inactiveEnd = new Date();
 				if (inactiveStart !== -1) {
 					let inactiveTime = inactiveEnd - inactiveStart;
+					let timestamp = new Date();
 					fetch(`https://${root}/timetrack/receive`, {
 						method: "PUT",
 						body: JSON.stringify({
 							messageType: "Inactivity",
 							time: Math.round(inactiveTime / 1000),
-							timestamp: new Date(),
+							timestamp: timestamp.toUTCString(),
 							username: username
 						})
 					}).then();
@@ -156,13 +158,14 @@ if (!window["timeTrack"]) {
 
 		function reportInterval(message, time_spent, editorOpen) {
 			if (time_spent > 1) {
+				let timestamp = new Date();
 				fetch(`https://${root}/timetrack/receive`, {
 					method: "PUT",
 					body: JSON.stringify({
 						messageType: editorOpen?"Editor":"Activity",
 						time: time_spent,
 						message: "[" + message + "]",
-						timestamp: new Date(),
+						timestamp: timestamp.toUTCString(),
 						username: username
 					})
 				}).then();
