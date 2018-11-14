@@ -1,20 +1,23 @@
 if (!window["timeTrack"]) {
 	window["timeTrack"] = true;
 	const root = "api.libretexts.org";
-	fetch(`https://${root}/timetrack/ping`).then((response) => {
-		if (response.ok) {
-			console.log("Student Editor");
-			track();
-		}
-		else {
-			console.error(response.status)
-		}
-	});
+
+	window.onload = ()=>{
+		fetch(`https://${root}/timetrack/ping`).then((response) => {
+			if (response.ok) {
+				console.log("Student Editor");
+				track();
+			}
+			else {
+				console.error(response.status)
+			}
+		});
+	};
 
 
 	function track() {
 		let hidden, state, visibilityChange;
-		let username = document.getElementById("userEmailHolder").innerText;
+		let username = document.getElementById("usernameHolder").innerText;
 
 		if (document.hidden != null) {
 			hidden = "hidden";

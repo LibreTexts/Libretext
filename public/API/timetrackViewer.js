@@ -2,13 +2,14 @@ class timetrackViewer {
 	constructor() {
 		this.user = document.getElementById("usernameHolder").innerText;
 		this.dataset = "contributions";
-
+		let lastUser = "";
 		const chartHeader = document.getElementById("chartHeader");
 		chartHeader.innerHTML = `
 			<div style="border: 2px solid green; padding: 10px; border-radius: 10px">
 				<div>Administrative Authentication required</div>
 <!--				<div>Username to Authenticate: <input id="user" placeholder="Username"/></div>
 				<div>Password to Authenticate: <input id="password" placeholder="Password" type="password"/></div>-->
+				<input id="searchUsername" placeholder="Search by Student Username"/>
 			</div>`;
 		const chartButtons = document.getElementById("chartButtons");
 		chartButtons.innerHTML = `
@@ -19,41 +20,44 @@ class timetrackViewer {
 				<button onClick="timetrack.loadDataset('idle')">Idle</button>
 			</div>
 			<div style="display: flex">
-				<input id="searchUsername" placeholder="Search by Student Username"/>
-				<button onClick="timetrack.searchUser()">Search for user</button>
+				<!--<button onClick="timetrack.searchUser()">Search for user</button>-->
 			</div>`;
 
 		var options = {
-			url: function (username) {
+			serviceUrl: function (username) {
 				return `${window.location.origin}/@api/deki/users/search?fullname=${encodeURIComponent(username)}&dream.out.format=json`;
 			},
-
-			getValue: function (json) {
-				console.log(json);
-				let user = json.user;
+			deferRequestBy: 150,
+			minChars: 2,
+			transformResult: function (response, originalQuery) {
+				response = JSON.parse(response);
+				let user = response.user;
 				if (user) {
-					if (user.length) {
-						return $.map(user, (item) => item.fullname);
+					if (!user.length) {
+						user = [user];
 					}
-					return user.fullname;
+					return {
+						suggestions: $.map(user, (item) => {
+							return {value: item.fullname, data: item}
+						})
+					}
 				}
 				return [];
 			},
-			requestDelay: 500,
-
-			list: {
-				match: {
-					enabled: true
+			onSelect: function (suggestion) {
+				suggestion = suggestion.data;
+				if (suggestion.username !== lastUser) {
+					lastUser = suggestion.username;
+					timetrack.searchUser({value: suggestion.username});
 				}
 			}
 		};
-
-		$("#searchUsername").easyAutocomplete(options);
+		$("#searchUsername").devbridgeAutocomplete(options);
 		this.searchUser();
 	}
 
-	async searchUser() {
-		let username = document.getElementById("searchUsername");
+	async searchUser(inputUsername) {
+		let username = inputUsername || document.getElementById("searchUsername");
 		if (username && username.value) {
 			this.user = username.value;
 		}
@@ -90,28 +94,24 @@ class timetrackViewer {
 			let array = json.change;
 			let result = [];
 			if (array) {
-				/*				if (array.length === 100) {
-									array = array.concat(await getOffset(100));
-								}*/
 				console.log(array.length);
 				for (let i = 0; i < array.length; i++) {
 					let time = "" + array[i].rc_timestamp;
 					let date = `${time.substring(0, 4)}-${time.substring(4, 6)}-${time.substring(6, 8)}T${time.substring(8, 10)}:${time.substring(10, 12)}:${time.substring(12, 14)}`;
 
-					date = new Date(date);
-
-/*					date = new Date(Date.UTC(parseInt(time.substring(0, 4)), //Year
-						parseInt(time.substring(4, 6)), //Month
+					date = new Date(Date.UTC(parseInt(time.substring(0, 4)), //Year
+						parseInt(time.substring(4, 6)) - 1, //Month
 						parseInt(time.substring(6, 8)), //Day
 						parseInt(time.substring(8, 10)), //Hour
 						parseInt(time.substring(10, 12)), //Minute
-						parseInt(time.substring(12, 14)))); //Second*/
+						parseInt(time.substring(12, 14)))); //Second
 					result.push(date);
 				}
 			}
 			else {
 				alert("No known contributions");
 			}
+			console.log(result);
 			this.contributions = result;
 		}
 		else {

@@ -358,7 +358,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 						}
 
 					//Thumbnail
-					/*				fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
+									fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
 										headers: instance.getCredentials(instance.Ssubdomain)
 									}).then(async (response) => {
 										if (response.ok) {
@@ -369,7 +369,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 												headers: instance.getCredentials(instance.Dsubdomain)
 											}).then();
 										}
-									});*/
+									});
 				}
 
 				counter++;
