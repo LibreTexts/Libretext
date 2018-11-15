@@ -1,4 +1,4 @@
-TOC();
+window.onload = TOC;
 
 function TOC() {
 	const urlArray = window.location.href.replace("?action=edit","").split("/");
@@ -15,14 +15,14 @@ function TOC() {
 						tags = tags.tag.map((tag) => tag["@value"]);
 						if (tags.includes("coverpage:yes") && !coverpage) {
 							coverpage = window.location.origin + path;
-							makeTOC(window.location.origin, path, true);
+							makeTOC(path, true);
 						}
 					}
 					else {
 						tags = tags.tag["@value"];
 						if (tags.includes("coverpage:yes") && !coverpage) {
 							coverpage = window.location.origin + path;
-							makeTOC(window.location.origin, path, true);
+							makeTOC(path, true);
 						}
 					}
 				}
@@ -30,14 +30,16 @@ function TOC() {
 		}
 	}
 
-	function makeTOC(origin, path, full) {
+	async function makeTOC(path, isRoot, full) {
+		const origin = window.location.origin;
+		path = path.replace(origin+"/","");
 		//get coverpage title & subpages;
 		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").done((info) =>
 			coverTitle = info.title
 		);
-		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json").done((info) =>
-			subpageCallback(info, true)
-		);
+		let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+		response = await response.json();
+		return await subpageCallback(response, isRoot);
 
 		async function subpageCallback(info, isRoot) {
 			const subpageArray = info["page.subpage"];
@@ -53,7 +55,7 @@ function TOC() {
 				let currentPage = url === window.location.href;
 				const hasChildren = subpage["@subpages"] === "true";
 				let defaultOpen = window.location.href.includes(url) && !currentPage;
-				let children = hasChildren ? [] : undefined;
+				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full || defaultOpen)) { //recurse down
 					children = await
 						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
@@ -77,8 +79,7 @@ function TOC() {
 				// console.log(content);
 				initializeFancyTree();
 			}
-			else
-				return result;
+			return result;
 		}
 
 		function initializeFancyTree() {
@@ -94,7 +95,13 @@ function TOC() {
 				target.innerHTML = "";
 				target.prepend(`<a href="${origin+"/"+path}"><h6>${coverTitle}</h6></a>`);
 				target.fancytree({
-					source: content
+					source: content,
+					lazyLoad: function (event, data) {
+						var dfd = new $.Deferred();
+						let node = data.node;
+						data.result = dfd.promise();
+						makeTOC(node.data.url).then((result)=>dfd.resolve(result));
+					}
 				})
 			}
 		}
