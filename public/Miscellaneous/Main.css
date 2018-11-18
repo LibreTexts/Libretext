@@ -179,3 +179,18 @@ figure {
     height: 30px;
     object-fit: contain;
 }
+
+div#LTform {
+    display: flex;
+}
+
+div#LTLeft, div#LTRight {
+    flex: 1;
+}
+
+#LTRight span.fancytree-title:after {
+    content: "\e819";
+    font-family: Icomoon;
+    margin-left: 5px;
+    font-size: medium;
+}
