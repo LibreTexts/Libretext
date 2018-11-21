@@ -21,17 +21,18 @@
 	.elm-meta-top .mt-article-pagination * {
 		display: none;
 	}
+
 	.mt-author-container {
 		background: #f0f0f0;
 		border-radius: .5em;
 	}
 }
+
 /*GeoGebra fix*/
 article.elm-content-container, section.mt-content-container {
-	height: auto!important;
-	width:  auto!important;
+	height: auto !important;
+	width: auto !important;
 }
-
 
 
 .elm-meta-top .mt-article-pagination a {
@@ -65,8 +66,8 @@ article.elm-content-container, section.mt-content-container {
 }
 
 
-a.notSS{
-	width:auto;
+a.notSS {
+	width: auto;
 	height: auto;
 	margin-top: 0;
 }
@@ -75,42 +76,50 @@ a.notSS{
 	content: "\e8a6";
 	font-size: 150%;
 }
+
 .fancytree-icon:before {
 	content: "\e8aa";
 }
-.mt-icon-hierarchy-trigger-open:before{
+
+.mt-icon-hierarchy-trigger-open:before {
 	font-size: 150%;
 }
-span.fancytree-has-children >.fancytree-icon:before {
+
+span.fancytree-has-children > .fancytree-icon:before {
 	content: "\e8b3";
 }
-.fancytree-title a{
+
+.fancytree-title a {
 	color: #666;
 }
+
 span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-icon {
 	color: #1a9003;
 }
+
 .toc-hierarchy > div {
 	display: none;
 }
+
 .toc-hierarchy h6 {
 	margin-top: 0;
 	color: #137ac3
 }
 
 .pageInfo {
-	float:left;
-	margin:0 1em 0 0;
+	float: left;
+	margin: 0 1em 0 0;
 }
 
 .cc {
 	color: black;
 }
+
 #pageTagsHolder {
 	display: none;
 }
 
-#batchPrint{
+#batchPrint {
 	display: flex;
 	align-items: stretch;
 	justify-content: center;
@@ -128,6 +137,7 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 	width: unset;
 	height: unset;
 }
+
 #thinCC:hover {
 	background: #650000;
 }
@@ -147,6 +157,7 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 	nav.elm-header-global-nav ol.mt-breadcrumbs {
 		max-width: 85% !important;
 	}
+
 	#TOCbutton {
 		width: auto;
 	}
@@ -175,22 +186,38 @@ figure {
 }
 
 #copyResults img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
+	width: 30px;
+	height: 30px;
+	object-fit: contain;
 }
 
-div#LTform {
-    display: flex;
+#LTform, #LTPreview {
+	display: flex;
+	flex-direction: column;
 }
 
-div#LTLeft, div#LTRight {
-    flex: 1;
+#LTFormContainer, #LTFormHeader, #LTFormFooter {
+	display: flex;
+}
+
+#LTLeft, #LTRight {
+	flex: 1;
+}
+#LTFormFooter {
+	flex-direction: column;
+}
+
+#LTPreview {
+	display: none;
 }
 
 #LTRight span.fancytree-title:after {
-    content: "\e819";
-    font-family: Icomoon;
-    margin-left: 5px;
-    font-size: medium;
+	content: "\e819";
+	font-family: Icomoon;
+	margin-left: 5px;
+	font-size: medium;
+}
+
+div#LTFormHeader {
+    justify-content: flex-end;
 }
