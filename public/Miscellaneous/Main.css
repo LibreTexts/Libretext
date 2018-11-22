@@ -202,6 +202,7 @@ figure {
 
 #LTLeft, #LTRight {
 	flex: 1;
+	align-items: stretch;
 }
 #LTFormFooter {
 	flex-direction: column;
@@ -220,4 +221,9 @@ figure {
 
 div#LTFormHeader {
     justify-content: flex-end;
+}
+
+#LTPreviewHeader {
+    display: flex;
+    justify-content: space-between;
 }
