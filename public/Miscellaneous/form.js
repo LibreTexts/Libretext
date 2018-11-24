@@ -1,20 +1,25 @@
 class LTForm {
 	static async initialize() {
 		this.formScript = document.currentScript;
-		await this.getSubpages("Textbook_Maps", true);
+		await this.getSubpages("", true, false, true);
 	}
 
-	static new() {
+	static async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
-		node.addChildren({
-			title: "New Page",
-			tooltip: "Newly Created Page",
-		});
+		if (node) {
+			await node.setExpanded(true);
+			node.addChildren({
+				title: "New Page",
+				padded: "",
+				lazy: false,
+				tooltip: "Newly Created Page",
+			});
+		}
 	}
 
 	static mergeUp() {
 		let node = $("#LTRight").fancytree("getActiveNode");
-		if (node && node.title !== "Cover Page. Drag onto me") {
+		if (node && node.key !== "ROOT") {
 			node.setExpanded(true).done(() => {
 				if (node.hasChildren()) {
 					while (node.hasChildren()) {
@@ -28,8 +33,1467 @@ class LTForm {
 
 	static delAll() {
 		let node = $("#LTRight").fancytree("getActiveNode");
-		if (node && node.title !== "Cover Page. Drag onto me") {
+		if (node && node.key !== "ROOT") {
 			node.remove();
+		}
+	}
+
+	static default() {
+		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+		if (confirm("This will delete your work and replace it with the default template. Are you sure?")) {
+			const defaultMap = {
+				"expanded": true,
+				"key": "ROOT",
+				"title": "Cover Page.",
+				"unselectable": true,
+				"children": [
+					{
+						"expanded": false,
+						"key": "_40",
+						"lazy": false,
+						"selected": false,
+						"title": "1: Chapter 1",
+						"data": {
+							"padded": "01: Chapter 1"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_60",
+								"lazy": false,
+								"selected": false,
+								"title": "1.1: Section 1:",
+								"data": {
+									"padded": "1.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_61",
+								"lazy": false,
+								"selected": false,
+								"title": "1.2: Section 2:",
+								"data": {
+									"padded": "1.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_62",
+								"lazy": false,
+								"selected": false,
+								"title": "1.3: Section 3:",
+								"data": {
+									"padded": "1.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_63",
+								"lazy": false,
+								"selected": false,
+								"title": "1.4: Section 4:",
+								"data": {
+									"padded": "1.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_64",
+								"lazy": false,
+								"selected": false,
+								"title": "1.5: Section 5:",
+								"data": {
+									"padded": "1.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_65",
+								"lazy": false,
+								"selected": false,
+								"title": "1.6: Section 6:",
+								"data": {
+									"padded": "1.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_41",
+						"lazy": false,
+						"selected": false,
+						"title": "2: Chapter 2",
+						"data": {
+							"padded": "02: Chapter 2"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_66",
+								"lazy": false,
+								"selected": false,
+								"title": "2.1: Section 1:",
+								"data": {
+									"padded": "2.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_67",
+								"lazy": false,
+								"selected": false,
+								"title": "2.2: Section 2:",
+								"data": {
+									"padded": "2.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_68",
+								"lazy": false,
+								"selected": false,
+								"title": "2.3: Section 3:",
+								"data": {
+									"padded": "2.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_69",
+								"lazy": false,
+								"selected": false,
+								"title": "2.4: Section 4:",
+								"data": {
+									"padded": "2.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_70",
+								"lazy": false,
+								"selected": false,
+								"title": "2.5: Section 5:",
+								"data": {
+									"padded": "2.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_71",
+								"lazy": false,
+								"selected": false,
+								"title": "2.6: Section 6:",
+								"data": {
+									"padded": "2.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_42",
+						"lazy": false,
+						"selected": false,
+						"title": "3: Chapter 3",
+						"data": {
+							"padded": "03: Chapter 3"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_72",
+								"lazy": false,
+								"selected": false,
+								"title": "3.1: Section 1:",
+								"data": {
+									"padded": "3.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_73",
+								"lazy": false,
+								"selected": false,
+								"title": "3.2: Section 2:",
+								"data": {
+									"padded": "3.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_74",
+								"lazy": false,
+								"selected": false,
+								"title": "3.3: Section 3:",
+								"data": {
+									"padded": "3.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_75",
+								"lazy": false,
+								"selected": false,
+								"title": "3.4: Section 4:",
+								"data": {
+									"padded": "3.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_76",
+								"lazy": false,
+								"selected": false,
+								"title": "3.5: Section 5:",
+								"data": {
+									"padded": "3.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_77",
+								"lazy": false,
+								"selected": false,
+								"title": "3.6: Section 6:",
+								"data": {
+									"padded": "3.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_43",
+						"lazy": false,
+						"selected": false,
+						"title": "4: Chapter 4",
+						"data": {
+							"padded": "04: Chapter 4"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_78",
+								"lazy": false,
+								"selected": false,
+								"title": "4.1: Section 1:",
+								"data": {
+									"padded": "4.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_79",
+								"lazy": false,
+								"selected": false,
+								"title": "4.2: Section 2:",
+								"data": {
+									"padded": "4.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_80",
+								"lazy": false,
+								"selected": false,
+								"title": "4.3: Section 3:",
+								"data": {
+									"padded": "4.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_81",
+								"lazy": false,
+								"selected": false,
+								"title": "4.4: Section 4:",
+								"data": {
+									"padded": "4.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_82",
+								"lazy": false,
+								"selected": false,
+								"title": "4.5: Section 5:",
+								"data": {
+									"padded": "4.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_83",
+								"lazy": false,
+								"selected": false,
+								"title": "4.6: Section 6:",
+								"data": {
+									"padded": "4.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_44",
+						"lazy": false,
+						"selected": false,
+						"title": "5: Chapter 5",
+						"data": {
+							"padded": "05: Chapter 5"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_84",
+								"lazy": false,
+								"selected": false,
+								"title": "5.1: Section 1:",
+								"data": {
+									"padded": "5.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_85",
+								"lazy": false,
+								"selected": false,
+								"title": "5.2: Section 2:",
+								"data": {
+									"padded": "5.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_86",
+								"lazy": false,
+								"selected": false,
+								"title": "5.3: Section 3:",
+								"data": {
+									"padded": "5.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_87",
+								"lazy": false,
+								"selected": false,
+								"title": "5.4: Section 4:",
+								"data": {
+									"padded": "5.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_88",
+								"lazy": false,
+								"selected": false,
+								"title": "5.5: Section 5:",
+								"data": {
+									"padded": "5.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_89",
+								"lazy": false,
+								"selected": false,
+								"title": "5.6: Section 6:",
+								"data": {
+									"padded": "5.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_45",
+						"lazy": false,
+						"selected": false,
+						"title": "6: Chapter 6",
+						"data": {
+							"padded": "06: Chapter 6"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_90",
+								"lazy": false,
+								"selected": false,
+								"title": "6.1: Section 1:",
+								"data": {
+									"padded": "6.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_91",
+								"lazy": false,
+								"selected": false,
+								"title": "6.2: Section 2:",
+								"data": {
+									"padded": "6.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_92",
+								"lazy": false,
+								"selected": false,
+								"title": "6.3: Section 3:",
+								"data": {
+									"padded": "6.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_93",
+								"lazy": false,
+								"selected": false,
+								"title": "6.4: Section 4:",
+								"data": {
+									"padded": "6.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_94",
+								"lazy": false,
+								"selected": false,
+								"title": "6.5: Section 5:",
+								"data": {
+									"padded": "6.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_95",
+								"lazy": false,
+								"selected": false,
+								"title": "6.6: Section 6:",
+								"data": {
+									"padded": "6.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_46",
+						"lazy": false,
+						"selected": false,
+						"title": "7: Chapter 7",
+						"data": {
+							"padded": "07: Chapter 7"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_96",
+								"lazy": false,
+								"selected": false,
+								"title": "7.1: Section 1:",
+								"data": {
+									"padded": "7.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_97",
+								"lazy": false,
+								"selected": false,
+								"title": "7.2: Section 2:",
+								"data": {
+									"padded": "7.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_98",
+								"lazy": false,
+								"selected": false,
+								"title": "7.3: Section 3:",
+								"data": {
+									"padded": "7.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_99",
+								"lazy": false,
+								"selected": false,
+								"title": "7.4: Section 4:",
+								"data": {
+									"padded": "7.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_100",
+								"lazy": false,
+								"selected": false,
+								"title": "7.5: Section 5:",
+								"data": {
+									"padded": "7.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_101",
+								"lazy": false,
+								"selected": false,
+								"title": "7.6: Section 6:",
+								"data": {
+									"padded": "7.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_47",
+						"lazy": false,
+						"selected": false,
+						"title": "8: Chapter 8",
+						"data": {
+							"padded": "08: Chapter 8"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_102",
+								"lazy": false,
+								"selected": false,
+								"title": "8.1: Section 1:",
+								"data": {
+									"padded": "8.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_103",
+								"lazy": false,
+								"selected": false,
+								"title": "8.2: Section 2:",
+								"data": {
+									"padded": "8.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_104",
+								"lazy": false,
+								"selected": false,
+								"title": "8.3: Section 3:",
+								"data": {
+									"padded": "8.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_105",
+								"lazy": false,
+								"selected": false,
+								"title": "8.4: Section 4:",
+								"data": {
+									"padded": "8.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_106",
+								"lazy": false,
+								"selected": false,
+								"title": "8.5: Section 5:",
+								"data": {
+									"padded": "8.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_107",
+								"lazy": false,
+								"selected": false,
+								"title": "8.6: Section 6:",
+								"data": {
+									"padded": "8.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_48",
+						"lazy": false,
+						"selected": false,
+						"title": "9: Chapter 9",
+						"data": {
+							"padded": "09: Chapter 9"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_108",
+								"lazy": false,
+								"selected": false,
+								"title": "9.1: Section 1:",
+								"data": {
+									"padded": "9.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_109",
+								"lazy": false,
+								"selected": false,
+								"title": "9.2: Section 2:",
+								"data": {
+									"padded": "9.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_110",
+								"lazy": false,
+								"selected": false,
+								"title": "9.3: Section 3:",
+								"data": {
+									"padded": "9.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_111",
+								"lazy": false,
+								"selected": false,
+								"title": "9.4: Section 4:",
+								"data": {
+									"padded": "9.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_112",
+								"lazy": false,
+								"selected": false,
+								"title": "9.5: Section 5:",
+								"data": {
+									"padded": "9.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_113",
+								"lazy": false,
+								"selected": false,
+								"title": "9.6: Section 6:",
+								"data": {
+									"padded": "9.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_49",
+						"lazy": false,
+						"selected": false,
+						"title": "10: Chapter 10",
+						"data": {
+							"padded": "10: Chapter 10"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_114",
+								"lazy": false,
+								"selected": false,
+								"title": "10.1: Section 1:",
+								"data": {
+									"padded": "10.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_115",
+								"lazy": false,
+								"selected": false,
+								"title": "10.2: Section 2:",
+								"data": {
+									"padded": "10.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_116",
+								"lazy": false,
+								"selected": false,
+								"title": "10.3: Section 3:",
+								"data": {
+									"padded": "10.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_117",
+								"lazy": false,
+								"selected": false,
+								"title": "10.4: Section 4:",
+								"data": {
+									"padded": "10.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_118",
+								"lazy": false,
+								"selected": false,
+								"title": "10.5: Section 5:",
+								"data": {
+									"padded": "10.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_119",
+								"lazy": false,
+								"selected": false,
+								"title": "10.6: Section 6:",
+								"data": {
+									"padded": "10.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_50",
+						"lazy": false,
+						"selected": false,
+						"title": "11: Chapter 11",
+						"data": {
+							"padded": "11: Chapter 11"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_120",
+								"lazy": false,
+								"selected": false,
+								"title": "11.1: Section 1:",
+								"data": {
+									"padded": "11.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_121",
+								"lazy": false,
+								"selected": false,
+								"title": "11.2: Section 2:",
+								"data": {
+									"padded": "11.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_122",
+								"lazy": false,
+								"selected": false,
+								"title": "11.3: Section 3:",
+								"data": {
+									"padded": "11.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_123",
+								"lazy": false,
+								"selected": false,
+								"title": "11.4: Section 4:",
+								"data": {
+									"padded": "11.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_124",
+								"lazy": false,
+								"selected": false,
+								"title": "11.5: Section 5:",
+								"data": {
+									"padded": "11.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_125",
+								"lazy": false,
+								"selected": false,
+								"title": "11.6: Section 6:",
+								"data": {
+									"padded": "11.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_51",
+						"lazy": false,
+						"selected": false,
+						"title": "12: Chapter 12",
+						"data": {
+							"padded": "12: Chapter 12"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_126",
+								"lazy": false,
+								"selected": false,
+								"title": "12.1: Section 1:",
+								"data": {
+									"padded": "12.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_127",
+								"lazy": false,
+								"selected": false,
+								"title": "12.2: Section 2:",
+								"data": {
+									"padded": "12.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_128",
+								"lazy": false,
+								"selected": false,
+								"title": "12.3: Section 3:",
+								"data": {
+									"padded": "12.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_129",
+								"lazy": false,
+								"selected": false,
+								"title": "12.4: Section 4:",
+								"data": {
+									"padded": "12.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_130",
+								"lazy": false,
+								"selected": false,
+								"title": "12.5: Section 5:",
+								"data": {
+									"padded": "12.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_131",
+								"lazy": false,
+								"selected": false,
+								"title": "12.6: Section 6:",
+								"data": {
+									"padded": "12.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_52",
+						"lazy": false,
+						"selected": false,
+						"title": "13: Chapter 13",
+						"data": {
+							"padded": "13: Chapter 13"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_132",
+								"lazy": false,
+								"selected": false,
+								"title": "13.1: Section 1:",
+								"data": {
+									"padded": "13.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_133",
+								"lazy": false,
+								"selected": false,
+								"title": "13.2: Section 2:",
+								"data": {
+									"padded": "13.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_134",
+								"lazy": false,
+								"selected": false,
+								"title": "13.3: Section 3:",
+								"data": {
+									"padded": "13.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_135",
+								"lazy": false,
+								"selected": false,
+								"title": "13.4: Section 4:",
+								"data": {
+									"padded": "13.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_136",
+								"lazy": false,
+								"selected": false,
+								"title": "13.5: Section 5:",
+								"data": {
+									"padded": "13.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_137",
+								"lazy": false,
+								"selected": false,
+								"title": "13.6: Section 6:",
+								"data": {
+									"padded": "13.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_53",
+						"lazy": false,
+						"selected": false,
+						"title": "14: Chapter 14",
+						"data": {
+							"padded": "14: Chapter 14"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_138",
+								"lazy": false,
+								"selected": false,
+								"title": "14.1: Section 1:",
+								"data": {
+									"padded": "14.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_139",
+								"lazy": false,
+								"selected": false,
+								"title": "14.2: Section 2:",
+								"data": {
+									"padded": "14.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_140",
+								"lazy": false,
+								"selected": false,
+								"title": "14.3: Section 3:",
+								"data": {
+									"padded": "14.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_141",
+								"lazy": false,
+								"selected": false,
+								"title": "14.4: Section 4:",
+								"data": {
+									"padded": "14.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_142",
+								"lazy": false,
+								"selected": false,
+								"title": "14.5: Section 5:",
+								"data": {
+									"padded": "14.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_143",
+								"lazy": false,
+								"selected": false,
+								"title": "14.6: Section 6:",
+								"data": {
+									"padded": "14.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_54",
+						"lazy": false,
+						"selected": false,
+						"title": "15: Chapter 15",
+						"data": {
+							"padded": "15: Chapter 15"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_144",
+								"lazy": false,
+								"selected": false,
+								"title": "15.1: Section 1:",
+								"data": {
+									"padded": "15.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_145",
+								"lazy": false,
+								"selected": false,
+								"title": "15.2: Section 2:",
+								"data": {
+									"padded": "15.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_146",
+								"lazy": false,
+								"selected": false,
+								"title": "15.3: Section 3:",
+								"data": {
+									"padded": "15.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_147",
+								"lazy": false,
+								"selected": false,
+								"title": "15.4: Section 4:",
+								"data": {
+									"padded": "15.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_148",
+								"lazy": false,
+								"selected": false,
+								"title": "15.5: Section 5:",
+								"data": {
+									"padded": "15.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_149",
+								"lazy": false,
+								"selected": false,
+								"title": "15.6: Section 6:",
+								"data": {
+									"padded": "15.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_55",
+						"lazy": false,
+						"selected": false,
+						"title": "16: Chapter 16",
+						"data": {
+							"padded": "16: Chapter 16"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_150",
+								"lazy": false,
+								"selected": false,
+								"title": "16.1: Section 1:",
+								"data": {
+									"padded": "16.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_151",
+								"lazy": false,
+								"selected": false,
+								"title": "16.2: Section 2:",
+								"data": {
+									"padded": "16.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_152",
+								"lazy": false,
+								"selected": false,
+								"title": "16.3: Section 3:",
+								"data": {
+									"padded": "16.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_153",
+								"lazy": false,
+								"selected": false,
+								"title": "16.4: Section 4:",
+								"data": {
+									"padded": "16.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_154",
+								"lazy": false,
+								"selected": false,
+								"title": "16.5: Section 5:",
+								"data": {
+									"padded": "16.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_155",
+								"lazy": false,
+								"selected": false,
+								"title": "16.6: Section 6:",
+								"data": {
+									"padded": "16.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_56",
+						"lazy": false,
+						"selected": false,
+						"title": "17: Chapter 17",
+						"data": {
+							"padded": "17: Chapter 17"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_156",
+								"lazy": false,
+								"selected": false,
+								"title": "17.1: Section 1:",
+								"data": {
+									"padded": "17.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_157",
+								"lazy": false,
+								"selected": false,
+								"title": "17.2: Section 2:",
+								"data": {
+									"padded": "17.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_158",
+								"lazy": false,
+								"selected": false,
+								"title": "17.3: Section 3:",
+								"data": {
+									"padded": "17.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_159",
+								"lazy": false,
+								"selected": false,
+								"title": "17.4: Section 4:",
+								"data": {
+									"padded": "17.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_160",
+								"lazy": false,
+								"selected": false,
+								"title": "17.5: Section 5:",
+								"data": {
+									"padded": "17.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_161",
+								"lazy": false,
+								"selected": false,
+								"title": "17.6: Section 6:",
+								"data": {
+									"padded": "17.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_57",
+						"lazy": false,
+						"selected": false,
+						"title": "18: Chapter 18",
+						"data": {
+							"padded": "18: Chapter 18"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_162",
+								"lazy": false,
+								"selected": false,
+								"title": "18.1: Section 1:",
+								"data": {
+									"padded": "18.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_163",
+								"lazy": false,
+								"selected": false,
+								"title": "18.2: Section 2:",
+								"data": {
+									"padded": "18.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_164",
+								"lazy": false,
+								"selected": false,
+								"title": "18.3: Section 3:",
+								"data": {
+									"padded": "18.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_165",
+								"lazy": false,
+								"selected": false,
+								"title": "18.4: Section 4:",
+								"data": {
+									"padded": "18.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_166",
+								"lazy": false,
+								"selected": false,
+								"title": "18.5: Section 5:",
+								"data": {
+									"padded": "18.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_167",
+								"lazy": false,
+								"selected": false,
+								"title": "18.6: Section 6:",
+								"data": {
+									"padded": "18.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_58",
+						"lazy": false,
+						"selected": false,
+						"title": "19: Chapter 19",
+						"data": {
+							"padded": "19: Chapter 19"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_168",
+								"lazy": false,
+								"selected": false,
+								"title": "19.1: Section 1:",
+								"data": {
+									"padded": "19.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_169",
+								"lazy": false,
+								"selected": false,
+								"title": "19.2: Section 2:",
+								"data": {
+									"padded": "19.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_170",
+								"lazy": false,
+								"selected": false,
+								"title": "19.3: Section 3:",
+								"data": {
+									"padded": "19.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_171",
+								"lazy": false,
+								"selected": false,
+								"title": "19.4: Section 4:",
+								"data": {
+									"padded": "19.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_172",
+								"lazy": false,
+								"selected": false,
+								"title": "19.5: Section 5:",
+								"data": {
+									"padded": "19.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_173",
+								"lazy": false,
+								"selected": false,
+								"title": "19.6: Section 6:",
+								"data": {
+									"padded": "19.6: Section 6:"
+								}
+							}
+						]
+					},
+					{
+						"expanded": false,
+						"key": "_59",
+						"lazy": false,
+						"selected": false,
+						"title": "20: Chapter 20",
+						"data": {
+							"padded": "20: Chapter 20"
+						},
+						"children": [
+							{
+								"expanded": false,
+								"key": "_174",
+								"lazy": false,
+								"selected": false,
+								"title": "20.1: Section 1:",
+								"data": {
+									"padded": "20.1: Section 1:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_175",
+								"lazy": false,
+								"selected": false,
+								"title": "20.2: Section 2:",
+								"data": {
+									"padded": "20.2: Section 2:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_176",
+								"lazy": false,
+								"selected": false,
+								"title": "20.3: Section 3:",
+								"data": {
+									"padded": "20.3: Section 3:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_177",
+								"lazy": false,
+								"selected": false,
+								"title": "20.4: Section 4:",
+								"data": {
+									"padded": "20.4: Section 4:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_178",
+								"lazy": false,
+								"selected": false,
+								"title": "20.5: Section 5:",
+								"data": {
+									"padded": "20.5: Section 5:"
+								}
+							},
+							{
+								"expanded": false,
+								"key": "_179",
+								"lazy": false,
+								"selected": false,
+								"title": "20.6: Section 6:",
+								"data": {
+									"padded": "20.6: Section 6:"
+								}
+							}
+						]
+					}
+				],
+				"data": {
+					"padded": false
+				},
+				"lazy": false
+			};
+			node.fromDict(defaultMap);
 		}
 	}
 
@@ -37,6 +1501,41 @@ class LTForm {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work. Are you sure?")) {
 			node.removeChildren();
+		}
+	}
+
+	static async renumber() {
+		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+		for (let i = 0; i < root.children.length; i++) {
+			if (root.children[i].lazy) {
+				await root.children[i].visitAndLoad();
+			}
+		}
+		let d = root.toDict(true);
+		let depth = LTForm.getDepth(d);
+		let chapter = 1;
+		processNode(d, 0, 0);
+		root.fromDict(d);
+		root.setExpanded(true);
+
+		function processNode(node, index, level) {
+			if (depth - level <= 1 && node.title.includes(": ")) {
+				node.title = node.title.match(/(?<=: ).*/)[0];
+			}
+			if (depth - level === 1) { //Chapter handling
+				node.title = `${index}: ${node.title}`;
+				chapter = index;
+			}
+			else if (depth - level === 0) { //Page handling
+				node.title = `${chapter}.${index}: ${node.title}`;
+			}
+			node.lazy = false;
+			if (node.children) {
+				for (let i = 0; i < node.children.length; i++) {
+					node.children[i] = processNode(node.children[i], i + 1, level + 1, node.children.length >= 10);
+				}
+			}
+			return node;
 		}
 	}
 
@@ -55,8 +1554,26 @@ class LTForm {
 		}
 	}
 
+	static debug() {
+		let root = $("#LTPreviewForm").fancytree("getTree").getNodeByKey("ROOT");
+		if (!root) {
+			$("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+		}
+		console.log(root.toDict());
+	}
+
+	static setName() {
+		let name = document.getElementById("LTFormName").value;
+		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
+	}
+
 	static async preview() {
 		let institution = document.getElementById("LTFormInstitutions");
+		if (institution.value === "") {
+			if (confirm("Would you like to send an email to info@libretexts.com to request your institution?"))
+				window.open("mailto:info@libretexts.org?subject=Remixer%20Institution%20Request", "_blank");
+			return false;
+		}
 		let name = document.getElementById("LTFormName").value;
 		let url = `${institution.value}/${encodeURIComponent(encodeURIComponent(name))}`;
 		let depth = 0;
@@ -65,29 +1582,28 @@ class LTForm {
 			let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${institution.value.replace(window.location.origin, "")}/${name}`))}/info`);
 			if (response.ok)
 				alert(`The page ${url} already exists!`);
-			else {
-			// alert(`Good ${url}`);
-			let source = $("#LTRight").fancytree("getTree");
-			let preview = $("#LTPreviewForm").fancytree("getTree");
-			let root = source.getNodeByKey("ROOT");
+			let preview = $("#LTPreviewForm").fancytree("getTree").getNodeByKey("ROOT");
+			let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 			if (root.children) {
 				for (let i = 0; i < root.children.length; i++) {
-					await root.children[i].visitAndLoad();
+					if (root.children[i].lazy) {
+						await root.children[i].visitAndLoad();
+					}
 				}
 				let d = root.toDict(true);
 				LTForm.mode("preview");
 				d.title = name;
 				d["data"] = {url: url};
-				depth = getDepth(d);
+				depth = LTForm.getDepth(d);
 				d = processNode(d, 0, 0);
 
-				preview.getNodeByKey("ROOT").fromDict(d);
-
+				preview.fromDict(d);
+				preview.setExpanded(true);
 				console.log(d);
 			}
 			else
 				alert("No content detected!");
-			}
+			// }
 		}
 		else {
 			alert("No name provided!");
@@ -117,18 +1633,19 @@ class LTForm {
 			}
 			return node;
 		}
-
-		function getDepth(tree) {
-			let depth = 0;
-			while (tree.children) {
-				depth++;
-				tree = tree.children[0];
-			}
-			return depth;
-		}
 	}
 
-	static async getSubpages(path, isRoot, full) {
+
+	static getDepth(tree) {
+		let depth = 0;
+		while (tree.children) {
+			depth++;
+			tree = tree.children[0];
+		}
+		return depth;
+	}
+
+	static async getSubpages(path, isRoot, full, linkTitle) {
 		const origin = window.location.origin;
 		path = path.replace(origin + "/", "");
 		let response = await fetch(origin + `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/subpages?dream.out.format=json`);
@@ -143,9 +1660,11 @@ class LTForm {
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
-				let currentPage = url === window.location.href;
+				// let currentPage = url === window.location.href;
+				const currentPage = false;
 				const hasChildren = subpage["@subpages"] === "true";
-				let defaultOpen = window.location.href.includes(url) && !currentPage;
+				// let defaultOpen = window.location.href.includes(url) && !currentPage;
+				const defaultOpen = false;
 				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full || defaultOpen)) { //recurse down
 					children = await
@@ -155,7 +1674,7 @@ class LTForm {
 						subpageCallback(children, false);
 				}
 				result[index] = {
-					title: subpage.title,
+					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
 					url: url,
 					selected: currentPage,
 					expanded: defaultOpen,
@@ -186,22 +1705,24 @@ class LTForm {
 			if (LTForm.content) {
 				let target = document.createElement("div");
 				target.id = "LTRemixer";
-				target.innerHTML = "<div id='LTForm'>Edit Mode<div id='LTFormHeader'><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.reset()'>Reset</button></div>" +
-					"<div id='LTFormContainer'><div id='LTLeft'></div><div id='LTRight'></div></div>" +
-					"<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName'/></div></div>" +
+				target.innerHTML =
+					"<div id='LTForm'><div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div></div>" +
+					"<div class='LTFormHeader'><div class='LTTitle'>Edit Mode</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.delAll()'>Delete Item</button><button onclick='LTForm.renumber()'>Renumber</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>" +
+					"<div id='LTFormContainer'><div>Source Panel<div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>" +
 					"<div><button onclick='LTForm.preview()'>Preview LibreText structure</button></div></div>" +
-					"<div id='LTPreview'><div>Preview Mode</div><div id='LTPreviewHeader'><button onclick='LTForm.mode(\"edit\")'>Return to Edit mode</button><button onclick='LTForm.publish()'>Publish your LibreText</button></div><div id='LTPreviewForm'></div><div id='copyResults'></div><div id='copyErrors'></div> </div>";
+					"<div id='LTPreview'><div class='LTFormHeader'><div class='LTTitle'>Preview Mode</div><button onclick='LTForm.mode(\"edit\")'>Return to Edit mode</button><button onclick='LTForm.publish()'>Publish your LibreText</button></div><div id='LTPreviewForm'></div><div id='copyResults'></div><div id='copyErrors'></div> </div>";
 
 				LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
 				$("#LTLeft").fancytree({
 					source: LTForm.content,
 					debugLevel: 0,
+					autoScroll: true,
 					extensions: ["dnd5"],
 					lazyLoad: function (event, data) {
 						var dfd = new $.Deferred();
 						let node = data.node;
 						data.result = dfd.promise();
-						LTForm.getSubpages(node.data.url).then((result) => dfd.resolve(result));
+						LTForm.getSubpages(node.data.url, false, false, true).then((result) => dfd.resolve(result));
 					},
 					dnd5: {
 						// autoExpandMS: 400,
@@ -248,8 +1769,14 @@ class LTForm {
 					},
 				});
 				$("#LTRight").fancytree({
-					source: [{title: "Cover Page. Drag onto me", key: "ROOT", unselectable: true}],
+					source: [{
+						title: "Cover Page. Drag onto me to get started",
+						key: "ROOT",
+						unselectable: true,
+						expanded: true
+					}],
 					debugLevel: 0,
+					autoScroll: true,
 					extensions: ["dnd5", "edit"],
 					lazyLoad: function (event, data) {
 						var dfd = new $.Deferred();
@@ -258,7 +1785,7 @@ class LTForm {
 						LTForm.getSubpages(node.data.url).then((result) => dfd.resolve(result));
 					},
 					tooltip: (event, data) => {
-						return "Originally " + data.node.data.url
+						return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
 					},
 					edit: {
 						// Available options with their default:
@@ -266,7 +1793,7 @@ class LTForm {
 						inputCss: {minWidth: "3em"},
 						triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
 						beforeEdit: function (event, data) {
-							return data.orgTitle !== "Cover Page. Drag onto me";
+							return data.node.key !== "ROOT";
 						},
 						/*save: function (event, data) {
 							setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
@@ -327,11 +1854,11 @@ class LTForm {
 								if (node.getLevel() <= 1) {
 									data.hitMode = "over";
 								}
-								if (sameTree) {
-									data.otherNode.moveTo(node, data.hitMode);
+								if (data.hitMode === "over") {
+									node.setExpanded(true).always(doTransfer);
 								}
 								else {
-									data.otherNode.copyTo(node, data.hitMode);
+									doTransfer();
 								}
 							}
 							else if (data.otherNodeData) {
@@ -345,15 +1872,27 @@ class LTForm {
 									title: transfer.getData("text")
 								}, data.hitMode);
 							}
-							// node.setExpanded();
+
+							function doTransfer() {
+								if (sameTree) {
+									data.otherNode.moveTo(node, data.hitMode);
+								}
+								else {
+									data.otherNode.copyTo(node, data.hitMode, function (n) {
+										n.title = n.title.replace(/<a.* ><\/a>/, "");
+										n.key = null; // make sure, a new key is generated
+									});
+								}
+							}
 						}
 					},
 				});
 				$("#LTPreviewForm").fancytree({
-					source: [{title: "Cover Page. Drag onto me", key: "ROOT", unselectable: true}],
+					source: [{title: "Cover Page. Drag onto me", key: "ROOT", unselectable: true, expanded: true}],
 					debugLevel: 0,
+					autoScroll: true,
 					tooltip: (event, data) => {
-						return "Originally " + data.node.data.url
+						return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
 					},
 				});
 				await LTForm.getInstitutions();
@@ -383,6 +1922,11 @@ class LTForm {
 	}
 
 	static async publish() {
+		const allowed = document.getElementById("adminHolder").innerText === "true";
+		if (!allowed) {
+			alert("This feature is not available during the testing phase.");
+			return false;
+		}
 		// let subdomain = window.document.origin.split("/")[2].split(".")[0];
 		const tree = $("#LTPreviewForm").fancytree("getTree").toDict()[0];
 		let destRoot = tree.data.url;
@@ -447,149 +1991,161 @@ class LTForm {
 
 			for (let i = 0; i < tree.length; i++) {
 				const child = tree[i];
-				child.path = child.data.url.replace(window.location.origin + "/", ""); //source
 				let url = destRoot + "/" + (child.data.padded || child.title);
 				let path = url.replace(window.location.origin + "/", "");
-				//get info
-				let info = fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json");
-
-				//get Tags
-				let copyContent = false;
-				let tags = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
-				tags = await tags.json();
-				if (tags["@count"] !== "0") {
-					if (tags.tag) {
-						if (tags.tag.length) {
-							tags = tags.tag.map((tag) => tag["@value"]);
-						}
-						else {
-							tags = [tags.tag["@value"]];
-						}
+				if (!child.data.url) { //New Page
+					await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
+						method: "POST",
+						body: ""
+					});
+					// Title cleanup
+					if (child.data.padded) {
+						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + path, {
+							method: "POST"
+						}).then();
 					}
-					copyContent = copyContent || tags.includes("article:topic-category") || tags.includes("article:topic-guide");
-					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
-					tags = "<tags>" + tags + "</tags>";
-				}
-
-				//copy Content
-				let content;
-				info = await info;
-				info = await info.json();
-
-				if (copyContent) {
-					content = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw");
-					content = await content.text();
-					content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-					content = decodeHTML(content);
 				}
 				else {
-					content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
+					child.path = child.data.url.replace(window.location.origin + "/", ""); //source
+					let content;
+					//get info
+					let info = fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json");
+
+					//get Tags
+					let copyContent = false;
+					let tags = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
+					tags = await tags.json();
+					if (tags["@count"] !== "0") {
+						if (tags.tag) {
+							if (tags.tag.length) {
+								tags = tags.tag.map((tag) => tag["@value"]);
+							}
+							else {
+								tags = [tags.tag["@value"]];
+							}
+						}
+						copyContent = copyContent || tags.includes("article:topic-category") || tags.includes("article:topic-guide");
+						tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+						tags = "<tags>" + tags + "</tags>";
+					}
+
+					//copy Content
+					info = await info;
+					info = await info.json();
+					if (copyContent) {
+						content = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw");
+						content = await content.text();
+						content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+						content = decodeHTML(content);
+					}
+					else {
+						content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
 <pre class="script">
 wiki.page("${child.path}", NULL)</pre>
 </div>`;
-				}
-				let response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
-					method: "POST",
-					body: content
-				});
-				if (response.status >= 400) {
-					failedCounter++;
-				}
-				switch (response.status) {
-					case 403:
-						errorText += "403 Forbidden - User does not have permission to create" + path + "\n";
-						break;
-					case 500:
-						errorText += "500 Server Error " + path + "\n";
-						break;
-					case 409:
-						errorText += "409 Conflict - Page already exists " + path + "\n";
-						break;
-					default:
-						errorText += "Error " + response.status + " " + path + "\n";
-						break;
-					case 200:
-						//copy Tags
-						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
-							method: "PUT",
-							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8"}
-						}).then();
-
-						//Properties
-						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json").then(async (response) => {
-							let content = await response.json();
-							if (content["@count"] !== "0") {
-								if (content.property) {
-									if (content.property.length) {
-										content = content.property.map((property) => {
-											return {name: property["@name"], value: property["contents"]["#text"]}
-										});
-									}
-									else {
-										content = [{
-											name: content.property["@name"],
-											value: content.property["contents"]["#text"]
-										}];
-									}
-								}
-							}
-							for (let i = 0; i < content.length; i++) {
-								switch (content[i].name) {
-									//subpageListing check
-									case "mindtouch.idf#subpageListing":
-										if (tags.includes("article:topic-category")) {
-											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
-												method: "POST",
-												body: content[i].value,
-												headers: {"Slug": content[i].name}
-											}).then();
-										}
-										break;
-									//subpageListing check
-									case "mindtouch.idf#guideDisplay":
-										if (tags.includes("article:topic-guide")) {
-											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
-												method: "POST",
-												body: content[i].value,
-												headers: {"Slug": content[i].name}
-											}).then();
-										}
-										break;
-									//pagecontent
-									case "mindtouch.page#overview":
-									case "mindtouch#idf.guideTabs":
-									case "mindtouch.page#welcomeHidden":
-									case "mindtouch.idf#product-image": //NEED FILE TRANSFER
-										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
-											method: "POST",
-											body: content[i].value,
-											headers: {"Slug": content[i].name}
-										}).then();
-										break;
-								}
-							}
-						});
-
-						// Title cleanup
-						if (child.data.padded) {
-							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + path, {
-								method: "POST"
+					}
+					let response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
+						method: "POST",
+						body: content
+					});
+					if (response.status >= 400) {
+						failedCounter++;
+					}
+					switch (response.status) {
+						case 403:
+							errorText += "403 Forbidden - User does not have permission to create" + path + "\n";
+							break;
+						case 500:
+							errorText += "500 Server Error " + path + "\n";
+							break;
+						case 409:
+							errorText += "409 Conflict - Page already exists " + path + "\n";
+							break;
+						default:
+							errorText += "Error " + response.status + " " + path + "\n";
+							break;
+						case 200:
+							//copy Tags
+							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
+								method: "PUT",
+								body: tags,
+								headers: {"Content-Type": "text/xml; charset=utf-8"}
 							}).then();
-						}
 
-					/*					//Thumbnail
-										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail").then(async (response) => {
-											if (response.ok) {
-												let image = await response.blob();
-												fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
-													method: "PUT",
-													body: image
+							//Properties
+							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json").then(async (response) => {
+								let content = await response.json();
+								if (content["@count"] !== "0") {
+									if (content.property) {
+										if (content.property.length) {
+											content = content.property.map((property) => {
+												return {name: property["@name"], value: property["contents"]["#text"]}
+											});
+										}
+										else {
+											content = [{
+												name: content.property["@name"],
+												value: content.property["contents"]["#text"]
+											}];
+										}
+									}
+								}
+								for (let i = 0; i < content.length; i++) {
+									switch (content[i].name) {
+										//subpageListing check
+										case "mindtouch.idf#subpageListing":
+											if (tags.includes("article:topic-category")) {
+												fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
+													method: "POST",
+													body: content[i].value,
+													headers: {"Slug": content[i].name}
 												}).then();
 											}
-										});*/
-				}
+											break;
+										//subpageListing check
+										case "mindtouch.idf#guideDisplay":
+											if (tags.includes("article:topic-guide")) {
+												fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
+													method: "POST",
+													body: content[i].value,
+													headers: {"Slug": content[i].name}
+												}).then();
+											}
+											break;
+										//pagecontent
+										case "mindtouch.page#overview":
+										case "mindtouch#idf.guideTabs":
+										case "mindtouch.page#welcomeHidden":
+										case "mindtouch.idf#product-image": //NEED FILE TRANSFER
+											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
+												method: "POST",
+												body: content[i].value,
+												headers: {"Slug": content[i].name}
+											}).then();
+											break;
+									}
+								}
+							});
 
+							// Title cleanup
+							if (child.data.padded) {
+								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + path, {
+									method: "POST"
+								}).then();
+							}
+
+						/*					//Thumbnail
+											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail").then(async (response) => {
+												if (response.ok) {
+													let image = await response.blob();
+													fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
+														method: "PUT",
+														body: image
+													}).then();
+												}
+											});*/
+					}
+				}
 				counter++;
 				results.innerText = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? "\nFailed: " + failedCounter : "");
 				errors.innerText = errorText;

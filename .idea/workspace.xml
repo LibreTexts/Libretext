@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Username lookup">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added Remixeradmin guard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Jupyter/lib/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Jupyter/lib/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Skele/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Skele/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Skele/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Skele/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,26 +21,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="165" column="91" selection-start-line="165" selection-start-column="91" selection-end-line="165" selection-end-column="91" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-575">
-              <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="202" column="9" selection-start-line="202" selection-start-column="9" selection-end-line="202" selection-end-column="9" />
+            <state relative-caret-position="201">
+              <caret line="1924" column="72" selection-start-line="1924" selection-start-column="72" selection-end-line="1924" selection-end-column="72" />
+              <folding>
+                <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+                <element signature="e#1109#32273#0" />
+                <element signature="e#1236#32207#0" />
+                <element signature="n#!!block;n#reset#1;n#LTForm#0" />
+                <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+                <element signature="n#!!block;n#mode#0;n#LTForm#0" />
+                <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+                <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getSubpages#0;n#LTForm#0" />
+                <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
+                <element signature="n#!!block;n#initializeFancyTree#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
+                <element signature="e#6665#8375#0" />
+                <element signature="e#8406#11824#0" />
+                <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
+                <element signature="e#15859#16261#0" />
+                <element signature="e#16374#16650#0" />
+                <element signature="e#17930#19809#0" />
+                <element signature="e#19865#20048#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -64,36 +62,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user</find>
+      <find>instance.Dorigin +</find>
+      <find>replace(</find>
+      <find>paddstart</find>
+      <find>padded</find>
+      <find>already</find>
+      <find>Enact</find>
+      <find>lazyload</find>
+      <find>getsubpages</find>
       <find>current</find>
-      <find>month</find>
-      <find>date</find>
-      <find>api</find>
-      <find>parsecontributions</find>
-      <find>track</find>
-      <find>headers</find>
-      <find>getcred</find>
-      <find>searchuser</find>
-      <find>minchar</find>
-      <find>fancytree</find>
-      <find>bef</find>
-      <find>propagator</find>
-      <find>content</find>
-      <find>formscript</find>
-      <find>lazy</find>
-      <find>data</find>
-      <find>Data</find>
-      <find>Data root</find>
-      <find>debug</find>
-      <find>LTF</find>
-      <find>title</find>
-      <find>ROOT</find>
-      <find>expandall</find>
-      <find>expand</find>
-      <find>LTLeft</find>
-      <find>mode</find>
-      <find>LTform</find>
-      <find>LTPreview</find>
+      <find>getSubpages</find>
+      <find>replace</find>
+      <find>activenode</find>
+      <find>newpage</find>
+      <find>new</find>
+      <find>tooltip</find>
+      <find>console.log</find>
+      <find>already ex</find>
+      <find>Link</find>
+      <find>Cover</find>
+      <find>title =</find>
+      <find>Drag onto me</find>
+      <find>f9</find>
+      <find>f9f9f9</find>
+      <find>Edit</find>
+      <find>Edit mode</find>
+      <find>publish</find>
+      <find>preview</find>
+      <find>ren</find>
+      <find>chapter</find>
+      <find>New Page</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -112,6 +110,7 @@
       <replace>LTform.content</replace>
       <replace>Cover Page</replace>
       <replace>LTForm</replace>
+      <replace>f3f3f3</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -178,9 +177,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1358" />
-    <option name="width" value="1390" />
-    <option name="height" value="1756" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="2762" />
+    <option name="height" value="1770" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -221,72 +221,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
-          <expand>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="TOC" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -689,13 +624,10 @@
       <workItem from="1542262256312" duration="511000" />
       <workItem from="1542349296636" duration="4247000" />
       <workItem from="1542764261898" duration="14753000" />
-    </task>
-    <task id="LOCAL-00028" summary="Partial Stress test">
-      <created>1531175761059</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1531175761059</updated>
+      <workItem from="1542840989857" duration="18061000" />
+      <workItem from="1543001230760" duration="711000" />
+      <workItem from="1543004745210" duration="2417000" />
+      <workItem from="1543015778161" duration="12266000" />
     </task>
     <task id="LOCAL-00029" summary="Added new logos">
       <created>1531546193520</created>
@@ -1033,7 +965,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542260066025</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Initial Remixer">
+      <created>1542877162249</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1542877162250</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1069,18 +1008,18 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="670147000" />
+    <option name="totallyTimeSpent" value="703602000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27135298" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.26001513" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" weight="0.32992172" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32621083" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32478634" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.17094018" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4984949" weight="0.25492772" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1090,8 +1029,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3266762" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" visible="true" weight="0.22222222" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49789283" weight="0.37056506" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.23361823" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49789283" weight="1.0" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50210714" side_tool="true" weight="0.3455979" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1194,7 +1133,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Fixed timeout" />
     <MESSAGE value="Added Travis-Slack integration" />
     <MESSAGE value="git update-server-info&#10;&#10;Requirejs has JQuery conflict and hates HTML define()" />
     <MESSAGE value="Lengthened timeout to 12 hours" />
@@ -1219,7 +1157,8 @@
     <MESSAGE value="Hooked up tracker data&#10;&#10;Contributions seems off" />
     <MESSAGE value="Time tracker MVP" />
     <MESSAGE value="Updated TOC to lazyload" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated TOC to lazyload" />
+    <MESSAGE value="Initial Remixer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Remixer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1502,13 +1441,6 @@
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/import.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -1516,24 +1448,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="202" column="9" selection-start-line="202" selection-start-column="9" selection-end-line="202" selection-end-column="9" />
+        <state relative-caret-position="379">
+          <caret line="183" column="17" selection-start-line="183" selection-end-line="381" />
+          <folding>
+            <element signature="n#!!block;n#copy#0;n#copyTransclude#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-575">
-          <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+        <state relative-caret-position="92">
+          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="261" column="17" lean-forward="true" selection-start-line="261" selection-start-column="17" selection-end-line="261" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="165" column="91" selection-start-line="165" selection-start-column="91" selection-end-line="165" selection-end-column="91" />
+        <state relative-caret-position="201">
+          <caret line="1924" column="72" selection-start-line="1924" selection-start-column="72" selection-end-line="1924" selection-end-column="72" />
+          <folding>
+            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+            <element signature="e#1109#32273#0" />
+            <element signature="e#1236#32207#0" />
+            <element signature="n#!!block;n#reset#1;n#LTForm#0" />
+            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#mode#0;n#LTForm#0" />
+            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getSubpages#0;n#LTForm#0" />
+            <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
+            <element signature="n#!!block;n#initializeFancyTree#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
+            <element signature="e#6665#8375#0" />
+            <element signature="e#8406#11824#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="e#15859#16261#0" />
+            <element signature="e#16374#16650#0" />
+            <element signature="e#17930#19809#0" />
+            <element signature="e#19865#20048#0" />
+          </folding>
         </state>
       </provider>
     </entry>
