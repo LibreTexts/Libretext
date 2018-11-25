@@ -42,9 +42,12 @@ function TOC() {
 		return await subpageCallback(response, isRoot);
 
 		async function subpageCallback(info, isRoot) {
-			const subpageArray = info["page.subpage"];
+			let subpageArray = info["page.subpage"];
 			const result = [];
 			const promiseArray = [];
+			if(!subpageArray.length){
+				subpageArray = [subpageArray];
+			}
 			for (let i = 0; i < subpageArray.length; i++) {
 				promiseArray[i] = subpage(subpageArray[i], i);
 			}

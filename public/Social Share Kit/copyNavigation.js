@@ -11,6 +11,7 @@
 			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
 		}
 		propagatorOption();
+		remixerOption();
 		copyTranscludeOption();
 	}
 
@@ -42,6 +43,22 @@
 			copyTarget.classList.remove("mt-icon-copy-page");
 			copyTarget.setAttribute("target", "_blank");
 			copyTarget.title = "Propagate this page to other libraries";
+			original.parentNode.insertBefore(copy, original.nextSibling)
+		}
+	}
+
+	function remixerOption() {
+		let copy = document.getElementsByClassName("mt-new-page");
+		if (copy.length) {
+			let original = document.getElementsByClassName("mt-new-page")[0];
+			copy = original.cloneNode(true);
+			let copyTarget = copy.getElementsByTagName("a")[0];
+			copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/LibreText_Remixer";
+			copyTarget.innerText = "Remixer";
+			copyTarget.classList.add("mt-icon-tree");
+			copyTarget.classList.remove("mt-icon-new-page");
+			copyTarget.setAttribute("target", "_blank");
+			copyTarget.title = "Remix a new LibreText";
 			original.parentNode.insertBefore(copy, original.nextSibling)
 		}
 	}
