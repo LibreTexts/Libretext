@@ -1521,14 +1521,14 @@ class LTForm {
 		let d = root.toDict(true);
 		let depth = this.getDepth(d);
 		let chapter = 1;
-		let shallow = depth < 2
+		let shallow = depth < 2;
 		processNode(d, 0, 0, false,);
 		root.fromDict(d);
 		root.setExpanded(true);
 
 		function processNode(node, index, level, overTen) {
 			if (depth - level <= 1 && node.title.includes(": ")) {
-				node.title = node.title.match(/(?<=: ).*/)[0];
+				node.title = node.title.replace(/^[^:]*:/, "");
 			}
 			if ((!shallow && depth - level === 1) || (shallow && level === 1)) { //Chapter handling
 				node.data["padded"] = `${overTen ? ("" + index).padStart(2, "0") : index}: ${node.title}`;
@@ -2006,7 +2006,8 @@ class LTForm {
 					if (copyContent) {
 						content = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw");
 						content = await content.text();
-						content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+						content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>","").replace("</body>","");
+						//TODO Verify that this works!!!
 						content = decodeHTML(content);
 					}
 					else {
