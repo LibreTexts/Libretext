@@ -197,15 +197,6 @@ class copyTransclude {
 		await doCopy(destRoot, tree);
 		results.innerText = "Finished: " + counter + " pages completed" + (failedCounter ? "\nFailed: " + failedCounter : "");
 
-		function decodeHTML(content) {
-			let ret = content.replace(/&gt;/g, '>');
-			ret = ret.replace(/&lt;/g, '<');
-			ret = ret.replace(/&quot;/g, '"');
-			ret = ret.replace(/&apos;/g, "'");
-			ret = ret.replace(/&amp;/g, '&');
-			return ret;
-		}
-
 		async function doCopy(destRoot, tree) {
 
 			for (let i = 0; i < tree.length; i++) {

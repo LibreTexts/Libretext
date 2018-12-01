@@ -2,17 +2,17 @@ if (!window["timeTrack"]) {
 	window["timeTrack"] = true;
 	const root = "api.libretexts.org";
 
-	window.onload = ()=>{
+	window.addEventListener('load', function () {
 		fetch(`https://${root}/timetrack/ping`).then((response) => {
 			if (response.ok) {
-				console.log("Student Editor");
+				console.log("Student license");
 				track();
 			}
 			else {
 				console.error(response.status)
 			}
 		});
-	};
+	});
 
 
 	function track() {
@@ -80,7 +80,7 @@ if (!window["timeTrack"]) {
 			if (time_spent > 1) {
 				let timestamp = new Date();
 				var data = {
-					messageType: editorOpen?"Editor":"Activity",
+					messageType: editorOpen ? "Editor" : "Activity",
 					time: time_spent,
 					message: "[Left Page]",
 					timestamp: timestamp.toUTCString(),
@@ -165,7 +165,7 @@ if (!window["timeTrack"]) {
 				fetch(`https://${root}/timetrack/receive`, {
 					method: "PUT",
 					body: JSON.stringify({
-						messageType: editorOpen?"Editor":"Activity",
+						messageType: editorOpen ? "Editor" : "Activity",
 						time: time_spent,
 						message: "[" + message + "]",
 						timestamp: timestamp.toUTCString(),

@@ -13,6 +13,8 @@
 		propagatorOption();
 		remixerOption();
 		copyTranscludeOption();
+		copyContentOption();
+		// setInterval(editorContentReuseLink, 500);
 	}
 
 	function copyTranscludeOption() {
@@ -53,7 +55,7 @@
 			let original = document.getElementsByClassName("mt-new-page")[0];
 			copy = original.cloneNode(true);
 			let copyTarget = copy.getElementsByTagName("a")[0];
-			copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/LibreText_Remixer";
+			copyTarget.href = window.location.origin + "/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
@@ -63,5 +65,115 @@
 		}
 	}
 
+	async function getTags(pageID, extraArray) {
+		let tags = await fetch(`/@api/deki/pages/${pageID}/tags?dream.out.format=json`);
+		tags = await tags.json();
+		if (tags["@count"] !== "0") {
+			if (tags.tag) {
+				if (tags.tag.length) {
+					tags = tags.tag.map((tag) => tag["@value"]);
+				}
+				else {
+					tags = [tags.tag["@value"]];
+				}
+			}
+			copyContent = copyContent || tags.includes("article:topic-category") || tags.includes("article:topic-guide");
+			if (extraArray && extraArray.length) {
+				tags = tags.concat(extraArray);
+			}
+			tags.splice(tags.indexOf("Transcluded"), 1);
+			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+			return "<tags>" + tags + "</tags>";
+		}
+		else {
+			return null;
+		}
+	}
+
+	async function copyContent() {
+		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
+			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
+			let response = await fetch(`/@api/deki/pages/${pageID}/contents?mode=raw`);
+			if (response.ok) {
+				let contentReuse = await response.text();
+				if (contentReuse) {
+					contentReuse = decodeHTML(contentReuse);
+					contentReuse = decodeHTML(contentReuse);
+					let matches = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+					if (matches && matches.length) {
+						let result = contentReuse;
+						result = result.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+						for (let i = 0; i < matches.length; i++) {
+							let path = matches[i].match(/(?<=data-page=")[^"]+/)[0];
+							console.log(path);
+							let content = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`);
+							content = await content.text();
+							content = decodeHTML(content);
+							content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+							result = result.replace(matches[i], content);
+						}
+						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
+							method: "POST",
+							body: result,
+						});
+						let tags = await getTags(pageID, "Forked");
+						await fetch(`/@api/deki/pages/${pageID}/tags`, {
+							method: "PUT",
+							body: tags,
+							headers: {"Content-Type": "text/xml; charset=utf-8"}
+						});
+						location.reload();
+					}
+					else {
+						alert("No content-reuse sections detected!");
+					}
+				}
+			}
+		}
+	}
+
+	function copyContentOption() {
+		let tags = document.getElementById("pageTagsHolder");
+		let isPro = document.getElementById("adminHolder"); //TODO: Enable for all
+		let target = $("span.title.mt-title-edit");
+		if (tags && isPro && isPro.innerText) {
+			tags = tags.innerText;
+			tags = tags.replace(/\\/g, "");
+			tags = JSON.parse(tags);
+			if (tags.includes("Transcluded") && !tags.includes("Forked")) {
+				let icon = document.createElement("a");
+				icon.classList.add("mt-icon-flow-branch");
+				icon.classList.add("printHide");
+				icon.onclick = copyContent;
+				target.after(icon);
+			}
+		}
+	}
+
+	async function editorContentReuseLink() {
+		if (document.getElementById("eareaParent")) {
+			let contentReuse = CKEDITOR.instances.editarea.getData();
+			if (contentReuse) {
+				contentReuse = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+				if (contentReuse && contentReuse.length) {
+					for (let i = 0; i < contentReuse.length; i++) {
+						let url = contentReuse[i].match(/(?<=data-page=")[^"]+/)[0];
+						console.log(url);
+					}
+				}
+			}
+		}
+	}
+
 	document.addEventListener('DOMContentLoaded', fn)
 })();
+
+
+function decodeHTML(content) {
+	let ret = content.replace(/&gt;/g, '>');
+	ret = ret.replace(/&lt;/g, '<');
+	ret = ret.replace(/&quot;/g, '"');
+	ret = ret.replace(/&apos;/g, "'");
+	ret = ret.replace(/&amp;/g, '&');
+	return ret;
+}
