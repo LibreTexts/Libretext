@@ -18,18 +18,24 @@
 	}
 
 	function copyTranscludeOption() {
-		let copy = document.getElementsByClassName("mt-user-menu-copy-page");
-		if (copy.length) {
-			let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
-			copy = original.cloneNode(true);
-			let copyTarget = copy.getElementsByTagName("a")[0];
-			copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Copy_Transclude?" + encodeURIComponent(window.location.href);
-			copyTarget.innerText = "Copy-Transclude";
-			copyTarget.classList.add("mt-icon-paste3");
-			copyTarget.classList.remove("mt-icon-copy-page");
-			copyTarget.setAttribute("target", "_blank");
-			copyTarget.title = "Transcluding will make a copy that receives updates from the original content";
-			original.parentNode.insertBefore(copy, original.nextSibling)
+		let tags = document.getElementById("pageTagsHolder");
+		if (tags) {
+			tags = tags.innerText;
+			tags = tags.replace(/\\/g, "");
+			tags = JSON.parse(tags);
+			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
+			if (copy.length && !tags.includes("transcluded:yes")) {
+				let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
+				copy = original.cloneNode(true);
+				let copyTarget = copy.getElementsByTagName("a")[0];
+				copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Copy_Transclude?" + encodeURIComponent(window.location.href);
+				copyTarget.innerText = "Copy-Transclude";
+				copyTarget.classList.add("mt-icon-paste3");
+				copyTarget.classList.remove("mt-icon-copy-page");
+				copyTarget.setAttribute("target", "_blank");
+				copyTarget.title = "Transcluding will make a copy that receives updates from the original content";
+				original.parentNode.insertBefore(copy, original.nextSibling)
+			}
 		}
 	}
 
@@ -77,11 +83,10 @@
 					tags = [tags.tag["@value"]];
 				}
 			}
-			copyContent = copyContent || tags.includes("article:topic-category") || tags.includes("article:topic-guide");
 			if (extraArray && extraArray.length) {
 				tags = tags.concat(extraArray);
 			}
-			tags.splice(tags.indexOf("Transcluded"), 1);
+			tags.splice(tags.indexOf("transcluded:yes"), 1);
 			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
 			return "<tags>" + tags + "</tags>";
 		}
@@ -97,7 +102,6 @@
 			if (response.ok) {
 				let contentReuse = await response.text();
 				if (contentReuse) {
-					contentReuse = decodeHTML(contentReuse);
 					contentReuse = decodeHTML(contentReuse);
 					let matches = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
 					if (matches && matches.length) {
@@ -116,17 +120,17 @@
 							method: "POST",
 							body: result,
 						});
-						let tags = await getTags(pageID, "Forked");
-						await fetch(`/@api/deki/pages/${pageID}/tags`, {
-							method: "PUT",
-							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8"}
-						});
-						location.reload();
 					}
 					else {
 						alert("No content-reuse sections detected!");
 					}
+					let tags = await getTags(pageID);
+					await fetch(`/@api/deki/pages/${pageID}/tags`, {
+						method: "PUT",
+						body: tags,
+						headers: {"Content-Type": "text/xml; charset=utf-8"}
+					});
+					location.reload();
 				}
 			}
 		}
@@ -140,12 +144,29 @@
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
-			if (tags.includes("Transcluded") && !tags.includes("Forked")) {
-				let icon = document.createElement("a");
-				icon.classList.add("mt-icon-flow-branch");
-				icon.classList.add("printHide");
-				icon.onclick = copyContent;
-				target.after(icon);
+
+			//Options menu
+			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
+			if (copy.length) {
+				let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
+				copy = original.cloneNode(true);
+				let copyTarget = copy.getElementsByTagName("a")[0];
+				copyTarget.onclick = copyContent;
+				copyTarget.innerText = "Forker";
+				copyTarget.classList.add("mt-icon-flow-branch");
+				copyTarget.classList.remove("mt-icon-copy-page");
+				copyTarget.title = "Fork this transcluded page";
+				original.parentNode.insertBefore(copy, original.nextSibling)
+			}
+			if (tags.includes("transcluded:yes")) {
+				//Next to title
+				if (!tags.includes("article:topic-category") && !tags.includes("article:topic-guide")) {
+					let icon = document.createElement("a");
+					icon.classList.add("mt-icon-flow-branch");
+					icon.classList.add("printHide");
+					icon.onclick = copyContent;
+					target.after(icon);
+				}
 			}
 		}
 	}

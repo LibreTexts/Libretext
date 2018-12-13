@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/timetrack.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/timetrack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,21 +22,21 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="93" column="160" selection-start-line="93" selection-start-column="160" selection-end-line="93" selection-end-column="160" />
+            <state relative-caret-position="598">
+              <caret line="26" column="58" lean-forward="true" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+        <entry file="file://$PROJECT_DIR$/API/propagator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1092">
-              <caret line="2129" column="48" selection-start-line="2129" selection-start-column="48" selection-end-line="2129" selection-end-column="48" />
+            <state relative-caret-position="-1909">
+              <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
               <folding>
-                <element signature="e#1244#32215#0" />
+                <element signature="e#3308#3648#0" />
               </folding>
             </state>
           </provider>
@@ -55,10 +56,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>chapter</find>
-      <find>New Page</find>
-      <find>/move?title=&quot; + child.title + &quot;&amp;name=&quot; + path</find>
-      <find>move</find>
       <find>your new libr</find>
       <find>cover</find>
       <find>LTright</find>
@@ -66,7 +63,6 @@
       <find>PUT</find>
       <find>LTform.renumber</find>
       <find>moveto</find>
-      <find>admin</find>
       <find>testing</find>
       <find>path</find>
       <find>Promise.all</find>
@@ -85,6 +81,11 @@
       <find>tag</find>
       <find>Transcluded</find>
       <find>contents</find>
+      <find>transcluded</find>
+      <find>admin</find>
+      <find>responseerror</find>
+      <find>authen</find>
+      <find>secrets</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -105,6 +106,7 @@
       <replace>LTForm</replace>
       <replace>f3f3f3</replace>
       <replace>/move?to=&quot; + child.title</replace>
+      <replace>authen</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -117,9 +119,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Jupyter/ts.js" />
-        <option value="$PROJECT_DIR$/BUGS.txt" />
-        <option value="$PROJECT_DIR$/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/.dockerignore" />
         <option value="$PROJECT_DIR$/nodePrint/DOCKERFILE" />
         <option value="$PROJECT_DIR$/nodePrint/Dockerfile" />
@@ -143,7 +142,6 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.js" />
         <option value="$PROJECT_DIR$/Bots/package.json" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/ContactForm/credentials.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/testr.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
@@ -157,25 +155,29 @@
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/Bots/credentials.json" />
         <option value="$PROJECT_DIR$/Bots/sendKey.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/propagator.js" />
         <option value="$PROJECT_DIR$/install/cors" />
         <option value="$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
         <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/public/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/handsontable.full.min.css" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/API/authen.json" />
+        <option value="$PROJECT_DIR$/API/propagator.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/propagator.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="2763" />
-    <option name="height" value="1770" />
+    <option name="x" value="-378" />
+    <option name="y" value="303" />
+    <option name="width" value="2586" />
+    <option name="height" value="1467" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -241,13 +243,18 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -294,7 +301,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.7.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/propagator.js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -335,11 +342,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.timetrack.js">
+  <component name="RunManager" selected="Node.js.propagator">
     <configuration name="Jupyter" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="Jupyter.js" working-dir="$PROJECT_DIR$/Jupyter">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
+      <method v="2" />
+    </configuration>
+    <configuration name="propagator" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="propagator.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="timetrack.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="timetrack.js" working-dir="$PROJECT_DIR$/API">
@@ -400,6 +410,7 @@
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
+      <mocha-package>$PROJECT_DIR$/nodePrint/node_modules/mocha</mocha-package>
       <working-directory>$PROJECT_DIR$/nodePrint</working-directory>
       <pass-parent-env>true</pass-parent-env>
       <ui>bdd</ui>
@@ -414,6 +425,7 @@
       <item itemvalue="Node.js.Jupyter" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.timetrack.js" />
+      <item itemvalue="Node.js.propagator" />
       <item itemvalue="npm.Build" />
       <item itemvalue="npm.Serve" />
     </list>
@@ -697,14 +709,11 @@
       <workItem from="1543295598045" duration="140000" />
       <workItem from="1543376229420" duration="350000" />
       <workItem from="1543630511598" duration="158000" />
-      <workItem from="1543630692015" duration="10103000" />
-    </task>
-    <task id="LOCAL-00031" summary="Fixed CORS preflight">
-      <created>1531767762430</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1531767762430</updated>
+      <workItem from="1543630692015" duration="12813000" />
+      <workItem from="1543722303135" duration="5396000" />
+      <workItem from="1543794873004" duration="2055000" />
+      <workItem from="1544155753479" duration="613000" />
+      <workItem from="1544733252571" duration="6107000" />
     </task>
     <task id="LOCAL-00032" summary="Added IP logging">
       <created>1531770766577</created>
@@ -1042,7 +1051,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543280831044</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Implemented Forker/copyContent">
+      <created>1543640849186</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1543640849188</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1078,20 +1094,20 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="734288000" />
+    <option name="totallyTimeSpent" value="751169000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2540638" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16134858" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" weight="0.32992172" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32478634" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.17094018" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4984949" weight="0.25492772" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28266665" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4984949" weight="0.312" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1099,7 +1115,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3266762" />
       <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.23333333" />
+      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.22" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49789283" weight="0.66933334" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50210714" side_tool="true" weight="0.34472933" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
@@ -1203,7 +1219,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Lengthened timeout to 12 hours" />
     <MESSAGE value="Implemented ThinCC beta" />
     <MESSAGE value="Initial Recaptcha" />
     <MESSAGE value="Implemented contact form" />
@@ -1228,7 +1243,8 @@
     <MESSAGE value="Initial Remixer" />
     <MESSAGE value="Added Remixer admin guard" />
     <MESSAGE value="Swapped out positive lookaheads" />
-    <option name="LAST_COMMIT_MESSAGE" value="Swapped out positive lookaheads" />
+    <MESSAGE value="Implemented Forker/copyContent" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Forker/copyContent" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1291,34 +1307,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Jupyter/public/Terminal+Usage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-391">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1265">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -1456,16 +1444,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
     <entry file="file://$PROJECT_DIR$/API/Data/11-2018/delmarlarsen@gmail.com" />
-    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2944">
-          <caret line="17" column="37" lean-forward="true" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/foo/OEBPS/back-matter-001-glossary.html" />
     <entry file="file://$PROJECT_DIR$/API/foo/OEBPS/back-matter-002-about-the-author.html" />
     <entry file="file://$PROJECT_DIR$/public/API/timetrackViewer.js">
@@ -1482,13 +1460,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/import.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1518,13 +1489,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="120" column="33" lean-forward="true" selection-start-line="120" selection-start-column="33" selection-end-line="121" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
@@ -1532,20 +1496,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/handsontable.full.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1092">
-          <caret line="2129" column="48" selection-start-line="2129" selection-start-column="48" selection-end-line="2129" selection-end-column="48" />
+        <state relative-caret-position="534">
+          <caret line="1940" column="22" selection-start-line="1940" selection-start-column="22" selection-end-line="1940" selection-end-column="22" />
           <folding>
-            <element signature="e#1244#32215#0" />
+            <element signature="e#8515#8836#2" expanded="true" />
+            <element signature="e#8922#9243#2" expanded="true" />
+            <element signature="e#22263#22480#2" expanded="true" />
+            <element signature="e#22562#22779#2" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="127" selection-start-line="127" selection-end-line="131" selection-end-column="23" />
+          <folding>
+            <element signature="e#759#1745#0" />
+            <element signature="e#1776#2498#0" />
+            <element signature="e#2526#3151#0" />
+            <element signature="e#3197#3772#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="1633" column="40" lean-forward="true" selection-start-line="1633" selection-start-column="40" selection-end-line="1634" selection-end-column="92" />
+          <folding>
+            <element signature="e#1244#32215#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-184">
+          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
-          <caret line="93" column="160" selection-start-line="93" selection-start-column="160" selection-end-line="93" selection-end-column="160" />
+          <caret line="45" column="53" lean-forward="true" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-346">
+          <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1909">
+          <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding>
+            <element signature="e#3308#3648#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="26" column="58" lean-forward="true" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
         </state>
       </provider>
     </entry>

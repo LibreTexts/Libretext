@@ -2132,7 +2132,7 @@ class LTForm {
 						}
 						copyContent = copyContent || tags.includes("article:topic-category") || tags.includes("article:topic-guide");
 						if (!copyContent) {
-							tags.push("Transcluded");
+							tags.push("transcluded:yes");
 						}
 						tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
 						tags = "<tags>" + tags + "</tags>";
