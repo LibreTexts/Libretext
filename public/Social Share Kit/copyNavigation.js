@@ -103,19 +103,24 @@
 				let contentReuse = await response.text();
 				if (contentReuse) {
 					contentReuse = decodeHTML(contentReuse);
+					contentReuse = contentReuse.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 					let matches = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+
+
 					if (matches && matches.length) {
 						let result = contentReuse;
-						result = result.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-						for (let i = 0; i < matches.length; i++) {
-							let path = matches[i].match(/(?<=data-page=")[^"]+/)[0];
+						do {
+							let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
 							console.log(path);
 							let content = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`);
 							content = await content.text();
 							content = decodeHTML(content);
 							content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-							result = result.replace(matches[i], content);
-						}
+							result = result.replace(matches[0], content);
+
+							matches = result.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+						} while (matches && matches.length);
+
 						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
 							method: "POST",
 							body: result,
