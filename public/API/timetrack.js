@@ -153,7 +153,7 @@ if (!window["timeTrack"]) {
 				}, minutes * 60 * 1000);
 			}
 
-			window.onload = resetTimer;
+			window.addEventListener('load',resetTimer);
 			// DOM Events
 			document.onmousemove = resetTimer;
 			document.onkeypress = resetTimer;

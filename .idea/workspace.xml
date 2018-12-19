@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API/timetrack.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/timetrack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/import.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/propagator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/TOC/TOC.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/TOC/TOC.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,21 +28,35 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
+        <entry file="file://$PROJECT_DIR$/API/import.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="26" column="58" lean-forward="true" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
+            <state relative-caret-position="334">
+              <caret line="213" column="78" selection-start-line="213" selection-start-column="78" selection-end-line="213" selection-end-column="78" />
+              <folding>
+                <element signature="n#!!block;n#processXHTML#0" />
+                <element signature="e#11246#11995#0" />
+                <element signature="n#!!block;n#authenticate#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/propagator.js">
+        <entry file="file://$PROJECT_DIR$/API/Environmental-ScienceBites-1536263723/OEBPS/chapter-001-climate-change-opens-the-door-to-more-intense-tropical-storms.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1909">
-              <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+            <state relative-caret-position="265">
+              <caret line="197" column="8" lean-forward="true" selection-start-line="197" selection-start-column="8" selection-end-line="197" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17779">
+              <caret line="2226" column="45" selection-start-line="2226" selection-start-column="45" selection-end-line="2226" selection-end-column="45" />
               <folding>
-                <element signature="e#3308#3648#0" />
+                <element signature="e#1244#32215#0" />
               </folding>
             </state>
           </provider>
@@ -56,36 +76,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>your new libr</find>
-      <find>cover</find>
-      <find>LTright</find>
-      <find>Renumber</find>
-      <find>PUT</find>
-      <find>LTform.renumber</find>
-      <find>moveto</find>
-      <find>testing</find>
-      <find>path</find>
-      <find>Promise.all</find>
-      <find>putProperty</find>
-      <find>welcome</find>
-      <find>edit</find>
-      <find>over</find>
-      <find>visitand</find>
-      <find>data.othernode</find>
-      <find>default</find>
-      <find>renumber</find>
-      <find>print</find>
-      <find>transclude</find>
-      <find>none</find>
-      <find>decodeHTML</find>
-      <find>tag</find>
-      <find>Transcluded</find>
-      <find>contents</find>
-      <find>transcluded</find>
-      <find>admin</find>
-      <find>responseerror</find>
-      <find>authen</find>
       <find>secrets</find>
+      <find>max-w</find>
+      <find>window.onload</find>
+      <find>authen</find>
+      <find>&lt;img</find>
+      <find>maplimit</find>
+      <find>root</find>
+      <find>edittime</find>
+      <find>const token</find>
+      <find>padd</find>
+      <find>limit</find>
+      <find>isguide</find>
+      <find>padstart</find>
+      <find>padded</find>
+      <find>template</find>
+      <find>putproperty</find>
+      <find>chem</find>
+      <find>media</find>
+      <find>tags</find>
+      <find>img</find>
+      <find>coverpage</find>
+      <find>article</find>
+      <find>&lt;uri</find>
+      <find>topic</find>
+      <find>token</find>
+      <find>console.error</find>
+      <find>[0-9]</find>
+      <find>Chapter</find>
+      <find>[0-9</find>
+      <find>Chapter</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -107,6 +127,7 @@
       <replace>f3f3f3</replace>
       <replace>/move?to=&quot; + child.title</replace>
       <replace>authen</replace>
+      <replace>${subdomain}</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -119,8 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/.dockerignore" />
-        <option value="$PROJECT_DIR$/nodePrint/DOCKERFILE" />
         <option value="$PROJECT_DIR$/nodePrint/Dockerfile" />
         <option value="$PROJECT_DIR$/install/default" />
         <option value="$PROJECT_DIR$/.gitmodules" />
@@ -157,27 +176,29 @@
         <option value="$PROJECT_DIR$/Bots/sendKey.js" />
         <option value="$PROJECT_DIR$/install/cors" />
         <option value="$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
-        <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
-        <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
-        <option value="$PROJECT_DIR$/public/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/handsontable.full.min.css" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/API/authen.json" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
+        <option value="$PROJECT_DIR$/public/API/timetrack.js" />
+        <option value="$PROJECT_DIR$/API/sendKey.js" />
+        <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/propagator.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+        <option value="$PROJECT_DIR$/API/import.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-378" />
-    <option name="y" value="303" />
-    <option name="width" value="2586" />
-    <option name="height" value="1467" />
+    <option name="x" value="381" />
+    <option name="y" value="-6" />
+    <option name="width" value="1302" />
+    <option name="height" value="573" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -248,13 +269,25 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Environmental-ScienceBites-1536263723" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="foo" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -299,9 +332,9 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="true" />
+    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/API/authen.json" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.7.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/propagator.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/import.js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -316,11 +349,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\ContactForm" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
@@ -342,8 +375,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.propagator">
+  <component name="RunManager" selected="Node.js.import.js">
     <configuration name="Jupyter" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="Jupyter.js" working-dir="$PROJECT_DIR$/Jupyter">
+      <method v="2" />
+    </configuration>
+    <configuration name="import.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="import.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
@@ -424,11 +460,17 @@
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.Jupyter" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Node.js.timetrack.js" />
       <item itemvalue="Node.js.propagator" />
+      <item itemvalue="Node.js.timetrack.js" />
+      <item itemvalue="Node.js.import.js" />
       <item itemvalue="npm.Build" />
       <item itemvalue="npm.Serve" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.import.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -713,14 +755,15 @@
       <workItem from="1543722303135" duration="5396000" />
       <workItem from="1543794873004" duration="2055000" />
       <workItem from="1544155753479" duration="613000" />
-      <workItem from="1544733252571" duration="6107000" />
-    </task>
-    <task id="LOCAL-00032" summary="Added IP logging">
-      <created>1531770766577</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1531770766577</updated>
+      <workItem from="1544733252571" duration="7194000" />
+      <workItem from="1544744190952" duration="598000" />
+      <workItem from="1544754097292" duration="1221000" />
+      <workItem from="1544755614656" duration="1560000" />
+      <workItem from="1544771830447" duration="7000" />
+      <workItem from="1545023624260" duration="8806000" />
+      <workItem from="1545075442626" duration="8593000" />
+      <workItem from="1545098823143" duration="16002000" />
+      <workItem from="1545163869734" duration="13236000" />
     </task>
     <task id="LOCAL-00033" summary="Updated Footer">
       <created>1531972839727</created>
@@ -1058,7 +1101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543640849188</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Implemented Propagator">
+      <created>1544742888499</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1544742888499</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1094,37 +1144,36 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="751169000" />
+    <option name="totallyTimeSpent" value="802279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16134858" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14087899" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="2" weight="0.32992172" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32478634" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.28266665" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4984949" weight="0.312" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" weight="0.18700266" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3266762" />
-      <window_info anchor="bottom" id="Inspection Results" order="9" weight="0.7945493" />
-      <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49848944" weight="0.22" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49789283" weight="0.66933334" />
-      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50210714" side_tool="true" weight="0.34472933" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.3276316" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.268" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="5" />
+      <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" weight="0.18700266" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
+      <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
+      <window_info anchor="bottom" id="DB Execution Console" order="9" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.23733333" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4960867" weight="0.39466667" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.3276316" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.4631579" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.4629741" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
+      <window_info active="true" anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.38290188" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20650211" />
@@ -1219,7 +1268,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Implemented ThinCC beta" />
     <MESSAGE value="Initial Recaptcha" />
     <MESSAGE value="Implemented contact form" />
     <MESSAGE value="RequireJS compatibility fix" />
@@ -1244,7 +1292,8 @@
     <MESSAGE value="Added Remixer admin guard" />
     <MESSAGE value="Swapped out positive lookaheads" />
     <MESSAGE value="Implemented Forker/copyContent" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Forker/copyContent" />
+    <MESSAGE value="Implemented Propagator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Propagator" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1254,121 +1303,113 @@
           <line>343</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/node_modules/epub/epub.js</url>
+          <line>749</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>260</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>249</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>295</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>281</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>178</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>161</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>116</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>!containerTags</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>result.Inactivity</expression-string>
+        <expression-string>epub.getImage('media-image027').then(result=&gt;console.log(result))</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result.Inactivity[i]</expression-string>
+        <expression-string>epub.getImage('media-image027')</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result.Inactivity[i].values[h]</expression-string>
+        <expression-string>epub.toc</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result[type][0].date</expression-string>
+        <expression-string>response.status</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>JSON.parse(&quot;[&quot;+month0.trim().replace(/\n/g,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <expression-string>respomse.status</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>JSON.parse(&quot;[&quot;+month0.replace(/\n/g,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <expression-string>response.text().then((data)=&gt;data)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>&quot;[&quot;+month0.replace(/\n/g,&quot;,&quot;)+&quot;]&quot;;</expression-string>
+        <expression-string>response.text()</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>&quot;[&quot;+month0.replace(&quot;\n&quot;,&quot;,&quot;)+&quot;]&quot;;</expression-string>
+        <expression-string>await response.text()</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>JSON.parse(&quot;[&quot;+month0.replace(&quot;\n&quot;,&quot;,&quot;)+&quot;]&quot;);</expression-string>
+        <expression-string>await response.status</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ContactForm/credentials.json" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/testr.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
-    <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="851">
-          <caret line="37" column="47" selection-end-line="80" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bots/test.js" />
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/gpl.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bots/package.json" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="1089" column="13" selection-start-line="1089" selection-start-column="13" selection-end-line="1089" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/install/install.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-218" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/404.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8648">
-          <caret line="376" column="13" selection-start-line="376" selection-start-column="13" selection-end-line="376" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/index.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1435,13 +1476,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1251">
-          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="32" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
     <entry file="file://$PROJECT_DIR$/API/Data/11-2018/delmarlarsen@gmail.com" />
     <entry file="file://$PROJECT_DIR$/API/foo/OEBPS/back-matter-001-glossary.html" />
@@ -1458,16 +1492,6 @@
         <state relative-caret-position="-7168" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/import.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="54" column="52" lean-forward="true" selection-start-line="54" selection-start-column="52" selection-end-line="54" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
@@ -1479,13 +1503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="27" column="61" lean-forward="true" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3473">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1509,10 +1526,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="127" selection-start-line="127" selection-end-line="131" selection-end-column="23" />
+        <state relative-caret-position="166">
+          <caret line="109" column="52" selection-start-line="109" selection-start-column="52" selection-end-line="109" selection-end-column="52" />
           <folding>
             <element signature="e#759#1745#0" />
             <element signature="e#1776#2498#0" />
@@ -1522,65 +1546,166 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="168" column="20" lean-forward="true" selection-start-line="168" selection-start-column="20" selection-end-line="168" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="897">
+          <caret line="39" column="40" lean-forward="true" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3341">
+          <caret line="156" column="25" lean-forward="true" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API/import.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json" />
+    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="37" lean-forward="true" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/Physical-Geology-1539116817.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="886">
+          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/epubs/Physical-Geology-1539116817.html" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-350">
+          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/node_modules/sax/lib/sax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="893" column="7" lean-forward="true" selection-start-line="893" selection-start-column="7" selection-end-line="893" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="4" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1411">
+          <caret line="95" column="38" lean-forward="true" selection-start-line="95" selection-start-column="38" selection-end-line="95" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/node_modules/node-fetch/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="1292" column="14" selection-start-line="1292" selection-start-column="14" selection-end-line="1292" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/foo/OEBPS/chapter-136-chapter-21-geological-history-of-western-canada.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="43" lean-forward="true" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/foo/OEBPS/chapter-142-chapter-21-summary.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/foo/toc.ncx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/node_modules/epub/epub.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="749" column="12" selection-start-line="749" selection-start-column="12" selection-end-line="749" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="1633" column="40" lean-forward="true" selection-start-line="1633" selection-start-column="40" selection-end-line="1634" selection-end-column="92" />
+        <state relative-caret-position="17779">
+          <caret line="2226" column="45" selection-start-line="2226" selection-start-column="45" selection-end-line="2226" selection-end-column="45" />
           <folding>
             <element signature="e#1244#32215#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/authen.json">
+    <entry file="file://$PROJECT_DIR$/API/node_modules/async/dist/async.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+        <state relative-caret-position="229">
+          <caret line="195" column="26" selection-start-line="195" selection-start-column="26" selection-end-line="195" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/API/Environmental-ScienceBites-1536263723/OEBPS/chapter-001-climate-change-opens-the-door-to-more-intense-tropical-storms.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="265">
+          <caret line="197" column="8" lean-forward="true" selection-start-line="197" selection-start-column="8" selection-end-line="197" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
+    <entry file="file://$PROJECT_DIR$/API/import.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-184">
-          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="45" column="53" lean-forward="true" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-346">
-          <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1909">
-          <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+        <state relative-caret-position="334">
+          <caret line="213" column="78" selection-start-line="213" selection-start-column="78" selection-end-line="213" selection-end-column="78" />
           <folding>
-            <element signature="e#3308#3648#0" />
+            <element signature="n#!!block;n#processXHTML#0" />
+            <element signature="e#11246#11995#0" />
+            <element signature="n#!!block;n#authenticate#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="26" column="58" lean-forward="true" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
         </state>
       </provider>
     </entry>

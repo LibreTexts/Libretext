@@ -1,6 +1,7 @@
 const http = require('http');
 const timestamp = require("console-timestamp");
 const server = http.createServer(handler);
+const fetch = require("node-fetch");
 const authen = require('./authen.json');
 let port = 3002;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -10,7 +11,6 @@ server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 console.log(now1.toString());
-const fetch = require("node-fetch");
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -45,8 +45,7 @@ function handler(request, response) {
 					let path = url.split("/").slice(3).join("/");
 					let content = await getContent();
 
-					//Disabled for careered
-					let otherArray = ["bio", "biz", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+										let otherArray = ["bio", "biz","careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
 
 					//Propagatate

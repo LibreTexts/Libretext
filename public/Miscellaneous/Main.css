@@ -163,6 +163,14 @@ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-ico
 	}
 }
 
+@media (max-width: 1001px) {
+
+	#TOCbutton {
+		width: 20px;
+		justify-content: flex-start;
+	}
+}
+
 div.propagatorLoader {
 	display: flex;
 	margin: 10px;

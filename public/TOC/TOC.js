@@ -1,7 +1,7 @@
-window.onload = TOC;
+window.addEventListener('load', TOC);
 
 function TOC() {
-	const urlArray = window.location.href.replace("?action=edit","").split("/");
+	const urlArray = window.location.href.replace("?action=edit", "").split("/");
 	let coverpage;
 	let coverTitle;
 	let content;
@@ -9,7 +9,8 @@ function TOC() {
 		for (let i = 3; i < urlArray.length; i++) {
 			let path = urlArray.slice(3, i + 1).join("/");
 			let getURL = window.location.origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json";
-			$.get(getURL).done((tags) => {
+			fetch(getURL).then(async (response) => {
+				let tags = await response.json();
 				if (tags.tag) {
 					if (tags.tag.length) {
 						tags = tags.tag.map((tag) => tag["@value"]);
@@ -32,11 +33,14 @@ function TOC() {
 
 	async function makeTOC(path, isRoot, full) {
 		const origin = window.location.origin;
-		path = path.replace(origin+"/","");
+		path = path.replace(origin + "/", "");
 		//get coverpage title & subpages;
-		$.get(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").done((info) =>
-			coverTitle = info.title
+		fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").then(async (info) => {
+				info = await info.json();
+				coverTitle = info.title;
+			}
 		);
+
 		let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 		response = await response.json();
 		return await subpageCallback(response, isRoot);
@@ -45,7 +49,7 @@ function TOC() {
 			let subpageArray = info["page.subpage"];
 			const result = [];
 			const promiseArray = [];
-			if(!subpageArray.length){
+			if (!subpageArray.length) {
 				subpageArray = [subpageArray];
 			}
 			for (let i = 0; i < subpageArray.length; i++) {
@@ -90,20 +94,20 @@ function TOC() {
 			if (content) {
 				const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
 				button.text("Contents");
-				button.attr('id',"TOCbutton");
-				button.attr('title',"Expand/Contract Table of Contents");
+				button.attr('id', "TOCbutton");
+				button.attr('title', "Expand/Contract Table of Contents");
 				button.addClass("toc-button");
 				target.addClass("toc-hierarchy");
 				// target.removeClass("elm-hierarchy mt-hierarchy");
 				target.innerHTML = "";
-				target.prepend(`<a href="${origin+"/"+path}"><h6>${coverTitle}</h6></a>`);
+				target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
 				target.fancytree({
 					source: content,
 					lazyLoad: function (event, data) {
 						var dfd = new $.Deferred();
 						let node = data.node;
 						data.result = dfd.promise();
-						makeTOC(node.data.url).then((result)=>dfd.resolve(result));
+						makeTOC(node.data.url).then((result) => dfd.resolve(result));
 					}
 				})
 			}
