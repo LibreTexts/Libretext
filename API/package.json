@@ -10,7 +10,9 @@
     "epub": "^1.1.0",
     "filenamify": "^2.1.0",
     "fs-extra": "^7.0.1",
+    "node-eta": "^0.9.0",
     "node-fetch": "^2.3.0",
-    "node-static": "^0.7.11"
+    "node-static": "^0.7.11",
+    "perf_hooks": "0.0.1"
   }
 }
