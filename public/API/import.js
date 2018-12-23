@@ -14,9 +14,11 @@ button.onclick = () => {
 		url: document.getElementById('importURL').value,
 	});
 	errorText = "";
-	request.open('POST', 'https://api.libretexts.org/import', true);
+	errorField.innerText = errorText;
+	let isHenry = document.getElementById("userEmailHolder").textContent === 'hdagnew@ucdavis.edu';
+	request.open('POST', isHenry ? 'https://home.miniland1333.com/import' : 'https://api.libretexts.org/import', true);
 	request.addEventListener("progress", receive);
-	// request.addEventListener("load", download);
+	// request.addEventListener("load", receive);
 	request.send(requestJSON);
 };
 document.currentScript.parentNode.insertBefore(button, document.currentScript);

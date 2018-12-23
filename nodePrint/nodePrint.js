@@ -265,6 +265,8 @@ puppeteer.launch({
 								return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
 							case "gnudls":
 								return {label: "gnudls", link: "https://www.gnu.org/licenses/dsl.html"};
+							case "arr":
+								return {label: "© All Rights Reserved", link: ""};
 						}
 					}
 				}

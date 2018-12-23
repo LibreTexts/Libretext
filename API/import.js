@@ -92,35 +92,56 @@ function handler(request, response) {
 	async function processEPUB(target, subdomain, user) {
 		const start = performance.now();
 		reportMessage('Downloading...This will take quite a while...');
-		let checkURL = await fetch(target + '/open/download?type=epub', {
+		target = target.trim();
+		let url = target;
+		let checkURL = await fetch(url, {
 			method: 'HEAD'
 		});
-		if (!checkURL.ok) {
-			reportMessage('This source is not valid, please check your URL', true);
-			response.end();
-			return false;
+		let isEpub = target.endsWith('.epub')
+			|| checkURL.headers.get('content-type').includes('application/epub+zip')
+			|| checkURL.headers.get('content-type').includes('application/octet-stream');
+		console.log(checkURL.headers.get('content-type'));
+		if (!checkURL.ok || !isEpub) {
+			url = target + '/open/download?type=epub';
+			checkURL = await fetch(url, {
+				method: 'HEAD'
+			});
+			isEpub = checkURL.headers.get('content-type') === 'application/epub+zip';
+			if (!checkURL.ok || !isEpub) {
+				reportMessage('This source is not valid, please check your URL', true);
+				response.end();
+				return false;
+			}
 		}
-
-		let data = await download(target + '/open/download?type=epub');
-		let epubName = `epubs/${filenamify(target)}.epub`;
-		await fs.ensureDir('epubs');
-		await fs.writeFile(epubName, data);
-		reportMessage('EPUB download complete. Processing...');
+		let epubName = `epubs/${filenamify(target)}${target.endsWith('.epub') ? 'epub' : '.epub'}`;
+		if (!await fs.pathExists(epubName)) {
+			let count = 0;
+			let heartbeat = setInterval(() => reportMessage(`Downloading...This will take quite a while...\nTime elapsed: ${++count} seconds`), 1000);
+			let data = await download(url);
+			await fs.ensureDir('epubs');
+			await fs.writeFile(epubName, data);
+			clearInterval(heartbeat);
+			reportMessage('EPUB download complete. Processing...');
+		}
+		else {
+			reportMessage('Cached EPUB found. Processing...');
+		}
 
 		let epub = new EPub(epubName);
 		epub.on("end", async function () {
 			const title = epub.metadata.title;
 			let filtered = [];
 			let chapters = [];
-			const toc = epub.toc;
+			let whole = [];
+			const toc = epub.flow;
 			let chapterIndex = 0;
 			let pageIndex = 1;
 
 			for (let i = 0; i < toc.length; i++) {
-				if (toc[i].href.includes('-slug-') || toc[i].level) {
+				if (toc[i].level) {
 					//front and back matter ignored
 					let page = toc[i];
-					let indexes = page.title.match(/^[0-9.]+/);
+					let indexes = page.title.match(/^[0-9]+\.[0-9]/);
 					if (indexes) {
 						indexes = indexes[0];
 						page.title = page.title.replace(indexes, indexes + ':');
@@ -129,27 +150,37 @@ function handler(request, response) {
 						page.title = `${chapterIndex}.${pageIndex}: ${page.title}`;
 					}
 					pageIndex++;
-					filtered.push({title: page.title, id: page.id});
+					filtered.push({title: page.title, id: page.id, href: page.href});
 				}
 				else if (toc[i].href.includes('-chapter-') || toc[i].href.includes('part-')) {
-					chapters.push({title: toc[i].title, id: toc[i].id});
+					chapters.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
 					chapterIndex++;
 					pageIndex = 1;
 				}
+				whole.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
 			}
 
 			let filteredChapters = [];
 			for (let i = 0; i < chapters.length; i++) {
 				let current = chapters[i];
-				if (!current.title.includes('Summary'))
+				if (!current.title.includes('Summary')) {
+					current.index = i;
 					filteredChapters.push(current);
+				}
 			}
 
 			let root = 'https://chem.libretexts.org/Under_Construction/Users/Henry/dev/' + title;
 			let subroot = 'Under_Construction/Users/Henry/dev/' + title;
-			if (await coverPage(subroot)) {
-				await processChapters(root, subroot, filteredChapters);
-				await processPages(filtered, root, subroot, filteredChapters);
+			const isSimple = !filtered.length || !filteredChapters.length;
+			if (await coverPage(subroot, isSimple)) {
+				if (isSimple) { //falling back to simple import
+					reportMessage('Warning: Cannot determine structure. Falling back to simple import.', true);
+					await processPages(whole, root, subroot, null);
+				}
+				else {
+					await processChapters(root, subroot, filteredChapters);
+					await processPages(filtered, root, subroot, filteredChapters);
+				}
 
 				const end = performance.now();
 				let time = end - start;
@@ -171,9 +202,9 @@ function handler(request, response) {
 		});
 		epub.parse();
 
-		async function coverPage(subroot) {
+		async function coverPage(subroot, isSimple) {
 			const token = authenticate(user, subdomain);
-			let content = "<p>{{template.ShowCategory()}}</p>";
+			let content = isSimple ? '<p>{{template.ShowGuide()}}</p>' : '<p>{{template.ShowCategory()}}</p>';
 			// TODO Reenable ?abort=exists
 			let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(subroot)) + "/contents?edittime=now", {
 				method: "POST",
@@ -185,41 +216,42 @@ function handler(request, response) {
 				reportMessage(error, true);
 				return false;
 			}
-			let tags = '<tags><tag value="article:topic-category"/><tag value="coverpage:yes"/></tags>';
-			let propertyArray = [putProperty('mindtouch.page#welcomeHidden', true, subroot), putProperty('mindtouch.idf#subpageListing', 'simple', subroot), fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(subroot)) + "/tags", {
+			let tags = `<tags><tag value="article:topic-${isSimple ? 'guide' : 'category'}"/><tag value="coverpage:yes"/></tags>`;
+			let propertyArray = isSimple ? [putProperty("mindtouch.idf#guideDisplay", "single", subroot),
+					putProperty('mindtouch.page#welcomeHidden', true, subroot),
+					putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", subroot)]
+				: [putProperty('mindtouch.page#welcomeHidden', true, subroot),
+					putProperty('mindtouch.idf#subpageListing', 'simple', subroot)];
+
+			propertyArray.push(fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(subroot)) + "/tags", {
 				method: "PUT",
 				body: tags,
 				headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': token}
-			})];
+			}));
 
 			await Promise.all(propertyArray);
 			return true;
 		}
 
 		async function processChapters(root, subroot, chapters) {
-			let promiseArray = [];
+			await mapLimit(chapters, 5, processChapter);
 
-			for (let i = 0; i < chapters.length; i++) {
-				promiseArray.push(processChapter(i));
-			}
-			await Promise.all(promiseArray);
-
-			async function processChapter(index) {
+			async function processChapter(chapter) {
 				const token = authenticate(user, subdomain);
-				let title = chapters[index].title;
+				let title = chapter.title;
 				title = title.replace("Chapter ", "");
 				let number = title.match(/[0-9]+(?= )/);
 				if (number) {
 					number = number[0];
 				}
 				else {
-					number = index + 1;
-					if (!title.startsWith(`${index + 1}:`))
-						title = `${index + 1}: ${title}`;
+					number = chapter.index + 1;
+					if (!title.startsWith(`${chapter.index + 1}:`))
+						title = `${chapter.index + 1}: ${title}`;
 				}
 				let padded = title.replace(number, ("" + number).padStart(2, "0"));
-				chapters[index].title = title;
-				chapters[index].padded = padded;
+				chapter.title = title;
+				chapter.padded = padded;
 				let location = `${subroot}/${title}`;
 				let content = "<p>{{template.ShowGuide()}}</p>";
 				let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(location)) + "/contents?edittime=now", {
@@ -268,20 +300,30 @@ function handler(request, response) {
 
 		async function processPages(splice, root, subroot, filteredChapters) {
 			let completed = 0;
+			let isSimple = filteredChapters === null;
 			const eta = new Eta(splice.length, true);
+			let untitled = 0;
 
 			async function processPage(page) {
 				const token = authenticate(user, subdomain);
 				epub.getChapterRaw = util.promisify(epub.getChapterRaw);
 				epub.getImage = util.promisify(epub.getImage);
+				epub.readFile = util.promisify(epub.readFile);
 				let content = await epub.getChapterRaw(page.id);
-				content = content.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>)/m)[0];
+				let pressBooksContent = content.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>)/m);
+				if (pressBooksContent) {
+					content = pressBooksContent[0];
+				}
 
+				let path = page.title || `Untitled Page ${++untitled}`;
 
-				let path = page.title;
-				let chapterNumber = parseInt(path.match(/.*?(?=\.)/)[0]);
-				let padded = chapterNumber < 10 ? "0" + path : false;
-				path = `${subroot}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
+				let chapterNumber = path.match(/.*?(?=\.)/);
+				let padded;
+				if (!isSimple && chapterNumber) {
+					chapterNumber = parseInt(chapterNumber[0]);
+					padded = chapterNumber < 10 ? "0" + path : false;
+				}
+				path = isSimple ? `${subroot}/${path}` : `${subroot}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
 
 				//remove extraneous link tags
 				let containerTags = content.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
@@ -293,16 +335,29 @@ function handler(request, response) {
 				}
 
 				//Rewrite image src url
-				let images = content.match(/<img .*?src="assets\/.*?\/>/g);
-				let src = content.match(/(?<=<img .*?src="assets\/).*?(?=")/g);
+				let images = content.match(/<img .*?src=".*?\/.*?>/g);
+				let src = content.match(/(?<=<img .*?src=").*?(?=")/g);
+				const atRoot = images === null;
+				if (atRoot) {
+					images = content.match(/<img .*?src=".*?>/g);
+				}
 				if (src) {
 					for (let i = 0; i < src.length; i++) {
-						const fileID = await uploadImage(src[i]);
-						let toReplace = images[i].replace("assets/", `/@api/deki/files/${fileID}/`);
-						content = content.replace(images[i], toReplace);
+						if (!src[i].startsWith('http')) {
+							const fileID = await uploadImage(src[i]);
+							let toReplace;
+							if (atRoot) { // at root url
+								toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
+							}
+							else {
+								toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+							}
+
+							content = content.replace(images[i], toReplace);
+							content = content.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+						}
 					}
 				}
-
 				await uploadContent();
 				completed++;
 				eta.iterate();
@@ -355,12 +410,25 @@ function handler(request, response) {
 				}
 
 				async function uploadImage(filename) {
-					let manifestID = filename.replace(/\.[^/.]+$/, ''); //remove extension
-					manifestID = 'media-' + manifestID.replace(/[^a-z0-9\-]/gi, ''); //only alphanumeric
-					let image = await epub.getImage(manifestID);
+					// filename = filename.replace('.svg', '.png');
+					filename = decodeURIComponent(filename);
+					let prefix = page.href.match(/.*\//);
+					prefix = prefix ? prefix[0] : '';
+					if (prefix && filename.startsWith('../')) {
+						prefix = prefix.match(/.*\/(?=.*?\/$)/)[0];
+						filename = filename.match(/(?<=\.\.\/).*/)[0];
+					}
+
+					let image = await epub.readFile(prefix + filename);
+
+
 					if (!image) {
-						reportMessage(manifestID, true);
+						reportMessage(filename, true);
 						return false;
+					}
+					let shortname = filename.match(/(?<=\/).*?$/);
+					if (shortname) {
+						filename = shortname[0];
 					}
 					let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${encodeURIComponent(encodeURIComponent(filename))}`, {
 						method: 'PUT',

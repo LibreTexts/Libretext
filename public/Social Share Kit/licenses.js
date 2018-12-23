@@ -5,10 +5,13 @@
 			const thing = document.createElement("li");
 			thing.classList.add("pageInfo");
 			if (cc.label === "gnu") {
-				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><img style="height: 30px" src="https://awesomefiles.libretexts.org/Social Share Kit/gpl.png"/></a>`;
+				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><img style="height: 30px" src="https://awesomefiles.libretexts.org/Social Share Kit/gpl.png" alt="GNU General Public License"/></a>`;
 			}
-			if (cc.label === "gnudls") {
+			else if (cc.label === "gnudls") {
 				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><p style="color: black; font-size: small">GNU Design Science License</p></a>`;
+			}
+			else if (cc.label === "arr") {
+				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><img style="height: 30px" src="https://awesomefiles.libretexts.org/Social Share Kit/arr.png" alt="All Rights Reserved"/></a>`;
 			}
 			else {
 				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><i class='cc ${cc.label}'></i></a>`;
@@ -52,6 +55,8 @@
 							return {label: "gnu", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
 						case "gnudls":
 							return {label: "gnudls", link: "https://www.gnu.org/licenses/dsl.html"};
+						case "arr":
+							return {label: "arr"};
 
 					}
 				}
