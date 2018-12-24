@@ -79,8 +79,9 @@
 			document.getElementById("donate").appendChild(donor);
 
 		let printme = document.getElementById("printme");
+		let email = document.getElementById('userEmailHolder').textContent;
 		if (printme)
-			printme.href = "https://dynamic.libretexts.org/" + "print/url=" + window.location + ".pdf";
+			printme.href = `https://${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}/print/url=${window.location}.pdf`;
 
 		const thing = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)

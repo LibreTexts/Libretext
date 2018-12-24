@@ -1,7 +1,7 @@
 const http = require('http');
 const nodeStatic = require('node-static');
 const puppeteer = require('puppeteer');
-const fs = require('fs');
+const fs = require('fs-extra');
 const filenamify = require('filenamify');
 const baseIMG = require("./baseIMG.js");
 const colors = require("./colors");
@@ -9,7 +9,6 @@ const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
 const mapLimit = require("async/mapLimit");
 const zipLocal = require('zip-local');
-const mkdirp = require('mkdirp');
 const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
@@ -39,7 +38,7 @@ puppeteer.launch({
 	Gbrowser = browser;
 	Gserver = server;
 
-	function handler(request, response) {
+	async function handler(request, response) {
 		let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 		ip = ip.padEnd(15);
 		request.url = request.url.replace("print/", "");
@@ -47,13 +46,13 @@ puppeteer.launch({
 
 
 		if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
-			let nocache = false;
+			let isNoCache = false;
 			if (url.includes("?nocache")) {
-				nocache = true;
+				isNoCache = true;
 				url = url.replace("?nocache", "");
 			}
 			if (url.includes("?no-cache")) {
-				nocache = true;
+				isNoCache = true;
 				url = url.replace("?no-cache", "");
 			}
 			url = url.split('/url=')[1];
@@ -64,36 +63,20 @@ puppeteer.launch({
 
 			// response.setHeader("Content-Disposition","attachment");
 
-			fs.stat('./PDF/' + escapedURL + '.pdf', (err, stats) => {
-				const hoursCache = .5;
-				if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
-					delete working[escapedURL];					//5 min timeout for DUPE
-				}
-
-				if (!nocache && (!err && Date.now() - stats.mtime < hoursCache * 4.32e+7)) { //file exists
-					// 4.32e+7 12 hr
-					console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
+			getPDF(url, isNoCache).then((result) => {
+				if (result) {
+					if(result.filename === 'restricted'){
+						responseError('This page is not publicly accessible.', 403)
+					}
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
-				else if (working[escapedURL]) { //another thread is already working
-					eventEmitter.on(escapedURL, () => {
-						console.log(`DUPE   ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
-						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-					});
-					setTimeout(() => {
-						responseError("Request is duplicate.\nPlease try again.");
-					}, 60000);
-				}
-				else {
-					getPDF(url).then(() => {
-						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
-					}, (err) => responseError("Server \n" + err, 500));
-				}
-			});
+			}, (err) => responseError("Server \n" + err, 500));
+
 		}
 		else if (url.startsWith("/Libretext=")) {
 			if (request.headers.origin.endsWith("libretexts.org")) {
 				if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+
 					response.writeHead(200, {
 						"Access-Control-Allow-Origin": request.headers.origin,
 						"Access-Control-Allow-Methods": "PUT",
@@ -104,11 +87,11 @@ puppeteer.launch({
 					let body = [];
 					request.on('data', (chunk) => {
 						body.push(chunk);
-					}).on('end', () => {
+					}).on('end', async () => {
 						body = Buffer.concat(body).toString();
 						const contents = JSON.parse(body);
 						const zipFilename = filenamify(contents.batchName);
-
+						const directory = './PDF/libretexts/' + zipFilename;
 
 						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 							"Access-Control-Allow-Origin": request.headers.origin,
@@ -118,70 +101,78 @@ puppeteer.launch({
 						} : {"Content-Type": " application/json"});
 
 
-						mkdirp.sync('./PDF/libretexts/' + zipFilename);
+						await fs.ensureDir(directory);
 						let urlArray = [contents.root];
 						urlArray = urlArray.concat(addLinks(contents.subpages));
 
 
-						fs.stat('./public/ZIP/' + zipFilename + '.zip', (err, stats) => {
-							const hoursCache = 12;
-							if ((!err && Date.now() - stats.mtime < hoursCache * 4.32e+7)) { //file exists
-								// 4.32e+7 12 hr
-								console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${'./PDF/libretexts/' + zipFilename}`);
-								response.write(JSON.stringify({
-									message: "complete",
-									filename: zipFilename + '.zip',
-									timeTaken: "Cache"
-								}));
-								response.end();
+						response.write(JSON.stringify({
+							message: "start",
+							percent: 0,
+							eta: "Loading...",
+						}) + "\r\n");
+
+						let count = 0;
+						let untitled = 0;
+						const start = performance.now();
+						const eta = new Eta(urlArray.length, true);
+
+						mapLimit(urlArray, 4, async (url) => {
+							let {filename, title} = await getPDF(url, contents.isNoCache, zipFilename);
+							count++;
+							eta.iterate();
+
+							if (filename !== 'restricted') {
+								if (!title) {
+									const sourceArray = url.split("/");
+									const domain = sourceArray.slice(0, 3).join("/");
+									let path = sourceArray.slice(3, sourceArray.length).join("/");
+									let response = await fetch(`${domain}/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/info?dream.out.format=json`);
+									if (response.ok) {
+										title = await response.json();
+										title = title.title;
+									}
+									else {
+										let error = await response.text();
+										console.error(`Err: ${error}`);
+										title = `Untitled ${++untitled}`;
+									}
+								}
+								title = filenamify(title);
+
+								await fs.copy(`./PDF/${filename}`, `${directory}/${title}.pdf`);
 							}
-							else {
-								response.write(JSON.stringify({
-									message: "start",
-									percent: 0,
-									eta: "Loading...",
-								}) + "\r\n");
 
-								let count = 0;
-								const start = performance.now();
-								const eta = new Eta(urlArray.length, true);
+							response.write(JSON.stringify({
+								message: "progress",
+								percent: (Math.round(count / urlArray.length * 1000) / 10),
+								eta: eta.format("{{etah}}"),
+								// count: count,
+							}) + "\r\n");
+						}, (err, results) => {
+							if (err) throw err;
 
-								mapLimit(urlArray, 2, async (url) => {
-									await getPDF(url, zipFilename);
-									count++;
-									eta.iterate();
-									response.write(JSON.stringify({
-										message: "progress",
-										percent: (Math.round(count / urlArray.length * 1000) / 10),
-										eta: eta.format("{{etah}}"),
-										// count: count,
-									}) + "\r\n");
-								}, (err, results) => {
-									if (err) throw err;
+							const end = performance.now();
+							let time = end - start;
+							time /= 100;
+							time = Math.round(time);
+							time /= 10;
 
-									const end = performance.now();
-									let time = end - start;
-									time /= 100;
-									time = Math.round(time);
-									time /= 10;
+							console.log(time);
+							fs.ensureDir('./public/ZIP/');
+							zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
 
-									console.log(time);
-									mkdirp.sync('./public/ZIP/');
-									zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
-
-									response.write(JSON.stringify({
-										message: "complete",
-										filename: zipFilename + '.zip',
-										timeTaken: time
-									}));
-									response.end();
-								});
-							}
+							response.write(JSON.stringify({
+								message: "complete",
+								filename: zipFilename + '.zip',
+								timeTaken: time
+							}));
+							response.end();
 						});
 					});
 				}
 				else {
-					responseError(request.method + " Not Acceptable",406)
+					responseError(request.method + " Not Acceptable", 406)
 				}
 			}
 			else {
@@ -225,6 +216,10 @@ puppeteer.launch({
 			let sourceArray = url.split("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
 			let tags = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags?dream.out.format=json`);
+			if (!tags.ok) {
+				let error = await tags.text();
+				console.error(`getCC: ${error}`);
+			}
 			tags = await tags.text();
 			if (tags) {
 				tags = JSON.parse(tags);
@@ -274,7 +269,63 @@ puppeteer.launch({
 			return null; //not found
 		}
 
-		async function getPDF(url, directory) {
+		async function checkTime(mtime, url) {
+			const sourceArray = url.split("/");
+			let result = false;
+			const domain = sourceArray.slice(0, 3).join("/");
+			let path = sourceArray.slice(3, sourceArray.length).join("/");
+			let response = await fetch(`${domain}/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/revisions?dream.out.format=json`);
+			if (response.ok) {
+				response = await response.json();
+				response = response.page;
+				if (response.length) {
+					response = response[response.length - 1]
+				}
+				let editedDate = new Date(response['date.edited']);
+				result = mtime > editedDate;
+				return result;
+			}
+			else {
+				// let error = await response.text();
+				// console.error(`checkTime: ${error}`);
+				return 'restricted';
+			}
+		}
+
+		async function getPDF(url, isNoCache = false, isBatch = false) {
+			let escapedURL = md5(url);
+			let stats, err;
+			try {
+				stats = await fs.stat('./PDF/' + escapedURL + '.pdf');
+			} catch (e) {
+				err = e;
+			}
+
+			const daysCache = 30;
+			if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
+				delete working[escapedURL];					//5 min timeout for DUPE
+			}
+			const isUpdated = await checkTime(stats.mtime, url);
+			if (isUpdated === 'restricted') {
+				console.error(`PRIVE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
+				return {filename: 'restricted'};
+			}
+			else if (!isNoCache && !err && isUpdated && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
+				// 8.64e+7 day
+				console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
+				return {filename: escapedURL + '.pdf'};
+			}
+			else if (working[escapedURL] && !isBatch) { //another thread is already working
+				eventEmitter.on(escapedURL, () => {
+					console.log(`DUPE   ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
+					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+				});
+				setTimeout(() => {
+					responseError("Request is duplicate.\nPlease try again.");
+				}, 60000);
+				return false;
+			}
+
 			const start = performance.now();
 			console.log(`NEW    ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 			// const browser = await puppeteer.launch();
@@ -286,27 +337,21 @@ puppeteer.launch({
 			}, 40000);
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
-			let escapedURL = md5(url);
-
-			if (!directory)
-				directory = "";
-			else
-				directory = "libretexts/" + directory + "/";
 
 			working[escapedURL] = Date.now();
 			let PDFname = escapedURL;
+			let title;
 			try {
 				try {
 					await page.goto(url + "?no-cache", {
 						timeout: 30000,
 						waitUntil: ["load", "domcontentloaded", 'networkidle0']
 					});
-				}
-				catch (err) {
+				} catch (err) {
 					console.error(`ERROR  ${timestamp('MM/DD hh:mm', Date.now())} Timeout Exceeded ${url}`);
 				}
 
-				const out = await page.evaluate((url) => {
+				const out = await page.evaluate(function (url) {
 					let prefix = "";
 					let title = document.getElementById("title");
 					let innerText;
@@ -322,10 +367,10 @@ puppeteer.launch({
 					return [prefix, innerText];
 				}, url);
 				let prefix = out[0];
-				if (directory) {
-					PDFname = filenamify(out[1] ? out[1] : escapedURL);
+				title = out[1] || null;
+				if (title) {
+					title = title.trim();
 				}
-
 
 				const host = url.split("/")[2].split(".");
 				const subdomain = host[0];
@@ -371,9 +416,8 @@ puppeteer.launch({
 					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 					'</div>';
 
-				mkdirp.sync("./PDF/" + directory);
 				await page.pdf({
-					path: "./PDF/" + directory + PDFname + '.pdf',
+					path: `./PDF/${PDFname}.pdf`,
 					displayHeaderFooter: true,
 					headerTemplate: css + style1,
 					footerTemplate: css + style2,
@@ -385,10 +429,6 @@ puppeteer.launch({
 						left: "0.75in",
 					}
 				});
-
-				/*			response.writeHead(200);
-							response.write(escapedURL);
-							response.end();*/
 
 
 			} catch (err) {
@@ -415,7 +455,7 @@ puppeteer.launch({
 				console.log(`RENDER ${timestamp('MM/DD hh:mm', now)} ${ip} [${pages.length}] ${time}s ${PDFname}`);
 			}
 
-			return PDFname + '.pdf';
+			return {filename: PDFname + '.pdf', title: title};
 		}
 	}
 });
