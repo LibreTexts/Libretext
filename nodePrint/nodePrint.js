@@ -68,7 +68,8 @@ puppeteer.launch({
 					if (result.filename === 'restricted') {
 						responseError('This page is not publicly accessible.', 403)
 					}
-					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+					else
+						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 			}, (err) => responseError("Server \n" + err, 500));
 
@@ -403,6 +404,7 @@ puppeteer.launch({
 					'</div>';
 
 
+				await fs.ensureDir('./PDF');
 				license = await license;
 
 				const style2 = `<div id="mainF">` +
@@ -413,7 +415,6 @@ puppeteer.launch({
 					`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
 					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
 					'</div>';
-
 				await page.pdf({
 					path: `./PDF/${PDFname}.pdf`,
 					displayHeaderFooter: true,
