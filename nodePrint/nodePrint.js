@@ -65,7 +65,7 @@ puppeteer.launch({
 
 			getPDF(url, isNoCache).then((result) => {
 				if (result) {
-					if(result.filename === 'restricted'){
+					if (result.filename === 'restricted') {
 						responseError('This page is not publicly accessible.', 403)
 					}
 					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
@@ -269,9 +269,8 @@ puppeteer.launch({
 			return null; //not found
 		}
 
-		async function checkTime(mtime, url) {
+		async function checkTime(url) {
 			const sourceArray = url.split("/");
-			let result = false;
 			const domain = sourceArray.slice(0, 3).join("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
 			let response = await fetch(`${domain}/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/revisions?dream.out.format=json`);
@@ -281,9 +280,7 @@ puppeteer.launch({
 				if (response.length) {
 					response = response[response.length - 1]
 				}
-				let editedDate = new Date(response['date.edited']);
-				result = mtime > editedDate;
-				return result;
+				return new Date(response['date.edited']);
 			}
 			else {
 				// let error = await response.text();
@@ -301,16 +298,17 @@ puppeteer.launch({
 				err = e;
 			}
 
-			const daysCache = 30;
 			if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
-			const isUpdated = await checkTime(stats.mtime, url);
-			if (isUpdated === 'restricted') {
+
+			const daysCache = 30;
+			const updateTime = await checkTime(url);
+			if (updateTime === 'restricted') {
 				console.error(`PRIVE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 				return {filename: 'restricted'};
 			}
-			else if (!isNoCache && !err && isUpdated && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
+			else if (!isNoCache && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
 				// 8.64e+7 day
 				console.log(`CACHE  ${timestamp('MM/DD hh:mm', Date.now())} ${ip} ${url}`);
 				return {filename: escapedURL + '.pdf'};
