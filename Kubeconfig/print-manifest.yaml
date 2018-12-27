@@ -19,11 +19,7 @@ spec:
             - containerPort: 3001
           volumeMounts:
             - name: nfs-volume
-              mountPath: /app/public/PDF
-
-          # Write to a file inside our NFS
-          command: ["/bin/sh"]
-          args: ["-c", "while true; do date >> /app/public/PDF/dates.txt; sleep 5; done"]
+              mountPath: /app/PDF
 
       volumes:
         - name: nfs-volume
