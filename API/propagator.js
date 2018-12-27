@@ -15,8 +15,9 @@ console.log(now1.toString());
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
+	url = url.replace("propagator/", "");
 
-	if (url.startsWith("/propagator/receive")) {
+	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {

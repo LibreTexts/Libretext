@@ -18,8 +18,9 @@ const fetch = require("node-fetch");
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
+	url = url.replace("timetrack/", "");
 
-	if (url.startsWith("/timetrack/receive")) {
+	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
@@ -44,8 +45,8 @@ function handler(request, response) {
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						await fs.ensureDir(`./Data/${date.getMonth()+1}-${date.getFullYear()}`);
-						await fs.appendFile(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${event.username}`, body + "\n");
+						await fs.ensureDir(`./timetrackData/${date.getMonth()+1}-${date.getFullYear()}`);
+						await fs.appendFile(`./timetrackData/${date.getMonth()+1}-${date.getFullYear()}/${event.username}`, body + "\n");
 						/*						if (event.messageType === "Activity") {
 													if (event.editorOpen) {
 
@@ -70,7 +71,7 @@ function handler(request, response) {
 			}
 		}
 	}
-	else if (url.startsWith("/timetrack/ping")) {
+	else if (url.startsWith("/ping")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
@@ -93,7 +94,7 @@ function handler(request, response) {
 			}
 		}
 	}
-	else if (url.startsWith("/timetrack/editorStats?user=")) {
+	else if (url.startsWith("/editorStats?user=")) {
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin,
@@ -140,7 +141,7 @@ function handler(request, response) {
 			let date = new Date();
 			date.setDate(1);
 			date.setMonth(date.getMonth() - monthOffset);
-			let data = (await fs.pathExists(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${user}`)) ? await fs.readFile(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${user}`, "utf8") : undefined;
+			let data = (await fs.pathExists(`./timetrackData/${date.getMonth()+1}-${date.getFullYear()}/${user}`)) ? await fs.readFile(`./timetrackData/${date.getMonth()+1}-${date.getFullYear()}/${user}`, "utf8") : undefined;
 			if (data) {
 				return JSON.parse("[" + data.trim().replace(/\n/g, ",") + "]");
 			}

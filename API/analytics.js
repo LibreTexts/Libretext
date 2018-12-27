@@ -15,8 +15,9 @@ const fetch = require("node-fetch");
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
+	url = url.replace("analytics/", "");
 
-	if (url.startsWith("/analytics/receive")) {
+	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
@@ -41,8 +42,8 @@ function handler(request, response) {
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						await fs.ensureDir(`./Data/${date.getMonth()+1}-${date.getFullYear()}`);
-						await fs.appendFile(`./Data/${date.getMonth()+1}-${date.getFullYear()}/${event.username}`, body + "\n");
+						await fs.ensureDir(`./analyticsData/${date.getMonth()+1}-${date.getFullYear()}`);
+						await fs.appendFile(`./analyticsData/${date.getMonth()+1}-${date.getFullYear()}/${event.username}.txt`, body + "\n");
 					} catch (e) {
 						console.error(e)
 					}
@@ -54,7 +55,7 @@ function handler(request, response) {
 			}
 		}
 	}
-	else if (url.startsWith("/analytics/ping")) {
+	else if (url.startsWith("/ping")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
