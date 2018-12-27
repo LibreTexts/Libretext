@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-print
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-print
+  template:
+    metadata:
+      labels:
+        app: node-print
+    spec:
+      containers:
+        - name: node-print
+          image: miniland1333/libretext:latest
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: nfs-volume
+              mountPath: /app/public/PDF
+
+          # Write to a file inside our NFS
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do date >> /app/public/PDF/dates.txt; sleep 5; done"]
+
+      volumes:
+        - name: nfs-volume
+          nfs:
+            # URL for the NFS server
+            server: 10.138.138.209
+            path: /var/nfs/general/PDF

@@ -11,7 +11,8 @@ before(function (done) {
 });
 
 describe('basic response', function () {
-	customTest(404, '');
+	customTest(404, 'ajkgalsnflksd');
+	customTest(200, '');
 	customTest(200, 'logo.png');
 });
 

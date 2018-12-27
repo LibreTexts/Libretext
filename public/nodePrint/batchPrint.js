@@ -221,6 +221,10 @@ if (!window["batchPrint.js"]) {
 			function download() {
 				let newText = this.responseText.match(/^{.+}$(?!\s*^.*}$)/m)[0];
 				const out = JSON.parse(newText);
+				if (out.filename === 'refreshOnly') {
+					batchButton.innerText = "Refresh complete";
+					return;
+				}
 				batchButton.innerText = "Redownload";
 				window.location = "https://" + targetComputer + "/print/ZIP/" + out.filename;
 				window["batchComplete"] = "https://" + targetComputer + "/print/ZIP/" + out.filename;

@@ -93,6 +93,7 @@ puppeteer.launch({
 						const contents = JSON.parse(body);
 						const zipFilename = filenamify(contents.batchName);
 						const directory = './PDF/libretexts/' + zipFilename;
+						const refreshOnly = body.refreshOnly;
 
 						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 							"Access-Control-Allow-Origin": request.headers.origin,
@@ -101,8 +102,8 @@ puppeteer.launch({
 							"Content-Type": " application/json",
 						} : {"Content-Type": " application/json"});
 
-
-						await fs.ensureDir(directory);
+						if (!refreshOnly)
+							await fs.ensureDir(directory);
 						let urlArray = [contents.root];
 						urlArray = urlArray.concat(addLinks(contents.subpages));
 
@@ -118,12 +119,12 @@ puppeteer.launch({
 						const start = performance.now();
 						const eta = new Eta(urlArray.length, true);
 
-						mapLimit(urlArray, 4, async (url) => {
+						mapLimit(urlArray, 2, async (url) => {
 							let {filename, title} = await getPDF(url, contents.isNoCache, zipFilename);
 							count++;
 							eta.iterate();
 
-							if (filename !== 'restricted') {
+							if (filename !== 'restricted' && !refreshOnly) {
 								if (!title) {
 									const sourceArray = url.split("/");
 									const domain = sourceArray.slice(0, 3).join("/");
@@ -160,14 +161,24 @@ puppeteer.launch({
 							time /= 10;
 
 							console.log(time);
-							fs.ensureDir('./public/ZIP/');
-							zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
+							if (refreshOnly) {
+								response.write(JSON.stringify({
+									message: "complete",
+									filename: 'refreshOnly',
+									timeTaken: time
+								}));
+							}
+							else {
+								fs.ensureDir('./public/ZIP/');
+								zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
 
-							response.write(JSON.stringify({
-								message: "complete",
-								filename: zipFilename + '.zip',
-								timeTaken: time
-							}));
+								response.write(JSON.stringify({
+									message: "complete",
+									filename: zipFilename + '.zip',
+									timeTaken: time
+								}));
+							}
+
 							response.end();
 						});
 					});
@@ -178,6 +189,27 @@ puppeteer.launch({
 			}
 			else {
 				responseError("CORS Error " + request.headers.origin, 403);
+			}
+		}
+		else if (url === '/' || url.startsWith("/ping")) {
+			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+				response.writeHead(200, {
+					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Methods": "GET",
+					"Content-Type": " text/plain",
+				});
+				response.end();
+			}
+			else if (request.method === "GET") {
+				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Methods": "GET",
+					"Content-Type": " text/plain",
+				} : {"Content-Type": " text/plain"});
+				response.end();
+			}
+			else {
+				responseError(request.method + " Not Acceptable", 406)
 			}
 		}
 		else { //static server
