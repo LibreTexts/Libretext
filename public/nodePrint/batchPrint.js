@@ -12,11 +12,11 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 
 if (!window["batchPrint.js"]) {
 	window["batchPrint.js"] = true;
-	let email = document.getElementById('userEmailHolder').textContent;
+	var email = document.getElementById('userEmailHolder').textContent;
 	const targetComputer = false ? 'home.miniland1333.com' : 'batch.libretexts.org';
 	//email === 'hdagnew@ucdavis.edu'
-	let request;
-	let requestJSON;
+	var request;
+	var requestJSON;
 
 	function fn() {
 		HTMLtoJSON();
@@ -30,7 +30,6 @@ if (!window["batchPrint.js"]) {
 		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com'].includes(email);
 		const batchPrint = document.getElementById("batchPrint");
 		batchPrint.innerHTML = (email ? '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>' : "") + '<a href="https://chem.libretexts.org/Under_Construction/Users/Henry/How_to_use_the_LMS_Thin_Common_Cartridge" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
-
 	}
 
 	function getChildren(HTML) {

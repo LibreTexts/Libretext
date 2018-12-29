@@ -1,6 +1,6 @@
 if (!window["timeTrack"]) {
 	window["timeTrack"] = true;
-	const root = "api.libretexts.org";
+	var root = "api.libretexts.org";
 
 	window.addEventListener('load', function () {
 		fetch(`https://${root}/timetrack/ping`).then((response) => {
@@ -90,14 +90,16 @@ if (!window["timeTrack"]) {
 					type: "PUT",
 					async: false,
 					url: `https://${root}/timetrack/receive`,
-					data: JSON.stringify(data)
+					data: JSON.stringify(data),
+					timeout: 5000
 				});
 				if (editorOpen) {
 					$.ajax({
 						type: "PUT",
 						async: false,
 						url: `https://${root}/timetrack/receive`,
-						data: JSON.stringify(data)
+						data: JSON.stringify(data),
+						timeout: 5000
 					});
 				}
 			}

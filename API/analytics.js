@@ -15,22 +15,22 @@ const fetch = require("node-fetch");
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
-	url = url.replace("analytics/", "");
+	url = url.replace("ay/", "");
 
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
 					"Access-Control-Allow-Origin": request.headers.origin,
-					"Access-Control-Allow-Methods": "PUT",
+					"Access-Control-Allow-Methods": "PUT, POST",
 					"Content-Type": " text/plain",
 				});
 				response.end();
 			}
-			else if (request.method === "PUT") {
+			else if (['PUT', 'POST'].includes(request.method)) {
 				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 					"Access-Control-Allow-Origin": request.headers.origin,
-					"Access-Control-Allow-Methods": "PUT",
+					"Access-Control-Allow-Methods": "PUT, POST",
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});
 				let body = [];
@@ -42,8 +42,8 @@ function handler(request, response) {
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						await fs.ensureDir(`./analyticsData/${date.getMonth()+1}-${date.getFullYear()}`);
-						await fs.appendFile(`./analyticsData/${date.getMonth()+1}-${date.getFullYear()}/${event.username}.txt`, body + "\n");
+						await fs.ensureDir(`./analyticsData/${date.getMonth() + 1}-${date.getFullYear()}`);
+						await fs.appendFile(`./analyticsData/${date.getMonth() + 1}-${date.getFullYear()}/${event.actor.id}.txt`, body + "\n");
 					} catch (e) {
 						console.error(e)
 					}
@@ -51,7 +51,7 @@ function handler(request, response) {
 				});
 			}
 			else {
-				responseError(request.method + " Not Acceptable", 406)
+				responseError(request.method + " Not Acceptable", 406);
 			}
 		}
 	}

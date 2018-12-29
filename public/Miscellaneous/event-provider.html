@@ -1,0 +1,88 @@
+<html>
+<head>
+	<title>Testing caliper.event</title>
+</head>
+<body>
+<p>
+	Send "caliper.event" to parent frame using <b>parent.postMessage()</b> to sneak across
+	origins.
+</p>
+<p>
+	<script>
+		// https://github.com/bracken/lti_messaging
+		// http://www.imsglobal.org/sites/default/files/caliper/v1p1/caliper-spec-v1p1/caliper-spec-v1p1.html#assessmentItemEvent
+
+		var AssessmentItemEvent = 'http://purl.imsglobal.org/caliper/AssessmentItemEvent';
+		var AssessmentItemEventStarted = 'http://purl.imsglobal.org/caliper/actions/Started';
+		var AssessmentItemEventSkipped = 'http://purl.imsglobal.org/caliper/actions/Skipped';
+		var AssessmentItemEventCompleted = 'http://purl.imsglobal.org/caliper/actions/Completed';
+
+		// https://html-online.com/articles/get-url-parameters-javascript/
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			return vars;
+		}
+		function getUrlParam(parameter, defaultvalue){
+			var urlparameter = defaultvalue;
+			if(window.location.href.indexOf(parameter) > -1){
+				urlparameter = getUrlVars()[parameter];
+			}
+			return urlparameter;
+		}
+
+		function getPostMessageId() {
+			var retval = getUrlParam('ext_lti_element_id', false);
+			retval = getUrlParam('iframe_resize_id', retval); // Legacy
+			return retval;
+		}
+
+		function caliper_event(type,action) {
+			// console.log("Type, action "+type+','+action);
+			var message_id =  getPostMessageId();
+			if ( ! message_id ) {
+				console.log("Missing ext_lti_element_id parameter");
+				alert("Missing ext_lti_element_id parameter");
+				return;
+			}
+			parent.postMessage(JSON.stringify({
+				subject: "caliper.event",
+				type: type,
+				action: action,
+				element_id: message_id
+			}), "*");
+		}
+
+		function inIframe () {
+			try {
+				return window.self !== window.top;
+			} catch (e) {
+				return true;
+			}
+		}
+
+		if ( ! inIframe() ) {
+			document.write('Must be launched in an iframe with ext_lti_element_id parameter, events will fail');
+		} else {
+			var id = getPostMessageId();
+			if ( id ) {
+				document.write('Window id='+id);
+			} else {
+				document.write('Missing ext_lti_element_id parameter, events will fail');
+			}
+		}
+	
+	</script>
+</p>
+<p>
+	<button onclick="caliper_event(AssessmentItemEvent, AssessmentItemEventStarted);return false;"
+	        value="click">AssessmentItemEventStarted</button>
+	<button onclick="caliper_event(AssessmentItemEvent, AssessmentItemEventSkipped);return false;"
+	        value="click">AssessmentItemEventSkipped</button>
+	<button onclick="caliper_event(AssessmentItemEvent, AssessmentItemEventCompleted);return false;"
+	        value="click">AssessmentItemEventCompleted</button>
+</p>
+
+</body>
