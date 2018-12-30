@@ -1527,7 +1527,7 @@ class LTForm {
 		root.setExpanded(true);
 
 		function processNode(node, index, level, overTen) {
-			if (depth - level <= 1 && node.title.includes(": ")) {
+			if (level && depth - level <= 1 && node.title.includes(": ")) {
 				node.title = node.title.replace(/^[^:]*: /, "");
 			}
 			if ((!shallow && depth - level === 1) || (shallow && level === 1)) { //Chapter handling
@@ -1703,147 +1703,147 @@ class LTForm {
 						padded: "",
 						unselectable: true,
 						expanded: true,
-						children:  [{
-								"expanded": true,
-								"key": "_9",
-								"lazy": false,
-								"title": "1: Chapter 1",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "01: Chapter 1"}
-							}, {
-								"expanded": true,
-								"key": "_10",
-								"lazy": false,
-								"title": "2: Chapter 2",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "02: Chapter 2"}
-							}, {
-								"expanded": true,
-								"key": "_11",
-								"lazy": false,
-								"title": "3: Chapter 3",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "03: Chapter 3"}
-							}, {
-								"expanded": true,
-								"key": "_12",
-								"lazy": false,
-								"title": "4: Chapter 4",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "04: Chapter 4"}
-							}, {
-								"expanded": true,
-								"key": "_13",
-								"lazy": false,
-								"title": "5: Chapter 5",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "05: Chapter 5"}
-							}, {
-								"expanded": true,
-								"key": "_14",
-								"lazy": false,
-								"title": "6: Chapter 6",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "06: Chapter 6"}
-							}, {
-								"expanded": true,
-								"key": "_15",
-								"lazy": false,
-								"title": "7: Chapter 7",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "07: Chapter 7"}
-							}, {
-								"expanded": true,
-								"key": "_16",
-								"lazy": false,
-								"title": "8: Chapter 8",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "08: Chapter 8"}
-							}, {
-								"expanded": true,
-								"key": "_17",
-								"lazy": false,
-								"title": "9: Chapter 9",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "09: Chapter 9"}
-							}, {
-								"expanded": true,
-								"key": "_18",
-								"lazy": false,
-								"title": "10: Chapter 10",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "10: Chapter 10"}
-							}, {
-								"expanded": true,
-								"key": "_19",
-								"lazy": false,
-								"title": "11: Chapter 11",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "11: Chapter 11"}
-							}, {
-								"expanded": true,
-								"key": "_20",
-								"lazy": false,
-								"title": "12: Chapter 12",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "12: Chapter 12"}
-							}, {
-								"expanded": true,
-								"key": "_21",
-								"lazy": false,
-								"title": "13: Chapter 13",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "13: Chapter 13"}
-							}, {
-								"expanded": true,
-								"key": "_22",
-								"lazy": false,
-								"title": "14: Chapter 14",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "14: Chapter 14"}
-							}, {
-								"expanded": true,
-								"key": "_23",
-								"lazy": false,
-								"title": "15: Chapter 15",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "15: Chapter 15"}
-							}, {
-								"expanded": true,
-								"key": "_24",
-								"lazy": false,
-								"title": "16: Chapter 16",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "16: Chapter 16"}
-							}, {
-								"expanded": true,
-								"key": "_25",
-								"lazy": false,
-								"title": "17: Chapter 17",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "17: Chapter 17"}
-							}, {
-								"expanded": true,
-								"key": "_26",
-								"lazy": false,
-								"title": "18: Chapter 18",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "18: Chapter 18"}
-							}, {
-								"expanded": true,
-								"key": "_27",
-								"lazy": false,
-								"title": "19: Chapter 19",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "19: Chapter 19"}
-							}, {
-								"expanded": true,
-								"key": "_28",
-								"lazy": false,
-								"title": "20: Chapter 20",
-								"tooltip": "Newly Created Page",
-								"data": {"padded": "20: Chapter 20"}
-							}]
+						children: [{
+							"expanded": true,
+							"key": "_9",
+							"lazy": false,
+							"title": "1: Chapter 1",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "01: Chapter 1"}
+						}, {
+							"expanded": true,
+							"key": "_10",
+							"lazy": false,
+							"title": "2: Chapter 2",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "02: Chapter 2"}
+						}, {
+							"expanded": true,
+							"key": "_11",
+							"lazy": false,
+							"title": "3: Chapter 3",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "03: Chapter 3"}
+						}, {
+							"expanded": true,
+							"key": "_12",
+							"lazy": false,
+							"title": "4: Chapter 4",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "04: Chapter 4"}
+						}, {
+							"expanded": true,
+							"key": "_13",
+							"lazy": false,
+							"title": "5: Chapter 5",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "05: Chapter 5"}
+						}, {
+							"expanded": true,
+							"key": "_14",
+							"lazy": false,
+							"title": "6: Chapter 6",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "06: Chapter 6"}
+						}, {
+							"expanded": true,
+							"key": "_15",
+							"lazy": false,
+							"title": "7: Chapter 7",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "07: Chapter 7"}
+						}, {
+							"expanded": true,
+							"key": "_16",
+							"lazy": false,
+							"title": "8: Chapter 8",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "08: Chapter 8"}
+						}, {
+							"expanded": true,
+							"key": "_17",
+							"lazy": false,
+							"title": "9: Chapter 9",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "09: Chapter 9"}
+						}, {
+							"expanded": true,
+							"key": "_18",
+							"lazy": false,
+							"title": "10: Chapter 10",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "10: Chapter 10"}
+						}, {
+							"expanded": true,
+							"key": "_19",
+							"lazy": false,
+							"title": "11: Chapter 11",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "11: Chapter 11"}
+						}, {
+							"expanded": true,
+							"key": "_20",
+							"lazy": false,
+							"title": "12: Chapter 12",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "12: Chapter 12"}
+						}, {
+							"expanded": true,
+							"key": "_21",
+							"lazy": false,
+							"title": "13: Chapter 13",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "13: Chapter 13"}
+						}, {
+							"expanded": true,
+							"key": "_22",
+							"lazy": false,
+							"title": "14: Chapter 14",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "14: Chapter 14"}
+						}, {
+							"expanded": true,
+							"key": "_23",
+							"lazy": false,
+							"title": "15: Chapter 15",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "15: Chapter 15"}
+						}, {
+							"expanded": true,
+							"key": "_24",
+							"lazy": false,
+							"title": "16: Chapter 16",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "16: Chapter 16"}
+						}, {
+							"expanded": true,
+							"key": "_25",
+							"lazy": false,
+							"title": "17: Chapter 17",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "17: Chapter 17"}
+						}, {
+							"expanded": true,
+							"key": "_26",
+							"lazy": false,
+							"title": "18: Chapter 18",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "18: Chapter 18"}
+						}, {
+							"expanded": true,
+							"key": "_27",
+							"lazy": false,
+							"title": "19: Chapter 19",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "19: Chapter 19"}
+						}, {
+							"expanded": true,
+							"key": "_28",
+							"lazy": false,
+							"title": "20: Chapter 20",
+							"tooltip": "Newly Created Page",
+							"data": {"padded": "20: Chapter 20"}
+						}]
 					}],
 					debugLevel: 0,
 					autoScroll: true,
@@ -2107,8 +2107,8 @@ class LTForm {
 					if (isGuide) {
 						await Promise.all(
 							[putProperty("mindtouch.idf#guideDisplay", "single", path),
-							putProperty('mindtouch.page#welcomeHidden', true, path),
-							putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+								putProperty('mindtouch.page#welcomeHidden', true, path),
+								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
 					}
 				}
 				else {
@@ -2119,9 +2119,9 @@ class LTForm {
 
 					//get Tags
 					let copyContent = false;
-					let tags = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
-					tags = await tags.json();
-					if (tags["@count"] !== "0") {
+					let response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
+					let tags = await response.json();
+					if (response.ok && tags["@count"] !== "0") {
 						if (tags.tag) {
 							if (tags.tag.length) {
 								tags = tags.tag.map((tag) => tag["@value"]);
@@ -2157,7 +2157,7 @@ class LTForm {
 wiki.page("${child.path}", NULL)</pre>
 </div>`;
 					}
-					let response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
+					response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
 						method: "POST",
 						body: content
 					});

@@ -3,8 +3,8 @@ if (!window["analytics.js"]) {
 	ay();
 
 	function ay() {
-		// const root = "api.libretexts.org";
-		const root = "home.miniland1333.com";
+		const root = "api.libretexts.org";
+		// const root = "home.miniland1333.com";
 
 
 		window.addEventListener('load', function () {
@@ -72,7 +72,7 @@ if (!window["analytics.js"]) {
 					library: library,
 					id: userID
 				},
-				verb: getVerb(verb),
+				verb: verb,
 				object: getObject(object)
 			};
 			result = Object.assign(result, extra);
@@ -120,7 +120,7 @@ if (!window["analytics.js"]) {
 					timestamp: timestamp.toUTCString(),
 				};
 
-				switch (object) {
+/*				switch (object) {
 					case 'page':
 						result.definition = {
 							"name": {
@@ -134,7 +134,7 @@ if (!window["analytics.js"]) {
 
 					default:
 						result.definition = object;
-				}
+				}*/
 
 				return result;
 			}

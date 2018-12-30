@@ -40,18 +40,48 @@
 	}
 
 	function propagatorOption() {
-		let copy = document.getElementsByClassName("mt-user-menu-copy-page");
-		if (copy.length) {
-			let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
-			copy = original.cloneNode(true);
-			let copyTarget = copy.getElementsByTagName("a")[0];
-			copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Propagator?" + encodeURIComponent(window.location.href);
-			copyTarget.innerText = "Propagate";
-			copyTarget.classList.add("mt-icon-cycle");
-			copyTarget.classList.remove("mt-icon-copy-page");
-			copyTarget.setAttribute("target", "_blank");
-			copyTarget.title = "Propagate this page to other libraries";
-			original.parentNode.insertBefore(copy, original.nextSibling)
+		const isAdmin = document.getElementById("adminHolder").innerText === "true";
+		if(isAdmin) {
+			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
+			if (copy.length) {
+				let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
+				copy = original.cloneNode(true);
+				let copyTarget = copy.getElementsByTagName("a")[0];
+				// copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Propagator?" + encodeURIComponent(window.location.href);
+				copyTarget.innerText = "Propagate";
+				copyTarget.removeAttribute('href');
+				copyTarget.classList.add("mt-icon-cycle");
+				copyTarget.classList.remove("mt-icon-copy-page");
+				// copyTarget.setAttribute("target", "_blank");
+				copyTarget.onclick = askPropagator;
+				copyTarget.style.cursor = 'pointer';
+				copyTarget.title = "Propagate this page to other libraries";
+				original.parentNode.insertBefore(copy, original.nextSibling);
+			}
+		}
+	}
+
+	async function askPropagator(){
+		if(confirm(`Propagate ${window.location.href} to the other libraries?`)){
+			let url = window.location.href;
+			const subdomain = url.split("/")[2].split(".")[0];
+			//Disabled for careered
+			let otherArray = ["bio", "biz","careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+			if (otherArray.includes(subdomain)) {
+				let index = otherArray.indexOf(subdomain);
+				if (index > -1) {
+					otherArray.splice(index, 1);
+					let response = await fetch(`https://api.libretexts.org/propagator/receive`, {
+						method: "PUT",
+						body: JSON.stringify({
+							username: document.getElementById("usernameHolder").innerText,
+							url: url,
+						})
+					});
+					response = await response.json();
+					alert('Propagation successful');
+				}
+			}
 		}
 	}
 
