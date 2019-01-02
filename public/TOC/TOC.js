@@ -35,14 +35,14 @@ function TOC() {
 		const origin = window.location.origin;
 		path = path.replace(origin + "/", "");
 		//get coverpage title & subpages;
-		fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json").then(async (info) => {
-				info = await info.json();
-				coverTitle = info.title;
-			}
-		);
+		let info = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json");
+
 
 		let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 		response = await response.json();
+		info = await info;
+		info = await info.json();
+		coverTitle = info.title;
 		return await subpageCallback(response, isRoot);
 
 		async function subpageCallback(info, isRoot) {

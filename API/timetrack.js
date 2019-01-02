@@ -25,15 +25,15 @@ function handler(request, response) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
 					"Access-Control-Allow-Origin": request.headers.origin,
-					"Access-Control-Allow-Methods": "PUT",
+					"Access-Control-Allow-Methods": "POST",
 					"Content-Type": " text/plain",
 				});
 				response.end();
 			}
-			else if (request.method === "PUT") {
+			else if (request.method === "POST") {
 				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 					"Access-Control-Allow-Origin": request.headers.origin,
-					"Access-Control-Allow-Methods": "PUT",
+					"Access-Control-Allow-Methods": "POST",
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});
 				let body = [];

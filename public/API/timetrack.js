@@ -16,6 +16,7 @@ if (!window["timeTrack"]) {
 
 
 	function track() {
+		const isSafari = navigator.userAgent.toLowerCase().indexOf('safari') !== -1;
 		let hidden, state, visibilityChange;
 		let username = document.getElementById("usernameHolder").innerText;
 
@@ -74,7 +75,7 @@ if (!window["timeTrack"]) {
 
 // Calculates Time Spent on page upon leaving/closing page
 
-		window.addEventListener('beforeunload', function () {
+		window.addEventListener('pagehide', function () {
 			end = new Date();
 			var time_spent = Math.round((end - start) / 1000);
 			if (time_spent > 1) {
@@ -87,7 +88,7 @@ if (!window["timeTrack"]) {
 					username: username
 				};
 				$.ajax({
-					type: "PUT",
+					type: "POST",
 					async: false,
 					url: `https://${root}/timetrack/receive`,
 					data: JSON.stringify(data),
@@ -95,7 +96,7 @@ if (!window["timeTrack"]) {
 				});
 				if (editorOpen) {
 					$.ajax({
-						type: "PUT",
+						type: "POST",
 						async: false,
 						url: `https://${root}/timetrack/receive`,
 						data: JSON.stringify(data),
@@ -136,15 +137,13 @@ if (!window["timeTrack"]) {
 				if (inactiveStart !== -1) {
 					let inactiveTime = inactiveEnd - inactiveStart;
 					let timestamp = new Date();
-					fetch(`https://${root}/timetrack/receive`, {
-						method: "PUT",
-						body: JSON.stringify({
+					navigator.sendBeacon(`https://${root}/timetrack/receive`, JSON.stringify({
 							messageType: "Inactivity",
 							time: Math.round(inactiveTime / 1000),
 							timestamp: timestamp.toUTCString(),
 							username: username
 						})
-					}).then();
+					);
 				}
 				const minutes = 5;
 				clearTimeout(t);
@@ -155,7 +154,7 @@ if (!window["timeTrack"]) {
 				}, minutes * 60 * 1000);
 			}
 
-			window.addEventListener('load',resetTimer);
+			window.addEventListener('load', resetTimer);
 			// DOM Events
 			document.onmousemove = resetTimer;
 			document.onkeypress = resetTimer;
@@ -164,16 +163,14 @@ if (!window["timeTrack"]) {
 		function reportInterval(message, time_spent, editorOpen) {
 			if (time_spent > 1) {
 				let timestamp = new Date();
-				fetch(`https://${root}/timetrack/receive`, {
-					method: "PUT",
-					body: JSON.stringify({
+				navigator.sendBeacon(`https://${root}/timetrack/receive`, JSON.stringify({
 						messageType: editorOpen ? "Editor" : "Activity",
 						time: time_spent,
 						message: "[" + message + "]",
 						timestamp: timestamp.toUTCString(),
 						username: username
 					})
-				}).then();
+				)
 			}
 		}
 	}

@@ -3,6 +3,8 @@ if (!window["analytics.js"]) {
 	ay();
 
 	function ay() {
+		const isSafari = navigator.userAgent.toLowerCase().indexOf('safari') !== -1;
+		const sessionID = '_' + Math.random().toString(36).substr(2, 9);
 		const root = "api.libretexts.org";
 		// const root = "home.miniland1333.com";
 
@@ -44,7 +46,27 @@ if (!window["analytics.js"]) {
 
 			//Time on page handling
 			window.addEventListener('pagehide', function () {
-				navigator.sendBeacon(`https://${root}/ay/receive`, getBody('left', 'page', {result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}}));
+				// console.log(TimeMe.getTimeOnCurrentPageInSeconds());
+				if (isSafari) { //workaround due to pagehide asynchronous http request bug in safari
+					$.ajax({
+						type: "POST",
+						async: false,
+						url: `https://${root}/ay/receive`,
+						data: getBody('left', 'page', {
+							type: 'ajax',
+							result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}
+						}),
+						timeout: 5000
+					});
+				}
+				else {
+					navigator.sendBeacon(`https://${root}/ay/receive`, getBody('left', 'page', {
+						type: 'beacon',
+						result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}
+					}));
+				}
+				// report('left', 'page', {type:'fetch',result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}});
+
 			});
 
 			//Scroll depth handling
@@ -59,7 +81,7 @@ if (!window["analytics.js"]) {
 
 		function report(verb, object, extra) {
 			fetch(`https://${root}/ay/receive`, {
-				method: "PUT",
+				method: "POST",
 				body: getBody(verb, object, extra)
 			}).then();
 		}
@@ -118,23 +140,24 @@ if (!window["analytics.js"]) {
 				let result = {
 					page: window.location.href,
 					timestamp: timestamp.toUTCString(),
+					pageSession: sessionID,
 				};
 
-/*				switch (object) {
-					case 'page':
-						result.definition = {
-							"name": {
-								"en-US": "page"
-							},
-							"description": {
-								"en-US": "Represents an area, typically a web page, that is representative of, and generally managed by a particular entity. Such areas are usually dedicated to displaying descriptive information about the entity and showcasing recent content such as articles, photographs and videos. Most social networking applications, for example, provide individual users with their own dedicated \"profile\" pages. Several allow similar types of pages to be created for commercial entities, organizations or events. While the specific details of how pages are implemented, their characteristics and use may vary, the one unifying property is that they are typically \"owned\" by a single entity that is represented by the content provided by the page itself."
-							}
-						};
-						break;
+				/*				switch (object) {
+									case 'page':
+										result.definition = {
+											"name": {
+												"en-US": "page"
+											},
+											"description": {
+												"en-US": "Represents an area, typically a web page, that is representative of, and generally managed by a particular entity. Such areas are usually dedicated to displaying descriptive information about the entity and showcasing recent content such as articles, photographs and videos. Most social networking applications, for example, provide individual users with their own dedicated \"profile\" pages. Several allow similar types of pages to be created for commercial entities, organizations or events. While the specific details of how pages are implemented, their characteristics and use may vary, the one unifying property is that they are typically \"owned\" by a single entity that is represented by the content provided by the page itself."
+											}
+										};
+										break;
 
-					default:
-						result.definition = object;
-				}*/
+									default:
+										result.definition = object;
+								}*/
 
 				return result;
 			}
