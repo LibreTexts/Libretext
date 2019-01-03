@@ -3,22 +3,29 @@ if (!window["analytics.js"]) {
 	ay();
 
 	function ay() {
-		const isSafari = navigator.userAgent.toLowerCase().indexOf('safari') !== -1;
+		const ua = navigator.userAgent.toLowerCase();
+		const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
 		const sessionID = '_' + Math.random().toString(36).substr(2, 9);
 		const root = "api.libretexts.org";
 		// const root = "home.miniland1333.com";
 
 
 		window.addEventListener('load', function () {
-			fetch(`https://${root}/ay/ping`).then((response) => {
-				if (response.ok) {
-					console.log("2BH");
-					track();
-				}
-				else {
-					console.error(response.status)
-				}
-			});
+			if (sessionStorage.getItem('ay')) {
+				track()
+			}
+			else {
+				fetch(`https://${root}/ay/ping`).then((response) => {
+					if (response.ok) {
+						console.log("2BH");
+						sessionStorage.setItem('ay', 'true');
+						track();
+					}
+					else {
+						console.error(response.status)
+					}
+				});
+			}
 		});
 
 		function track() {
@@ -28,6 +35,31 @@ if (!window["analytics.js"]) {
 			TimeMe.initialize({
 				currentPageName: pageTitle, // current page
 				idleTimeoutInSeconds: 600 // seconds
+			});
+
+			//Page switch handling
+			let hidden, visibilityChange, isActive = true;
+			if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+				hidden = "hidden";
+				visibilityChange = "visibilitychange";
+			}
+			else if (typeof document.msHidden !== "undefined") {
+				hidden = "msHidden";
+				visibilityChange = "msvisibilitychange";
+			}
+			else if (typeof document.webkitHidden !== "undefined") {
+				hidden = "webkitHidden";
+				visibilityChange = "webkitvisibilitychange";
+			}
+			document.addEventListener(visibilityChange, function () {
+				if (document[hidden] && isActive) { //leaving
+					isActive = false;
+					report('switched away');
+				}
+				else if (!document[hidden] && !isActive) { //returning
+					isActive = true;
+					report('switched to');
+				}
 			});
 
 			//LTI iframe event handling
@@ -46,27 +78,26 @@ if (!window["analytics.js"]) {
 
 			//Time on page handling
 			window.addEventListener('pagehide', function () {
-				// console.log(TimeMe.getTimeOnCurrentPageInSeconds());
 				if (isSafari) { //workaround due to pagehide asynchronous http request bug in safari
 					$.ajax({
 						type: "POST",
 						async: false,
 						url: `https://${root}/ay/receive`,
 						data: getBody('left', 'page', {
-							type: 'ajax',
-							result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}
+							type: 'ajax'
 						}),
 						timeout: 5000
 					});
 				}
-				else {
-					navigator.sendBeacon(`https://${root}/ay/receive`, getBody('left', 'page', {
-						type: 'beacon',
-						result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}
-					}));
-				}
-				// report('left', 'page', {type:'fetch',result: {'timeMe': TimeMe.getTimeOnCurrentPageInSeconds()}});
-
+				report('left', 'page', {
+					type: 'pagehide'
+				});
+			});
+			//Backup event for time on page
+			window.addEventListener('beforeunload', function () {
+				report('left', 'page', {
+					type: 'beforeunload'
+				});
 			});
 
 			//Scroll depth handling
@@ -80,10 +111,7 @@ if (!window["analytics.js"]) {
 		}
 
 		function report(verb, object, extra) {
-			fetch(`https://${root}/ay/receive`, {
-				method: "POST",
-				body: getBody(verb, object, extra)
-			}).then();
+			navigator.sendBeacon(`https://${root}/ay/receive`, getBody(verb, object, extra));
 		}
 
 		function getBody(verb, object, extra) {
@@ -98,7 +126,6 @@ if (!window["analytics.js"]) {
 				object: getObject(object)
 			};
 			result = Object.assign(result, extra);
-			console.log(result);
 			return JSON.stringify(result);
 
 			function getVerb(verb) {
@@ -141,6 +168,7 @@ if (!window["analytics.js"]) {
 					page: window.location.href,
 					timestamp: timestamp.toUTCString(),
 					pageSession: sessionID,
+					timeMe: TimeMe.getTimeOnCurrentPageInSeconds()
 				};
 
 				/*				switch (object) {
