@@ -79,7 +79,7 @@ puppeteer.launch({
 				if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 
 					response.writeHead(200, {
-						"Access-Control-Allow-Origin": request.headers.origin,
+						"Access-Control-Allow-Origin": request.headers.origin || null,
 						"Access-Control-Allow-Methods": "PUT",
 					});
 					response.end();
@@ -96,7 +96,7 @@ puppeteer.launch({
 						const refreshOnly = body.refreshOnly;
 
 						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-							"Access-Control-Allow-Origin": request.headers.origin,
+							"Access-Control-Allow-Origin": request.headers.origin || null,
 							"Access-Control-Allow-Methods": "PUT",
 							// "Transfer-Encoding": "chunked",
 							"Content-Type": " application/json",
@@ -194,7 +194,7 @@ puppeteer.launch({
 		else if (url === '/' || url.startsWith("/ping")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Origin": request.headers.origin || null,
 					"Access-Control-Allow-Methods": "GET",
 					"Content-Type": " text/plain",
 				});
@@ -202,7 +202,7 @@ puppeteer.launch({
 			}
 			else if (request.method === "GET") {
 				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Origin": request.headers.origin || null,
 					"Access-Control-Allow-Methods": "GET",
 					"Content-Type": " text/plain",
 				} : {"Content-Type": " text/plain"});

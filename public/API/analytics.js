@@ -115,18 +115,31 @@ if (!window["analytics.js"]) {
 		}
 
 		function getBody(verb, object, extra) {
-			let userID = document.getElementById("userIDHolder").innerText;
-			let library = window.location.host.split('.')[0];
 			let result = {
-				actor: {
-					library: library,
-					id: userID
-				},
+				actor: getActor(),
 				verb: verb,
 				object: getObject(object)
 			};
 			result = Object.assign(result, extra);
 			return JSON.stringify(result);
+
+			function getActor(){
+				let library = window.location.host.split('.')[0];
+				switch (library) {
+					case 'webwork':
+
+						return {
+							library: library,
+							id: userID
+						};
+					default:
+						let userID = document.getElementById("userIDHolder").innerText;
+						return {
+							library: library,
+							id: userID
+						};
+				}
+			}
 
 			function getVerb(verb) {
 				switch (verb) {

@@ -31,7 +31,7 @@ function handler(request, response) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Origin": request.headers.origin || null,
 					"Access-Control-Allow-Methods": "POST",
 					"Content-Type": " application/json",
 				});
@@ -39,7 +39,7 @@ function handler(request, response) {
 			}
 			else if (request.method === "POST") {
 				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin,
+					"Access-Control-Allow-Origin": request.headers.origin || null,
 					"Access-Control-Allow-Methods": "POST",
 					"Content-Type": " application/json",
 				} : {"Content-Type": " application/json"});
