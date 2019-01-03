@@ -1632,7 +1632,10 @@ class LTForm {
 			if (LTForm.content) {
 				let target = document.createElement("div");
 				target.id = "LTRemixer";
-				const allowed = document.getElementById("adminHolder").innerText === "true";
+				const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+				const isPro = document.getElementById("proHolder").innerText === 'true';
+				const groups = document.getElementById("groupHolder").innerText;
+				let allowed = isAdmin || (isPro && groups.includes('faculty'));
 				target.innerHTML =
 					"<div id='LTForm'><div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div></div>" +
 					`<div class='LTFormHeader'><div class='LTTitle'>${allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
@@ -2006,7 +2009,10 @@ class LTForm {
 		LTForm.renumber();
 
 
-		const allowed = document.getElementById("adminHolder").innerText === "true";
+		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+		const isPro = document.getElementById("proHolder").innerText === 'true';
+		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
+		let allowed = isAdmin || (isPro && groups.includes('faculty'));
 		if (!allowed) {
 			alert("This feature is not available in Demonstration Mode.");
 			return false;

@@ -173,9 +173,11 @@
 
 	function copyContentOption() {
 		let tags = document.getElementById("pageTagsHolder");
-		let isPro = document.getElementById("adminHolder"); //TODO: Enable for all
+		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+		const isPro = document.getElementById("proHolder").innerText === 'true';
+		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
 		let target = $("span.title.mt-title-edit");
-		if (tags && isPro && isPro.innerText) {
+		if (tags && (isAdmin || (isPro && groups.includes('contributor')))) {
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
