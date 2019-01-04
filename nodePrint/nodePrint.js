@@ -291,8 +291,10 @@ puppeteer.launch({
 								};
 							case "gnu":
 								return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
-							case "gnudls":
-								return {label: "gnudls", link: "https://www.gnu.org/licenses/dsl.html"};
+							case "gnudsl":
+								return {label: "GNU Design Science License", link: "https://www.gnu.org/licenses/dsl.html"};
+							case "gnufdl":
+								return {label: "GNU Free Documentation License", link: "https://www.gnu.org/licenses/fdl-1.3.en.html"};
 							case "arr":
 								return {label: "© All Rights Reserved", link: ""};
 						}

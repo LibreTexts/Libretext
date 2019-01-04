@@ -56,3 +56,6 @@ Temporary Items
 /public/Miscellaneous/credentials.json
 /API/authen.json
 /API/secure.json
+/Kubeconfig/http-cache/
+/Kubeconfig/cache/
+/Kubeconfig/config
