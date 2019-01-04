@@ -51,6 +51,10 @@ puppeteer.launch({
 				isNoCache = true;
 				url = url.replace("?nocache", "");
 			}
+			if (url.includes("?no-cache")) {
+				isNoCache = true;
+				url = url.replace("?no-cache", "");
+			}
 			if (url.includes("?offload") || url.includes("&offload")) {
 				isOffload = true;
 				url = url.replace("?offload", "");
