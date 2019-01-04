@@ -44,16 +44,18 @@ puppeteer.launch({
 		request.url = request.url.replace("print/", "");
 		let url = request.url;
 
-
 		if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
 			let isNoCache = false;
+			let isOffload = false;
 			if (url.includes("?nocache")) {
 				isNoCache = true;
 				url = url.replace("?nocache", "");
 			}
-			if (url.includes("?no-cache")) {
-				isNoCache = true;
-				url = url.replace("?no-cache", "");
+			if (url.includes("?offload") || url.includes("&offload")) {
+				isOffload = true;
+				url = url.replace("?offload", "");
+				url = url.replace("&offload", "");
+				ip = 'BatchOffload';
 			}
 			url = url.split('/url=')[1];
 			if (url.endsWith(".pdf")) {
@@ -65,7 +67,12 @@ puppeteer.launch({
 
 			getPDF(url, isNoCache).then((result) => {
 				if (result) {
-					if (result.filename === 'restricted') {
+					if (isOffload) {
+						response.writeHead(200);
+						response.write(JSON.stringify(result));
+						response.end();
+					}
+					else if (result.filename === 'restricted') {
 						responseError('This page is not publicly accessible.', 403)
 					}
 					else
@@ -119,8 +126,28 @@ puppeteer.launch({
 						const start = performance.now();
 						const eta = new Eta(urlArray.length, true);
 
-						mapLimit(urlArray, 2, async (url) => {
-							let {filename, title} = await getPDF(url, contents.isNoCache, zipFilename);
+						//Determine if in Kubernetes
+						let kubernetesServiceHost = process.env.NODE_BALANCER_SERVICE_HOST;
+
+						mapLimit(urlArray, kubernetesServiceHost ? 4 : 2, async (url) => {
+							let filename, title;
+							if (kubernetesServiceHost) {
+								let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
+								if (contents.isNoCache)
+									offloadURL += '?no-cache&offload';
+								else
+									offloadURL += '?offload';
+
+								let offload = await fetch(offloadURL);
+								offload = await offload.json();
+								filename = offload.filename;
+								title = offload.title;
+							}
+							else {
+								let temp = await getPDF(url, contents.isNoCache, zipFilename);
+								filename = temp.filename;
+								title = temp.title;
+							}
 							count++;
 							eta.iterate();
 
@@ -292,9 +319,15 @@ puppeteer.launch({
 							case "gnu":
 								return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
 							case "gnudsl":
-								return {label: "GNU Design Science License", link: "https://www.gnu.org/licenses/dsl.html"};
+								return {
+									label: "GNU Design Science License",
+									link: "https://www.gnu.org/licenses/dsl.html"
+								};
 							case "gnufdl":
-								return {label: "GNU Free Documentation License", link: "https://www.gnu.org/licenses/fdl-1.3.en.html"};
+								return {
+									label: "GNU Free Documentation License",
+									link: "https://www.gnu.org/licenses/fdl-1.3.en.html"
+								};
 							case "arr":
 								return {label: "© All Rights Reserved", link: ""};
 						}

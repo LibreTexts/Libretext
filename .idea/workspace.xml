@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/Social Share Kit/gfdl.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Libretext.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added GNU FDL">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kubeconfig/config" beforeDir="false" afterPath="$PROJECT_DIR$/Kubeconfig/config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -25,10 +20,27 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
+        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="917">
+              <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+              <folding>
+                <element signature="e#7318#7611#0" />
+                <element signature="e#7652#9726#0" />
+                <element signature="e#8292#9689#0" />
+                <element signature="e#9760#10411#0" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,8 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>info</find>
-      <find>console</find>
       <find>err</find>
       <find>restricted</find>
       <find>error</find>
@@ -78,6 +88,8 @@
       <find>&quot;Access-Control-Allow-Origin&quot;: request.headers.origin,</find>
       <find>serve</find>
       <find>license</find>
+      <find>render</find>
+      <find>refresh</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -146,8 +158,6 @@
         <option value="$PROJECT_DIR$/Kubeconfig/pvc.yaml" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/Kubeconfig/my-manifest.yaml" />
-        <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
-        <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
         <option value="$PROJECT_DIR$/public/package-lock.json" />
         <option value="$PROJECT_DIR$/API/analyticsData/12-2018/10332.txt" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/event-provider.html" />
@@ -164,13 +174,15 @@
         <option value="$PROJECT_DIR$/API/import.js" />
         <option value="$PROJECT_DIR$/API/secure.json" />
         <option value="$PROJECT_DIR$/API/analytics.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/public/API/import.js" />
-        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
         <option value="$PROJECT_DIR$/Kubeconfig/config" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
+        <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
       </list>
     </option>
   </component>
@@ -242,17 +254,6 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Kubeconfig" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -311,7 +312,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.analytics.js ">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -712,14 +713,7 @@
       <workItem from="1546384435272" duration="7838000" />
       <workItem from="1546489177789" duration="4769000" />
       <workItem from="1546501569180" duration="1401000" />
-      <workItem from="1546539892196" duration="14373000" />
-    </task>
-    <task id="LOCAL-00047" summary="Attempt to synchronize travis-ci builds">
-      <created>1535154634994</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1535154634994</updated>
+      <workItem from="1546539892196" duration="20383000" />
     </task>
     <task id="LOCAL-00048" summary="Added travis-ci termination">
       <created>1535155448999</created>
@@ -1057,7 +1051,14 @@
       <option name="project" value="LOCAL" />
       <updated>1546551915073</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Added GNU FDL">
+      <created>1546560653662</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1546560653663</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1093,16 +1094,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="935322000" />
+    <option name="totallyTimeSpent" value="941332000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.1872366" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.13726671" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1123,7 +1123,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.3822998" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.28236002" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.36122817" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1218,7 +1218,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Another npm update" />
     <MESSAGE value="ThinCC launched" />
     <MESSAGE value="Initial timetrack server" />
     <MESSAGE value="Hooked up tracker data&#10;&#10;Contributions seems off" />
@@ -1243,7 +1242,8 @@
     <MESSAGE value="Added page switching" />
     <MESSAGE value="Updated un-transclude and remixer permissions" />
     <MESSAGE value="Updated CORS for no-origin requests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated CORS for no-origin requests" />
+    <MESSAGE value="Added GNU FDL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added GNU FDL" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1302,20 +1302,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-054-slug-7-6-interwar-years-the-canadas.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="71" selection-start-line="12" selection-start-column="71" selection-end-line="12" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-062-slug-8-5-the-montrealers-versus-the-hbc.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="18" column="73" selection-start-line="18" selection-start-column="73" selection-end-line="18" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-101-slug-11-10-rebellions-1837-38.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="426">
@@ -1359,20 +1345,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/async/asyncify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/fs-extra/lib/copy/copy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="230" lean-forward="true" selection-start-line="230" selection-end-line="230" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/universalify/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -1389,23 +1361,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/package-lock.json" />
@@ -1479,13 +1437,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.7.0/core-modules/_http_outgoing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="430" column="57" lean-forward="true" selection-start-line="430" selection-start-column="57" selection-end-line="430" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="393">
@@ -1527,72 +1478,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-759">
-          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="296" column="78" selection-start-line="296" selection-start-column="78" selection-end-line="296" selection-end-column="78" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1615">
           <caret line="2014" column="69" lean-forward="true" selection-start-line="2014" selection-start-column="69" selection-end-line="2014" selection-end-column="69" />
           <folding>
             <element signature="e#1244#32215#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3657">
-          <caret line="179" column="67" selection-start-line="179" selection-start-column="67" selection-end-line="179" selection-end-column="67" />
-          <folding>
-            <element signature="e#759#1745#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
-          <caret line="14" column="71" lean-forward="true" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1638,17 +1529,128 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml">
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+        <state relative-caret-position="161">
+          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
+    <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="138">
+          <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2943">
+          <caret line="179" column="67" selection-start-line="179" selection-start-column="67" selection-end-line="179" selection-end-column="67" />
+          <folding>
+            <element signature="e#759#1745#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="76" column="73" lean-forward="true" selection-start-line="76" selection-start-column="73" selection-end-line="76" selection-end-column="73" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.7.0/core-modules/_http_outgoing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="616" selection-start-line="616" selection-end-line="616" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/async/asyncify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1158">
+          <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/fs-extra/lib/copy/copy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="226" column="6" selection-start-line="226" selection-start-column="6" selection-end-line="226" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/graceful-fs/polyfills.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="286" column="17" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="917">
+          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+          <folding>
+            <element signature="e#7318#7611#0" />
+            <element signature="e#7652#9726#0" />
+            <element signature="e#8292#9689#0" />
+            <element signature="e#9760#10411#0" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
