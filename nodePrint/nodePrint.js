@@ -35,6 +35,12 @@ puppeteer.launch({
 	let working = {};
 	const eventEmitter = new events.EventEmitter();
 
+	//Determine if in Kubernetes
+	let kubernetesServiceHost = process.env.NODE_BALANCER_SERVICE_HOST;
+	if(kubernetesServiceHost){
+		console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
+	}
+
 	Gbrowser = browser;
 	Gserver = server;
 
@@ -129,9 +135,6 @@ puppeteer.launch({
 						let untitled = 0;
 						const start = performance.now();
 						const eta = new Eta(urlArray.length, true);
-
-						//Determine if in Kubernetes
-						let kubernetesServiceHost = process.env.NODE_BALANCER_SERVICE_HOST;
 
 						mapLimit(urlArray, kubernetesServiceHost ? 4 : 2, async (url) => {
 							let filename, title;

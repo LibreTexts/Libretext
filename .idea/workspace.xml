@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added GNU FDL">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="917">
-              <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+            <state relative-caret-position="230">
+              <caret line="40" column="67" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
               <folding>
                 <element signature="e#7318#7611#0" />
                 <element signature="e#7652#9726#0" />
@@ -180,9 +178,9 @@
         <option value="$PROJECT_DIR$/Kubeconfig/config" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
         <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
     </option>
   </component>
@@ -312,7 +310,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="Mocha.nodePrintTest">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -713,21 +711,7 @@
       <workItem from="1546384435272" duration="7838000" />
       <workItem from="1546489177789" duration="4769000" />
       <workItem from="1546501569180" duration="1401000" />
-      <workItem from="1546539892196" duration="20383000" />
-    </task>
-    <task id="LOCAL-00048" summary="Added travis-ci termination">
-      <created>1535155448999</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1535155448999</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Moved test to package.json">
-      <created>1535157412645</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1535157412645</updated>
+      <workItem from="1546539892196" duration="20951000" />
     </task>
     <task id="LOCAL-00050" summary="Added mandatory waiting period">
       <created>1535157941551</created>
@@ -1058,28 +1042,24 @@
       <option name="project" value="LOCAL" />
       <updated>1546560653663</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Added NODE_BALANCER_SERVICE_HOST">
+      <created>1546573618261</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1546573618261</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Fixed no-cache bug">
+      <created>1546574055927</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1546574055927</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="nodePrintTest - 2018.08.24 at 18h 00m 08s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.12.24 at 00h 02m 45s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.12.24 at 00h 03m 26s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.12.24 at 00h 05m 14s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.12.24 at 00h 09m 12s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2018.12.26 at 20h 36m 09s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="nodePrintTest - 2018.12.26 at 20h 37m 30s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -1092,17 +1072,36 @@
     <history-entry file="nodePrintTest - 2018.12.26 at 20h 39m 01s.xml">
       <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 49m 40s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 50m 41s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 51m 57s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 52m 05s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 53m 02s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="nodePrintTest - 2019.01.03 at 19h 53m 16s.xml">
+      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="941332000" />
+    <option name="totallyTimeSpent" value="941900000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.13726671" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.22636966" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1113,7 +1112,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.08533333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.08533333" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.19333333" />
@@ -1218,8 +1217,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="ThinCC launched" />
-    <MESSAGE value="Initial timetrack server" />
     <MESSAGE value="Hooked up tracker data&#10;&#10;Contributions seems off" />
     <MESSAGE value="Time tracker MVP" />
     <MESSAGE value="Updated TOC to lazyload" />
@@ -1243,7 +1240,9 @@
     <MESSAGE value="Updated un-transclude and remixer permissions" />
     <MESSAGE value="Updated CORS for no-origin requests" />
     <MESSAGE value="Added GNU FDL" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added GNU FDL" />
+    <MESSAGE value="Added NODE_BALANCER_SERVICE_HOST" />
+    <MESSAGE value="Fixed no-cache bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed no-cache bug" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1354,13 +1353,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Kubeconfig/pvc.yaml" />
     <entry file="file://$PROJECT_DIR$/Kubeconfig/pv.yaml" />
-    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10" />
@@ -1616,6 +1608,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -1623,17 +1622,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
+    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        <state relative-caret-position="170">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="917">
-          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+        <state relative-caret-position="230">
+          <caret line="40" column="67" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
           <folding>
             <element signature="e#7318#7611#0" />
             <element signature="e#7652#9726#0" />
