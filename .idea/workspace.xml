@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Remove expired config">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/analytics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,29 +21,39 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="40" column="67" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
-              <folding>
-                <element signature="e#7318#7611#0" />
-                <element signature="e#7652#9726#0" />
-                <element signature="e#8292#9689#0" />
-                <element signature="e#9760#10411#0" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="208">
+              <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/analytics.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/secure.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -58,9 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>err</find>
-      <find>restricted</find>
-      <find>error</find>
       <find>mtime</find>
       <find>ensuredir</find>
       <find>mapLimit</find>
@@ -88,6 +100,9 @@
       <find>license</find>
       <find>render</find>
       <find>refresh</find>
+      <find>user</find>
+      <find>getelement</find>
+      <find>ziplocal</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -163,15 +178,11 @@
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/public/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/resize.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
-        <option value="$PROJECT_DIR$/public/API/analytics.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/API/sendKey.js" />
         <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/API/import.js" />
-        <option value="$PROJECT_DIR$/API/secure.json" />
-        <option value="$PROJECT_DIR$/API/analytics.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/public/API/import.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
@@ -181,14 +192,17 @@
         <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
         <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/API/analytics.js" />
+        <option value="$PROJECT_DIR$/API/secure.json" />
+        <option value="$PROJECT_DIR$/API/analytics.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="y" value="-8" />
-    <option name="width" value="1302" />
-    <option name="height" value="848" />
+    <option name="x" value="-11" />
+    <option name="width" value="1301" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -250,7 +264,18 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Kubeconfig" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -267,7 +292,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/API/authen.json" />
+    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/Kubeconfig/config&#10;C:/Users/Henry/Desktop/rogramming/Libretext/API/authen.json" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.7.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/API/import.js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -310,7 +335,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Mocha.nodePrintTest">
+  <component name="RunManager" selected="Node.js.analytics.js ">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -711,21 +736,13 @@
       <workItem from="1546384435272" duration="7838000" />
       <workItem from="1546489177789" duration="4769000" />
       <workItem from="1546501569180" duration="1401000" />
-      <workItem from="1546539892196" duration="20951000" />
-    </task>
-    <task id="LOCAL-00050" summary="Added mandatory waiting period">
-      <created>1535157941551</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1535157941552</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Lengthened mandatory waiting period">
-      <created>1535158081170</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1535158081171</updated>
+      <workItem from="1546539892196" duration="22672000" />
+      <workItem from="1546640975416" duration="604000" />
+      <workItem from="1546667619170" duration="1481000" />
+      <workItem from="1546721111572" duration="599000" />
+      <workItem from="1546729783673" duration="1242000" />
+      <workItem from="1546731553068" duration="3060000" />
+      <workItem from="1546746800770" duration="5874000" />
     </task>
     <task id="LOCAL-00052" summary="Fixed timeout">
       <created>1535158829383</created>
@@ -1056,7 +1073,21 @@
       <option name="project" value="LOCAL" />
       <updated>1546574055927</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="Added Kubernetes detection">
+      <created>1546574257665</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1546574257665</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Remove expired config">
+      <created>1546575367919</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1546575367919</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1092,16 +1123,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="941900000" />
+    <option name="totallyTimeSpent" value="956481000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.22636966" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.21131848" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1112,17 +1142,17 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.08533333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.08533333" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.19333333" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" visible="true" weight="0.484" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.3822998" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.36122817" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.295003" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1217,8 +1247,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Hooked up tracker data&#10;&#10;Contributions seems off" />
-    <MESSAGE value="Time tracker MVP" />
     <MESSAGE value="Updated TOC to lazyload" />
     <MESSAGE value="Initial Remixer" />
     <MESSAGE value="Added Remixer admin guard" />
@@ -1242,7 +1270,9 @@
     <MESSAGE value="Added GNU FDL" />
     <MESSAGE value="Added NODE_BALANCER_SERVICE_HOST" />
     <MESSAGE value="Fixed no-cache bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed no-cache bug" />
+    <MESSAGE value="Added Kubernetes detection" />
+    <MESSAGE value="Remove expired config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove expired config" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1327,13 +1357,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="143" column="26" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -1463,13 +1486,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/secure.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="74" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1615">
@@ -1487,20 +1503,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2691">
-          <caret line="117" column="17" lean-forward="true" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3013">
-          <caret line="131" column="35" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API/timetrack.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-322">
@@ -1515,18 +1517,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -1538,16 +1530,6 @@
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2943">
-          <caret line="179" column="67" selection-start-line="179" selection-start-column="67" selection-end-line="179" selection-end-column="67" />
-          <folding>
-            <element signature="e#759#1745#0" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
@@ -1608,6 +1590,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1622,34 +1618,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        <state relative-caret-position="1518">
+          <caret line="66" column="50" selection-start-line="66" selection-start-column="50" selection-end-line="66" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="40" column="67" selection-start-line="40" selection-start-column="67" selection-end-line="40" selection-end-column="67" />
+        <state relative-caret-position="311">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
           <folding>
-            <element signature="e#7318#7611#0" />
-            <element signature="e#7652#9726#0" />
-            <element signature="e#8292#9689#0" />
-            <element signature="e#9760#10411#0" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#759#1745#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/secure.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
         </state>
       </provider>
     </entry>

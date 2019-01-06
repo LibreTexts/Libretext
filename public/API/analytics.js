@@ -31,7 +31,8 @@ if (!window["analytics.js"]) {
 		function track() {
 			report('accessed');
 
-			const pageTitle = document.getElementById("title").innerText;
+			let pageTitle = document.getElementById("title");
+			pageTitle = pageTitle ? pageTitle.innerText : document.title;
 			TimeMe.initialize({
 				currentPageName: pageTitle, // current page
 				idleTimeoutInSeconds: 600 // seconds
@@ -123,20 +124,32 @@ if (!window["analytics.js"]) {
 			result = Object.assign(result, extra);
 			return JSON.stringify(result);
 
-			function getActor(){
+			function getActor() {
 				let library = window.location.host.split('.')[0];
+				let userID;
 				switch (library) {
 					case 'webwork':
-
+						let url = window.location.href;
+						userID = url.match(/user=[A-Za-z]*/);
+						if (userID) {
+							userID = userID[0];
+							userID = userID.replace('user=', '');
+							console.log(userID);
+						}
+						else {
+							userID = 'unknown'
+						}
 						return {
 							library: library,
-							id: userID
+							id: userID,
+							platform: platform
 						};
 					default:
-						let userID = document.getElementById("userIDHolder").innerText;
+						userID = document.getElementById("userIDHolder").innerText;
 						return {
 							library: library,
-							id: userID
+							id: userID,
+							platform: platform
 						};
 				}
 			}
