@@ -1527,6 +1527,7 @@ class LTForm {
 		root.setExpanded(true);
 
 		function processNode(node, index, level, overTen) {
+			node.title = node.title.replace('&amp;', 'and');
 			if (level && depth - level <= 1 && node.title.includes(": ")) {
 				node.title = node.title.replace(/^[^:]*: /, "");
 			}
@@ -1559,6 +1560,7 @@ class LTForm {
 
 	static setName() {
 		let name = document.getElementById("LTFormName").value;
+		name = name.replace('&', 'and');
 		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
 	}
 

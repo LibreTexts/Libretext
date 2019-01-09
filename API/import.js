@@ -67,6 +67,9 @@ function handler(request, response) {
 			}
 		}
 	}
+	else {
+		responseError('Action not found', 400);
+	}
 
 	function responseError(message, status) {
 		//else fall through to error

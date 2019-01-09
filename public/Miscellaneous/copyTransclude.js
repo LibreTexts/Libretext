@@ -16,24 +16,11 @@ class copyTransclude {
 		this.copyTree = null;
 	}
 
-	static getCredentials(subdomain, otherheaders) {
-		let result = otherheaders || {};
-		if (subdomain !== window.location.origin.split("/")[2].split(".")[0]) {
-			result = Object.assign({'X-Deki-Token': this.credentials[subdomain]}, result);
-		}
-		return result;
-	}
-
 	static async verify() {
 		this.sourceURL = document.getElementById("copySource").value.replace(/\/$/, "");
 		this.destURL = document.getElementById("copyDestination").value.replace(/\/$/, "");
 		const sourceArray = this.sourceURL.split("/");
 		const destArray = this.destURL.split("/");
-
-		if (!this.credentials) {
-			let credentials = await fetch("https://awesomefiles.libretexts.org/Miscellaneous/credentials.json");
-			this.credentials = await credentials.json();
-		}
 		const instance = this;
 
 		// Valid URL check
@@ -54,9 +41,7 @@ class copyTransclude {
 
 			const tree = getTree(this.Sorigin, path);
 
-			let coverTitle = fetch(this.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json", {
-				headers: this.getCredentials(instance.Ssubdomain)
-			});
+			let coverTitle = fetch(this.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json");
 
 			document.getElementById("copyOutput").innerHTML = `<div>Confirmed LibreText coverpage: ${await isCover}</div>
 <div>Cross Library: ${this.crossOrigin}</div>
@@ -92,9 +77,7 @@ class copyTransclude {
 
 		async function isCoverpage(origin, path) {
 
-			let tags = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json", {
-				headers: instance.getCredentials(instance.Ssubdomain)
-			});
+			let tags = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json");
 			tags = await
 				tags.json();
 			if (tags.tag) {
@@ -110,9 +93,7 @@ class copyTransclude {
 		}
 
 		async function getTree(origin, path) {
-			let tree = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json", {
-				headers: instance.getCredentials(instance.Ssubdomain)
-			});
+			let tree = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 			const relativePath = path;
 			tree = await tree.json();
 			return await subpageCallback(tree, true);
@@ -136,9 +117,7 @@ class copyTransclude {
 					let children = [];
 					if (hasChildren) { //recurse down
 						children = await
-							fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json", {
-								headers: instance.getCredentials(instance.Ssubdomain)
-							});
+							fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 						children = await children.json();
 						children = await
 							subpageCallback(children, false);
@@ -205,15 +184,11 @@ class copyTransclude {
 				let path = destArray.slice(3, destArray.length).join("/");
 
 				//get info
-				let info = fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json", {
-					headers: instance.getCredentials(instance.Ssubdomain)
-				});
+				let info = fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json");
 
 				//get Tags
 				let copyContent = false;
-				let tags = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json", {
-					headers: instance.getCredentials(instance.Ssubdomain)
-				});
+				let tags = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
 				tags = await tags.json();
 				if (tags["@count"] !== "0") {
 					if (tags.tag) {
@@ -235,9 +210,7 @@ class copyTransclude {
 				info = await info.json();
 
 				if (copyContent) {
-					content = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw", {
-						headers: instance.getCredentials(instance.Ssubdomain)
-					});
+					content = await fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw");
 					content = await content.text();
 					content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 					content = decodeHTML(content);
@@ -256,8 +229,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 
 				let response = await fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/contents?abort=exists", {
 					method: "POST",
-					body: content,
-					headers: instance.getCredentials(instance.Dsubdomain)
+					body: content
 				});
 				if (response.status >= 400) {
 					failedCounter++;
@@ -279,13 +251,10 @@ template('TranscludeAutoNumTitle');</pre>`;
 						//copy Tags
 						fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
 							method: "PUT",
-							body: tags,
-							headers: instance.getCredentials(instance.Dsubdomain, {"Content-Type": "text/xml; charset=utf-8"})
+							body: tags
 						}).then();
 
-						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json", {
-							headers: instance.getCredentials(instance.Ssubdomain)
-						}).then(async (response) => {
+						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json").then(async (response) => {
 							let content = await response.json();
 							if (content["@count"] !== "0") {
 								if (content.property) {
@@ -310,7 +279,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
 												method: "POST",
 												body: content[i].value,
-												headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+												headers: {"Slug": content[i].name}
 											}).then();
 										}
 										break;
@@ -320,7 +289,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
 												method: "POST",
 												body: content[i].value,
-												headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+												headers: {"Slug": content[i].name}
 											}).then();
 										}
 										break;
@@ -332,7 +301,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 										fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/properties", {
 											method: "POST",
 											body: content[i].value,
-											headers: instance.getCredentials(instance.Dsubdomain, {"Slug": content[i].name})
+											headers: {"Slug": content[i].name}
 										}).then();
 										break;
 								}
@@ -343,24 +312,20 @@ template('TranscludeAutoNumTitle');</pre>`;
 						const endPath = (path + child.relativePath).split("/").pop();
 						if (info.title !== endPath) {
 							fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/move?title=" + info.title + "&name=" + path + child.relativePath, {
-								method: "POST",
-								headers: instance.getCredentials(instance.Dsubdomain)
+								method: "POST"
 							}).then();
 						}
 
-					//Thumbnail
-									fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail", {
-										headers: instance.getCredentials(instance.Ssubdomain)
-									}).then(async (response) => {
-										if (response.ok) {
-											let image = await response.blob();
-											fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
-												method: "PUT",
-												body: image,
-												headers: instance.getCredentials(instance.Dsubdomain)
-											}).then();
-										}
-									});
+						//Thumbnail
+						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail").then(async (response) => {
+							if (response.ok) {
+								let image = await response.blob();
+								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
+									method: "PUT",
+									body: image
+								}).then();
+							}
+						});
 				}
 
 				counter++;

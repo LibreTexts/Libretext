@@ -256,7 +256,9 @@ ul.ui-fancytree.fancytree-container.fancytree-plain.fancytree-ext-dnd5 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 10px
+	margin: 10px;
+	height: 60vh;
+	max-width: 45vw;
 }
 
 .LTTitle {

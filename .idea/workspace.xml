@@ -2,18 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Remove expired config">
+      <change afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2019-01-08T104845.200.json" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/2019-01-08T104845.200.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/analytics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
     <ignored path="nodePrint/public/PDF/" />
+    <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,39 +26,24 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/analytics.js">
+        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
+            <state relative-caret-position="46">
+              <caret line="124" column="37" selection-start-line="124" selection-start-column="37" selection-end-line="124" selection-end-column="37" />
+              <folding>
+                <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/package.json">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/secure.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+            <state relative-caret-position="2300">
+              <caret line="100" column="53" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -73,29 +63,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mtime</find>
-      <find>ensuredir</find>
-      <find>mapLimit</find>
-      <find>Data</find>
-      <find>authen</find>
-      <find>timetrack</find>
-      <find>analytics</find>
-      <find>response</find>
-      <find>publish</find>
-      <find>title</find>
-      <find>pagehide</find>
-      <find>fetch</find>
-      <find>unload</find>
-      <find>PUT</find>
-      <find>ajax</find>
-      <find>demonstration</find>
-      <find>groups</find>
-      <find>group</find>
-      <find>isPro</find>
-      <find>Contributor</find>
-      <find>report</find>
-      <find>zipLocal</find>
-      <find>&quot;Access-Control-Allow-Origin&quot;: request.headers.origin,</find>
       <find>serve</find>
       <find>license</find>
       <find>render</find>
@@ -103,6 +70,29 @@
       <find>user</find>
       <find>getelement</find>
       <find>ziplocal</find>
+      <find>home</find>
+      <find>batch</find>
+      <find>ltformcontainer</find>
+      <find>origin</find>
+      <find>subdomain</find>
+      <find>getPDF</find>
+      <find>authen</find>
+      <find>PUT</find>
+      <find>authenticate</find>
+      <find>responseerror</find>
+      <find>getsu</find>
+      <find>get</find>
+      <find>getsubpages</find>
+      <find>console.log</find>
+      <find>response</find>
+      <find>title</find>
+      <find>info</find>
+      <find>getcredentials</find>
+      <find>renumber</find>
+      <find>edit</find>
+      <find>setname</find>
+      <find>'and'</find>
+      <find>deb</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -145,8 +135,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Bots/package.json" />
-        <option value="$PROJECT_DIR$/ContactForm/credentials.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/testr.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/license.js" />
@@ -157,10 +145,8 @@
         <option value="$PROJECT_DIR$/Bots/sendKey.js" />
         <option value="$PROJECT_DIR$/install/cors" />
         <option value="$PROJECT_DIR$/API/Data/10-2018/hdagnew@ucdavis.edu" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/handsontable.full.min.css" />
         <option value="$PROJECT_DIR$/API/authen.json" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-020-slug-4-2-acadia.html" />
         <option value="$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-030-slug-5-2-the-columbian-exchange.html" />
         <option value="$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-034-slug-5-6-belief-and-culture-the-wendat-experience.html" />
@@ -178,17 +164,12 @@
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/public/API/timetrack.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/resize.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/API/sendKey.js" />
         <option value="$PROJECT_DIR$/API/timetrack.js" />
-        <option value="$PROJECT_DIR$/API/import.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/public/API/import.js" />
         <option value="$PROJECT_DIR$/public/API/timetrackViewer.js" />
         <option value="$PROJECT_DIR$/Kubeconfig/config" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
         <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
@@ -196,13 +177,22 @@
         <option value="$PROJECT_DIR$/public/API/analytics.js" />
         <option value="$PROJECT_DIR$/API/secure.json" />
         <option value="$PROJECT_DIR$/API/analytics.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
+        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
+        <option value="$PROJECT_DIR$/API/import.js" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-12" />
+    <option name="width" value="1302" />
+    <option name="height" value="1392" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -275,7 +265,7 @@
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -308,13 +298,6 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/GLmol/js/GLWrapperSpin.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Kubeconfig" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API" />
@@ -322,6 +305,43 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\ContactForm" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Kubeconfig" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Bots" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Jupyter" />
+    </key>
+  </component>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="PUT" />
+          <option name="urlBase" value="https://computer.miniland1333.com/endpoint/subpages" />
+          <option name="urlPath" value="" />
+          <option name="haveTextToSend" value="true" />
+          <option name="textToSend" value="{&quot;username&quot;:&quot;hdagnew@ucdavis.edu&quot;,&quot;root&quot;:&quot;https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)&quot;}" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="PUT" />
+          <option name="urlBase" value="https://computer.miniland1333.com/endpoint/subpages" />
+          <option name="urlPath" value="" />
+          <option name="haveTextToSend" value="true" />
+          <option name="textToSend" value="{&quot;username&quot;:&quot;hdagnew@ucdavis.edu&quot;,&quot;root&quot;:&quot;https://chem.libretexts.org&quot;}" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="PUT" />
+          <option name="urlBase" value="https://computer.miniland1333.com/endpoint/subpages" />
+          <option name="urlPath" value="" />
+          <option name="haveTextToSend" value="true" />
+          <option name="textToSend" value="{&quot;username&quot;:&quot;hdagnew@ucdavis.edu&quot;,root:&quot;https://chem.libretexts.org&quot;}" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -335,17 +355,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.analytics.js ">
+  <component name="RunManager" selected="Node.js.endpoint.js">
+    <configuration name="rest-api#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
+      <method v="2" />
+    </configuration>
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
+      <method v="2" />
+    </configuration>
+    <configuration name="endpoint.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="API/endpoint.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="import.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="import.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
-      <method v="2" />
-    </configuration>
-    <configuration name="timetrack.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="timetrack.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -416,12 +439,18 @@
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Node.js.timetrack.js" />
       <item itemvalue="Node.js.analytics.js " />
       <item itemvalue="Node.js.import.js" />
+      <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="npm.Build" />
       <item itemvalue="npm.Serve" />
+      <item itemvalue="HTTP Request.rest-api#1" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.rest-api#1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -743,6 +772,14 @@
       <workItem from="1546729783673" duration="1242000" />
       <workItem from="1546731553068" duration="3060000" />
       <workItem from="1546746800770" duration="5874000" />
+      <workItem from="1546803997256" duration="66000" />
+      <workItem from="1546805787083" duration="685000" />
+      <workItem from="1546913012310" duration="610000" />
+      <workItem from="1546913821330" duration="1329000" />
+      <workItem from="1547001408903" duration="721000" />
+      <workItem from="1547002195108" duration="51000" />
+      <workItem from="1547012193503" duration="2597000" />
+      <workItem from="1547014812937" duration="3239000" />
     </task>
     <task id="LOCAL-00052" summary="Fixed timeout">
       <created>1535158829383</created>
@@ -1123,15 +1160,17 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="956481000" />
+    <option name="totallyTimeSpent" value="965779000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.21131848" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.1577363" />
+      <window_info anchor="bottom" id="REST Client" weight="0.47733334" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1142,17 +1181,17 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.08533333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.336" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" visible="true" weight="0.484" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.484" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Remote Host" order="3" weight="0.3822998" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.295003" />
+      <window_info active="true" anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.26429862" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1274,6 +1313,18 @@
     <MESSAGE value="Remove expired config" />
     <option name="LAST_COMMIT_MESSAGE" value="Remove expired config" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/endpoint.js</url>
+          <line>24</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
       <expression>
@@ -1331,14 +1382,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/API/epubs/https!opentextbc.ca!preconfederation!open!download!type=epub/OEBPS/chapter-101-slug-11-10-rebellions-1837-38.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/printme.js" />
     <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/puppeteer/lib/ExecutionContext.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1357,13 +1400,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="143" column="26" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="56" column="46" lean-forward="true" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -1404,26 +1440,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/analyticsData/12-2018/10332.txt" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-920">
-          <caret line="17" selection-start-line="16" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
-          <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1459,43 +1481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1227">
-          <caret line="59" column="82" selection-start-line="59" selection-start-column="82" selection-end-line="59" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-567">
-          <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/import.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="41" column="82" selection-start-line="41" selection-start-column="82" selection-end-line="41" selection-end-column="82" />
-          <folding>
-            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
-            <element signature="n#!!block;n#coverPage#0;n#!!block;n#processEPUB#0;n#!!block;n#handler#0" />
-            <element signature="n#!!block;n#main#0" />
-            <element signature="n#!!block;n#authenticate#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1615">
-          <caret line="2014" column="69" lean-forward="true" selection-start-line="2014" selection-start-column="69" selection-end-line="2014" selection-end-column="69" />
-          <folding>
-            <element signature="e#1244#32215#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API/import.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -1517,36 +1502,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="76" column="73" lean-forward="true" selection-start-line="76" selection-start-column="73" selection-end-line="76" selection-end-column="73" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1561,18 +1520,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="514">
           <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1158">
-          <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1618,27 +1565,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+    <entry file="file://$PROJECT_DIR$/API/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1518">
-          <caret line="66" column="50" selection-start-line="66" selection-start-column="50" selection-end-line="66" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
-          <folding>
-            <element signature="e#759#1745#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
+        <state relative-caret-position="368">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -1649,17 +1579,166 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/package.json">
+    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="643">
+          <caret line="34" column="73" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="83" column="65" lean-forward="true" selection-start-line="83" selection-start-column="65" selection-end-line="83" selection-end-column="65" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="135" column="61" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
+          <folding>
+            <element signature="e#759#1745#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="259" column="17" selection-start-line="259" selection-start-column="17" selection-end-line="259" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-230">
+          <caret line="59" column="82" selection-start-line="59" selection-start-column="82" selection-end-line="59" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
+        <state relative-caret-position="414">
+          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="22" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1737">
+          <caret line="474" column="134" selection-start-line="474" selection-start-column="134" selection-end-line="474" selection-end-column="134" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="33" column="61" selection-start-line="33" selection-start-column="61" selection-end-line="33" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="44" selection-start-line="2" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="37" column="55" lean-forward="true" selection-start-line="37" selection-start-column="55" selection-end-line="37" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="23" column="87" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2300">
+          <caret line="100" column="53" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17295">
+          <caret line="1529" column="60" lean-forward="true" selection-start-line="1529" selection-start-column="60" selection-end-line="1529" selection-end-column="60" />
+          <folding>
+            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
+            <element signature="n#!!block;n#new#0;n#LTForm#0" />
+            <element signature="e#1244#32215#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/import.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2843">
+          <caret line="155" column="52" selection-start-line="155" selection-start-column="47" selection-end-line="155" selection-end-column="52" />
+          <folding>
+            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
+            <element signature="n#!!block;n#coverPage#0;n#!!block;n#processEPUB#0;n#!!block;n#handler#0" />
+            <element signature="n#!!block;n#main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="124" column="37" selection-start-line="124" selection-start-column="37" selection-end-line="124" selection-end-column="37" />
+          <folding>
+            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
+          </folding>
         </state>
       </provider>
     </entry>
