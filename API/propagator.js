@@ -44,9 +44,9 @@ function handler(request, response) {
 					let {username, url} = input;
 					const Ssubdomain = url.split("/")[2].split(".")[0];
 					let path = url.split("/").slice(3).join("/");
-					let content = await getContent();
+					let {content, tags, properties} = await getContent();
 
-										let otherArray = ["bio", "biz","careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+					let otherArray = ["bio", "biz", "careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
 
 					//Propagatate
@@ -70,7 +70,15 @@ function handler(request, response) {
 						}
 						content = await content.text();
 						content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-						return decodeHTML(content);
+
+						//get tags and properties
+						let response = await fetch(`https://${Ssubdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags`,
+							{headers: {'x-deki-token': token}});
+						let tags = await response.text();
+						response = await fetch(`https://${Ssubdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/properties?dream.out.format=json`,
+							{headers: {'x-deki-token': token}});
+						let properties = await response.json();
+						return {content: decodeHTML(content), tags: tags, properties: parseProperties(properties)};
 
 						function decodeHTML(content) {
 							let ret = content.replace(/&gt;/g, '>');
@@ -79,6 +87,25 @@ function handler(request, response) {
 							ret = ret.replace(/&apos;/g, "'");
 							ret = ret.replace(/&amp;/g, '&');
 							return ret;
+						}
+
+						function parseProperties(properties) {
+							if (properties["@count"] !== "0") {
+								if (properties.property) {
+									if (properties.property.length) {
+										properties = properties.property.map((property) => {
+											return {name: property["@name"], value: property["contents"]["#text"]}
+										});
+									}
+									else {
+										properties = [{
+											name: properties.property["@name"],
+											value: properties.property["contents"]["#text"]
+										}];
+									}
+								}
+							}
+							return properties
 						}
 					}
 
@@ -89,8 +116,26 @@ function handler(request, response) {
 							body: content,
 							headers: {'x-deki-token': token}
 						});
-						console.log(await response.text());
-						return response.ok ? true : response.statusText
+
+						if (response.ok) {
+							//handle tags and properties
+							for (let i = 0; i < properties.length; i++) {
+								fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/properties?abort=never`, {
+									method: "POST",
+									body: properties[i].value,
+									headers: {"Slug": properties[i].name, 'x-deki-token': token}
+								}).then();
+							}
+							await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags`, {
+								method: "PUT",
+								body: tags,
+								headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': token},
+							});
+							return true;
+						}
+						else {
+							return response.statusText
+						}
 					}
 
 					function authenticate(username, subdomain) {
