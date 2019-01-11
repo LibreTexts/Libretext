@@ -251,7 +251,8 @@ template('TranscludeAutoNumTitle');</pre>`;
 						//copy Tags
 						fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/tags", {
 							method: "PUT",
-							body: tags
+							body: tags,
+							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						}).then();
 
 						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json").then(async (response) => {

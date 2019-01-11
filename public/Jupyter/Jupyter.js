@@ -41,6 +41,7 @@ function setKernel() {
 				break;
 			case "r":
 				repo = "LibreTexts/jupyter-r";
+				kernel = 'ir';
 				break;
 			case "octave":
 				repo = "LibreTexts/jupyter-octave";
@@ -117,8 +118,7 @@ function deleteServiceWorker() {
 			// console.log(serviceScript);
 			serviceScript.remove();
 		}
-	}
-	catch (e) {
+	} catch (e) {
 	}
 	navigator.serviceWorker.getRegistrations().then(function (registrations) {
 		if (!registrations.length) {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Propagator properties and tags">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Jupyter/Jupyter.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Jupyter/Jupyter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,10 +20,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/propagator.js">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="122" column="162" selection-start-line="122" selection-start-column="162" selection-end-line="122" selection-end-column="162" />
+            <state relative-caret-position="293">
+              <caret line="323" column="58" selection-start-line="323" selection-start-column="58" selection-end-line="323" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -70,8 +71,8 @@
       <find>'and'</find>
       <find>deb</find>
       <find>getcredentials</find>
-      <find>tags</find>
       <find>console.log</find>
+      <find>tags</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -114,7 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/Miscellaneous/testr.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/credentials.json" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/license.js" />
         <option value="$PROJECT_DIR$/Bots/test.js" />
@@ -153,7 +153,6 @@
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/API/analytics.js" />
-        <option value="$PROJECT_DIR$/API/secure.json" />
         <option value="$PROJECT_DIR$/API/analytics.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
@@ -161,10 +160,12 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/import.js" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
+        <option value="$PROJECT_DIR$/API/secure.json" />
+        <option value="$PROJECT_DIR$/public/Jupyter/Jupyter.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
       </list>
     </option>
   </component>
@@ -181,6 +182,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -217,34 +246,6 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -759,14 +760,10 @@
       <workItem from="1547002195108" duration="51000" />
       <workItem from="1547012193503" duration="2597000" />
       <workItem from="1547014812937" duration="3739000" />
-      <workItem from="1547094606269" duration="2653000" />
-    </task>
-    <task id="LOCAL-00053" summary="Added Travis-Slack integration">
-      <created>1535161183916</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1535161183917</updated>
+      <workItem from="1547094606269" duration="3829000" />
+      <workItem from="1547098757939" duration="586000" />
+      <workItem from="1547104577801" duration="973000" />
+      <workItem from="1547171864630" duration="2043000" />
     </task>
     <task id="LOCAL-00054" summary="git update-server-info&#10;&#10;Requirejs has JQuery conflict and hates HTML define()">
       <created>1535662720526</created>
@@ -1104,7 +1101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547018273221</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Propagator properties and tags">
+      <created>1547097481212</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1547097481215</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1140,7 +1144,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="968932000" />
+    <option name="totallyTimeSpent" value="973710000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1149,7 +1153,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.15954244" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.16496086" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1266,7 +1270,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Initial Remixer" />
     <MESSAGE value="Added Remixer admin guard" />
     <MESSAGE value="Swapped out positive lookaheads" />
     <MESSAGE value="Implemented Forker/copyContent" />
@@ -1291,7 +1294,8 @@
     <MESSAGE value="Added Kubernetes detection" />
     <MESSAGE value="Remove expired config" />
     <MESSAGE value="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions" />
+    <MESSAGE value="Propagator properties and tags" />
+    <option name="LAST_COMMIT_MESSAGE" value="Propagator properties and tags" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1350,20 +1354,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/puppeteer/lib/ExecutionContext.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="110" column="14" selection-start-line="110" selection-start-column="14" selection-end-line="110" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/puppeteer/lib/Page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="776" column="42" selection-start-line="776" selection-start-column="42" selection-end-line="776" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/puppeteer/lib/helper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
@@ -1533,13 +1523,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/secure.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="643">
@@ -1601,16 +1584,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-230">
           <caret line="59" column="82" selection-start-line="59" selection-start-column="82" selection-end-line="59" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authen.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="22" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1684,13 +1657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="100" column="53" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
@@ -1705,8 +1671,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="122" column="162" selection-start-line="122" selection-start-column="162" selection-end-line="122" selection-end-column="162" />
+        <state relative-caret-position="285">
+          <caret line="126" column="42" lean-forward="true" selection-start-line="126" selection-start-column="42" selection-end-line="126" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/secure.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="323" column="58" selection-start-line="323" selection-start-column="58" selection-end-line="323" selection-end-column="58" />
         </state>
       </provider>
     </entry>
