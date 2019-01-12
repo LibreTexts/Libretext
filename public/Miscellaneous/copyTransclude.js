@@ -318,7 +318,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 						}
 
 						//Thumbnail
-						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail").then(async (response) => {
+						fetch(instance.Sorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/=mindtouch.page%2523thumbnail").then(async (response) => {
 							if (response.ok) {
 								let image = await response.blob();
 								fetch(instance.Dorigin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {

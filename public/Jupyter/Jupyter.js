@@ -79,7 +79,7 @@ function activateThebelab() {
 	requirejs.type = "text/javascript";
 	unpkg.type = "text/javascript";
 	// requirejs.src = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js";
-	unpkg.src = test ? "https://awesomefiles.libretexts.org/Jupyter/lib/index.js" : "https://unpkg.com/thebelab@^0.3.0";
+	unpkg.src = test ? "https://awesomefiles.libretexts.org/Jupyter/lib/index.js" : "https://unpkg.com/thebelab@^0.3.3";
 	top.appendChild(requirejs);
 	top.appendChild(unpkg);
 	unpkg.onload = activateLoader;
