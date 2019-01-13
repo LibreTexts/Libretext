@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -18,26 +22,39 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="1569" column="48" selection-start-line="1569" selection-start-column="48" selection-end-line="1569" selection-end-column="48" />
+            <state relative-caret-position="152">
+              <caret line="2194" column="33" lean-forward="true" selection-start-line="2194" selection-start-column="33" selection-end-line="2194" selection-end-column="33" />
               <folding>
+                <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
                 <element signature="n#!!block;n#new#0;n#LTForm#0" />
                 <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
                 <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
                 <element signature="n#!!block;n#default#0;n#LTForm#0" />
                 <element signature="n#!!block;n#reset#0;n#LTForm#0" />
                 <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+                <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
                 <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+                <element signature="n#!!block;n#setSubdomain#0;n#LTForm#0" />
+                <element signature="n#!!block;n#setName#0;n#LTForm#0" />
                 <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
-                <element signature="e#37709#39411#0" />
-                <element signature="e#39442#47327#0" />
-                <element signature="e#39458#43551#0" />
+                <element signature="n#!!block;n#getSubpages#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
                 <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-                <element signature="n#!!block;n#publish#0;n#LTForm#0" />
                 <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
                 <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
-                <element signature="n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
                 <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1495">
+              <caret line="65" column="45" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
+              <folding>
+                <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
               </folding>
             </state>
           </provider>
@@ -58,15 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>PUT</find>
-      <find>authenticate</find>
-      <find>responseerror</find>
-      <find>getsu</find>
-      <find>get</find>
-      <find>getsubpages</find>
-      <find>response</find>
-      <find>title</find>
-      <find>info</find>
       <find>renumber</find>
       <find>edit</find>
       <find>setname</find>
@@ -82,12 +90,21 @@
       <find>authent</find>
       <find>.org</find>
       <find>miniland</find>
-      <find>authen</find>
       <find>\n}</find>
       <find>\n.*\}</find>
       <find>lazyload</find>
       <find>bio</find>
       <find>LTFormSubdomain</find>
+      <find>\}</find>
+      <find>current</find>
+      <find>initializefanc</find>
+      <find>path</find>
+      <find>copycontent</find>
+      <find>authen</find>
+      <find>authenticated</find>
+      <find>TODO</find>
+      <find>authenticatedFetch</find>
+      <find>username</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -124,7 +141,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/nodePrint/node_modules/node-eta/index.js" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -178,14 +194,15 @@
         <option value="$PROJECT_DIR$/public/Jupyter/Jupyter.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/API/authenBrowser.json" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
+    <option name="x" value="1236" />
+    <option name="y" value="268" />
     <option name="width" value="1302" />
     <option name="height" value="1392" />
   </component>
@@ -250,6 +267,17 @@
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -770,6 +798,8 @@
       <workItem from="1547171864630" duration="4854000" />
       <workItem from="1547276222423" duration="1020000" />
       <workItem from="1547336618889" duration="6132000" />
+      <workItem from="1547363017117" duration="7253000" />
+      <workItem from="1547418153034" duration="305000" />
     </task>
     <task id="LOCAL-00056" summary="Implemented ThinCC beta">
       <created>1536019970642</created>
@@ -1150,16 +1180,16 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="983673000" />
+    <option name="totallyTimeSpent" value="991231000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.07706201" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.133031" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1170,7 +1200,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.10266667" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.15527065" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.484" />
@@ -1178,10 +1208,10 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.3822998" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.38170823" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.28356412" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.28356412" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1370,13 +1400,7 @@
     <entry file="file://$PROJECT_DIR$/public/package-lock.json" />
     <entry file="file://$PROJECT_DIR$/Jupyter/Jupyter.js" />
     <entry file="file://$PROJECT_DIR$/Jupyter/public/Terminal+Usage.html" />
-    <entry file="file://$PROJECT_DIR$/ContactForm/credentials.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="51" selection-start-line="3" selection-start-column="51" selection-end-line="3" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ContactForm/credentials.json" />
     <entry file="file://$PROJECT_DIR$/ContactForm/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1399,31 +1423,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/resize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6093">
-          <caret line="366" column="18" lean-forward="true" selection-start-line="366" selection-start-column="18" selection-end-line="366" selection-end-column="18" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#1761#1994#0" />
-            <element signature="e#2041#2278#0" />
-            <element signature="e#2319#2680#0" />
-            <element signature="e#2710#2996#0" />
-            <element signature="e#3034#3086#0" />
-            <element signature="e#3121#3192#0" />
-            <element signature="e#3223#3283#0" />
-            <element signature="e#3315#3376#0" />
-            <element signature="e#3408#3451#0" />
-            <element signature="e#3500#3622#0" />
-            <element signature="e#6166#6507#0" />
-            <element signature="e#28363#29630#0" />
-            <element signature="e#29670#30000#0" />
-            <element signature="e#30022#30069#0" />
-            <element signature="e#30120#30147#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/resize.js" />
     <entry file="file://$PROJECT_DIR$/public/API/import.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -1452,34 +1452,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.7.0/core-modules/_http_outgoing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="616" selection-start-line="616" selection-end-line="616" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/async/asyncify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/fs-extra/lib/copy/copy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="226" column="6" selection-start-line="226" selection-start-column="6" selection-end-line="226" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/graceful-fs/polyfills.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="286" column="17" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.7.0/core-modules/_http_outgoing.js" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/async/asyncify.js" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/fs-extra/lib/copy/copy.js" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/graceful-fs/polyfills.js" />
     <entry file="file://$PROJECT_DIR$/nodePrint/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1487,13 +1463,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kubeconfig/config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Kubeconfig/config" />
     <entry file="file://$PROJECT_DIR$/Kubeconfig/print-manifest.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1576,13 +1546,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="44" selection-start-line="2" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" />
     <entry file="file://$PROJECT_DIR$/public/TOC/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="83">
@@ -1617,13 +1581,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/secure.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/API/secure.json" />
     <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1646,13 +1604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2797">
-          <caret line="326" column="42" selection-start-line="326" selection-start-column="42" selection-end-line="326" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1667,37 +1618,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="47" column="5" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="47" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authen.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="10" lean-forward="true" selection-end-line="49" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="76" lean-forward="true" selection-start-line="5" selection-start-column="76" selection-end-line="5" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json" />
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -1716,28 +1637,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/sendKey.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="214" column="28" selection-start-line="214" selection-start-column="28" selection-end-line="214" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="1569" column="48" selection-start-line="1569" selection-start-column="48" selection-end-line="1569" selection-end-column="48" />
+        <state relative-caret-position="152">
+          <caret line="2194" column="33" lean-forward="true" selection-start-line="2194" selection-start-column="33" selection-end-line="2194" selection-end-column="33" />
           <folding>
+            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
             <element signature="n#!!block;n#new#0;n#LTForm#0" />
             <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
             <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
             <element signature="n#!!block;n#default#0;n#LTForm#0" />
             <element signature="n#!!block;n#reset#0;n#LTForm#0" />
             <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
             <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setSubdomain#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
             <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
-            <element signature="e#37709#39411#0" />
-            <element signature="e#39442#47327#0" />
-            <element signature="e#39458#43551#0" />
+            <element signature="n#!!block;n#getSubpages#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
             <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
-            <element signature="n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1495">
+          <caret line="65" column="45" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
+          <folding>
+            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
           </folding>
         </state>
       </provider>

@@ -26,7 +26,7 @@ async function handler(request, response) {
 		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "PUT",
+				"Access-Control-Allow-Methods": "GET",
 			});
 			response.end();
 		}
@@ -38,6 +38,38 @@ async function handler(request, response) {
 			} : {"Content-Type": "application/json"});
 			response.write(JSON.stringify(authenBrowser));
 			response.end();
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
+	}
+	else if (url.startsWith("/redirect")) {
+		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+			});
+			response.end();
+		}
+		else if (request.method === "PUT") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+				"Content-Type": "application/json",
+			} : {"Content-Type": "application/json"});
+			let body = [];
+			request.on('data', (chunk) => {
+				body.push(chunk);
+			}).on('end', async () => {
+				body = Buffer.concat(body).toString();
+
+				let input = JSON.parse(body);
+				//Only get requests are acceptable
+				let response = await authenticatedFetch(input.path, input.api, input.username, input.subdomain);
+				response.write(JSON.stringify(response));
+
+				response.end();
+			});
 		}
 		else {
 			responseError(request.method + " Not Acceptable", 406)
@@ -72,11 +104,11 @@ async function handler(request, response) {
 
 				origin = rootURL.split("/").splice(0, 3).join('/');
 				let path = rootURL.split('/').splice(3).join('/');
-				let pages = await authenticatedFetch(path, 'subpages');
+				let pages = await authenticatedFetch(path, 'subpages', username, subdomain);
 				pages = await pages.json();
 
 
-				let info = await authenticatedFetch(path, 'info');
+				let info = await authenticatedFetch(path, 'info', username, subdomain);
 				info = await info.json();
 				let finalResult = {
 					title: info.title,
@@ -98,7 +130,7 @@ async function handler(request, response) {
 						const hasChildren = subpage["@subpages"] === "true";
 						let children = hasChildren ? undefined : [];
 						if (hasChildren) { //recurse down
-							children = await authenticatedFetch(path, 'subpages');
+							children = await authenticatedFetch(path, 'subpages', username, subdomain);
 							children = await children.json();
 							children = await subpageCallback(children, false);
 						}
@@ -123,20 +155,6 @@ async function handler(request, response) {
 						return [];
 					}
 				}
-
-				async function authenticatedFetch(path, api) {
-					const user = "=" + username;
-					const crypto = require('crypto');
-					const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
-					const epoch = Math.floor(Date.now() / 1000);
-					hmac.update(`${authen[subdomain].key}${epoch}${user}`);
-					const hash = hmac.digest('hex');
-					let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
-
-					return await fetch(origin + `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}?dream.out.format=json`, {
-						headers: {'x-deki-token': token}
-					});
-				}
 			});
 		}
 	}
@@ -151,4 +169,20 @@ async function handler(request, response) {
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
 	}
+}
+
+
+async function authenticatedFetch(path, api, username, subdomain) {
+	const user = "=" + username;
+	const crypto = require('crypto');
+	const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
+	const epoch = Math.floor(Date.now() / 1000);
+	hmac.update(`${authen[subdomain].key}${epoch}${user}`);
+	const hash = hmac.digest('hex');
+	let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
+	if (subdomain)
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+			{headers: {'x-deki-token': token}});
+	else
+		console.error(`Invalid subdomain ${subdomain}`);
 }

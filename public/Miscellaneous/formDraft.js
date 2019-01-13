@@ -2,7 +2,7 @@ class LTForm {
 	static async initialize() {
 		this.formScript = document.currentScript;
 
-		let keys = await fetch('https://computer.miniland1333.com/endpoint/getKey');
+		let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
 		LTForm.keys = await keys.json();
 
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
@@ -1568,10 +1568,10 @@ class LTForm {
 	static async setSubdomain() {
 		let subdomain = document.getElementById('LTFormSubdomain').value;
 		LTForm.content = await this.getSubpages("", subdomain, false, true);
-		alert(`Pretending to swap to ${subdomain}! This isn't written yet...`);
-		//TODO Need reinitialize
 
-		// LTForm.initializeFancyTree(); Need something else to prevent duplicates
+		let root = $("#LTLeft").fancytree("getTree").getRootNode();
+		root.removeChildren();
+		root.addChildren(LTForm.content);
 	}
 
 	static setName() {
@@ -1614,6 +1614,7 @@ class LTForm {
 				result[index] = {
 					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
 					url: url,
+					path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
 					id: parseInt(subpage['@id']),
 					children: children,
 					lazy: !full,
@@ -1965,7 +1966,10 @@ class LTForm {
 									n.title = n.title.replace(/<a.* ><\/a>/, "");
 									n.key = null; // make sure, a new key is generated
 								});
+								let LTRight = $("#LTRight").fancytree("getTree");
+								LTRight.enable(false);
 								await data.otherNode.visitAndLoad();
+								LTRight.enable(true);
 							}
 						}
 					}
@@ -2148,14 +2152,15 @@ class LTForm {
 					}
 				}
 				else {
-					child.path = child.data.url.replace(window.location.origin + "/", ""); //source
+					// child.path = child.data.url.replace(window.location.origin + "/", ""); //source
+					child.path = child.data.path;
 					let content;
 					//get info
-					let info = fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/info?dream.out.format=json");
+					let info = await LTForm.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
 
 					//get Tags
 					let copyContent = false;
-					let response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/tags?dream.out.format=json");
+					let response = await LTForm.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
 					let tags = await response.json();
 					if (response.ok && tags["@count"] !== "0") {
 						if (tags.tag) {
@@ -2180,12 +2185,33 @@ class LTForm {
 					//copy Content
 					info = await info;
 					info = await info.json();
+					let current = window.location.origin.split('/')[2].split('.')[0];
 					if (copyContent) {
-						content = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/contents?mode=raw");
+						if (child.data.subdomain === current) {
+							content = await LTForm.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain);
+						}
+						else {
+							content = await fetch('https://api.libretexts.org/endpoint/redirect', {
+								method: 'PUT',
+								body: {
+									path: child.path,
+									api: 'contents?mode=raw',
+									username: document.getElementById("usernameHolder").innerText,
+									subdomain: child.data.subdomain,
+
+								}
+							})
+						}
 						content = await content.text();
 						content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
-						//TODO Verify that this works!!!
 						content = decodeHTML(content);
+					}
+					else if (child.data.subdomain !== current) {
+						content = `<p class="mt-script-comment">Cross Library Transclusion</p>
+
+<pre class="script">
+template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});
+template('TranscludeAutoNumTitle');</pre>`
 					}
 					else {
 						content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
@@ -2223,7 +2249,7 @@ wiki.page("${child.path}", NULL)</pre>
 								}).then();
 							}
 							//Properties
-							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/properties?dream.out.format=json").then(async (response) => {
+							LTForm.authenticatedFetch(child.path, 'properties?dream.out.format=json', child.data.subdomain).then(async (response) => {
 								let content = await response.json();
 								if (content["@count"] !== "0") {
 									if (content.property) {
@@ -2318,6 +2344,7 @@ wiki.page("${child.path}", NULL)</pre>
 	static async authenticatedFetch(path, api, subdomain) {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let token = LTForm.keys[subdomain];
+		subdomain = subdomain || current;
 		if (subdomain)
 			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 				current === subdomain ? {} : {headers: {'x-deki-token': token}});
