@@ -60,3 +60,4 @@ Temporary Items
 /Kubeconfig/cache/
 /Kubeconfig/config
 /API/secureAccess.zip
+/API/authenBrowser.json

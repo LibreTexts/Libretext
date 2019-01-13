@@ -3,6 +3,7 @@ const timestamp = require("console-timestamp");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
 const authen = require('./authen.json');
+const authenBrowser = require('./authenBrowser.json');
 const fetch = require("node-fetch");
 let port = 3005;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -18,10 +19,31 @@ async function handler(request, response) {
 	let url = request.url;
 	url = url.replace("endpoint/", "");
 
-	if (!request.headers.origin && !request.headers.origin.endsWith("libretexts.org")) {
-		responseError('Forbidden', 401);
+	if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
+		responseError('Unauthorized', 401);
 	}
-	else if (url === "/subpages") { //single page
+	else if (url.startsWith("/getKey")) {
+		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+			});
+			response.end();
+		}
+		else if (request.method === "GET") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": "application/json",
+			} : {"Content-Type": "application/json"});
+			response.write(JSON.stringify(authenBrowser));
+			response.end();
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
+	}
+	else if (url === "/subpages" && false) { //DISABLED
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -115,29 +137,6 @@ async function handler(request, response) {
 						headers: {'x-deki-token': token}
 					});
 				}
-			});
-		}
-	}
-	else if (url === "/copyTransclude") { //single page
-		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-			response.writeHead(200, {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "PUT",
-				"Content-Type": " application/json",
-			});
-			response.end();
-		}
-		else if (request.method === "PUT") {
-			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "PUT",
-				"Content-Type": " application/json",
-			} : {"Content-Type": " application/json"});
-			let body = [];
-			request.on('data', (chunk) => {
-				body.push(chunk);
-			}).on('end', async () => {
-
 			});
 		}
 	}

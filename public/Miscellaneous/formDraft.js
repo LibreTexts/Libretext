@@ -1,8 +1,15 @@
 class LTForm {
 	static async initialize() {
 		this.formScript = document.currentScript;
-		await this.getSubpages("", true, false, true);
+
+		let keys = await fetch('https://computer.miniland1333.com/endpoint/getKey');
+		LTForm.keys = await keys.json();
+
+		let subdomain = window.location.origin.split('/')[2].split('.')[0];
+		LTForm.content = await this.getSubpages("", subdomain, false, true);
+		LTForm.initializeFancyTree();
 	}
+
 
 	static async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
@@ -1558,6 +1565,15 @@ class LTForm {
 		return root.toDict(true);
 	}
 
+	static async setSubdomain() {
+		let subdomain = document.getElementById('LTFormSubdomain').value;
+		LTForm.content = await this.getSubpages("", subdomain, false, true);
+		alert(`Pretending to swap to ${subdomain}! This isn't written yet...`);
+		//TODO Need reinitialize
+
+		// LTForm.initializeFancyTree(); Need something else to prevent duplicates
+	}
+
 	static setName() {
 		let name = document.getElementById("LTFormName").value;
 		name = name.replace('&', 'and');
@@ -1574,14 +1590,13 @@ class LTForm {
 		return depth;
 	}
 
-	static async getSubpages(path, isRoot, full, linkTitle) {
-		const origin = window.location.origin;
-		path = path.replace(origin + "/", "");
-		let response = await fetch(origin + `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/subpages?dream.out.format=json`);
+	static async getSubpages(path, subdomain, full, linkTitle) {
+		path = path.replace(`https://${subdomain}.libretexts.org/`, "");
+		let response = await this.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 		response = await response.json();
-		return await subpageCallback(response, isRoot);
+		return await subpageCallback(response);
 
-		async function subpageCallback(info, isRoot) {
+		async function subpageCallback(info) {
 			const subpageArray = info["page.subpage"].length ? info["page.subpage"] : [info["page.subpage"]];
 			const result = [];
 			const promiseArray = [];
@@ -1589,26 +1604,20 @@ class LTForm {
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
-				// let currentPage = url === window.location.href;
-				const currentPage = false;
 				const hasChildren = subpage["@subpages"] === "true";
-				// let defaultOpen = window.location.href.includes(url) && !currentPage;
-				const defaultOpen = false;
 				let children = hasChildren ? undefined : [];
-				if (hasChildren && (full || defaultOpen)) { //recurse down
-					children = await
-						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+				if (hasChildren && (full)) { //recurse down
+					children = await LTForm.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 					children = await children.json();
-					children = await
-						subpageCallback(children, false);
+					children = await subpageCallback(children, false);
 				}
 				result[index] = {
 					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
 					url: url,
-					selected: currentPage,
-					expanded: defaultOpen,
+					id: parseInt(subpage['@id']),
 					children: children,
-					lazy: !full
+					lazy: !full,
+					subdomain: subdomain,
 				};
 			}
 
@@ -1618,356 +1627,375 @@ class LTForm {
 				}
 
 				await Promise.all(promiseArray);
-				if (isRoot) {
-					LTForm.content = result;
-					// console.log(LTForm.content);
-					initializeFancyTree();
-				}
 				return result;
 			}
 			else {
 				return [];
 			}
 		}
+	}
 
-		async function initializeFancyTree() {
-			if (LTForm.content) {
-				let target = document.createElement("div");
-				target.id = "LTRemixer";
-				const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-				const isPro = document.getElementById("proHolder").innerText === 'true';
-				const groups = document.getElementById("groupHolder").innerText;
-				let allowed = isAdmin || (isPro && groups.includes('faculty'));
-				target.innerHTML =
-					"<div id='LTForm'><div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div></div>" +
-					`<div class='LTFormHeader'><div class='LTTitle'>${allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
-					"<div id='LTFormContainer'><div>Source Panel<div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>" +
-					"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
+	static async initializeFancyTree() {
+		if (LTForm.content) {
+			let target = document.createElement("div");
+			target.id = "LTRemixer";
+			const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+			const isPro = document.getElementById("proHolder").innerText === 'true';
+			const groups = document.getElementById("groupHolder").innerText;
+			let allowed = isAdmin || (isPro && groups.includes('faculty'));
+			target.innerHTML =
+				"<div id='LTForm'>" +
+				`<div class='LTFormHeader'><div class='LTTitle'>${allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
+				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
+				"<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div></div>" +
+				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
 
-				LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
-				$("#LTLeft").fancytree({
-					source: LTForm.content,
-					debugLevel: 0,
-					autoScroll: true,
-					extensions: ["dnd5"],
-					lazyLoad: function (event, data) {
-						var dfd = new $.Deferred();
-						let node = data.node;
-						data.result = dfd.promise();
-						LTForm.getSubpages(node.data.url, false, false, true).then((result) => dfd.resolve(result));
-					},
-					dnd5: {
-						// autoExpandMS: 400,
-						// preventForeignNodes: true,
-						// preventNonNodes: true,
-						// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-						// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-						// scroll: true,
-						// scrollSpeed: 7,
-						// scrollSensitivity: 10,
+			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
+			$("#LTLeft").fancytree({
+				source: LTForm.content,
+				debugLevel: 0,
+				autoScroll: true,
+				extensions: ["dnd5"],
+				lazyLoad: function (event, data) {
+					var dfd = new $.Deferred();
+					let node = data.node;
+					data.result = dfd.promise();
+					LTForm.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+				},
+				dnd5: {
+					// autoExpandMS: 400,
+					// preventForeignNodes: true,
+					// preventNonNodes: true,
+					// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+					// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+					// scroll: true,
+					// scrollSpeed: 7,
+					// scrollSensitivity: 10,
 
-						// --- Drag-support:
+					// --- Drag-support:
 
-						dragStart: function (node, data) {
-							/* This function MUST be defined to enable dragging for the tree.
-							 *
-							 * Return false to cancel dragging of node.
-							 * data.dataTransfer.setData() and .setDragImage() is available
-							 * here.
-							 */
+					dragStart: function (node, data) {
+						/* This function MUST be defined to enable dragging for the tree.
+						 *
+						 * Return false to cancel dragging of node.
+						 * data.dataTransfer.setData() and .setDragImage() is available
+						 * here.
+						 */
 //					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
-							return true;
-						},
-						dragDrag: function (node, data) {
-							data.dataTransfer.dropEffect = "move";
-						},
-						dragEnd: function (node, data) {
-						},
-
-						// --- Drop-support:
-
-						dragEnter: function (node, data) {
-							// node.debug("dragEnter", data);
-							data.dataTransfer.dropEffect = "move";
-							// data.dataTransfer.effectAllowed = "copy";
-							return true;
-						},
-						dragOver: function (node, data) {
-							data.dataTransfer.dropEffect = "move";
-							// data.dataTransfer.effectAllowed = "copy";
-						},
-						dragLeave: function (node, data) {
-						},
+						return true;
 					},
-				});
-				$("#LTRight").fancytree({
-					source: [{
-						title: "Cover Page. Drag onto me to get started",
-						key: "ROOT",
-						url: "",
-						padded: "",
-						unselectable: true,
-						expanded: true,
-						children: [{
-							"expanded": true,
-							"key": "_9",
-							"lazy": false,
-							"title": "1: Chapter 1",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "01: Chapter 1"}
-						}, {
-							"expanded": true,
-							"key": "_10",
-							"lazy": false,
-							"title": "2: Chapter 2",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "02: Chapter 2"}
-						}, {
-							"expanded": true,
-							"key": "_11",
-							"lazy": false,
-							"title": "3: Chapter 3",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "03: Chapter 3"}
-						}, {
-							"expanded": true,
-							"key": "_12",
-							"lazy": false,
-							"title": "4: Chapter 4",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "04: Chapter 4"}
-						}, {
-							"expanded": true,
-							"key": "_13",
-							"lazy": false,
-							"title": "5: Chapter 5",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "05: Chapter 5"}
-						}, {
-							"expanded": true,
-							"key": "_14",
-							"lazy": false,
-							"title": "6: Chapter 6",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "06: Chapter 6"}
-						}, {
-							"expanded": true,
-							"key": "_15",
-							"lazy": false,
-							"title": "7: Chapter 7",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "07: Chapter 7"}
-						}, {
-							"expanded": true,
-							"key": "_16",
-							"lazy": false,
-							"title": "8: Chapter 8",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "08: Chapter 8"}
-						}, {
-							"expanded": true,
-							"key": "_17",
-							"lazy": false,
-							"title": "9: Chapter 9",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "09: Chapter 9"}
-						}, {
-							"expanded": true,
-							"key": "_18",
-							"lazy": false,
-							"title": "10: Chapter 10",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "10: Chapter 10"}
-						}, {
-							"expanded": true,
-							"key": "_19",
-							"lazy": false,
-							"title": "11: Chapter 11",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "11: Chapter 11"}
-						}, {
-							"expanded": true,
-							"key": "_20",
-							"lazy": false,
-							"title": "12: Chapter 12",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "12: Chapter 12"}
-						}, {
-							"expanded": true,
-							"key": "_21",
-							"lazy": false,
-							"title": "13: Chapter 13",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "13: Chapter 13"}
-						}, {
-							"expanded": true,
-							"key": "_22",
-							"lazy": false,
-							"title": "14: Chapter 14",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "14: Chapter 14"}
-						}, {
-							"expanded": true,
-							"key": "_23",
-							"lazy": false,
-							"title": "15: Chapter 15",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "15: Chapter 15"}
-						}, {
-							"expanded": true,
-							"key": "_24",
-							"lazy": false,
-							"title": "16: Chapter 16",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "16: Chapter 16"}
-						}, {
-							"expanded": true,
-							"key": "_25",
-							"lazy": false,
-							"title": "17: Chapter 17",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "17: Chapter 17"}
-						}, {
-							"expanded": true,
-							"key": "_26",
-							"lazy": false,
-							"title": "18: Chapter 18",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "18: Chapter 18"}
-						}, {
-							"expanded": true,
-							"key": "_27",
-							"lazy": false,
-							"title": "19: Chapter 19",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "19: Chapter 19"}
-						}, {
-							"expanded": true,
-							"key": "_28",
-							"lazy": false,
-							"title": "20: Chapter 20",
-							"tooltip": "Newly Created Page",
-							"data": {"padded": "20: Chapter 20"}
-						}]
-					}],
-					debugLevel: 0,
-					autoScroll: true,
-					extensions: ["dnd5", "edit"],
-					lazyLoad: function (event, data) {
-						var dfd = new $.Deferred();
-						let node = data.node;
-						data.result = dfd.promise();
-						LTForm.getSubpages(node.data.url).then((result) => dfd.resolve(result));
+					dragDrag: function (node, data) {
+						data.dataTransfer.dropEffect = "move";
 					},
-					tooltip: (event, data) => {
-						return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
+					dragEnd: function (node, data) {
 					},
-					edit: {
-						// Available options with their default:
-						adjustWidthOfs: 4,   // null: don't adjust input size to content
-						inputCss: {minWidth: "3em"},
-						triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
-						beforeEdit: function (event, data) {
-							return data.node.key !== "ROOT";
-						},
-						/*save: function (event, data) {
-							setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
-						},*/
-						close: function (event, data) {
-							LTForm.renumber();
-						}
-					},
-					dnd5: {
-						// autoExpandMS: 400,
-						// preventForeignNodes: true,
-						// preventNonNodes: true,
-						// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-						// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-						// scroll: true,
-						// scrollSpeed: 7,
-						// scrollSensitivity: 10,
 
-						// --- Drag-support:
+					// --- Drop-support:
 
-						dragStart: function (node, data) {
-							/* This function MUST be defined to enable dragging for the tree.
-							 *
-							 * Return false to cancel dragging of node.
-							 * data.dataTransfer.setData() and .setDragImage() is available
-							 * here.
-							 */
+					dragEnter: function (node, data) {
+						// node.debug("dragEnter", data);
+						data.dataTransfer.dropEffect = "move";
+						// data.dataTransfer.effectAllowed = "copy";
+						return true;
+					},
+					dragOver: function (node, data) {
+						data.dataTransfer.dropEffect = "move";
+						// data.dataTransfer.effectAllowed = "copy";
+					},
+					dragLeave: function (node, data) {
+					},
+				},
+			});
+			$("#LTRight").fancytree({
+				source: [{
+					title: "Cover Page. Drag onto me to get started",
+					key: "ROOT",
+					url: "",
+					padded: "",
+					unselectable: true,
+					expanded: true,
+					children: [{
+						"expanded": true,
+						"key": "_9",
+						"lazy": false,
+						"title": "1: Chapter 1",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "01: Chapter 1"}
+					}, {
+						"expanded": true,
+						"key": "_10",
+						"lazy": false,
+						"title": "2: Chapter 2",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "02: Chapter 2"}
+					}, {
+						"expanded": true,
+						"key": "_11",
+						"lazy": false,
+						"title": "3: Chapter 3",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "03: Chapter 3"}
+					}, {
+						"expanded": true,
+						"key": "_12",
+						"lazy": false,
+						"title": "4: Chapter 4",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "04: Chapter 4"}
+					}, {
+						"expanded": true,
+						"key": "_13",
+						"lazy": false,
+						"title": "5: Chapter 5",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "05: Chapter 5"}
+					}, {
+						"expanded": true,
+						"key": "_14",
+						"lazy": false,
+						"title": "6: Chapter 6",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "06: Chapter 6"}
+					}, {
+						"expanded": true,
+						"key": "_15",
+						"lazy": false,
+						"title": "7: Chapter 7",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "07: Chapter 7"}
+					}, {
+						"expanded": true,
+						"key": "_16",
+						"lazy": false,
+						"title": "8: Chapter 8",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "08: Chapter 8"}
+					}, {
+						"expanded": true,
+						"key": "_17",
+						"lazy": false,
+						"title": "9: Chapter 9",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "09: Chapter 9"}
+					}, {
+						"expanded": true,
+						"key": "_18",
+						"lazy": false,
+						"title": "10: Chapter 10",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "10: Chapter 10"}
+					}, {
+						"expanded": true,
+						"key": "_19",
+						"lazy": false,
+						"title": "11: Chapter 11",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "11: Chapter 11"}
+					}, {
+						"expanded": true,
+						"key": "_20",
+						"lazy": false,
+						"title": "12: Chapter 12",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "12: Chapter 12"}
+					}, {
+						"expanded": true,
+						"key": "_21",
+						"lazy": false,
+						"title": "13: Chapter 13",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "13: Chapter 13"}
+					}, {
+						"expanded": true,
+						"key": "_22",
+						"lazy": false,
+						"title": "14: Chapter 14",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "14: Chapter 14"}
+					}, {
+						"expanded": true,
+						"key": "_23",
+						"lazy": false,
+						"title": "15: Chapter 15",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "15: Chapter 15"}
+					}, {
+						"expanded": true,
+						"key": "_24",
+						"lazy": false,
+						"title": "16: Chapter 16",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "16: Chapter 16"}
+					}, {
+						"expanded": true,
+						"key": "_25",
+						"lazy": false,
+						"title": "17: Chapter 17",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "17: Chapter 17"}
+					}, {
+						"expanded": true,
+						"key": "_26",
+						"lazy": false,
+						"title": "18: Chapter 18",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "18: Chapter 18"}
+					}, {
+						"expanded": true,
+						"key": "_27",
+						"lazy": false,
+						"title": "19: Chapter 19",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "19: Chapter 19"}
+					}, {
+						"expanded": true,
+						"key": "_28",
+						"lazy": false,
+						"title": "20: Chapter 20",
+						"tooltip": "Newly Created Page",
+						"data": {"padded": "20: Chapter 20"}
+					}]
+				}],
+				debugLevel: 0,
+				autoScroll: true,
+				extensions: ["dnd5", "edit"],
+				lazyLoad: function (event, data) {
+					var dfd = new $.Deferred();
+					let node = data.node;
+					data.result = dfd.promise();
+					LTForm.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
+				},
+				tooltip: (event, data) => {
+					return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
+				},
+				edit: {
+					// Available options with their default:
+					adjustWidthOfs: 4,   // null: don't adjust input size to content
+					inputCss: {minWidth: "3em"},
+					triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
+					beforeEdit: function (event, data) {
+						return data.node.key !== "ROOT";
+					},
+					/*save: function (event, data) {
+						setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
+					},*/
+					close: function (event, data) {
+						LTForm.renumber();
+					}
+				},
+				dnd5: {
+					// autoExpandMS: 400,
+					// preventForeignNodes: true,
+					// preventNonNodes: true,
+					// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+					// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+					// scroll: true,
+					// scrollSpeed: 7,
+					// scrollSensitivity: 10,
+
+					// --- Drag-support:
+
+					dragStart: function (node, data) {
+						/* This function MUST be defined to enable dragging for the tree.
+						 *
+						 * Return false to cancel dragging of node.
+						 * data.dataTransfer.setData() and .setDragImage() is available
+						 * here.
+						 */
 //					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
-							return true;
-						},
-						dragDrag: function (node, data) {
-							data.dataTransfer.dropEffect = "move";
-						},
-						dragEnd: function (node, data) {
-						},
+						return true;
+					},
+					dragDrag: function (node, data) {
+						data.dataTransfer.dropEffect = "move";
+					},
+					dragEnd: function (node, data) {
+					},
 
-						// --- Drop-support:
+					// --- Drop-support:
 
-						dragEnter: function (node, data) {
-							// node.debug("dragEnter", data);
-							data.dataTransfer.dropEffect = "move";
-							data.dataTransfer.effectAllowed = "copy";
-							return true;
-						},
-						dragOver: function (node, data) {
-							data.dataTransfer.dropEffect = "move";
-							data.dataTransfer.effectAllowed = "copy";
-						},
-						dragLeave: function (node, data) {
-						},
-						dragDrop: async function (node, data) {
-							/* This function MUST be defined to enable dropping of items on
-							 * the tree.
-							 */
-							var transfer = data.dataTransfer;
+					dragEnter: function (node, data) {
+						// node.debug("dragEnter", data);
+						data.dataTransfer.dropEffect = "move";
+						data.dataTransfer.effectAllowed = "copy";
+						return true;
+					},
+					dragOver: function (node, data) {
+						data.dataTransfer.dropEffect = "move";
+						data.dataTransfer.effectAllowed = "copy";
+					},
+					dragLeave: function (node, data) {
+					},
+					dragDrop: async function (node, data) {
+						/* This function MUST be defined to enable dropping of items on
+						 * the tree.
+						 */
+						var transfer = data.dataTransfer;
 
-							if (data.otherNode) {
-								// Drop another Fancytree node from same frame
-								// (maybe from another tree however)
-								var sameTree = (data.otherNode.tree === data.tree);
-								if (node.getLevel() <= 1) {
-									data.hitMode = "over";
-								}
-								if (data.hitMode === "over") {
-									node.setExpanded(true);
-								}
-								await doTransfer();
+						if (data.otherNode) {
+							// Drop another Fancytree node from same frame
+							// (maybe from another tree however)
+							var sameTree = (data.otherNode.tree === data.tree);
+							if (node.getLevel() <= 1) {
+								data.hitMode = "over";
 							}
-							else if (data.otherNodeData) {
-								// Drop Fancytree node from different frame or window, so we only have
-								// JSON representation available
-								node.addChild(data.otherNodeData, data.hitMode);
+							if (data.hitMode === "over") {
+								node.setExpanded(true);
+							}
+							await doTransfer();
+						}
+						else if (data.otherNodeData) {
+							// Drop Fancytree node from different frame or window, so we only have
+							// JSON representation available
+							node.addChild(data.otherNodeData, data.hitMode);
+						}
+						else {
+							// Drop a non-node
+							node.addNode({
+								title: transfer.getData("text")
+							}, data.hitMode);
+						}
+						await LTForm.renumber();
+
+						async function doTransfer() {
+							if (sameTree) {
+								data.otherNode.moveTo(node, data.hitMode);
 							}
 							else {
-								// Drop a non-node
-								node.addNode({
-									title: transfer.getData("text")
-								}, data.hitMode);
-							}
-							await LTForm.renumber();
-
-							async function doTransfer() {
-								if (sameTree) {
-									data.otherNode.moveTo(node, data.hitMode);
-								}
-								else {
-									data.otherNode.copyTo(node, data.hitMode, function (n) {
-										n.title = n.title.replace(/<a.* ><\/a>/, "");
-										n.key = null; // make sure, a new key is generated
-									});
-									await data.otherNode.visitAndLoad();
-								}
+								data.otherNode.copyTo(node, data.hitMode, function (n) {
+									n.title = n.title.replace(/<a.* ><\/a>/, "");
+									n.key = null; // make sure, a new key is generated
+								});
+								await data.otherNode.visitAndLoad();
 							}
 						}
-					},
-				});
-				await LTForm.getInstitutions();
-			}
+					}
+				},
+			});
+			await LTForm.getInstitutions();
 		}
+	}
+
+	static getSelectOptions() {
+		let current = window.location.origin.split('/')[2].split('.')[0];
+		let libraries = {
+			'Biology': 'bio',
+			'Business': 'biz',
+			'Chemistry': 'chem',
+			'Engineering': 'eng',
+			'Geology': 'geo',
+			'Humanities': 'human',
+			'Mathematics': 'math',
+			'Medicine': 'med',
+			'Physics': 'phys',
+			'Social Sciences': 'socialsci',
+			'Statistics': 'stats',
+			'Workforce': 'careered'
+		};
+		let result = '';
+		Object.keys(libraries).map(function (key, index) {
+			result += `<option value="${libraries[key]}" ${current === libraries[key] ? 'selected' : ''}>${key}</option>`;
+		});
+		return result;
 	}
 
 	static async getInstitutions() {
@@ -2287,6 +2315,15 @@ wiki.page("${child.path}", NULL)</pre>
 		}
 	}
 
+	static async authenticatedFetch(path, api, subdomain) {
+		let current = window.location.origin.split('/')[2].split('.')[0];
+		let token = LTForm.keys[subdomain];
+		if (subdomain)
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+				current === subdomain ? {} : {headers: {'x-deki-token': token}});
+		else
+			console.error(`Invalid subdomain ${subdomain}`);
+	}
 }
 
 LTForm.initialize();
