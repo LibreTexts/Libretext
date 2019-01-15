@@ -1667,9 +1667,9 @@ class LTForm {
 			let root = LTRight.getNodeByKey("ROOT");
 			root.removeChildren();
 			root.addChildren(content);
+			await LTForm.renumber();
 			RightAlert.slideUp();
 			LTRight.enable(true);
-			root.setExpanded(true);
 		}
 	}
 
@@ -2265,8 +2265,7 @@ class LTForm {
 						content = `<p class="mt-script-comment">Cross Library Transclusion</p>
 
 <pre class="script">
-template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});
-template('TranscludeAutoNumTitle');</pre>`
+template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});`
 					}
 					else {
 						content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
