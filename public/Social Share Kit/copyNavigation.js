@@ -133,39 +133,47 @@
 				let contentReuse = await response.text();
 				if (contentReuse) {
 					contentReuse = decodeHTML(contentReuse);
-					contentReuse = contentReuse.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-					let matches = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+					contentReuse = contentReuse.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
+					let matches = contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 
 
 					if (matches && matches.length) {
 						let result = contentReuse;
 						do {
-							let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
+							// WAITING FOR ECMA 2018      let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
+							let path = matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="','');
+							//End compliance code
+
 							console.log(path);
 							let content = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`);
 							content = await content.text();
 							content = decodeHTML(content);
-							content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+
+							// WAITING FOR ECMA 2018      content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+							content = content.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
+							//End compliance code
+
 							result = result.replace(matches[0], content);
 
-							matches = result.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
+							matches = result.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 						} while (matches && matches.length);
 
 						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
 							method: "POST",
 							body: result,
 						});
+
+						let tags = await getTags(pageID);
+						await fetch(`/@api/deki/pages/${pageID}/tags`, {
+							method: "PUT",
+							body: tags,
+							headers: {"Content-Type": "text/xml; charset=utf-8"}
+						});
+						location.reload();
 					}
 					else {
 						alert("No content-reuse sections detected!");
 					}
-					let tags = await getTags(pageID);
-					await fetch(`/@api/deki/pages/${pageID}/tags`, {
-						method: "PUT",
-						body: tags,
-						headers: {"Content-Type": "text/xml; charset=utf-8"}
-					});
-					location.reload();
 				}
 			}
 		}
@@ -203,21 +211,6 @@
 					icon.classList.add("printHide");
 					icon.onclick = copyContent;
 					target.after(icon);
-				}
-			}
-		}
-	}
-
-	async function editorContentReuseLink() {
-		if (document.getElementById("eareaParent")) {
-			let contentReuse = CKEDITOR.instances.editarea.getData();
-			if (contentReuse) {
-				contentReuse = contentReuse.match(/(?=<div class="mt-contentreuse-widget")[\S\s]*?(?<=<\/div>)/g);
-				if (contentReuse && contentReuse.length) {
-					for (let i = 0; i < contentReuse.length; i++) {
-						let url = contentReuse[i].match(/(?<=data-page=")[^"]+/)[0];
-						console.log(url);
-					}
 				}
 			}
 		}
