@@ -65,8 +65,8 @@ async function handler(request, response) {
 
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
-				let response = await authenticatedFetch(input.path, input.api, input.username, input.subdomain);
-				response.write(JSON.stringify(response));
+				let requests = await authenticatedFetch(input.path, input.api, input.username, input.subdomain);
+				response.write(await requests.text());
 
 				response.end();
 			});

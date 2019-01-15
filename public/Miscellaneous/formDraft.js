@@ -1566,12 +1566,21 @@ class LTForm {
 	}
 
 	static async setSubdomain() {
-		let subdomain = document.getElementById('LTFormSubdomain').value;
-		LTForm.content = await this.getSubpages("", subdomain, false, true);
+		let select = document.getElementById('LTFormSubdomain');
+		let subdomain = select.value;
+		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
+		let LTLeft = $("#LTLeft").fancytree("getTree");
+		let LeftAlert = $("#LTLeftAlert");
 
-		let root = $("#LTLeft").fancytree("getTree").getRootNode();
+		LTLeft.enable(false);
+		LeftAlert.text(`Loading ${name}`);
+		LeftAlert.slideDown();
+		LTForm.content = await this.getSubpages("", subdomain, false, true);
+		let root = LTLeft.getRootNode();
 		root.removeChildren();
 		root.addChildren(LTForm.content);
+		LeftAlert.slideUp();
+		LTLeft.enable(true);
 	}
 
 	static setName() {
@@ -1597,13 +1606,18 @@ class LTForm {
 		return await subpageCallback(response);
 
 		async function subpageCallback(info) {
-			const subpageArray = info["page.subpage"].length ? info["page.subpage"] : [info["page.subpage"]];
+			let subpageArray = info["page.subpage"];
+			if (subpageArray) {
+				subpageArray = subpageArray.length ? info["page.subpage"] : [info["page.subpage"]];
+			}
 			const result = [];
 			const promiseArray = [];
 
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
+				url = url.replace('?title=','');
+				path = path.replace('?title=','');
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full)) { //recurse down
@@ -1652,13 +1666,15 @@ class LTForm {
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
 
 			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
-			$("#LTLeft").fancytree({
+			const LTLeft = $("#LTLeft");
+			const LTRight = $("#LTRight");
+			LTLeft.fancytree({
 				source: LTForm.content,
 				debugLevel: 0,
 				autoScroll: true,
 				extensions: ["dnd5"],
 				lazyLoad: function (event, data) {
-					var dfd = new $.Deferred();
+					const dfd = new $.Deferred();
 					let node = data.node;
 					data.result = dfd.promise();
 					LTForm.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
@@ -1707,7 +1723,7 @@ class LTForm {
 					},
 				},
 			});
-			$("#LTRight").fancytree({
+			LTRight.fancytree({
 				source: [{
 					title: "Cover Page. Drag onto me to get started",
 					key: "ROOT",
@@ -1861,7 +1877,7 @@ class LTForm {
 				autoScroll: true,
 				extensions: ["dnd5", "edit"],
 				lazyLoad: function (event, data) {
-					var dfd = new $.Deferred();
+					const dfd = new $.Deferred();
 					let node = data.node;
 					data.result = dfd.promise();
 					LTForm.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
@@ -1930,7 +1946,7 @@ class LTForm {
 						/* This function MUST be defined to enable dropping of items on
 						 * the tree.
 						 */
-						var transfer = data.dataTransfer;
+						const transfer = data.dataTransfer;
 
 						if (data.otherNode) {
 							// Drop another Fancytree node from same frame
@@ -1968,7 +1984,11 @@ class LTForm {
 								});
 								let LTRight = $("#LTRight").fancytree("getTree");
 								LTRight.enable(false);
+								const RightAlert = $("#LTRightAlert");
+								RightAlert.text('Importing content. Please wait...');
+								RightAlert.slideDown();
 								await data.otherNode.visitAndLoad();
+								RightAlert.slideUp();
 								LTRight.enable(true);
 							}
 						}
@@ -1976,6 +1996,11 @@ class LTForm {
 				},
 			});
 			await LTForm.getInstitutions();
+
+			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
+			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
+			$("#LTRightAlert,#LTLeftAlert").hide();
+
 		}
 	}
 
@@ -2053,6 +2078,10 @@ class LTForm {
 		}
 		// let subdomain = window.document.origin.split("/")[2].split(".")[0];
 		let LTRight = $("#LTRight").fancytree("getTree");
+		let RightAlert = $("#LTRightAlert");
+
+		RightAlert.text('Beginning Publication process');
+		RightAlert.slideDown();
 		LTRight.enable(false);
 		let tree = LTRight.toDict()[0];
 		tree.data = {url: url};
@@ -2062,13 +2091,17 @@ class LTForm {
 		results.innerText = "Processing";
 		console.log(tree);
 		let counter = 0;
+		let startedAt = new Date();
 		let failedCounter = 0;
 		let errorText = "";
 		const total = getTotal(tree.children);
 
 		await coverPage(tree);
 		await doCopy(destRoot, tree.children, 1);
-		results.innerHTML = `<div><div>${"Finished: " + counter + " pages completed" + (failedCounter ? "\\nFailed: " + failedCounter : "")}</div><a href="${destRoot}" target="_blank">Visit your new LibreText here</a></div>`;
+		const text = `${"Finished: " + counter + " pages completed" + (failedCounter ? "\\nFailed: " + failedCounter : "")}`;
+		results.innerHTML = `<div><div>${text}</div><a href="${destRoot}" target="_blank">Visit your new LibreText here</a></div>`;
+		RightAlert.text(text);
+		RightAlert.slideUp();
 		LTRight.enable(true);
 
 		function decodeHTML(content) {
@@ -2193,13 +2226,12 @@ class LTForm {
 						else {
 							content = await fetch('https://api.libretexts.org/endpoint/redirect', {
 								method: 'PUT',
-								body: {
+								body: JSON.stringify({
 									path: child.path,
 									api: 'contents?mode=raw',
 									username: document.getElementById("usernameHolder").innerText,
 									subdomain: child.data.subdomain,
-
-								}
+								})
 							})
 						}
 						content = await content.text();
@@ -2322,8 +2354,19 @@ wiki.page("${child.path}", NULL)</pre>
 											});*/
 					}
 				}
+
+
 				counter++;
-				results.innerText = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? "\nFailed: " + failedCounter : "");
+				var elapsed = (new Date() - startedAt)/1000;
+				var rate = counter/elapsed;
+				var estimated = total/rate;
+				var eta = estimated - elapsed;
+				var etah = secondsToStr(eta);
+				const text = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? "\nFailed: " + failedCounter : "");
+
+
+				results.innerText = `${text} ETA: ${etah}`;
+				RightAlert.text(text);
 				errors.innerText = errorText;
 				if (child.children) {
 					await doCopy(url, child.children, depth + 1);
@@ -2351,6 +2394,48 @@ wiki.page("${child.path}", NULL)</pre>
 		else
 			console.error(`Invalid subdomain ${subdomain}`);
 	}
+}
+
+function secondsToStr (seconds) {
+	return millisecondsToStr(seconds*1000);
+}
+
+// http://stackoverflow.com/a/8212878
+function millisecondsToStr (milliseconds) {
+	// TIP: to find current time in milliseconds, use:
+	// var  current_time_milliseconds = new Date().getTime();
+
+	function numberEnding (number) {
+		return (number > 1) ? 's' : '';
+	}
+
+	let temp = Math.floor(milliseconds / 1000);
+	const years = Math.floor(temp / 31536000);
+	if (years) {
+		return years + ' year' + numberEnding(years);
+	}
+	//TODO: Months! Maybe weeks?
+	const days = Math.floor((temp %= 31536000) / 86400);
+	if (days) {
+		return days + ' day' + numberEnding(days);
+	}
+	const hours = Math.floor((temp %= 86400) / 3600);
+	if (hours) {
+		return hours + ' hour' + numberEnding(hours);
+	}
+	const minutes = Math.floor((temp %= 3600) / 60);
+	if (minutes) {
+		return minutes + ' minute' + numberEnding(minutes);
+	}
+	const seconds = temp % 60;
+	if (seconds) {
+		return seconds + ' second' + numberEnding(seconds);
+	}
+	return 'less than a second'; //'just now' //or other string you like;
+}
+
+function formatNumber (it) {
+	return it.toPrecision(4);
 }
 
 LTForm.initialize();

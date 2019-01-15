@@ -209,8 +209,10 @@ figure {
 }
 
 #LTFormContainer .fancytree-container, #LTPreviewForm .fancytree-container {
-	width: 95%;
-	background: #f3f3f3
+	background: #f3f3f3;
+	border-radius: 10px;
+	overflow: auto;
+	flex: 1;
 }
 
 #LTLeft, #LTRight, #LTPreviewForm {
@@ -218,10 +220,20 @@ figure {
 	align-items: stretch;
 	height: 60vh;
 	max-width: 45vw;
-	overflow: auto;
+	overflow: hidden;
 	width: 100%;
 	background: #f3f3f3;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+#LTLeft {
+	border-radius: 0 0 10px 10px;
+}
+
+select#LTFormSubdomain {
+	border-radius: 10px 10px 0 0;
 }
 
 #LTFormFooter {
@@ -268,7 +280,21 @@ ul.ui-fancytree.fancytree-container.fancytree-plain.fancytree-ext-dnd5 {
 }
 
 div#LTPreviewForm {
-    max-width: unset;
-    margin: 10px;
-    width: auto;
+	max-width: unset;
+	margin: 10px;
+	width: auto;
+}
+
+div#LTLeftAlert, div#LTRightAlert {
+	height: 30px;
+	background-color: rgb(1, 211, 105);
+	width: inherit;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+select#LTFormSubdomain {
+	border-radius: 10px 10px 0 0;
 }
