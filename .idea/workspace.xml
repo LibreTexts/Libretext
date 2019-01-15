@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -16,49 +20,17 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1531">
-              <caret line="2225" column="30" lean-forward="true" selection-start-line="2225" selection-start-column="30" selection-end-line="2234" selection-end-column="30" />
-              <folding>
-                <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
-                <element signature="n#!!block;n#new#0;n#LTForm#0" />
-                <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
-                <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
-                <element signature="n#!!block;n#default#0;n#LTForm#0" />
-                <element signature="n#!!block;n#reset#0;n#LTForm#0" />
-                <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
-                <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
-                <element signature="n#!!block;n#debug#0;n#LTForm#0" />
-                <element signature="n#!!block;n#setName#0;n#LTForm#0" />
-                <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
-                <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
-                <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-                <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
-                <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
-                <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1757">
-              <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
+            <state relative-caret-position="297">
+              <caret line="137" column="48" selection-start-line="137" selection-start-column="48" selection-end-line="137" selection-end-column="48" />
               <folding>
                 <element signature="e#759#1745#0" />
+                <element signature="e#1776#2738#0" />
+                <element signature="e#2771#3564#0" />
+                <element signature="e#3592#4217#0" />
+                <element signature="e#4263#4838#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-377">
-              <caret line="234" column="22" selection-start-line="234" selection-start-column="22" selection-end-line="234" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -78,14 +50,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.org</find>
-      <find>miniland</find>
-      <find>\n}</find>
-      <find>\n.*\}</find>
-      <find>lazyload</find>
-      <find>bio</find>
-      <find>LTFormSubdomain</find>
-      <find>\}</find>
       <find>current</find>
       <find>initializefanc</find>
       <find>copycontent</find>
@@ -108,6 +72,14 @@
       <find>path</find>
       <find>?title</find>
       <find>endpoint</find>
+      <find>Root</find>
+      <find>split</find>
+      <find>getsubpages</find>
+      <find>setExpanded</find>
+      <find>copytransclude</find>
+      <find>LTForm.content</find>
+      <find>LTForm.content</find>
+      <find>copyTransclude</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -195,12 +167,12 @@
         <option value="$PROJECT_DIR$/API/import.js" />
         <option value="$PROJECT_DIR$/public/Jupyter/Jupyter.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/authenBrowser.json" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
       </list>
     </option>
   </component>
@@ -217,6 +189,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -247,41 +247,13 @@
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Social Share Kit" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Social Share Kit" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
+              <item name="TOC" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -804,13 +776,7 @@
       <workItem from="1547336618889" duration="6132000" />
       <workItem from="1547363017117" duration="7253000" />
       <workItem from="1547418153034" duration="305000" />
-    </task>
-    <task id="LOCAL-00058" summary="Implemented contact form">
-      <created>1536473830060</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1536473830061</updated>
+      <workItem from="1547530348138" duration="2411000" />
     </task>
     <task id="LOCAL-00059" summary="RequireJS compatibility fix">
       <created>1536888237153</created>
@@ -1148,7 +1114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547530147498</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="Color change">
+      <created>1547530400016</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1547530400017</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1184,7 +1157,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1001198000" />
+    <option name="totallyTimeSpent" value="1003609000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1193,7 +1166,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.17880794" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.18121614" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1310,7 +1283,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Import EPUB" />
     <MESSAGE value="Added import GUI" />
     <MESSAGE value="Import epub compatibility" />
     <MESSAGE value="Added Private Page handling" />
@@ -1335,7 +1307,8 @@
     <MESSAGE value="Initial Cross-Library Remixer" />
     <MESSAGE value="Forker compatibility Mozilla" />
     <MESSAGE value="Remixer Cross-Library" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remixer Cross-Library" />
+    <MESSAGE value="Color change" />
+    <option name="LAST_COMMIT_MESSAGE" value="Color change" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1580,17 +1553,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/authen.json" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="1582" lean-forward="true" selection-start-line="1582" selection-end-line="1582" />
-          <folding>
-            <element signature="n#!!block;n#new#0;n#LTForm#0" />
-            <element signature="e#1244#32215#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
@@ -1657,29 +1619,34 @@
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-377">
-          <caret line="234" column="22" selection-start-line="234" selection-start-column="22" selection-end-line="234" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1757">
-          <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
+        <state relative-caret-position="2246">
+          <caret line="1971" lean-forward="true" selection-start-line="1971" selection-end-line="1971" />
           <folding>
-            <element signature="e#759#1745#0" />
+            <element signature="n#!!block;n#new#0;n#LTForm#0" />
+            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+            <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
+            <element signature="n#!!block;n#default#0;n#LTForm#0" />
+            <element signature="e#1244#32215#0" />
+            <element signature="n#!!block;n#reset#0;n#LTForm#0" />
+            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
+            <element signature="e#37825#39534#0" />
+            <element signature="e#39565#47450#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1531">
-          <caret line="2225" column="30" lean-forward="true" selection-start-line="2225" selection-start-column="30" selection-end-line="2234" selection-end-column="30" />
+        <state relative-caret-position="943">
+          <caret line="1653" column="30" lean-forward="true" selection-start-line="1653" selection-start-column="30" selection-end-line="1653" selection-end-column="30" />
           <folding>
-            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
             <element signature="n#!!block;n#new#0;n#LTForm#0" />
             <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
             <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
@@ -1688,13 +1655,40 @@
             <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
             <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
             <element signature="n#!!block;n#debug#0;n#LTForm#0" />
-            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setSubdomain#0;n#LTForm#0" />
             <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getSubpages#0;n#LTForm#0" />
+            <element signature="e#38557#40254#0" />
+            <element signature="e#40278#48221#0" />
+            <element signature="e#40293#44238#0" />
             <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
             <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
             <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="294" column="26" selection-start-line="294" selection-start-column="26" selection-end-line="294" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="137" column="48" selection-start-line="137" selection-start-column="48" selection-end-line="137" selection-end-column="48" />
+          <folding>
+            <element signature="e#759#1745#0" />
+            <element signature="e#1776#2738#0" />
+            <element signature="e#2771#3564#0" />
+            <element signature="e#3592#4217#0" />
+            <element signature="e#4263#4838#0" />
           </folding>
         </state>
       </provider>

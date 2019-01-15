@@ -1589,7 +1589,6 @@ class LTForm {
 		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
 	}
 
-
 	static getDepth(tree) {
 		let depth = 0;
 		while (tree && tree.children) {
@@ -1616,8 +1615,8 @@ class LTForm {
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
-				url = url.replace('?title=','');
-				path = path.replace('?title=','');
+				url = url.replace('?title=', '');
+				path = path.replace('?title=', '');
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full)) { //recurse down
@@ -1647,6 +1646,30 @@ class LTForm {
 			else {
 				return [];
 			}
+		}
+	}
+
+	static async copyTransclude() {
+		let LTRight = $("#LTRight").fancytree("getTree");
+		let RightAlert = $("#LTRightAlert");
+		let url = window.location.href;
+
+		if (url.includes('?url=')) {
+			url = decodeURIComponent(url);
+			url = url.split('url=')[1];
+			let subdomain = url.split('/')[2].split('.')[0];
+			let path = url.split('/').splice(3).join('/');
+
+			LTRight.enable(false);
+			RightAlert.text(`Loading Copy-Transclude`);
+			RightAlert.slideDown();
+			let content = await this.getSubpages(path, subdomain);
+			let root = LTRight.getNodeByKey("ROOT");
+			root.removeChildren();
+			root.addChildren(content);
+			RightAlert.slideUp();
+			LTRight.enable(true);
+			root.setExpanded(true);
 		}
 	}
 
@@ -2000,7 +2023,7 @@ class LTForm {
 			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 			$("#LTRightAlert,#LTLeftAlert").hide();
-
+			await LTForm.copyTransclude();
 		}
 	}
 
@@ -2357,9 +2380,9 @@ wiki.page("${child.path}", NULL)</pre>
 
 
 				counter++;
-				var elapsed = (new Date() - startedAt)/1000;
-				var rate = counter/elapsed;
-				var estimated = total/rate;
+				var elapsed = (new Date() - startedAt) / 1000;
+				var rate = counter / elapsed;
+				var estimated = total / rate;
 				var eta = estimated - elapsed;
 				var etah = secondsToStr(eta);
 				const text = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? "\nFailed: " + failedCounter : "");
@@ -2396,16 +2419,16 @@ wiki.page("${child.path}", NULL)</pre>
 	}
 }
 
-function secondsToStr (seconds) {
-	return millisecondsToStr(seconds*1000);
+function secondsToStr(seconds) {
+	return millisecondsToStr(seconds * 1000);
 }
 
 // http://stackoverflow.com/a/8212878
-function millisecondsToStr (milliseconds) {
+function millisecondsToStr(milliseconds) {
 	// TIP: to find current time in milliseconds, use:
 	// var  current_time_milliseconds = new Date().getTime();
 
-	function numberEnding (number) {
+	function numberEnding(number) {
 		return (number > 1) ? 's' : '';
 	}
 
@@ -2434,7 +2457,7 @@ function millisecondsToStr (milliseconds) {
 	return 'less than a second'; //'just now' //or other string you like;
 }
 
-function formatNumber (it) {
+function formatNumber(it) {
 	return it.toPrecision(4);
 }
 
