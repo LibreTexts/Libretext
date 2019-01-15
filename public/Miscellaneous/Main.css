@@ -287,7 +287,7 @@ div#LTPreviewForm {
 
 div#LTLeftAlert, div#LTRightAlert {
 	height: 30px;
-	background-color: rgb(1, 211, 105);
+	background-color: rgba(18, 122, 196, 0.61);
 	width: inherit;
 	z-index: 1;
 	display: flex;

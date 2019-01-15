@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" afterDir="false" />
-    </list>
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -21,10 +15,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1531">
+              <caret line="2225" column="30" lean-forward="true" selection-start-line="2225" selection-start-column="30" selection-end-line="2234" selection-end-column="30" />
+              <folding>
+                <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
+                <element signature="n#!!block;n#new#0;n#LTForm#0" />
+                <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+                <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
+                <element signature="n#!!block;n#default#0;n#LTForm#0" />
+                <element signature="n#!!block;n#reset#0;n#LTForm#0" />
+                <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+                <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
+                <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+                <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
+                <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
+            <state relative-caret-position="-1757">
               <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
               <folding>
                 <element signature="e#759#1745#0" />
@@ -33,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
+            <state relative-caret-position="-377">
               <caret line="234" column="22" selection-start-line="234" selection-start-column="22" selection-end-line="234" selection-end-column="22" />
             </state>
           </provider>
@@ -184,9 +205,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-12" />
+    <option name="width" value="1302" />
+    <option name="height" value="1392" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -784,13 +805,6 @@
       <workItem from="1547363017117" duration="7253000" />
       <workItem from="1547418153034" duration="305000" />
     </task>
-    <task id="LOCAL-00057" summary="Initial Recaptcha">
-      <created>1536218012824</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1536218012825</updated>
-    </task>
     <task id="LOCAL-00058" summary="Implemented contact form">
       <created>1536473830060</created>
       <option name="number" value="00058" />
@@ -1127,7 +1141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547521052203</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="Remixer Cross-Library">
+      <created>1547530147498</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1547530147498</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1163,7 +1184,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1000969000" />
+    <option name="totallyTimeSpent" value="1001198000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1289,7 +1310,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Implemented Propagator" />
     <MESSAGE value="Import EPUB" />
     <MESSAGE value="Added import GUI" />
     <MESSAGE value="Import epub compatibility" />
@@ -1314,7 +1334,8 @@
     <MESSAGE value="Bugfixs R and copyTransclude" />
     <MESSAGE value="Initial Cross-Library Remixer" />
     <MESSAGE value="Forker compatibility Mozilla" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forker compatibility Mozilla" />
+    <MESSAGE value="Remixer Cross-Library" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remixer Cross-Library" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1615,33 +1636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="2225" column="30" lean-forward="true" selection-start-line="2225" selection-start-column="30" selection-end-line="2234" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
-            <element signature="n#!!block;n#new#0;n#LTForm#0" />
-            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
-            <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
-            <element signature="n#!!block;n#default#0;n#LTForm#0" />
-            <element signature="n#!!block;n#reset#0;n#LTForm#0" />
-            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
-            <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
-            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
-            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
-            <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
-            <element signature="e#38075#39770#0" />
-            <element signature="e#39800#47568#0" />
-            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
-            <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
-            <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1909">
@@ -1663,9 +1657,16 @@
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-377">
+          <caret line="234" column="22" selection-start-line="234" selection-start-column="22" selection-end-line="234" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
+        <state relative-caret-position="-1757">
           <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
           <folding>
             <element signature="e#759#1745#0" />
@@ -1673,10 +1674,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="234" column="22" selection-start-line="234" selection-start-column="22" selection-end-line="234" selection-end-column="22" />
+        <state relative-caret-position="-1531">
+          <caret line="2225" column="30" lean-forward="true" selection-start-line="2225" selection-start-column="30" selection-end-line="2234" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
+            <element signature="n#!!block;n#new#0;n#LTForm#0" />
+            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+            <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
+            <element signature="n#!!block;n#default#0;n#LTForm#0" />
+            <element signature="n#!!block;n#reset#0;n#LTForm#0" />
+            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#processNode#0;n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#coverPage#0;n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getTotal#0;n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
+          </folding>
         </state>
       </provider>
     </entry>
