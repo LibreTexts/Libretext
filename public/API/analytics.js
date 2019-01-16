@@ -109,6 +109,14 @@ if (!window["analytics.js"]) {
 					report('read', null, {result: {'percent': data.eventLabel}})
 				}
 			});
+
+			$('dl > dt').click(function () {
+				report('answerReveal', null, {result: {'answer': this.innerText}})
+			});
+
+			$('a.mt-related-listing-link').click(function () {
+				report('recommendedTo', null, {result: {'recommendation': this.href}})
+			})
 		}
 
 		function report(verb, object, extra) {

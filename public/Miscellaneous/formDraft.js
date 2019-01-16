@@ -2090,15 +2090,27 @@ class LTForm {
 			return false;
 		}
 		let name = document.getElementById("LTFormName").value;
-		if (institution.value === 'Remixer University') {
-			institution.value += `/Username: ${document.getElementById("usernameHolder").innerText}`
+		let college = institution.value;
+		if (college.includes('Remixer_University')) {
+			college += `/Username:_${document.getElementById("usernameHolder").innerText}`;
+			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/contents?edittime=now", {
+				method: "POST",
+				body: "<p>{{template.ShowCategory()}}</p>"
+			});
+			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/tags", {
+				method: "PUT",
+				body: '<tags><tag value="article:topic-category"/></tags>',
+				headers: {"Content-Type": "text/xml; charset=utf-8"}
+			});
 		}
-		let url = `${institution.value}/${name.replace(/ /g, "_")}`;
+		let url = `${college}/${name.replace(/ /g, "_")}`;
 		if (!name) {
 			alert("No name provided!");
 			return false
 		}
-		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${institution.value.replace(window.location.origin, "")}/${name}`))}/info`);
+		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}/${name}`))}/info`,{
+			method: 'HEAD'
+		});
 		if (response.ok) {
 			alert(`The page ${url} already exists!`);
 			return false;
