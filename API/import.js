@@ -109,7 +109,7 @@ function handler(request, response) {
 			checkURL = await fetch(url, {
 				method: 'HEAD'
 			});
-			isEpub = checkURL.headers.get('content-type') === 'application/epub+zip';
+			isEpub = checkURL.headers.get('content-type').includes('application/epub+zip');
 			if (!checkURL.ok || !isEpub) {
 				reportMessage('This source is not valid, please check your URL', true);
 				response.end();
@@ -172,8 +172,8 @@ function handler(request, response) {
 				}
 			}
 
-			let root = 'https://chem.libretexts.org/Under_Construction/Users/Henry/dev/' + title;
-			let subroot = 'Under_Construction/Users/Henry/dev/' + title;
+			let root = `https://${subdomain}.libretexts.org/Remixer_University/Importer/${title}`;
+			let subroot = `/Remixer_University/Importer/${title}`;
 			const isSimple = !filtered.length || !filteredChapters.length;
 			if (await coverPage(subroot, isSimple)) {
 				if (isSimple) { //falling back to simple import

@@ -192,6 +192,7 @@ if (!window["analytics.js"]) {
 				let timestamp = new Date();
 				let result = {
 					page: window.location.href,
+					id: document.getElementById('pageIDHolder').innerText,
 					timestamp: timestamp.toUTCString(),
 					pageSession: sessionID,
 					timeMe: TimeMe.getTimeOnCurrentPageInSeconds()

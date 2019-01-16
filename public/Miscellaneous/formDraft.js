@@ -1567,6 +1567,7 @@ class LTForm {
 	static async setSubdomain() {
 		let select = document.getElementById('LTFormSubdomain');
 		let subdomain = select.value;
+		this.subdomain = subdomain;
 		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
 		let LTLeft = $("#LTLeft").fancytree("getTree");
 		let LeftAlert = $("#LTLeftAlert");
@@ -1578,6 +1579,13 @@ class LTForm {
 		let root = LTLeft.getRootNode();
 		root.removeChildren();
 		root.addChildren(LTForm.content);
+
+		for (let i = 0; i < root.children.length; i++) {
+			let node = root.children[i];
+			node.icon = `https://static.libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+			node.renderTitle();
+		}
+
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
 	}
@@ -1744,6 +1752,11 @@ class LTForm {
 					dragLeave: function (node, data) {
 					},
 				},
+				icon: function (event, data) {
+					let subdomain = window.location.origin.split("/")[2].split(".")[0];
+					if ((!LTForm.subdomain || LTForm.subdomain === subdomain) && data.node.getLevel() === 1)
+						return `https://static.libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+				}
 			});
 			LTRight.fancytree({
 				source: [{
@@ -2040,7 +2053,7 @@ class LTForm {
 			'Physics': 'phys',
 			'Social Sciences': 'socialsci',
 			'Statistics': 'stats',
-			'Workforce': 'careered'
+			'Workforce': 'workforce'
 		};
 		let result = '';
 		Object.keys(libraries).map(function (key, index) {
@@ -2058,7 +2071,7 @@ class LTForm {
 			response = await fetch("/@api/deki/pages/=Course_LibreTexts/subpages?dream.out.format=json");
 		}
 		response = await response.json();
-		const subpageArray = response["page.subpage"];
+		const subpageArray = response["page.subpage"] || [];
 		const result = [];
 		for (let i = 0; i < subpageArray.length; i++) {
 			let institution = subpageArray[i];
@@ -2077,6 +2090,9 @@ class LTForm {
 			return false;
 		}
 		let name = document.getElementById("LTFormName").value;
+		if (institution.value === 'Remixer University') {
+			institution.value += `/Username: ${document.getElementById("usernameHolder").innerText}`
+		}
 		let url = `${institution.value}/${name.replace(/ /g, "_")}`;
 		if (!name) {
 			alert("No name provided!");
@@ -2098,7 +2114,7 @@ class LTForm {
 			alert("This feature is not available in Demonstration Mode.");
 			return false;
 		}
-		// let subdomain = window.document.origin.split("/")[2].split(".")[0];
+		// let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let LTRight = $("#LTRight").fancytree("getTree");
 		let RightAlert = $("#LTRightAlert");
 
@@ -2363,13 +2379,18 @@ wiki.page("${child.path}", NULL)</pre>
 							}
 
 							//Thumbnail
-							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/=mindtouch.page%2523thumbnail").then(async (response) => {
+							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/").then(async (response) => {
 								if (response.ok) {
-									let image = await response.blob();
-									fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/=mindtouch.page%2523thumbnail", {
-										method: "PUT",
-										body: image
-									}).then();
+									let files = await response.text();
+									if (files.includes('mindtouch.page#thumbnail')) {
+										let image = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/=mindtouch.page%2523thumbnail");
+
+										image = await image.blob();
+										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
+											method: "PUT",
+											body: image
+										}).then();
+									}
 								}
 							});
 					}

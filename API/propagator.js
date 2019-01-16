@@ -46,7 +46,7 @@ function handler(request, response) {
 					let path = url.split("/").slice(3).join("/");
 					let {content, tags, properties} = await getContent();
 
-					let otherArray = ["bio", "biz", "careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+					let otherArray = ["bio", "biz", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats","workforce"];
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
 
 					//Propagatate

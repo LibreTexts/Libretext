@@ -17,8 +17,8 @@ if (!window["importer"]) {
 		});
 		errorText = "";
 		errorField.innerText = errorText;
-		let isHenry = document.getElementById("userEmailHolder").textContent === 'hdagnew@ucdavis.edu';
-		request.open('POST', isHenry ? 'https://home.miniland1333.com/import' : 'https://api.libretexts.org/import', true);
+		let isTestEnviroment = document.getElementById("userEmailHolder").textContent === 'hdagnew@ucdavis.edu';
+		request.open('POST', isTestEnviroment ? 'https://computer.miniland1333.com/import' : 'https://api.libretexts.org/import', true);
 		request.addEventListener("progress", receive);
 		// request.addEventListener("load", receive);
 		request.send(requestJSON);
