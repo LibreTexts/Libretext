@@ -87,9 +87,12 @@ function handler(request, response) {
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "PUT"
+				"Access-Control-Allow-Methods": "PUT, GET"
 			});
 			response.end();
+		}
+		else if (request.method ==="GET" && url.endsWith(`?key=${secure.key}`)){
+			secureAccess().then();
 		}
 		else if (request.method === "PUT") {
 			let body = [];
@@ -99,35 +102,7 @@ function handler(request, response) {
 				body = Buffer.concat(body).toString();
 				if (secure.key === body) {
 					//get past_answer
-
-					const connection = mysql.createConnection(secure.mysql);
-					connection.connect();
-					connection.query = util.promisify(connection.query);
-					let SQLresult = await connection.query('SELECT * FROM `Chem2BH_past_answer` ');
-					let result = '';
-					for (let i = 0; i < SQLresult.length; i++) {
-						result += JSON.stringify({
-							course_id: SQLresult[i].course_id,
-							user_id: SQLresult[i].user_id,
-							set_id: SQLresult[i].set_id,
-							problem_id: SQLresult[i].problem_id,
-							answer_id: SQLresult[i].answer_id,
-							answer_string: SQLresult[i].answer_string,
-							scores: SQLresult[i].scores,
-							comment_string: SQLresult[i].comment_string,
-							timestamp: SQLresult[i].timestamp,
-							source_file: SQLresult[i].source_file,
-						}) + '\n';
-					}
-					await fs.writeFile(`./analyticsData/webwork.txt`, result);
-					connection.end();
-
-					zipLocal.sync.zip('./analyticsData').compress().save('./secureAccess.zip');
-
-					staticFileServer.serveFile('../secureAccess.zip', 200, request.headers.host.includes(".miniland1333.com") ? {
-						"Access-Control-Allow-Origin": request.headers.origin || null,
-						"Access-Control-Allow-Methods": "PUT"
-					} : {}, request, response);
+					await secureAccess();
 				}
 				else {
 					responseError('Incorrect key', 403)
@@ -145,4 +120,37 @@ function handler(request, response) {
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
 	}
+
+
+	async function secureAccess() {
+		const connection = mysql.createConnection(secure.mysql);
+		connection.connect();
+		connection.query = util.promisify(connection.query);
+		let SQLresult = await connection.query('SELECT * FROM `Chem2BH_past_answer` ');
+		let result = '';
+		for (let i = 0; i < SQLresult.length; i++) {
+			result += JSON.stringify({
+				course_id: SQLresult[i].course_id,
+				user_id: SQLresult[i].user_id,
+				set_id: SQLresult[i].set_id,
+				problem_id: SQLresult[i].problem_id,
+				answer_id: SQLresult[i].answer_id,
+				answer_string: SQLresult[i].answer_string,
+				scores: SQLresult[i].scores,
+				comment_string: SQLresult[i].comment_string,
+				timestamp: SQLresult[i].timestamp,
+				source_file: SQLresult[i].source_file,
+			}) + '\n';
+		}
+		await fs.writeFile(`./analyticsData/webwork.txt`, result);
+		connection.end();
+
+		zipLocal.sync.zip('./analyticsData').compress().save('./secureAccess.zip');
+
+		staticFileServer.serveFile('../secureAccess.zip', 200, request.headers.host.includes(".miniland1333.com") ? {
+			"Access-Control-Allow-Origin": request.headers.origin || null,
+			"Access-Control-Allow-Methods": "PUT"
+		} : {}, request, response);
+	}
+
 }

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Begin username fix">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/analytics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,61 +20,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
+        <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="2055" column="22" selection-start-line="2055" selection-start-column="13" selection-end-line="2055" selection-end-column="22" />
-              <folding>
-                <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
-                <element signature="n#!!block;n#new#0;n#LTForm#0" />
-                <element signature="n#!!block;n#default#0;n#LTForm#0" />
-                <element signature="n#!!block;n#reset#0;n#LTForm#0" />
-                <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
-                <element signature="n#!!block;n#debug#0;n#LTForm#0" />
-                <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
-                <element signature="n#!!block;n#copyTransclude#0;n#LTForm#0" />
-                <element signature="e#39641#40950#0" />
-                <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
-              </folding>
+            <state relative-caret-position="466">
+              <caret line="117" column="30" selection-start-line="117" selection-start-column="30" selection-end-line="117" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+        <entry file="file://$PROJECT_DIR$/API/analytics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="38" column="50" lean-forward="true" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-              <folding>
-                <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/propagator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="771">
-              <caret line="48" column="138" selection-start-line="48" selection-start-column="138" selection-end-line="48" selection-end-column="138" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="78" lean-forward="true" selection-start-line="11" selection-start-column="78" selection-end-line="11" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/authen.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="42" column="23" lean-forward="true" selection-start-line="42" selection-start-column="23" selection-end-line="42" selection-end-column="23" />
+            <state relative-caret-position="275">
+              <caret line="96" column="44" lean-forward="true" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -101,7 +52,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>action</find>
       <find>this.count</find>
       <find>path</find>
       <find>?title</find>
@@ -131,6 +81,7 @@
       <find>careered</find>
       <find>career</find>
       <find>workforce</find>
+      <find>institution.value</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -205,7 +156,6 @@
         <option value="$PROJECT_DIR$/Kubeconfig/loadbalancer.yaml" />
         <option value="$PROJECT_DIR$/Kubeconfig/print-manifest.yaml" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
-        <option value="$PROJECT_DIR$/API/analytics.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" />
         <option value="$PROJECT_DIR$/API/secure.json" />
@@ -219,11 +169,12 @@
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/API/import.js" />
         <option value="$PROJECT_DIR$/public/API/import.js" />
-        <option value="$PROJECT_DIR$/public/API/analytics.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/API/authenBrowser.json" />
         <option value="$PROJECT_DIR$/API/authen.json" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
+        <option value="$PROJECT_DIR$/public/API/analytics.js" />
+        <option value="$PROJECT_DIR$/API/analytics.js" />
       </list>
     </option>
   </component>
@@ -240,34 +191,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -297,12 +220,6 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="epubs" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -310,6 +227,40 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -837,21 +788,8 @@
       <workItem from="1547536187687" duration="35000" />
       <workItem from="1547593534071" duration="1377000" />
       <workItem from="1547612641531" duration="684000" />
-      <workItem from="1547614669789" duration="5880000" />
-    </task>
-    <task id="LOCAL-00060" summary="initial TOC">
-      <created>1537232666869</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1537232666870</updated>
-    </task>
-    <task id="LOCAL-00061" summary="needs lazyloading">
-      <created>1537245053653</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1537245053654</updated>
+      <workItem from="1547614669789" duration="8071000" />
+      <workItem from="1547623557370" duration="321000" />
     </task>
     <task id="LOCAL-00062" summary="Disabled Lazyloading for now">
       <created>1537248501455</created>
@@ -1182,7 +1120,21 @@
       <option name="project" value="LOCAL" />
       <updated>1547532775677</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="Remixer Thumbnails">
+      <created>1547621046179</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1547621046180</updated>
+    </task>
+    <task id="LOCAL-00110" summary="Analytics recommended and answerReveal tracking">
+      <created>1547623161873</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1547623161873</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1218,7 +1170,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1015101000" />
+    <option name="totallyTimeSpent" value="1017613000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1227,7 +1179,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.13365443" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.19325708" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.324" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1238,10 +1190,10 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32666665" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.224" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.224" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" visible="true" weight="0.21733333" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.21733333" />
       <window_info anchor="bottom" id="REST Client" order="14" weight="0.47733334" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1249,7 +1201,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.38170823" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.3112583" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.3112583" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1344,8 +1296,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Import epub compatibility" />
-    <MESSAGE value="Added Private Page handling" />
     <MESSAGE value="Bugfix checkTime" />
     <MESSAGE value="Added Prive test" />
     <MESSAGE value="Added basic health check" />
@@ -1369,7 +1319,9 @@
     <MESSAGE value="Remixer Cross-Library" />
     <MESSAGE value="Color change" />
     <MESSAGE value="crossTransclude in Remixer" />
-    <option name="LAST_COMMIT_MESSAGE" value="crossTransclude in Remixer" />
+    <MESSAGE value="Remixer Thumbnails" />
+    <MESSAGE value="Analytics recommended and answerReveal tracking" />
+    <option name="LAST_COMMIT_MESSAGE" value="Analytics recommended and answerReveal tracking" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1554,13 +1506,6 @@
     <entry file="file://$PROJECT_DIR$/public/Jupyter/lib/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Jupyter/Jupyter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1609,29 +1554,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/social-share-kit.css">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2246">
-          <caret line="1971" lean-forward="true" selection-start-line="1971" selection-end-line="1971" />
-          <folding>
-            <element signature="n#!!block;n#new#0;n#LTForm#0" />
-            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
-            <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
-            <element signature="n#!!block;n#default#0;n#LTForm#0" />
-            <element signature="e#1244#32215#0" />
-            <element signature="n#!!block;n#reset#0;n#LTForm#0" />
-            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
-            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
-            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
-            <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
-            <element signature="e#37825#39534#0" />
-            <element signature="e#39565#47450#0" />
-            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -1683,13 +1605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="194" column="74" selection-start-line="194" selection-start-column="74" selection-end-line="194" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/timetrack.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1704,6 +1619,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="78" lean-forward="true" selection-start-line="11" selection-start-column="78" selection-end-line="11" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/API/propagator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="771">
@@ -1711,10 +1633,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="38" column="50" lean-forward="true" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
+          <folding>
+            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="1971" lean-forward="true" selection-start-line="1971" selection-end-line="1971" />
+          <folding>
+            <element signature="n#!!block;n#new#0;n#LTForm#0" />
+            <element signature="n#!!block;n#mergeUp#0;n#LTForm#0" />
+            <element signature="n#!!block;n#delAll#0;n#LTForm#0" />
+            <element signature="n#!!block;n#default#0;n#LTForm#0" />
+            <element signature="e#1244#32215#0" />
+            <element signature="n#!!block;n#reset#0;n#LTForm#0" />
+            <element signature="n#!!block;n#renumber#0;n#LTForm#0" />
+            <element signature="n#!!block;n#debug#0;n#LTForm#0" />
+            <element signature="n#!!block;n#setName#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getDepth#0;n#LTForm#0" />
+            <element signature="e#37825#39534#0" />
+            <element signature="e#39565#47450#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="2055" column="22" selection-start-line="2055" selection-start-column="13" selection-end-line="2055" selection-end-column="22" />
+        <state relative-caret-position="334">
+          <caret line="2111" column="25" selection-start-line="2111" selection-start-column="25" selection-end-line="2111" selection-end-column="25" />
           <folding>
             <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
             <element signature="n#!!block;n#new#0;n#LTForm#0" />
@@ -1724,26 +1679,22 @@
             <element signature="n#!!block;n#debug#0;n#LTForm#0" />
             <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0;n#LTForm#0" />
             <element signature="n#!!block;n#copyTransclude#0;n#LTForm#0" />
-            <element signature="e#39641#40950#0" />
             <element signature="n#!!block;n#putProperty#0;n#!!block;n#doCopy#0;n#!!block;n#publish#0;n#LTForm#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="78" lean-forward="true" selection-start-line="11" selection-start-column="78" selection-end-line="11" selection-end-column="78" />
+        <state relative-caret-position="466">
+          <caret line="117" column="30" selection-start-line="117" selection-start-column="30" selection-end-line="117" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+    <entry file="file://$PROJECT_DIR$/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="38" column="50" lean-forward="true" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-          <folding>
-            <element signature="n#!!block;n#responseError#0;n#!!block;n#handler#0" />
-          </folding>
+        <state relative-caret-position="275">
+          <caret line="96" column="44" lean-forward="true" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
         </state>
       </provider>
     </entry>

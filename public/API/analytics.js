@@ -110,10 +110,12 @@ if (!window["analytics.js"]) {
 				}
 			});
 
+			//Answer Reveal
 			$('dl > dt').click(function () {
 				report('answerReveal', null, {result: {'answer': this.innerText}})
 			});
 
+			//Recommended Link
 			$('a.mt-related-listing-link').click(function () {
 				report('recommendedTo', null, {result: {'recommendation': this.href}})
 			})
