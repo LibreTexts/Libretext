@@ -43,7 +43,7 @@ async function handler(request, response) {
 			responseError(request.method + " Not Acceptable", 406)
 		}
 	}
-	else if (url.startsWith("/redirect")) {
+	else if (url.startsWith("/contents")) {
 		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -65,7 +65,7 @@ async function handler(request, response) {
 
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
-				let requests = await authenticatedFetch(input.path, input.api, input.username, input.subdomain);
+				let requests = await authenticatedFetch(input.path, 'contents?mode=raw', 'Remixer', input.subdomain);
 				response.write(await requests.text());
 
 				response.end();

@@ -1,7 +1,6 @@
 class LTForm {
 	static async initialize() {
 		this.formScript = document.currentScript;
-
 		let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
 		LTForm.keys = await keys.json();
 
@@ -2247,12 +2246,11 @@ class LTForm {
 							content = await LTForm.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain);
 						}
 						else {
-							content = await fetch('https://api.libretexts.org/endpoint/redirect', {
+							content = await fetch('https://api.libretexts.org/endpoint/contents', {
 								method: 'PUT',
 								body: JSON.stringify({
 									path: child.path,
 									api: 'contents?mode=raw',
-									username: document.getElementById("usernameHolder").innerText,
 									subdomain: child.data.subdomain,
 								})
 							})
@@ -2364,16 +2362,16 @@ wiki.page("${child.path}", NULL)</pre>
 								}).then();
 							}
 
-						/*					//Thumbnail
-											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/mindtouch.page%2523thumbnail").then(async (response) => {
-												if (response.ok) {
-													let image = await response.blob();
-													fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/mindtouch.page%2523thumbnail", {
-														method: "PUT",
-														body: image
-													}).then();
-												}
-											});*/
+							//Thumbnail
+							fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(child.path)) + "/files/=mindtouch.page%2523thumbnail").then(async (response) => {
+								if (response.ok) {
+									let image = await response.blob();
+									fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path + child.relativePath)) + "/files/=mindtouch.page%2523thumbnail", {
+										method: "PUT",
+										body: image
+									}).then();
+								}
+							});
 					}
 				}
 
