@@ -1692,7 +1692,7 @@ class LTForm {
 				"<div id='LTForm'>" +
 				`<div class='LTFormHeader'><div class='LTTitle'>${allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
 				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
-				"<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div></div>" +
+				"<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div><div>Remixer Type<select id='LTFormCopyMode'></select></div></div>" +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
 
 			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
@@ -2032,6 +2032,8 @@ class LTForm {
 			});
 			await LTForm.getInstitutions();
 
+			const select = document.getElementById("LTFormCopyMode");
+			select.innerHTML = `<option value='transclude'>Transclude</option><option value='copy'>Direct Copy - Admin only</option>`;
 			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 			$("#LTRightAlert,#LTLeftAlert").hide();
@@ -2108,7 +2110,7 @@ class LTForm {
 			alert("No name provided!");
 			return false
 		}
-		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}/${name}`))}/info`,{
+		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}/${name}`))}/info`, {
 			method: 'HEAD'
 		});
 		if (response.ok) {
@@ -2126,6 +2128,13 @@ class LTForm {
 			alert("This feature is not available in Demonstration Mode.");
 			return false;
 		}
+		let copyMode = document.getElementById("LTFormCopyMode").value;
+		if (copyMode === 'copy' && !isAdmin) {
+			alert("Direct copy is restricted to administratiors. Use Forker afterwards to copy over individual pages.");
+			document.getElementById("LTFormCopyMode").value = 'transclude';
+			return false;
+		}
+
 		// let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let LTRight = $("#LTRight").fancytree("getTree");
 		let RightAlert = $("#LTRightAlert");
@@ -2242,7 +2251,8 @@ class LTForm {
 					let info = await LTForm.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
 
 					//get Tags
-					let copyContent = false;
+					let copyMode = document.getElementById("LTFormCopyMode").value;
+					let copyContent = copyMode === 'copy';
 					let response = await LTForm.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
 					let tags = await response.json();
 					if (response.ok && tags["@count"] !== "0") {
@@ -2291,12 +2301,24 @@ class LTForm {
 						content = `<p class="mt-script-comment">Cross Library Transclusion</p>
 
 <pre class="script">
-template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});`
+template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});</pre>
+
+<div class="comment">
+<div class="mt-comment-content">
+<p><a href="${child.data.url}">Cross-Library Link: ${child.data.url}</a></p>
+</div>
+</div>`
 					}
 					else {
 						content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
 <pre class="script">
 wiki.page("${child.path}", NULL)</pre>
+</div>
+
+<div class="comment">
+<div class="mt-comment-content">
+<p><a href="${child.data.url}">Content Reuse Link: ${child.data.url}</a></p>
+</div>
 </div>`;
 					}
 					response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {

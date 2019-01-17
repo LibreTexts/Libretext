@@ -244,7 +244,7 @@ select#LTFormSubdomain {
 	display: none;
 }
 
-#LTRight .fancytree-node:not(:first-child) span.fancytree-title:after {
+#LTRight ul ul span.fancytree-title:after {
 	content: "\e819";
 	font-family: Icomoon;
 	margin-left: 5px;
