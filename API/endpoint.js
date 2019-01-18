@@ -66,7 +66,7 @@ async function handler(request, response) {
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
 				let requests = await authenticatedFetch(input.path, 'contents?mode=raw', 'Remixer', input.subdomain);
-				if (response.ok)
+				if (requests.ok)
 					response.write(await requests.text());
 				else
 					responseError(`${requests.statusText}\n${await requests.text()}`, 400);
