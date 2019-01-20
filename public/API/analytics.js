@@ -105,6 +105,7 @@ if (!window["analytics.js"]) {
 			jQuery.scrollDepth({
 				userTiming: false,
 				pixelDepth: false,
+				noCache: true,
 				eventHandler: function (data) {
 					report('read', null, {result: {'percent': data.eventLabel}})
 				}
