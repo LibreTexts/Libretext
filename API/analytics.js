@@ -60,8 +60,7 @@ function handler(request, response) {
 			}
 		}
 	}
-	else if (url.startsWith("/ping")) {
-		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
+	else if (url === "/ping") {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
 					"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -81,7 +80,6 @@ function handler(request, response) {
 			else {
 				responseError(request.method + " Not Acceptable", 406)
 			}
-		}
 	}
 	else if (url.startsWith("/secureAccess")) {
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
