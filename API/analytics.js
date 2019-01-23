@@ -15,7 +15,6 @@ const staticFileServer = new nodeStatic.Server('./public');
 server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
-console.log(now1.toString());
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -47,8 +46,19 @@ function handler(request, response) {
 					try {
 						let date = new Date();
 						let event = JSON.parse(body);
-						await fs.ensureDir(`./analyticsData/${date.getMonth() + 1}-${date.getFullYear()}`);
-						await fs.appendFile(`./analyticsData/${date.getMonth() + 1}-${date.getFullYear()}/${event.actor.library}-${event.actor.id}.txt`, body + "\n");
+						let courseName = event.actor.courseName;
+						if (!courseName) {
+							await fs.ensureDir(`./analyticsData/General/${date.getMonth() + 1}-${date.getFullYear()}`);
+							await fs.appendFile(`./analyticsData/General/${date.getMonth() + 1}-${date.getFullYear()}/${event.actor.library}-${event.actor.id}.txt`, body + "\n");
+						}
+						else {
+							if (!Array.isArray(courseName))
+								courseName = [courseName];
+							for (let i = 0; i < courseName.length; i++) {
+								await fs.ensureDir(`./analyticsData/${courseName[i]}/${date.getMonth() + 1}-${date.getFullYear()}`);
+								await fs.appendFile(`./analyticsData/${courseName[i]}/${date.getMonth() + 1}-${date.getFullYear()}/${event.actor.library}-${event.actor.id}.txt`, body + "\n");
+							}
+						}
 					} catch (e) {
 						console.error(e)
 					}
@@ -61,25 +71,25 @@ function handler(request, response) {
 		}
 	}
 	else if (url === "/ping") {
-			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "GET",
-					"Content-Type": " text/plain",
-				});
-				response.end();
-			}
-			else if (request.method === "GET") {
-				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "GET",
-					"Content-Type": " text/plain",
-				} : {"Content-Type": " text/plain"});
-				response.end();
-			}
-			else {
-				responseError(request.method + " Not Acceptable", 406)
-			}
+		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": " text/plain",
+			});
+			response.end();
+		}
+		else if (request.method === "GET") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": " text/plain",
+			} : {"Content-Type": " text/plain"});
+			response.end();
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
 	}
 	else if (url.startsWith("/secureAccess")) {
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
@@ -89,8 +99,16 @@ function handler(request, response) {
 			});
 			response.end();
 		}
-		else if (request.method ==="GET" && url.endsWith(`?key=${secure.key}`)){
-			secureAccess().then();
+		else if (request.method === "GET") {
+			let key = url.split('?key=');
+			if (key) {
+				key = key[1];
+				let courseName = secure.keys[key];
+				if (courseName)
+					secureAccess(courseName).then();
+				else
+					responseError('Incorrect key', 403)
+			}
 		}
 		else if (request.method === "PUT") {
 			let body = [];
@@ -98,13 +116,11 @@ function handler(request, response) {
 				body.push(chunk);
 			}).on('end', async () => {
 				body = Buffer.concat(body).toString();
-				if (secure.key === body) {
-					//get past_answer
-					await secureAccess();
-				}
-				else {
+				let courseName = secure.keys[key];
+				if (courseName)
+					await secureAccess(courseName);
+				else
 					responseError('Incorrect key', 403)
-				}
 			});
 		}
 		else {
@@ -120,32 +136,34 @@ function handler(request, response) {
 	}
 
 
-	async function secureAccess() {
-		const connection = mysql.createConnection(secure.mysql);
-		connection.connect();
-		connection.query = util.promisify(connection.query);
-		let SQLresult = await connection.query('SELECT * FROM `Chem2BH_past_answer` ');
-		let result = '';
-		for (let i = 0; i < SQLresult.length; i++) {
-			result += JSON.stringify({
-				course_id: SQLresult[i].course_id,
-				user_id: SQLresult[i].user_id,
-				set_id: SQLresult[i].set_id,
-				problem_id: SQLresult[i].problem_id,
-				answer_id: SQLresult[i].answer_id,
-				answer_string: SQLresult[i].answer_string,
-				scores: SQLresult[i].scores,
-				comment_string: SQLresult[i].comment_string,
-				timestamp: SQLresult[i].timestamp,
-				source_file: SQLresult[i].source_file,
-			}) + '\n';
+	async function secureAccess(courseName) {
+		if(courseName === 'Chem2BH') {
+			const connection = mysql.createConnection(secure.mysql);
+			connection.connect();
+			connection.query = util.promisify(connection.query);
+			let SQLresult = await connection.query('SELECT * FROM `Chem2BH_past_answer` ');
+			let result = '';
+			for (let i = 0; i < SQLresult.length; i++) {
+				result += JSON.stringify({
+					course_id: SQLresult[i].course_id,
+					user_id: SQLresult[i].user_id,
+					set_id: SQLresult[i].set_id,
+					problem_id: SQLresult[i].problem_id,
+					answer_id: SQLresult[i].answer_id,
+					answer_string: SQLresult[i].answer_string,
+					scores: SQLresult[i].scores,
+					comment_string: SQLresult[i].comment_string,
+					timestamp: SQLresult[i].timestamp,
+					source_file: SQLresult[i].source_file,
+				}) + '\n';
+			}
+			await fs.writeFile(`./analyticsData/webwork.txt`, result);
+			connection.end();
 		}
-		await fs.writeFile(`./analyticsData/webwork.txt`, result);
-		connection.end();
 
-		zipLocal.sync.zip('./analyticsData').compress().save('./secureAccess.zip');
+		zipLocal.sync.zip(`./analyticsData/${courseName}`).compress().save(`./secureAccess-${courseName}.zip`);
 
-		staticFileServer.serveFile('../secureAccess.zip', 200, request.headers.host.includes(".miniland1333.com") ? {
+		staticFileServer.serveFile(`../secureAccess-${courseName}.zip`, 200, request.headers.host.includes(".miniland1333.com") ? {
 			"Access-Control-Allow-Origin": request.headers.origin || null,
 			"Access-Control-Allow-Methods": "PUT"
 		} : {}, request, response);

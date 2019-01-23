@@ -3476,7 +3476,7 @@ class LTForm {
 		}
 
 		function formMode(isAdmin) {
-			return isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Direct Copy - Admin only</option><option value='deep'>Full Duplication [SLOW]</option></select></div>` : '';
+			return isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option><option value='deep'>Copy Full [SLOW]</option></select></div>` : '';
 		}
 	}
 
@@ -3894,7 +3894,7 @@ wiki.page("${child.path}", NULL)</pre>
 								if (response.ok) {
 									let files = await response.text();
 									if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail')) {
-										let image = await LTForm.authenticatedFetch(child.path, 'files/=mindtouch.page%2523thumbnail', child.data.subdomain);
+										let image = await LTForm.authenticatedFetch(child.path, 'thumbnail', child.data.subdomain);
 
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {

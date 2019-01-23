@@ -12,12 +12,13 @@ if (!window["analytics.js"]) {
 
 		window.addEventListener('load', function () {
 			if (sessionStorage.getItem('ay')) {
+				console.log("LAL");
 				track()
 			}
 			else {
 				fetch(`https://${root}/ay/ping`).then((response) => {
 					if (response.ok) {
-						console.log("2BH");
+						console.log("LA");
 						sessionStorage.setItem('ay', 'true');
 						track();
 					}
@@ -126,6 +127,24 @@ if (!window["analytics.js"]) {
 			navigator.sendBeacon(`https://${root}/ay/receive`, getBody(verb, object, extra));
 		}
 
+		function getGroup() {
+			let groups = document.getElementById('groupHolder').innerText;
+			let classArray = ['Chem2BH', 'KU110'];
+			let result = [];
+			for (let i = 0; i < classArray.length; i++) {
+				if (groups.includes(classArray[i])) {
+					result.push(classArray[i]);
+				}
+			}
+
+			if (!result.length)
+				return undefined;
+			else if (result.length === 1)
+				return result[0];
+			else
+				return result;
+		}
+
 		function getBody(verb, object, extra) {
 			let result = {
 				actor: getActor(),
@@ -151,13 +170,15 @@ if (!window["analytics.js"]) {
 							userID = 'unknown'
 						}
 						return {
+							courseName: getGroup(),
 							library: library,
 							id: userID,
-							platform: platform
+							platform: platform,
 						};
 					default:
 						userID = document.getElementById("userIDHolder").innerText;
 						return {
+							courseName: getGroup(),
 							library: library,
 							id: userID,
 							platform: platform
