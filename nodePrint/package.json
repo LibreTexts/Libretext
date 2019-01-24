@@ -20,7 +20,7 @@
     "node-fetch": "^2.3.0",
     "node-static": "^0.7.11",
     "nodemailer": "^4.7.0",
-    "npm": "^6.5.0",
+    "npm": "^6.6.0",
     "puppeteer": "^1.11.0",
     "zip-local": "^0.3.4"
   },
