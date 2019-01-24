@@ -20,7 +20,7 @@ function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("ay/", "");
-
+	
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
@@ -115,7 +115,7 @@ function handler(request, response) {
 			request.on('data', (chunk) => {
 				body.push(chunk);
 			}).on('end', async () => {
-				body = Buffer.concat(body).toString();
+				let key = Buffer.concat(body).toString();
 				let courseName = secure.keys[key];
 				if (courseName)
 					await secureAccess(courseName);
@@ -127,24 +127,33 @@ function handler(request, response) {
 			responseError(request.method + " Not Acceptable", 406)
 		}
 	}
-
+	
 	function responseError(message, status) {
 		//else fall through to error
 		response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
 	}
-
-
+	
+	
 	async function secureAccess(courseName) {
-		if(courseName === 'Chem2BH') {
+		await fs.ensureDir(`./analyticsData/ZIP/${courseName}`);
+		await fs.emptyDir(`./analyticsData/ZIP/${courseName}/RAW`);
+		await fs.emptyDir(`./analyticsData/ZIP/${courseName}/JSON`);
+		await fs.emptyDir(`./analyticsData/ZIP/${courseName}/CSV`);
+		await fs.copy(`./analyticsData/${courseName}`, `./analyticsData/ZIP/${courseName}/RAW`);
+		
+		//Webwork Processing
+		if (courseName === 'Chem2BH') {
 			const connection = mysql.createConnection(secure.mysql);
 			connection.connect();
 			connection.query = util.promisify(connection.query);
 			let SQLresult = await connection.query('SELECT * FROM `Chem2BH_past_answer` ');
-			let result = '';
+			let result = [];
+			let resultCSV = 'course_id, user_id, set_id, problem_id, answer_id, scores, comment_string, timestamp, source_file';
+			const keys = ['course_id', 'user_id', 'set_id', 'problem_id', 'answer_id', 'scores', 'comment_string', 'timestamp', 'source_file'];
 			for (let i = 0; i < SQLresult.length; i++) {
-				result += JSON.stringify({
+				result.push({
 					course_id: SQLresult[i].course_id,
 					user_id: SQLresult[i].user_id,
 					set_id: SQLresult[i].set_id,
@@ -155,18 +164,71 @@ function handler(request, response) {
 					comment_string: SQLresult[i].comment_string,
 					timestamp: SQLresult[i].timestamp,
 					source_file: SQLresult[i].source_file,
-				}) + '\n';
+				});
+				
+				
+				let values = keys.map((x) => SQLresult[i][x]);
+				resultCSV += '\n' + values.join(',');
 			}
-			await fs.writeFile(`./analyticsData/webwork.txt`, result);
+			await fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/webwork.json`, JSON.stringify(result, null, "\t"));
+			await fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/webwork.csv`, resultCSV);
 			connection.end();
 		}
-
-		zipLocal.sync.zip(`./analyticsData/${courseName}`).compress().save(`./secureAccess-${courseName}.zip`);
-
+		
+		
+		//Reprocessing raw data
+		let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
+		console.time('Reprocessing');
+		for (let i = 0; i < months.length; i++) {
+			let month = months[i];
+			if (month.isDirectory()) {
+				await fs.ensureDir(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/`);
+				await fs.ensureDir(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/`);
+				//process each month
+				let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW/${month.name}`, {withFileTypes: true});
+				for (let j = 0; j < students.length; j++) {
+					let student = students[j];
+					if (student.isFile()) {
+						student = student.name;
+						const fileRoot = student.replace('.txt', '');
+						let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
+						lines = lines.toString().replace(/\n$/, "").split('\n');
+						lines = lines.map((line) => JSON.parse(line));
+						let result = lines;
+						let resultCSV = 'courseName, library, id, platform, verb, pageURL, pageID, timestamp, pageSession, timeMe, [type or percent]';
+						
+						//CSV Handling
+						for (let k = 0; k < result.length; k++) {
+							let line = lines[k];
+							resultCSV += `\n${line.actor.courseName},${line.actor.library},${line.actor.id},${line.actor.platform ? line.actor.platform.description : 'undefined'},${line.verb},${line.object.page},${line.object.id},${line.object.timestamp},${line.object.pageSession},${line.object.timeMe}`;
+							switch ('verb') {
+								case 'left':
+									resultCSV += `,${line.type}`;
+									break;
+								case 'read':
+									resultCSV += `,${line.result.percent}`;
+									break;
+							}
+						}
+						
+						await fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t"));
+						await fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV);
+					}
+				}
+			}
+		}
+		console.timeEnd('Reprocessing');
+		
+		
+		console.time('Compressing');
+		zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./secureAccess-${courseName}.zip`);
+		console.timeEnd('Compressing');
+		console.log(`Secure Access ${courseName} ${ip}`);
+		
 		staticFileServer.serveFile(`../secureAccess-${courseName}.zip`, 200, request.headers.host.includes(".miniland1333.com") ? {
 			"Access-Control-Allow-Origin": request.headers.origin || null,
 			"Access-Control-Allow-Methods": "PUT"
 		} : {}, request, response);
 	}
-
+	
 }
