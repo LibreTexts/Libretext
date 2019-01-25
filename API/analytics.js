@@ -200,13 +200,16 @@ function handler(request, response) {
 						//CSV Handling
 						for (let k = 0; k < result.length; k++) {
 							let line = lines[k];
-							resultCSV += `\n${line.actor.courseName},${line.actor.library},${line.actor.id},${line.actor.platform ? line.actor.platform.description : 'undefined'},${line.verb},${line.object.page},${line.object.id},${line.object.timestamp},${line.object.pageSession},${line.object.timeMe}`;
-							switch ('verb') {
+							resultCSV += `\n${line.actor.courseName},${line.actor.library},${line.actor.id},${line.actor.platform ? line.actor.platform.description : 'undefined'},${line.verb},${line.object.page},${line.object.id},"${line.object.timestamp}",${line.object.pageSession},${line.object.timeMe}`;
+							switch (line.verb) {
 								case 'left':
 									resultCSV += `,${line.type}`;
 									break;
 								case 'read':
 									resultCSV += `,${line.result.percent}`;
+									break;
+								case 'answerReveal':
+									resultCSV += `,${line.result.answer}`;
 									break;
 							}
 						}
