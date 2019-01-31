@@ -62,3 +62,5 @@ Temporary Items
 /API/secureAccess.zip
 /API/authenBrowser.json
 /API/analyticsData/
+/API/node_modules/
+/.idea/httpRequests/

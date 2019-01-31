@@ -623,7 +623,7 @@ puppeteer.launch({
 });
 
 async function authenticatedFetch(path, api, subdomain) {
-	//DUMMY FUNCTION - does not have elevated privelages
+	//DUMMY FUNCTION - does not have elevated privileges
 	let headers = {'X-Requested-With': 'XMLHttpRequest'};
 	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 		{headers: headers});
