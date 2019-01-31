@@ -378,8 +378,27 @@ puppeteer.launch({
 	async function getTOC(url) {
 		let subpages = await getSubpages(url);
 		const page = await browser.newPage();
-		let content = `<h1>Table of Contents</h1>${getLevel(subpages)}`;
-		content += '<style>a {text-decoration: none; color:#127bc4} body > ul {list-style-type: none; color:black} h2 >a{color:#127bc4}</style>';
+		
+		
+		let origin = url.split("/")[2].split(".");
+		const subdomain = origin[0];
+		let path = url.split('/').splice(3).join('/');
+		
+		let properties = await authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
+		properties = await properties.json();
+		properties = properties.property.length ? properties.property : [properties.property];
+		
+		properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
+		properties = properties && properties.contents && properties.contents['#text'] ?
+			properties.contents['#text'] : '';
+		
+		
+		let content = `<h1>Table of Contents</h1><h2>${subpages.title}</h2><div>${properties}</div>${getLevel(subpages)}`;
+		content += '<style>a {text-decoration: none; color:#127bc4}' +
+			'body > ul {list-style-type: none; color:black}' +
+			'h2>a{color:#127bc4}' +
+			'ul {margin: 0; padding: 0;}' +
+			'body {font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif !important}</style>';
 		try {
 			await page.setContent(content);
 		} catch (e) {
@@ -399,8 +418,6 @@ puppeteer.launch({
 			return result;
 		}
 		
-		const host = url.split("/")[2].split(".");
-		const subdomain = host[0];
 		const topIMG = baseIMG[subdomain];
 		const color = colors[subdomain];
 		
@@ -463,7 +480,7 @@ puppeteer.launch({
 			err = e;
 		}
 		
-		if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
+		if ((working[escapedURL] && Date.now() - working[escapedURL] > 120000)) {
 			delete working[escapedURL];					//5 min timeout for DUPE
 		}
 		
@@ -483,9 +500,6 @@ puppeteer.launch({
 				console.log(`DUPE   ${ip} ${url}`);
 				staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 			});
-			setTimeout(() => {
-				responseError("Request is duplicate.\nPlease try again.");
-			}, 60000);
 			return false;
 		}
 		
