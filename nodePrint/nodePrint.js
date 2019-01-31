@@ -34,22 +34,87 @@ puppeteer.launch({
 	console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 	let working = {};
 	const eventEmitter = new events.EventEmitter();
-
+	
 	//Determine if in Kubernetes
 	let kubernetesServiceHost = process.env.NODE_BALANCER_SERVICE_HOST;
-	if(kubernetesServiceHost){
+	if (kubernetesServiceHost) {
 		console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
 	}
-
+	
+	getTOC('https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)');
+	
 	Gbrowser = browser;
 	Gserver = server;
-
+	
+	async function getTOC(url) {
+		let subpages = await getSubpages(url);
+		const page = await browser.newPage();
+		let content = `<h1>Table of Contents</h1><ul>
+${subpages.children.map((elem)=>`<li><h2><a href="${elem.url}">${elem.title}</a></h2><ul>${subpages.children.map((elem) =>`<li><a href="${elem.url}">${elem.title}</a></li>`).join('')}</ul>`).join('')}
+</ul>`;
+		content += '<style>a {color: black} </style>';
+		try {
+			await page.setContent(content);
+		} catch (e) {
+		
+		}
+		const host = url.split("/")[2].split(".");
+		const subdomain = host[0];
+		const topIMG = baseIMG[subdomain];
+		const color = colors[subdomain];
+		
+		const cssb = [];
+		cssb.push('<style>');
+		cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
+		cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
+		cssb.push('#main {border: 1px solid blue;}');
+		cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
+		cssb.push('* { -webkit-print-color-adjust: exact}');
+		cssb.push('.date, .pageNumber {display: inline-block}');
+		cssb.push('.added {padding: 0px 4px}');
+		cssb.push('a {text-decoration:none; color: white}');
+		cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
+		cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
+		cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
+		cssb.push('</style>');
+		const css = cssb.join('');
+		const prefix = 'TOC ';
+		
+		const style1 = '<div id="mainH">' +
+			'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
+			'<div class="trapezoid"></div>' +
+			`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
+			'</div>';
+		
+		const style2 = `<div id="mainF">` +
+			`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'></div>`+
+			`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
+			`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
+			`<div>Updated <div class="date"/></div>` +
+			'</div>';
+		
+		await page.pdf({
+			path: `./PDF/TOC.pdf`,
+			displayHeaderFooter: true,
+			headerTemplate: css + style1,
+			footerTemplate: css + style2,
+			printBackground: true,
+			margin: {
+				top: "90px",
+				bottom: "60px",
+				right: "0.75in",
+				left: "0.75in",
+			}
+		});
+		console.log('Done!');
+	}
+	
 	async function handler(request, response) {
 		let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 		ip = ip.padEnd(15);
 		request.url = request.url.replace("print/", "");
 		let url = request.url;
-
+		
 		if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
 			let isNoCache = false;
 			let isOffload = false;
@@ -72,9 +137,9 @@ puppeteer.launch({
 				url = url.slice(0, -4);
 			}
 			const escapedURL = md5(url);
-
+			
 			// response.setHeader("Content-Disposition","attachment");
-
+			
 			getPDF(url, isNoCache).then((result) => {
 				if (result) {
 					if (isOffload) {
@@ -89,12 +154,12 @@ puppeteer.launch({
 						staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				}
 			}, (err) => responseError("Server \n" + err, 500));
-
+			
 		}
 		else if (url.startsWith("/Libretext=")) {
 			if (request.headers.origin.endsWith("libretexts.org")) {
 				if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-
+					
 					response.writeHead(200, {
 						"Access-Control-Allow-Origin": request.headers.origin || null,
 						"Access-Control-Allow-Methods": "PUT",
@@ -111,31 +176,31 @@ puppeteer.launch({
 						const zipFilename = filenamify(contents.batchName);
 						const directory = './PDF/libretexts/' + zipFilename;
 						const refreshOnly = body.refreshOnly;
-
+						
 						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 							"Access-Control-Allow-Origin": request.headers.origin || null,
 							"Access-Control-Allow-Methods": "PUT",
 							// "Transfer-Encoding": "chunked",
 							"Content-Type": " application/json",
 						} : {"Content-Type": " application/json"});
-
+						
 						if (!refreshOnly)
 							await fs.ensureDir(directory);
 						let urlArray = [contents.root];
 						urlArray = urlArray.concat(addLinks(contents.subpages));
-
-
+						
+						
 						response.write(JSON.stringify({
 							message: "start",
 							percent: 0,
 							eta: "Loading...",
 						}) + "\r\n");
-
+						
 						let count = 0;
 						let untitled = 0;
 						const start = performance.now();
 						const eta = new Eta(urlArray.length, true);
-
+						
 						mapLimit(urlArray, kubernetesServiceHost ? 4 : 2, async (url) => {
 							let filename, title;
 							if (kubernetesServiceHost) {
@@ -144,7 +209,7 @@ puppeteer.launch({
 									offloadURL += '?no-cache&offload';
 								else
 									offloadURL += '?offload';
-
+								
 								let offload = await fetch(offloadURL);
 								offload = await offload.json();
 								filename = offload.filename;
@@ -157,7 +222,7 @@ puppeteer.launch({
 							}
 							count++;
 							eta.iterate();
-
+							
 							if (filename !== 'restricted' && !refreshOnly) {
 								if (!title) {
 									const sourceArray = url.split("/");
@@ -175,10 +240,10 @@ puppeteer.launch({
 									}
 								}
 								title = filenamify(title);
-
+								
 								await fs.copy(`./PDF/${filename}`, `${directory}/${title}.pdf`);
 							}
-
+							
 							response.write(JSON.stringify({
 								message: "progress",
 								percent: (Math.round(count / urlArray.length * 1000) / 10),
@@ -187,13 +252,13 @@ puppeteer.launch({
 							}) + "\r\n");
 						}, (err, results) => {
 							if (err) throw err;
-
+							
 							const end = performance.now();
 							let time = end - start;
 							time /= 100;
 							time = Math.round(time);
 							time /= 10;
-
+							
 							console.log(time);
 							if (refreshOnly) {
 								response.write(JSON.stringify({
@@ -205,14 +270,14 @@ puppeteer.launch({
 							else {
 								fs.ensureDir('./public/ZIP/');
 								zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
-
+								
 								response.write(JSON.stringify({
 									message: "complete",
 									filename: zipFilename + '.zip',
 									timeTaken: time
 								}));
 							}
-
+							
 							response.end();
 						});
 					});
@@ -246,6 +311,9 @@ puppeteer.launch({
 				responseError(request.method + " Not Acceptable", 406)
 			}
 		}
+		else if (url.includes('coverpage=')) {
+		
+		}
 		else { //static server
 			console.log(url);
 			staticFileServer.serve(request, response, function (error, res) {
@@ -255,8 +323,8 @@ puppeteer.launch({
 				}
 			});
 		}
-
-
+		
+		
 		function responseError(message, status) {
 			//else fall through to error
 			if (!response.finished) {
@@ -265,7 +333,7 @@ puppeteer.launch({
 				response.end();
 			}
 		}
-
+		
 		function addLinks(object) {
 			let array = [];
 			if (Object.keys(object).length) {
@@ -278,7 +346,7 @@ puppeteer.launch({
 			}
 			return array;
 		}
-
+		
 		async function getCC(url, subdomain) {
 			let sourceArray = url.split("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
@@ -298,7 +366,7 @@ puppeteer.launch({
 						tags = tags.tag["@value"];
 					}
 				}
-
+				
 				for (let i = 0; i < tags.length; i++) {
 					if (tags[i].includes("license")) {
 						let tag = tags[i].split(":")[1];
@@ -343,7 +411,7 @@ puppeteer.launch({
 			}
 			return null; //not found
 		}
-
+		
 		async function checkTime(url) {
 			const sourceArray = url.split("/");
 			const domain = sourceArray.slice(0, 3).join("/");
@@ -363,7 +431,13 @@ puppeteer.launch({
 				return 'restricted';
 			}
 		}
-
+		
+		async function getCover(url, title) {
+		
+		}
+		
+		
+		
 		async function getPDF(url, isNoCache = false, isBatch = false) {
 			let escapedURL = md5(url);
 			let stats, err;
@@ -372,11 +446,11 @@ puppeteer.launch({
 			} catch (e) {
 				err = e;
 			}
-
+			
 			if ((working[escapedURL] && Date.now() - working[escapedURL] > 300000)) {
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
-
+			
 			const daysCache = 30;
 			const updateTime = await checkTime(url);
 			if (updateTime === 'restricted') {
@@ -398,11 +472,11 @@ puppeteer.launch({
 				}, 60000);
 				return false;
 			}
-
+			
 			const start = performance.now();
 			console.log(`NEW    ${ip} ${url}`);
 			// const browser = await puppeteer.launch();
-
+			
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
 				if (!page.isClosed)
@@ -410,7 +484,7 @@ puppeteer.launch({
 			}, 40000);
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
-
+			
 			working[escapedURL] = Date.now();
 			let PDFname = escapedURL;
 			let title;
@@ -423,12 +497,12 @@ puppeteer.launch({
 				} catch (err) {
 					console.error(`ERROR  Timeout Exceeded ${url}`);
 				}
-
+				
 				const out = await page.evaluate(function (url) {
 					let prefix = "";
 					let title = document.getElementById("title");
 					let innerText;
-
+					
 					if (title) {
 						let color = window.getComputedStyle(title).color;
 						innerText = title.textContent;
@@ -444,7 +518,7 @@ puppeteer.launch({
 				if (title) {
 					title = title.trim();
 				}
-
+				
 				const host = url.split("/")[2].split(".");
 				const subdomain = host[0];
 				const topIMG = baseIMG[subdomain];
@@ -453,7 +527,7 @@ puppeteer.launch({
 				const attribution = "";
 				// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
 				let license = getCC(url, subdomain);
-
+				
 				const cssb = [];
 				cssb.push('<style>');
 				cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
@@ -469,18 +543,18 @@ puppeteer.launch({
 				cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 				cssb.push('</style>');
 				const css = cssb.join('');
-
-
+				
+				
 				const style1 = '<div id="mainH">' +
 					'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
 					'<div class="trapezoid"></div>' +
 					`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
 					'</div>';
-
-
+				
+				
 				await fs.ensureDir('./PDF');
 				license = await license;
-
+				
 				const style2 = `<div id="mainF">` +
 					// `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>` +
 					(license ? `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'><a href="${license.link}">${license.label}</a></div>`
@@ -502,8 +576,8 @@ puppeteer.launch({
 						left: "0.75in",
 					}
 				});
-
-
+				
+				
 			} catch (err) {
 				failed = err;
 			}
@@ -516,7 +590,7 @@ puppeteer.launch({
 			clearTimeout(timeout);
 			let pages = await browser.pages();
 			const now = new Date();
-
+			
 			eventEmitter.emit(escapedURL);
 			delete working[escapedURL];
 			if (failed) {
@@ -527,12 +601,76 @@ puppeteer.launch({
 			else {
 				console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
 			}
-
+			
 			return {filename: PDFname + '.pdf', title: title};
 		}
 	}
 });
 
+async function authenticatedFetch(path, api, subdomain) {
+	//DUMMY FUNCTION - does not have elevated privelages
+	let headers = {'X-Requested-With': 'XMLHttpRequest'};
+	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+		{headers: headers});
+}
+
+async function getSubpages(rootURL) {
+	let origin = rootURL.split("/")[2].split(".");
+	const subdomain = origin[0];
+	
+	origin = rootURL.split("/").splice(0, 3).join('/');
+	let path = rootURL.split('/').splice(3).join('/');
+	
+	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+	pages = await pages.json();
+	
+	
+	let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
+	info = await info.json();
+	return {
+		title: info.title,
+		url: rootURL,
+		children: await subpageCallback(pages)
+	};
+	
+	
+	async function subpageCallback(info) {
+		const subpageArray = info["page.subpage"];
+		const result = [];
+		const promiseArray = [];
+		
+		async function subpage(subpage, index) {
+			let url = subpage["uri.ui"];
+			let path = subpage.path["#text"];
+			const hasChildren = subpage["@subpages"] === "true";
+			let children = hasChildren ? undefined : [];
+			if (hasChildren) { //recurse down
+				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				children = await children.json();
+				children = await subpageCallback(children, false);
+			}
+			result[index] = {
+				title: subpage.title,
+				url: url,
+				children: children,
+				id: subpage['@id'],
+				relativePath: url.replace(rootURL, '')
+			};
+		}
+		
+		if (subpageArray && subpageArray.length) {
+			for (let i = 0; i < subpageArray.length; i++) {
+				promiseArray[i] = subpage(subpageArray[i], i);
+			}
+			
+			await Promise.all(promiseArray);
+			return result;
+		}
+		else {
+			return [];
+		}
+	}
+}
 
 function stop() {
 	Gserver.close();

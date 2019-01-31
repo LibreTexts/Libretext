@@ -3,13 +3,13 @@ class LTForm {
 		this.formScript = document.currentScript;
 		let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
 		LTForm.keys = await keys.json();
-
+		
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		LTForm.content = await this.getSubpages("", subdomain, false, true);
 		LTForm.initializeFancyTree();
 	}
-
-
+	
+	
 	static async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node) {
@@ -24,7 +24,7 @@ class LTForm {
 			await LTForm.renumber();
 		}
 	}
-
+	
 	static mergeUp() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
@@ -38,7 +38,7 @@ class LTForm {
 			});
 		}
 	}
-
+	
 	static delAll() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
@@ -46,7 +46,7 @@ class LTForm {
 			LTForm.renumber();
 		}
 	}
-
+	
 	static default() {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work and replace it with the default template. Are you sure?")) {
@@ -1506,14 +1506,14 @@ class LTForm {
 			node.setExpanded();
 		}
 	}
-
+	
 	static async reset() {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work. Are you sure?")) {
 			node.removeChildren();
 		}
 	}
-
+	
 	static async renumber() {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (!root.children) {
@@ -1531,7 +1531,7 @@ class LTForm {
 		processNode(d, 0, 0, false,);
 		root.fromDict(d);
 		root.setExpanded(true);
-
+		
 		function processNode(node, index, level, overTen) {
 			node.title = node.title.replace('&amp;', 'and');
 			if (level && depth - level <= 1 && node.title.includes(": ")) {
@@ -1558,12 +1558,12 @@ class LTForm {
 			return node;
 		}
 	}
-
+	
 	static debug() {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		return root.toDict(true);
 	}
-
+	
 	static async setSubdomain() {
 		let select = document.getElementById('LTFormSubdomain');
 		let subdomain = select.value;
@@ -1571,7 +1571,7 @@ class LTForm {
 		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
 		let LTLeft = $("#LTLeft").fancytree("getTree");
 		let LeftAlert = $("#LTLeftAlert");
-
+		
 		LTLeft.enable(false);
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
@@ -1579,23 +1579,23 @@ class LTForm {
 		let root = LTLeft.getRootNode();
 		root.removeChildren();
 		root.addChildren(LTForm.content);
-
+		
 		for (let i = 0; i < root.children.length; i++) {
 			let node = root.children[i];
 			node.icon = `https://static.libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
 			node.renderTitle();
 		}
-
+		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
 	}
-
+	
 	static setName() {
 		let name = document.getElementById("LTFormName").value;
 		name = name.replace('&', 'and');
 		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
 	}
-
+	
 	static getDepth(tree) {
 		let depth = 0;
 		while (tree && tree.children) {
@@ -1604,13 +1604,13 @@ class LTForm {
 		}
 		return depth;
 	}
-
+	
 	static async getSubpages(path, subdomain, full, linkTitle) {
 		path = path.replace(`https://${subdomain}.libretexts.org/`, "");
 		let response = await this.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 		response = await response.json();
 		return await subpageCallback(response);
-
+		
 		async function subpageCallback(info) {
 			let subpageArray = info["page.subpage"];
 			if (subpageArray) {
@@ -1618,7 +1618,7 @@ class LTForm {
 			}
 			const result = [];
 			const promiseArray = [];
-
+			
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
@@ -1641,12 +1641,12 @@ class LTForm {
 					subdomain: subdomain,
 				};
 			}
-
+			
 			if (subpageArray && subpageArray.length) {
 				for (let i = 0; i < subpageArray.length; i++) {
 					promiseArray[i] = subpage(subpageArray[i], i);
 				}
-
+				
 				await Promise.all(promiseArray);
 				return result;
 			}
@@ -1655,18 +1655,18 @@ class LTForm {
 			}
 		}
 	}
-
+	
 	static async copyTransclude() {
 		let LTRight = $("#LTRight").fancytree("getTree");
 		let RightAlert = $("#LTRightAlert");
 		let url = window.location.href;
-
+		
 		if (url.includes('?url=')) {
 			url = decodeURIComponent(url);
 			url = url.split('url=')[1];
 			let subdomain = url.split('/')[2].split('.')[0];
 			let path = url.split('/').splice(3).join('/');
-
+			
 			LTRight.enable(false);
 			RightAlert.text(`Loading Copy-Transclude`);
 			RightAlert.slideDown();
@@ -1679,9 +1679,9 @@ class LTForm {
 			LTRight.enable(true);
 		}
 	}
-
+	
 	static async initializeFancyTree() {
-
+		
 		if (LTForm.content) {
 			let target = document.createElement("div");
 			target.id = "LTRemixer";
@@ -1695,7 +1695,7 @@ class LTForm {
 				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
 				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin)}</div>` +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
-
+			
 			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
 			const LTLeft = $("#LTLeft");
 			const LTRight = $("#LTRight");
@@ -1719,9 +1719,9 @@ class LTForm {
 					// scroll: true,
 					// scrollSpeed: 7,
 					// scrollSensitivity: 10,
-
+					
 					// --- Drag-support:
-
+					
 					dragStart: function (node, data) {
 						/* This function MUST be defined to enable dragging for the tree.
 						 *
@@ -1737,9 +1737,9 @@ class LTForm {
 					},
 					dragEnd: function (node, data) {
 					},
-
+					
 					// --- Drop-support:
-
+					
 					dragEnter: function (node, data) {
 						// node.debug("dragEnter", data);
 						data.dataTransfer.dropEffect = "move";
@@ -1797,9 +1797,9 @@ class LTForm {
 					// scroll: true,
 					// scrollSpeed: 7,
 					// scrollSensitivity: 10,
-
+					
 					// --- Drag-support:
-
+					
 					dragStart: function (node, data) {
 						/* This function MUST be defined to enable dragging for the tree.
 						 *
@@ -1815,9 +1815,9 @@ class LTForm {
 					},
 					dragEnd: function (node, data) {
 					},
-
+					
 					// --- Drop-support:
-
+					
 					dragEnter: function (node, data) {
 						// node.debug("dragEnter", data);
 						data.dataTransfer.dropEffect = "move";
@@ -1835,7 +1835,7 @@ class LTForm {
 						 * the tree.
 						 */
 						const transfer = data.dataTransfer;
-
+						
 						if (data.otherNode) {
 							// Drop another Fancytree node from same frame
 							// (maybe from another tree however)
@@ -1860,7 +1860,7 @@ class LTForm {
 							}, data.hitMode);
 						}
 						await LTForm.renumber();
-
+						
 						async function doTransfer() {
 							if (sameTree) {
 								data.otherNode.moveTo(node, data.hitMode);
@@ -1884,19 +1884,19 @@ class LTForm {
 				},
 			});
 			await LTForm.getInstitutions();
-
-
+			
+			
 			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 			$("#LTRightAlert,#LTLeftAlert").hide();
 			await LTForm.copyTransclude();
 		}
-
+		
 		function formMode(isAdmin) {
 			return isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option><option value='deep'>Copy Full [SLOW]</option></select></div>` : '';
 		}
 	}
-
+	
 	static getSelectOptions() {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let libraries = {
@@ -1919,27 +1919,28 @@ class LTForm {
 		});
 		return result;
 	}
-
+	
 	static async getInstitutions() {
 		const select = document.getElementById("LTFormInstitutions");
 		let response;
 		try {
-			response = await fetch("/@api/deki/pages/=LibreTexts/subpages?dream.out.format=json");
+			response = await fetch("/@api/deki/pages/=Courses/subpages?dream.out.format=json");
 		} catch (e) {
 			response = await fetch("/@api/deki/pages/=Course_LibreTexts/subpages?dream.out.format=json");
 		}
 		response = await response.json();
-		const subpageArray = response["page.subpage"] || [];
+		const subpageArray = (response['@count'] === "1" ? [response["page.subpage"]] : response["page.subpage"]) || [];
 		const result = [];
+		console.log(subpageArray);
 		for (let i = 0; i < subpageArray.length; i++) {
 			let institution = subpageArray[i];
 			result.push(`<option value="${institution["uri.ui"]}">${institution.title}</option>`);
 		}
 		result.push(`<option value="">Not listed? Contact info@libretexts.org</option>`);
-
+		
 		select.innerHTML = result.concat();
 	}
-
+	
 	static async publish() {
 		let institution = document.getElementById("LTFormInstitutions");
 		if (institution.value === "") {
@@ -1972,8 +1973,8 @@ class LTForm {
 			return false;
 		}
 		LTForm.renumber();
-
-
+		
+		
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		const isPro = document.getElementById("proHolder").innerText === 'true';
 		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
@@ -1988,11 +1989,11 @@ class LTForm {
 			document.getElementById("LTFormCopyMode").value = 'transclude';
 			return false;
 		}
-
+		
 		// let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let LTRight = $("#LTRight").fancytree("getTree");
 		let RightAlert = $("#LTRightAlert");
-
+		
 		RightAlert.text('Beginning Publication process');
 		RightAlert.slideDown();
 		LTRight.enable(false);
@@ -2008,7 +2009,7 @@ class LTForm {
 		let failedCounter = 0;
 		let errorText = "";
 		const total = getTotal(tree.children);
-
+		
 		await coverPage(tree);
 		await doCopy(destRoot, tree.children, 1);
 		const text = `${"Finished: " + counter + " pages completed" + (failedCounter ? "\\nFailed: " + failedCounter : "")}`;
@@ -2016,7 +2017,7 @@ class LTForm {
 		RightAlert.text(text);
 		RightAlert.slideUp();
 		LTRight.enable(true);
-
+		
 		function decodeHTML(content) {
 			let ret = content.replace(/&gt;/g, '>');
 			ret = ret.replace(/&lt;/g, '<');
@@ -2025,7 +2026,7 @@ class LTForm {
 			ret = ret.replace(/&amp;/g, '&');
 			return ret;
 		}
-
+		
 		async function coverPage(tree) {
 			let path = tree.data.url.replace(window.location.origin + "/", "");
 			let content = "<p>{{template.ShowCategory()}}</p>";
@@ -2039,12 +2040,12 @@ class LTForm {
 				body: tags,
 				headers: {"Content-Type": "text/xml; charset=utf-8"}
 			})];
-
+			
 			await Promise.all(propertyArray);
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + tree.title + "&name=" + encodeURIComponent(tree.title.replace(" ", "_")), {
 				method: "POST"
 			});
-
+			
 			async function putProperty(name, value) {
 				await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 					method: "POST",
@@ -2053,7 +2054,7 @@ class LTForm {
 				})
 			}
 		}
-
+		
 		function getTotal(treeArray) {
 			let result = treeArray.length;
 			for (let i = 0; i < treeArray.length; i++) {
@@ -2064,9 +2065,9 @@ class LTForm {
 			}
 			return result;
 		}
-
+		
 		async function doCopy(destRoot, tree, depth) {
-
+			
 			for (let i = 0; i < tree.length; i++) {
 				const child = tree[i];
 				let url = destRoot + "/" + (child.data.padded || child.title);
@@ -2103,10 +2104,10 @@ class LTForm {
 					let content;
 					//get info
 					let info = await LTForm.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
-
+					
 					//get Tags
 					let copyMode = document.getElementById("LTFormCopyMode").value;
-					let copyContent = copyMode === 'copy';
+					let copyContent = copyMode && copyMode !== 'transclude';
 					let response = await LTForm.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
 					let tags = await response.json();
 					if (response.ok && tags["@count"] !== "0") {
@@ -2128,7 +2129,7 @@ class LTForm {
 					else {
 						tags = null;
 					}
-
+					
 					//copy Content
 					info = await info;
 					info = await info.json();
@@ -2153,7 +2154,7 @@ class LTForm {
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
-
+							
 							let copyMode = document.getElementById("LTFormCopyMode").value;
 							if (copyMode === 'copy') {
 								content = content.replace(/\/@api\/deki/g, `https://${child.data.subdomain}.libretexts.org/@api/deki`);
@@ -2298,21 +2299,21 @@ wiki.page("${child.path}", NULL)</pre>
 									}
 								}
 							});
-
+							
 							// Title cleanup
 							if (child.data.padded) {
 								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
 									method: "POST"
 								}).then();
 							}
-
+							
 							//Thumbnail
 							LTForm.authenticatedFetch(child.path, 'files', child.data.subdomain).then(async (response) => {
 								if (response.ok) {
 									let files = await response.text();
 									if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail')) {
 										let image = await LTForm.authenticatedFetch(child.path, 'thumbnail', child.data.subdomain);
-
+										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
 											method: "PUT",
@@ -2323,8 +2324,8 @@ wiki.page("${child.path}", NULL)</pre>
 							});
 					}
 				}
-
-
+				
+				
 				counter++;
 				var elapsed = (new Date() - startedAt) / 1000;
 				var rate = counter / elapsed;
@@ -2332,8 +2333,8 @@ wiki.page("${child.path}", NULL)</pre>
 				var eta = estimated - elapsed;
 				var etah = secondsToStr(eta);
 				const text = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? "\nFailed: " + failedCounter : "");
-
-
+				
+				
 				results.innerText = `${text} ETA: ${etah}`;
 				RightAlert.text(text);
 				errors.innerText = errorText;
@@ -2341,8 +2342,8 @@ wiki.page("${child.path}", NULL)</pre>
 					await doCopy(url, child.children, depth + 1);
 				}
 			}
-
-
+			
+			
 			async function putProperty(name, value, path) {
 				fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 					method: "POST",
@@ -2350,13 +2351,13 @@ wiki.page("${child.path}", NULL)</pre>
 					headers: {"Slug": name}
 				})
 			}
-
+			
 			async function processFile(file, child, path, id) {
 				//only files with extensions
 				if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
 					let filename = file['filename'];
 					let image = await LTForm.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
-
+					
 					image = await image.blob();
 					let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 						method: "PUT",
@@ -2375,18 +2376,20 @@ wiki.page("${child.path}", NULL)</pre>
 			}
 		}
 	}
-
+	
 	static async authenticatedFetch(path, api, subdomain) {
 		let current = window.location.origin.split('/')[2].split('.')[0];
-		let token = LTForm.keys[subdomain];
-		subdomain = subdomain || current;
-		if (subdomain)
-			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-				current === subdomain ? {} : {headers: {'x-deki-token': token}});
-		else
-			console.error(`Invalid subdomain ${subdomain}`);
+		let headers = {'X-Requested-With': 'XMLHttpRequest'};
+		if (api.includes('files/') || (current !== subdomain)) {
+			subdomain = subdomain || current;
+			let token = LTForm.keys[subdomain];
+			headers['x-deki-token'] = token;
+		}
+		
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+			{headers: headers});
 	}
-
+	
 	static rightDefault() {
 		return [{
 			title: "Cover Page. Drag onto me to get started",
@@ -2548,11 +2551,11 @@ function secondsToStr(seconds) {
 function millisecondsToStr(milliseconds) {
 	// TIP: to find current time in milliseconds, use:
 	// var  current_time_milliseconds = new Date().getTime();
-
+	
 	function numberEnding(number) {
 		return (number > 1) ? 's' : '';
 	}
-
+	
 	let temp = Math.floor(milliseconds / 1000);
 	const years = Math.floor(temp / 31536000);
 	if (years) {
