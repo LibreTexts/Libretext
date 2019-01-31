@@ -298,3 +298,13 @@ div#LTLeftAlert, div#LTRightAlert {
 select#LTFormSubdomain {
 	border-radius: 10px 10px 0 0;
 }
+#getTOCLink {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: slategrey;
+	color: white;
+	width: fit-content;
+	margin-right: 2px;
+	padding: 0 3px;
+}
