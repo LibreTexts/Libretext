@@ -7,7 +7,9 @@ const baseIMG = require("./baseIMG.js");
 const colors = require("./colors");
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
+const util = require('util');
 const mapLimit = require("async/mapLimit");
+const map = util.promisify(require("async/map"));
 const zipLocal = require('zip-local');
 const Eta = require('node-eta');
 const md5 = require('md5');
@@ -252,6 +254,12 @@ puppeteer.launch({
 			let file = await getTOC(url);
 			staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
 		}
+		else if (url.includes('tocHTML=')) {
+			url = url.split('tocHTML=')[1];
+			let file = await getTOC(url, true);
+			response.write(file);
+			response.end();
+		}
 		else { //static server
 			console.log(url);
 			staticFileServer.serve(request, response, function (error, res) {
@@ -375,7 +383,10 @@ puppeteer.launch({
 	
 	}
 	
-	async function getTOC(url) {
+	async function getTOC(url, isHTML) {
+		let escapedURL = md5(url);
+		console.log('Starting...');
+		const start = performance.now();
 		let subpages = await getSubpages(url);
 		const page = await browser.newPage();
 		
@@ -384,35 +395,72 @@ puppeteer.launch({
 		const subdomain = origin[0];
 		let path = url.split('/').splice(3).join('/');
 		
-		let properties = await authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
-		properties = await properties.json();
+		let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
+		let tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
+		properties = await (await properties).json();
+		tags = await (await tags).json();
 		properties = properties.property.length ? properties.property : [properties.property];
+		tags = tags.tag.length ? tags.tag : [tags.tag];
+		tags = tags.map((elem) => elem.title);
 		
 		properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
 		properties = properties && properties.contents && properties.contents['#text'] ?
 			properties.contents['#text'] : '';
 		
 		
-		let content = `<h1>Table of Contents</h1><h2>${subpages.title}</h2><div>${properties}</div>${getLevel(subpages)}`;
+		let content = `${!tags.includes('coverpage:yes') ? `<h1>${subpages.title}</h1>` : '<h1>Table of Contents</h1>'}
+<div style="padding: 0 0 10px 0">${properties}</div>${await getLevel(subpages)}`;
 		content += '<style>a {text-decoration: none; color:#127bc4}' +
 			'body > ul {list-style-type: none; color:black}' +
 			'h2>a{color:#127bc4}' +
 			'ul {margin: 0; padding: 0;}' +
+			'h2, h3, h4, h5 {margin: 20px 0 10px 0}' +
+			'li {page-break-inside: avoid;}' +
 			'body {font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif !important}</style>';
+		if (isHTML) {
+			const end = performance.now();
+			let time = end - start;
+			time /= 100;
+			time = Math.round(time);
+			time /= 10;
+			console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
+			return content;
+		}
+		
 		try {
 			await page.setContent(content);
 		} catch (e) {
 		
 		}
 		
-		function getLevel(subpages, level = 2) {
+		async function getLevel(subpages, level = 2, isSubTOC) {
 			let result = '';
 			if (subpages.children && subpages.children.length) {
 				let prefix = `h${level}`;
 				if (!subpages.children[0].children.length) {
 					prefix = 'h';
 				}
-				result = `<ul>${subpages.children.map((elem) => `<li><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}>${getLevel(elem, level + 1)}</li>`).join('')}</ul>`;
+				
+				if (level === 2 && tags.includes('article:topic-guide')) {
+					isSubTOC = 'yes';
+				}
+				
+				
+				let inner = await map(subpages.children, async (elem, callback) => {
+					let summary = '';
+					if (isSubTOC === 'yes' || prefix !== 'h') {
+						let path = elem.url.split('/').splice(3).join('/');
+						
+						properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
+						summary = properties && properties.contents && properties.contents['#text'] ?
+							`<div style="padding: 0 20px 10px 20px">${properties.contents['#text']}</div>` : '';
+					}
+					
+					return `<li><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}${await getLevel(elem, level + 1, isSubTOC)}</li>`
+				});
+				inner = inner.join('');
+				
+				result = `<ul>${inner}</ul>`;
 			}
 			
 			return result;
@@ -450,7 +498,6 @@ puppeteer.launch({
 			`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
 			`<div>Updated <div class="date"/></div>` +
 			'</div>';
-		let escapedURL = md5(url);
 		
 		fs.ensureDir('./PDF/TOC');
 		
@@ -467,7 +514,12 @@ puppeteer.launch({
 				left: "0.75in",
 			}
 		});
-		console.log(`TOC Created: ${escapedURL}`);
+		const end = performance.now();
+		let time = end - start;
+		time /= 100;
+		time = Math.round(time);
+		time /= 10;
+		console.log(`TOC Created: ${time}s ${escapedURL}`);
 		return escapedURL;
 	}
 	
@@ -673,14 +725,24 @@ async function getSubpages(rootURL) {
 			let path = subpage.path["#text"];
 			const hasChildren = subpage["@subpages"] === "true";
 			let children = hasChildren ? undefined : [];
+			let tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
+			let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
 			if (hasChildren) { //recurse down
 				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 				children = await children.json();
 				children = await subpageCallback(children, false);
 			}
+			tags = await (await tags).json();
+			properties = await (await properties).json();
+			tags = tags.tag.length ? tags.tag : [tags.tag];
+			properties = properties['@count'] !== '0' && properties.property.length ? properties.property : [properties.property];
+			tags = tags.map((elem) => elem.title);
+			
 			result[index] = {
 				title: subpage.title,
 				url: url,
+				tags: tags,
+				properties: properties,
 				children: children,
 				id: subpage['@id'],
 				relativePath: url.replace(rootURL, '')
