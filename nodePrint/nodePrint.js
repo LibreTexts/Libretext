@@ -23,7 +23,8 @@ puppeteer.launch({
 	args: [
 		'--no-sandbox',
 		'--disable-setuid-sandbox'
-	]
+	],
+	// headless: false
 }).then((browser) => {
 	const server = http.createServer(handler);
 	const staticFileServer = new nodeStatic.Server('./public');
@@ -408,15 +409,19 @@ puppeteer.launch({
 			properties.contents['#text'] : '';
 		
 		
-		let content = `${!tags.includes('coverpage:yes') ? `<h1>${subpages.title}</h1>` : '<h1>Table of Contents</h1>'}
-<div style="padding: 0 0 10px 0">${properties}</div>${await getLevel(subpages)}`;
-		content += '<style>a {text-decoration: none; color:#127bc4}' +
-			'body > ul {list-style-type: none; color:black}' +
+		let content = `${!tags.includes('coverpage:yes') ? `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>` : '<h1>Table of Contents</h1>'}
+<div style="padding: 0 0 10px 0" class="summary">${properties}</div></div>${await getLevel(subpages)}`;
+		content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
+			'<style>a {text-decoration: none; color:#127bc4}' +
+			'body>ul {list-style-type: none; color:black}' +
 			'h2>a{color:#127bc4}' +
 			'ul {margin: 0; padding: 0;}' +
-			'h2, h3, h4, h5 {margin: 20px 0 10px 0}' +
-			'li {page-break-inside: avoid;}' +
-			'body {font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif !important}</style>';
+			'h2, h3, h4, h5, h, l {margin: 20px 0 0 0;}' +
+			'h1, h2, h3, h4, h5, h {text-transform: uppercase;}' +
+			'.nobreak {page-break-inside: avoid;}' +
+			'.summary {text-align: justify; text-justify: inter-word;}' +
+			'body {font-size:80%; font-family: lato,arial,helvetica,sans-serif,\'arial unicode ms\'}</style>' +
+			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:r,b,i%7CSource+Code+Pro:r,b" media="all">';
 		if (isHTML) {
 			const end = performance.now();
 			let time = end - start;
@@ -428,7 +433,8 @@ puppeteer.launch({
 		}
 		
 		try {
-			await page.setContent(content);
+			await page.setContent(content,
+				{waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 		} catch (e) {
 		
 		}
@@ -436,27 +442,31 @@ puppeteer.launch({
 		async function getLevel(subpages, level = 2, isSubTOC) {
 			let result = '';
 			if (subpages.children && subpages.children.length) {
-				let prefix = `h${level}`;
-				if (!subpages.children[0].children.length) {
-					prefix = 'h';
-				}
 				
 				if (level === 2 && tags.includes('article:topic-guide')) {
 					isSubTOC = 'yes';
+					level = 3;
+				}
+				
+				let prefix = `h${level}`;
+				if (!subpages.children[0].children.length) {
+					prefix = isSubTOC === 'yes' ? 'h' : 'l';
 				}
 				
 				
 				let inner = await map(subpages.children, async (elem, callback) => {
 					let summary = '';
-					if (isSubTOC === 'yes' || prefix !== 'h') {
+					if (prefix !== 'l') {
 						let path = elem.url.split('/').splice(3).join('/');
 						
 						properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
-						summary = properties && properties.contents && properties.contents['#text'] ?
-							`<div style="padding: 0 20px 10px 20px">${properties.contents['#text']}</div>` : '';
+						let good = properties && properties.contents && properties.contents['#text'];
+						if (good && (!elem.tags.includes('article:topic') || isSubTOC)) {
+							summary = `<div style="padding-bottom:10px" class="summary">${properties.contents['#text']}</div>`;
+						}
 					}
 					
-					return `<li><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}${await getLevel(elem, level + 1, isSubTOC)}</li>`
+					return `<li><div class="nobreak"><${prefix}><a href="${elem.url}"><b>${elem.title}</b></a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
 				});
 				inner = inner.join('');
 				
@@ -484,7 +494,7 @@ puppeteer.launch({
 		cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 		cssb.push('</style>');
 		const css = cssb.join('');
-		const prefix = 'TOC ';
+		const prefix = 'TOC.';
 		
 		const style1 = '<div id="mainH">' +
 			'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
