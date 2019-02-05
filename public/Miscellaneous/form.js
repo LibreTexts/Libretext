@@ -2379,11 +2379,13 @@ wiki.page("${child.path}", NULL)</pre>
 	
 	static async authenticatedFetch(path, api, subdomain) {
 		let current = window.location.origin.split('/')[2].split('.')[0];
-		let headers = {'X-Requested-With': 'XMLHttpRequest'};
+		let headers = {};
 		if (api.includes('files/') || (current !== subdomain)) {
 			subdomain = subdomain || current;
 			let token = LTForm.keys[subdomain];
 			headers['x-deki-token'] = token;
+			if (api.includes('files/'))
+				headers['X-Requested-With'] = 'XMLHttpRequest';
 		}
 		
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
