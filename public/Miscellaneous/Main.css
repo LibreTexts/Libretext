@@ -308,3 +308,6 @@ select#LTFormSubdomain {
 	margin-right: 2px;
 	padding: 0 3px;
 }
+.annotator-frame .annotator-bucket-bar{
+	background: none;
+}
