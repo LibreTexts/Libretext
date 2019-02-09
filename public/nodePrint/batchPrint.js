@@ -24,7 +24,6 @@ if (!window["batchPrint.js"]) {
 		requestJSON = {
 			root: window.location.href,
 			batchName: window["BatchName"],
-			subpages: window["BatchTable"],
 			isNoCache: false
 		};
 		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
@@ -202,11 +201,14 @@ if (!window["batchPrint.js"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("PUT", "https://" + targetComputer + "/print/Libretext=" + window["BatchName"], true); //async get
+			request.open("GET", "https://" + targetComputer + "/print/Libretext=" + window.location.href, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
-			request.send(JSON.stringify(requestJSON));
+			request.send();
+			//JSON.stringify(requestJSON)
 			const batchButton = document.getElementById("batchButton");
+			batchButton.innerText = 'Request sent...';
+			
 			
 			function receive() {
 				let newText = this.responseText;
@@ -227,8 +229,8 @@ if (!window["batchPrint.js"]) {
 					return;
 				}
 				batchButton.innerText = "Redownload";
-				window.location = "https://" + targetComputer + "/print/ZIP/" + out.filename;
-				window["batchComplete"] = "https://" + targetComputer + "/print/ZIP/" + out.filename;
+				window.location = "https://" + targetComputer + "/print/FullPDF/" + out.filename;
+				window["batchComplete"] = "https://" + targetComputer + "/print/FullPDF/" + out.filename;
 			}
 		}
 	}

@@ -21,6 +21,7 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/PDF" />
             <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/ZIP" />
+            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/FullPDF" />
           </excludedPaths>
         </serverdata>
       </paths>

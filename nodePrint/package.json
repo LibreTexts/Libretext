@@ -13,6 +13,7 @@
     "adm-zip": "^0.4.13",
     "async": "^2.6.1",
     "console-timestamp": "^0.3.0",
+    "easy-pdf-merge": "^0.2.0",
     "filenamify": "^2.0.0",
     "fs-extra": "^7.0.1",
     "md5": "^2.2.1",

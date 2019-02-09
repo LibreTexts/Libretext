@@ -8,13 +8,17 @@ const colors = require("./colors");
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
 const util = require('util');
-const mapLimit = require("async/mapLimit");
+const mapLimit = util.promisify(require("async/mapLimit"));
 const map = util.promisify(require("async/map"));
 const zipLocal = require('zip-local');
 const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
 const fetch = require('node-fetch');
+const querystring = require('querystring');
+const merge = util.promisify(require('easy-pdf-merge'));
+
+
 
 var Gbrowser;
 var Gserver;
@@ -98,128 +102,29 @@ puppeteer.launch({
 		else if (url.startsWith("/Libretext=")) {
 			if (request.headers.origin.endsWith("libretexts.org")) {
 				if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-					
 					response.writeHead(200, {
 						"Access-Control-Allow-Origin": request.headers.origin || null,
-						"Access-Control-Allow-Methods": "PUT",
+						"Access-Control-Allow-Methods": "GET",
 					});
 					response.end();
 				}
-				else if (request.method === "PUT") {
-					let body = [];
-					request.on('data', (chunk) => {
-						body.push(chunk);
-					}).on('end', async () => {
-						body = Buffer.concat(body).toString();
-						const contents = JSON.parse(body);
-						const zipFilename = filenamify(contents.batchName);
-						const directory = './PDF/libretexts/' + zipFilename;
-						const refreshOnly = body.refreshOnly;
-						
-						response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-							"Access-Control-Allow-Origin": request.headers.origin || null,
-							"Access-Control-Allow-Methods": "PUT",
-							// "Transfer-Encoding": "chunked",
-							"Content-Type": " application/json",
-						} : {"Content-Type": " application/json"});
-						
-						if (!refreshOnly)
-							await fs.ensureDir(directory);
-						let urlArray = [contents.root];
-						urlArray = urlArray.concat(addLinks(contents.subpages));
-						
-						
-						response.write(JSON.stringify({
-							message: "start",
-							percent: 0,
-							eta: "Loading...",
-						}) + "\r\n");
-						
-						let count = 0;
-						let untitled = 0;
-						const start = performance.now();
-						const eta = new Eta(urlArray.length, true);
-						
-						mapLimit(urlArray, kubernetesServiceHost ? 4 : 2, async (url) => {
-							let filename, title;
-							if (kubernetesServiceHost) {
-								let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
-								if (contents.isNoCache)
-									offloadURL += '?no-cache&offload';
-								else
-									offloadURL += '?offload';
-								
-								let offload = await fetch(offloadURL);
-								offload = await offload.json();
-								filename = offload.filename;
-								title = offload.title;
-							}
-							else {
-								let temp = await getPDF(url, ip, contents.isNoCache, zipFilename);
-								filename = temp.filename;
-								title = temp.title;
-							}
-							count++;
-							eta.iterate();
-							
-							if (filename !== 'restricted' && !refreshOnly) {
-								if (!title) {
-									const sourceArray = url.split("/");
-									const domain = sourceArray.slice(0, 3).join("/");
-									let path = sourceArray.slice(3, sourceArray.length).join("/");
-									let response = await fetch(`${domain}/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/info?dream.out.format=json`);
-									if (response.ok) {
-										title = await response.json();
-										title = title.title;
-									}
-									else {
-										let error = await response.text();
-										console.error(`Err: ${error}`);
-										title = `Untitled ${++untitled}`;
-									}
-								}
-								title = filenamify(title);
-								
-								await fs.copy(`./PDF/${filename}`, `${directory}/${title}.pdf`);
-							}
-							
-							response.write(JSON.stringify({
-								message: "progress",
-								percent: (Math.round(count / urlArray.length * 1000) / 10),
-								eta: eta.format("{{etah}}"),
-								// count: count,
-							}) + "\r\n");
-						}, (err, results) => {
-							if (err) throw err;
-							
-							const end = performance.now();
-							let time = end - start;
-							time /= 100;
-							time = Math.round(time);
-							time /= 10;
-							
-							console.log(time);
-							if (refreshOnly) {
-								response.write(JSON.stringify({
-									message: "complete",
-									filename: 'refreshOnly',
-									timeTaken: time
-								}));
-							}
-							else {
-								fs.ensureDir('./public/ZIP/');
-								zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
-								
-								response.write(JSON.stringify({
-									message: "complete",
-									filename: zipFilename + '.zip',
-									timeTaken: time
-								}));
-							}
-							
-							response.end();
-						});
-					});
+				else if (request.method === "GET") {
+					response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+						"Access-Control-Allow-Origin": request.headers.origin || null,
+						"Access-Control-Allow-Methods": "GET",
+						// "Transfer-Encoding": "chunked",
+						"Content-Type": " application/json",
+					} : {"Content-Type": " application/json"});
+					url = url.split('/Libretext=')[1];
+					let params = querystring.parse(url.split('?')[1]);
+					url = url.split('?')[0];
+					for (let param in params) {
+						if (params[param] === "")
+							params[param] = true;
+					}
+					params.ip = ip;
+					await getLibretext(url, response, params);
+					response.end();
 				}
 				else {
 					responseError(request.method + " Not Acceptable", 406)
@@ -252,12 +157,12 @@ puppeteer.launch({
 		}
 		else if (url.includes('toc=')) {
 			url = url.split('/toc=')[1];
-			let file = await getTOC(url);
+			let file = await getTOC(url, null);
 			staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
 		}
 		else if (url.includes('tocHTML=')) {
 			url = url.split('tocHTML=')[1];
-			let file = await getTOC(url, true);
+			let file = await getTOC(url, null, true);
 			response.write(file);
 			response.end();
 		}
@@ -282,15 +187,13 @@ puppeteer.launch({
 		}
 	}
 	
-	function addLinks(object) {
+	function addLinks(children) {
 		let array = [];
-		if (Object.keys(object).length) {
-			for (let property in object) {
-				array.push(object[property].link);
-				if (Object.keys(object[property].children).length) {
-					array = array.concat(addLinks(object[property].children))
-				}
-			}
+		if (children && children.length) {
+			children.forEach((child) => {
+				let result = [child];
+				array = array.concat(result.concat(addLinks(child.children)));
+			});
 		}
 		return array;
 	}
@@ -384,11 +287,11 @@ puppeteer.launch({
 	
 	}
 	
-	async function getTOC(url, isHTML) {
+	async function getTOC(url, subpages, isHTML) {
 		let escapedURL = md5(url);
-		console.log('Starting...');
+		console.log('Starting TOC');
 		const start = performance.now();
-		let subpages = await getSubpages(url);
+		subpages = subpages || await getSubpages(url);
 		const page = await browser.newPage();
 		
 		
@@ -396,18 +299,11 @@ puppeteer.launch({
 		const subdomain = origin[0];
 		let path = url.split('/').splice(3).join('/');
 		
-		let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
-		let tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
-		properties = await (await properties).json();
-		tags = await (await tags).json();
-		properties = properties.property.length ? properties.property : [properties.property];
-		tags = tags.tag.length ? tags.tag : [tags.tag];
-		tags = tags.map((elem) => elem.title);
-		
+		let properties = subpages.properties;
 		properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
 		properties = properties && properties.contents && properties.contents['#text'] ?
 			properties.contents['#text'] : '';
-		
+		let tags = subpages.tags;
 		
 		let content = `${!tags.includes('coverpage:yes') ? `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>` : '<h1>Table of Contents</h1>'}
 <div style="padding: 0 0 10px 0" class="summary">${properties}</div></div>${await getLevel(subpages)}`;
@@ -494,7 +390,7 @@ puppeteer.launch({
 		cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 		cssb.push('</style>');
 		const css = cssb.join('');
-		const prefix = 'TOC.';
+		const prefix = 'TOC.'; //TODO adjust for chapter guides
 		
 		const style1 = '<div id="mainH">' +
 			'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
@@ -533,7 +429,7 @@ puppeteer.launch({
 		return escapedURL;
 	}
 	
-	async function getPDF(url, ip, isNoCache = false, isBatch = false) {
+	async function getPDF(url, ip, isNoCache = false) {
 		let escapedURL = md5(url);
 		let stats, err;
 		try {
@@ -696,6 +592,119 @@ puppeteer.launch({
 		
 		return {filename: PDFname + '.pdf', title: title};
 	}
+	
+	async function getLibretext(url, response, params) {
+		let refreshOnly = params.refreshOnly;
+		let isNoCache = params['no-cache'] || params.nocache;
+		let current = params.subpages || await getSubpages(url);
+		console.log(`Getting LibreText ${current.title}`);
+		const zipFilename = filenamify(`${current.subdomain}-${current.title}`);
+		const directory = './PDF/libretexts/' + zipFilename;
+		const thinName = md5(zipFilename).slice(0,16);
+		
+		if (!refreshOnly) {
+			await fs.emptyDir(directory);
+			await fs.emptyDir(`./PDF/order/${thinName}/`); //RELIES ON PDFtk
+		}
+		let urlArray = [current];
+		urlArray = urlArray.concat(addLinks(current.children));
+		urlArray = urlArray.map((item, index) => {
+			item.index = index;
+			return item;
+		});
+		
+		if (response)
+			response.write(JSON.stringify({
+				message: "start",
+				percent: 0,
+				eta: "Loading...",
+			}) + "\r\n");
+		
+		let count = 0;
+		const start = performance.now();
+		const eta = new Eta(urlArray.length, true);
+		
+		
+		try {
+			await mapLimit(urlArray, 4, async (page) => {
+				let filename, title = page.title;
+				let url = page.url;
+				if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
+					filename = `TOC/${await getTOC(page.url, page)}.pdf`;
+					
+					if (page.tags.includes('coverpage:yes'))
+						title = '00000:B Table of Contents'
+				}
+				else if (kubernetesServiceHost) {
+					let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
+					if (isNoCache)
+						offloadURL += '?no-cache&offload';
+					else
+						offloadURL += '?offload';
+					
+					let offload = await fetch(offloadURL);
+					offload = await offload.json();
+					filename = offload.filename;
+				}
+				else {
+					let temp = await getPDF(url, params.ip, isNoCache);
+					filename = temp.filename;
+				}
+				count++;
+				eta.iterate();
+				
+				if (filename !== 'restricted' && !refreshOnly) {
+					title = filenamify(title);
+					
+					await fs.copy(`./PDF/${filename}`, `${directory}/${title}.pdf`);
+					await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`${page.index}`.padStart(3,'0')}.pdf`);
+				}
+				if (response)
+					response.write(JSON.stringify({
+						message: "progress",
+						percent: (Math.round(count / urlArray.length * 1000) / 10),
+						eta: eta.format("{{etah}}"),
+						// count: count,
+					}) + "\r\n");
+			});
+		} catch (err) {
+			throw err;
+		}
+		
+		let files = (await fs.readdir(`./PDF/order/${thinName}`)).map((file) => `./PDF/order/${thinName}/${file}`);
+		console.log('Merging');
+		if (response)
+			response.write(JSON.stringify({
+				message: "progress",
+				percent: (Math.round(count / urlArray.length * 1000) / 10),
+				eta: 'Finishing',
+				// count: count,
+			}) + "\r\n");
+		await fs.ensureDir('./public/FullPDF/');
+		// files = files.slice(0,3);
+		if (files && files.length)
+			await merge(files, `./public/FullPDF/${zipFilename}.pdf`,{maxBuffer:1024*10000000});
+		console.log('Done Merging');
+		
+		//TODO Overall cover
+		
+		
+		await fs.ensureDir('./public/ZIP/');
+		zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save('./public/ZIP/' + zipFilename + '.zip');
+		
+		const end = performance.now();
+		let time = end - start;
+		time /= 100;
+		time = Math.round(time);
+		time /= 10;
+		console.log(time);
+		if (response)
+			response.write(JSON.stringify({
+				message: "complete",
+				filename: zipFilename + '.pdf',
+				timeTaken: time
+			}));
+	}
 });
 
 async function authenticatedFetch(path, api, subdomain) {
@@ -708,20 +717,31 @@ async function authenticatedFetch(path, api, subdomain) {
 async function getSubpages(rootURL) {
 	let origin = rootURL.split("/")[2].split(".");
 	const subdomain = origin[0];
-	
-	origin = rootURL.split("/").splice(0, 3).join('/');
 	let path = rootURL.split('/').splice(3).join('/');
 	
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 	pages = await pages.json();
 	
 	
-	let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
-	info = await info.json();
+	let info = authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
+	let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
+	let tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
+	info = await (await info).json();
+	properties = await (await properties).json();
+	tags = await (await tags).json();
+	properties = properties['@count'] !== '0' ? properties.property : [properties.property];
+	tags = tags['@count'] !== '0' ? tags.tag : [tags.tag];
+	tags = tags.map((elem) => elem.title);
+	
 	return {
 		title: info.title,
 		url: rootURL,
-		children: await subpageCallback(pages)
+		tags: tags,
+		properties: properties,
+		subdomain: subdomain,
+		relativePath: '/',
+		children: await subpageCallback(pages),
+		id: info['@id'],
 	};
 	
 	
@@ -753,6 +773,7 @@ async function getSubpages(rootURL) {
 				url: url,
 				tags: tags,
 				properties: properties,
+				subdomain: subdomain,
 				children: children,
 				id: subpage['@id'],
 				relativePath: url.replace(rootURL, '')
