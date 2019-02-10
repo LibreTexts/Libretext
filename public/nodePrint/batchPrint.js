@@ -229,8 +229,8 @@ if (!window["batchPrint.js"]) {
 					return;
 				}
 				batchButton.innerText = "Redownload";
-				window.location = "https://" + targetComputer + "/print/FullPDF/" + out.filename;
-				window["batchComplete"] = "https://" + targetComputer + "/print/FullPDF/" + out.filename;
+				window.location = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
+				window["batchComplete"] = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`
 			}
 		}
 	}

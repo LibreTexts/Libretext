@@ -12,7 +12,7 @@ sudo apt-get upgrade -y >/dev/null 2>&1
 
 echo "Installing nodejs"
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs >/dev/null 2>&1
+sudo apt-get install -y default-jre nodejs >/dev/null 2>&1
 echo "nginx"
 sudo apt-get install nginx -y  >/dev/null 2>&1
 echo "PM2"
