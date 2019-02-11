@@ -164,6 +164,10 @@ puppeteer.launch({
 			let file = await getTOC(url, null);
 			staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
 		}
+		else if (url === '/cover') {
+			let file = await getCover(url, null);
+			staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
+		}
 		else if (url.startsWith('/tocHTML=')) {
 			url = url.split('/tocHTML=')[1];
 			if (url.endsWith(".pdf")) {
@@ -304,12 +308,12 @@ puppeteer.launch({
 		const start = performance.now();
 		const page = await browser.newPage();
 		
-		let origin = url.split("/")[2].split(".");
+		/*let origin = url.split("/")[2].split(".");
 		const subdomain = origin[0];
-		let path = url.split('/').splice(3).join('/');
+		let path = url.split('/').splice(3).join('/');*/
 		
-		
-		let content = `<h1>A very professional cover</h1><h2>${title}</h2><h3>${numPages}</h3>`;
+		let style = `<link rel="stylesheet" type="text/css" href="http://localhost/cover.css"/>`;
+		let content = `<div id="frontContainer"><div><h1>A lot of Text For me</h1></div><div><h1>Bottom</h1></div></div>${style}`;
 		
 		try {
 			await page.setContent(content,
@@ -318,51 +322,9 @@ puppeteer.launch({
 		
 		}
 		
-		const topIMG = baseIMG[subdomain];
-		const color = colors[subdomain];
-		
-		const cssb = [];
-		cssb.push('<style>');
-		cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-		cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-		cssb.push('#main {border: 1px solid blue;}');
-		cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-		cssb.push('* { -webkit-print-color-adjust: exact}');
-		cssb.push('.date, .pageNumber {display: inline-block}');
-		cssb.push('.added {padding: 0px 4px}');
-		cssb.push('a {text-decoration:none; color: white}');
-		cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
-		cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
-		cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
-		cssb.push('</style>');
-		const css = cssb.join('');
-		const prefix = 'Cover.';
-		
-		const style1 = '<div id="mainH">' +
-			'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/jpeg;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; margin-right: 10px"/></a>' +
-			'<div class="trapezoid"></div>' +
-			`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content; background: ${color}; border-radius: 10px;"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
-			'</div>';
-		
-		const style2 = `<div id="mainF">` +
-			`<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'></div>` +
-			`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-			`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-			`<div>Updated <div class="date"/></div>` +
-			'</div>';
-		
 		await page.pdf({
 			path: `./PDF/Cover/${escapedURL}.pdf`,
-			displayHeaderFooter: true,
-			headerTemplate: css + style1,
-			footerTemplate: css + style2,
 			printBackground: true,
-			margin: {
-				top: "90px",
-				bottom: "60px",
-				right: "0.75in",
-				left: "0.75in",
-			}
 		});
 		const end = performance.now();
 		let time = end - start;
@@ -377,7 +339,7 @@ puppeteer.launch({
 	async function getTOC(url, subpages, isHTML) {
 		await fs.ensureDir('./PDF/TOC');
 		let escapedURL = md5(url);
-		// console.log('Starting TOC');
+		console.log('Starting TOC');
 		const start = performance.now();
 		subpages = subpages || await getSubpages(url);
 		const page = await browser.newPage();
@@ -400,7 +362,7 @@ puppeteer.launch({
 			'body>ul {list-style-type: none; color:black}' +
 			'h2>a{color:#127bc4}' +
 			'ul {margin: 0; padding: 0;}' +
-			'h2, h3, h4, h5, h, l {margin: 20px 0 0 0;}' +
+			'h2, h3, h4, h5, h, l {margin: 10px 0 0 0;}' +
 			'h1, h2, h3, h4, h5, h {text-transform: uppercase;}' +
 			'.nobreak {page-break-inside: avoid;}' +
 			'.summary {text-align: justify; text-justify: inter-word;}' +
@@ -441,7 +403,7 @@ puppeteer.launch({
 				if (!hasLower) { //at lowest level
 					prefix = isSubTOC === 'yes' ? 'h' : 'l';
 				}
-				
+				// TODO Indented TOC subtopics and No Guide subtopic summaries
 				
 				let inner = await map(subpages.children, async (elem, callback) => {
 					let summary = '';

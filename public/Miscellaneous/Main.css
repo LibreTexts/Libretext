@@ -26,6 +26,9 @@
 		background: #f0f0f0;
 		border-radius: .5em;
 	}
+	#elm-main-content{
+		padding-bottom: 0;
+	}
 }
 
 /*GeoGebra fix*/
