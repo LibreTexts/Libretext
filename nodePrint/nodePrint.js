@@ -167,7 +167,13 @@ puppeteer.launch({
 			staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
 		}
 		else if (url === '/cover') {
-			let file = await getCover(url, null);
+			let current = {
+				url: 'And others ',
+				title: 'SCC: CHEM 300 - Beginning Chemistry (Alviar-Agnew)',
+				subdomain: 'chem',
+				tags: ['authorname:openstax']
+			};
+			let file = await getCover(current, 12);
 			staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
 		}
 		else if (url.startsWith('/tocHTML=')) {
@@ -304,19 +310,46 @@ puppeteer.launch({
 		}
 	}
 	
-	async function getCover(url, title, numPages) {
+	async function getCover(current, numPages, isHardcover) {
 		await fs.ensureDir('./PDF/Cover');
-		let escapedURL = md5(url);
+		let escapedURL = md5(current.url);
 		const start = performance.now();
 		const page = await browser.newPage();
 		
 		/*let origin = url.split("/")[2].split(".");
 		const subdomain = origin[0];
 		let path = url.split('/').splice(3).join('/');*/
+		let author = {};
+		for (let i = 0; i < current.tags.length; i++) {
+			let tag = current.tags[i];
+			if (tag.startsWith('lulu,')) {
+				let items = tag.split(',');
+				if (items[1])
+					current.title = items[1];
+				if (items[2])
+					author.name = items[2];
+				if (items[3])
+					author.companyname = items[3];
+				break;
+			}
+			if (tag.startsWith('authorname:')) {
+				author = tag.replace('authorname:', '');
+			}
+		}
 		
+		if (author) {
+			let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
+			authors = await authors.json();
+			author = authors[author] || author;
+		}
 		
-		let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>`;
-		let content = `<div id="frontContainer"><div><h1></h1></div><div><h1></h1></div></div>${style}`;
+		let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet">`;
+		let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title}</div></div><div><div id="frontCite"><i>${author.name}</i><br/>${author.companyname}</div></div></div>`;
+		let backContent = `<div id="backContainer"><div>${numPages}</div></div>`;
+		let spine = `<div id="spine"></div><style>body {padding: 80px}</style>`;
+		// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
+		let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
 		
 		try {
 			await page.setContent(content,
@@ -328,6 +361,8 @@ puppeteer.launch({
 		await page.pdf({
 			path: `./PDF/Cover/${escapedURL}.pdf`,
 			printBackground: true,
+			width: numPages ? getWidth() : '',
+			height: numPages ? '12.750 in' : '',
 		});
 		const end = performance.now();
 		let time = end - start;
@@ -337,6 +372,16 @@ puppeteer.launch({
 		await page.close();
 		// console.log(`Cover Created: ${time}s ${escapedURL}`);
 		return escapedURL;
+		
+		function getWidth(){
+			return '20.125 in';
+			if (isHardcover){
+			
+			}
+			else {
+			
+			}
+		}
 	}
 	
 	async function getTOC(url, subpages, isHTML) {
@@ -730,7 +775,7 @@ puppeteer.launch({
 		}
 		
 		//Overall cover
-		let filename = `Cover/${await getCover(current.url, current.title)}.pdf`;
+		let filename = `Cover/${await getCover(current)}.pdf`;
 		await fs.copy(`./PDF/${filename}`, `${directory}/${filenamify('00000:A Cover.pdf')}`);
 		await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
 		
@@ -755,7 +800,7 @@ puppeteer.launch({
 		let dataBuffer = await fs.readFile(`./PDF/Finished/${zipFilename}/Lulu.pdf`);
 		let lulu = await pdf(dataBuffer);
 		console.log(`Got numpages ${lulu.numpages}`);
-		filename = `Cover/${await getCover(current.url, current.title, lulu.numpages)}.pdf`;
+		filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
 		await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/LuluCover.pdf`);
 		
 		zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);

@@ -77,7 +77,7 @@ async function handler(request, response) {
 			responseError(request.method + " Not Acceptable", 406)
 		}
 	}
-	else if (url === "/subpages") {
+	else if (url === "/subpages" && false) { // disabled
 		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 			response.writeHead(200, {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -109,6 +109,40 @@ async function handler(request, response) {
 			});
 		}
 	}
+	else if (url.startsWith("/getAuthors/")) {
+		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "GET",
+				"Content-Type": " application/json",
+				"Cache-Control": "public, max-age=36000",
+			});
+			response.end();
+		}
+		else if (request.method === "GET") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+				"Content-Type": " application/json",
+				"Cache-Control": "public, max-age=36000",
+			} : {"Content-Type": " application/json", "Cache-Control": "public, max-age=36000",});
+			
+			let subdomain = url.split('/getAuthors/')[1];
+			let contents = await authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', authen["getAuthors"], subdomain);
+			if (contents.ok) {
+				contents = await contents.text();
+				let match = contents.match(/^var authors = {[\s\S]*?^}/m);
+				if (match) {
+					contents = match[0];
+					contents = contents.replace('var authors = ','');
+					contents = decodeHTML(contents);
+					contents = decodeHTML(contents);
+					response.write(contents);
+				}
+			}
+			response.end();
+		}
+	}
 	else {
 		responseError('Action not found', 400);
 	}
@@ -127,16 +161,18 @@ async function authenticatedFetch(path, api, username, subdomain) {
 	if (!username) {
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`);
 	}
-	const user = "=" + username;
-	const crypto = require('crypto');
-	const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
-	const epoch = Math.floor(Date.now() / 1000);
-	hmac.update(`${authen[subdomain].key}${epoch}${user}`);
-	const hash = hmac.digest('hex');
-	let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
-	if (subdomain)
+	if (subdomain) {
+		const user = "=" + username;
+		const crypto = require('crypto');
+		const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
+		const epoch = Math.floor(Date.now() / 1000);
+		hmac.update(`${authen[subdomain].key}${epoch}${user}`);
+		const hash = hmac.digest('hex');
+		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
+		
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 			{headers: {'x-deki-token': token}});
+	}
 	else
 		console.error(`Invalid subdomain ${subdomain}`);
 }
@@ -197,4 +233,13 @@ async function getSubpages(rootURL, username) {
 			return [];
 		}
 	}
+}
+
+function decodeHTML(content) {
+	let ret = content.replace(/&gt;/g, '>');
+	ret = ret.replace(/&lt;/g, '<');
+	ret = ret.replace(/&quot;/g, '"');
+	ret = ret.replace(/&apos;/g, "'");
+	ret = ret.replace(/&amp;/g, '&');
+	return ret;
 }
