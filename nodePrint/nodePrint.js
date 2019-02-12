@@ -31,12 +31,14 @@ puppeteer.launch({
 	// headless: false
 }).then((browser) => {
 	const server = http.createServer(handler);
+	const localServer = http.createServer(handler);
 	const staticFileServer = new nodeStatic.Server('./public');
 	let port = 3001;
+	server.listen(port);
 	if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 		port = parseInt(process.argv[2]);
+		localServer.listen(port);
 	}
-	server.listen(port);
 	const now1 = new Date();
 	console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 	fs.ensureDir('./PDF');
@@ -181,7 +183,7 @@ puppeteer.launch({
 			url = url.split('/Finished/')[1];
 			url = decodeURIComponent(url);
 			if (await fs.exists(`./PDF/Finished/${url}`))
-				staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition':'attachment'}, request, response);
+				staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment'}, request, response);
 			else
 				console.error(url);
 		}
@@ -312,8 +314,9 @@ puppeteer.launch({
 		const subdomain = origin[0];
 		let path = url.split('/').splice(3).join('/');*/
 		
-		let style = `<link rel="stylesheet" type="text/css" href="http://localhost/cover.css"/>`;
-		let content = `<div id="frontContainer"><div><h1>A lot of Text For me</h1></div><div><h1>Bottom</h1></div></div>${style}`;
+		
+		let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>`;
+		let content = `<div id="frontContainer"><div><h1></h1></div><div><h1></h1></div></div>${style}`;
 		
 		try {
 			await page.setContent(content,
@@ -332,7 +335,7 @@ puppeteer.launch({
 		time = Math.round(time);
 		time /= 10;
 		await page.close();
-		// console.log(`TOC Created: ${time}s ${escapedURL}`);
+		// console.log(`Cover Created: ${time}s ${escapedURL}`);
 		return escapedURL;
 	}
 	
@@ -362,6 +365,7 @@ puppeteer.launch({
 			'body>ul {list-style-type: none; color:black}' +
 			'h2>a{color:#127bc4}' +
 			'ul {margin: 0; padding: 0;}' +
+			'.indent {margin-left: 10px;}' +
 			'h2, h3, h4, h5, h, l {margin: 10px 0 0 0;}' +
 			'h1, h2, h3, h4, h5, h {text-transform: uppercase;}' +
 			'.nobreak {page-break-inside: avoid;}' +
@@ -403,11 +407,12 @@ puppeteer.launch({
 				if (!hasLower) { //at lowest level
 					prefix = isSubTOC === 'yes' ? 'h' : 'l';
 				}
-				// TODO Indented TOC subtopics and No Guide subtopic summaries
 				
+				//Summary Handling
 				let inner = await map(subpages.children, async (elem, callback) => {
 					let summary = '';
-					if (prefix !== 'l') {
+					let isSubtopic = elem.title.match(/^[0-9.]+[A-Z]: /) && elem.tags.includes('article:topic') ? 'indent' : null;
+					if (prefix !== 'l' && !isSubtopic) {
 						let path = elem.url.split('/').splice(3).join('/');
 						
 						properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
@@ -417,7 +422,7 @@ puppeteer.launch({
 						}
 					}
 					
-					return `<li><div class="nobreak"><${prefix}><a href="${elem.url}"><b>${elem.title}</b></a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
+					return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}"><b>${elem.title}</b></a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
 				});
 				inner = inner.join('');
 				
@@ -797,7 +802,7 @@ async function getSubpages(rootURL) {
 	properties = await (await properties).json();
 	tags = await (await tags).json();
 	properties = properties['@count'] !== '0' ? properties.property : [properties.property];
-	if(tags['@count'] !== '0') {
+	if (tags['@count'] !== '0') {
 		tags = tags.tag.length ? tags.tag : [tags.tag];
 		tags = tags.map((elem) => elem.title);
 	}

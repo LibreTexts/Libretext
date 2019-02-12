@@ -1,5 +1,5 @@
 body {
-	background-image: url("http://localhost/med.png");
+	background-image: url("http://localhost:3001/print/med.png");
 	background-size: cover;
 	background-color: #127AC2;
 	margin: 0;
@@ -15,7 +15,7 @@ body {
 	flex: 1;
 	width: 800px;
 	color: white;
-	padding: 40px 0 40px 30px;
+	padding: 45px 0 45px 45px;
 	border: 1px solid red;
 }
 
