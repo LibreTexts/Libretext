@@ -456,7 +456,7 @@ puppeteer.launch({
 				//Summary Handling
 				let inner = await map(subpages.children, async (elem, callback) => {
 					let summary = '';
-					let isSubtopic = elem.title.match(/^[0-9.]+[A-Z]: /) && elem.tags.includes('article:topic') ? 'indent' : null;
+					let isSubtopic = elem.title.match(/^[0-9.]+\.[0-9]+\.[A-Z]: /) && elem.tags.includes('article:topic') ? 'indent' : null;
 					if (prefix !== 'l' && !isSubtopic) {
 						let path = elem.url.split('/').splice(3).join('/');
 						
