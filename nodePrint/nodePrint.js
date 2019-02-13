@@ -312,7 +312,6 @@ puppeteer.launch({
 		async function getCover(current, numPages, isHardcover = true) {
 			await fs.ensureDir('./PDF/Cover');
 			let escapedURL = md5(current.url);
-			const start = performance.now();
 			const page = await browser.newPage();
 			
 			/*let origin = url.split("/")[2].split(".");
@@ -354,7 +353,7 @@ puppeteer.launch({
 				await page.setContent(content,
 					{waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 			} catch (e) {
-			
+				
 			}
 			
 			await page.pdf({
@@ -363,14 +362,7 @@ puppeteer.launch({
 				width: numPages ? getWidth() : '8.5 in',
 				height: numPages ? '12.750 in' : '11 in',
 			});
-			const end = performance.now();
-			let time = end - start;
-			time /= 100;
-			time = Math.round(time);
-			time /= 10;
-			console.log(time);
 			await page.close();
-			// console.log(`Cover Created: ${time}s ${escapedURL}`);
 			return escapedURL;
 			
 			function getWidth() {
@@ -405,7 +397,7 @@ puppeteer.launch({
 					'751': 2,
 					'779': 2.0625,
 					'800': 2.125,
-				}
+				};
 				if (isHardcover) {
 					let result = '';
 					for (let number in sizes) {
@@ -471,7 +463,7 @@ puppeteer.launch({
 				await page.setContent(content,
 					{waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 			} catch (e) {
-			
+				
 			}
 			
 			async function getLevel(subpages, level = 2, isSubTOC) {
@@ -859,6 +851,44 @@ puppeteer.launch({
 			return {filename: PDFname + '.pdf', title: title};
 		}
 		
+		async function getSpecial(current) {
+			let url = current.url;
+			let escapedURL = md5(url);
+			
+			const page = await browser.newPage();
+			const timeout = setTimeout(() => {
+				if (!page.isClosed)
+					page.close();
+			}, 40000);
+			
+			let PDFname = escapedURL;
+			try {
+				try {
+					await page.goto(url + "?no-cache", {
+						timeout: 30000,
+						waitUntil: ["load", "domcontentloaded", 'networkidle0']
+					});
+				} catch (err) {
+				}
+				await page.addStyleTag({content: '#title{display:none}'});
+				await page.pdf({
+					path: `./PDF/${PDFname}.pdf`,
+					printBackground: true,
+					margin: {
+						top: "90px",
+						bottom: "60px",
+						right: "0.75in",
+						left: "0.75in",
+					}
+				});
+			} catch (err) {
+			}
+			await page.close();
+			clearTimeout(timeout);
+			
+			return {filename: PDFname + '.pdf', title: current.title};
+		}
+		
 		async function getLibretext(url, response, params) {
 			let refreshOnly = params.refreshOnly;
 			let isNoCache = params['no-cache'] || params.nocache;
@@ -896,11 +926,19 @@ puppeteer.launch({
 				await mapLimit(urlArray, 4, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
-					if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
+					if (title === 'TitlePage') {
+						filename = `TOC/${await getSpecial(page)}.pdf`;
+						title = '00000:B Title Page'
+					}
+					else if (title === 'InfoPage') {
+						filename = `TOC/${await getSpecial(page)}.pdf`;
+						title = '00000:C Information Page'
+					}
+					else if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
 						filename = `TOC/${await getTOC(page.url, page)}.pdf`;
 						
 						if (page.tags.includes('coverpage:yes'))
-							title = '00000:B Table of Contents'
+							title = '00000:D Table of Contents'
 					}
 					else if (kubernetesServiceHost) {
 						let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
