@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/nodePrint/public/logo.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,72 +25,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-745">
-              <caret line="938" column="59" lean-forward="true" selection-start-line="938" selection-start-column="59" selection-end-line="938" selection-end-column="59" />
+            <state relative-caret-position="526">
+              <caret line="1000" column="30" lean-forward="true" selection-start-line="1000" selection-start-column="30" selection-end-line="1000" selection-end-column="30" />
               <folding>
-                <element signature="e#2148#2218#0" />
-                <element signature="e#2254#2325#0" />
-                <element signature="e#2388#2524#0" />
-                <element signature="e#3282#4531#0" />
-                <element signature="e#3343#4444#0" />
-                <element signature="e#3438#3645#0" />
-                <element signature="e#3489#3614#0" />
-                <element signature="e#3686#4358#0" />
-                <element signature="e#3771#3982#0" />
-                <element signature="e#4186#4258#0" />
-                <element signature="e#4369#4438#0" />
-                <element signature="e#4454#4526#0" />
-                <element signature="e#4584#5368#0" />
-                <element signature="e#4702#4940#0" />
-                <element signature="e#4752#4911#0" />
-                <element signature="e#4980#5286#0" />
-                <element signature="e#5064#5223#0" />
-                <element signature="e#5296#5363#0" />
-                <element signature="e#5406#5638#0" />
-                <element signature="e#5471#5507#0" />
-                <element signature="e#5681#6039#0" />
-                <element signature="e#5701#5858#0" />
-                <element signature="e#6081#6283#0" />
-                <element signature="e#6150#6186#0" />
-                <element signature="e#6326#6611#0" />
-                <element signature="e#6620#6901#0" />
-                <element signature="e#6728#6894#0" />
-                <element signature="e#6786#6888#0" />
-                <element signature="e#6953#7192#0" />
-                <element signature="e#7016#7187#0" />
-                <element signature="e#7230#7451#0" />
-                <element signature="e#7494#9628#0" />
-                <element signature="e#7774#7853#0" />
-                <element signature="e#7896#9596#0" />
-                <element signature="e#7945#8090#0" />
-                <element signature="e#7973#8032#0" />
-                <element signature="e#8043#8084#0" />
-                <element signature="e#8138#9591#0" />
-                <element signature="e#8178#9585#0" />
-                <element signature="e#8225#9578#0" />
-                <element signature="e#8247#8321#0" />
-                <element signature="e#8329#8428#0" />
-                <element signature="e#8436#8543#0" />
-                <element signature="e#8551#8694#0" />
-                <element signature="e#8583#8693#0" />
-                <element signature="e#8702#8809#0" />
-                <element signature="e#8817#8924#0" />
-                <element signature="e#8932#9075#0" />
-                <element signature="e#8964#9074#0" />
-                <element signature="e#9083#9179#0" />
-                <element signature="e#9187#9330#0" />
-                <element signature="e#9217#9329#0" />
-                <element signature="e#9338#9492#0" />
-                <element signature="e#9368#9491#0" />
-                <element signature="e#9500#9570#0" />
-                <element signature="e#9664#10315#0" />
-                <element signature="e#9985#10184#0" />
-                <element signature="e#10080#10133#0" />
-                <element signature="e#10193#10311#0" />
-                <element signature="e#10199#10236#0" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#13994#20889#0" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#2076#3519#0" />
+                <element signature="e#5687#5919#0" />
+                <element signature="e#5962#6536#0" />
+                <element signature="e#6578#6780#0" />
+                <element signature="e#6823#7108#0" />
+                <element signature="e#7991#10125#0" />
+                <element signature="e#10161#10812#0" />
+                <element signature="e#14368#21622#0" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -97,7 +46,7 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#20942#25422#0" />
+                <element signature="e#25987#32925#0" />
                 <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -109,9 +58,6 @@
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#32720#39565#0" />
-                <element signature="n#!!block;n#getSubpages#0" />
-                <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0" />
               </folding>
             </state>
           </provider>
@@ -132,26 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>starting</find>
-      <find>write</find>
-      <find>img</find>
-      <find>params</find>
-      <find>index</find>
-      <find>cover</find>
-      <find>ensuredir</find>
-      <find>chem</find>
-      <find>getsubpages</find>
-      <find>propaga</find>
-      <find>TOC</find>
-      <find>commons</find>
-      <find>soci</find>
-      <find>bottom</find>
-      <find>fork</find>
-      <find>amp</find>
-      <find>getcover</find>
-      <find>300</find>
-      <find>getCover</find>
-      <find>margin</find>
       <find>[0-9</find>
       <find>lowercase</find>
       <find>thin</find>
@@ -162,6 +88,26 @@
       <find>0.5in</find>
       <find>Margin</find>
       <find>ensureDir</find>
+      <find>special</find>
+      <find>red</find>
+      <find>getThin</find>
+      <find>getCover</find>
+      <find>spine</find>
+      <find>relativePath</find>
+      <find>stat</find>
+      <find>PDF/TOC</find>
+      <find>exists</find>
+      <find>InfoPage</find>
+      <find>cover</find>
+      <find>endsWith</find>
+      <find>getLibrete</find>
+      <find>count</find>
+      <find>download</find>
+      <find>Finishing</find>
+      <find>lulu</find>
+      <find>lulu,</find>
+      <find>kubernetes</find>
+      <find>slice</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -272,9 +218,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-396" />
-    <option name="y" value="-14" />
+    <option name="y" value="-15" />
     <option name="width" value="1737" />
-    <option name="height" value="1388" />
+    <option name="height" value="1389" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -336,39 +282,18 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="PDF" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="PDF" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Finished" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="PDF" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Finished" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="chem-SCC! CHEM 300 - Beginning Chemistry (Alviar-Agnew)" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -385,7 +310,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="true" />
+    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/nodePrint/node_modules/find-remove/find-remove.js" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -939,13 +864,7 @@
       <workItem from="1550001778841" duration="4988000" />
       <workItem from="1550007862052" duration="253000" />
       <workItem from="1550008875769" duration="8853000" />
-    </task>
-    <task id="LOCAL-00074" summary="Hooked up tracker data&#10;&#10;Contributions seems off">
-      <created>1542081461367</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1542081461368</updated>
+      <workItem from="1550029427382" duration="7882000" />
     </task>
     <task id="LOCAL-00075" summary="Time tracker MVP">
       <created>1542176128163</created>
@@ -1283,7 +1202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549957076103</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="Added TitlePage and InfoPage">
+      <created>1550025341391</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1550025341393</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1319,7 +1245,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1178083000" />
+    <option name="totallyTimeSpent" value="1189213000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1328,7 +1254,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.19987959" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.2486454" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32266667" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1339,7 +1265,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.26666668" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26666668" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.248" />
@@ -1350,7 +1276,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.30162552" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info active="true" anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.29680914" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.31848285" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1446,7 +1372,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added Kubernetes detection" />
     <MESSAGE value="Remove expired config" />
     <MESSAGE value="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions" />
     <MESSAGE value="Propagator properties and tags" />
@@ -1471,7 +1396,8 @@
     <MESSAGE value="Added printTOC chapter guides" />
     <MESSAGE value="Beginning renumber escape sequence" />
     <MESSAGE value="Regex fix for subtopics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Regex fix for subtopics" />
+    <MESSAGE value="Added TitlePage and InfoPage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added TitlePage and InfoPage" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1507,6 +1433,11 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>url.replace(rootURL, '')</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>sizes[24]</expression-string>
         <language-id>JavaScript</language-id>
@@ -1547,31 +1478,9 @@
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>response.statusText</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23782">
-          <caret line="1042" column="29" selection-start-line="1042" selection-start-column="29" selection-end-line="1042" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!block;n#initialize#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="2" selection-start-column="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/.dockerignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1769,7 +1678,6 @@
     <entry file="file://$PROJECT_DIR$/nodePrint/public/med.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.jpg" />
     <entry file="file://$PROJECT_DIR$/nodePrint/public/header_logo_mini.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1778,23 +1686,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/lulu.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1832,74 +1723,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/lulu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="24" lean-forward="true" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/find-remove/find-remove.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="162" column="4" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/import.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="119" column="26" lean-forward="true" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="30" lean-forward="true" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-745">
-          <caret line="938" column="59" lean-forward="true" selection-start-line="938" selection-start-column="59" selection-end-line="938" selection-end-column="59" />
+        <state relative-caret-position="526">
+          <caret line="1000" column="30" lean-forward="true" selection-start-line="1000" selection-start-column="30" selection-end-line="1000" selection-end-column="30" />
           <folding>
-            <element signature="e#2148#2218#0" />
-            <element signature="e#2254#2325#0" />
-            <element signature="e#2388#2524#0" />
-            <element signature="e#3282#4531#0" />
-            <element signature="e#3343#4444#0" />
-            <element signature="e#3438#3645#0" />
-            <element signature="e#3489#3614#0" />
-            <element signature="e#3686#4358#0" />
-            <element signature="e#3771#3982#0" />
-            <element signature="e#4186#4258#0" />
-            <element signature="e#4369#4438#0" />
-            <element signature="e#4454#4526#0" />
-            <element signature="e#4584#5368#0" />
-            <element signature="e#4702#4940#0" />
-            <element signature="e#4752#4911#0" />
-            <element signature="e#4980#5286#0" />
-            <element signature="e#5064#5223#0" />
-            <element signature="e#5296#5363#0" />
-            <element signature="e#5406#5638#0" />
-            <element signature="e#5471#5507#0" />
-            <element signature="e#5681#6039#0" />
-            <element signature="e#5701#5858#0" />
-            <element signature="e#6081#6283#0" />
-            <element signature="e#6150#6186#0" />
-            <element signature="e#6326#6611#0" />
-            <element signature="e#6620#6901#0" />
-            <element signature="e#6728#6894#0" />
-            <element signature="e#6786#6888#0" />
-            <element signature="e#6953#7192#0" />
-            <element signature="e#7016#7187#0" />
-            <element signature="e#7230#7451#0" />
-            <element signature="e#7494#9628#0" />
-            <element signature="e#7774#7853#0" />
-            <element signature="e#7896#9596#0" />
-            <element signature="e#7945#8090#0" />
-            <element signature="e#7973#8032#0" />
-            <element signature="e#8043#8084#0" />
-            <element signature="e#8138#9591#0" />
-            <element signature="e#8178#9585#0" />
-            <element signature="e#8225#9578#0" />
-            <element signature="e#8247#8321#0" />
-            <element signature="e#8329#8428#0" />
-            <element signature="e#8436#8543#0" />
-            <element signature="e#8551#8694#0" />
-            <element signature="e#8583#8693#0" />
-            <element signature="e#8702#8809#0" />
-            <element signature="e#8817#8924#0" />
-            <element signature="e#8932#9075#0" />
-            <element signature="e#8964#9074#0" />
-            <element signature="e#9083#9179#0" />
-            <element signature="e#9187#9330#0" />
-            <element signature="e#9217#9329#0" />
-            <element signature="e#9338#9492#0" />
-            <element signature="e#9368#9491#0" />
-            <element signature="e#9500#9570#0" />
-            <element signature="e#9664#10315#0" />
-            <element signature="e#9985#10184#0" />
-            <element signature="e#10080#10133#0" />
-            <element signature="e#10193#10311#0" />
-            <element signature="e#10199#10236#0" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#13994#20889#0" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#2076#3519#0" />
+            <element signature="e#5687#5919#0" />
+            <element signature="e#5962#6536#0" />
+            <element signature="e#6578#6780#0" />
+            <element signature="e#6823#7108#0" />
+            <element signature="e#7991#10125#0" />
+            <element signature="e#10161#10812#0" />
+            <element signature="e#14368#21622#0" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1910,7 +1780,7 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#20942#25422#0" />
+            <element signature="e#25987#32925#0" />
             <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1922,9 +1792,6 @@
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#32720#39565#0" />
-            <element signature="n#!!block;n#getSubpages#0" />
-            <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0" />
           </folding>
         </state>
       </provider>

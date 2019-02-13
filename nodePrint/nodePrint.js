@@ -18,7 +18,7 @@ const fetch = require('node-fetch');
 const querystring = require('querystring');
 const merge = util.promisify(require('easy-pdf-merge'));
 const pdf = require('pdf-parse');
-
+const findRemoveSync = require('find-remove');
 
 var Gbrowser;
 var Gserver;
@@ -42,6 +42,7 @@ puppeteer.launch({
 		const now1 = new Date();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF');
+		fs.ensureDir('./PDF/Margin');
 		let working = {};
 		const eventEmitter = new events.EventEmitter();
 		
@@ -81,6 +82,13 @@ puppeteer.launch({
 				if (url.endsWith(".pdf")) {
 					url = url.slice(0, -4);
 				}
+				
+				//TODO: Remove this testing feature
+				let withMargin = false;
+				if (url.endsWith("marg")) {
+					url = url.slice(0, -4);
+					withMargin = true;
+				}
 				const escapedURL = md5(url);
 				
 				// response.setHeader("Content-Disposition","attachment");
@@ -92,6 +100,8 @@ puppeteer.launch({
 							response.write(JSON.stringify(result));
 							response.end();
 						}
+						else if (withMargin)
+							staticFileServer.serveFile('../PDF/Margin/' + escapedURL + '.pdf', 200, {}, request, response);
 						else if (result.filename === 'restricted') {
 							responseError('This page is not publicly accessible.', 403)
 						}
@@ -102,7 +112,7 @@ puppeteer.launch({
 				
 			}
 			else if (url.startsWith("/Libretext=")) {
-				if (request.headers.origin.endsWith("libretexts.org")) {
+				if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 					if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 						response.writeHead(200, {
 							"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -125,6 +135,7 @@ puppeteer.launch({
 								params[param] = true;
 						}
 						params.ip = ip;
+						console.log(`Received Libretext request ${ip}`);
 						await getLibretext(url, response, params);
 						response.end();
 					}
@@ -146,7 +157,7 @@ puppeteer.launch({
 					response.end();
 				}
 				else if (request.method === "GET") {
-					response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+					response.writeHead(200, request.headers.host && request.headers.host.includes(".miniland1333.com") ? {
 						"Access-Control-Allow-Origin": request.headers.origin || null,
 						"Access-Control-Allow-Methods": "GET",
 						"Content-Type": " text/plain",
@@ -167,10 +178,10 @@ puppeteer.launch({
 			}
 			else if (url.startsWith('/testCover')) {
 				let current = {
-					url: 'And others ',
+					url: 'https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)',
 					title: 'SCC: CHEM 300 - Beginning Chemistry (Alviar-Agnew)',
 					subdomain: 'chem',
-					tags: ['authorname:openstax']
+					tags: ['lulu,CHEM 300 - Beginning Chemistry,Marisa Agnew,Sacramento City College'] //'authorname:openstax'
 				};
 				let file = await getCover(current, url.includes('num') ? 478 : undefined); //, 478
 				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
@@ -191,6 +202,12 @@ puppeteer.launch({
 					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment'}, request, response);
 				else
 					console.error(url);
+			}
+			else if (url.startsWith('/Refresh=')) {
+				//Remove all files older than 2 months.
+				findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
+				response.write('Done!');
+				response.end();
 			}
 			else { //static server
 				console.log(url);
@@ -320,7 +337,17 @@ puppeteer.launch({
 			let author = {};
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
-				if (tag.startsWith('lulu,')) {
+				if (tag.startsWith('lulu|')) {
+					let items = tag.split('|');
+					if (items[1])
+						current.title = items[1];
+					if (items[2])
+						author.name = items[2];
+					if (items[3])
+						author.companyname = items[3];
+					break;
+				}
+				else if (tag.startsWith('lulu,')) {
 					let items = tag.split(',');
 					if (items[1])
 						current.title = items[1];
@@ -344,8 +371,11 @@ puppeteer.launch({
 			let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${numPages ? 'LuluFront' : 'Normal'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/LuluBack/${current.subdomain}.png")</style>`;
 			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title}</div></div><div><div id="frontCite"><i>${author.name}</i><br/>${author.companyname}</div></div></div>`;
-			let backContent = `<div id="backContainer"><div style="color:red">${numPages}</div></div>`;
+			let backContent = `<div id="backContainer"></div>`;
 			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/>`;
+			if (!isHardcover) {
+				spine += '<style>#frontContainer,#backContainer{width: 695px}</style>'
+			}
 			// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
 			let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
 			
@@ -360,14 +390,13 @@ puppeteer.launch({
 				path: `./PDF/Cover/${escapedURL}.pdf`,
 				printBackground: true,
 				width: numPages ? getWidth() : '8.5 in',
-				height: numPages ? '12.750 in' : '11 in',
+				height: numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
 			});
 			await page.close();
 			return escapedURL;
 			
 			function getWidth() {
 				// return '20.125 in';
-				let covers = 18.75;
 				let sizes = {
 					'0': null,
 					'24': .25,
@@ -406,18 +435,21 @@ puppeteer.launch({
 						}
 					}
 					if (result) {
-						return `${result + covers} in`;
+						return `${result + 18.75} in`;
 					}
 					
 				}
 				else {
-					return `${numPages / 444 + 0.06 + covers} in`;
+					let width = (numPages / 444) + 0.06 + 17.25;
+					width = Math.floor(width * 1000) / 1000;
+					return `${width} in`;
 				}
 			}
 		}
 		
 		async function getTOC(url, subpages, isHTML) {
 			await fs.ensureDir('./PDF/TOC');
+			await fs.ensureDir('./PDF/Margin/TOC');
 			let escapedURL = md5(url);
 			console.log('Starting TOC');
 			const start = performance.now();
@@ -555,6 +587,20 @@ puppeteer.launch({
 					left: "0.75in",
 				}
 			});
+			//Lulu
+			await page.pdf({
+				path: `./PDF/Margin/TOC/${escapedURL}.pdf`,
+				displayHeaderFooter: true,
+				headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
+				footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+				printBackground: true,
+				margin: {
+					top: "1in",
+					bottom: ".75in",
+					right: "0.75in",
+					left: "0.75in",
+				}
+			});
 			const end = performance.now();
 			let time = end - start;
 			time /= 100;
@@ -566,8 +612,6 @@ puppeteer.launch({
 		}
 		
 		async function getThinCC(current, destination) {
-			current = await getSubpages('https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)');
-			destination = './imsmanifest.xml';
 			let result;
 			
 			const {org, resources} = createXML(addChildren(current));
@@ -704,11 +748,12 @@ puppeteer.launch({
 			
 			const daysCache = 30;
 			const updateTime = await checkTime(url);
+			let marginExists = await fs.exists(`./PDF/Margin/${escapedURL}.pdf`);
 			if (updateTime === 'restricted') {
 				console.error(`PRIVE  ${ip} ${url}`);
 				return {filename: 'restricted'};
 			}
-			else if (!isNoCache && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
+			else if (!isNoCache && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7 && marginExists) { //file is up to date
 				// 8.64e+7 day
 				console.log(`CACHE  ${ip} ${url}`);
 				return {filename: escapedURL + '.pdf'};
@@ -822,6 +867,20 @@ puppeteer.launch({
 						left: "0.75in",
 					}
 				});
+				//Lulu
+				await page.pdf({
+					path: `./PDF/Margin/${PDFname}.pdf`,
+					displayHeaderFooter: true,
+					headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
+					footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+					printBackground: true,
+					margin: {
+						top: "1in",
+						bottom: ".75in",
+						right: "0.75in",
+						left: "0.75in",
+					}
+				});
 				
 				
 			} catch (err) {
@@ -881,22 +940,85 @@ puppeteer.launch({
 						left: "0.75in",
 					}
 				});
+				await page.pdf({
+					path: `./PDF/Margin/${PDFname}.pdf`,
+					printBackground: true,
+					margin: {
+						top: "0.5in",
+						bottom: "0.5in",
+						right: "0.75in",
+						left: "0.75in",
+					}
+				});
 			} catch (err) {
 			}
 			await page.close();
 			clearTimeout(timeout);
 			
-			return {filename: PDFname + '.pdf', title: current.title};
+			return PDFname;
 		}
 		
 		async function getLibretext(url, response, params) {
 			let refreshOnly = params.refreshOnly;
 			let isNoCache = params['no-cache'] || params.nocache;
-			let current = params.subpages || await getSubpages(url);
+			
+			let current = params.subpages;
+			if (!current) {
+				let count = 0;
+				let heartbeat = setInterval(() => response.write(JSON.stringify({
+					message: "subpages",
+					percent: 0,
+					eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
+				}) + "\r\n"), 1000);
+				current = await getSubpages(url);
+				clearInterval(heartbeat);
+			}
+			for (let i = 0; i < current.tags.length; i++) {
+				let tag = current.tags[i];
+				if (tag.startsWith('lulu|')) {
+					let items = tag.split('|');
+					if (items[1])
+						current.title = items[1];
+					break;
+				}
+				else if (tag.startsWith('lulu,')) {
+					let items = tag.split(',');
+					if (items[1])
+						current.title = items[1];
+					break;
+				}
+			}
+			
 			console.log(`Getting LibreText ${current.title}`);
-			const zipFilename = filenamify(`${current.subdomain}-${current.title}`);
+			const zipFilename = filenamify(`${current.subdomain}-${current.title}-${md5(current.url).slice(0, 16)}`);
 			const directory = './PDF/libretexts/' + zipFilename;
 			const thinName = md5(zipFilename).slice(0, 16);
+			
+			//Try to get special files
+			let titlePage = fetch(`${current.url}/TitlePage`);
+			let infoPage = await fetch(`${current.url}/InfoPage`);
+			titlePage = await titlePage;
+			if (infoPage.ok) {
+				current.children.push({
+					title: "InfoPage",
+					url: `${current.url}/InfoPage`,
+					subdomain: current.subdomain,
+					tags: [],
+					properties: [],
+					children: []
+				});
+			}
+			if (titlePage.ok) {
+				current.children.push({
+					title: "TitlePage",
+					url: `${current.url}/TitlePage`,
+					subdomain: current.subdomain,
+					tags: [],
+					properties: [],
+					children: []
+				});
+			}
+			
 			
 			if (!refreshOnly) {
 				await fs.emptyDir(directory);
@@ -923,15 +1045,16 @@ puppeteer.launch({
 			
 			
 			try {
-				await mapLimit(urlArray, 4, async (page) => {
+				//kubernetesServiceHost ? 4 : 2
+				await mapLimit(urlArray,  4, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
 					if (title === 'TitlePage') {
-						filename = `TOC/${await getSpecial(page)}.pdf`;
+						filename = `${await getSpecial(page)}.pdf`;
 						title = '00000:B Title Page'
 					}
 					else if (title === 'InfoPage') {
-						filename = `TOC/${await getSpecial(page)}.pdf`;
+						filename = `${await getSpecial(page)}.pdf`;
 						title = '00000:C Information Page'
 					}
 					else if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
@@ -962,7 +1085,7 @@ puppeteer.launch({
 						title = filenamify(title);
 						
 						await fs.copy(`./PDF/${filename}`, `${directory}/${title}.pdf`);
-						await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
+						await fs.copy(`./PDF/Margin/${filename}`, `./PDF/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
 					}
 					if (response)
 						response.write(JSON.stringify({
@@ -976,37 +1099,39 @@ puppeteer.launch({
 				throw err;
 			}
 			
-			//Overall cover
-			let filename = `Cover/${await getCover(current)}.pdf`;
-			await fs.copy(`./PDF/${filename}`, `${directory}/${filenamify('00000:A Cover.pdf')}`);
-			await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
-			await getThinCC(current, `./PDF/Finished/${zipFilename}/imsmanifest.xml`);
-			
-			let files = (await fs.readdir(`./PDF/order/${thinName}`)).map((file) => `./PDF/order/${thinName}/${file}`);
-			console.log('Merging');
-			if (response)
-				response.write(JSON.stringify({
-					message: "progress",
-					percent: (Math.round(count / urlArray.length * 1000) / 10),
-					eta: 'Finishing',
-					// count: count,
-				}) + "\r\n");
-			if (files && files.length) {
-				await merge(files, `./PDF/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
-				files.shift();
-				await merge(files, `./PDF/Finished/${zipFilename}/Lulu.pdf`, {maxBuffer: 1024 * 10000000});
+			if (!refreshOnly) {
+				//Overall cover
+				let filename = `Cover/${await getCover(current)}.pdf`;
+				await fs.copy(`./PDF/${filename}`, `${directory}/${filenamify('00000:A Cover.pdf')}`);
+				await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
+				await getThinCC(current, `./PDF/Finished/${zipFilename}/imsmanifest.xml`);
+				
+				let files = (await fs.readdir(`./PDF/order/${thinName}`)).map((file) => `./PDF/order/${thinName}/${file}`);
+				console.log('Merging');
+				if (response)
+					response.write(JSON.stringify({
+						message: "progress",
+						percent: (Math.round(count / urlArray.length * 1000) / 10),
+						eta: 'Finishing...',
+						// count: count,
+					}) + "\r\n");
+				if (files && files.length) {
+					await merge(files, `./PDF/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
+					files.shift();
+					await merge(files, `./PDF/Finished/${zipFilename}/Lulu.pdf`, {maxBuffer: 1024 * 10000000});
+				}
+				console.log('Done Merging');
+				
+				//Lulu cover
+				let dataBuffer = await fs.readFile(`./PDF/Finished/${zipFilename}/Lulu.pdf`);
+				let lulu = await pdf(dataBuffer);
+				console.log(`Got numpages ${lulu.numpages}`);
+				filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
+				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/LuluCover.pdf`);
+				
+				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
+				
 			}
-			console.log('Done Merging');
-			
-			//Lulu cover
-			let dataBuffer = await fs.readFile(`./PDF/Finished/${zipFilename}/Lulu.pdf`);
-			let lulu = await pdf(dataBuffer);
-			console.log(`Got numpages ${lulu.numpages}`);
-			filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
-			await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/LuluCover.pdf`);
-			
-			zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
-			
 			const end = performance.now();
 			let time = end - start;
 			time /= 100;
@@ -1019,7 +1144,6 @@ puppeteer.launch({
 					filename: zipFilename,
 					timeTaken: time
 				}));
-			
 			// cleanup
 			await fs.emptyDir(`./PDF/libretexts/${zipFilename}`);
 			await fs.emptyDir(`./PDF/order/${thinName}`);
@@ -1086,9 +1210,16 @@ async function getSubpages(rootURL) {
 			}
 			tags = await (await tags).json();
 			properties = await (await properties).json();
-			tags = tags.tag.length ? tags.tag : [tags.tag];
+			if (tags.tag) {
+				tags = tags.tag.length ? tags.tag : [tags.tag];
+			}
+			else {
+				tags = []
+			}
 			properties = properties['@count'] !== '0' && properties.property.length ? properties.property : [properties.property];
 			tags = tags.map((elem) => elem.title);
+			
+			url = decodeURIComponent(url);
 			
 			result[index] = {
 				title: subpage.title,
@@ -1098,7 +1229,7 @@ async function getSubpages(rootURL) {
 				subdomain: subdomain,
 				children: children,
 				id: subpage['@id'],
-				relativePath: url.replace(rootURL, '')
+				relativePath: url.replace(rootURL + '/', '')
 			};
 		}
 		

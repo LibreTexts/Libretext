@@ -3,7 +3,7 @@ body {
 	height: 100vh;
 	width: 100vw;
 	display: flex;
-	background-color: #127AC2;
+	background-color: #127bc4;
 	font-family: 'Open Sans', sans-serif;
 	align-content: stretch;
 	box-sizing: border-box;
@@ -26,7 +26,7 @@ body {
 	width: 800px;
 	color: white;
 	padding: 50px;
-	background-size: cover;
+	background-size: contain;
 	background-repeat: no-repeat;
 }
 

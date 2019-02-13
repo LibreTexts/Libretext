@@ -15,6 +15,7 @@
     "console-timestamp": "^0.3.0",
     "easy-pdf-merge": "^0.2.0",
     "filenamify": "^2.0.0",
+    "find-remove": "^1.2.2",
     "fs-extra": "^7.0.1",
     "md5": "^2.2.1",
     "node-eta": "^0.9.0",
