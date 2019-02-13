@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Beginning renumber escape sequence">
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/header_logo_mini.png" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/public/lulu.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/med.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/med.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,23 +22,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="353" column="42" lean-forward="true" selection-start-line="353" selection-start-column="42" selection-end-line="353" selection-end-column="42" />
+            <state relative-caret-position="388">
+              <caret line="827" column="37" selection-start-line="827" selection-start-column="37" selection-end-line="827" selection-end-column="37" />
               <folding>
+                <element signature="e#1209#1277#0" />
+                <element signature="e#1604#1674#0" />
                 <element signature="e#2015#3169#0" />
+                <element signature="e#2116#2183#0" />
+                <element signature="e#2218#2286#0" />
+                <element signature="e#2348#2479#0" />
+                <element signature="e#2541#2575#0" />
+                <element signature="e#2725#3111#0" />
+                <element signature="e#2743#3106#0" />
+                <element signature="e#2765#2872#0" />
+                <element signature="e#2921#2995#0" />
                 <element signature="e#3212#4427#0" />
+                <element signature="e#3272#4344#0" />
+                <element signature="e#3366#3567#0" />
+                <element signature="e#3416#3538#0" />
+                <element signature="e#3607#4262#0" />
+                <element signature="e#3691#3897#0" />
+                <element signature="e#4097#4166#0" />
+                <element signature="e#4272#4339#0" />
+                <element signature="e#4353#4423#0" />
                 <element signature="e#4479#5243#0" />
+                <element signature="e#4596#4827#0" />
+                <element signature="e#4645#4800#0" />
+                <element signature="e#4866#5165#0" />
+                <element signature="e#4949#5104#0" />
+                <element signature="e#5174#5239#0" />
                 <element signature="e#5280#5505#0" />
-                <element signature="e#5878#6072#0" />
-                <element signature="e#6114#6392#0" />
-                <element signature="e#6400#6673#0" />
-                <element signature="e#6989#7201#0" />
-                <element signature="e#7242#9313#0" />
-                <element signature="e#9347#9980#0" />
-                <element signature="e#11584#18323#0" />
+                <element signature="e#5343#5377#0" />
+                <element signature="e#5547#5896#0" />
+                <element signature="e#5937#6131#0" />
+                <element signature="e#6173#6451#0" />
+                <element signature="e#7301#9372#0" />
+                <element signature="e#9406#10039#0" />
+                <element signature="e#10106#13553#0" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#13602#20351#0" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -49,7 +74,7 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#18377#24740#0" />
+                <element signature="e#20960#25450#0" />
                 <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -61,34 +86,10 @@
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#24795#28937#0" />
+                <element signature="e#26823#30965#0" />
                 <element signature="n#!!block;n#getSubpages#0" />
                 <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/public/header_logo_mini.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -108,12 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getPDF</find>
-      <find>isbatch</find>
-      <find>.pdf</find>
-      <find>URL</find>
-      <find>Starting</find>
-      <find>getToc</find>
       <find>libretexts</find>
       <find>FullPDF</find>
       <find>Full</find>
@@ -122,7 +117,6 @@
       <find>img</find>
       <find>params</find>
       <find>index</find>
-      <find>console.log</find>
       <find>cover</find>
       <find>ensuredir</find>
       <find>chem</find>
@@ -138,6 +132,13 @@
       <find>300</find>
       <find>getCover</find>
       <find>margin</find>
+      <find>[0-9</find>
+      <find>lowercase</find>
+      <find>thin</find>
+      <find>addLinks</find>
+      <find>console.log</find>
+      <find>getTHinCC</find>
+      <find>getPDF</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -186,7 +187,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Kubeconfig/my-manifest.yaml" />
         <option value="$PROJECT_DIR$/public/package-lock.json" />
         <option value="$PROJECT_DIR$/API/analyticsData/12-2018/10332.txt" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/event-provider.html" />
@@ -235,6 +235,7 @@
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
         <option value="$PROJECT_DIR$/API/authen.json" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/public/lulu.css" />
         <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
@@ -247,10 +248,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="606" />
-    <option name="y" value="129" />
-    <option name="width" value="1737" />
-    <option name="height" value="1850" />
+    <option name="x" value="-28" />
+    <option name="width" value="3256" />
+    <option name="height" value="3468" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -260,6 +260,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -289,47 +317,13 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="nodePrint" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Miscellaneous" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -362,19 +356,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public\LuluFront" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public\LuluBack" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\JSmol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\JSmol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\JSmol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -419,7 +413,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.endpoint.js">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="rest-api#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http">
       <method v="2" />
     </configuration>
@@ -895,13 +889,11 @@
       <workItem from="1549923469812" duration="2482000" />
       <workItem from="1549939952893" duration="6596000" />
       <workItem from="1549947917570" duration="6125000" />
-    </task>
-    <task id="LOCAL-00073" summary="Initial timetrack server">
-      <created>1542005783128</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1542005783128</updated>
+      <workItem from="1549955878584" duration="1216000" />
+      <workItem from="1549998026511" duration="2955000" />
+      <workItem from="1550001778841" duration="4988000" />
+      <workItem from="1550007862052" duration="253000" />
+      <workItem from="1550008875769" duration="8853000" />
     </task>
     <task id="LOCAL-00074" summary="Hooked up tracker data&#10;&#10;Contributions seems off">
       <created>1542081461367</created>
@@ -1239,7 +1231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1548992719609</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="Regex fix for subtopics">
+      <created>1549957076099</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1549957076103</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1275,16 +1274,16 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1155947000" />
+    <option name="totallyTimeSpent" value="1174212000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="-13" y="-13" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.19747141" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.18216175" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32266667" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.26666668" />
@@ -1295,7 +1294,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.268" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.26666668" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5039133" side_tool="true" weight="0.39466667" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4960867" weight="0.248" />
@@ -1306,7 +1305,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.30162552" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.34798315" />
+      <window_info anchor="right" x="854" y="30" width="853" height="890" id="Debug" order="6" sideWeight="0.4972908" weight="0.33257747" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1402,7 +1401,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Fixed no-cache bug" />
     <MESSAGE value="Added Kubernetes detection" />
     <MESSAGE value="Remove expired config" />
     <MESSAGE value="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions" />
@@ -1427,7 +1425,8 @@
     <MESSAGE value="Added printTOC summary" />
     <MESSAGE value="Added printTOC chapter guides" />
     <MESSAGE value="Beginning renumber escape sequence" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beginning renumber escape sequence" />
+    <MESSAGE value="Regex fix for subtopics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Regex fix for subtopics" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1464,6 +1463,16 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>sizes[24]</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>sizes(24)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>params['param']</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -1498,34 +1507,9 @@
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>response.status</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>response.ok</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="309" column="1" selection-start-line="309" selection-start-column="1" selection-end-line="309" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/base64/workforce.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="30" selection-end-column="10336" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23782">
@@ -1566,7 +1550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/chem.png" />
     <entry file="file://$PROJECT_DIR$/nodePrint/public/bio.png" />
     <entry file="file://$PROJECT_DIR$/nodePrint/public/chem.jpg" />
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
@@ -1576,41 +1559,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="229" column="17" lean-forward="true" selection-start-line="229" selection-start-column="17" selection-end-line="229" selection-end-column="17" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/public/logoClear.png" />
     <entry file="file://$PROJECT_DIR$/nodePrint/public/favicon.ico">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="43" column="63" selection-start-line="43" selection-start-column="63" selection-end-line="43" selection-end-column="63" />
-          <folding>
-            <element signature="e#2771#3564#0" />
-            <element signature="e#3592#4217#0" />
-            <element signature="e#4263#4838#0" />
-            <element signature="e#4870#6914#0" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/base64/biz.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -1773,32 +1724,114 @@
     <entry file="file://$PROJECT_DIR$/nodePrint/public/med.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.jpg" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/header_logo_mini.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/lulu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-659">
+          <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/licenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="90" column="18" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="58" column="49" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/imsmanifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13731" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="77" column="32" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="353" column="42" lean-forward="true" selection-start-line="353" selection-start-column="42" selection-end-line="353" selection-end-column="42" />
+        <state relative-caret-position="388">
+          <caret line="827" column="37" selection-start-line="827" selection-start-column="37" selection-end-line="827" selection-end-column="37" />
           <folding>
+            <element signature="e#1209#1277#0" />
+            <element signature="e#1604#1674#0" />
             <element signature="e#2015#3169#0" />
+            <element signature="e#2116#2183#0" />
+            <element signature="e#2218#2286#0" />
+            <element signature="e#2348#2479#0" />
+            <element signature="e#2541#2575#0" />
+            <element signature="e#2725#3111#0" />
+            <element signature="e#2743#3106#0" />
+            <element signature="e#2765#2872#0" />
+            <element signature="e#2921#2995#0" />
             <element signature="e#3212#4427#0" />
+            <element signature="e#3272#4344#0" />
+            <element signature="e#3366#3567#0" />
+            <element signature="e#3416#3538#0" />
+            <element signature="e#3607#4262#0" />
+            <element signature="e#3691#3897#0" />
+            <element signature="e#4097#4166#0" />
+            <element signature="e#4272#4339#0" />
+            <element signature="e#4353#4423#0" />
             <element signature="e#4479#5243#0" />
+            <element signature="e#4596#4827#0" />
+            <element signature="e#4645#4800#0" />
+            <element signature="e#4866#5165#0" />
+            <element signature="e#4949#5104#0" />
+            <element signature="e#5174#5239#0" />
             <element signature="e#5280#5505#0" />
-            <element signature="e#5878#6072#0" />
-            <element signature="e#6114#6392#0" />
-            <element signature="e#6400#6673#0" />
-            <element signature="e#6989#7201#0" />
-            <element signature="e#7242#9313#0" />
-            <element signature="e#9347#9980#0" />
-            <element signature="e#11584#18323#0" />
+            <element signature="e#5343#5377#0" />
+            <element signature="e#5547#5896#0" />
+            <element signature="e#5937#6131#0" />
+            <element signature="e#6173#6451#0" />
+            <element signature="e#7301#9372#0" />
+            <element signature="e#9406#10039#0" />
+            <element signature="e#10106#13553#0" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#13602#20351#0" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1809,7 +1842,7 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#18377#24740#0" />
+            <element signature="e#20960#25450#0" />
             <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1821,18 +1854,12 @@
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#24795#28937#0" />
+            <element signature="e#26823#30965#0" />
             <element signature="n#!!block;n#getSubpages#0" />
             <element signature="n#!!block;n#subpageCallback#0;n#!!block;n#getSubpages#0" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/header_logo_mini.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/logo.jpg">
-      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
 </project>
