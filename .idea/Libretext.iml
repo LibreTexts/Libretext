@@ -11,6 +11,7 @@
       <excludeFolder url="file://$MODULE_DIR$/nodePrint/public/FullPDF" />
       <excludeFolder url="file://$MODULE_DIR$/nodePrint/public/ZIP" />
       <excludeFolder url="file://$MODULE_DIR$/public/Converter/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/public/Downloads Center/.cache" />
       <excludeFolder url="file://$MODULE_DIR$/public/Skele/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />

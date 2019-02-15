@@ -1,0 +1,17 @@
+.Text {
+	width: 20vmin;
+	height: 30vmin;
+	border: 1px solid black;
+}
+
+.side {
+	background-color: #0c85d0;
+	width: 20vmin;
+	height: 30vmin;
+}
+
+.Center {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
