@@ -19,14 +19,15 @@ export default class LibreText extends React.Component {
 			<div className='Text' onMouseEnter={()=>this.handleClick(true)} onMouseLeave={()=>this.handleClick(false)}>
 			<ReactCardFlip isFlipped={this.state.isFlipped}>
 				<div key="back" className='side'>
-					Chemistry 2BH,
-					Delmar Larsen,
-					University of California, Davis
+					{this.props.item.name}
 				</div>
 				
 				
 				<div key="front" className='side'>
-					This is the back of the card.
+					<a href={`${this.props.item.url}/Full.pdf`} target='_blank'>Full</a>
+					<a href={`${this.props.item.url}/imsmanifest.xml`} target='_blank'>LMS</a>
+					<a href={`${this.props.item.url}/LuluCover.pdf`} target='_blank'>Cover</a>
+					<a href={`${this.props.item.url}/Lulu.pdf`} target='_blank'>Lulu</a>
 				</div>
 			</ReactCardFlip>
 			</div>

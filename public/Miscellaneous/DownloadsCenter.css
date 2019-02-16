@@ -2,6 +2,8 @@
 	width: 20vmin;
 	height: 30vmin;
 	/*border: 1px solid black;*/
+	font-family: 'Open Sans', sans-serif;
+	color: white;
 }
 
 .side {

@@ -761,7 +761,7 @@ puppeteer.launch({
 			else if (working[escapedURL] && !isBatch) { //another thread is already working
 				eventEmitter.on(escapedURL, () => {
 					console.log(`DUPE   ${ip} ${url}`);
-					staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+					// staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
 				});
 				return false;
 			}
@@ -965,11 +965,14 @@ puppeteer.launch({
 			let current = params.subpages;
 			if (!current) {
 				let count = 0;
-				let heartbeat = setInterval(() => response.write(JSON.stringify({
-					message: "subpages",
-					percent: 0,
-					eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
-				}) + "\r\n"), 1000);
+				let heartbeat = setInterval(() => {
+					if (response)
+						response.write(JSON.stringify({
+							message: "subpages",
+							percent: 0,
+							eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
+						}) + "\r\n")
+				}, 1000);
 				current = await getSubpages(url);
 				clearInterval(heartbeat);
 			}
@@ -1046,7 +1049,7 @@ puppeteer.launch({
 			
 			try {
 				//kubernetesServiceHost ? 4 : 2
-				await mapLimit(urlArray,  4, async (page) => {
+				await mapLimit(urlArray, 4, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
 					if (title === 'TitlePage') {
