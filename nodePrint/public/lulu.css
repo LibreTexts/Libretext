@@ -1,3 +1,7 @@
 #frontContainer > div {
 	margin-right: 190px;
 }
+*{
+	/*border: 1px solid lime;*/
+	box-sizing: content-box;
+}

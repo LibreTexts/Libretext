@@ -34,9 +34,11 @@ body {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
-	justify-content: flex-start;
-	padding-top: 60px;
-	align-items: center;
+	justify-content: center;
+	padding: 60px 0;
+	align-items: stretch;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 #spine > img {
 	max-width: 80%;

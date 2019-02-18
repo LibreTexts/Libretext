@@ -183,7 +183,7 @@ puppeteer.launch({
 					subdomain: 'chem',
 					tags: ['lulu,CHEM 300 - Beginning Chemistry,Marisa Alviar-Agnew,Sacramento City College'] //'authorname:openstax'
 				};
-				let file = await getCover(current, url.includes('num') ? 478 : undefined); //, 478
+				let file = await getCover(current, url.includes('num') ? 478 : undefined, false, false); //, 478
 				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
 			}
 			else if (url.startsWith('/tocHTML=')) {
@@ -382,14 +382,14 @@ puppeteer.launch({
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
 			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${author.name || ''}</i><br/>${author.companyname || ''}</div></div></div>`;
 			let backContent = `<div id="backContainer"></div>`;
-			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/>`;
-			if (hasExtraPadding && !isHardcover) {
-				spine += '<style>#frontContainer,#backContainer{width: 695px}</style>'
+			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/><style>#spine{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
+			if (hasExtraPadding) {
+				spine += `<style>#frontContainer,#backContainer{width: ${isHardcover ? 802 : 696}px}</style>`;
 			}
 			// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
 			let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
 			if (hasExtraPadding) {
-				content += `<style>#frontContainer {padding: 117px 50px;}</style>`
+				content += `<style>#frontContainer {padding: 117px 50px;}</style>`;
 			}
 			else {
 				content += '<style>#frontContainer,#backContainer{width: 735px}</style>'
