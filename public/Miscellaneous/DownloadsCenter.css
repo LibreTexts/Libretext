@@ -1,19 +1,63 @@
 .Text {
-	width: 20vmin;
-	height: 30vmin;
+	width: 16vmin;
+	height: 24vmin;
 	/*border: 1px solid black;*/
 	font-family: 'Open Sans', sans-serif;
 	color: white;
 }
 
-.side {
+.textSide {
 	background-color: #0c85d0;
-	width: 20vmin;
-	height: 30vmin;
+	width: 16vmin;
+	height: 24vmin;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 80%;
+}
+
+.textFront {
+	border-radius: 0px 20px 20px 0px;
+}
+
+.textFront div {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.textFront > div > h5 {
+	color: white;
+	margin:0;
+}
+
+.textBack {
+	align-items: stretch;
+}
+
+.textBack a{
+	color: white;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.textBack a:not(:first-child) {
+	border-top: 1px solid white;
+}
+
+.textBack a:hover{
+	color: #141414;
+	background-color: #f5f7fa;
+	transition-duration: 500ms;
+	border-radius: 5px 5px 0 0 ;
+}
+
+.textBack a:before{
+	margin-right: .5em;
 }
 
 .Center {

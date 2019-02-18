@@ -14,14 +14,14 @@ function TOC() {
 				if (tags.tag) {
 					if (tags.tag.length) {
 						tags = tags.tag.map((tag) => tag["@value"]);
-						if (tags.includes("coverpage:yes") && !coverpage) {
+						if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) && !coverpage) {
 							coverpage = window.location.origin + path;
 							makeTOC(path, true);
 						}
 					}
 					else {
 						tags = tags.tag["@value"];
-						if (tags.includes("coverpage:yes") && !coverpage) {
+						if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) && !coverpage) {
 							coverpage = window.location.origin + path;
 							makeTOC(path, true);
 						}
@@ -30,21 +30,21 @@ function TOC() {
 			});
 		}
 	}
-
+	
 	async function makeTOC(path, isRoot, full) {
 		const origin = window.location.origin;
 		path = path.replace(origin + "/", "");
 		//get coverpage title & subpages;
 		let info = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json");
-
-
+		
+		
 		let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
 		response = await response.json();
 		info = await info;
 		info = await info.json();
 		coverTitle = info.title;
 		return await subpageCallback(response, isRoot);
-
+		
 		async function subpageCallback(info, isRoot) {
 			let subpageArray = info["page.subpage"];
 			const result = [];
@@ -55,7 +55,7 @@ function TOC() {
 			for (let i = 0; i < subpageArray.length; i++) {
 				promiseArray[i] = subpage(subpageArray[i], i);
 			}
-
+			
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
@@ -79,7 +79,7 @@ function TOC() {
 					lazy: !full
 				};
 			}
-
+			
 			await Promise.all(promiseArray);
 			if (isRoot) {
 				content = result;
@@ -88,7 +88,7 @@ function TOC() {
 			}
 			return result;
 		}
-
+		
 		function initializeFancyTree() {
 			const target = $(".elm-hierarchy.mt-hierarchy");
 			if (content) {

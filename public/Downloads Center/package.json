@@ -4,24 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] ]"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "babelify": "^10.0.0",
-    "gatsby": "^2.1.4",
-    "gatsby-image": "^2.0.29",
-    "gatsby-plugin-manifest": "^2.0.17",
-    "gatsby-plugin-offline": "^2.0.23",
-    "gatsby-plugin-react-helmet": "^3.0.6",
-    "gatsby-plugin-sharp": "^2.0.20",
-    "gatsby-source-filesystem": "^2.0.20",
-    "gatsby-transformer-sharp": "^2.1.13",
     "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-card-flip": "^0.2.1",

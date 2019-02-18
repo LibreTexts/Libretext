@@ -181,7 +181,7 @@ puppeteer.launch({
 					url: 'https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)',
 					title: 'SCC: CHEM 300 - Beginning Chemistry (Alviar-Agnew)',
 					subdomain: 'chem',
-					tags: ['lulu,CHEM 300 - Beginning Chemistry,Marisa Agnew,Sacramento City College'] //'authorname:openstax'
+					tags: ['lulu,CHEM 300 - Beginning Chemistry,Marisa Alviar-Agnew,Sacramento City College'] //'authorname:openstax'
 				};
 				let file = await getCover(current, url.includes('num') ? 478 : undefined); //, 478
 				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
@@ -326,7 +326,7 @@ puppeteer.launch({
 			}
 		}
 		
-		async function getCover(current, numPages, isHardcover = true) {
+		async function getCover(current, numPages, hasExtraPadding = false, isHardcover = false) {
 			await fs.ensureDir('./PDF/Cover');
 			let escapedURL = md5(current.url);
 			const page = await browser.newPage();
@@ -337,7 +337,17 @@ puppeteer.launch({
 			let author = {};
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
-				if (tag.startsWith('lulu|')) {
+				if (tag.startsWith('lulu@')) {
+					let items = tag.split('@');
+					if (items[1])
+						current.title = items[1];
+					if (items[2])
+						author.name = items[2];
+					if (items[3])
+						author.companyname = items[3];
+					break;
+				}
+				else if (tag.startsWith('lulu|')) {
 					let items = tag.split('|');
 					if (items[1])
 						current.title = items[1];
@@ -369,15 +379,22 @@ puppeteer.launch({
 			}
 			
 			let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${numPages ? 'LuluFront' : 'Normal'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/LuluBack/${current.subdomain}.png")</style>`;
-			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title}</div></div><div><div id="frontCite"><i>${author.name}</i><br/>${author.companyname}</div></div></div>`;
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
+			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${author.name || ''}</i><br/>${author.companyname || ''}</div></div></div>`;
 			let backContent = `<div id="backContainer"></div>`;
 			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/>`;
-			if (!isHardcover) {
+			if (hasExtraPadding && !isHardcover) {
 				spine += '<style>#frontContainer,#backContainer{width: 695px}</style>'
 			}
 			// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
 			let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
+			if (hasExtraPadding) {
+				content += `<style>#frontContainer {padding: 117px 50px;}</style>`
+			}
+			else {
+				content += '<style>#frontContainer,#backContainer{width: 715px}</style>'
+			}
+			
 			
 			try {
 				await page.setContent(content,
@@ -390,8 +407,9 @@ puppeteer.launch({
 				path: `./PDF/Cover/${escapedURL}.pdf`,
 				printBackground: true,
 				width: numPages ? getWidth() : '8.5 in',
-				height: numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
+				height: hasExtraPadding ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
 			});
+			console.log(numPages ? getWidth() : '8.5 in', hasExtraPadding ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
 			await page.close();
 			return escapedURL;
 			
@@ -427,7 +445,10 @@ puppeteer.launch({
 					'779': 2.0625,
 					'800': 2.125,
 				};
-				if (isHardcover) {
+				if (!hasExtraPadding) {
+					return `${numPages * 0.002252 + 17} in`;
+				}
+				else if (isHardcover) {
 					let result = '';
 					for (let number in sizes) {
 						if (numPages > parseInt(number)) {
@@ -462,7 +483,7 @@ puppeteer.launch({
 			let path = url.split('/').splice(3).join('/');
 			
 			let properties = subpages.properties;
-			properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
+			properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
 			properties = properties && properties.contents && properties.contents['#text'] ?
 				properties.contents['#text'] : '';
 			let tags = subpages.tags;
@@ -524,7 +545,7 @@ puppeteer.launch({
 						if (prefix !== 'l' && !isSubtopic) {
 							let path = elem.url.split('/').splice(3).join('/');
 							
-							properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : undefined);
+							properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
 							let good = properties && properties.contents && properties.contents['#text'];
 							if (good && (!elem.tags.includes('article:topic') || isSubTOC)) {
 								summary = `<div style="padding-bottom:10px" class="summary">${properties.contents['#text']}</div>`;
@@ -622,7 +643,7 @@ puppeteer.launch({
 				
 				if (!subpages.length) //too shallow
 					return {
-						title: title,
+						title: current.title,
 						resources: [{
 							title: subpages.title,
 							url: subpages.url + "?contentOnly"
@@ -685,29 +706,30 @@ puppeteer.launch({
 					return result;
 				}
 				
-				array.forEach((item) => {
-					if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
-						org += "\n" +
-							`            <item identifier=\"${getIdentifier()}\">\n` +
-							`                <title>${item.title}</title>`;
-						item.resources.forEach((resource) => {
-							const identifier = getIdentifier();
-							org += `
+				if (array.length)
+					array.forEach((item) => {
+						if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
+							org += "\n" +
+								`            <item identifier=\"${getIdentifier()}\">\n` +
+								`                <title>${item.title}</title>`;
+							item.resources.forEach((resource) => {
+								const identifier = getIdentifier();
+								org += `
                 <item identifier="${identifier}" identifierref="${identifier}_R">
                     <title>${resource.title}</title>
                 </item>`;
-							resources += `
+								resources += `
         <resource identifier="${identifier}_R" type="imswl_xmlv1p3">
             <webLink>
                 <title>${resource.title}</title>
                 <url href="${resource.url}"/>
             </webLink>
         </resource>`;
-						});
-						org += "\n" +
-							"            </item>";
-					}
-				});
+							});
+							org += "\n" +
+								"            </item>";
+						}
+					});
 				
 				return {org: org, resources: resources};
 			}
@@ -976,9 +998,30 @@ puppeteer.launch({
 				current = await getSubpages(url);
 				clearInterval(heartbeat);
 			}
+			
+			//Merge up Text or Chapters
+			let content;
+			for (let i = 0; i < current.children.length; i++) {
+				if (['Text', 'Chapters'].includes(current.children[i].title)) {
+					content = current.children[i];
+				}
+			}
+			if (content) {
+				content.title = current.title;
+				content.tags = current.tags.concat(content.tags);
+				content.properties = current.properties.concat(content.properties);
+				current = content;
+			}
+			
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
-				if (tag.startsWith('lulu|')) {
+				if (tag.startsWith('lulu@')) {
+					let items = tag.split('@');
+					if (items[1])
+						current.title = items[1];
+					break;
+				}
+				else if (tag.startsWith('lulu|')) {
 					let items = tag.split('|');
 					if (items[1])
 						current.title = items[1];
@@ -1026,6 +1069,7 @@ puppeteer.launch({
 			if (!refreshOnly) {
 				await fs.emptyDir(directory);
 				await fs.emptyDir(`./PDF/Finished/${zipFilename}`);
+				await fs.ensureDir(`./PDF/Finished/${zipFilename}/Publication`);
 				await fs.emptyDir(`./PDF/order/${thinName}/`);
 			}
 			let urlArray = [current];
@@ -1054,17 +1098,21 @@ puppeteer.launch({
 					let url = page.url;
 					if (title === 'TitlePage') {
 						filename = `${await getSpecial(page)}.pdf`;
-						title = '00000:B Title Page'
+						title = '00000:B Title Page';
+						page.index = 2;
 					}
 					else if (title === 'InfoPage') {
 						filename = `${await getSpecial(page)}.pdf`;
-						title = '00000:C Information Page'
+						title = '00000:C Information Page';
+						page.index = 3;
 					}
 					else if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
 						filename = `TOC/${await getTOC(page.url, page)}.pdf`;
 						
-						if (page.tags.includes('coverpage:yes'))
-							title = '00000:D Table of Contents'
+						if (page.tags.includes('coverpage:yes')) {
+							title = '00000:D Table of Contents';
+							page.index = 4;
+						}
 					}
 					else if (kubernetesServiceHost) {
 						let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
@@ -1118,21 +1166,30 @@ puppeteer.launch({
 						eta: 'Finishing...',
 						// count: count,
 					}) + "\r\n");
-				if (files && files.length) {
+				if (files && files.length > 2) {
 					await merge(files, `./PDF/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
 					files.shift();
-					await merge(files, `./PDF/Finished/${zipFilename}/Lulu.pdf`, {maxBuffer: 1024 * 10000000});
+					await merge(files, `./PDF/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
+				}
+				else {
+					await fs.copy(files[0], `./PDF/Finished/${zipFilename}/Full.pdf`);
+					await fs.copy(files[0], `./PDF/Finished/${zipFilename}/Publication/Content.pdf`);
 				}
 				console.log('Done Merging');
 				
-				//Lulu cover
-				let dataBuffer = await fs.readFile(`./PDF/Finished/${zipFilename}/Lulu.pdf`);
+				//Publication covers
+				let dataBuffer = await fs.readFile(`./PDF/Finished/${zipFilename}/Publication/Content.pdf`);
 				let lulu = await pdf(dataBuffer);
 				console.log(`Got numpages ${lulu.numpages}`);
-				filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
-				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/LuluCover.pdf`);
+				filename = `Cover/${await getCover(current, lulu.numpages, false)}.pdf`;
+				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/Publication/NormalCover.pdf`);
+				filename = `Cover/${await getCover(current, lulu.numpages, true)}.pdf`;
+				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/Publication/PaddedCover.pdf`);
+				filename = `Cover/${await getCover(current, lulu.numpages, true, true)}.pdf`;
+				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/Publication/HardCover.pdf`);
 				
 				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
+				zipLocal.sync.zip(`./PDF/Finished/${zipFilename}/Publication`).compress().save(`./PDF/Finished/${zipFilename}/Publication.zip`);
 				
 			}
 			const end = performance.now();
@@ -1176,10 +1233,18 @@ async function getSubpages(rootURL) {
 	info = await (await info).json();
 	properties = await (await properties).json();
 	tags = await (await tags).json();
-	properties = properties['@count'] !== '0' ? properties.property : [properties.property];
-	if (tags['@count'] !== '0') {
+	if (properties['@count'] !== '0') {
+		properties = properties.property.length ? properties.property : [properties.property]
+	}
+	else {
+		properties = [];
+	}
+	if (tags['@count'] && tags['@count'] !== '0') {
 		tags = tags.tag.length ? tags.tag : [tags.tag];
 		tags = tags.map((elem) => elem.title);
+	}
+	else {
+		tags = [];
 	}
 	
 	return {
@@ -1195,7 +1260,7 @@ async function getSubpages(rootURL) {
 	
 	
 	async function subpageCallback(info) {
-		const subpageArray = info["page.subpage"];
+		let subpageArray = info["page.subpage"];
 		const result = [];
 		const promiseArray = [];
 		
@@ -1213,13 +1278,18 @@ async function getSubpages(rootURL) {
 			}
 			tags = await (await tags).json();
 			properties = await (await properties).json();
+			if (properties['@count'] !== '0') {
+				properties = properties.property.length ? properties.property : [properties.property]
+			}
+			else {
+				properties = [];
+			}
 			if (tags.tag) {
 				tags = tags.tag.length ? tags.tag : [tags.tag];
 			}
 			else {
 				tags = []
 			}
-			properties = properties['@count'] !== '0' && properties.property.length ? properties.property : [properties.property];
 			tags = tags.map((elem) => elem.title);
 			
 			url = decodeURIComponent(url);
@@ -1232,11 +1302,14 @@ async function getSubpages(rootURL) {
 				subdomain: subdomain,
 				children: children,
 				id: subpage['@id'],
-				relativePath: url.replace(rootURL + '/', '')
+				relativePath: url.replace(decodeURIComponent(rootURL) + '/', '')
 			};
 		}
 		
-		if (subpageArray && subpageArray.length) {
+		if (subpageArray) {
+			if (!subpageArray.length) {
+				subpageArray = [subpageArray];
+			}
 			for (let i = 0; i < subpageArray.length; i++) {
 				promiseArray[i] = subpage(subpageArray[i], i);
 			}
@@ -1244,9 +1317,7 @@ async function getSubpages(rootURL) {
 			await Promise.all(promiseArray);
 			return result;
 		}
-		else {
-			return [];
-		}
+		return [];
 	}
 }
 
