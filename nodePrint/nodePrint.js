@@ -392,7 +392,7 @@ puppeteer.launch({
 				content += `<style>#frontContainer {padding: 117px 50px;}</style>`
 			}
 			else {
-				content += '<style>#frontContainer,#backContainer{width: 715px}</style>'
+				content += '<style>#frontContainer,#backContainer{width: 735px}</style>'
 			}
 			
 			
@@ -407,9 +407,9 @@ puppeteer.launch({
 				path: `./PDF/Cover/${escapedURL}.pdf`,
 				printBackground: true,
 				width: numPages ? getWidth() : '8.5 in',
-				height: hasExtraPadding ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
+				height: numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
 			});
-			console.log(numPages ? getWidth() : '8.5 in', hasExtraPadding ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
+			console.log(numPages ? getWidth() : '8.5 in', numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
 			await page.close();
 			return escapedURL;
 			
@@ -445,8 +445,9 @@ puppeteer.launch({
 					'779': 2.0625,
 					'800': 2.125,
 				};
-				if (!hasExtraPadding) {
-					return `${numPages * 0.002252 + 17} in`;
+				if (!hasExtraPadding) { //Amazon size
+					console.log(numPages * 0.002252);
+					return `${numPages * 0.002252 + 0.375 + 17} in`;
 				}
 				else if (isHardcover) {
 					let result = '';

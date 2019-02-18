@@ -246,11 +246,12 @@ class LTForm {
 			target.id = "LTRemixer";
 			const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 			const isPro = document.getElementById("proHolder").innerText === 'true';
+			const isDemonstration = checkIfDemonstration();
 			const groups = document.getElementById("groupHolder").innerText;
-			let allowed = isAdmin || (isPro && groups.includes('faculty'));
+			let allowed = isAdmin || (isPro && groups.includes('faculty')) || isDemonstration;
 			target.innerHTML =
 				"<div id='LTForm'>" +
-				`<div class='LTFormHeader'><div class='LTTitle'>${allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
+				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
 				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
 				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin)}</div>` +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
@@ -481,6 +482,12 @@ class LTForm {
 	
 	static async getInstitutions() {
 		const select = document.getElementById("LTFormInstitutions");
+		const isDemonstration = checkIfDemonstration();
+		if (isDemonstration) {
+			select.innerHTML = '<option value="https://chem.libretexts.org/Courses/Demonstration_Institution">Demonstration Institution</option>';
+			return;
+		}
+		
 		let response;
 		try {
 			response = await fetch("/@api/deki/pages/=Courses/subpages?dream.out.format=json");
@@ -537,13 +544,14 @@ class LTForm {
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		const isPro = document.getElementById("proHolder").innerText === 'true';
 		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
-		let allowed = isAdmin || (isPro && groups.includes('faculty'));
+		const isDemonstration = checkIfDemonstration();
+		let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
 		if (!allowed) {
 			alert("This feature is not available in Demonstration Mode.");
 			return false;
 		}
-		let copyMode = document.getElementById("LTFormCopyMode").value;
-		if (copyMode === 'copy' && !isAdmin) {
+		let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
+		if (copyMode && copyMode === 'copy' && !isAdmin) {
 			alert("Direct copy is restricted to administratiors. Use Forker afterwards to copy over individual pages.");
 			document.getElementById("LTFormCopyMode").value = 'transclude';
 			return false;
@@ -667,7 +675,7 @@ class LTForm {
 					let info = await LTForm.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
 					
 					//get Tags
-					let copyMode = document.getElementById("LTFormCopyMode").value;
+					let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
 					let copyContent = copyMode && copyMode !== 'transclude';
 					let response = await LTForm.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
 					let tags = await response.json();
@@ -1041,6 +1049,11 @@ function millisecondsToStr(milliseconds) {
 
 function formatNumber(it) {
 	return it.toPrecision(4);
+}
+
+function checkIfDemonstration() {
+	const groups = document.getElementById("groupHolder").innerText;
+	return document.getElementById('usernameHolder').innerText === 'RemixerDemonstration' || groups.includes('Remixer');
 }
 
 LTForm.initialize();
