@@ -1,6 +1,5 @@
 import React from 'react';
 import LibreText from "../components/LibreText";
-// import "../styles/DownloadsCenter.css";
 import ReactDOM from 'react-dom';
 
 const target = document.createElement("div");

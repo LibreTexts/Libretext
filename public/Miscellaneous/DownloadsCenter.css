@@ -1,15 +1,16 @@
 .Text {
-	width: 16vmin;
-	height: 24vmin;
+	width: 120px;
+	height: 200px;
 	/*border: 1px solid black;*/
 	font-family: 'Open Sans', sans-serif;
 	color: white;
+	margin: 10px;
 }
 
 .textSide {
 	background-color: #0c85d0;
-	width: 16vmin;
-	height: 24vmin;
+	width: 120px;
+	height: 200px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -17,6 +18,7 @@
 	box-sizing: border-box;
 	padding: 10px;
 	font-size: 80%;
+	box-shadow: 9px 9px 15px 2px #67676754;
 }
 
 .textFront {
