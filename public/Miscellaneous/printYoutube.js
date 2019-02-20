@@ -2,7 +2,7 @@ if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 
 	window.addEventListener("load", () => {
-
+		
 		let candidates = $("iframe");
 		for (let i = 0; i < candidates.length; i++) {
 			let iframe = candidates[i];
@@ -11,8 +11,9 @@ if (!window["youtubeIFrame"]) {
 				if(videoID) {
 					console.log(videoID);
 				}
-				if (iframe.src.includes("www.youtube.com")) {
+				if (iframe.src.includes("www.youtube.com") || iframe.src.includes("www.youtube-nocookie.com")) {
 					videoID = videoID[2];
+					iframe.src = iframe.src.replace('www.youtube.com','www.youtube-nocookie.com');
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");
 					youtubeImgContainer.innerHTML = "<img class='youtubeImage' src="+ "\"https://img.youtube.com/vi/" + videoID + "/0.jpg\""+"/>";
