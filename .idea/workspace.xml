@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="953" column="81" selection-start-line="953" selection-start-column="81" selection-end-line="953" selection-end-column="81" />
+            <state relative-caret-position="364">
+              <caret line="489" column="19" lean-forward="true" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -42,12 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>batch</find>
-      <find>flex</find>
-      <find>Publication</find>
-      <find>properties</find>
-      <find>@name</find>
-      <find>getcover</find>
       <find>|</find>
       <find>lulu</find>
       <find>startsWith('lulu</find>
@@ -65,13 +59,19 @@
       <find>isDemonstration</find>
       <find>groups</find>
       <find>getInstit</find>
-      <find>copyMode</find>
       <find>.value</find>
       <find>console.log</find>
       <find>content</find>
       <find>spine</find>
       <find>testcover</find>
       <find>print</find>
+      <find>copyMode</find>
+      <find>&amp;</find>
+      <find>'&amp;'</find>
+      <find>edit</find>
+      <find>chem</find>
+      <find>subdomain</find>
+      <find>getInst</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -169,8 +169,8 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
       </list>
     </option>
   </component>
@@ -181,7 +181,7 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1269" />
+    <option name="x" value="1268" />
     <option name="width" value="1302" />
     <option name="height" value="1392" />
   </component>
@@ -828,6 +828,8 @@
       <workItem from="1550810888285" duration="1520000" />
       <workItem from="1550812904879" duration="361000" />
       <workItem from="1550814207412" duration="2276000" />
+      <workItem from="1550822102538" duration="870000" />
+      <workItem from="1550856292772" duration="668000" />
     </task>
     <task id="LOCAL-00082" summary="Import EPUB">
       <created>1545195621611</created>
@@ -1208,16 +1210,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1245468000" />
+    <option name="totallyTimeSpent" value="1247006000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.23359422" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24111867" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.36894587" />
@@ -1228,7 +1229,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.288" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.2877493" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44729346" />
@@ -1648,8 +1649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="953" column="81" selection-start-line="953" selection-start-column="81" selection-end-line="953" selection-end-column="81" />
+        <state relative-caret-position="364">
+          <caret line="489" column="19" lean-forward="true" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
         </state>
       </provider>
     </entry>

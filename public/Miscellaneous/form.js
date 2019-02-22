@@ -481,10 +481,12 @@ class LTForm {
 	}
 	
 	static async getInstitutions() {
+		let subdomain = window.location.origin.split("/")[2].split(".")[0];
+		
 		const select = document.getElementById("LTFormInstitutions");
 		const isDemonstration = checkIfDemonstration();
 		if (isDemonstration) {
-			select.innerHTML = '<option value="https://chem.libretexts.org/Courses/Demonstration_Institution">Demonstration Institution</option>';
+			select.innerHTML = `<option value="https://${subdomain}.libretexts.org/Courses/Demonstration_Institution">Demonstration Institution</option>`;
 			return;
 		}
 		
@@ -724,7 +726,7 @@ class LTForm {
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
 							
-							let copyMode = document.getElementById("LTFormCopyMode").value;
+							let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
 							if (copyMode === 'copy') {
 								content = content.replace(/\/@api\/deki/g, `https://${child.data.subdomain}.libretexts.org/@api/deki`);
 								content = content.replace(/ fileid=".*?"/g, '');
