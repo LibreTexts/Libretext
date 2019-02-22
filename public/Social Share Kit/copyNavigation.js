@@ -87,18 +87,24 @@
 	}
 
 	function remixerOption() {
-		let copy = document.getElementsByClassName("mt-new-page");
+		let targetName = "mt-new-page";
+		let copy = document.getElementsByClassName(targetName);
+		if (!copy.length){
+			targetName = 'mt-site-tools';
+			copy = document.getElementsByClassName(targetName);
+		}
 		if (copy.length) {
-			let original = document.getElementsByClassName("mt-new-page")[0];
+			let original = document.getElementsByClassName(targetName)[0];
 			copy = original.cloneNode(true);
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
+			copyTarget.classList.remove("mt-icon-site-tools");
 			copyTarget.setAttribute("target", "_blank");
 			copyTarget.title = "Remix a new LibreText";
-			original.parentNode.insertBefore(copy, original.nextSibling)
+			original.parentNode.insertBefore(copy, targetName === 'mt-site-tools'? original: original.nextSibling)
 		}
 	}
 
