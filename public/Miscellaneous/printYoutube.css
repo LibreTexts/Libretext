@@ -4,9 +4,6 @@
 }
 
 .youtubeImage {
-	position: absolute;
-	width: 100%;
-	height: inherit;
 	object-fit: cover;
 }
 
@@ -39,18 +36,26 @@
 }
 
 @media print {
-	.youtubeIFrame, .noPrint {
+	.youtubeIFrame {
 		display: none
+	}
+
+	.mt-video-widget .youtubeImage {
+		width: 100%;
+		height: inherit;
+	}
+
+	.mt-video-widget .youtubeImage, .mt-video-widget .youtubeImageContainer {
+		position: absolute;
 	}
 
 	.youtubeImageContainer {
 		display: block;
 		width: 100%;
 		height: 100%;
-		position: absolute;
 	}
 
-	.ytp-button {
+	.mt-video-widget .ytp-button {
 		display: block;
 	}
 }
