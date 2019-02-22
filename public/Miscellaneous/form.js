@@ -705,7 +705,7 @@ class LTForm {
 					let current = window.location.origin.split('/')[2].split('.')[0];
 					if (copyContent) {
 						if (child.data.subdomain === current) {
-							content = await LTForm.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain);
+							content = await LTForm.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain, {isLimited: isDemonstration});
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
@@ -946,10 +946,14 @@ wiki.page("${child.path}", NULL)</pre>
 		}
 	}
 	
-	static async authenticatedFetch(path, api, subdomain) {
+	static async authenticatedFetch(path, api, subdomain, options) {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let headers = {};
-		if (api.includes('files/') || (current !== subdomain)) {
+		if (api === 'contents?mode=raw' && options.isLimited) {
+			return await fetch(`https://api.libretexts.org/endpoint/contents`,
+				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
+		}
+		else if (api.includes('files/') || (current !== subdomain)) {
 			subdomain = subdomain || current;
 			let token = LTForm.keys[subdomain];
 			headers['x-deki-token'] = token;
