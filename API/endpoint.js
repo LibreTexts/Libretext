@@ -64,7 +64,7 @@ async function handler(request, response) {
 				
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
-				let requests = await authenticatedFetch(input.path, 'contents?mode=raw', 'Remixer', input.subdomain);
+				let requests = await authenticatedFetch(input.path, 'contents?mode=raw', 'Cross-Library', input.subdomain);
 				if (requests.ok)
 					response.write(await requests.text());
 				else
@@ -134,7 +134,7 @@ async function handler(request, response) {
 				let match = contents.match(/^var authors = {[\s\S]*?^}/m);
 				if (match) {
 					contents = match[0];
-					contents = contents.replace('var authors = ','');
+					contents = contents.replace('var authors = ', '');
 					contents = decodeHTML(contents);
 					contents = decodeHTML(contents);
 					response.write(contents);
@@ -158,8 +158,13 @@ async function handler(request, response) {
 
 
 async function authenticatedFetch(path, api, username, subdomain) {
+	let isNumber;
+	if (!isNaN(path)) {
+		path = parseInt(path);
+		isNumber = true;
+	}
 	if (!username) {
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`);
 	}
 	if (subdomain) {
 		const user = "=" + username;
@@ -170,7 +175,7 @@ async function authenticatedFetch(path, api, username, subdomain) {
 		const hash = hmac.digest('hex');
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 			{headers: {'x-deki-token': token}});
 	}
 	else

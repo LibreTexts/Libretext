@@ -959,7 +959,7 @@ wiki.page("${child.path}", NULL)</pre>
 			subdomain = subdomain || current;
 			let token = LTForm.keys[subdomain];
 			headers['x-deki-token'] = token;
-			if (api.includes('files/'))
+			if (api.includes('files/') && (current === subdomain))
 				headers['X-Requested-With'] = 'XMLHttpRequest';
 		}
 		

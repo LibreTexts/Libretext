@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,26 +23,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11247">
-              <caret line="489" column="19" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="209" column="49" lean-forward="true" selection-start-line="209" selection-start-column="49" selection-end-line="209" selection-end-column="49" />
+            <state relative-caret-position="226">
+              <caret line="959" column="47" lean-forward="true" selection-start-line="959" selection-start-column="47" selection-end-line="959" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4203">
-              <caret line="327" column="1" lean-forward="true" selection-start-line="327" selection-start-column="1" selection-end-line="327" selection-end-column="1" />
+            <state relative-caret-position="-713">
+              <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -60,14 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>|</find>
-      <find>lulu</find>
-      <find>startsWith('lulu</find>
-      <find>coverpage:</find>
-      <find>coverpage</find>
-      <find>getCOver</find>
-      <find>getCover</find>
-      <find>index</find>
       <find>getTHinCC</find>
       <find>replace</find>
       <find>lulu@</find>
@@ -90,6 +75,14 @@
       <find>subdomain</find>
       <find>getInst</find>
       <find>print</find>
+      <find>authenticated</find>
+      <find>keys</find>
+      <find>Remixer</find>
+      <find>isN</find>
+      <find>isNan</find>
+      <find>500</find>
+      <find>processFile</find>
+      <find>transclude</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -185,10 +178,10 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
       </list>
     </option>
   </component>
@@ -199,9 +192,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1268" />
-    <option name="width" value="1302" />
-    <option name="height" value="1392" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="2762" />
+    <option name="height" value="1770" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -211,34 +205,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Tests'; set:Tests; class com.intellij.psi.search.scope.TestsScope">
           <expand>
@@ -263,6 +229,11 @@
             <path>
               <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="API" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -276,6 +247,34 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Social Share Kit" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -848,14 +847,9 @@
       <workItem from="1550814207412" duration="2276000" />
       <workItem from="1550822102538" duration="870000" />
       <workItem from="1550856292772" duration="1272000" />
-      <workItem from="1550900551996" duration="901000" />
-    </task>
-    <task id="LOCAL-00083" summary="Added import GUI">
-      <created>1545292890217</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1545292890217</updated>
+      <workItem from="1550900551996" duration="1031000" />
+      <workItem from="1550908864935" duration="90000" />
+      <workItem from="1550943402258" duration="7203000" />
     </task>
     <task id="LOCAL-00084" summary="Import epub compatibility">
       <created>1545605743729</created>
@@ -1193,7 +1187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550857078326</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Hiding OEW on mobile">
+      <created>1550902498646</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1550902498662</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1229,7 +1230,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1248511000" />
+    <option name="totallyTimeSpent" value="1255934000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
@@ -1238,7 +1239,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24489796" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.24187453" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.36894587" />
@@ -1249,7 +1250,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.2877493" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.2877493" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44729346" />
@@ -1356,7 +1357,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="crossTransclude in Remixer" />
     <MESSAGE value="Remixer Thumbnails" />
     <MESSAGE value="Analytics recommended and answerReveal tracking" />
     <MESSAGE value="Changed method" />
@@ -1381,7 +1381,8 @@
     <MESSAGE value="Fixed printYoutube Halpern" />
     <MESSAGE value="Remixer icon fix" />
     <MESSAGE value="Added subdomain" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added subdomain" />
+    <MESSAGE value="Hiding OEW on mobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hiding OEW on mobile" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1465,7 +1466,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/package.json" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-browser.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-config.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/src/pages/404.js" />
@@ -1631,20 +1631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="64" column="45" lean-forward="true" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11247">
-          <caret line="489" column="19" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -1659,13 +1645,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="209" column="49" lean-forward="true" selection-start-line="209" selection-start-column="49" selection-end-line="209" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1288">
@@ -1675,8 +1654,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4203">
-          <caret line="327" column="1" lean-forward="true" selection-start-line="327" selection-start-column="1" selection-end-line="327" selection-end-column="1" />
+        <state relative-caret-position="595">
+          <caret line="327" column="1" selection-start-line="327" selection-start-column="1" selection-end-line="327" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="959" column="47" lean-forward="true" selection-start-line="959" selection-start-column="47" selection-end-line="959" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-713">
+          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
         </state>
       </provider>
     </entry>

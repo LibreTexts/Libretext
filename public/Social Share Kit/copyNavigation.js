@@ -16,7 +16,7 @@
 		copyContentOption();
 		// setInterval(editorContentReuseLink, 500);
 	}
-
+	
 	function copyTranscludeOption() {
 		let tags = document.getElementById("pageTagsHolder");
 		if (tags) {
@@ -38,11 +38,11 @@
 			}
 		}
 	}
-
+	
 	function propagatorOption() {
 		const isAdmin = document.getElementById("adminHolder").innerText === "true";
 		const isLibrarySpecific = window.location.href.includes('LibrarySpecific');
-		if(isAdmin && !isLibrarySpecific) {
+		if (isAdmin && !isLibrarySpecific) {
 			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
 			if (copy.length) {
 				let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
@@ -61,13 +61,13 @@
 			}
 		}
 	}
-
-	async function askPropagator(){
-		if(confirm(`Propagate ${window.location.href} to the other libraries?`)){
+	
+	async function askPropagator() {
+		if (confirm(`Propagate ${window.location.href} to the other libraries?`)) {
 			let url = window.location.href;
 			const subdomain = url.split("/")[2].split(".")[0];
 			//Disabled for careered
-			let otherArray = ["bio", "biz","careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+			let otherArray = ["bio", "biz", "careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
 			if (otherArray.includes(subdomain)) {
 				let index = otherArray.indexOf(subdomain);
 				if (index > -1) {
@@ -85,11 +85,11 @@
 			}
 		}
 	}
-
+	
 	function remixerOption() {
 		let targetName = "mt-new-page";
 		let copy = document.getElementsByClassName(targetName);
-		if (!copy.length){
+		if (!copy.length) {
 			targetName = 'mt-site-tools';
 			copy = document.getElementsByClassName(targetName);
 		}
@@ -104,10 +104,10 @@
 			copyTarget.classList.remove("mt-icon-site-tools");
 			copyTarget.setAttribute("target", "_blank");
 			copyTarget.title = "Remix a new LibreText";
-			original.parentNode.insertBefore(copy, targetName === 'mt-site-tools'? original: original.nextSibling)
+			original.parentNode.insertBefore(copy, targetName === 'mt-site-tools' ? original : original.nextSibling)
 		}
 	}
-
+	
 	async function getTags(pageID, extraArray) {
 		let tags = await fetch(`/@api/deki/pages/${pageID}/tags?dream.out.format=json`);
 		tags = await tags.json();
@@ -131,7 +131,7 @@
 			return null;
 		}
 	}
-
+	
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
@@ -141,39 +141,88 @@
 				if (contentReuse) {
 					contentReuse = decodeHTML(contentReuse);
 					contentReuse = contentReuse.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
-
-					//TODO: Cross-library Forker
-
-
-					let matches = contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
-
-
+					
+					//Cross-library Forker
+					let result = contentReuse;
+					let success;
+					let matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
 					if (matches && matches.length) {
-						let result = contentReuse;
+						do {
+							let path = JSON.parse(matches[0].match(/{.*?}/)[0].replace(/'/g, '"'));
+							
+							//Get cross content
+							let content = await authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
+							content = await content.text();
+							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
+							content = decodeHTML(content);
+							
+							
+							response = await authenticatedFetch(path.PageID, 'files?dream.out.format=json', path.Library);
+							if (response.ok) {
+								let files = await response.json();
+								if (files["@count"] !== "0") {
+									if (files.file) {
+										if (!files.file.length) {
+											files = [files.file];
+										}
+										else {
+											files = files.file;
+										}
+									}
+								}
+								let promiseArray = [];
+								for (let i = 0; i < files.length; i++) {
+									let file = files[i];
+									if (file['@res-is-deleted'] === 'false')
+										promiseArray.push(processFile(file, {
+											path: path.PageID,
+											data: {subdomain: path.Library}
+										}, window.location.pathname.slice(1), file['@id']));
+								}
+								promiseArray = await Promise.all(promiseArray);
+								for (let i = 0; i < promiseArray.length; i++) {
+									if (promiseArray[i]) {
+										content = content.replace(promiseArray[i].original, promiseArray[i].final);
+										content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+									}
+								}
+							}
+							result = result.replace(matches[0], content);
+							matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
+					
+						} while (matches && matches.length);
+						success = true;
+					}
+					
+					//Local Forker
+					matches = contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
+					if (matches && matches.length) {
 						do {
 							// WAITING FOR ECMA 2018      let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
-							let path = matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="','');
+							let path = matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="', '');
 							//End compliance code
-
+							
 							console.log(path);
 							let content = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`);
 							content = await content.text();
 							content = decodeHTML(content);
-
+							
 							// WAITING FOR ECMA 2018      content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 							content = content.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
 							//End compliance code
-
+							
 							result = result.replace(matches[0], content);
-
+							
 							matches = result.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 						} while (matches && matches.length);
-
+						success = true;
+					}
+					if (success) {
 						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
 							method: "POST",
 							body: result,
 						});
-
+						
 						let tags = await getTags(pageID);
 						await fetch(`/@api/deki/pages/${pageID}/tags`, {
 							method: "PUT",
@@ -189,7 +238,7 @@
 			}
 		}
 	}
-
+	
 	function copyContentOption() {
 		let tags = document.getElementById("pageTagsHolder");
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
@@ -200,7 +249,7 @@
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
-
+			
 			//Options menu
 			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
 			if (copy.length) {
@@ -226,8 +275,60 @@
 			}
 		}
 	}
-
-	document.addEventListener('DOMContentLoaded', fn)
+	
+	async function authenticatedFetch(path, api, subdomain, options) {
+		let isNumber;
+		if (!isNaN(path)) {
+			path = parseInt(path);
+			isNumber = true;
+		}
+		if (typeof authenticatedFetch.keys === 'undefined') {
+			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			authenticatedFetch.keys = await keys.json();
+		}
+		let current = window.location.origin.split('/')[2].split('.')[0];
+		let headers = {};
+		if (api === 'contents?mode=raw') {
+			return await fetch(`https://api.libretexts.org/endpoint/contents`,
+				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
+		}
+		else if (api.includes('files/') || (current !== subdomain)) {
+			subdomain = subdomain || current;
+			let token = authenticatedFetch.keys[subdomain];
+			headers['x-deki-token'] = token;
+			if (api.includes('files/') && (current === subdomain))
+				headers['X-Requested-With'] = 'XMLHttpRequest';
+		}
+		
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+			{headers: headers});
+	}
+	
+	async function processFile(file, child, path, id) {
+		//only files with extensions
+		let filename = file['filename'];
+		
+		if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
+			filename = `=${filename}`;
+		}
+		let image = await authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+		
+		image = await image.blob();
+		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+			method: "PUT",
+			body: image
+		});
+		response = await response.json();
+		let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
+		return {
+			original: original,
+			oldID: id,
+			newID: response['@id'],
+			final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`
+		};
+	}
+	
+	document.addEventListener('DOMContentLoaded', () => setTimeout(fn, 800));
 })();
 
 
