@@ -313,3 +313,16 @@ select#LTFormSubdomain {
 .annotator-frame .annotator-bucket-bar{
 	background: none;
 }
+
+.mobileOnly {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	.mobileOnly {
+		display: block;
+	}
+	.mobileHide {
+		 display: none;
+	 }
+}

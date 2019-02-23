@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,11 +18,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="489" column="19" lean-forward="true" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
+            <state relative-caret-position="11247">
+              <caret line="489" column="19" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="209" column="49" lean-forward="true" selection-start-line="209" selection-start-column="49" selection-end-line="209" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4203">
+              <caret line="327" column="1" lean-forward="true" selection-start-line="327" selection-start-column="1" selection-end-line="327" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -64,7 +82,6 @@
       <find>content</find>
       <find>spine</find>
       <find>testcover</find>
-      <find>print</find>
       <find>copyMode</find>
       <find>&amp;</find>
       <find>'&amp;'</find>
@@ -72,6 +89,7 @@
       <find>chem</find>
       <find>subdomain</find>
       <find>getInst</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -166,11 +184,11 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
       </list>
     </option>
   </component>
@@ -829,14 +847,8 @@
       <workItem from="1550812904879" duration="361000" />
       <workItem from="1550814207412" duration="2276000" />
       <workItem from="1550822102538" duration="870000" />
-      <workItem from="1550856292772" duration="668000" />
-    </task>
-    <task id="LOCAL-00082" summary="Import EPUB">
-      <created>1545195621611</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1545195621612</updated>
+      <workItem from="1550856292772" duration="1272000" />
+      <workItem from="1550900551996" duration="901000" />
     </task>
     <task id="LOCAL-00083" summary="Added import GUI">
       <created>1545292890217</created>
@@ -1174,7 +1186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550813251636</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="Added subdomain">
+      <created>1550857078326</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1550857078326</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1210,15 +1229,16 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1247006000" />
+    <option name="totallyTimeSpent" value="1248511000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24111867" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24489796" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.36894587" />
@@ -1229,7 +1249,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.2877493" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.2877493" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44729346" />
@@ -1336,7 +1356,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Color change" />
     <MESSAGE value="crossTransclude in Remixer" />
     <MESSAGE value="Remixer Thumbnails" />
     <MESSAGE value="Analytics recommended and answerReveal tracking" />
@@ -1361,7 +1380,8 @@
     <MESSAGE value="Youtube-nocookie" />
     <MESSAGE value="Fixed printYoutube Halpern" />
     <MESSAGE value="Remixer icon fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remixer icon fix" />
+    <MESSAGE value="Added subdomain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added subdomain" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1445,7 +1465,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/.next/index.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/package.json" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-browser.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-config.js" />
@@ -1561,13 +1580,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/styles/LibreText.css" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/pages/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -1609,29 +1621,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1748">
-          <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="101" column="53" selection-start-line="101" selection-start-column="53" selection-end-line="101" selection-end-column="53" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1649,8 +1640,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="489" column="19" lean-forward="true" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
+        <state relative-caret-position="11247">
+          <caret line="489" column="19" selection-start-line="489" selection-start-column="19" selection-end-line="489" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="209" column="49" lean-forward="true" selection-start-line="209" selection-start-column="49" selection-end-line="209" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1288">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4203">
+          <caret line="327" column="1" lean-forward="true" selection-start-line="327" selection-start-column="1" selection-end-line="327" selection-end-column="1" />
         </state>
       </provider>
     </entry>
