@@ -17,7 +17,7 @@ if (!window["importer"]) {
 		});
 		errorText = "";
 		errorField.innerText = errorText;
-		let isTestEnviroment = document.getElementById("userEmailHolder").textContent === 'hdagnew@ucdavis.edu';
+		let isTestEnviroment = false && document.getElementById("userEmailHolder").textContent === 'hdagnew@ucdavis.edu';
 		request.open('POST', isTestEnviroment ? 'https://computer.miniland1333.com/import' : 'https://api.libretexts.org/import', true);
 		request.addEventListener("progress", receive);
 		// request.addEventListener("load", receive);
@@ -59,7 +59,7 @@ if (!window["importer"]) {
 				}
 				else if (json.message.messageType && json.message.messageType === 'complete') {
 					batchButton.innerText = `Complete! Time taken: ${json.message.timeTaken}`;
-					resultField.innerHTML = `<a target="_blank" href="/${json.message.resultURL}">${json.message.resultURL}</a>`;
+					resultField.innerHTML = `<a target="_blank" href="${json.message.resultURL}">${window.location.origin}${json.message.resultURL}</a>`;
 				}
 				else {
 					batchButton.innerText = json.message;

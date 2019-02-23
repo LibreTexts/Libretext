@@ -171,8 +171,8 @@ function handler(request, response) {
 				}
 			}
 
-			let root = `https://${subdomain}.libretexts.org/Remixer_University/Importer/${title}`;
-			let subroot = `/Remixer_University/Importer/${title}`;
+			let root = `https://${subdomain}.libretexts.org/Courses/Remixer_University/Importer/${title}`;
+			let subroot = `/Courses/Remixer_University/Importer/${title}`;
 			const isSimple = !filtered.length || !filteredChapters.length;
 			if (await coverPage(subroot, isSimple)) {
 				if (isSimple) { //falling back to simple import
