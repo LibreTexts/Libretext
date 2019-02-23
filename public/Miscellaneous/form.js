@@ -694,16 +694,17 @@ class LTForm {
 						if (!copyContent) {
 							tags.push("transcluded:yes");
 						}
-						tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
-						tags = "<tags>" + tags + "</tags>";
 					}
 					else {
-						tags = null;
+						tags = ["transcluded:yes"];
 					}
+					info = await (await info).json();
+					
+					tags.push(`source-${child.data.subdomain}-${info['@id']}`);
+					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+					tags = "<tags>" + tags + "</tags>";
 					
 					//copy Content
-					info = await info;
-					info = await info.json();
 					let current = window.location.origin.split('/')[2].split('.')[0];
 					if (copyContent) {
 						if (child.data.subdomain === current) {
@@ -771,7 +772,7 @@ template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${c
 
 <div class="comment">
 <div class="mt-comment-content">
-<p><a href="${child.data.url}">Cross-Library Link: ${child.data.url}</a></p>
+<p><a href="${child.data.url}">Cross-Library Link: ${child.data.url}</a><br/>source-${child.data.subdomain}-${info['@id']}</p>
 </div>
 </div>`
 					}
