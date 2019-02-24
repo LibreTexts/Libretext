@@ -103,11 +103,13 @@
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
+			copyTarget.id = "RemixerIcon";
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
 			copyTarget.classList.remove("mt-icon-site-tools");
 			copyTarget.classList.remove("mt-icon-site-tools");
 			copyTarget.classList.remove("mt-icon-quick-sign-in");
+			copyTarget.classList.remove("mt-toggle-right");
 			copyTarget.setAttribute("target", "_blank");
 			copyTarget.title = "Remix a new LibreText";
 			let target;
