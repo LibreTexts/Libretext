@@ -24,7 +24,7 @@ export default class LibreText extends React.Component {
 				<ReactCardFlip isFlipped={this.state.isFlipped}>
 					<div key="back" className='textSide textFront'>
 						<div style={{flex: 2}}><h5>{this.props.item.title}</h5></div>
-						<div style={{flex: 1}}>{this.props.item.author || ''}<br/>{this.props.item.institution || ''}
+						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
 						</div>
 					</div>
 					

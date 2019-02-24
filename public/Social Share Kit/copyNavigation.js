@@ -93,6 +93,10 @@
 			targetName = 'mt-site-tools';
 			copy = document.getElementsByClassName(targetName);
 		}
+		if(!copy.length){
+			targetName = 'mt-user-menu-user';
+			copy = document.getElementsByClassName(targetName);
+		}
 		if (copy.length) {
 			let original = document.getElementsByClassName(targetName)[0];
 			copy = original.cloneNode(true);
@@ -102,9 +106,24 @@
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
 			copyTarget.classList.remove("mt-icon-site-tools");
+			copyTarget.classList.remove("mt-icon-site-tools");
+			copyTarget.classList.remove("mt-icon-quick-sign-in");
 			copyTarget.setAttribute("target", "_blank");
 			copyTarget.title = "Remix a new LibreText";
-			original.parentNode.insertBefore(copy, targetName === 'mt-site-tools' ? original : original.nextSibling)
+			let target;
+			switch (targetName) {
+				case 'mt-site-tools':
+					target = original;
+					break;
+				case 'mt-new-page':
+					target = original.nextSibling;
+					break;
+				case 'mt-user-menu-user':
+					target = original.previousSibling.previousSibling;
+					console.log(target);
+					break;
+			}
+			original.parentNode.insertBefore(copy, target)
 		}
 	}
 	

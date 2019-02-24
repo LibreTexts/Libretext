@@ -290,17 +290,18 @@ class LTForm {
 						 * here.
 						 */
 //					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
+						data.dataTransfer.dropEffect = "copy";
 						return true;
 					},
-					dragDrag: function (node, data) {
+					/*dragDrag: function (node, data) {
 						data.dataTransfer.dropEffect = "move";
 					},
 					dragEnd: function (node, data) {
-					},
+					},*/
 					
 					// --- Drop-support:
 					
-					dragEnter: function (node, data) {
+					/*dragEnter: function (node, data) {
 						// node.debug("dragEnter", data);
 						data.dataTransfer.dropEffect = "move";
 						// data.dataTransfer.effectAllowed = "copy";
@@ -311,7 +312,7 @@ class LTForm {
 						// data.dataTransfer.effectAllowed = "copy";
 					},
 					dragLeave: function (node, data) {
-					},
+					},*/
 				},
 				icon: function (event, data) {
 					let subdomain = window.location.origin.split("/")[2].split(".")[0];
@@ -371,7 +372,7 @@ class LTForm {
 						return true;
 					},
 					dragDrag: function (node, data) {
-						data.dataTransfer.dropEffect = "move";
+						// data.dataTransfer.dropEffect = "move";
 					},
 					dragEnd: function (node, data) {
 					},
@@ -380,16 +381,14 @@ class LTForm {
 					
 					dragEnter: function (node, data) {
 						// node.debug("dragEnter", data);
-						data.dataTransfer.dropEffect = "move";
-						data.dataTransfer.effectAllowed = "copy";
+						// data.dataTransfer.dropEffect = "move";
 						return true;
 					},
-					dragOver: function (node, data) {
+					/*dragOver: function (node, data) {
 						data.dataTransfer.dropEffect = "move";
-						data.dataTransfer.effectAllowed = "copy";
 					},
 					dragLeave: function (node, data) {
-					},
+					},*/
 					dragDrop: async function (node, data) {
 						/* This function MUST be defined to enable dropping of items on
 						 * the tree.
@@ -513,7 +512,7 @@ class LTForm {
 		let institution = document.getElementById("LTFormInstitutions");
 		if (institution.value === "") {
 			if (confirm("Would you like to send an email to info@libretexts.com to request your institution?"))
-				window.open("mailto:info@libretexts.org?subject=Remixer%20Institution%20Request", "_blank");
+				window.location.href ="mailto:info@libretexts.org?subject=Remixer%20Institution%20Request";
 			return false;
 		}
 		let name = document.getElementById("LTFormName").value;
@@ -549,7 +548,8 @@ class LTForm {
 		const isDemonstration = checkIfDemonstration();
 		let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
 		if (!allowed) {
-			alert("This feature is not available in Demonstration Mode.");
+			if (confirm("Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText!\nWould you like to send an email to info@libretexts.com to get started?"))
+				window.location.href ="mailto:info@libretexts.org?subject=Remixer%20Account%20Request";
 			return false;
 		}
 		let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;

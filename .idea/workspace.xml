@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +25,30 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="488" column="22" selection-start-line="488" selection-start-column="22" selection-end-line="488" selection-end-column="22" />
+            <state relative-caret-position="124">
+              <caret line="371" column="36" lean-forward="true" selection-start-line="371" selection-start-column="36" selection-end-line="371" selection-end-column="36" />
+              <folding>
+                <element signature="e#11415#11987#0" />
+                <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#publish#0;n#LTForm#0" />
+                <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
+                <element signature="e#35458#36479#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="366">
+              <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,8 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>demonstration</find>
-      <find>isDemonstration</find>
       <find>groups</find>
       <find>getInstit</find>
       <find>.value</find>
@@ -73,6 +96,8 @@
       <find>yes</find>
       <find>prop</find>
       <find>Workshop</find>
+      <find>default</find>
+      <find>would you</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -156,10 +181,8 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/update.sh" />
         <option value="$PROJECT_DIR$/public/Downloads Center/update.bat" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/styles/LibreText.css" />
-        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/package.json" />
-        <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
         <option value="$PROJECT_DIR$/nodePrint/public/lulu.css" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
@@ -169,8 +192,10 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
+        <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
+        <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
       </list>
     </option>
@@ -182,9 +207,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-12" />
+    <option name="width" value="1302" />
+    <option name="height" value="1392" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -205,6 +230,33 @@
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Downloads Center" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Downloads Center" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Downloads Center" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -301,7 +353,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Downloads Center">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -336,21 +388,21 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/public/MoleculeGenerator/package.json" />
+    <configuration name="Downloads Center" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/Downloads Center/package.json" />
       <command value="run" />
       <scripts>
-        <script value="build" />
+        <script value="package" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="package" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/public/Downloads Center/package.json" />
+    <configuration default="true" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/MoleculeGenerator/package.json" />
       <command value="run" />
       <scripts>
-        <script value="package" />
+        <script value="build" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -375,13 +427,8 @@
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="npm.package" />
+      <item itemvalue="npm.Downloads Center" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.package" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -788,14 +835,10 @@
       <workItem from="1550908864935" duration="90000" />
       <workItem from="1550943402258" duration="7203000" />
       <workItem from="1550960766982" duration="6000" />
-      <workItem from="1550967761269" duration="1295000" />
-    </task>
-    <task id="LOCAL-00085" summary="Added Private Page handling">
-      <created>1545637681845</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1545637681845</updated>
+      <workItem from="1550967761269" duration="1344000" />
+      <workItem from="1550969992289" duration="181000" />
+      <workItem from="1550979904492" duration="660000" />
+      <workItem from="1550986339429" duration="1634000" />
     </task>
     <task id="LOCAL-00086" summary="Bugfix checkTime">
       <created>1545638263217</created>
@@ -1133,7 +1176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550960734367</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="Workshop University">
+      <created>1550969529696</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1550969529698</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1169,7 +1219,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1258454000" />
+    <option name="totallyTimeSpent" value="1260978000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1178,10 +1228,10 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.23660445" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24563517" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36894587" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.368" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -1189,10 +1239,10 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.2897574" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.28933334" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44729346" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44666666" />
       <window_info anchor="bottom" id="REST Client" order="14" weight="0.47733334" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1296,7 +1346,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Analytics recommended and answerReveal tracking" />
     <MESSAGE value="Changed method" />
     <MESSAGE value="Added content-reuse comment" />
     <MESSAGE value="Changed time format" />
@@ -1321,7 +1370,8 @@
     <MESSAGE value="Added subdomain" />
     <MESSAGE value="Hiding OEW on mobile" />
     <MESSAGE value="Added source-library-pageID tag to Remixer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added source-library-pageID tag to Remixer" />
+    <MESSAGE value="Workshop University" />
+    <option name="LAST_COMMIT_MESSAGE" value="Workshop University" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1436,7 +1486,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/public/404/index.html" />
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/public/index.html" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/public/app-e5236b37abfb02ce5b4c.js" />
     <entry file="file://$PROJECT_DIR$/public/Converter/package.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -1463,18 +1512,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-710">
           <caret line="24" column="56" selection-start-line="24" selection-start-column="52" selection-end-line="24" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="232" column="104" selection-start-line="232" selection-start-column="104" selection-end-line="232" selection-end-column="104" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1533,16 +1570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1612,17 +1639,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Downloads Center/public/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="57" column="52" lean-forward="true" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
+        <state relative-caret-position="334">
+          <caret line="121" column="69" selection-start-line="121" selection-start-column="69" selection-end-line="121" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="488" column="22" selection-start-line="488" selection-start-column="22" selection-end-line="488" selection-end-column="22" />
+        <state relative-caret-position="124">
+          <caret line="371" column="36" lean-forward="true" selection-start-line="371" selection-start-column="36" selection-end-line="371" selection-end-column="36" />
+          <folding>
+            <element signature="e#11415#11987#0" />
+            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
+            <element signature="e#35458#36479#0" />
+          </folding>
         </state>
       </provider>
     </entry>
