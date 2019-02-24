@@ -548,7 +548,7 @@ class LTForm {
 		const isDemonstration = checkIfDemonstration();
 		let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
 		if (!allowed) {
-			if (confirm("Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText!\nWould you like to send an email to info@libretexts.com to get started?"))
+			if (confirm("Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?"))
 				window.location.href ="mailto:info@libretexts.org?subject=Remixer%20Account%20Request";
 			return false;
 		}
