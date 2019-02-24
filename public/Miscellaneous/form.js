@@ -486,7 +486,7 @@ class LTForm {
 		const select = document.getElementById("LTFormInstitutions");
 		const isDemonstration = checkIfDemonstration();
 		if (isDemonstration) {
-			select.innerHTML = `<option value="https://${subdomain}.libretexts.org/Courses/Demonstration_Institution">Demonstration Institution</option>`;
+			select.innerHTML = `<option value="https://${subdomain}.libretexts.org/Workshops/Workshop_University">Workshop University</option>`;
 			return;
 		}
 		
@@ -1060,7 +1060,7 @@ function formatNumber(it) {
 
 function checkIfDemonstration() {
 	const groups = document.getElementById("groupHolder").innerText;
-	return document.getElementById('usernameHolder').innerText === 'RemixerDemonstration' || groups.includes('Remixer');
+	return groups.includes('Remixer');
 }
 
 LTForm.initialize();
