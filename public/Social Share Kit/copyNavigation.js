@@ -122,7 +122,6 @@
 					break;
 				case 'mt-user-menu-user':
 					target = original.previousSibling.previousSibling;
-					console.log(target);
 					break;
 			}
 			original.parentNode.insertBefore(copy, target)

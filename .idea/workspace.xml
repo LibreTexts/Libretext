@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added Remix name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
@@ -20,10 +20,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="11132">
+              <caret line="988" column="28" selection-start-line="988" selection-start-column="28" selection-end-line="988" selection-end-column="28" />
+              <folding>
+                <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+                <element signature="n#!!block;n#publish#0;n#LTForm#0" />
+                <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="105" column="42" selection-start-line="105" selection-start-column="42" selection-end-line="105" selection-end-column="42" />
+            <state relative-caret-position="132">
+              <caret line="122" column="41" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -31,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="311" selection-start-line="311" selection-end-line="311" />
+            <state relative-caret-position="252">
+              <caret line="318" column="20" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -55,7 +70,6 @@
       <find>groups</find>
       <find>getInstit</find>
       <find>.value</find>
-      <find>console.log</find>
       <find>content</find>
       <find>spine</find>
       <find>testcover</find>
@@ -82,6 +96,7 @@
       <find>Workshop</find>
       <find>default</find>
       <find>would you</find>
+      <find>console.log</find>
     </findStrings>
     <replaceStrings>
       <replace>viewerdiv[0]</replace>
@@ -802,14 +817,8 @@
       <workItem from="1550969992289" duration="181000" />
       <workItem from="1550979904492" duration="660000" />
       <workItem from="1550986339429" duration="1902000" />
-      <workItem from="1550991956068" duration="443000" />
-    </task>
-    <task id="LOCAL-00087" summary="Added Prive test">
-      <created>1545638931489</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1545638931489</updated>
+      <workItem from="1550991956068" duration="1605000" />
+      <workItem from="1550994161269" duration="452000" />
     </task>
     <task id="LOCAL-00088" summary="Added basic health check">
       <created>1545885571964</created>
@@ -1147,7 +1156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550988227373</updated>
     </task>
-    <option name="localTasksCounter" value="136" />
+    <task id="LOCAL-00136" summary="Added Remix name">
+      <created>1550992522448</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1550992522448</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1183,7 +1199,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1261689000" />
+    <option name="totallyTimeSpent" value="1263303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1192,7 +1208,7 @@
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.2486454" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.25165564" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.368" />
@@ -1203,7 +1219,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.28933334" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.27733332" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.44666666" />
@@ -1310,7 +1326,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added content-reuse comment" />
     <MESSAGE value="Changed time format" />
     <MESSAGE value="Added support for more AY/AL" />
     <MESSAGE value="Remixer 2.0" />
@@ -1335,7 +1350,8 @@
     <MESSAGE value="Added source-library-pageID tag to Remixer" />
     <MESSAGE value="Workshop University" />
     <MESSAGE value="Mozilla Remixer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mozilla Remixer" />
+    <MESSAGE value="Added Remix name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Remix name" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1419,7 +1435,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-browser.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/gatsby-config.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/src/pages/404.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/my-blazing-fast-site/src/pages/index.js" />
@@ -1609,19 +1624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="397" column="39" selection-start-line="397" selection-start-column="39" selection-end-line="397" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
-            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
-            <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="366">
@@ -1634,17 +1636,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/event-provider.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11132">
+          <caret line="988" column="28" selection-start-line="988" selection-start-column="28" selection-end-line="988" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!block;n#getSelectOptions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#getInstitutions#0;n#LTForm#0" />
+            <element signature="n#!!block;n#publish#0;n#LTForm#0" />
+            <element signature="n#!!block;n#authenticatedFetch#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="105" column="42" selection-start-line="105" selection-start-column="42" selection-end-line="105" selection-end-column="42" />
+        <state relative-caret-position="132">
+          <caret line="122" column="41" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="311" selection-start-line="311" selection-end-line="311" />
+        <state relative-caret-position="252">
+          <caret line="318" column="20" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
         </state>
       </provider>
     </entry>
