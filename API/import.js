@@ -97,7 +97,8 @@ function handler(request, response) {
 		target = target.trim();
 		let url = target;
 		let checkURL = await fetch(url, {
-			method: 'HEAD'
+			method: 'HEAD',
+			headers: {'x-deki-token': authenticate(subdomain,user)}
 		});
 		let isEpub = target.endsWith('.epub')
 			|| checkURL.headers.get('content-type').includes('application/epub+zip')
@@ -106,7 +107,8 @@ function handler(request, response) {
 		if (!checkURL.ok || !isEpub) {
 			url = target + '/open/download?type=epub';
 			checkURL = await fetch(url, {
-				method: 'HEAD'
+				method: 'HEAD',
+				headers: {'x-deki-token': authenticate(subdomain,user)}
 			});
 			isEpub = checkURL.headers.get('content-type').includes('application/epub+zip');
 			if (!checkURL.ok || !isEpub) {

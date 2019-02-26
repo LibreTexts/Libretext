@@ -21,7 +21,6 @@ describe('dynamic response', function () {
 	customTest(200, 'print/url=https://chem.libretexts.org/?no-cache');
 	customTest(200, 'print/url=https://chem.libretexts.org/');
 	customTest(403, 'print/url=https://chem.libretexts.org/LibreTexts/University_of_California_Davis/UCD_Chem_110B%3A_Physical_Chemistry_II/Chapters/14%3A_Nuclear_Magnetic_Resonance_Spectroscopy/14.6%3A_Spin-Spin_Coupling_Results_in_Multiplets_in_NMR_Spectra');
-
 });
 
 after(function () {

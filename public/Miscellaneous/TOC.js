@@ -1,6 +1,6 @@
 window.addEventListener('load', TOC);
 
-function TOC() {
+async function TOC() {
 	const urlArray = window.location.href.replace("?action=edit", "").split("/");
 	let coverpage;
 	let coverTitle;
@@ -8,37 +8,36 @@ function TOC() {
 	if (!window.matchMedia('print').matches) {
 		for (let i = 3; i < urlArray.length; i++) {
 			let path = urlArray.slice(3, i + 1).join("/");
-			let getURL = window.location.origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags?dream.out.format=json";
-			fetch(getURL).then(async (response) => {
-				let tags = await response.json();
-				if (tags.tag) {
-					if (tags.tag.length) {
-						tags = tags.tag.map((tag) => tag["@value"]);
-						if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) && !coverpage) {
-							coverpage = window.location.origin + path;
-							makeTOC(path, true);
-						}
-					}
-					else {
-						tags = tags.tag["@value"];
-						if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) && !coverpage) {
-							coverpage = window.location.origin + path;
-							makeTOC(path, true);
-						}
+			let response = await authenticatedFetch(path, 'tags?dream.out.format=json');
+			let tags = await response.json();
+			if (tags.tag) {
+				if (tags.tag.length) {
+					tags = tags.tag.map((tag) => tag["@value"]);
+					if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
+						coverpage = path;
 					}
 				}
-			});
+				else {
+					tags = tags.tag["@value"];
+					if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
+						coverpage = path;
+					}
+				}
+			}
 		}
+	}
+	if (coverpage) {
+		makeTOC(coverpage, true);
 	}
 	
 	async function makeTOC(path, isRoot, full) {
 		const origin = window.location.origin;
 		path = path.replace(origin + "/", "");
 		//get coverpage title & subpages;
-		let info = fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/info?dream.out.format=json");
+		let info = authenticatedFetch(path, 'info?dream.out.format=json');
 		
 		
-		let response = await fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+		let response = await authenticatedFetch(path, 'subpages?dream.out.format=json');
 		response = await response.json();
 		info = await info;
 		info = await info.json();
@@ -64,8 +63,7 @@ function TOC() {
 				let defaultOpen = window.location.href.includes(url) && !currentPage;
 				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full || defaultOpen)) { //recurse down
-					children = await
-						fetch(origin + "/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/subpages?dream.out.format=json");
+					children = await authenticatedFetch(path, 'subpages?dream.out.format=json');
 					children = await children.json();
 					children = await
 						subpageCallback(children, false);
@@ -112,5 +110,27 @@ function TOC() {
 				})
 			}
 		}
+	}
+	
+	async function authenticatedFetch(path, api, subdomain) {
+		let isNumber;
+		if (!isNaN(path)) {
+			path = parseInt(path);
+			isNumber = true;
+		}
+		if (typeof authenticatedFetch.keys === 'undefined') {
+			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			authenticatedFetch.keys = await keys.json();
+		}
+		let current = window.location.origin.split('/')[2].split('.')[0];
+		let headers = {};
+		subdomain = subdomain || current;
+		let token = authenticatedFetch.keys[subdomain];
+		headers['x-deki-token'] = token;
+		if (current === subdomain)
+			headers['X-Requested-With'] = 'XMLHttpRequest';
+		
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+			{headers: headers});
 	}
 }

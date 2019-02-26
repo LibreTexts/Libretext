@@ -489,12 +489,7 @@ class LTForm {
 			return;
 		}
 		
-		let response;
-		try {
-			response = await fetch("/@api/deki/pages/=Courses/subpages?dream.out.format=json");
-		} catch (e) {
-			response = await fetch("/@api/deki/pages/=Course_LibreTexts/subpages?dream.out.format=json");
-		}
+		let response = await this.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
 		response = await response.json();
 		const subpageArray = (response['@count'] === "1" ? [response["page.subpage"]] : response["page.subpage"]) || [];
 		const result = [];
@@ -509,10 +504,11 @@ class LTForm {
 	}
 	
 	static async publish() {
+		let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let institution = document.getElementById("LTFormInstitutions");
 		if (institution.value === "") {
 			if (confirm("Would you like to send an email to info@libretexts.com to request your institution?"))
-				window.location.href ="mailto:info@libretexts.org?subject=Remixer%20Institution%20Request";
+				window.location.href = "mailto:info@libretexts.org?subject=Remixer%20Institution%20Request";
 			return false;
 		}
 		let name = document.getElementById("LTFormName").value;
@@ -521,12 +517,17 @@ class LTForm {
 			college += `/Username:_${document.getElementById("usernameHolder").innerText}`;
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/contents?edittime=now", {
 				method: "POST",
-				body: "<p>{{template.ShowCategory()}}</p>"
+				body: "<p>{{template.ShowCategory()}}</p>",
+				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/tags", {
 				method: "PUT",
 				body: '<tags><tag value="article:topic-category"/></tags>',
-				headers: {"Content-Type": "text/xml; charset=utf-8"}
+				headers: {
+					"Content-Type": "text/xml; charset=utf-8",
+					'x-deki-token': LTForm.keys[subdomain],
+					'x-requested-with': 'XMLHttpRequest'
+				}
 			});
 		}
 		let url = `${college}/${name.replace(/ /g, "_")}`;
@@ -534,7 +535,7 @@ class LTForm {
 			alert("No name provided!");
 			return false
 		}
-		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}/${name}`))}/info`);
+		let response = await this.authenticatedFetch(`${college.replace(window.location.origin, "")}/${name}`, 'info', subdomain);
 		if (response.ok) {
 			alert(`The page ${url} already exists!`);
 			return false;
@@ -549,7 +550,7 @@ class LTForm {
 		let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
 		if (!allowed) {
 			if (confirm("Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?"))
-				window.location.href ="mailto:info@libretexts.org?subject=Remixer%20Account%20Request";
+				window.location.href = "mailto:info@libretexts.org?subject=Remixer%20Account%20Request";
 			return false;
 		}
 		let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
@@ -601,25 +602,35 @@ class LTForm {
 			let content = "<p>{{template.ShowCategory()}}</p>";
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
 				method: "POST",
-				body: content
+				body: content,
+				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			let tags = '<tags><tag value="article:topic-category"/><tag value="coverpage:yes"/></tags>';
 			let propertyArray = [putProperty('mindtouch.page#welcomeHidden', true), putProperty('mindtouch.idf#subpageListing', 'simple'), fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
 				method: "PUT",
 				body: tags,
-				headers: {"Content-Type": "text/xml; charset=utf-8"}
+				headers: {
+					"Content-Type": "text/xml; charset=utf-8",
+					'x-deki-token': LTForm.keys[subdomain],
+					'x-requested-with': 'XMLHttpRequest'
+				}
 			})];
 			
 			await Promise.all(propertyArray);
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + tree.title + "&name=" + encodeURIComponent(tree.title.replace(" ", "_")), {
-				method: "POST"
+				method: "POST",
+				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			
 			async function putProperty(name, value) {
 				await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 					method: "POST",
 					body: value,
-					headers: {"Slug": name}
+					headers: {
+						"Slug": name,
+						'x-deki-token': LTForm.keys[subdomain],
+						'x-requested-with': 'XMLHttpRequest'
+					}
 				})
 			}
 		}
@@ -649,17 +660,23 @@ class LTForm {
 						method: "POST",
 						body: isGuide ? "<p>{{template.ShowGuide()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>\n"
 							: "",
+						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					let tags = `<tags><tag value="${isGuide ? "article:topic-guide" : "article:topic"}"/></tags>`;
 					await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
 						method: "PUT",
 						body: tags,
-						headers: {"Content-Type": "text/xml; charset=utf-8"}
+						headers: {
+							"Content-Type": "text/xml; charset=utf-8",
+							'x-deki-token': LTForm.keys[subdomain],
+							'x-requested-with': 'XMLHttpRequest'
+						}
 					});
 					// Title cleanup
 					if (child.data.padded) {
 						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
-							method: "POST"
+							method: "POST",
+							headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 						}).then();
 					}
 					if (isGuide) {
@@ -790,7 +807,8 @@ wiki.page("${child.path}", NULL)</pre>
 					}
 					response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?edittime=now", {
 						method: "POST",
-						body: content
+						body: content,
+						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					if (response.status >= 400) {
 						failedCounter++;
@@ -814,7 +832,11 @@ wiki.page("${child.path}", NULL)</pre>
 								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
 									method: "PUT",
 									body: tags,
-									headers: {"Content-Type": "text/xml; charset=utf-8"}
+									headers: {
+										"Content-Type": "text/xml; charset=utf-8",
+										'x-deki-token': LTForm.keys[subdomain],
+										'x-requested-with': 'XMLHttpRequest'
+									}
 								}).then();
 							}
 							//Properties
@@ -843,7 +865,11 @@ wiki.page("${child.path}", NULL)</pre>
 												fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 													method: "POST",
 													body: content[i].value,
-													headers: {"Slug": content[i].name}
+													headers: {
+														"Slug": content[i].name,
+														'x-deki-token': LTForm.keys[subdomain],
+														'x-requested-with': 'XMLHttpRequest'
+													}
 												}).then();
 											}
 											break;
@@ -853,7 +879,11 @@ wiki.page("${child.path}", NULL)</pre>
 												fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 													method: "POST",
 													body: content[i].value,
-													headers: {"Slug": content[i].name}
+													headers: {
+														"Slug": content[i].name,
+														'x-deki-token': LTForm.keys[subdomain],
+														'x-requested-with': 'XMLHttpRequest'
+													}
 												}).then();
 											}
 											break;
@@ -865,7 +895,11 @@ wiki.page("${child.path}", NULL)</pre>
 											fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 												method: "POST",
 												body: content[i].value,
-												headers: {"Slug": content[i].name}
+												headers: {
+													"Slug": content[i].name,
+													'x-deki-token': LTForm.keys[subdomain],
+													'x-requested-with': 'XMLHttpRequest'
+												}
 											}).then();
 											break;
 									}
@@ -875,7 +909,11 @@ wiki.page("${child.path}", NULL)</pre>
 							// Title cleanup
 							if (child.data.padded) {
 								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
-									method: "POST"
+									method: "POST",
+									headers: {
+										'x-deki-token': LTForm.keys[subdomain],
+										'x-requested-with': 'XMLHttpRequest'
+									}
 								}).then();
 							}
 							
@@ -889,7 +927,11 @@ wiki.page("${child.path}", NULL)</pre>
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
 											method: "PUT",
-											body: image
+											body: image,
+											headers: {
+												'x-deki-token': LTForm.keys[subdomain],
+												'x-requested-with': 'XMLHttpRequest'
+											}
 										}).then();
 									}
 								}
@@ -920,7 +962,11 @@ wiki.page("${child.path}", NULL)</pre>
 				fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/properties", {
 					method: "POST",
 					body: value,
-					headers: {"Slug": name}
+					headers: {
+						"Slug": name,
+						'x-deki-token': LTForm.keys[subdomain],
+						'x-requested-with': 'XMLHttpRequest'
+					}
 				})
 			}
 			
@@ -933,7 +979,8 @@ wiki.page("${child.path}", NULL)</pre>
 					image = await image.blob();
 					let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 						method: "PUT",
-						body: image
+						body: image,
+						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					response = await response.json();
 					let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
@@ -956,13 +1003,11 @@ wiki.page("${child.path}", NULL)</pre>
 			return await fetch(`https://api.libretexts.org/endpoint/contents`,
 				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
 		}
-		else if (api.includes('files/') || (current !== subdomain)) {
-			subdomain = subdomain || current;
-			let token = LTForm.keys[subdomain];
-			headers['x-deki-token'] = token;
-			if (api.includes('files/') && (current === subdomain))
-				headers['X-Requested-With'] = 'XMLHttpRequest';
-		}
+		subdomain = subdomain || current;
+		let token = LTForm.keys[subdomain];
+		headers['x-deki-token'] = token;
+		if (current === subdomain)
+			headers['X-Requested-With'] = 'XMLHttpRequest';
 		
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 			{headers: headers});
