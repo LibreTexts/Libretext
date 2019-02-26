@@ -684,9 +684,27 @@ class LTForm {
 							[putProperty("mindtouch.idf#guideDisplay", "single", path),
 								putProperty('mindtouch.page#welcomeHidden', true, path),
 								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+						
+						let current = window.location.origin.split('/')[2].split('.')[0];
+						let headers = {headers: {
+							'x-deki-token': LTForm.keys['chem'],
+						}};
+						if(current === 'chem')
+							headers['x-requested-with'] = 'XMLHttpRequest';
+						let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', headers);
+						
+						image = await image.blob();
+						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
+							method: "PUT",
+							body: image,
+							headers: {
+								'x-deki-token': LTForm.keys[subdomain],
+								'x-requested-with': 'XMLHttpRequest'
+							}
+						}).then();
 					}
 				}
-				else {
+				else { //copying from an exisitg source
 					// child.path = child.data.url.replace(window.location.origin + "/", ""); //source
 					child.path = child.data.path;
 					let content;
@@ -718,8 +736,8 @@ class LTForm {
 					info = await (await info).json();
 					
 					tags.push(`source-${child.data.subdomain}-${info['@id']}`);
-					tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
-					tags = "<tags>" + tags + "</tags>";
+					let tagsHTML = tags.map((tag) => `<tag value="${tag}"/>`).join("");
+					tagsHTML = "<tags>" + tagsHTML + "</tags>";
 					
 					//copy Content
 					let current = window.location.origin.split('/')[2].split('.')[0];
@@ -828,10 +846,10 @@ wiki.page("${child.path}", NULL)</pre>
 							break;
 						case 200:
 							//copy Tags
-							if (tags) {
+							if (tagsHTML) {
 								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
 									method: "PUT",
-									body: tags,
+									body: tagsHTML,
 									headers: {
 										"Content-Type": "text/xml; charset=utf-8",
 										'x-deki-token': LTForm.keys[subdomain],
@@ -923,6 +941,25 @@ wiki.page("${child.path}", NULL)</pre>
 									let files = await response.text();
 									if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail')) {
 										let image = await LTForm.authenticatedFetch(child.path, 'thumbnail', child.data.subdomain);
+										
+										image = await image.blob();
+										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
+											method: "PUT",
+											body: image,
+											headers: {
+												'x-deki-token': LTForm.keys[subdomain],
+												'x-requested-with': 'XMLHttpRequest'
+											}
+										}).then();
+									}
+									else if (tags.includes("article:topic-category") || tags.includes("article:topic-guide")) {
+										let current = window.location.origin.split('/')[2].split('.')[0];
+										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', {
+											headers: {
+												'x-deki-token': LTForm.keys['chem'],
+												'x-requested-with': current === 'chem' ? 'XMLHttpRequest' : ''
+											}
+										});
 										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
@@ -1079,7 +1116,6 @@ function millisecondsToStr(milliseconds) {
 	if (years) {
 		return years + ' year' + numberEnding(years);
 	}
-	//TODO: Months! Maybe weeks?
 	const days = Math.floor((temp %= 31536000) / 86400);
 	if (days) {
 		return days + ' day' + numberEnding(days);

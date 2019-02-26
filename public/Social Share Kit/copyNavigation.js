@@ -93,7 +93,7 @@
 			targetName = 'mt-site-tools';
 			copy = document.getElementsByClassName(targetName);
 		}
-		if(!copy.length){
+		if (!copy.length) {
 			targetName = 'mt-user-menu-user';
 			copy = document.getElementsByClassName(targetName);
 		}
@@ -103,7 +103,9 @@
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
-			copyTarget.id = "RemixerIcon";
+			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
+				copyTarget.id = "RemixerIcon";
+			
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
 			copyTarget.classList.remove("mt-icon-site-tools");
@@ -209,7 +211,7 @@
 							}
 							result = result.replace(matches[0], content);
 							matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
-					
+							
 						} while (matches && matches.length);
 						success = true;
 					}
