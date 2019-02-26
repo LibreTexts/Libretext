@@ -22,6 +22,7 @@ const findRemoveSync = require('find-remove');
 
 var Gbrowser;
 var Gserver;
+var keys;
 
 puppeteer.launch({
 	args: [
@@ -29,11 +30,13 @@ puppeteer.launch({
 		'--disable-setuid-sandbox'
 	],
 	// headless: false
-}).then((browser) => {
+}).then(async (browser) => {
 		const server = http.createServer(handler);
 		const localServer = http.createServer(handler);
 		const staticFileServer = new nodeStatic.Server('./public');
 		let port = 3001;
+		keys = await fetch('https://api.libretexts.org/endpoint/getKey', {headers:{origin:'print.libretexts.org'}});
+		keys = await keys.json();
 		server.listen(port);
 		if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 			port = parseInt(process.argv[2]);
@@ -43,6 +46,8 @@ puppeteer.launch({
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF');
 		fs.ensureDir('./PDF/Margin');
+		
+		
 		let working = {};
 		const eventEmitter = new events.EventEmitter();
 		
@@ -244,7 +249,7 @@ puppeteer.launch({
 		async function getCC(url, subdomain) {
 			let sourceArray = url.split("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
-			let tags = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags?dream.out.format=json`);
+			let tags = await authenticatedFetch(path,'tags?dream.out.format=json',subdomain);
 			if (!tags.ok) {
 				let error = await tags.text();
 				console.error(`getCC: ${error}`);
@@ -310,7 +315,9 @@ puppeteer.launch({
 			const sourceArray = url.split("/");
 			const domain = sourceArray.slice(0, 3).join("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
-			let response = await fetch(`${domain}/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/revisions?dream.out.format=json`);
+			let origin = url.split("/")[2].split(".");
+			const subdomain = origin[0];
+			let response = await authenticatedFetch(path,'revisions?dream.out.format=json',subdomain);
 			if (response.ok) {
 				response = await response.json();
 				response = response.page;
@@ -320,8 +327,8 @@ puppeteer.launch({
 				return new Date(response['date.edited']);
 			}
 			else {
-				// let error = await response.text();
-				// console.error(`checkTime: ${error}`);
+				let error = await response.text();
+				console.error(`checkTime: ${error}`);
 				return 'restricted';
 			}
 		}
@@ -1213,8 +1220,9 @@ puppeteer.launch({
 );
 
 async function authenticatedFetch(path, api, subdomain) {
-	//DUMMY FUNCTION - does not have elevated privileges
 	let headers = {'X-Requested-With': 'XMLHttpRequest'};
+	let token = keys[subdomain];
+	headers['x-deki-token'] = token;
 	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
 		{headers: headers});
 }
