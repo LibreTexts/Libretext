@@ -30,12 +30,13 @@ puppeteer.launch({
 		'--disable-setuid-sandbox'
 	],
 	// headless: false
-}).then(async (browser) => {
+}).then(
+	async (browser) => {
 		const server = http.createServer(handler);
 		const localServer = http.createServer(handler);
 		const staticFileServer = new nodeStatic.Server('./public');
 		let port = 3001;
-		keys = await fetch('https://api.libretexts.org/endpoint/getKey', {headers:{origin:'print.libretexts.org'}});
+		keys = await fetch('https://api.libretexts.org/endpoint/getKey', {headers: {origin: 'print.libretexts.org'}});
 		keys = await keys.json();
 		server.listen(port);
 		if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -66,7 +67,7 @@ puppeteer.launch({
 			request.url = request.url.replace("print/", "");
 			let url = request.url;
 			
-			if (url.startsWith("/url=") && url.includes("libretexts.org")) { //single page
+			if (url.startsWith("/url=")) { //single page
 				let isNoCache = false;
 				let isOffload = false;
 				if (url.includes("?nocache")) {
@@ -86,6 +87,11 @@ puppeteer.launch({
 				url = url.split('/url=')[1];
 				if (url.endsWith(".pdf")) {
 					url = url.slice(0, -4);
+				}
+				
+				if (!url.includes("libretexts.org")) {
+					responseError();
+					return;
 				}
 				
 				//TODO: Remove this testing feature
@@ -211,11 +217,82 @@ puppeteer.launch({
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
 				findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
-				response.write('Done!');
+				
+				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
+					responseError('Unauthorized', 401);
+				}
+				
+				url = url.split('/Refresh=')[1];
+				
+				// try {
+				let subdomain = url.split('/')[0];
+				let path = url.split('/').slice(1).join('/');
+				let isNoCache = false;
+				console.log(`Starting Refresh ${subdomain} ${path}`);
+				let all = await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true});
+				let texts = [];
+				let standalone = [];
+				let finished = [];
+				sort(all);
+				console.log(standalone);
+				
+				function sort(current) {
+					for (let i = 0; i < current.children.length; i++) {
+						let page = current.children[i];
+						if (page.tags.includes('coverpage:yes')) {
+							texts.push(page);
+						}
+						else {
+							standalone.push(page.url);
+							sort(page);
+						}
+					}
+				}
+				
+				response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
+				
+				//process Texts
+				console.log(`Processing ${texts.length} LibreTexts`);
+				for (let i = 0; i < texts.length; i++) {
+					let current = texts[i];
+					finished.push(await getLibretext(current.url, null, {current: current, ip: ip}));
+				}
+				
+				
+				console.log(`Processing ${standalone.length} standalone pages`);
+				//kubernetesServiceHost ? 4 : 2
+				await mapLimit(standalone, 4, async (pageURL) => {
+					if (kubernetesServiceHost) {
+						let offloadURL = `http://${kubernetesServiceHost}/url=${pageURL}`;
+						if (isNoCache)
+							offloadURL += '?no-cache&offload';
+						else
+							offloadURL += '?offload';
+						
+						let offload = await fetch(offloadURL);
+						await offload.json();
+					}
+					else {
+						await getPDF(pageURL, ip, isNoCache);
+					}
+				});
+				await fetch('https://api.libretexts.org/endpoint/refreshList', {
+					method: 'PUT',
+					body: JSON.stringify({
+						subdomain: subdomain,
+						path: 'Test',
+						identifier: md5(keys[subdomain]),
+						content: ['Pickles']
+					}),
+					headers: {
+						origin: 'print.libretexts.org'
+					}
+				});
+				console.log('Finished');
 				response.end();
 			}
 			else { //static server
-				console.log(url);
+				// console.log(url);
 				staticFileServer.serve(request, response, function (error, res) {
 					//on error
 					if (error && error.status === 404) {//404 File not Found
@@ -249,7 +326,7 @@ puppeteer.launch({
 		async function getCC(url, subdomain) {
 			let sourceArray = url.split("/");
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
-			let tags = await authenticatedFetch(path,'tags?dream.out.format=json',subdomain);
+			let tags = await authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
 			if (!tags.ok) {
 				let error = await tags.text();
 				console.error(`getCC: ${error}`);
@@ -317,7 +394,7 @@ puppeteer.launch({
 			let path = sourceArray.slice(3, sourceArray.length).join("/");
 			let origin = url.split("/")[2].split(".");
 			const subdomain = origin[0];
-			let response = await authenticatedFetch(path,'revisions?dream.out.format=json',subdomain);
+			let response = await authenticatedFetch(path, 'revisions?dream.out.format=json', subdomain);
 			if (response.ok) {
 				response = await response.json();
 				response = response.page;
@@ -333,6 +410,57 @@ puppeteer.launch({
 			}
 		}
 		
+		async function getInformation(current) {
+			for (let i = 0; i < current.tags.length; i++) {
+				let tag = current.tags[i];
+				if (tag.startsWith('lulu@')) {
+					let items = tag.split('@');
+					if (items[1])
+						current.title = items[1];
+					if (items[2])
+						current.name = items[2];
+					if (items[3])
+						current.companyname = items[3];
+					break;
+				}
+				else if (tag.startsWith('lulu|')) {
+					let items = tag.split('|');
+					if (items[1])
+						current.title = items[1];
+					if (items[2])
+						current.name = items[2];
+					if (items[3])
+						current.companyname = items[3];
+					break;
+				}
+				else if (tag.startsWith('lulu,')) {
+					let items = tag.split(',');
+					if (items[1])
+						current.title = items[1];
+					if (items[2])
+						current.name = items[2];
+					if (items[3])
+						current.companyname = items[3];
+					break;
+				}
+				if (tag.startsWith('authorname:')) {
+					current.authorTag = tag.replace('authorname:', '');
+					
+					if (!current.name) {
+						if (typeof getInformation.libreAuthors === 'undefined') {
+							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
+							getInformation.libreAuthors = await authors.json();
+						}
+						
+						let information = getInformation.libreAuthors[current.author];
+						if (information) {
+							Object.assign(current, information);
+						}
+					}
+				}
+			}
+		}
+		
 		async function getCover(current, numPages, hasExtraPadding = false, isHardcover = false) {
 			await fs.ensureDir('./PDF/Cover');
 			let escapedURL = md5(current.url);
@@ -341,53 +469,11 @@ puppeteer.launch({
 			/*let origin = url.split("/")[2].split(".");
 			const subdomain = origin[0];
 			let path = url.split('/').splice(3).join('/');*/
-			let author = {};
-			for (let i = 0; i < current.tags.length; i++) {
-				let tag = current.tags[i];
-				if (tag.startsWith('lulu@')) {
-					let items = tag.split('@');
-					if (items[1])
-						current.title = items[1];
-					if (items[2])
-						author.name = items[2];
-					if (items[3])
-						author.companyname = items[3];
-					break;
-				}
-				else if (tag.startsWith('lulu|')) {
-					let items = tag.split('|');
-					if (items[1])
-						current.title = items[1];
-					if (items[2])
-						author.name = items[2];
-					if (items[3])
-						author.companyname = items[3];
-					break;
-				}
-				else if (tag.startsWith('lulu,')) {
-					let items = tag.split(',');
-					if (items[1])
-						current.title = items[1];
-					if (items[2])
-						author.name = items[2];
-					if (items[3])
-						author.companyname = items[3];
-					break;
-				}
-				if (tag.startsWith('authorname:')) {
-					author = tag.replace('authorname:', '');
-				}
-			}
-			
-			if (author) {
-				let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
-				authors = await authors.json();
-				author = authors[author] || author;
-			}
+			await getInformation(current);
 			
 			let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
-			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${author.name || ''}</i><br/>${author.companyname || ''}</div></div></div>`;
+			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${current.name || ''}</i><br/>${current.companyname || ''}</div></div></div>`;
 			let backContent = `<div id="backContainer"></div>`;
 			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/><style>#spine{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
 			if (hasExtraPadding) {
@@ -416,7 +502,7 @@ puppeteer.launch({
 				width: numPages ? getWidth() : '8.5 in',
 				height: numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in',
 			});
-			console.log(numPages ? getWidth() : '8.5 in', numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
+			// console.log(numPages ? getWidth() : '8.5 in', numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
 			await page.close();
 			return escapedURL;
 			
@@ -453,7 +539,7 @@ puppeteer.launch({
 					'800': 2.125,
 				};
 				if (!hasExtraPadding) { //Amazon size
-					console.log(numPages * 0.002252);
+					// console.log(numPages * 0.002252);
 					return `${numPages * 0.002252 + 0.375 + 17} in`;
 				}
 				else if (isHardcover) {
@@ -504,11 +590,11 @@ puppeteer.launch({
 				'h2>a{color:#127bc4}' +
 				'ul {margin: 0; padding: 0;}' +
 				'.indent {margin-left: 10px;}' +
-				'h2, h3, h4, h5, h, l {margin: 10px 0 0 0;}' +
-				'h1, h2, h3, h4, h5, h {text-transform: uppercase;}' +
+				'h2, h3, h4, h5, h, l {margin: 10px 0 0 0; font-weight: normal;}' +
+				'h1, h2, h3, h4, h5, h {text-transform: uppercase; font-family:"Tahoma", Arial, serif}' +
 				'.nobreak {page-break-inside: avoid;}' +
 				'.summary {text-align: justify; text-justify: inter-word;}' +
-				'body {font-size:80%; font-family: lato,arial,helvetica,sans-serif,\'arial unicode ms\'}</style>' +
+				'body {font-size: 12px; font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif}</style>' +
 				'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:r,b,i%7CSource+Code+Pro:r,b" media="all">';
 			if (isHTML) {
 				const end = performance.now();
@@ -539,9 +625,14 @@ puppeteer.launch({
 					let prefix = `h${level}`;
 					
 					let hasLower = false;
+					let temp = [];
 					for (let i = 0; i < subpages.children.length; i++) {
 						hasLower = hasLower || subpages.children[i].children.length;
+						if (!['InfoPage', 'TitlePage'].includes(subpages.children[i].title)) {
+							temp.push(subpages.children[i]);
+						}
 					}
+					subpages.children = temp; // hide InfoPage and TitlePage
 					if (!hasLower) { //at lowest level
 						prefix = isSubTOC === 'yes' ? 'h' : 'l';
 					}
@@ -560,7 +651,7 @@ puppeteer.launch({
 							}
 						}
 						
-						return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}"><b>${elem.title}</b></a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
+						return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
 					});
 					inner = inner.join('');
 					
@@ -776,7 +867,7 @@ puppeteer.launch({
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
 			
-			const daysCache = 30;
+			const daysCache = 30; //valid for a month
 			const updateTime = await checkTime(url);
 			let marginExists = await fs.exists(`./PDF/Margin/${escapedURL}.pdf`);
 			if (updateTime === 'restricted') {
@@ -988,11 +1079,11 @@ puppeteer.launch({
 			return PDFname;
 		}
 		
-		async function getLibretext(url, response, params) {
-			let refreshOnly = params.refreshOnly;
-			let isNoCache = params['no-cache'] || params.nocache;
+		async function getLibretext(url, response, options) {
+			let refreshOnly = options.refreshOnly;
+			let isNoCache = options['no-cache'] || options.nocache;
 			
-			let current = params.subpages;
+			let current = options.current;
 			if (!current) {
 				let count = 0;
 				let heartbeat = setInterval(() => {
@@ -1006,6 +1097,7 @@ puppeteer.launch({
 				current = await getSubpages(url);
 				clearInterval(heartbeat);
 			}
+			let link = url;
 			
 			//Merge up Text or Chapters
 			let content;
@@ -1020,33 +1112,13 @@ puppeteer.launch({
 				content.properties = current.properties.concat(content.properties);
 				current = content;
 			}
+			await getInformation(current);
 			
-			for (let i = 0; i < current.tags.length; i++) {
-				let tag = current.tags[i];
-				if (tag.startsWith('lulu@')) {
-					let items = tag.split('@');
-					if (items[1])
-						current.title = items[1];
-					break;
-				}
-				else if (tag.startsWith('lulu|')) {
-					let items = tag.split('|');
-					if (items[1])
-						current.title = items[1];
-					break;
-				}
-				else if (tag.startsWith('lulu,')) {
-					let items = tag.split(',');
-					if (items[1])
-						current.title = items[1];
-					break;
-				}
-			}
 			
 			console.log(`Getting LibreText ${current.title}`);
 			const zipFilename = filenamify(`${current.subdomain}-${current.title}-${md5(current.url).slice(0, 16)}`);
 			const directory = './PDF/libretexts/' + zipFilename;
-			const thinName = md5(zipFilename).slice(0, 16);
+			const thinName = md5(zipFilename).slice(0, 6);
 			
 			//Try to get special files
 			let titlePage = fetch(`${current.url}/TitlePage`);
@@ -1134,7 +1206,7 @@ puppeteer.launch({
 						filename = offload.filename;
 					}
 					else {
-						let temp = await getPDF(url, params.ip, isNoCache);
+						let temp = await getPDF(url, options.ip, isNoCache);
 						filename = temp.filename;
 					}
 					count++;
@@ -1214,7 +1286,15 @@ puppeteer.launch({
 				}));
 			// cleanup
 			await fs.emptyDir(`./PDF/libretexts/${zipFilename}`);
-			await fs.emptyDir(`./PDF/order/${thinName}`);
+			await fs.remove(`./PDF/order/${thinName}`);
+			
+			return {
+				zipFilename: zipFilename,
+				title: current.title,
+				author: current.name,
+				institution: current.companyname,
+				link: link
+			};
 		}
 	}
 );
@@ -1227,7 +1307,7 @@ async function authenticatedFetch(path, api, subdomain) {
 		{headers: headers});
 }
 
-async function getSubpages(rootURL) {
+async function getSubpages(rootURL, options = {}) {
 	let origin = rootURL.split("/")[2].split(".");
 	const subdomain = origin[0];
 	let path = rootURL.split('/').splice(3).join('/');
@@ -1263,28 +1343,23 @@ async function getSubpages(rootURL) {
 		properties: properties,
 		subdomain: subdomain,
 		relativePath: '/',
-		children: await subpageCallback(pages),
+		children: await subpageCallback(pages, options),
 		id: info['@id'],
 	};
 	
 	
-	async function subpageCallback(info) {
+	async function subpageCallback(info, options = {}) {
 		let subpageArray = info["page.subpage"];
 		const result = [];
 		const promiseArray = [];
 		
-		async function subpage(subpage, index) {
+		async function subpage(subpage, index, options = {}) {
 			let url = subpage["uri.ui"];
 			let path = subpage.path["#text"];
 			const hasChildren = subpage["@subpages"] === "true";
 			let children = hasChildren ? undefined : [];
 			let tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain);
 			let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
-			if (hasChildren) { //recurse down
-				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
-				children = await children.json();
-				children = await subpageCallback(children, false);
-			}
 			tags = await (await tags).json();
 			properties = await (await properties).json();
 			if (properties['@count'] !== '0') {
@@ -1300,6 +1375,11 @@ async function getSubpages(rootURL) {
 				tags = []
 			}
 			tags = tags.map((elem) => elem.title);
+			if (hasChildren) { //recurse down
+				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				children = await children.json();
+				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {delay: options.delay} : {});
+			}
 			
 			url = decodeURIComponent(url);
 			
@@ -1320,13 +1400,20 @@ async function getSubpages(rootURL) {
 				subpageArray = [subpageArray];
 			}
 			for (let i = 0; i < subpageArray.length; i++) {
-				promiseArray[i] = subpage(subpageArray[i], i);
+				if (options.delay) {
+					console.log(`Delay ${subpageArray[i]["uri.ui"]}`);
+					await subpage(subpageArray[i], i, {delay: options.delay});
+				}
+				else {
+					// console.log(subpageArray[i]["uri.ui"]);
+					promiseArray[i] = subpage(subpageArray[i], i);
+				}
 			}
 			
 			await Promise.all(promiseArray);
 			return result;
 		}
-		return [];
+		return {};
 	}
 }
 
