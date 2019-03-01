@@ -5,7 +5,7 @@
   "main": "nodePrint.js",
   "scripts": {
     "start": "node nodePrint.js",
-    "test": "./node_modules/.bin/mocha -u tdd --reporter spec"
+    "test": "./node_modules/.bin/mocha -u bdd --reporter spec"
   },
   "author": "",
   "license": "ISC",
