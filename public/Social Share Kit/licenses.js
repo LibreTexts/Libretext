@@ -84,6 +84,7 @@
 			document.getElementById("donate").appendChild(donor);
 
 		let printme = document.getElementById("printme");
+		printme.rel = "nofollow";
 		let email = document.getElementById('userEmailHolder').textContent;
 		if (printme)
 			//${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}

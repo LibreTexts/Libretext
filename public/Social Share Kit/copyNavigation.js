@@ -1,4 +1,6 @@
 (function () {
+	let currentToken;
+	
 	function fn() {
 		let nav = document.getElementsByClassName("elm-article-pagination");
 		if (nav.length) {
@@ -131,7 +133,7 @@
 	}
 	
 	async function getTags(pageID, extraArray) {
-		let tags = await fetch(`/@api/deki/pages/${pageID}/tags?dream.out.format=json`);
+		let tags = await authenticatedFetch(pageID,'tags?dream.out.format=json');
 		tags = await tags.json();
 		if (tags["@count"] !== "0") {
 			if (tags.tag) {
@@ -157,7 +159,7 @@
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
-			let response = await fetch(`/@api/deki/pages/${pageID}/contents?mode=raw`);
+			let response = await authenticatedFetch(pageID, `contents?mode=raw`);
 			if (response.ok) {
 				let contentReuse = await response.text();
 				if (contentReuse) {
@@ -225,7 +227,7 @@
 							//End compliance code
 							
 							console.log(path);
-							let content = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`);
+							let content = await authenticatedFetch(path, 'contents?mode=raw');
 							content = await content.text();
 							content = decodeHTML(content);
 							
@@ -243,13 +245,14 @@
 						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
 							method: "POST",
 							body: result,
+							headers: {'x-deki-token': currentToken}
 						});
 						
 						let tags = await getTags(pageID);
 						await fetch(`/@api/deki/pages/${pageID}/tags`, {
 							method: "PUT",
 							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8"}
+							headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': currentToken}
 						});
 						location.reload();
 					}
@@ -298,32 +301,34 @@
 		}
 	}
 	
-	async function authenticatedFetch(path, api, subdomain, options) {
+	async function authenticatedFetch(path, api, subdomain) {
 		let isNumber;
 		if (!isNaN(path)) {
 			path = parseInt(path);
 			isNumber = true;
 		}
-		if (typeof authenticatedFetch.keys === 'undefined') {
-			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
-			authenticatedFetch.keys = await keys.json();
-		}
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let headers = {};
+		subdomain = subdomain || current;
+		if (typeof authenticatedFetch.keys === 'undefined') {
+			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			keys = await keys.json();
+			currentToken = keys[subdomain];
+			authenticatedFetch.keys = keys;
+		}
+		let token = authenticatedFetch.keys[subdomain];
+		headers['x-deki-token'] = token;
 		if (api === 'contents?mode=raw') {
 			return await fetch(`https://api.libretexts.org/endpoint/contents`,
 				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
 		}
-		else if (api.includes('files/') || (current !== subdomain)) {
-			subdomain = subdomain || current;
-			let token = authenticatedFetch.keys[subdomain];
-			headers['x-deki-token'] = token;
-			if (api.includes('files/') && (current === subdomain))
+		else {
+			if (current === subdomain)
 				headers['X-Requested-With'] = 'XMLHttpRequest';
+			
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+				{headers: headers});
 		}
-		
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-			{headers: headers});
 	}
 	
 	async function processFile(file, child, path, id) {
@@ -338,7 +343,8 @@
 		image = await image.blob();
 		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 			method: "PUT",
-			body: image
+			body: image,
+			headers:{'x-deki-token':currentToken}
 		});
 		response = await response.json();
 		let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
