@@ -65,7 +65,7 @@ puppeteer.launch({
 			let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 			ip = ip.padEnd(15);
 			request.url = request.url.replace("print/", "");
-			let url = request.url;
+			let url = clarifySubdomain(request.url);
 			
 			if (url.startsWith("/url=")) { //single page
 				let isNoCache = false;
@@ -1415,6 +1415,12 @@ async function getSubpages(rootURL, options = {}) {
 		}
 		return {};
 	}
+}
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
 }
 
 function stop() {

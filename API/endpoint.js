@@ -19,6 +19,7 @@ async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("endpoint/", "");
+	url = clarifySubdomain(url);
 	
 	if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 		responseError('Unauthorized', 401);
@@ -278,6 +279,12 @@ async function getSubpages(rootURL, username) {
 			return [];
 		}
 	}
+}
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
 }
 
 function decodeHTML(content) {

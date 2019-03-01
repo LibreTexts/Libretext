@@ -141,7 +141,7 @@ class LTForm {
 		
 		for (let i = 0; i < root.children.length; i++) {
 			let node = root.children[i];
-			node.icon = `https://static.libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+			node.icon = `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
 			node.renderTitle();
 		}
 		
@@ -463,6 +463,7 @@ class LTForm {
 			'Business': 'biz',
 			'Chemistry': 'chem',
 			'Engineering': 'eng',
+			'Espanol': 'espanol',
 			'Geology': 'geo',
 			'Humanities': 'human',
 			'Mathematics': 'math',
