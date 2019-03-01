@@ -318,7 +318,9 @@ select#LTFormSubdomain {
 #LTRight > ul > li {
 	min-height: 100%;
 }
-
+.react-toggle {
+	height: 24px;
+}
 
 
 
