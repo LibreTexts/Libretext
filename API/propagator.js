@@ -15,7 +15,8 @@ function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("propagator/", "");
-
+	url = clarifySubdomain(url);
+	
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
@@ -38,28 +39,28 @@ function handler(request, response) {
 				}).on('end', async () => {
 					body = Buffer.concat(body).toString();
 					console.log(body);
-
+					
 					let input = JSON.parse(body);
 					let {username, url} = input;
 					const Ssubdomain = url.split("/")[2].split(".")[0];
 					let path = url.split("/").slice(3).join("/");
 					let {content, tags, properties} = await getContent();
-
-					let otherArray = ["bio", "biz", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats","workforce"];
+					
+					let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
-
+					
 					//Propagatate
 					let promiseArray = [];
 					for (let i = 0; i < otherArray.length; i++) {
 						promiseArray.push(propagatePage(otherArray[i], path));
 					}
-
+					
 					let values = await Promise.all(promiseArray);
-
+					
 					response.write(JSON.stringify(values));
 					console.log(values);
 					response.end();
-
+					
 					async function getContent() {
 						const token = authenticate(username, Ssubdomain);
 						let content = await fetch(`https://${Ssubdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`,
@@ -69,7 +70,7 @@ function handler(request, response) {
 						}
 						content = await content.text();
 						content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-
+						
 						//get tags and properties
 						let response = await fetch(`https://${Ssubdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/tags`,
 							{headers: {'x-deki-token': token}});
@@ -78,7 +79,7 @@ function handler(request, response) {
 							{headers: {'x-deki-token': token}});
 						let properties = await response.json();
 						return {content: decodeHTML(content), tags: tags, properties: parseProperties(properties)};
-
+						
 						function decodeHTML(content) {
 							let ret = content.replace(/&gt;/g, '>');
 							ret = ret.replace(/&lt;/g, '<');
@@ -87,7 +88,7 @@ function handler(request, response) {
 							ret = ret.replace(/&amp;/g, '&');
 							return ret;
 						}
-
+						
 						function parseProperties(properties) {
 							if (properties["@count"] !== "0") {
 								if (properties.property) {
@@ -107,7 +108,7 @@ function handler(request, response) {
 							return properties
 						}
 					}
-
+					
 					async function propagatePage(subdomain, path) {
 						const token = authenticate(username, subdomain);
 						let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now`, {
@@ -115,7 +116,7 @@ function handler(request, response) {
 							body: content,
 							headers: {'x-deki-token': token}
 						});
-
+						
 						if (response.ok) {
 							//handle tags and properties
 							for (let i = 0; i < properties.length; i++) {
@@ -136,7 +137,7 @@ function handler(request, response) {
 							return response.statusText
 						}
 					}
-
+					
 					function authenticate(username, subdomain) {
 						const user = "=" + username;
 						const crypto = require('crypto');
@@ -153,11 +154,17 @@ function handler(request, response) {
 			}
 		}
 	}
-
+	
 	function responseError(message, status) {
 		//else fall through to error
 		response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
 	}
+}
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
 }

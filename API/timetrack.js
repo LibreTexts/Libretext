@@ -18,6 +18,7 @@ function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("timetrack/", "");
+	url = clarifySubdomain(url);
 
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
@@ -208,4 +209,10 @@ function handler(request, response) {
 			return result;
 		}
 	}
+}
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
 }

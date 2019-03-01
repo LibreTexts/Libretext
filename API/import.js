@@ -25,6 +25,7 @@ const map = util.promisify(async.map);
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
+	url = clarifySubdomain(url);
 
 	if (url.startsWith("/import")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
@@ -548,6 +549,12 @@ async function photoTest() {
 		reportMessage(`https://${subdomain}.libretexts.org/${path}`);
 }
 */
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
+}
 
 function authenticate(username, subdomain) {
 	const user = "=" + username;

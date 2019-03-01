@@ -5,6 +5,8 @@ const server = http.createServer(handler);
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const fetch = require("node-fetch");
+const fs = require('fs-extra');
+const md5 = require('md5');
 let port = 3005;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
@@ -17,6 +19,7 @@ async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("endpoint/", "");
+	url = clarifySubdomain(url);
 	
 	if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 		responseError('Unauthorized', 401);
@@ -69,6 +72,44 @@ async function handler(request, response) {
 					response.write(await requests.text());
 				else
 					responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+				
+				response.end();
+			});
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
+	}
+	else if (url.startsWith("/refreshList")) {
+		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+			});
+			response.end();
+		}
+		else if (request.method === "PUT") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+				"Content-Type": "application/json",
+			} : {"Content-Type": "application/json"});
+			let body = [];
+			request.on('data', (chunk) => {
+				body.push(chunk);
+			}).on('end', async () => {
+				body = Buffer.concat(body).toString();
+				
+				let input = JSON.parse(body);
+				console.log(input);
+				if (input && input.identifier && input.identifier === md5(authenBrowser[input.subdomain])
+					&& ['Courses', 'Bookshelves'].includes(input.path)) {
+					await fs.ensureDir('./public/DownloadsCenter');
+					await fs.writeFile(`./public/DownloadsCenter/${filenamify(`${input.subdomain}/${input.path}`)}`, input.contents);
+				}
+				else {
+					responseError(400, `Bad Request\nRejected path ${input.path}`)
+				}
 				
 				response.end();
 			});
@@ -238,6 +279,12 @@ async function getSubpages(rootURL, username) {
 			return [];
 		}
 	}
+}
+
+function clarifySubdomain(url) {
+	url = decodeURIComponent(url);
+	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	return url;
 }
 
 function decodeHTML(content) {
