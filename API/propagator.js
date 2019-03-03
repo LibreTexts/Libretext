@@ -134,7 +134,7 @@ function handler(request, response) {
 							return true;
 						}
 						else {
-							return response.statusText
+							return await response.text();
 						}
 					}
 					

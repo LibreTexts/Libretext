@@ -103,7 +103,7 @@
 			let original = document.getElementsByClassName(targetName)[0];
 			copy = original.cloneNode(true);
 			let copyTarget = copy.getElementsByTagName("a")[0];
-			copyTarget.href = window.location.origin + "/Development_Details/OER_Remixer";
+			copyTarget.href = window.location.origin + "/Under_Construction/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
 			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
 				copyTarget.id = "RemixerIcon";

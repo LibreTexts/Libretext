@@ -84,11 +84,12 @@
 			document.getElementById("donate").appendChild(donor);
 
 		let printme = document.getElementById("printme");
-		printme.rel = "nofollow";
 		let email = document.getElementById('userEmailHolder').textContent;
-		if (printme)
+		if (printme) {
+			printme.rel = "nofollow";
 			//${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}
 			printme.href = `https://dynamic.libretexts.org/print/url=${window.location}.pdf`;
+		}
 		const thing = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)
 			$("li.elm-page-restriction")[0].after(thing);
