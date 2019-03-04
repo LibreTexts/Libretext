@@ -105,10 +105,10 @@ async function handler(request, response) {
 				if (input && input.identifier && input.identifier === md5(authenBrowser[input.subdomain])
 					&& ['Courses', 'Bookshelves'].includes(input.path)) {
 					await fs.ensureDir('./public/DownloadsCenter');
-					await fs.writeFile(`./public/DownloadsCenter/${filenamify(`${input.subdomain}/${input.path}`)}`, input.contents);
+					await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, input.content);
 				}
 				else {
-					responseError(400, `Bad Request\nRejected path ${input.path}`)
+					responseError(`Bad Request\nRejected path ${input.path}`, 400)
 				}
 				
 				response.end();
@@ -283,7 +283,7 @@ async function getSubpages(rootURL, username) {
 
 function clarifySubdomain(url) {
 	url = decodeURIComponent(url);
-	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	url = url.replace('https://español.libretexts.org', 'https://espanol.libretexts.org');
 	return url;
 }
 

@@ -193,13 +193,24 @@ function handler(request, response) {
 						const fileRoot = student.replace('.txt', '');
 						let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
 						lines = lines.toString().replace(/\n$/, "").split('\n');
-						lines = lines.map((line) => JSON.parse(line));
+						lines = lines.map((line) => {
+							try {
+								let result = JSON.parse(line);
+								return result;
+							} catch (e) {
+								console.error(`Invalid: ${line}`);
+								return undefined;
+							}
+						});
 						let result = lines;
 						let resultCSV = 'courseName, library, id, platform, verb, pageURL, pageID, timestamp, pageSession, timeMe, [type or percent]';
 						
 						//CSV Handling
 						for (let k = 0; k < result.length; k++) {
 							let line = lines[k];
+							if (!line) {
+								continue;
+							}
 							resultCSV += `\n${line.actor.courseName},${line.actor.library},${line.actor.id},${line.actor.platform ? line.actor.platform.description : 'undefined'},${line.verb},${line.object.page},${line.object.id},"${line.object.timestamp}",${line.object.pageSession},${line.object.timeMe}`;
 							switch (line.verb) {
 								case 'left':
@@ -224,11 +235,12 @@ function handler(request, response) {
 		
 		
 		console.time('Compressing');
-		zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./secureAccess-${courseName}.zip`);
+		await fs.ensureDir('./analyticsSecure');
+		zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./analyticsSecure/secureAccess-${courseName}.zip`);
 		console.timeEnd('Compressing');
 		console.log(`Secure Access ${courseName} ${ip}`);
 		
-		staticFileServer.serveFile(`../secureAccess-${courseName}.zip`, 200, request.headers.host.includes(".miniland1333.com") ? {
+		staticFileServer.serveFile(`../analyticsSecure/secureAccess-${courseName}.zip`, 200, request.headers.host.includes(".miniland1333.com") ? {
 			"Access-Control-Allow-Origin": request.headers.origin || null,
 			"Access-Control-Allow-Methods": "PUT"
 		} : {}, request, response);

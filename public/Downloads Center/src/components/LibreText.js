@@ -16,8 +16,9 @@ export default class LibreText extends React.Component {
 	}
 	
 	render() {
-		if (this.props.item.finished)
-			this.props.item.finished = this.props.item.finished.replace('/Full.pdf', '');
+		let root = 'https://batch.libretexts.org/print/Finished/';
+		if (this.props.item.zipFilename)
+			root += this.props.item.zipFilename.replace('/Full.pdf', '');
 		return (
 			<div className='Text' onMouseEnter={() => this.handleClick(true)}
 			     onMouseLeave={() => this.handleClick(false)}>
@@ -30,14 +31,14 @@ export default class LibreText extends React.Component {
 					
 					
 					<div key="front" className='textSide textBack'>
-						<a href={this.props.item.url} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
-						<a href={`${this.props.item.finished}/Full.pdf`} className={'mt-icon-file-pdf'}
+						<a href={this.props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
+						<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
 						   target='_blank'>PDF</a>
-						<a href={`${this.props.item.finished}/imsmanifest.xml`} className={'mt-icon-graduation'}
+						<a href={`${root}/imsmanifest.xml`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
-						<a href={`${this.props.item.finished}/Individual.zip`} className={'mt-icon-file-zip'}
+						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 						   target='_blank'>Individual ZIP</a>
-						<a href={`${this.props.item.finished}/Publication.zip`} className={'mt-icon-book3'}
+						<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}
 						   target='_blank'>Print
 						                   Book
 						                   Files</a>

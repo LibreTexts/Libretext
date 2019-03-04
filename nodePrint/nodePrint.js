@@ -216,6 +216,12 @@ puppeteer.launch({
 			}
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
+				console.log(`Cleaning...`);
+				let count =0;
+				let heartbeat = setInterval(() => {
+					if (response)
+						response.write(`${(++count)}s\r\n`.padStart(5,' '))
+				}, 1000);
 				findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
 				
 				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
@@ -228,13 +234,12 @@ puppeteer.launch({
 				let subdomain = url.split('/')[0];
 				let path = url.split('/').slice(1).join('/');
 				let isNoCache = false;
-				console.log(`Starting Refresh ${subdomain} ${path}`);
+				console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
 				let all = await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true});
 				let texts = [];
 				let standalone = [];
 				let finished = [];
 				sort(all);
-				console.log(standalone);
 				
 				function sort(current) {
 					for (let i = 0; i < current.children.length; i++) {
@@ -249,7 +254,9 @@ puppeteer.launch({
 					}
 				}
 				
+				clearInterval(heartbeat);
 				response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
+				response.end();
 				
 				//process Texts
 				console.log(`Processing ${texts.length} LibreTexts`);
@@ -280,16 +287,15 @@ puppeteer.launch({
 					method: 'PUT',
 					body: JSON.stringify({
 						subdomain: subdomain,
-						path: 'Test',
+						path: path,
 						identifier: md5(keys[subdomain]),
-						content: ['Pickles']
+						content: finished
 					}),
 					headers: {
 						origin: 'print.libretexts.org'
 					}
 				});
 				console.log('Finished');
-				response.end();
 			}
 			else { //static server
 				// console.log(url);
@@ -1268,6 +1274,7 @@ puppeteer.launch({
 				filename = `Cover/${await getCover(current, lulu.numpages, true, true)}.pdf`;
 				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/Publication/HardCover.pdf`);
 				
+				console.log('Zipping');
 				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
 				zipLocal.sync.zip(`./PDF/Finished/${zipFilename}/Publication`).compress().save(`./PDF/Finished/${zipFilename}/Publication.zip`);
 				
