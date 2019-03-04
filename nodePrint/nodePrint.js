@@ -1300,7 +1300,8 @@ puppeteer.launch({
 				title: current.title,
 				author: current.name,
 				institution: current.companyname,
-				link: link
+				link: link,
+				tags: current.tags
 			};
 		}
 	}
