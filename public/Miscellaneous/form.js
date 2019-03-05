@@ -47,10 +47,10 @@ class LTForm {
 		}
 	}
 	
-	static default() {
+	static default(chapters = 5, pages = 0) {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
-		if (confirm("This will delete your work and replace it with the default template. Are you sure?")) {
-			const defaultMap = LTForm.rightDefault()[0];
+		if (confirm("This will delete your work and replace it with the template you've chosen. Are you sure?")) {
+			const defaultMap = LTForm.generateDefault(chapters, pages)[0];
 			node.fromDict(defaultMap);
 			node.setExpanded();
 		}
@@ -251,10 +251,25 @@ class LTForm {
 			let allowed = isAdmin || (isPro && groups.includes('faculty')) || isDemonstration;
 			target.innerHTML =
 				"<div id='LTForm'>" +
-				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.default()'>Default</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
+				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
 				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
 				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin)}</div>` +
-				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div> </div>";
+				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div>" +
+				`<div id="dialog-form" title="Create a Default Template">
+  <p class="validateTips">Choose the number of chapters and pages per chapter you would like.<br/><b>All unsaved changes will be lost!</b></p>
+ 
+  <form>
+    <fieldset>
+      <label for="chapters">Number of Chapters</label>
+      <input type="number" name="chapters" id="chapters" value="0" class="text ui-widget-content ui-corner-all">
+      <label for="pages">Number of Pages per Chapter</label>
+      <input type="number" name="pages" id="pages" value="0" class="text ui-widget-content ui-corner-all">
+ 
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>` + "</div>";
 			
 			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
 			const LTLeft = $("#LTLeft");
@@ -321,7 +336,7 @@ class LTForm {
 				}
 			});
 			LTRight.fancytree({
-				source: LTForm.rightDefault(),
+				source: LTForm.generateDefault(5, 0),
 				debugLevel: 0,
 				autoScroll: true,
 				extensions: ["dnd5", "edit"],
@@ -448,6 +463,31 @@ class LTForm {
 			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 			$("#LTRightAlert,#LTLeftAlert").hide();
+			
+			LTForm.dialog = $("#dialog-form").dialog({
+				autoOpen: false,
+				height: 400,
+				width: 350,
+				modal: true,
+				buttons: {
+					"Create this default template structure": function () {
+						let chapters, pages;
+						chapters = Math.min(100, parseInt($('#chapters').val()));
+						pages = Math.min(100, parseInt($('#pages').val()));
+						
+						LTForm.default(chapters, pages);
+						LTForm.dialog.dialog("close");
+					},
+					Cancel: function () {
+						LTForm.dialog.dialog("close");
+					},
+				},
+				classes: {'ui-dialog-buttonset':'buttonsetForm'},
+				close: function () {
+					LTForm.dialog.dialog("close");
+				}
+			});
+			
 			await LTForm.copyTransclude();
 		}
 		
@@ -687,11 +727,13 @@ class LTForm {
 								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
 						
 						let current = window.location.origin.split('/')[2].split('.')[0];
-						let headers = {headers: {
-							'x-deki-token': LTForm.keys['chem'],
-						}};
-						if(current === 'chem')
-							headers['x-requested-with'] = 'XMLHttpRequest';
+						let headers = {
+							headers: {
+								'x-deki-token': LTForm.keys['chem'],
+							}
+						};
+						if (current === 'chem')
+							headers.headers['x-requested-with'] = 'XMLHttpRequest';
 						let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', headers);
 						
 						image = await image.blob();
@@ -1051,7 +1093,35 @@ wiki.page("${child.path}", NULL)</pre>
 			{headers: headers});
 	}
 	
-	static rightDefault() {
+	static generateDefault(chapters, pages) {
+		let key = 1;
+		let children = [];
+		for (let i = 1; i <= chapters; i++) {
+			let childPages = [];
+			let chapterKey = key++;
+			
+			for (let j = 1; j <= pages; j++) {
+				childPages.push({
+					"expanded": true,
+					"key": `_${key++}`,
+					"lazy": false,
+					"title": `${i}.${j}: New Page`,
+					"tooltip": "Newly Created Page",
+					"data": {"padded": `${i.toString().padStart(2, '0')}.${i.toString().padStart(2, '0')}: New Page`}
+				})
+			}
+			
+			children.push({
+				"expanded": true,
+				"key": `_${chapterKey}`,
+				"lazy": false,
+				"title": `${i}: Chapter ${i}`,
+				"tooltip": "Newly Created Page",
+				"data": {"padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},
+				"children": childPages
+			})
+		}
+		
 		return [{
 			title: "Cover Page. Drag onto me to get started",
 			key: "ROOT",
@@ -1059,42 +1129,7 @@ wiki.page("${child.path}", NULL)</pre>
 			padded: "",
 			unselectable: true,
 			expanded: true,
-			children: [{
-				"expanded": true,
-				"key": "_9",
-				"lazy": false,
-				"title": "1: Chapter 1",
-				"tooltip": "Newly Created Page",
-				"data": {"padded": "01: Chapter 1"}
-			}, {
-				"expanded": true,
-				"key": "_10",
-				"lazy": false,
-				"title": "2: Chapter 2",
-				"tooltip": "Newly Created Page",
-				"data": {"padded": "02: Chapter 2"}
-			}, {
-				"expanded": true,
-				"key": "_11",
-				"lazy": false,
-				"title": "3: Chapter 3",
-				"tooltip": "Newly Created Page",
-				"data": {"padded": "03: Chapter 3"}
-			}, {
-				"expanded": true,
-				"key": "_12",
-				"lazy": false,
-				"title": "4: Chapter 4",
-				"tooltip": "Newly Created Page",
-				"data": {"padded": "04: Chapter 4"}
-			}, {
-				"expanded": true,
-				"key": "_13",
-				"lazy": false,
-				"title": "5: Chapter 5",
-				"tooltip": "Newly Created Page",
-				"data": {"padded": "05: Chapter 5"}
-			}]
+			children: children
 		}]
 	}
 }

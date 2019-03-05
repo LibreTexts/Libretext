@@ -322,6 +322,10 @@ select#LTFormSubdomain {
 	height: 24px;
 }
 
+.buttonsetForm > button:first-child {
+	background: #525050;
+	color: white;
+}
 
 
 

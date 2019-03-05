@@ -102,6 +102,9 @@
 		if (copy.length) {
 			let original = document.getElementsByClassName(targetName)[0];
 			copy = original.cloneNode(true);
+			copy.classList.remove("mt-new-page");
+			copy.classList.remove("mt-site-tools");
+			copy.classList.remove("mt-user-menu-user");
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Under_Construction/Development_Details/OER_Remixer";
 			copyTarget.innerText = "Remixer";
@@ -129,6 +132,12 @@
 					break;
 			}
 			original.parentNode.insertBefore(copy, target)
+		}
+		if (window.location.href.endsWith('OER_Remixer')) {
+			const groups = document.getElementById("groupHolder").innerText;
+			if (groups.includes('Remixer')) {
+				$('.mt-edit-page, .mt-new-page, .mt-page-options').remove();
+			}
 		}
 	}
 	
