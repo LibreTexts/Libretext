@@ -1124,7 +1124,7 @@ puppeteer.launch({
 			console.log(`Getting LibreText ${current.title}`);
 			const zipFilename = filenamify(`${current.subdomain}-${current.title}-${md5(current.url).slice(0, 16)}`);
 			const directory = './PDF/libretexts/' + zipFilename;
-			const thinName = md5(zipFilename).slice(0, 2);
+			const thinName = md5(zipFilename).slice(0, 6);
 			
 			//Try to get special files
 			let titlePage = fetch(`${current.url}/TitlePage`);

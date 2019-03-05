@@ -133,7 +133,7 @@
 	}
 	
 	async function getTags(pageID, extraArray) {
-		let tags = await authenticatedFetch(pageID,'tags?dream.out.format=json');
+		let tags = await authenticatedFetch(pageID, 'tags?dream.out.format=json');
 		tags = await tags.json();
 		if (tags["@count"] !== "0") {
 			if (tags.tag) {
@@ -159,6 +159,7 @@
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
+			let current = window.location.origin.split('/')[2].split('.')[0];
 			let response = await authenticatedFetch(pageID, `contents?mode=raw`);
 			if (response.ok) {
 				let contentReuse = await response.text();
@@ -169,6 +170,7 @@
 					//Cross-library Forker
 					let result = contentReuse;
 					let success;
+					let subdomain;
 					let matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
 					if (matches && matches.length) {
 						do {
@@ -176,6 +178,7 @@
 							
 							//Get cross content
 							let content = await authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
+							subdomain = path.Library;
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
@@ -185,6 +188,7 @@
 							if (response.ok) {
 								let files = await response.json();
 								if (files["@count"] !== "0") {
+									alert('Copying files over');
 									if (files.file) {
 										if (!files.file.length) {
 											files = [files.file];
@@ -211,29 +215,72 @@
 									}
 								}
 							}
+							
+							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${path.PageID}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${path.PageID}</p></div></div>`;
+							
 							result = result.replace(matches[0], content);
 							matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
 							
 						} while (matches && matches.length);
-						success = true;
+						// success = true;
 					}
+					contentReuse = result;
 					
 					//Local Forker
-					matches = contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
+					matches = subdomain ? contentReuse.match(/(<pre class="script">\nwiki.page\(&quot;)[\S\s]*?(&quot;\)<\/pre>)/g) : contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 					if (matches && matches.length) {
 						do {
 							// WAITING FOR ECMA 2018      let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
-							let path = matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="', '');
+							let path = subdomain ? matches[0].match(/(wiki.page\(&quot;)[\S\s]*?(&quot;\)<\/pre>)/)[0].replace('wiki.page(&quot;', '').replace('&quot;)</pre>', '') :
+								matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="', '');
 							//End compliance code
 							
-							console.log(path);
-							let content = await authenticatedFetch(path, 'contents?mode=raw');
+							let content = await authenticatedFetch(path, 'contents?mode=raw', subdomain);
+							let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 							content = await content.text();
+							info = await info.json();
 							content = decodeHTML(content);
 							
 							// WAITING FOR ECMA 2018      content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 							content = content.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
 							//End compliance code
+							
+							if (subdomain) {
+								response = await authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
+								alert('Copying files over');
+								if (response.ok) {
+									let files = await response.json();
+									if (files["@count"] !== "0") {
+										if (files.file) {
+											if (!files.file.length) {
+												files = [files.file];
+											}
+											else {
+												files = files.file;
+											}
+										}
+									}
+									let promiseArray = [];
+									for (let i = 0; i < files.length; i++) {
+										let file = files[i];
+										if (file['@res-is-deleted'] === 'false')
+											promiseArray.push(processFile(file, {
+												path: path,
+												data: {subdomain: subdomain}
+											}, window.location.pathname.slice(1), file['@id']));
+									}
+									promiseArray = await Promise.all(promiseArray);
+									for (let i = 0; i < promiseArray.length; i++) {
+										if (promiseArray[i]) {
+											content = content.replace(promiseArray[i].original, promiseArray[i].final);
+											content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+										}
+									}
+								}
+							}
+							
+							subdomain = subdomain || current;
+							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${info['@id']}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${info['@id']}</p></div></div>`;
 							
 							result = result.replace(matches[0], content);
 							
@@ -344,7 +391,7 @@
 		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 			method: "PUT",
 			body: image,
-			headers:{'x-deki-token':currentToken}
+			headers: {'x-deki-token': currentToken}
 		});
 		response = await response.json();
 		let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
