@@ -16,7 +16,7 @@ const md5 = require('md5');
 const events = require('events');
 const fetch = require('node-fetch');
 const querystring = require('querystring');
-const merge = util.promisify(require('easy-pdf-merge'));
+const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 
@@ -1124,7 +1124,7 @@ puppeteer.launch({
 			console.log(`Getting LibreText ${current.title}`);
 			const zipFilename = filenamify(`${current.subdomain}-${current.title}-${md5(current.url).slice(0, 16)}`);
 			const directory = './PDF/libretexts/' + zipFilename;
-			const thinName = md5(zipFilename).slice(0, 6);
+			const thinName = md5(zipFilename).slice(0, 2);
 			
 			//Try to get special files
 			let titlePage = fetch(`${current.url}/TitlePage`);

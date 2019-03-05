@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/nodePrint/PDFMerger.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/pdfbox.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
@@ -18,20 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="106" column="83" selection-start-line="106" selection-start-column="83" selection-end-line="106" selection-end-column="83" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="1302" column="27" selection-start-line="1302" selection-start-column="27" selection-end-line="1302" selection-end-column="27" />
+            <state>
+              <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
               <folding>
                 <element signature="e#915#966#0" />
                 <element signature="e#2271#3848#0" />
@@ -69,6 +62,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nodePrint/PDFMerger.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -93,7 +95,6 @@
       <find>node-static</find>
       <find>14</find>
       <find>checkt</find>
-      <find>thinname</find>
       <find>md5</find>
       <find>DoneMergi</find>
       <find>del</find>
@@ -114,6 +115,7 @@
       <find>merge</find>
       <find>ispro</find>
       <find>1024</find>
+      <find>thinname</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -172,8 +174,6 @@
         <option value="$PROJECT_DIR$/public/JSmol/j2s/core/corejmol.z.js" />
         <option value="$PROJECT_DIR$/nodePrint/base64/workforce.txt" />
         <option value="$PROJECT_DIR$/nodePrint/Dockerfile" />
-        <option value="$PROJECT_DIR$/nodePrint/PDFMerger.js" />
-        <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
         <option value="$PROJECT_DIR$/install/install.sh" />
         <option value="$PROJECT_DIR$/nodePrint/base64/chem.txt" />
         <option value="$PROJECT_DIR$/nodePrint/baseIMG.js" />
@@ -211,8 +211,10 @@
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
+        <option value="$PROJECT_DIR$/nodePrint/PDFMerger.js" />
       </list>
     </option>
   </component>
@@ -223,10 +225,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="1391" />
-    <option name="height" value="1757" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1301" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -236,6 +238,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -248,22 +251,10 @@
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -275,7 +266,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/nodePrint/node_modules/find-remove/find-remove.js" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js&#10;true&#10;C:/Users/Henry/Desktop/rogramming/Libretext/nodePrint/node_modules/find-remove/find-remove.js" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
     <property name="last_opened_file_path" value="D:/Google Drive/Writing/Pop Sci/Article" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -291,19 +282,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public\NormalBack" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\pages" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public\NormalBack" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\pages" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -348,7 +339,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Downloads Center">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -866,6 +857,7 @@
       <workItem from="1551638576142" duration="426000" />
       <workItem from="1551639931310" duration="1032000" />
       <workItem from="1551676481009" duration="1501000" />
+      <workItem from="1551751746170" duration="3382000" />
     </task>
     <task id="LOCAL-00094" summary="Updated un-transclude and remixer permissions">
       <created>1546542647730</created>
@@ -1246,16 +1238,16 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1305022000" />
+    <option name="totallyTimeSpent" value="1308635000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" weight="0.32199547" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.18121614" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.276" />
@@ -1266,7 +1258,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.2834758" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.28133333" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.18933333" />
@@ -1277,7 +1269,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.30102348" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.31366646" />
+      <window_info active="true" anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.34256473" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1493,14 +1485,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/public/app-e5236b37abfb02ce5b4c.js" />
-    <entry file="file://$PROJECT_DIR$/public/Converter/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/update.sh" />
     <entry file="file://$PROJECT_DIR$/public/Converter/Converter.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1777,10 +1761,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="106" column="83" selection-start-line="106" selection-start-column="83" selection-end-line="106" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="643">
+          <caret line="58" column="28" lean-forward="true" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="1302" column="27" selection-start-line="1302" selection-start-column="27" selection-end-line="1302" selection-end-column="27" />
+        <state>
+          <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
           <folding>
             <element signature="e#915#966#0" />
             <element signature="e#2271#3848#0" />
@@ -1817,10 +1815,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+    <entry file="file://$PROJECT_DIR$/nodePrint/PDFMerger.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="106" column="83" selection-start-line="106" selection-start-column="83" selection-end-line="106" selection-end-column="83" />
+        <state relative-caret-position="230">
+          <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
         </state>
       </provider>
     </entry>
