@@ -1426,8 +1426,7 @@ async function getSubpages(rootURL, options = {}) {
 }
 
 function clarifySubdomain(url) {
-	url = decodeURIComponent(url);
-	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
+	url = url.replace('https://espa%C3%B1ol.libretexts.org','https://espanol.libretexts.org');
 	return url;
 }
 
