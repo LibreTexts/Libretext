@@ -48,6 +48,9 @@ async function TOC() {
 			let subpageArray = info["page.subpage"];
 			const result = [];
 			const promiseArray = [];
+			if(!subpageArray)
+				return false;
+			
 			if (!subpageArray.length) {
 				subpageArray = [subpageArray];
 			}

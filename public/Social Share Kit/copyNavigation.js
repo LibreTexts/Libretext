@@ -154,7 +154,10 @@
 				}
 			}
 			if (extraArray && extraArray.length) {
-				tags = tags.concat(extraArray);
+				for (let i = 0; i < extraArray.length; i++) {
+					if (!tags.includes(extraArray[i]))
+						tags.push(extraArray[i]);
+				}
 			}
 			tags.splice(tags.indexOf("transcluded:yes"), 1);
 			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
@@ -170,6 +173,7 @@
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
 			let current = window.location.origin.split('/')[2].split('.')[0];
 			let response = await authenticatedFetch(pageID, `contents?mode=raw`);
+			let sourceTags = [];
 			if (response.ok) {
 				let contentReuse = await response.text();
 				if (contentReuse) {
@@ -224,6 +228,7 @@
 									}
 								}
 							}
+							sourceTags.push(`source-${subdomain}-${path.PageID}`);
 							
 							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${path.PageID}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${path.PageID}</p></div></div>`;
 							
@@ -231,18 +236,21 @@
 							matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
 							
 						} while (matches && matches.length);
-						// success = true;
+						success = true;
 					}
 					contentReuse = result;
 					
 					//Local Forker
-					matches = subdomain ? contentReuse.match(/(<pre class="script">\nwiki.page\(&quot;)[\S\s]*?(&quot;\)<\/pre>)/g) : contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
+					matches = contentReuse.match(/(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g) || contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 					if (matches && matches.length) {
 						do {
 							// WAITING FOR ECMA 2018      let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
-							let path = subdomain ? matches[0].match(/(wiki.page\(&quot;)[\S\s]*?(&quot;\)<\/pre>)/)[0].replace('wiki.page(&quot;', '').replace('&quot;)</pre>', '') :
-								matches[0].match(/(data-page=")[^"]+/)[0].replace('data-page="', '');
+							let path = matches[0].match(/(wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/) || matches[0].match(/(data-page=")[^"]+/);
 							//End compliance code
+							path = path[0]
+								.replace('wiki.page(&quot;', '')
+								.replace(/&quot;\)\s*?<\/pre>/, '')
+								.replace('data-page="', '');
 							
 							let content = await authenticatedFetch(path, 'contents?mode=raw', subdomain);
 							let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
@@ -256,7 +264,7 @@
 							
 							if (subdomain) {
 								response = await authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
-								alert('Copying files over');
+								alert('Copying files over. This may take a while...');
 								if (response.ok) {
 									let files = await response.json();
 									if (files["@count"] !== "0") {
@@ -289,6 +297,8 @@
 							}
 							
 							subdomain = subdomain || current;
+							sourceTags.push(`source-${subdomain}-${info['@id']}`);
+							
 							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${info['@id']}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${info['@id']}</p></div></div>`;
 							
 							result = result.replace(matches[0], content);
@@ -304,7 +314,7 @@
 							headers: {'x-deki-token': currentToken}
 						});
 						
-						let tags = await getTags(pageID);
+						let tags = await getTags(pageID, sourceTags);
 						await fetch(`/@api/deki/pages/${pageID}/tags`, {
 							method: "PUT",
 							body: tags,
@@ -422,5 +432,7 @@ function decodeHTML(content) {
 	ret = ret.replace(/&quot;/g, '"');
 	ret = ret.replace(/&apos;/g, "'");
 	ret = ret.replace(/&amp;/g, '&');
+	ret = ret.replace(/&mdash;/g, '—');
+	ret = ret.replace(/&ndash;/g, '–');
 	return ret;
 }
