@@ -261,9 +261,9 @@ class LTForm {
   <form>
     <fieldset>
       <label for="chapters">Number of Chapters</label>
-      <input type="number" name="chapters" id="chapters" value="0" class="text ui-widget-content ui-corner-all">
+      <input type="number" name="chapters" id="chapters" value="0" min='0' max='100' step='1' class="text ui-widget-content ui-corner-all">
       <label for="pages">Number of Pages per Chapter</label>
-      <input type="number" name="pages" id="pages" value="0" class="text ui-widget-content ui-corner-all">
+      <input type="number" name="pages" id="pages" value="0" min='0' max='100' step='1' class="text ui-widget-content ui-corner-all">
  
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -332,7 +332,7 @@ class LTForm {
 				icon: function (event, data) {
 					let subdomain = window.location.origin.split("/")[2].split(".")[0];
 					if ((!LTForm.subdomain || LTForm.subdomain === subdomain) && data.node.getLevel() === 1)
-						return `https://static.libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+						return `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
 				}
 			});
 			LTRight.fancytree({
@@ -482,7 +482,7 @@ class LTForm {
 						LTForm.dialog.dialog("close");
 					},
 				},
-				classes: {'ui-dialog-buttonset':'buttonsetForm'},
+				classes: {'ui-dialog-buttonset': 'buttonsetForm'},
 				close: function () {
 					LTForm.dialog.dialog("close");
 				}
@@ -839,6 +839,43 @@ class LTForm {
 										}
 									}
 								}
+								
+								// Handling of hotlinked images (not attached to the page)
+								response = await LTForm.authenticatedFetch(path, 'files?dream.out.format=json');
+								if (response.ok) {
+									let files = await response.json();
+									if (files["@count"] !== "0") {
+										if (files.file) {
+											if (!files.file.length) {
+												files = [files.file];
+											}
+											else {
+												files = files.file;
+											}
+										}
+									}
+									files = files.map((file) => file['@id']);
+									
+									let promiseArray = [];
+									let images = content.match(/(<img.*?src="\/@api\/deki\/files\/)[\S\s]*?(")/g);
+									if (images) {
+										for (let i = 0; i < images.length; i++) {
+											images[i] = images[i].match(/src="\/@api\/deki\/files\/([\S\s]*?)["/]/)[1];
+											
+											if (!files.includes(images[i])) {
+												promiseArray.push(processFile(null, child, path, images[i]));
+											}
+										}
+										
+										promiseArray = await Promise.all(promiseArray);
+										for (let i = 0; i < promiseArray.length; i++) {
+											if (promiseArray[i]) {
+												content = content.replace(promiseArray[i].original, promiseArray[i].final);
+												content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+											}
+										}
+									}
+								}
 							}
 						}
 					}
@@ -1051,19 +1088,42 @@ wiki.page("${child.path}", NULL)</pre>
 			}
 			
 			async function processFile(file, child, path, id) {
-				//only files with extensions
-				if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
-					let filename = file['filename'];
-					let image = await LTForm.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+				let image, filename;
+				if (!file) {
+					image = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`, {
+						headers: {'x-deki-token': LTForm.keys[child.data.subdomain]}
+					});
+					filename = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`, {
+						headers: {'x-deki-token': LTForm.keys[child.data.subdomain]}
+					});
+					if (!image.ok || !filename.ok)
+						return false;
+					filename = await filename.json();
+					filename = filename['filename'];
 					
+				}
+				else if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
+					//only files with extensions
+					filename = file['filename'];
+					image = await LTForm.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+					if (!image.ok)
+						return false;
+				}
+				
+				
+				if (filename) {
 					image = await image.blob();
+					
 					let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 						method: "PUT",
 						body: image,
 						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
+					if (!response.ok)
+						return false;
+					
 					response = await response.json();
-					let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
+					let original = file ? file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '') : `/@api/deki/files/${id}`;
 					return {
 						original: original,
 						oldID: id,
