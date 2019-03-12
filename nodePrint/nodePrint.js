@@ -188,13 +188,8 @@ puppeteer.launch({
 				staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
 			}
 			else if (url.startsWith('/testCover')) {
-				let current = {
-					url: 'https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)',
-					title: 'SCC: CHEM 300 - Beginning Chemistry (Alviar-Agnew)',
-					subdomain: 'chem',
-					tags: ['lulu,CHEM 300 - Beginning Chemistry,Marisa Alviar-Agnew,Sacramento City College'] //'authorname:openstax'
-				};
-				let file = await getCover(current, url.includes('num') ? 478 : undefined, false, false); //, 478
+				let current = await getSubpages('https://chem.libretexts.org/Bookshelves/General_Chemistry/Book:_Chemistry_(OpenSTAX)', {children: []});
+				let file = await getCover(current, url.includes('num') ? 478 : undefined, url.includes('pad'), url.includes('hard')); //, 478
 				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
 			}
 			else if (url.startsWith('/tocHTML=')) {
@@ -217,10 +212,10 @@ puppeteer.launch({
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
 				console.log(`Cleaning...`);
-				let count =0;
+				let count = 0;
 				let heartbeat = setInterval(() => {
 					if (response)
-						response.write(`${(++count)}s\r\n`.padStart(5,' '))
+						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 				}, 1000);
 				findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
 				
@@ -458,7 +453,7 @@ puppeteer.launch({
 							getInformation.libreAuthors = await authors.json();
 						}
 						
-						let information = getInformation.libreAuthors[current.author];
+						let information = getInformation.libreAuthors[current.authorTag];
 						if (information) {
 							Object.assign(current, information);
 						}
@@ -483,7 +478,7 @@ puppeteer.launch({
 			let backContent = `<div id="backContainer"></div>`;
 			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/><style>#spine{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
 			if (hasExtraPadding) {
-				spine += `<style>#frontContainer,#backContainer{width: ${isHardcover ? 802 : 696}px}</style>`;
+				spine += `<style>#frontContainer, #backContainer{width: ${isHardcover ? 902 : 796}px}</style>`;
 			}
 			// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
 			let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
@@ -491,7 +486,7 @@ puppeteer.launch({
 				content += `<style>#frontContainer {padding: 117px 50px;}</style>`;
 			}
 			else {
-				content += '<style>#frontContainer,#backContainer{width: 735px}</style>'
+				content += '<style>#frontContainer, #backContainer{width: 834px}</style>'
 			}
 			
 			
@@ -1351,7 +1346,7 @@ async function getSubpages(rootURL, options = {}) {
 		properties: properties,
 		subdomain: subdomain,
 		relativePath: '/',
-		children: await subpageCallback(pages, options),
+		children: options.children || await subpageCallback(pages, options),
 		id: info['@id'],
 	};
 	
@@ -1426,7 +1421,7 @@ async function getSubpages(rootURL, options = {}) {
 }
 
 function clarifySubdomain(url) {
-	url = url.replace('https://espa%C3%B1ol.libretexts.org','https://espanol.libretexts.org');
+	url = url.replace('https://espa%C3%B1ol.libretexts.org', 'https://espanol.libretexts.org');
 	return url;
 }
 
