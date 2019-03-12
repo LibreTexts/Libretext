@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactCardFlip from 'react-card-flip';
+import {Textfit} from 'react-textfit';
 
 
 export default class LibreText extends React.Component {
@@ -24,7 +25,7 @@ export default class LibreText extends React.Component {
 			     onMouseLeave={() => this.handleClick(false)}>
 				<ReactCardFlip isFlipped={this.state.isFlipped}>
 					<div key="back" className='textSide textFront'>
-						<div style={{flex: 2}}><h5>{this.props.item.title}</h5></div>
+						<div style={{flex: 2}} className='headerFit'><Textfit max={20}>{this.props.item.title}</Textfit></div>
 						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 .Text {
-	width: 120px;
-	height: 200px;
-	/*border: 1px solid black;*/
+	width: 140px;
+	height: 220px;
+	/* border: 1px solid black; */
 	font-family: 'Open Sans', sans-serif;
 	color: white;
 	margin: 10px;
@@ -9,12 +9,12 @@
 
 .textSide {
 	background-color: #0c85d0;
-	width: 120px;
-	height: 200px;
+	width: 140px;
+	height: 220px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	align-items: center;
+	align-items: stretch;
 	box-sizing: border-box;
 	padding: 10px;
 	font-size: 80%;
@@ -30,16 +30,17 @@
 	justify-content: center;
 	flex-direction: column;
 }
+
 .textFront > div > h5 {
 	color: white;
-	margin:0;
+	margin: 0;
 }
 
 .textBack {
 	align-items: stretch;
 }
 
-.textBack a{
+.textBack a {
 	color: white;
 	flex: 1;
 	display: flex;
@@ -51,14 +52,14 @@
 	border-top: 1px solid white;
 }
 
-.textBack a:hover{
+.textBack a:hover {
 	color: #141414;
 	background-color: #f5f7fa;
 	transition-duration: 500ms;
-	border-radius: 5px 5px 0 0 ;
+	border-radius: 5px 5px 0 0;
 }
 
-.textBack a:before{
+.textBack a:before {
 	margin-right: .5em;
 }
 
@@ -66,4 +67,22 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+}
+
+.CenterContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.centerSearch {
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.headerFit > div {
+	height: 80%;
+}
+.headerFit > div > div {
+	height: 100%;
+	display: flex;
 }

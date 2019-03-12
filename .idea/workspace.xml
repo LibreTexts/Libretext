@@ -1,95 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/workforce.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/workforce.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/workforce.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/workforce.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/workforce.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/bio.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/biz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/eng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/espanol.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/geo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/human.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/law.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/math.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/med.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/phys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/socialsci.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/stats.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/workforce.png" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="All libraries&#10;&#10;Small issue with LuluFront Sizes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalBack/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalBack/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalFront/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalFront/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/lulu.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/lulu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -104,43 +25,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Downloads Center/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+            <state relative-caret-position="353">
+              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/pages/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
               <folding>
-                <element signature="e#915#966#0" />
-                <element signature="e#2271#3848#0" />
-                <element signature="e#3892#5222#0" />
-                <element signature="e#5275#6083#0" />
-                <element signature="e#6121#6353#0" />
-                <element signature="e#7033#7235#0" />
-                <element signature="e#7278#7563#0" />
-                <element signature="e#7605#10054#0" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#!!block;n#authenticatedFetch#0" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="25" column="64" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="467">
+              <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -160,7 +82,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>merge</find>
       <find>copycontent</find>
       <find>current</find>
       <find>dream</find>
@@ -189,6 +110,7 @@
       <find>ECMA</find>
       <find>renumber</find>
       <find>downloadsCenter</find>
+      <find>getinformation</find>
       <find>getcover</find>
     </findStrings>
     <replaceStrings>
@@ -261,7 +183,6 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/src/styles/LibreText.css" />
         <option value="$PROJECT_DIR$/public/TOC/TOC.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/package.json" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/printYoutube.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" />
@@ -274,7 +195,6 @@
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
-        <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
         <option value="$PROJECT_DIR$/nodePrint/PDFMerger.js" />
@@ -285,10 +205,12 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/bundle.js" />
-        <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/nodePrint/public/lulu.css" />
         <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
+        <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
       </list>
     </option>
   </component>
@@ -322,13 +244,13 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Downloads Center" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -419,7 +341,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Downloads Center">
     <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -943,14 +865,7 @@
       <workItem from="1552092005263" duration="11790000" />
       <workItem from="1552196422953" duration="1105000" />
       <workItem from="1552265949557" duration="599000" />
-      <workItem from="1552347299212" duration="6142000" />
-    </task>
-    <task id="LOCAL-00100" summary="Remove expired config">
-      <created>1546575367919</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1546575367919</updated>
+      <workItem from="1552347299212" duration="10524000" />
     </task>
     <task id="LOCAL-00101" summary="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions">
       <created>1547018273220</created>
@@ -1288,7 +1203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552197443440</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="All libraries&#10;&#10;Small issue with LuluFront Sizes">
+      <created>1552358713739</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1552358713739</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1324,7 +1246,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1338881000" />
+    <option name="totallyTimeSpent" value="1343263000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1336,7 +1258,7 @@
       <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.1884407" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.28830084" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23466666" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -1355,7 +1277,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.30102348" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info active="true" anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.307646" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.307646" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1451,7 +1373,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added 0.5in margins&#10;&#10;May need to chose a different delimiter besides commas" />
     <MESSAGE value="Initial bundle" />
     <MESSAGE value="Added coverpage:toc" />
     <MESSAGE value="Added Sandboxed Remixer" />
@@ -1476,7 +1397,8 @@
     <MESSAGE value="Forker Source Tags and emdash" />
     <MESSAGE value="Added Remixer non-attachment file duplication" />
     <MESSAGE value="Initial Bot" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Bot" />
+    <MESSAGE value="All libraries&#10;&#10;Small issue with LuluFront Sizes" />
+    <option name="LAST_COMMIT_MESSAGE" value="All libraries&#10;&#10;Small issue with LuluFront Sizes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1593,9 +1515,6 @@
     <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/styles/LibreText.css" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -1604,24 +1523,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
           <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1646,13 +1551,6 @@
     <entry file="file://$PROJECT_DIR$/public/API/import.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-897" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="172" column="51" selection-start-line="172" selection-start-column="51" selection-end-line="172" selection-end-column="51" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/top.json" />
@@ -1701,23 +1599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-46">
           <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-337">
-          <caret line="210" column="40" selection-start-line="210" selection-start-column="40" selection-end-line="210" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="33" column="53" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1848,16 +1729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/pages/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="23" column="41" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1879,10 +1750,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+        <state relative-caret-position="334">
+          <caret line="484" column="34" lean-forward="true" selection-start-line="484" selection-start-column="34" selection-end-line="484" selection-end-column="34" />
           <folding>
             <element signature="e#915#966#0" />
             <element signature="e#2271#3848#0" />
@@ -1915,6 +1789,54 @@
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#!!block;n#authenticatedFetch#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Downloads Center/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="54" column="59" lean-forward="true" selection-start-line="54" selection-start-column="59" selection-end-line="54" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="789">
+          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/pages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="25" column="64" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
         </state>
       </provider>
     </entry>

@@ -478,7 +478,7 @@ puppeteer.launch({
 			let backContent = `<div id="backContainer"></div>`;
 			let spine = `<div id="spine"></div><link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/lulu.css"/><style>#spine{background-image: url("http://localhost:${port}/print/${hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
 			if (hasExtraPadding) {
-				spine += `<style>#frontContainer, #backContainer{width: ${isHardcover ? 902 : 796}px}</style>`;
+				spine += `<style>#frontContainer, #backContainer{width: ${isHardcover ? 901 : 796}px}</style>`;
 			}
 			// <img src="http://localhost:${port}/print/header_logo_mini.png"/>
 			let content = numPages ? `${style}${backContent}${spine}${frontContent}` : `${style}${frontContent}`;
