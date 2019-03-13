@@ -226,71 +226,93 @@ puppeteer.launch({
 				url = url.split('/Refresh=')[1];
 				
 				// try {
-				let subdomain = url.split('/')[0];
-				let path = url.split('/').slice(1).join('/');
-				let isNoCache = false;
-				console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
-				let all = await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true});
-				let texts = [];
-				let standalone = [];
-				let finished = [];
-				sort(all);
-				
-				function sort(current) {
-					for (let i = 0; i < current.children.length; i++) {
-						let page = current.children[i];
-						if (page.tags.includes('coverpage:yes')) {
-							texts.push(page);
-						}
-						else {
-							standalone.push(page.url);
-							sort(page);
-						}
+				let subdomains = url.split('/')[0];
+				let paths;
+				if (subdomains === 'all') {
+					subdomains = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
+					paths = ['Courses', 'Bookshelves'];
+					console.log(`Starting All ${subdomains.join(', ')}`)
+				}
+				else {
+					subdomains = [subdomains];
+					paths = [url.split('/').slice(1).join('/')];
+					if (paths === 'all') {
+						paths = ['Courses', 'Bookshelves'];
 					}
 				}
 				
-				clearInterval(heartbeat);
-				response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
-				response.end();
 				
-				//process Texts
-				console.log(`Processing ${texts.length} LibreTexts`);
-				for (let i = 0; i < texts.length; i++) {
-					let current = texts[i];
-					finished.push(await getLibretext(current.url, null, {current: current, ip: ip}));
-				}
-				
-				
-				console.log(`Processing ${standalone.length} standalone pages`);
-				//kubernetesServiceHost ? 4 : 2
-				await mapLimit(standalone, 4, async (pageURL) => {
-					if (kubernetesServiceHost) {
-						let offloadURL = `http://${kubernetesServiceHost}/url=${pageURL}`;
-						if (isNoCache)
-							offloadURL += '?no-cache&offload';
-						else
-							offloadURL += '?offload';
+				for (let i = 0; i < subdomains.length; i++) {
+					for (let j = 0; j < paths.length; j++) {
+						let subdomain = subdomains[i];
+						let path = paths[j];
+						let isNoCache = false;
 						
-						let offload = await fetch(offloadURL);
-						await offload.json();
+						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
+						let all = await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true});
+						let texts = [];
+						let standalone = [];
+						let finished = [];
+						sort(all);
+						
+						function sort(current) {
+							for (let i = 0; i < current.children.length; i++) {
+								let page = current.children[i];
+								if (page.tags.includes('coverpage:yes')) {
+									texts.push(page);
+								}
+								else {
+									standalone.push(page.url);
+									sort(page);
+								}
+							}
+						}
+						
+						clearInterval(heartbeat);
+						response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
+						response.end();
+						
+						//process Texts
+						console.log(`Processing ${texts.length} LibreTexts`);
+						for (let i = 0; i < texts.length; i++) {
+							let current = texts[i];
+							finished.push(await getLibretext(current.url, null, {current: current, ip: ip}));
+						}
+						
+						
+						console.log(`Processing ${standalone.length} standalone pages`);
+						//kubernetesServiceHost ? 4 : 2
+						await mapLimit(standalone, 4, async (pageURL) => {
+							if (kubernetesServiceHost) {
+								let offloadURL = `http://${kubernetesServiceHost}/url=${pageURL}`;
+								if (isNoCache)
+									offloadURL += '?no-cache&offload';
+								else
+									offloadURL += '?offload';
+								
+								let offload = await fetch(offloadURL);
+								await offload.json();
+							}
+							else {
+								await getPDF(pageURL, ip, isNoCache);
+							}
+						});
+						await fetch('https://api.libretexts.org/endpoint/refreshList', {
+							method: 'PUT',
+							body: JSON.stringify({
+								subdomain: subdomain,
+								path: path,
+								identifier: md5(keys[subdomain]),
+								content: finished
+							}),
+							headers: {
+								origin: 'print.libretexts.org'
+							}
+						});
+						console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
 					}
-					else {
-						await getPDF(pageURL, ip, isNoCache);
-					}
-				});
-				await fetch('https://api.libretexts.org/endpoint/refreshList', {
-					method: 'PUT',
-					body: JSON.stringify({
-						subdomain: subdomain,
-						path: path,
-						identifier: md5(keys[subdomain]),
-						content: finished
-					}),
-					headers: {
-						origin: 'print.libretexts.org'
-					}
-				});
-				console.log('Finished');
+				}
+				
 			}
 			else { //static server
 				// console.log(url);
@@ -880,7 +902,7 @@ puppeteer.launch({
 				console.log(`CACHE  ${ip} ${url}`);
 				return {filename: escapedURL + '.pdf'};
 			}
-			else if (working[escapedURL] && !isBatch) { //another thread is already working
+			else if (working[escapedURL]) { //another thread is already working
 				eventEmitter.on(escapedURL, () => {
 					console.log(`DUPE   ${ip} ${url}`);
 					// staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
@@ -894,9 +916,9 @@ puppeteer.launch({
 			
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
-				if (!page.isClosed)
+				if (!page.isClosed())
 					page.close();
-			}, 40000);
+			}, 60000);
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
 			
@@ -905,6 +927,9 @@ puppeteer.launch({
 			let title;
 			try {
 				try {
+					page.on('dialog', async dialog => {
+						await dialog.dismiss();
+					});
 					await page.goto(url + "?no-cache", {
 						timeout: 30000,
 						waitUntil: ["load", "domcontentloaded", 'networkidle0']
@@ -1013,7 +1038,8 @@ puppeteer.launch({
 			time /= 100;
 			time = Math.round(time);
 			time /= 10;
-			await page.close();
+			if (!page.isClosed())
+				await page.close();
 			clearTimeout(timeout);
 			let pages = await browser.pages();
 			const now = new Date();
@@ -1027,6 +1053,7 @@ puppeteer.launch({
 			}
 			else {
 				console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
+				// console.log(pages);
 			}
 			
 			return {filename: PDFname + '.pdf', title: title};
@@ -1038,9 +1065,9 @@ puppeteer.launch({
 			
 			const page = await browser.newPage();
 			const timeout = setTimeout(() => {
-				if (!page.isClosed)
+				if (!page.isClosed())
 					page.close();
-			}, 40000);
+			}, 60000);
 			
 			let PDFname = escapedURL;
 			try {
