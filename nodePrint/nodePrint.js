@@ -245,7 +245,7 @@ puppeteer.launch({
 				for (let i = 0; i < subdomains.length; i++) {
 					for (let j = 0; j < paths.length; j++) {
 						let subdomain = subdomains[i];
-						let path = paths[j];
+						let path = subdomain === 'espanol' ? 'home' : paths[j];
 						let isNoCache = false;
 						
 						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
@@ -269,7 +269,8 @@ puppeteer.launch({
 						}
 						
 						clearInterval(heartbeat);
-						response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
+						if (!response.finished)
+							response.write(`Processing ${texts.length} LibreTexts and ${standalone.length} standalone pages`);
 						response.end();
 						
 						//process Texts
@@ -1333,7 +1334,15 @@ async function authenticatedFetch(path, api, subdomain) {
 	let headers = {'X-Requested-With': 'XMLHttpRequest'};
 	let token = keys[subdomain];
 	headers['x-deki-token'] = token;
-	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
+	let subpath;
+	if (path === 'home') {
+		subpath = 'home';
+	}
+	else {
+		subpath = `=${encodeURIComponent(encodeURIComponent(path))}`;
+	}
+	
+	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${subpath}/${api}`,
 		{headers: headers});
 }
 
@@ -1352,13 +1361,13 @@ async function getSubpages(rootURL, options = {}) {
 	info = await (await info).json();
 	properties = await (await properties).json();
 	tags = await (await tags).json();
-	if (properties['@count'] !== '0') {
+	if (properties && properties['@count'] !== '0' && properties.property) {
 		properties = properties.property.length ? properties.property : [properties.property]
 	}
 	else {
 		properties = [];
 	}
-	if (tags['@count'] && tags['@count'] !== '0') {
+	if (tags && tags['@count'] !== '0' && tags.tag) {
 		tags = tags.tag.length ? tags.tag : [tags.tag];
 		tags = tags.map((elem) => elem.title);
 	}

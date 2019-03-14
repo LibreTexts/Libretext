@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added All refresh">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="230" column="43" selection-start-line="230" selection-start-column="43" selection-end-line="230" selection-end-column="43" />
+            <state relative-caret-position="1598">
+              <caret line="305" column="65" lean-forward="true" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
               <folding>
                 <element signature="e#915#966#0" />
                 <element signature="e#3892#5222#0" />
@@ -61,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/endpoint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2461">
-              <caret line="107" column="114" selection-start-line="107" selection-start-column="114" selection-end-line="107" selection-end-column="114" />
+            <state relative-caret-position="161">
+              <caret line="106" column="65" lean-forward="true" selection-start-line="106" selection-start-column="65" selection-end-line="106" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -82,7 +81,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>confirm</find>
       <find>Leave Pl</find>
       <find>static</find>
       <find>processFile</find>
@@ -112,6 +110,7 @@
       <find>isBatch</find>
       <find>isclosed</find>
       <find>bio</find>
+      <find>getsubpages</find>
     </findStrings>
     <replaceStrings>
       <replace>;</replace>
@@ -209,8 +208,8 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
       </list>
     </option>
   </component>
@@ -221,10 +220,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1164" />
-    <option name="y" value="236" />
-    <option name="width" value="952" />
-    <option name="height" value="450" />
+    <option name="x" value="1358" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -234,6 +232,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -244,13 +243,12 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -862,13 +860,10 @@
       <workItem from="1552347299212" duration="10524000" />
       <workItem from="1552415559090" duration="5836000" />
       <workItem from="1552422993453" duration="7158000" />
-    </task>
-    <task id="LOCAL-00101" summary="Initial endpoint&#10;&#10;Allows for cross-library authenticated API transactions">
-      <created>1547018273220</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1547018273221</updated>
+      <workItem from="1552439832437" duration="90000" />
+      <workItem from="1552451725102" duration="1000" />
+      <workItem from="1552511843995" duration="612000" />
+      <workItem from="1552512747019" duration="914000" />
     </task>
     <task id="LOCAL-00102" summary="Propagator properties and tags">
       <created>1547097481212</created>
@@ -1206,7 +1201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552358713739</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="Added All refresh">
+      <created>1552439889918</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1552439889918</updated>
+    </task>
+    <option name="localTasksCounter" value="151" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1242,16 +1244,16 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1357154000" />
+    <option name="totallyTimeSpent" value="1358771000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1594" y="-16" width="1381" height="885" extended-state="6" />
+    <frame x="679" y="0" width="695" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.12698413" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.34850863" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.23466666" />
@@ -1262,7 +1264,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.27635327" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26353276" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.18933333" />
@@ -1369,7 +1371,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Initial bundle" />
     <MESSAGE value="Added coverpage:toc" />
     <MESSAGE value="Added Sandboxed Remixer" />
     <MESSAGE value="Youtube-nocookie" />
@@ -1394,7 +1395,8 @@
     <MESSAGE value="Added Remixer non-attachment file duplication" />
     <MESSAGE value="Initial Bot" />
     <MESSAGE value="All libraries&#10;&#10;Small issue with LuluFront Sizes" />
-    <option name="LAST_COMMIT_MESSAGE" value="All libraries&#10;&#10;Small issue with LuluFront Sizes" />
+    <MESSAGE value="Added All refresh" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added All refresh" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1779,10 +1781,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="106" column="65" lean-forward="true" selection-start-line="106" selection-start-column="65" selection-end-line="106" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="230" column="43" selection-start-line="230" selection-start-column="43" selection-end-line="230" selection-end-column="43" />
+        <state relative-caret-position="1598">
+          <caret line="305" column="65" lean-forward="true" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
           <folding>
             <element signature="e#915#966#0" />
             <element signature="e#3892#5222#0" />
@@ -1812,13 +1821,6 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2461">
-          <caret line="107" column="114" selection-start-line="107" selection-start-column="114" selection-end-line="107" selection-end-column="114" />
         </state>
       </provider>
     </entry>
