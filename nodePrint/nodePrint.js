@@ -1420,8 +1420,6 @@ async function getSubpages(rootURL, options = {}) {
 				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {delay: options.delay} : {});
 			}
 			
-			url = decodeURIComponent(url);
-			
 			result[index] = {
 				title: subpage.title,
 				url: url,
@@ -1430,7 +1428,7 @@ async function getSubpages(rootURL, options = {}) {
 				subdomain: subdomain,
 				children: children,
 				id: subpage['@id'],
-				relativePath: url.replace(decodeURIComponent(rootURL) + '/', '')
+				relativePath: encodeURIComponent(decodeURIComponent(url).replace(decodeURIComponent(rootURL) + '/', ''))
 			};
 		}
 		

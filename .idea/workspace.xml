@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added All refresh">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,14 +21,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1598">
-              <caret line="305" column="65" lean-forward="true" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
+            <state relative-caret-position="418">
+              <caret line="1433" column="8" lean-forward="true" selection-start-line="1433" selection-start-column="8" selection-end-line="1433" selection-end-column="8" />
               <folding>
                 <element signature="e#915#966#0" />
+                <element signature="e#2030#11249#0" />
                 <element signature="e#3892#5222#0" />
                 <element signature="e#5275#6083#0" />
                 <element signature="e#6121#6353#0" />
                 <element signature="e#6396#6761#0" />
+                <element signature="e#11283#11504#0" />
+                <element signature="e#11547#13610#0" />
+                <element signature="e#13646#14324#0" />
+                <element signature="e#14369#15785#0" />
+                <element signature="e#15880#19398#0" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -41,6 +46,7 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#27118#31418#0" />
                 <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -53,15 +59,6 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="106" column="65" lean-forward="true" selection-start-line="106" selection-start-column="65" selection-end-line="106" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -81,13 +78,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Leave Pl</find>
-      <find>static</find>
       <find>processFile</find>
       <find>put</find>
       <find>processfile</find>
       <find>getTags</find>
-      <find>decode</find>
       <find>Copying</find>
       <find>grt</find>
       <find>response.ok</find>
@@ -111,6 +105,9 @@
       <find>isclosed</find>
       <find>bio</find>
       <find>getsubpages</find>
+      <find>deki</find>
+      <find>decode</find>
+      <find>decodeuri</find>
     </findStrings>
     <replaceStrings>
       <replace>;</replace>
@@ -208,8 +205,8 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
     </option>
   </component>
@@ -232,7 +229,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -243,12 +239,19 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="PDF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -864,6 +867,8 @@
       <workItem from="1552451725102" duration="1000" />
       <workItem from="1552511843995" duration="612000" />
       <workItem from="1552512747019" duration="914000" />
+      <workItem from="1552591549823" duration="723000" />
+      <workItem from="1552632243890" duration="980000" />
     </task>
     <task id="LOCAL-00102" summary="Propagator properties and tags">
       <created>1547097481212</created>
@@ -1244,16 +1249,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1358771000" />
+    <option name="totallyTimeSpent" value="1360474000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="679" y="0" width="695" height="878" extended-state="0" />
-    <editor active="true" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.34850863" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.25245655" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.23466666" />
@@ -1275,7 +1279,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.3007712" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.39909297" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" visible="true" weight="0.39909297" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1647,13 +1651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="75" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/TOC.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1312">
@@ -1783,21 +1780,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/endpoint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="106" column="65" lean-forward="true" selection-start-line="106" selection-start-column="65" selection-end-line="106" selection-end-column="65" />
+        <state relative-caret-position="2438">
+          <caret line="106" column="65" selection-start-line="106" selection-start-column="65" selection-end-line="106" selection-end-column="65" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="305" column="65" lean-forward="true" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
+        <state relative-caret-position="418">
+          <caret line="1433" column="8" lean-forward="true" selection-start-line="1433" selection-start-column="8" selection-end-line="1433" selection-end-column="8" />
           <folding>
             <element signature="e#915#966#0" />
+            <element signature="e#2030#11249#0" />
             <element signature="e#3892#5222#0" />
             <element signature="e#5275#6083#0" />
             <element signature="e#6121#6353#0" />
             <element signature="e#6396#6761#0" />
+            <element signature="e#11283#11504#0" />
+            <element signature="e#11547#13610#0" />
+            <element signature="e#13646#14324#0" />
+            <element signature="e#14369#15785#0" />
+            <element signature="e#15880#19398#0" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1809,6 +1812,7 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#27118#31418#0" />
             <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1821,6 +1825,13 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
         </state>
       </provider>
     </entry>
