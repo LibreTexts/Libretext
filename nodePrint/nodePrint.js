@@ -952,7 +952,29 @@ puppeteer.launch({
 						}
 						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 					}
-					return [prefix, innerText, document.getElementById('pageTagsHolder').innerText];
+					let tags = document.getElementById('pageTagsHolder').innerText;
+					if (tags) {
+						try {
+							tags = tags.replace(/\\/, "");
+							tags = JSON.parse(tags);
+							if(!tags.length)
+								tags = null;
+							if (tags && tags.includes('hidetop:solutions')) {
+								let h3 = $('h3');
+								h3.wrap(doWrap);
+								
+								function doWrap(index) {
+									if (this.id) {
+										return `<a target="_blank" href="${window.location.href}#${this.id}"></a>`
+									}
+								}
+							}
+						} catch (e) {
+							console.error(e.toString());
+						}
+					}
+					
+					return [prefix, innerText, tags];
 				}, url);
 				let prefix = out[0];
 				title = out[1] || null;
@@ -961,9 +983,10 @@ puppeteer.launch({
 				}
 				let tags = out[2] || null;
 				if (tags) {
-					tags = JSON.parse(tags);
-					if (tags.includes('hidetop:solutions'))
-						await page.addStyleTag({content: 'dd {display: none;}'});
+					if (tags instanceof Error)
+						console.error(tags);
+					else if (tags.includes('hidetop:solutions'))
+						await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
 				}
 				
 				const host = url.split("/")[2].split(".");
