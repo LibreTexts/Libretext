@@ -952,12 +952,18 @@ puppeteer.launch({
 						}
 						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 					}
-					return [prefix, innerText];
+					return [prefix, innerText, document.getElementById('pageTagsHolder').innerText];
 				}, url);
 				let prefix = out[0];
 				title = out[1] || null;
 				if (title) {
 					title = title.trim();
+				}
+				let tags = out[2] || null;
+				if (tags) {
+					tags = JSON.parse(tags);
+					if (tags.includes('hidetop:solutions'))
+						await page.addStyleTag({content: 'dd {display: none;}'});
 				}
 				
 				const host = url.split("/")[2].split(".");
