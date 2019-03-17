@@ -41,7 +41,7 @@ class Center extends React.Component {
 		let result = this.state.downloads.map((item, index) => <LibreText key={index} item={item}/>);
 		return <div className={'CenterContainer'}>
 			<SearchField
-				placeholder="Search for a LibreTexts by Title, Author, or Institution"
+				placeholder="Search for a LibreText by Title, Author, or Institution"
 				onChange={(v, e) => this.onFilter(v, e)}
 				classNames="centerSearch"
 			/>
@@ -52,8 +52,20 @@ class Center extends React.Component {
 	
 }
 
-function downloadsCenter(downloads) {
+
+async function doCenter() {
+	let subdomain = window.location.origin.split("/")[2].split(".")[0];
+	let one = subdomain === 'espanol' ? fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/home.json`)
+		: fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Courses.json`);
+	let two = fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Bookshelves.json`);
+	let downloads = [];
+	one = await one;
+	two = await two;
+	one = one.ok ? await one.json() : [];
+	two = two.ok ? await two.json() : [];
+	
+	downloads = downloads.concat(one, two);
 	ReactDOM.render(<Center downloads={downloads}/>, target);
 }
 
-window.downloadsCenter = downloadsCenter;
+doCenter();

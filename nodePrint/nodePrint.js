@@ -217,7 +217,7 @@ puppeteer.launch({
 					if (response)
 						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 				}, 1000);
-				findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
+				//findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
 				
 				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 					responseError('Unauthorized', 401);
@@ -916,10 +916,7 @@ puppeteer.launch({
 			// const browser = await puppeteer.launch();
 			
 			const page = await browser.newPage();
-			const timeout = setTimeout(() => {
-				if (!page.isClosed())
-					page.close();
-			}, 60000);
+			let timeout;
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
 			
@@ -927,6 +924,9 @@ puppeteer.launch({
 			let PDFname = escapedURL;
 			let title;
 			try {
+				timeout = setTimeout(() => {
+					throw Error('Render Timeout Reached');
+				}, 60000);
 				try {
 					page.on('dialog', async dialog => {
 						await dialog.dismiss();
@@ -1063,6 +1063,7 @@ puppeteer.launch({
 			} catch (err) {
 				failed = err;
 			}
+			clearTimeout(timeout);
 			const end = performance.now();
 			let time = end - start;
 			time /= 100;
@@ -1070,7 +1071,6 @@ puppeteer.launch({
 			time /= 10;
 			if (!page.isClosed())
 				await page.close();
-			clearTimeout(timeout);
 			let pages = await browser.pages();
 			const now = new Date();
 			
