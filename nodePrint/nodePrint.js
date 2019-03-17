@@ -234,13 +234,17 @@ puppeteer.launch({
 					console.log(`Starting All ${subdomains.join(', ')}`)
 				}
 				else {
-					subdomains = [subdomains];
-					paths = [url.split('/').slice(1).join('/')];
+					subdomains = subdomains.split(',');
+					
+					paths = url.split('/').slice(1).join('/');
 					if (paths === 'all') {
 						paths = ['Courses', 'Bookshelves'];
 					}
+					else {
+						paths = paths.split(',');
+					}
 				}
-				
+				console.log(subdomains, paths);
 				
 				for (let i = 0; i < subdomains.length; i++) {
 					for (let j = 0; j < paths.length; j++) {
@@ -303,6 +307,7 @@ puppeteer.launch({
 							body: JSON.stringify({
 								subdomain: subdomain,
 								path: path,
+								identifier: md5(keys[subdomain]),
 								identifier: md5(keys[subdomain]),
 								content: finished
 							}),
@@ -926,13 +931,13 @@ puppeteer.launch({
 			try {
 				timeout = setTimeout(() => {
 					throw Error('Render Timeout Reached');
-				}, 60000);
+				}, 100000);
 				try {
 					page.on('dialog', async dialog => {
 						await dialog.dismiss();
 					});
 					await page.goto(url + "?no-cache", {
-						timeout: 30000,
+						timeout: 50000,
 						waitUntil: ["load", "domcontentloaded", 'networkidle0']
 					});
 				} catch (err) {
@@ -957,7 +962,7 @@ puppeteer.launch({
 						try {
 							tags = tags.replace(/\\/, "");
 							tags = JSON.parse(tags);
-							if(!tags.length)
+							/*if (!tags.length)
 								tags = null;
 							if (tags && tags.includes('hidetop:solutions')) {
 								let h3 = $('h3');
@@ -968,7 +973,7 @@ puppeteer.launch({
 										return `<a target="_blank" href="${window.location.href}#${this.id}"></a>`
 									}
 								}
-							}
+							}*/
 						} catch (e) {
 							console.error(e.toString());
 						}
