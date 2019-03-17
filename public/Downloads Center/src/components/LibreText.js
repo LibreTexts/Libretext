@@ -17,6 +17,9 @@ export default class LibreText extends React.Component {
 	}
 	
 	render() {
+		let email = document.getElementById('userEmailHolder').textContent;
+		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
+		
 		let root = 'https://batch.libretexts.org/print/Finished/';
 		if (this.props.item.zipFilename)
 			root += this.props.item.zipFilename.replace('/Full.pdf', '');
@@ -25,7 +28,8 @@ export default class LibreText extends React.Component {
 			     onMouseLeave={() => this.handleClick(false)}>
 				<ReactCardFlip isFlipped={this.state.isFlipped}>
 					<div key="back" className='textSide textFront'>
-						<div style={{flex: 2}} className='headerFit'><Textfit max={20}>{this.props.item.title}</Textfit></div>
+						<div style={{flex: 2}} className='headerFit'><Textfit max={20}>{this.props.item.title}</Textfit>
+						</div>
 						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
 						</div>
 					</div>
@@ -37,6 +41,8 @@ export default class LibreText extends React.Component {
 						   target='_blank'>PDF</a>
 						<a href={`${root}/imsmanifest.xml`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
+						{email ? <a onClick={() => print(this.props.item.link)} href='#' className={'mt-icon-spinner6'}
+						            target='_blank'>Refresh Text</a> : ''}
 						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 						   target='_blank'>Individual ZIP</a>
 						<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}

@@ -199,12 +199,16 @@ if (!window["batchPrint.js"]) {
 		
 	}
 	
-	function batch() {
+	function batch(target) {
+		if (!email) {
+			alert('Authorization Error');
+			return false;
+		}
 		if (window["batchComplete"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", "https://" + targetComputer + "/print/Libretext=" + window.location.href, true); //async get
+			request.open("GET", `"https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
@@ -236,6 +240,7 @@ if (!window["batchPrint.js"]) {
 				window["batchComplete"] = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`
 			}
 		}
+		
 	}
 }
 document.addEventListener('DOMContentLoaded', fn);
