@@ -316,6 +316,9 @@ puppeteer.launch({
 							}
 						});
 						console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
+						if (subdomain === 'espanol')
+							break; //Only processing home path
+						
 					}
 				}
 				
@@ -930,8 +933,8 @@ puppeteer.launch({
 			let title;
 			try {
 				timeout = setTimeout(() => {
-					throw Error('Render Timeout Reached');
-				}, 100000);
+					throw Error(`Render Timeout Reached  ${url}`);
+				}, 80000);
 				try {
 					page.on('dialog', async dialog => {
 						await dialog.dismiss();
@@ -958,11 +961,12 @@ puppeteer.launch({
 						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 					}
 					let tags = document.getElementById('pageTagsHolder').innerText;
+					/*
 					if (tags) {
 						try {
 							tags = tags.replace(/\\/, "");
 							tags = JSON.parse(tags);
-							/*if (!tags.length)
+							if (!tags.length)
 								tags = null;
 							if (tags && tags.includes('hidetop:solutions')) {
 								let h3 = $('h3');
@@ -973,11 +977,11 @@ puppeteer.launch({
 										return `<a target="_blank" href="${window.location.href}#${this.id}"></a>`
 									}
 								}
-							}*/
+							}
 						} catch (e) {
 							console.error(e.toString());
 						}
-					}
+					}*/
 					
 					return [prefix, innerText, tags];
 				}, url);
@@ -988,6 +992,8 @@ puppeteer.launch({
 				}
 				let tags = out[2] || null;
 				if (tags) {
+					tags = tags.replace(/\\/, "");
+					tags = JSON.parse(tags);
 					if (tags instanceof Error)
 						console.error(tags);
 					else if (tags.includes('hidetop:solutions'))
@@ -1084,7 +1090,8 @@ puppeteer.launch({
 			if (failed) {
 				console.error(failed);
 				console.error(`FAILED ${ip} [${pages.length}] ${time}s ${PDFname}`);
-				throw failed;
+				// throw failed;
+				// return {filename: 'restricted'};
 			}
 			else {
 				console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
