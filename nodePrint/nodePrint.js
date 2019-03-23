@@ -961,6 +961,12 @@ puppeteer.launch({
 						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
 					}
 					let tags = document.getElementById('pageTagsHolder').innerText;
+					
+					//Mathjax link handling
+					$("a[href^='#mjx-eqn-eq']").each(function (index) {
+						// console.log(url + $(this).attr('href'));
+						$(this).attr('href', url + $(this).attr('href'))
+					});
 					/*
 					if (tags) {
 						try {
@@ -974,7 +980,7 @@ puppeteer.launch({
 								
 								function doWrap(index) {
 									if (this.id) {
-										return `<a target="_blank" href="${window.location.href}#${this.id}"></a>`
+										return `<a target="_blank" href="${url}#${this.id}"></a>`
 									}
 								}
 							}
