@@ -318,6 +318,7 @@ select#LTFormSubdomain {
 #LTRight > ul > li {
 	min-height: 100%;
 }
+
 .react-toggle {
 	height: 24px;
 }
@@ -328,7 +329,72 @@ select#LTFormSubdomain {
 }
 
 
+/* Dropdown Button */
+#DownloadsDropdown .dropbtn {
+	background-color: #0c85d0;
+	color: white;
+	border: none;
+	height: 100%;
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+}
 
+/* The container <div> - needed to position the dropdown content */
+#DownloadsDropdown.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+#DownloadsDropdown .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	flex-direction: column;
+	align-items: stretch;
+	width: max-content;
+	width: -moz-max-content;
+}
+
+/* Links inside the dropdown */
+#DownloadsDropdown .dropdown-content a {
+	color: white;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	width: initial;
+	text-align: center;
+	background-color: #0c85d0;
+	font-size: 12px;
+}
+
+#DownloadsDropdown .dropdown-content a:before {
+	margin-right: .5em;
+}
+
+/* Change color of dropdown links on hover */
+#DownloadsDropdown .dropdown-content a:hover {
+	color: #141414;
+	background-color: #f5f7fa;
+	transition-duration: 500ms;
+	border-radius: 5px 5px 0 0;
+}#DownloadsDropdown .dropdown-content a:not(:first-child) {
+	 border-top: 1px solid white;
+ }
+
+/* Show the dropdown menu on hover */
+#DownloadsDropdown.dropdown:hover .dropdown-content {
+	display: flex;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+#DownloadsDropdown.dropdown:hover .dropbtn {
+	background-color: #0f67a6;
+}
 
 
 /*Media Queries*/

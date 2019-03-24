@@ -28,11 +28,74 @@ if (!window["batchPrint.js"]) {
 		};
 		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
 		const batchPrint = document.getElementById("batchPrint");
-		batchPrint.innerHTML = (email ? '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button><a id="getTOCLink" class="notSS" target="_blank">TOC</a>' : "") + '<a href="https://chem.libretexts.org/Under_Construction/Users/Henry/How_to_use_the_LMS_Thin_Common_Cartridge" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
-		let getTOCLink = document.getElementById("getTOCLink");
-		if (getTOCLink) {
-			getTOCLink.rel = "nofollow";
-			getTOCLink.href = `https://dynamic.libretexts.org/print/toc=${window.location.href}`;
+		
+		handleInner().then();
+		
+		async function handleInner() {
+			//Download widget handling
+			let tags = document.getElementById('pageTagsHolder').innerText;
+			let downloads = [];
+			let hasDownloads = false;
+			let url = window.location.href.replace(/#$/,'');
+			if (tags.includes('coverpage:yes')) {
+				
+				let subdomain = window.location.origin.split("/")[2].split(".")[0];
+				let one = subdomain === 'espanol' ? fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/home.json`)
+					: fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Courses.json`);
+				let two = fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Bookshelves.json`);
+				one = await one;
+				two = await two;
+				one = one.ok ? await one.json() : [];
+				two = two.ok ? await two.json() : [];
+				
+				downloads = downloads.concat(one, two);
+				let downloadLinks = downloads.map((value) => value.link);
+				if (downloadLinks.includes(url) || downloadLinks.includes(decodeURIComponent(url))) {
+					hasDownloads = true;
+				}
+			}
+			let innerHTML = "";
+			if (email) {
+				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>'
+			}
+			if (hasDownloads) {
+				let entry = '';
+				for (let i = 0; i < downloads.length; i++) {
+					if (downloads[i].link === url || downloads[i].link === decodeURIComponent(url)) {
+						entry = downloads[i];
+					}
+				}
+				if (entry) {
+					let root = 'https://batch.libretexts.org/print/Finished/';
+					if (entry.zipFilename)
+						root += entry.zipFilename.replace('/Full.pdf', '');
+					innerHTML += '<div id="DownloadsDropdown" class="dropdown"  style="float:right;"><div class="dropbtn" style="margin-right: 2px" title="Downloads Center"><span>Downloads</span></div>';
+					innerHTML += `<div class="dropdown-content">
+					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
+					   target='_blank'>Full PDF</a>
+					<a href='${root}/imsmanifest.xml' class='mt-icon-graduation'
+					   target='_blank'>Import into LMS</a>
+					${email ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch()" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
+					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
+					   target='_blank'>Individual ZIP</a>
+					<a href='${root}/Publication.zip' class='mt-icon-book3'
+					   target='_blank'>Print Book Files</a>
+				</div></div>`;
+				}
+			}
+			else if (email) {
+				innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
+			}
+			if (!hasDownloads) {
+				innerHTML += '<a href="https://chem.libretexts.org/Under_Construction/Users/Henry/How_to_use_the_LMS_Thin_Common_Cartridge" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
+			}
+			
+			batchPrint.innerHTML = innerHTML;
+			let getTOCLink = document.getElementById("getTOCLink");
+			if (getTOCLink) {
+				getTOCLink.rel = "nofollow";
+				getTOCLink.href = `https://dynamic.libretexts.org/print/toc=${url}`;
+			}
 		}
 	}
 	
@@ -208,7 +271,7 @@ if (!window["batchPrint.js"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `"https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();

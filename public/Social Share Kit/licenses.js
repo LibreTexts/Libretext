@@ -19,17 +19,17 @@
 			else {
 				thing.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><i class='cc ${cc.label}'></i></a>`;
 			}
-
-
+			
+			
 			if ($("li.elm-last-modified").length)
 				$("li.elm-last-modified")[0].before(thing);
 			else
 				thing.style.display = "none";
 		}
-
+		
 		socialShareConfig();
 	}
-
+	
 	function getCC() {
 		let tags = document.getElementById("pageTagsHolder");
 		if (tags) {
@@ -62,7 +62,7 @@
 							return {label: "gnufdl", link: "https://www.gnu.org/licenses/fdl-1.3.en.html"};
 						case "arr":
 							return {label: "arr"};
-
+						
 					}
 				}
 			}
@@ -76,17 +76,18 @@
 			SocialShareKit.init();
 			window.DonorBox = {widgetLinkClassName: 'custom-dbox-popup'};
 		}
-
+		
 		const donor = document.createElement("script");
 		donor.type = "text/javascript";
 		donor.src = "https://donorbox.org/install-popup-button.js";
 		if (document.getElementById("donate"))
 			document.getElementById("donate").appendChild(donor);
-
+		
 		let printme = document.getElementById("printme");
 		let email = document.getElementById('userEmailHolder').textContent;
 		if (printme) {
-			printme.rel = "nofollow";
+			// printme.rel = "nofollow";
+			printme.type = "application/pdf";
 			//${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}
 			printme.href = `https://dynamic.libretexts.org/print/url=${window.location}.pdf`;
 		}
@@ -96,6 +97,6 @@
 		else
 			thing.style.display = "none";
 	}
-
+	
 	document.addEventListener('DOMContentLoaded', fn)
 })();
