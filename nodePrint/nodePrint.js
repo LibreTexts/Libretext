@@ -19,6 +19,8 @@ const querystring = require('querystring');
 const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
+const storage = require('node-persist');
+
 
 var Gbrowser;
 var Gserver;
@@ -44,6 +46,7 @@ puppeteer.launch({
 			localServer.listen(port);
 		}
 		const now1 = new Date();
+		await storage.init();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF');
 		fs.ensureDir('./PDF/Margin');
@@ -204,10 +207,17 @@ puppeteer.launch({
 			else if (url.startsWith('/Finished/')) {
 				url = url.split('/Finished/')[1];
 				url = decodeURIComponent(url);
-				if (await fs.exists(`./PDF/Finished/${url}`))
+				if (await fs.exists(`./PDF/Finished/${url}`)) {
 					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment'}, request, response);
+					let count = await storage.getItem('downloadCount') || 0;
+					await storage.setItem('downloadCount', count + 1);
+				}
 				else
 					console.error(url);
+			}
+			else if (url.startsWith('/Stats')) {
+				response.write("" + (await storage.getItem('downloadCount') || 0));
+				response.end();
 			}
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
@@ -224,6 +234,11 @@ puppeteer.launch({
 				}
 				
 				url = url.split('/Refresh=')[1];
+				let nocache = false;
+				if (url.endsWith('?no-cache')) {
+					url = url.replace('?no-cache', '');
+					nocache = true;
+				}
 				
 				// try {
 				let subdomains = url.split('/')[0];
@@ -281,7 +296,11 @@ puppeteer.launch({
 						console.log(`Processing ${texts.length} LibreTexts`);
 						for (let i = 0; i < texts.length; i++) {
 							let current = texts[i];
-							finished.push(await getLibretext(current.url, null, {current: current, ip: ip}));
+							finished.push(await getLibretext(current.url, null, {
+								current: current,
+								ip: ip,
+								nocache: nocache
+							}));
 						}
 						
 						
@@ -998,7 +1017,8 @@ puppeteer.launch({
 				}
 				let tags = out[2] || null;
 				if (tags) {
-					tags = tags.replace(/\\/, "");
+					tags = tags.replace(/'/g, "'");
+					tags = tags.replace(/\\/g, "");
 					tags = JSON.parse(tags);
 					if (tags instanceof Error)
 						console.error(tags);
@@ -1305,6 +1325,7 @@ puppeteer.launch({
 			} catch (err) {
 				throw err;
 			}
+			let heartbeat;
 			
 			if (!refreshOnly) {
 				//Overall cover
@@ -1315,13 +1336,17 @@ puppeteer.launch({
 				
 				let files = (await fs.readdir(`./PDF/order/${thinName}`)).map((file) => `./PDF/order/${thinName}/${file}`);
 				console.log('Merging');
-				if (response)
-					response.write(JSON.stringify({
-						message: "progress",
-						percent: (Math.round(count / urlArray.length * 1000) / 10),
-						eta: 'Finishing...',
-						// count: count,
-					}) + "\r\n");
+				if (response) {
+					let count = 0;
+					heartbeat = setInterval(() => {
+						if (response)
+							response.write(JSON.stringify({
+								message: "progress",
+								percent: 100,
+								eta: `Finishing...\nTime elapsed: ${++count} seconds`,
+							}) + "\r\n")
+					}, 1000);
+				}
 				if (files && files.length > 2) {
 					await merge(files, `./PDF/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
 					files.shift();
@@ -1347,14 +1372,16 @@ puppeteer.launch({
 				console.log('Zipping');
 				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
 				zipLocal.sync.zip(`./PDF/Finished/${zipFilename}/Publication`).compress().save(`./PDF/Finished/${zipFilename}/Publication.zip`);
-				
+			
 			}
 			const end = performance.now();
 			let time = end - start;
 			time /= 100;
 			time = Math.round(time);
 			time /= 10;
-			console.log(time);
+			console.log(zipFilename, time);
+			if (response && heartbeat)
+				clearInterval(heartbeat);
 			if (response)
 				response.write(JSON.stringify({
 					message: "complete",
