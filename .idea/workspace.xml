@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/API/schedule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,12 +16,15 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Libretext" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="966">
+            <state relative-caret-position="897">
               <caret line="42" column="57" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="57" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -38,34 +38,50 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/schedule.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="2" lean-forward="true" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-341">
-              <caret line="211" column="46" selection-start-line="211" selection-start-column="38" selection-end-line="211" selection-end-column="46" />
+            <state relative-caret-position="288">
+              <caret line="928" column="33" lean-forward="true" selection-start-line="928" selection-start-column="33" selection-end-line="928" selection-end-column="33" />
               <folding>
                 <element signature="e#915#966#0" />
                 <element signature="e#5275#6083#0" />
                 <element signature="e#6121#6353#0" />
                 <element signature="e#6396#6761#0" />
-                <element signature="e#7048#7333#0" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
+              <folding>
+                <element signature="e#4396#5494#0" />
+                <element signature="e#5537#6876#0" />
               </folding>
             </state>
           </provider>
@@ -86,17 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getsubpages</find>
-      <find>deki</find>
-      <find>decodeuri</find>
-      <find>zip</find>
-      <find>out[1]</find>
-      <find>tags.length</find>
-      <find>pdf</find>
-      <find>timeout</find>
-      <find>decode</find>
-      <find>author</find>
-      <find>batch</find>
       <find>h3</find>
       <find>Failed</find>
       <find>getpdf</find>
@@ -116,6 +121,17 @@
       <find>reset</find>
       <find>all</find>
       <find>refresh=</find>
+      <find>Finished</find>
+      <find>zipping</find>
+      <find>json</find>
+      <find>finishing</find>
+      <find>checktime</find>
+      <find>CACHE</find>
+      <find>clean</find>
+      <find>findRemoveSync</find>
+      <find>month</find>
+      <find>findremove</find>
+      <find>60</find>
     </findStrings>
     <replaceStrings>
       <replace>&lt;i className=&quot;material-icons help&quot; style:{{color:this.props.color}}</replace>
@@ -212,10 +228,10 @@
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/API/schedule.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
     </option>
   </component>
@@ -245,11 +261,6 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -933,21 +944,7 @@
       <workItem from="1553369550497" duration="5061000" />
       <workItem from="1553375427343" duration="5877000" />
       <workItem from="1553466544696" duration="2758000" />
-      <workItem from="1553473857851" duration="3039000" />
-    </task>
-    <task id="LOCAL-00111" summary="Changed method">
-      <created>1547623999004</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1547623999004</updated>
-    </task>
-    <task id="LOCAL-00112" summary="Added content-reuse comment">
-      <created>1547711832183</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1547711832184</updated>
+      <workItem from="1553473857851" duration="9407000" />
     </task>
     <task id="LOCAL-00113" summary="Changed time format">
       <created>1547970269351</created>
@@ -1278,7 +1275,21 @@
       <option name="project" value="LOCAL" />
       <updated>1553400542153</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="Added schedule.js&#10;&#10;Provides automated batching">
+      <created>1553477408497</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1553477408499</updated>
+    </task>
+    <task id="LOCAL-00161" summary="Added monthly no-cache refresh">
+      <created>1553487534036</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1553487534038</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1314,7 +1325,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1390741000" />
+    <option name="totallyTimeSpent" value="1397109000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
@@ -1322,8 +1333,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.2207105" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2207105" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.23361823" />
@@ -1334,11 +1344,12 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26210827" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.26210827" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.9529914" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" visible="true" weight="0.18803419" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.6381766" />
       <window_info anchor="bottom" id="REST Client" order="14" weight="0.47733334" />
+      <window_info anchor="bottom" id="Favorites" order="15" weight="0.32905984" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1441,8 +1452,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Added source-library-pageID tag to Remixer" />
-    <MESSAGE value="Workshop University" />
     <MESSAGE value="Mozilla Remixer" />
     <MESSAGE value="Added Remix name" />
     <MESSAGE value="Bugfix Remixer empty space" />
@@ -1466,7 +1475,9 @@
     <MESSAGE value="Fixed Refresh link" />
     <MESSAGE value="Initial Equation links" />
     <MESSAGE value="Finished Downloads Button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Downloads Button" />
+    <MESSAGE value="Added schedule.js&#10;&#10;Provides automated batching" />
+    <MESSAGE value="Added monthly no-cache refresh" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added monthly no-cache refresh" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1827,7 +1838,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="966">
+        <state relative-caret-position="897">
           <caret line="42" column="57" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="57" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -1841,21 +1852,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/endpoint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="29" lean-forward="true" selection-start-column="29" selection-end-line="1" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-341">
-          <caret line="211" column="46" selection-start-line="211" selection-start-column="38" selection-end-line="211" selection-end-column="46" />
+        <state relative-caret-position="113">
+          <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
           <folding>
-            <element signature="e#915#966#0" />
-            <element signature="e#5275#6083#0" />
-            <element signature="e#6121#6353#0" />
-            <element signature="e#6396#6761#0" />
-            <element signature="e#7048#7333#0" />
+            <element signature="e#4396#5494#0" />
+            <element signature="e#5537#6876#0" />
           </folding>
         </state>
       </provider>
@@ -1863,14 +1864,49 @@
     <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="411">
-          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+          <caret line="30" column="18" lean-forward="true" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/schedule.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="2" lean-forward="true" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+        <state relative-caret-position="-3">
+          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="928" column="33" lean-forward="true" selection-start-line="928" selection-start-column="33" selection-end-line="928" selection-end-column="33" />
+          <folding>
+            <element signature="e#915#966#0" />
+            <element signature="e#5275#6083#0" />
+            <element signature="e#6121#6353#0" />
+            <element signature="e#6396#6761#0" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

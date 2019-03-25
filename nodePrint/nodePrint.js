@@ -227,7 +227,7 @@ puppeteer.launch({
 					if (response)
 						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 				}, 1000);
-				//findRemoveSync('./PDF', {age: {seconds: 5.256e+6}, extensions: '.pdf',});
+				findRemoveSync('./PDF', {age: {seconds: 70 * 8.64e+4}, extensions: '.pdf',});
 				
 				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 					responseError('Unauthorized', 401);
@@ -918,7 +918,7 @@ puppeteer.launch({
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
 			
-			const daysCache = 30; //valid for a month
+			const daysCache = 65; //valid for ~ 2 months
 			const updateTime = await checkTime(url);
 			let marginExists = await fs.exists(`./PDF/Margin/${escapedURL}.pdf`);
 			if (updateTime === 'restricted') {
@@ -926,7 +926,7 @@ puppeteer.launch({
 				return {filename: 'restricted'};
 			}
 			else if (!isNoCache && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7 && marginExists) { //file is up to date
-				// 8.64e+7 day
+				// 8.64e+7 ms/day
 				console.log(`CACHE  ${ip} ${url}`);
 				return {filename: escapedURL + '.pdf'};
 			}
