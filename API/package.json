@@ -12,11 +12,12 @@
     "fs-extra": "^7.0.1",
     "md5": "^2.2.1",
     "mysql": "^2.16.0",
+    "node-cron": "^2.0.3",
     "node-eta": "^0.9.0",
     "node-fetch": "^2.3.0",
     "node-static": "^0.7.11",
     "perf_hooks": "0.0.1",
-    "simple-git": "^1.107.0",
+    "simple-git": "^1.110.0",
     "zip-local": "^0.3.4"
   }
 }

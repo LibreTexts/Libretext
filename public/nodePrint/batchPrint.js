@@ -75,7 +75,7 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/imsmanifest.xml' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${email ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch()" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
+					${email ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
