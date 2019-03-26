@@ -20,6 +20,7 @@ const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
+const JSZip = require("jszip");
 
 
 var Gbrowser;
@@ -783,6 +784,7 @@ puppeteer.launch({
 		}
 		
 		async function getThinCC(current, destination) {
+			const zip = new JSZip();
 			let result;
 			
 			const {org, resources} = createXML(addChildren(current));
@@ -856,30 +858,32 @@ puppeteer.launch({
 					return result;
 				}
 				
-				if (array.length)
-					array.forEach((item) => {
-						if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
-							org += "\n" +
-								`            <item identifier=\"${getIdentifier()}\">\n` +
-								`                <title>${item.title}</title>`;
-							item.resources.forEach((resource) => {
-								const identifier = getIdentifier();
-								org += `
+				array.forEach((item) => {
+					if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
+						org += "\n" +
+							`            <item identifier=\"${getIdentifier()}\">\n` +
+							`                <title>${item.title}</title>`;
+						item.resources.forEach((resource) => {
+							const identifier = getIdentifier();
+							org += `
                 <item identifier="${identifier}" identifierref="${identifier}_R">
                     <title>${resource.title}</title>
                 </item>`;
-								resources += `
-        <resource identifier="${identifier}_R" type="imswl_xmlv1p3">
-            <webLink>
-                <title>${resource.title}</title>
-                <url href="${resource.url}"/>
-            </webLink>
+							resources += `
+        <resource identifier="${identifier}_R" type="imswl_xmlv1p1">
+            <file href="${identifier}_F.xml"/>
         </resource>`;
-							});
-							org += "\n" +
-								"            </item>";
-						}
-					});
+							zip.file(`${identifier}_F.xml`,
+								`<?xml version="1.0" encoding="UTF-8"?>
+<webLink>
+	<title>${resource.title}</title>
+	<url href="${resource.url}"/>
+</webLink>`);
+						});
+						org += "\n" +
+							"            </item>";
+					}
+				});
 				
 				return {org: org, resources: resources};
 			}
@@ -887,11 +891,18 @@ puppeteer.launch({
 			const top = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<manifest xmlns=\"http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1\" xmlns:lom=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/resource\" xmlns:lomimscc=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/manifest\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"cctd0015\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0p1.xsd\">\n" +
 				"    <metadata>\n" +
-				"        <schema>IMS Thin Common Cartridge</schema>\n" +
-				"        <schemaversion>1.3.0</schemaversion>\n" +
+				"        <schema>IMS Common Cartridge</schema>\n" +
+				"        <schemaversion>1.1.0</schemaversion>\n" +
+				"    <lomimscc:lom>\n" +
+				"      <lomimscc:general>\n" +
+				"        <lomimscc:title>\n" +
+				`          <lomimscc:string language=\"en-US\">${current.title}</lomimscc:string>\n` +
+				"        </lomimscc:title>\n" +
+				"      </lomimscc:general>\n" +
+				"    </lomimscc:lom>" +
 				"    </metadata>\n" +
 				"    <organizations>\n" +
-				"        <organization identifier=\"T_1000\" structure=\"rooted-hierarchy\">\n" +
+				"        <organization identifier=\"T_90000\" structure=\"rooted-hierarchy\">\n" +
 				"        <item identifier=\"T_00000\">";
 			const middle = "\n" +
 				"        </item>\n" +
@@ -902,6 +913,8 @@ puppeteer.launch({
 				"</manifest>";
 			
 			result = top + org + middle + resources + end;
+			zip.file('imsmanifest.xml',result);
+			result = await zip.generateAsync({type:"nodebuffer"});
 			await fs.writeFile(destination, result);
 		}
 		
@@ -1332,7 +1345,7 @@ puppeteer.launch({
 				let filename = `Cover/${await getCover(current)}.pdf`;
 				await fs.copy(`./PDF/${filename}`, `${directory}/${filenamify('00000:A Cover.pdf')}`);
 				await fs.copy(`./PDF/${filename}`, `./PDF/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
-				await getThinCC(current, `./PDF/Finished/${zipFilename}/imsmanifest.xml`);
+				await getThinCC(current, `./PDF/Finished/${zipFilename}/LibreText.imscc`);
 				
 				let files = (await fs.readdir(`./PDF/order/${thinName}`)).map((file) => `./PDF/order/${thinName}/${file}`);
 				console.log('Merging');

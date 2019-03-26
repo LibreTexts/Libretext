@@ -49,8 +49,8 @@ if (!window["batchPrint.js"]) {
 				two = two.ok ? await two.json() : [];
 				
 				downloads = downloads.concat(one, two);
-				let downloadLinks = downloads.map((value) => value.link);
-				if (downloadLinks.includes(url) || downloadLinks.includes(decodeURIComponent(url))) {
+				let downloadLinks = downloads.map((value) => decodeURIComponent(value.link));
+				if (downloadLinks.includes(url)) {
 					hasDownloads = true;
 				}
 			}
@@ -61,7 +61,7 @@ if (!window["batchPrint.js"]) {
 			if (hasDownloads) {
 				let entry = '';
 				for (let i = 0; i < downloads.length; i++) {
-					if (downloads[i].link === url || downloads[i].link === decodeURIComponent(url)) {
+					if (decodeURIComponent(downloads[i].link) === url) {
 						entry = downloads[i];
 					}
 				}
@@ -73,7 +73,7 @@ if (!window["batchPrint.js"]) {
 					innerHTML += `<div class="dropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
-					<a href='${root}/imsmanifest.xml' class='mt-icon-graduation'
+					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
 					${email ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
@@ -87,7 +87,7 @@ if (!window["batchPrint.js"]) {
 				innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
 			}
 			if (!hasDownloads) {
-				innerHTML += '<a href="https://chem.libretexts.org/Under_Construction/Users/Henry/How_to_use_the_LMS_Thin_Common_Cartridge" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
+				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
 			}
 			
 			batchPrint.innerHTML = innerHTML;
@@ -113,127 +113,140 @@ if (!window["batchPrint.js"]) {
 	}
 	
 	function thinCC() {
+		const zip = new JSZip();
 		const textToSave = JSONtoXML();
-		const textToSaveAsBlob = new Blob([textToSave], {type: "application/xml"});
-		const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-		const fileNameToSaveAs = 'imsmanifest.xml';
+		zip.file('imsmanifest.xml',textToSave);
+		zip.generateAsync({type:"blob"})
+			.then(function (blob) {
+				const textToSaveAsURL = window.URL.createObjectURL(blob);
+				const fileNameToSaveAs = `${window["BatchName"]}.imscc`;
+				
+				const downloadLink = document.createElement("a");
+				downloadLink.download = fileNameToSaveAs;
+				downloadLink.innerHTML = "Download File";
+				downloadLink.href = textToSaveAsURL;
+				downloadLink.onclick = this.destroyClickedElement;
+				downloadLink.style.display = "none";
+				document.body.appendChild(downloadLink);
+				
+				downloadLink.click();
+			});
 		
-		const downloadLink = document.createElement("a");
-		downloadLink.download = fileNameToSaveAs;
-		downloadLink.innerHTML = "Download File";
-		downloadLink.href = textToSaveAsURL;
-		downloadLink.onclick = this.destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
-		
-		downloadLink.click();
-	}
-	
-	/**
-	 * @return {string}
-	 */
-	function JSONtoXML() {
-		let
-			root = window.location.href,
-			batchName = window["BatchName"],
-			title = window["BatchTitle"],
-			subpages = window["BatchTable"];
-		
-		const {org, resources} = createXML(addLinks(subpages, title));
-		
-		function addLinks(object, title) {
-			let result = [];
-			if (Object.keys(object).length) {
-				let resourceArray = [];
-				let readyArray = [];
-				for (let property in object) {
-					if (object.hasOwnProperty(property)) {
-						
-						if (Object.keys(object[property].children).length) { //has children
-							readyArray = readyArray.concat(addLinks(object[property].children, property));
-						}
-						else {
-							resourceArray.push({
-								title: property,
-								url: object[property].link + "?contentOnly"
-							});
+		/**
+		 * @return {string}
+		 */
+		function JSONtoXML() {
+			let root = window.location.href,
+				batchName = window["BatchName"],
+				title = window["BatchTitle"],
+				subpages = window["BatchTable"];
+			
+			const {org, resources} = createXML(addLinks(subpages, title));
+			
+			function addLinks(object, title) {
+				let result = [];
+				if (Object.keys(object).length) {
+					let resourceArray = [];
+					let readyArray = [];
+					for (let property in object) {
+						if (object.hasOwnProperty(property)) {
+							
+							if (Object.keys(object[property].children).length) { //has children
+								readyArray = readyArray.concat(addLinks(object[property].children, property));
+							}
+							else {
+								resourceArray.push({
+									title: property,
+									url: object[property].link + "?contentOnly"
+								});
+							}
 						}
 					}
+					if (resourceArray.length) //remove empty
+						result.push({title: title, resources: resourceArray});
+					result = result.concat(readyArray);
+					
 				}
-				if (resourceArray.length) //remove empty
-					result.push({title: title, resources: resourceArray});
-				result = result.concat(readyArray);
-				
-			}
-			else { //too shallow
-				result.push({
-					title: title,
-					resources: [{
+				else { //too shallow
+					result.push({
 						title: title,
-						url: root + "?contentOnly"
-					}],
-				});
-			}
-			return result;
-		}
-		
-		function createXML(array) {
-			let org = "";
-			let resources = "";
-			console.log(array);
-			let counter = 1;
-			
-			function getIdentifier() {
-				let result = "T_" + (counter.toString().padStart(6, "0"));
-				counter++;
+						resources: [{
+							title: title,
+							url: root + "?contentOnly"
+						}],
+					});
+				}
 				return result;
 			}
 			
-			array.forEach((item) => {
-				if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
-					org += "\n" +
-						`            <item identifier=\"${getIdentifier()}\">\n` +
-						`                <title>${item.title}</title>`;
-					item.resources.forEach((resource) => {
-						const identifier = getIdentifier();
-						org += `
+			function createXML(array) {
+				let org = "";
+				let resources = "";
+				console.log(array);
+				let counter = 1;
+				
+				function getIdentifier() {
+					let result = "T_" + (counter.toString().padStart(6, "0"));
+					counter++;
+					return result;
+				}
+				
+				array.forEach((item) => {
+					if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
+						org += "\n" +
+							`            <item identifier=\"${getIdentifier()}\">\n` +
+							`                <title>${item.title}</title>`;
+						item.resources.forEach((resource) => {
+							const identifier = getIdentifier();
+							org += `
                 <item identifier="${identifier}" identifierref="${identifier}_R">
                     <title>${resource.title}</title>
                 </item>`;
-						resources += `
-        <resource identifier="${identifier}_R" type="imswl_xmlv1p3">
-            <webLink>
-                <title>${resource.title}</title>
-                <url href="${resource.url}"/>
-            </webLink>
+							resources += `
+        <resource identifier="${identifier}_R" type="imswl_xmlv1p1">
+            <file href="${identifier}_F.xml"/>
         </resource>`;
-					});
-					org += "\n" +
-						"            </item>";
-				}
-			});
+							zip.file(`${identifier}_F.xml`,
+`<?xml version="1.0" encoding="UTF-8"?>
+<webLink>
+	<title>${resource.title}</title>
+	<url href="${resource.url}"/>
+</webLink>`);
+						});
+						org += "\n" +
+							"            </item>";
+					}
+				});
+				
+				return {org: org, resources: resources};
+			}
 			
-			return {org: org, resources: resources};
+			const top = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<manifest xmlns=\"http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1\" xmlns:lom=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/resource\" xmlns:lomimscc=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/manifest\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"cctd0015\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0p1.xsd\">\n" +
+				"    <metadata>\n" +
+				"        <schema>IMS Common Cartridge</schema>\n" +
+				"        <schemaversion>1.1.0</schemaversion>\n" +
+				"    <lomimscc:lom>\n" +
+				"      <lomimscc:general>\n" +
+				"        <lomimscc:title>\n" +
+				`          <lomimscc:string language=\"en-US\">${title}</lomimscc:string>\n` +
+				"        </lomimscc:title>\n" +
+				"      </lomimscc:general>\n" +
+				"    </lomimscc:lom>" +
+				"    </metadata>\n" +
+				"    <organizations>\n" +
+				"        <organization identifier=\"T_90000\" structure=\"rooted-hierarchy\">\n" +
+				"        <item identifier=\"T_00000\">";
+			const middle = "\n" +
+				"        </item>\n" +
+				"        </organization>\n" +
+				"    </organizations>\n" +
+				"    <resources>";
+			const end = "\n    </resources>\n" +
+				"</manifest>";
+			
+			return top + org + middle + resources + end;
 		}
-		
-		const top = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<manifest xmlns=\"http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1\" xmlns:lom=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/resource\" xmlns:lomimscc=\"http://ltsc.ieee.org/xsd/imsccv1p1/LOM/manifest\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"cctd0015\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0p1.xsd\">\n" +
-			"    <metadata>\n" +
-			"        <schema>IMS Thin Common Cartridge</schema>\n" +
-			"        <schemaversion>1.3.0</schemaversion>\n" +
-			"    </metadata>\n" +
-			"    <organizations>\n" +
-			"        <organization identifier=\"T_1000\" structure=\"rooted-hierarchy\">\n" +
-			"        <item identifier=\"T_00000\">";
-		const middle = "\n" +
-			"        </item>\n" +
-			"        </organization>\n" +
-			"    </organizations>\n" +
-			"    <resources>";
-		const end = "\n    </resources>\n" +
-			"</manifest>";
-		
-		return top + org + middle + resources + end;
 	}
 	
 	function HTMLtoJSON() {

@@ -39,7 +39,7 @@ export default class LibreText extends React.Component {
 						<a href={this.props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
 						<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
 						   target='_blank'>PDF</a>
-						<a href={`${root}/imsmanifest.xml`} className={'mt-icon-graduation'}
+						<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
 						{email ? <a onClick={() => {
 							if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?')) {
