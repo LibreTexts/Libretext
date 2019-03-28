@@ -213,8 +213,10 @@ puppeteer.launch({
 					let count = await storage.getItem('downloadCount') || 0;
 					await storage.setItem('downloadCount', count + 1);
 				}
-				else
+				else {
 					console.error(url);
+					staticFileServer.serveFile("404.html", 404, {}, request, response);
+				}
 			}
 			else if (url.startsWith('/Stats')) {
 				response.write("" + (await storage.getItem('downloadCount') || 0));
@@ -847,7 +849,27 @@ puppeteer.launch({
 				return result;
 			}
 			
+			function escapeTitle(unsafe) {
+				return unsafe.replace(/[<>&'"]/g, function (c) {
+					switch (c) {
+						case '<':
+							return '&lt;';
+						case '>':
+							return '&gt;';
+						case '&':
+							return '&amp;';
+						case '\'':
+							return '&apos;';
+						case '"':
+							return '&quot;';
+					}
+				});
+			}
+			
 			function createXML(array) {
+				if (!array || !array.length) {  // invalid CC
+					return {org: false, resources: false};
+				}
 				let org = "";
 				let resources = "";
 				let counter = 1;
@@ -862,12 +884,12 @@ puppeteer.launch({
 					if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
 						org += "\n" +
 							`            <item identifier=\"${getIdentifier()}\">\n` +
-							`                <title>${item.title}</title>`;
+							`                <title>${escapeTitle(item.title)}</title>`;
 						item.resources.forEach((resource) => {
 							const identifier = getIdentifier();
 							org += `
                 <item identifier="${identifier}" identifierref="${identifier}_R">
-                    <title>${resource.title}</title>
+                    <title>${escapeTitle(resource.title)}</title>
                 </item>`;
 							resources += `
         <resource identifier="${identifier}_R" type="imswl_xmlv1p1">
@@ -875,9 +897,9 @@ puppeteer.launch({
         </resource>`;
 							zip.file(`${identifier}_F.xml`,
 								`<?xml version="1.0" encoding="UTF-8"?>
-<webLink>
-	<title>${resource.title}</title>
-	<url href="${resource.url}"/>
+<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
+	<title>${escapeTitle(resource.title)}</title>
+	<url href="${resource.url}" target="_iframe"/>
 </webLink>`);
 						});
 						org += "\n" +
@@ -896,13 +918,13 @@ puppeteer.launch({
 				"    <lomimscc:lom>\n" +
 				"      <lomimscc:general>\n" +
 				"        <lomimscc:title>\n" +
-				`          <lomimscc:string language=\"en-US\">${current.title}</lomimscc:string>\n` +
+				`          <lomimscc:string language=\"en-US\">${escapeTitle(current.title)}</lomimscc:string>\n` +
 				"        </lomimscc:title>\n" +
 				"      </lomimscc:general>\n" +
-				"    </lomimscc:lom>" +
+				"    </lomimscc:lom>\n" +
 				"    </metadata>\n" +
 				"    <organizations>\n" +
-				"        <organization identifier=\"T_90000\" structure=\"rooted-hierarchy\">\n" +
+				"        <organization identifier=\"T_1000\" structure=\"rooted-hierarchy\">\n" +
 				"        <item identifier=\"T_00000\">";
 			const middle = "\n" +
 				"        </item>\n" +
@@ -911,10 +933,13 @@ puppeteer.launch({
 				"    <resources>";
 			const end = "\n    </resources>\n" +
 				"</manifest>";
+			if (!org || !resources) { // invalid CC
+				return false;
+			}
 			
 			result = top + org + middle + resources + end;
-			zip.file('imsmanifest.xml',result);
-			result = await zip.generateAsync({type:"nodebuffer"});
+			zip.file('imsmanifest.xml', result);
+			result = await zip.generateAsync({type: "nodebuffer"});
 			await fs.writeFile(destination, result);
 		}
 		
@@ -1032,10 +1057,13 @@ puppeteer.launch({
 				if (tags) {
 					tags = tags.replace(/'/g, "'");
 					tags = tags.replace(/\\/g, "");
-					tags = JSON.parse(tags);
-					if (tags instanceof Error)
-						console.error(tags);
-					else if (tags.includes('hidetop:solutions'))
+					try {
+						tags = JSON.parse(tags);
+					} catch (e) {
+						console.error(e, tags);
+					}
+					
+					if (tags.includes('hidetop:solutions'))
 						await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
 				}
 				
@@ -1385,7 +1413,7 @@ puppeteer.launch({
 				console.log('Zipping');
 				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
 				zipLocal.sync.zip(`./PDF/Finished/${zipFilename}/Publication`).compress().save(`./PDF/Finished/${zipFilename}/Publication.zip`);
-			
+				
 			}
 			const end = performance.now();
 			let time = end - start;

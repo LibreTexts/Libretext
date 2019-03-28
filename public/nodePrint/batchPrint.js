@@ -49,8 +49,8 @@ if (!window["batchPrint.js"]) {
 				two = two.ok ? await two.json() : [];
 				
 				downloads = downloads.concat(one, two);
-				let downloadLinks = downloads.map((value) => decodeURIComponent(value.link));
-				if (downloadLinks.includes(url)) {
+				let downloadLinks = downloads.map((value) => value.link);
+				if (downloadLinks.includes(url) || downloadLinks.includes(decodeURIComponent(url))) {
 					hasDownloads = true;
 				}
 			}
@@ -61,7 +61,7 @@ if (!window["batchPrint.js"]) {
 			if (hasDownloads) {
 				let entry = '';
 				for (let i = 0; i < downloads.length; i++) {
-					if (decodeURIComponent(downloads[i].link) === url) {
+					if (downloads[i].link === url || downloads[i].link === decodeURIComponent(url)) {
 						entry = downloads[i];
 					}
 				}
@@ -179,6 +179,18 @@ if (!window["batchPrint.js"]) {
 				return result;
 			}
 			
+			function escapeTitle(unsafe){
+				return unsafe.replace(/[<>&'"]/g, function (c) {
+					switch (c) {
+						case '<': return '&lt;';
+						case '>': return '&gt;';
+						case '&': return '&amp;';
+						case '\'': return '&apos;';
+						case '"': return '&quot;';
+					}
+				});
+			}
+			
 			function createXML(array) {
 				let org = "";
 				let resources = "";
@@ -195,12 +207,12 @@ if (!window["batchPrint.js"]) {
 					if (item.hasOwnProperty("title") && item.hasOwnProperty("resources")) {
 						org += "\n" +
 							`            <item identifier=\"${getIdentifier()}\">\n` +
-							`                <title>${item.title}</title>`;
+							`                <title>${escapeTitle(item.title)}</title>`;
 						item.resources.forEach((resource) => {
 							const identifier = getIdentifier();
 							org += `
                 <item identifier="${identifier}" identifierref="${identifier}_R">
-                    <title>${resource.title}</title>
+                    <title>${escapeTitle(resource.title)}</title>
                 </item>`;
 							resources += `
         <resource identifier="${identifier}_R" type="imswl_xmlv1p1">
@@ -208,9 +220,9 @@ if (!window["batchPrint.js"]) {
         </resource>`;
 							zip.file(`${identifier}_F.xml`,
 `<?xml version="1.0" encoding="UTF-8"?>
-<webLink>
-	<title>${resource.title}</title>
-	<url href="${resource.url}"/>
+<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
+	<title>${escapeTitle(resource.title)}</title>
+	<url href="${resource.url}" target="_iframe"/>
 </webLink>`);
 						});
 						org += "\n" +
@@ -229,10 +241,10 @@ if (!window["batchPrint.js"]) {
 				"    <lomimscc:lom>\n" +
 				"      <lomimscc:general>\n" +
 				"        <lomimscc:title>\n" +
-				`          <lomimscc:string language=\"en-US\">${title}</lomimscc:string>\n` +
+				`          <lomimscc:string language=\"en-US\">${escapeTitle(title)}</lomimscc:string>\n` +
 				"        </lomimscc:title>\n" +
 				"      </lomimscc:general>\n" +
-				"    </lomimscc:lom>" +
+				"    </lomimscc:lom>\n" +
 				"    </metadata>\n" +
 				"    <organizations>\n" +
 				"        <organization identifier=\"T_90000\" structure=\"rooted-hierarchy\">\n" +
