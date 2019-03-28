@@ -1,15 +1,15 @@
 if (!window["analytics.js"]) {
 	window["analytics.js"] = true;
 	ay();
-
+	
 	function ay() {
 		const ua = navigator.userAgent.toLowerCase();
 		const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
 		const sessionID = '_' + Math.random().toString(36).substr(2, 9);
 		const root = "api.libretexts.org";
 		// const root = "home.miniland1333.com";
-
-
+		
+		
 		window.addEventListener('load', function () {
 			if (sessionStorage.getItem('ay')) {
 				console.log("LAL");
@@ -28,17 +28,17 @@ if (!window["analytics.js"]) {
 				});
 			}
 		});
-
+		
 		function track() {
 			report('accessed');
-
+			
 			let pageTitle = document.getElementById("title");
 			pageTitle = pageTitle ? pageTitle.innerText : document.title;
 			TimeMe.initialize({
 				currentPageName: pageTitle, // current page
 				idleTimeoutInSeconds: 600 // seconds
 			});
-
+			
 			//Page switch handling
 			let hidden, visibilityChange, isActive = true;
 			if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
@@ -63,7 +63,7 @@ if (!window["analytics.js"]) {
 					report('switched to');
 				}
 			});
-
+			
 			//LTI iframe event handling
 			window.addEventListener('message', function (message) {
 				try {
@@ -74,10 +74,10 @@ if (!window["analytics.js"]) {
 						report(action, {id: type, element_id: element_id});
 					}
 				} catch (e) {
-
+				
 				}
 			});
-
+			
 			//Time on page handling
 			window.addEventListener('pagehide', function () {
 				if (isSafari) { //workaround due to pagehide asynchronous http request bug in safari
@@ -101,7 +101,7 @@ if (!window["analytics.js"]) {
 					type: 'beforeunload'
 				});
 			});
-
+			
 			//Scroll depth handling
 			jQuery.scrollDepth({
 				userTiming: false,
@@ -111,32 +111,36 @@ if (!window["analytics.js"]) {
 					report('read', null, {result: {'percent': data.eventLabel}})
 				}
 			});
-
+			
 			//Answer Reveal
 			$('dl > dt').click(function () {
 				report('answerReveal', null, {result: {'answer': this.innerText}})
 			});
-
+			
 			//Recommended Link
 			$('a.mt-related-listing-link').click(function () {
 				report('recommendedTo', null, {result: {'recommendation': this.href}})
 			})
 		}
-
+		
 		function report(verb, object, extra) {
 			navigator.sendBeacon(`https://${root}/ay/receive`, getBody(verb, object, extra));
 		}
-
+		
 		function getGroup() {
 			let groups = document.getElementById('groupHolder').innerText;
 			let classArray = ['Chem2BH', 'KU110'];
 			let result = [];
+			if (window.location.href.includes('Facciotti') && document.getElementsByClassName('nb_sidebar').length) {
+				result.push('Bis2AFacciotti');
+			}
+			
 			for (let i = 0; i < classArray.length; i++) {
 				if (groups.includes(classArray[i])) {
 					result.push(classArray[i]);
 				}
 			}
-
+			
 			if (!result.length)
 				return undefined;
 			else if (result.length === 1)
@@ -144,7 +148,7 @@ if (!window["analytics.js"]) {
 			else
 				return result;
 		}
-
+		
 		function getBody(verb, object, extra) {
 			let result = {
 				actor: getActor(),
@@ -153,11 +157,32 @@ if (!window["analytics.js"]) {
 			};
 			result = Object.assign(result, extra);
 			return JSON.stringify(result);
-
+			
 			function getActor() {
 				let library = window.location.host.split('.')[0];
 				let userID;
 				switch (library) {
+					case 'bio':
+						//nb handling
+						let cookies = document.cookie.split('; ');
+						let nbUser = cookies.find(function (element) {
+							return element.startsWith('userinfo=') &&  element.includes('email');
+						});
+						
+						if (nbUser) {
+							nbUser = decodeURIComponent(decodeURIComponent(nbUser.replace('userinfo=', '')));
+							nbUser = JSON.parse(nbUser);
+							userID = md5(nbUser.email);
+						}
+						else {
+							userID = 'unknown'
+						}
+						return {
+							courseName: getGroup(),
+							library: library,
+							id: userID,
+							platform: platform,
+						};
 					case 'webwork':
 						let url = window.location.href;
 						userID = url.match(/user=[A-Za-z]*/);
@@ -185,7 +210,7 @@ if (!window["analytics.js"]) {
 						};
 				}
 			}
-
+			
 			function getVerb(verb) {
 				switch (verb) {
 					case  'read':
@@ -219,7 +244,7 @@ if (!window["analytics.js"]) {
 						return verb;
 				}
 			}
-
+			
 			function getObject(object = 'page') {
 				let timestamp = new Date();
 				let result = {
@@ -229,7 +254,7 @@ if (!window["analytics.js"]) {
 					pageSession: sessionID,
 					timeMe: TimeMe.getTimeOnCurrentPageInSeconds()
 				};
-
+				
 				/*				switch (object) {
 									case 'page':
 										result.definition = {
@@ -245,7 +270,7 @@ if (!window["analytics.js"]) {
 									default:
 										result.definition = object;
 								}*/
-
+				
 				return result;
 			}
 		}
