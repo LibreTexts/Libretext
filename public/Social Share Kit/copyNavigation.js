@@ -160,7 +160,7 @@
 			copy.classList.remove("mt-user-menu-user");
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Courses/Remixer_University/Download_Center";
-			copyTarget.innerText = "Download Center";
+			copyTarget.innerText = "Downloads";
 			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
 				copyTarget.id = "DownloadIcon";
 			
