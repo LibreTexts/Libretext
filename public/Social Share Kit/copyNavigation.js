@@ -13,6 +13,7 @@
 			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
 		}
 		propagatorOption();
+		downloadOption();
 		remixerOption();
 		copyTranscludeOption();
 		copyContentOption();
@@ -138,6 +139,52 @@
 			if (groups.includes('Remixer')) {
 				$('.mt-edit-page, .mt-new-page, .mt-page-options').remove();
 			}
+		}
+	}
+	function downloadOption() {
+		let targetName = "mt-new-page";
+		let copy = document.getElementsByClassName(targetName);
+		if (!copy.length) {
+			targetName = 'mt-site-tools';
+			copy = document.getElementsByClassName(targetName);
+		}
+		if (!copy.length) {
+			targetName = 'mt-user-menu-user';
+			copy = document.getElementsByClassName(targetName);
+		}
+		if (copy.length) {
+			let original = document.getElementsByClassName(targetName)[0];
+			copy = original.cloneNode(true);
+			copy.classList.remove("mt-new-page");
+			copy.classList.remove("mt-site-tools");
+			copy.classList.remove("mt-user-menu-user");
+			let copyTarget = copy.getElementsByTagName("a")[0];
+			copyTarget.href = window.location.origin + "/Courses/Remixer_University/Download_Center";
+			copyTarget.innerText = "Download Center";
+			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
+				copyTarget.id = "DownloadIcon";
+			
+			copyTarget.classList.add("mt-icon-download");
+			copyTarget.classList.remove("mt-icon-new-page");
+			copyTarget.classList.remove("mt-icon-site-tools");
+			copyTarget.classList.remove("mt-icon-site-tools");
+			copyTarget.classList.remove("mt-icon-quick-sign-in");
+			copyTarget.classList.remove("mt-toggle-right");
+			copyTarget.setAttribute("target", "_blank");
+			copyTarget.title = "Go to the Download Center";
+			let target;
+			switch (targetName) {
+				case 'mt-site-tools':
+					target = original;
+					break;
+				case 'mt-new-page':
+					target = original.nextSibling;
+					break;
+				case 'mt-user-menu-user':
+					target = original.previousSibling.previousSibling;
+					break;
+			}
+			original.parentNode.insertBefore(copy, target)
 		}
 	}
 	

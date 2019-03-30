@@ -303,11 +303,11 @@ select#LTFormSubdomain {
 	display: none;
 }
 
-#RemixerIcon {
+#RemixerIcon, #DownloadIcon {
 	width: auto;
 }
 
-#RemixerIcon:before {
+#RemixerIcon:before, #DownloadIcon:before {
 	vertical-align: middle;
 }
 
@@ -382,9 +382,11 @@ select#LTFormSubdomain {
 	background-color: #f5f7fa;
 	transition-duration: 500ms;
 	border-radius: 5px 5px 0 0;
-}#DownloadsDropdown .dropdown-content a:not(:first-child) {
-	 border-top: 1px solid white;
- }
+}
+
+#DownloadsDropdown .dropdown-content a:not(:first-child) {
+	border-top: 1px solid white;
+}
 
 /* Show the dropdown menu on hover */
 #DownloadsDropdown.dropdown:hover .dropdown-content {
@@ -394,6 +396,23 @@ select#LTFormSubdomain {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 #DownloadsDropdown.dropdown:hover .dropbtn {
 	background-color: #0f67a6;
+}
+
+nav.elm-header-user-nav > div.elm-nav-container > ol {
+	display: flex;
+}
+
+
+nav.elm-header-user-nav > div.elm-nav-container > ol > li {
+	display: flex;
+}
+
+li.elm-global-search {
+	flex: 1
+}
+
+#mt-site-search-input {
+	width: auto;
 }
 
 
@@ -406,8 +425,10 @@ select#LTFormSubdomain {
 	.mobileHide {
 		display: none;
 	}
+}
 
-	#RemixerIcon {
+@media (max-width: 875px) {
+	#RemixerIcon, #DownloadIcon {
 		width: 1.95em;
 	}
 }
