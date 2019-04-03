@@ -8,6 +8,10 @@ body {
 	align-content: stretch;
 }
 
+* {
+	white-space: pre-wrap;
+}
+
 #frontContainer {
 	display: flex;
 	flex-direction: column;
@@ -39,6 +43,7 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
+
 #spine > img {
 	max-width: 80%;
 }

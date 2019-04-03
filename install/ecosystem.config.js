@@ -18,6 +18,10 @@ module.exports = {
       cwd	: '/home/hagnew/awesomefiles/nodePrint',
       watch	: "nodePrint.js",
       ignore_watch : ["node_modules","public","PDF"],
+      "instances" : "max",
+      "exec_mode": "cluster_mode",
+      "cron_restart": "00 * * * *",
+      "log_date_format"  : "YY/MM/DD HH:mm:ss"
     },
   ],
 };

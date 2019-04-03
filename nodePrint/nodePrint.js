@@ -467,6 +467,8 @@ puppeteer.launch({
 		async function getInformation(current) {
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
+				if(tag)
+					tag = tag.replace(/\\\\/g,'\n');
 				if (tag.startsWith('lulu@')) {
 					let items = tag.split('@');
 					if (items[1])

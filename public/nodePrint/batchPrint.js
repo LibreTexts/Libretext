@@ -12,7 +12,7 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 
 if (!window["batchPrint.js"]) {
 	window["batchPrint.js"] = true;
-	let email = document.getElementById('userEmailHolder').textContent;
+	let email = document.getElementById('userEmailHolder').textContent || "";
 	const targetComputer = 'batch.libretexts.org';
 	//email === 'hdagnew@ucdavis.edu'
 	let request;
