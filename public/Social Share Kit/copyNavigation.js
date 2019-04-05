@@ -70,7 +70,7 @@
 			let url = window.location.href;
 			const subdomain = url.split("/")[2].split(".")[0];
 			//Disabled for careered
-			let otherArray = ["bio", "biz", "careered", "chem", "eng", "geo", "human", "math", "med", "phys", "socialsci", "stats"];
+			let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
 			if (otherArray.includes(subdomain)) {
 				let index = otherArray.indexOf(subdomain);
 				if (index > -1) {

@@ -2,7 +2,7 @@ const http = require('http');
 const timestamp = require("console-timestamp");
 const server = http.createServer(handler);
 const fetch = require("node-fetch");
-const authen = require('./authen.json');
+const LibreTexts = require("./reuse.js");
 let port = 3002;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
@@ -15,7 +15,7 @@ function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = url.replace("propagator/", "");
-	url = clarifySubdomain(url);
+	url = LibreTexts.clarifySubdomain(url);
 	
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
@@ -62,7 +62,7 @@ function handler(request, response) {
 					response.end();
 					
 					async function getContent() {
-						const token = authenticate(username, Ssubdomain);
+						const token = LibreTexts.authenticate(username, Ssubdomain);
 						let content = await fetch(`https://${Ssubdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?mode=raw`,
 							{headers: {'x-deki-token': token}});
 						if (!content.ok) {
@@ -110,7 +110,7 @@ function handler(request, response) {
 					}
 					
 					async function propagatePage(subdomain, path) {
-						const token = authenticate(username, subdomain);
+						const token = LibreTexts.authenticate(username, subdomain);
 						let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now`, {
 							method: "POST",
 							body: content,
@@ -137,16 +137,6 @@ function handler(request, response) {
 							return await response.text();
 						}
 					}
-					
-					function authenticate(username, subdomain) {
-						const user = "=" + username;
-						const crypto = require('crypto');
-						const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
-						const epoch = Math.floor(Date.now() / 1000);
-						hmac.update(`${authen[subdomain].key}${epoch}${user}`);
-						const hash = hmac.digest('hex');
-						return `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
-					}
 				});
 			}
 			else {
@@ -161,10 +151,4 @@ function handler(request, response) {
 		response.write(("Bad Request\n" + (message ? message : url)));
 		response.end();
 	}
-}
-
-function clarifySubdomain(url) {
-	url = decodeURIComponent(url);
-	url = url.replace('https://español.libretexts.org','https://espanol.libretexts.org');
-	return url;
 }

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added \\ for lulu tag newline">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Created reuse.js">
+      <change afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/install/ecosystem.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/chemwriter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/libretexts.com.2019.lic.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,44 +29,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
+        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+            <state relative-caret-position="-599">
+              <caret line="37" column="31" lean-forward="true" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+              <folding>
+                <element signature="e#3056#4419#0" />
+                <element signature="e#4460#5569#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,21 +57,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>json</find>
-      <find>finishing</find>
-      <find>checktime</find>
-      <find>CACHE</find>
-      <find>clean</find>
-      <find>findRemoveSync</find>
-      <find>month</find>
-      <find>findremove</find>
-      <find>60</find>
-      <find>BatchTitle</find>
-      <find>1000</find>
-      <find>ims</find>
-      <find>getthin</find>
-      <find>Downloads</find>
-      <find>2bh</find>
       <find>1035</find>
       <find>scroll</find>
       <find>Finished</find>
@@ -113,11 +72,23 @@
       <find>email</find>
       <find>pre</find>
       <find>getinformation</find>
+      <find>LibreTexts.authenticate(subdomain, user)</find>
+      <find>page alread</find>
+      <find>input</find>
+      <find>clarify</find>
+      <find>authen</find>
+      <find>clarif</find>
+      <find>decodehtml</find>
+      <find>authenticated</find>
+      <find>getsub</find>
+      <find>authenticatedfetch</find>
+      <find>getSubpages</find>
+      <find>decodeHTML</find>
+      <find>get</find>
+      <find>authenticate</find>
+      <find>bio</find>
     </findStrings>
     <replaceStrings>
-      <replace>&lt;i className=&quot;material-icons help&quot; style:{{color:this.props.color}}</replace>
-      <replace>{name:&quot;&quot;, help:&quot;&quot;, type:</replace>
-      <replace>style=</replace>
       <replace>timestamp('MM/DD hh:mm', Date.now()) + &quot; &quot;</replace>
       <replace>&quot;</replace>
       <replace>computer</replace>
@@ -145,6 +116,9 @@
       <replace>isClosed()</replace>
       <replace>entry</replace>
       <replace>class</replace>
+      <replace>LibreTexts.authenticate(user, subdomain)</replace>
+      <replace>LibreTexts.authenticate</replace>
+      <replace>LibreTexts.decodeHTML</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -162,8 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/JSmol/JSmol.full.js" />
-        <option value="$PROJECT_DIR$/public/JSmol/JSmol.GLmol.full.js" />
         <option value="$PROJECT_DIR$/public/JSmol/j2s/core/corejmol.z.js" />
         <option value="$PROJECT_DIR$/nodePrint/base64/workforce.txt" />
         <option value="$PROJECT_DIR$/nodePrint/Dockerfile" />
@@ -188,31 +160,33 @@
         <option value="$PROJECT_DIR$/API/authen.json" />
         <option value="$PROJECT_DIR$/API/authenBrowser.json" />
         <option value="$PROJECT_DIR$/nodePrint/colors.json" />
-        <option value="$PROJECT_DIR$/API/import.js" />
         <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
-        <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
         <option value="$PROJECT_DIR$/nodePrint/PDFMerger.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/TOC.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/bundle.js" />
         <option value="$PROJECT_DIR$/nodePrint/public/lulu.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/DownloadsCenter.css" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
         <option value="$PROJECT_DIR$/API/schedule.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/public/API/analytics.js" />
         <option value="$PROJECT_DIR$/API/secure.json" />
-        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
+        <option value="$PROJECT_DIR$/API/import.js" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/API/reuse.js" />
+        <option value="$PROJECT_DIR$/API/propagator.js" />
+        <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
       </list>
     </option>
   </component>
@@ -223,10 +197,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="2763" />
-    <option name="height" value="1770" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1301" />
+    <option name="height" value="1391" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -247,34 +221,7 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-              <item name="PDF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-              <item name="PDF" type="462c0819:PsiDirectoryNode" />
-              <item name="Finished" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-              <item name="PDF" type="462c0819:PsiDirectoryNode" />
-              <item name="Finished" type="462c0819:PsiDirectoryNode" />
-              <item name="phys-Physics 9C!Electricity &amp; Magnetism-c98417f3dd904401" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -286,6 +233,12 @@
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -376,8 +329,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
-    <configuration name="analytics.js " type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="analytics.js" working-dir="$PROJECT_DIR$/API">
+  <component name="RunManager" selected="Node.js.endpoint.js">
+    <configuration name="bot.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="endpoint.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="API/endpoint.js" working-dir="$PROJECT_DIR$">
@@ -387,9 +340,6 @@
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
-      <method v="2" />
-    </configuration>
-    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/API/schedule.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -459,17 +409,16 @@
     <list>
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="Mocha.nodePrintTest" />
-      <item itemvalue="Node.js.analytics.js " />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.test" />
+      <item itemvalue="Node.js.bot.js" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.schedule.js" />
+        <item itemvalue="Node.js.bot.js" />
         <item itemvalue="npm.test" />
       </list>
     </recent_temporary>
@@ -943,14 +892,8 @@
       <workItem from="1554093100174" duration="651000" />
       <workItem from="1554142072788" duration="147000" />
       <workItem from="1554254501863" duration="27000" />
-      <workItem from="1554255915052" duration="2202000" />
-    </task>
-    <task id="LOCAL-00117" summary="Bugfix CSV">
-      <created>1548392788397</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1548392788398</updated>
+      <workItem from="1554255915052" duration="2237000" />
+      <workItem from="1554429783900" duration="5652000" />
     </task>
     <task id="LOCAL-00118" summary="Initial PDF TOC">
       <created>1548904748333</created>
@@ -1288,7 +1231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1553751747172</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <task id="LOCAL-00166" summary="Added \\ for lulu tag newline">
+      <created>1554258133363</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1554258133364</updated>
+    </task>
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1324,7 +1274,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1423826000" />
+    <option name="totallyTimeSpent" value="1429513000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1332,7 +1282,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.18121614" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.1782059" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3190883" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.23333333" />
@@ -1343,10 +1293,10 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" visible="true" weight="0.26133335" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26133335" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.19866666" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.63733333" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.2" />
       <window_info anchor="bottom" id="REST Client" order="14" weight="0.47733334" />
       <window_info anchor="bottom" id="Favorites" order="15" weight="0.32905984" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1355,7 +1305,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.3007712" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.34136063" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.3112583" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1451,7 +1401,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/python" />
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
     </ignored-roots>
-    <MESSAGE value="Emergency Import, TOC, Remixer, copyTransclude fix" />
     <MESSAGE value="Initial Refresh" />
     <MESSAGE value="Español clarifySubdomain();" />
     <MESSAGE value="rel = &quot;nofollow&quot;" />
@@ -1476,7 +1425,8 @@
     <MESSAGE value="Downgraded Thin CC to v1.1 Common Cartridge" />
     <MESSAGE value="NB + Analytics Compatibility" />
     <MESSAGE value="Common Cartridge weblink Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Common Cartridge weblink Fix" />
+    <MESSAGE value="Added \\ for lulu tag newline" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added \\ for lulu tag newline" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1572,34 +1522,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/favicon.ico">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluBack/chem.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/styles/LibreText.css" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/printYoutube.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1288">
@@ -1618,13 +1540,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/top.json" />
     <entry file="file://$PROJECT_DIR$/nodePrint/finished.json" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/colors.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -1645,16 +1560,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/timeme.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authen.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46">
-          <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="643">
@@ -1669,49 +1574,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5473">
-          <caret line="484" selection-start-line="484" selection-end-line="484" />
-          <folding>
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/Git demo.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/import.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12788">
-          <caret line="556" column="1" selection-start-line="556" selection-start-column="1" selection-end-line="556" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="151" column="5" selection-start-line="151" selection-start-column="5" selection-end-line="151" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/public/LuluFront/chem.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="48" column="151" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="151" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/src/pages/404.js">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1720,16 +1584,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/TOC.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-          <folding>
-            <element signature="n#!!block;n#makeTOC#0;n#!!block;n#TOC#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1754,45 +1608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
           <caret line="50" column="10" lean-forward="true" selection-start-line="50" selection-start-column="10" selection-end-line="52" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4991">
-          <caret line="217" column="1" selection-start-line="217" selection-start-column="1" selection-end-line="217" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="80" column="9" lean-forward="true" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
-          <folding>
-            <element signature="e#4396#5494#0" />
-            <element signature="e#5537#6876#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/schedule.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="347" column="4" lean-forward="true" selection-start-line="347" selection-start-column="4" selection-end-line="347" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/analytics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1702">
-          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1839,13 +1654,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -1881,41 +1689,162 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
-          <caret line="34" column="22" lean-forward="true" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/timeme.min.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/chemwriter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-897">
           <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/public/cover.css">
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        <state relative-caret-position="7981">
+          <caret line="347" column="4" lean-forward="true" selection-start-line="347" selection-start-column="4" selection-end-line="347" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-89830" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-70">
+          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/libretexts.com.2019.lic.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/logoClear.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/TOC.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1970">
+          <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1794">
+          <caret line="78" column="1" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1801">
+          <caret line="507" column="34" lean-forward="true" selection-start-line="507" selection-start-column="34" selection-end-line="507" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/timetrack.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4991">
+          <caret line="217" column="1" selection-start-line="217" selection-start-column="1" selection-end-line="217" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/schedule.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2047">
+          <caret line="17" column="16" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/analytics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1334">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/Git demo.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/import.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8579">
+          <caret line="418" column="37" selection-start-line="418" selection-start-column="37" selection-end-line="418" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="52" column="42" lean-forward="true" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-599">
+          <caret line="37" column="31" lean-forward="true" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+          <folding>
+            <element signature="e#3056#4419#0" />
+            <element signature="e#4460#5569#0" />
+          </folding>
         </state>
       </provider>
     </entry>
