@@ -10,7 +10,6 @@ const timestamp = require("console-timestamp");
 const util = require('util');
 const mapLimit = util.promisify(require("async/mapLimit"));
 const map = util.promisify(require("async/map"));
-const zipLocal = require('zip-local');
 const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
@@ -21,7 +20,6 @@ const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
 const JSZip = require("jszip");
-
 
 var Gbrowser;
 var Gserver;
@@ -467,8 +465,8 @@ puppeteer.launch({
 		async function getInformation(current) {
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
-				if(tag)
-					tag = tag.replace(/\\\\/g,'\n');
+				if (tag)
+					tag = tag.replace(/\\\\/g, '\n');
 				if (tag.startsWith('lulu@')) {
 					let items = tag.split('@');
 					if (items[1])
@@ -1413,8 +1411,23 @@ puppeteer.launch({
 				await fs.copy(`./PDF/${filename}`, `./PDF/Finished/${zipFilename}/Publication/HardCover.pdf`);
 				
 				console.log('Zipping');
-				zipLocal.sync.zip('./PDF/libretexts/' + zipFilename).compress().save(`./PDF/Finished/${zipFilename}/Individual.zip`);
-				zipLocal.sync.zip(`./PDF/Finished/${zipFilename}/Publication`).compress().save(`./PDF/Finished/${zipFilename}/Publication.zip`);
+				let individualZIP = new JSZip();
+				let PublicationZIP = new JSZip();
+				files = await fs.readdir('./PDF/libretexts/' + zipFilename);
+				for (let i = 0; i < files.length; i++) {
+					individualZIP.file(files[i], await fs.readFile(`./PDF/libretexts/${zipFilename}/${files[i]}`));
+				}
+				files = await fs.readdir(`./PDF/Finished/${zipFilename}/Publication`);
+				for (let i = 0; i < files.length; i++) {
+					PublicationZIP.file(files[i], await fs.readFile(`./PDF/Finished/${zipFilename}/Publication/${files[i]}`));
+				}
+				
+				await Promise.all([saveAs(individualZIP, `./PDF/Finished/${zipFilename}/Individual.zip`), saveAs(PublicationZIP, `./PDF/Finished/${zipFilename}/Publication.zip`)])
+				
+				async function saveAs(zip, destination) {
+					let result = await zip.generateAsync({type: "nodebuffer"});
+					await fs.writeFile(destination, result);
+				}
 				
 			}
 			const end = performance.now();
