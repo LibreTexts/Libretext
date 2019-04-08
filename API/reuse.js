@@ -16,6 +16,7 @@ let LibreTextsFunctions = {
 	clarifySubdomain: clarifySubdomain,
 	decodeHTML: decodeHTML,
 	authenticate: authenticate,
+	addLinks: addLinks,
 };
 
 async function authenticatedFetch(path, api, username, subdomain) {
@@ -124,6 +125,17 @@ function authenticate(username, subdomain) {
 	hmac.update(`${authen[subdomain].key}${epoch}${user}`);
 	const hash = hmac.digest('hex');
 	return `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
+}
+
+function addLinks(current) {
+	let array = [current.url];
+	let children = current.children;
+	if (children && children.length) {
+		children.forEach((child) => {
+			array = array.concat(addLinks(child));
+		});
+	}
+	return array;
 }
 
 module.exports = LibreTextsFunctions;

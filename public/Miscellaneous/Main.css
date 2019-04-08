@@ -415,6 +415,17 @@ li.elm-global-search {
 	width: auto;
 }
 
+.LTBranding {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: min-content;
+}
+
+
+
+
+
 
 /*Media Queries*/
 @media (max-width: 600px) {
@@ -425,6 +436,11 @@ li.elm-global-search {
 	.mobileHide {
 		display: none;
 	}
+
+	.LTBranding {
+		flex-direction: column;
+	}
+
 }
 
 @media (max-width: 875px) {

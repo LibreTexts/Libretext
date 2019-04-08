@@ -235,10 +235,10 @@ puppeteer.launch({
 				}
 				
 				url = url.split('/Refresh=')[1];
-				let nocache = false;
+				let isNoCache = false;
 				if (url.endsWith('?no-cache')) {
 					url = url.replace('?no-cache', '');
-					nocache = true;
+					isNoCache = true;
 				}
 				
 				// try {
@@ -266,7 +266,6 @@ puppeteer.launch({
 					for (let j = 0; j < paths.length; j++) {
 						let subdomain = subdomains[i];
 						let path = subdomain === 'espanol' ? 'home' : paths[j];
-						let isNoCache = false;
 						
 						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
 						let all = await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true});
@@ -300,7 +299,7 @@ puppeteer.launch({
 							finished.push(await getLibretext(current.url, null, {
 								current: current,
 								ip: ip,
-								nocache: nocache
+								nocache: isNoCache
 							}));
 						}
 						

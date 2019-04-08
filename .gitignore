@@ -40,18 +40,15 @@ $RECYCLE.BIN/
 .VolumeIcon.icns
 
 # Directories potentially created on remote AFP share
+node_modules/
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-/public/nodePrint/node_modules/
-/nodePrint/node_modules/
 /nodePrint/PDF/
-/Jupyter/node_modules/
 /nodePrint/public/ZIP/
 /API/credentials.json
-/ContactForm/node_modules/
 /ContactForm/credentials.json
 /public/Miscellaneous/credentials.json
 /API/authen.json
@@ -62,8 +59,6 @@ Temporary Items
 /API/secureAccess.zip
 /API/authenBrowser.json
 /API/analyticsData/
-/API/node_modules/
 /.idea/httpRequests/
 /nodePrint/public/FullPDF/
-/public/Downloads Center/node_modules/
 /public/Downloads Center/.cache/
