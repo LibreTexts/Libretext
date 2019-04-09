@@ -81,3 +81,10 @@ nav.elm-nav.my-custom-class {
     margin: 5px;
     line-height: initial;
 }
+
+.LTBranding {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: min-content;
+}

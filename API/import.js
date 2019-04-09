@@ -67,6 +67,46 @@ function handler(request, response) {
 			}
 		}
 	}
+	else if (url.startsWith("/pretext")) {
+		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
+			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+				response.writeHead(200, {
+					"Access-Control-Allow-Origin": request.headers.origin || null,
+					"Access-Control-Allow-Methods": "POST",
+					"Content-Type": " application/json",
+				});
+				response.end();
+			}
+			else if (request.method === "POST") {
+				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+					"Access-Control-Allow-Origin": request.headers.origin || null,
+					"Access-Control-Allow-Methods": "POST",
+					"Content-Type": " application/json",
+				} : {"Content-Type": " application/json"});
+				let body = [];
+				request.on('data', (chunk) => {
+					body.push(chunk);
+				}).on('end', async () => {
+					body = Buffer.concat(body).toString();
+
+					let input = JSON.parse(body);
+					if (!(input.url && input.url.match(/^(http|https):\/\//))) {
+						reportMessage('This source is not valid, please check your URL', true);
+						response.end();
+					}
+					else {
+						const subdomain = request.headers.origin.split("/")[2].split(".")[0];
+						input.url = input.url.replace(/\/$/, "");
+						console.log(input.url);
+						processPretext(input.url, subdomain, input.user).then();
+					}
+				});
+			}
+			else {
+				responseError(request.method + " Not Acceptable", 406)
+			}
+		}
+	}
 	else {
 		responseError('Action not found', 400);
 	}
