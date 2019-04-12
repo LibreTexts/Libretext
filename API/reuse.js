@@ -17,6 +17,7 @@ let LibreTextsFunctions = {
 	decodeHTML: decodeHTML,
 	authenticate: authenticate,
 	addLinks: addLinks,
+	extractSubdomain: extractSubdomain,
 };
 
 async function authenticatedFetch(path, api, username, subdomain) {
@@ -136,6 +137,12 @@ function addLinks(current) {
 		});
 	}
 	return array;
+}
+
+function extractSubdomain(url) {
+	let origin = url.split("/")[2].split(".");
+	const subdomain = origin[0];
+	return subdomain;
 }
 
 module.exports = LibreTextsFunctions;

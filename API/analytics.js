@@ -225,8 +225,8 @@ function handler(request, response) {
 							}
 						}
 						
-						await fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t"));
-						await fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV);
+						await Promise.all([fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t")),
+						fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV)]);
 					}
 				}
 			}

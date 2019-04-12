@@ -4,6 +4,8 @@ const server = http.createServer(handler);
 const fs = require('fs-extra');
 const authen = require('./authen.json');
 const fetch = require("node-fetch");
+const jsdiff = require('diff');
+require('colors');
 const util = require('util');
 const mapLimit = util.promisify(require("async/mapLimit"));
 const LibreTexts = require("./reuse.js");
@@ -15,7 +17,6 @@ server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 fs.ensureDir('BotLogs');
-
 
 async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -51,9 +52,37 @@ async function handler(request, response) {
 					responseError(400, 'Body missing parameters');
 				console.log(`Got ${input.root}`);
 				let pages = LibreTexts.getSubpages(input.root, input.user);
-				await fs.ensureDir(`BotLogs/input.user`);
+				await fs.ensureDir(`BotLogs/${input.user}`);
 				pages = LibreTexts.addLinks(await pages);
-				console.log(pages);
+				// console.log(pages);
+				let count = 0;
+				
+				await mapLimit(pages, 10, async (page) => {
+					let subdomain = LibreTexts.extractSubdomain(page);
+					let path = page.replace(`https://${subdomain}.libretexts.org/`, '');
+					let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', input.user, subdomain);
+					if (!content.ok) {
+						console.error("Could not get content from " + path);
+					}
+					content = await content.text();
+					content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+					content = LibreTexts.decodeHTML(content);
+					let result = content.replaceAll(input.find, input.replace);
+					if (result !== content) {
+						count++;
+						const diff = jsdiff.diffWords(content, result);
+						console.log('----------------------------');
+						diff.forEach(function (part) {
+							// green for additions, red for deletions
+							// grey for common parts
+							var color = part.added ? 'green' :
+								part.removed ? 'red' : 'grey';
+							process.stderr.write(part.value[color]);
+						});
+					}
+				});
+				
+				
 				response.write(JSON.stringify(pages));
 				response.end();
 			});
@@ -74,3 +103,9 @@ async function handler(request, response) {
 		response.end();
 	}
 }
+
+String.prototype.replaceAll = function (search, replacement) {
+	const target = this;
+	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	return target.replace(new RegExp(search, 'g'), replacement);
+};
