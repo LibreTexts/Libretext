@@ -19,6 +19,7 @@
     "node-static": "^0.7.11",
     "perf_hooks": "0.0.1",
     "simple-git": "^1.110.0",
+    "socket.io": "^2.2.0",
     "zip-local": "^0.3.4"
   }
 }

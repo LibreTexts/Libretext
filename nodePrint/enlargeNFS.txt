@@ -1,0 +1,9 @@
+https://www.digitalocean.com/docs/volumes/how-to/increase-size/#resize-the-volume-in-the-control-panel
+
+ssh root@104.248.216.91
+systemctl stop nfs-kernel-server
+sudo umount /mnt/general
+//Do not need to resize partition table
+sudo e2fsck -f /dev/disk/by-id/scsi-0DO_Volume_general
+sudo resize2fs /dev/disk/by-id/scsi-0DO_Volume_general
+sudo reboot

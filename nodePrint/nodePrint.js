@@ -251,13 +251,17 @@ puppeteer.launch({
 				}
 				else {
 					subdomains = subdomains.split(',');
-					
-					paths = url.split('/').slice(1).join('/');
-					if (paths === 'all') {
+					if (!url.includes('/')) {
 						paths = ['Courses', 'Bookshelves'];
 					}
 					else {
-						paths = paths.split(',');
+						paths = url.split('/').slice(1).join('/');
+						if (paths === 'all') {
+							paths = ['Courses', 'Bookshelves'];
+						}
+						else {
+							paths = paths.split(',');
+						}
 					}
 				}
 				console.log(subdomains, paths);
@@ -294,19 +298,18 @@ puppeteer.launch({
 						
 						//process Texts
 						console.log(`Processing ${texts.length} LibreTexts`);
-						for (let i = 0; i < texts.length; i++) {
-							let current = texts[i];
+						await mapLimit(texts, 2, async (current) => {
 							finished.push(await getLibretext(current.url, null, {
 								current: current,
 								ip: ip,
-								nocache: isNoCache
+								nocache: isNoCache,
+								multiple: true,
 							}));
-						}
+						});
 						
 						
 						console.log(`Processing ${standalone.length} standalone pages`);
-						//kubernetesServiceHost ? 4 : 2
-						await mapLimit(standalone, 4, async (pageURL) => {
+						await mapLimit(standalone, kubernetesServiceHost ? 10 : 6, async (pageURL) => {
 							if (kubernetesServiceHost) {
 								let offloadURL = `http://${kubernetesServiceHost}/url=${pageURL}`;
 								if (isNoCache)
@@ -1308,8 +1311,12 @@ puppeteer.launch({
 			
 			
 			try {
-				//kubernetesServiceHost ? 4 : 2
-				await mapLimit(urlArray, 4, async (page) => {
+				let number = kubernetesServiceHost ? 10 : 6;
+				if (options.multiple) {
+					number /= 2;
+					number = Math.floor(number); //integer check
+				}
+				await mapLimit(urlArray, number, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
 					if (title === 'TitlePage') {

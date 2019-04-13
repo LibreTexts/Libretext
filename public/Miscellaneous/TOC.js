@@ -5,29 +5,28 @@ async function TOC() {
 	let coverpage;
 	let coverTitle;
 	let content;
-	if (!window.matchMedia('print').matches) {
-		for (let i = 3; i < urlArray.length; i++) {
-			let path = urlArray.slice(3, i + 1).join("/");
+	if (!navigator.webdriver || !window.matchMedia('print').matches) {
+		for (let i = urlArray.length; i > 3; i--) {
+			let path = urlArray.slice(3, i).join("/");
 			let response = await authenticatedFetch(path, 'tags?dream.out.format=json');
 			let tags = await response.json();
 			if (tags.tag) {
 				if (tags.tag.length) {
 					tags = tags.tag.map((tag) => tag["@value"]);
-					if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
-						coverpage = path;
-					}
 				}
 				else {
 					tags = tags.tag["@value"];
-					if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
-						coverpage = path;
-					}
+				}
+				if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
+					coverpage = path;
+					break;
 				}
 			}
 		}
-	}
-	if (coverpage) {
-		makeTOC(coverpage, true);
+		
+		if (coverpage) {
+			await makeTOC(coverpage, true);
+		}
 	}
 	
 	async function makeTOC(path, isRoot, full) {
@@ -48,7 +47,7 @@ async function TOC() {
 			let subpageArray = info["page.subpage"];
 			const result = [];
 			const promiseArray = [];
-			if(!subpageArray)
+			if (!subpageArray)
 				return false;
 			
 			if (!subpageArray.length) {

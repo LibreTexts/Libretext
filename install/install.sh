@@ -1,7 +1,7 @@
 !/usr/bin/env bash
 
-if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 address subdomain" >&2
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 computer_address domain email" >&2
   exit 1
 fi
 
@@ -63,7 +63,7 @@ sudo apt-get install python-certbot-nginx >/dev/null 2>&1
 
 echo "LetsEncrypt for $2.libretexts.org"
 sudo certbot --nginx -d $2.libretexts.org  >/dev/null 2>&1
-libretextspdf@gmail.com
+$3
 A
 2
 

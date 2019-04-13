@@ -1,6 +1,6 @@
 #Code from https://paul.kinlan.me/hosting-puppeteer-in-a-docker-container/
 
-FROM node:8
+FROM node:10
 
 # See https://crbug.com/795759
 RUN apt-get update && apt-get install -yq libgconf-2-4

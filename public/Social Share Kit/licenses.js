@@ -89,7 +89,7 @@
 			// printme.rel = "nofollow";
 			printme.type = "application/pdf";
 			//${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}
-			printme.href = `https://dynamic.libretexts.org/print/url=${window.location}.pdf`;
+			printme.href = `https://batch.libretexts.org/print/url=${window.location}.pdf`;
 		}
 		const thing = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)

@@ -1,10 +1,13 @@
 const http = require('http');
 const timestamp = require("console-timestamp");
 const server = http.createServer(handler);
+const io = require('socket.io')(http);
 const fs = require('fs-extra');
 const authen = require('./authen.json');
 const fetch = require("node-fetch");
 const jsdiff = require('diff');
+var io = require('socket.io')(http);
+
 require('colors');
 const util = require('util');
 const mapLimit = util.promisify(require("async/mapLimit"));
@@ -103,6 +106,10 @@ async function handler(request, response) {
 		response.end();
 	}
 }
+
+io.on('connection', function(socket){
+	console.log('an user connected');
+});
 
 String.prototype.replaceAll = function (search, replacement) {
 	const target = this;
