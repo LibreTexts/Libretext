@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:29-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">4.</span> <span class="title"><abbr class="acronym">ISBN</abbr> Codes.</span>
+</h6>
+<p>Every book has an International Standard Book Number (<abbr class="acronym">ISBN</abbr>) code. This is a 10-digit code indicating the book's publisher and title. The tenth digit is a check digit satisfying</p>
+<div class="displaymath">
+\begin{equation*}
+(d_1, d_2, \ldots, d_{10} ) \cdot (10, 9, \ldots, 1 )  \equiv 0 \pmod{11}\text{.}
+\end{equation*}
+</div>
+<p>One problem is that \(d_{10}\) might have to be a 10 to make the inner product zero; in this case, 11 digits would be  needed to make this scheme work. Therefore, the character X is used for the eleventh digit. So <abbr class="acronym">ISBN</abbr> 3-540-96035-X is a valid <abbr class="acronym">ISBN</abbr> code.</p>
+<ol class="lower-alpha">
+<li><p>Is <abbr class="acronym">ISBN</abbr> 0-534-91500-0 a valid <abbr class="acronym">ISBN</abbr> code? What about <abbr class="acronym">ISBN</abbr> 0-534-91700-0 and <abbr class="acronym">ISBN</abbr> 0-534-19500-0?</p></li>
+<li><p>Does this method detect all single-digit errors? What about all transposition errors?</p></li>
+<li><p>How many different <abbr class="acronym">ISBN</abbr> codes are there?</p></li>
+<li><p>Write a computer program that will calculate the check digit for the first nine digits of an <abbr class="acronym">ISBN</abbr> code.</p></li>
+<li><p>A publisher has houses in Germany and the United States. Its German prefix is 3-540. If its United States prefix will be 0-<code class="code-inline tex2jax_ignore">abc</code>, find <code class="code-inline tex2jax_ignore">abc</code>such that the rest of the <abbr class="acronym">ISBN</abbr> code will be the same for a book printed in Germany and in the United States. Under the <abbr class="acronym">ISBN</abbr> coding method the first digit identifies the language; German is 3 and English is 0. The next group of numbers identifies the publisher, and the last group identifies the specific book.</p></li>
+</ol></article><span class="incontext"><a href="groups-exercises-detecting-errors.html#eab">in-context</a></span>
+</body>
+</html>

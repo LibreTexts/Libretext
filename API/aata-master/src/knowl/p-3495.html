@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:29-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>It is easy to verify that \(x^{15} - 1 \in {\mathbb Z}_2[x]\) has a factorization</p>
+<div class="displaymath">
+\begin{equation*}
+x^{15} - 1 = (x + 1)(x^2 + x + 1)(x^4 + x + 1)(x^4 + x^3 + 1)(x^4 + x^3 + x^2 + x + 1)\text{,}
+\end{equation*}
+</div>
+<p>where each of the factors is an irreducible polynomial. Let \(\omega\) be a root of \(1 + x + x^4\text{.}\) The Galois field \(\gf(2^4)\) is</p>
+<div class="displaymath">
+\begin{equation*}
+\{ a_0 + a_1 \omega + a_2 \omega^2 + a_3 \omega^3 : a_i \in {\mathbb Z}_2 \text{ and } 1 + \omega + \omega^4 = 0 \}\text{.}
+\end{equation*}
+</div>
+<p>By <a data-knowl="./knowl/example-finite-gf-p24.html" title="Example 22.1.8">Example 22.1.8</a>, \(\omega\) is a primitive \(15\)th root of unity. The minimal polynomial of \(\omega\) is \(m_1(x) = 1 + x + x^4\text{.}\) It is easy to see that \(\omega^2\) and \(\omega^4\) are also roots of \(m_1(x)\text{.}\) The minimal polynomial of \(\omega^3\) is \(m_2(x) = 1 + x + x^2 + x^3 + x^4\text{.}\) Therefore,</p>
+<div class="displaymath">
+\begin{equation*}
+g(x) = m_1(x) m_2(x) = 1 + x^4 + x^6 + x^7 + x^8
+\end{equation*}
+</div>
+<p>has roots \(\omega\text{,}\) \(\omega^2\text{,}\) \(\omega^3\text{,}\) \(\omega^4\text{.}\) Since both \(m_1(x)\) and \(m_2(x)\) divide \(x^{15} - 1\text{,}\) the <abbr class="acronym">BCH</abbr> code is a \((15, 7)\)-code. If \(x^{15} -1 = g(x)h(x)\text{,}\) then \(h(x) = 1 + x^4 + x^6 + x^7\text{;}\) therefore, a parity-check matrix for this code is</p>
+<div class="displaymath">
+\begin{equation*}
+\left(
+\begin{array}{ccccccccccccccc}
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{array}
+\right)\text{.}
+\end{equation*}
+</div>
+<span class="incontext"><a href="section-poly-codes.html#RhT">in-context</a></span>
+</body>
+</html>

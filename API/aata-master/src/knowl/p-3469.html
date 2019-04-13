@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:28-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>To calculate a generator matrix for \(C\text{,}\) we merely need to examine the way the polynomials \(1\text{,}\) \(x\text{,}\) and \(x^2\) are encoded:</p>
+<div class="displaymath">
+\begin{align*}
+(1 + x^3) \cdot 1 &amp; = 1 + x^3\\
+(1 + x^3)x &amp; = x + x^4\\
+(1 + x^3)x^2 &amp; = x^2 + x^5\text{.}
+\end{align*}
+</div>
+<p>We obtain the code corresponding to the generator matrix \(G_1\) in <a data-knowl="./knowl/example-finite-6-3-linear-code.html" title="Example 22.2.1">Example 22.2.1</a>. The parity-check matrix for this code is</p>
+<div class="displaymath">
+\begin{equation*}
+H
+= 
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 
+\end{pmatrix}\text{.}
+\end{equation*}
+</div>
+<p>Since the smallest weight of any nonzero codeword is \(2\text{,}\) this code has the ability to detect all single errors.</p>
+<span class="incontext"><a href="section-poly-codes.html#YMs">in-context</a></span>
+</body>
+</html>

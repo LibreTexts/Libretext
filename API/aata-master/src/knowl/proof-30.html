@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:41-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>We will employ induction  on \(r\text{.}\) A transposition cannot be the identity; hence, \(r \gt 1\text{.}\) If \(r=2\text{,}\) then we are done. Suppose that \(r \gt 2\text{.}\) In this case the product of the last two transpositions, \(\tau_{r-1} \tau_r\text{,}\) must be one of the following cases:</p>
+<div class="displaymath">
+\begin{align*}
+(a b)(a b) &amp; = \identity\\
+(b c)(a b) &amp; = (a c)(b c)\\
+(c d)(a b) &amp; = (a b)(c d)\\
+(a c)(a b) &amp; = (a b)(b c)\text{,}
+\end{align*}
+</div>
+<p>where \(a\text{,}\) \(b\text{,}\) \(c\text{,}\) and \(d\) are distinct.</p>
+<p>The first equation simply says that a transposition is its own inverse. If this case occurs, delete \(\tau_{r-1} \tau_r\) from the product to obtain</p>
+<div class="displaymath">
+\begin{equation*}
+\identity = \tau_1 \tau_2 \cdots \tau_{r - 3} \tau_{r - 2}\text{.}
+\end{equation*}
+</div>
+<p>By induction \(r - 2\) is even; hence, \(r\) must be even.</p>
+<p>In each of the other three cases, we can replace \(\tau_{r - 1} \tau_r\) with the right-hand side of the corresponding equation to obtain a new product of \(r\) transpositions for the identity. In this new product the last occurrence of \(a\) will be in the next-to-the-last transposition. We can continue this process with \(\tau_{r - 2} \tau_{r - 1}\) to obtain either a product of \(r - 2\) transpositions or a new product of \(r\) transpositions where the last occurrence of \(a\) is in \(\tau_{r - 2}\text{.}\) If the identity is the product of \(r - 2\) transpositions, then again we are done, by our induction hypothesis; otherwise, we will repeat the procedure with \(\tau_{r - 3} \tau_{r - 2}\text{.}\)</p>
+<p>At some point either we will have two adjacent, identical transpositions canceling each other out or \(a\) will be shuffled so that it will appear only in the first transposition. However, the latter case cannot occur, because the identity would not fix \(a\) in this instance. Therefore, the identity permutation must be the product of \(r-2\) transpositions and, again by our induction hypothesis, we are done.</p></article><span class="incontext"><a href="section-permutation-definitions.html#ZHh">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:41-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>Let \(d(x)\) be the monic polynomial of smallest degree in the set</p>
+<div class="displaymath">
+\begin{equation*}
+S = \{ f(x) p(x) + g(x) q(x) : f(x), g(x) \in F[x]  \}\text{.}
+\end{equation*}
+</div>
+<p>We can write \(d(x) = r(x) p(x) + s(x) q(x)\) for two polynomials  \(r(x)\) and \(s(x)\) in \(F[x]\text{.}\) We need to show that \(d(x)\) divides both \(p(x)\) and \(q(x)\text{.}\) We shall first show that \(d(x)\) divides \(p(x)\text{.}\) By the division algorithm, there exist polynomials \(a(x)\) and \(b(x)\) such that \(p(x) = a(x) d(x) + b(x)\text{,}\) where \(b(x)\) is either the zero polynomial or \(\deg b(x) \lt \deg d(x)\text{.}\) Therefore,</p>
+<div class="displaymath">
+\begin{align*}
+b(x) &amp; = p(x) - a(x) d(x)\\
+&amp; = p(x) - a(x)( r(x) p(x) + s(x) q(x))\\
+&amp; = p(x) - a(x) r(x) p(x) - a(x)  s(x) q(x)\\
+&amp; = p(x)( 1  - a(x) r(x) ) + q(x) ( - a(x) s(x) )
+\end{align*}
+</div>
+<p>is a linear combination of \(p(x)\) and \(q(x)\) and therefore must be in \(S\text{.}\) However, \(b(x)\) must be the zero polynomial since \(d(x)\) was chosen to be of smallest degree; consequently, \(d(x)\) divides \(p(x)\text{.}\) A symmetric argument shows that \(d(x)\) must also divide \(q(x)\text{;}\) hence, \(d(x)\) is a common divisor of \(p(x)\) and \(q(x)\text{.}\)</p>
+<p>To show that \(d(x)\) is a greatest common divisor of \(p(x)\) and \(q(x)\text{,}\) suppose that \(d'(x)\) is another common divisor of \(p(x)\) and \(q(x)\text{.}\) We will show that \(d'(x) \mid d(x)\text{.}\) Since \(d'(x)\) is a common divisor of \(p(x)\) and \(q(x)\text{,}\) there exist polynomials \(u(x)\) and \(v(x)\) such that \(p(x) = u(x) d'(x)\) and \(q(x) = v(x) d'(x)\text{.}\) Therefore,</p>
+<div class="displaymath">
+\begin{align*}
+d(x) &amp; = r(x) p(x) + s(x) q(x)\\
+&amp; =  r(x) u(x) d'(x) + s(x) v(x) d'(x)\\
+&amp; = d'(x) [r(x) u(x) + s(x) v(x)]\text{.}
+\end{align*}
+</div>
+<p>Since \(d'(x) \mid d(x)\text{,}\) \(d(x)\) is a greatest common divisor of \(p(x)\) and \(q(x)\text{.}\)</p>
+<p>Finally, we must show that the greatest common divisor of \(p(x)\) and \(q(x)\) is unique. Suppose that \(d'(x)\) is another greatest common divisor of \(p(x)\) and \(q(x)\text{.}\) We have just shown that there exist polynomials \(u(x)\) and \(v(x)\) in \(F[x]\) such that \(d(x) = d'(x)[r(x) u(x) + s(x) v(x)]\text{.}\) Since</p>
+<div class="displaymath">
+\begin{equation*}
+\deg d(x) =  \deg d'(x) + \deg[r(x) u(x) + s(x) v(x)]
+\end{equation*}
+</div>
+<p>and \(d(x)\) and \(d'(x)\) are both greatest common divisors, \(\deg d(x) = \deg d'(x)\text{.}\) Since \(d(x)\) and \(d'(x)\) are both monic polynomials of the same degree, it must be the case that \(d(x) = d'(x)\text{.}\)</p></article><span class="incontext"><a href="section-poly-division-algorithm.html#LbZ">in-context</a></span>
+</body>
+</html>

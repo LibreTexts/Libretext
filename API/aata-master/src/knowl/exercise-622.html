@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:46-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">2.</span>
+</h6>
+<p>“Conway polynomials” are irreducible polynomials over \({\mathbb Z}_p\) that Sage (and other software) uses to build maximal ideals in polynomial rings, and thus quotient rings that are fields. Roughly speaking, they are “canonical” choices for each degree and each prime. The command <code class="code-inline tex2jax_ignore">conway_polynomial(p, n)</code>will return a database entry that is an irreducible polynomial of degree \(n\) over \({\mathbb Z}_p\text{.}\)</p>
+<p>Execute the command <code class="code-inline tex2jax_ignore">conway_polynomial(5, 4)</code>to obtain an allegedly irreducible polynomial of degree 4 over \({\mathbb Z}_5\text{:}\) \(p = x^{4} + 4x^{2} + 4x + 2\text{.}\) Construct the right polynomial ring (i.e., in the indeterminate \(x\)) and verify that <code class="code-inline tex2jax_ignore">p</code>is really an element of your polynomial ring.</p>
+<p>First determine that p has no linear factors. The only possibility left is that <code class="code-inline tex2jax_ignore">p</code>factors as two quadratic polynomials over \({\mathbb Z}_5\text{.}\) Use a list comprehension with <em class="emphasis">three</em> <code class="code-inline tex2jax_ignore">for</code>statements to create <em class="emphasis">every</em> possible quadratic polynomial over \({\mathbb Z}_5\text{.}\) Now use this list to create every possible product of two quadratic polynomials and check to see if <code class="code-inline tex2jax_ignore">p</code>is in this list.</p>
+<p>More on Conway polynomials is available at <a class="external" href="http://www.math.rwth-aachen.de/~Frank.Luebeck/data/ConwayPol/index.html" target="_blank">Frank Lübeck's site</a>.</p></article><span class="incontext"><a href="poly-sage-exercises.html#ekW">in-context</a></span>
+</body>
+</html>

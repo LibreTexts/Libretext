@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:17-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>Notice that a lattice can have several bases. For example, the vectors \((1,1)^\transpose\) and \((2,0)^\transpose\) have the  same lattice as the vectors \((-1, 1)^\transpose\) and \((-1, -1)^\transpose\) (<a data-knowl="./knowl/figure-lattice.html" title="Figure 12.2.7">Figure 12.2.7</a>). However, any lattice is completely determined by a basis. Given two bases for the same lattice, say \(\{ {\mathbf x}_1, {\mathbf x}_2 \}\) and \(\{ {\mathbf y}_1, {\mathbf y}_2 \}\text{,}\) we can write</p>
+<div class="displaymath">
+\begin{align*}
+{\mathbf y}_1 &amp; = \alpha_1  {\mathbf x}_1 + \alpha_2 {\mathbf x}_2\\
+{\mathbf y}_2 &amp; = \beta_1  {\mathbf x}_1 + \beta_2 {\mathbf x}_2\text{,}
+\end{align*}
+</div>
+<p>where \(\alpha_1\text{,}\) \(\alpha_2\text{,}\) \(\beta_1\text{,}\) and \(\beta_2\) are integers. The matrix corresponding to this transformation is</p>
+<div class="displaymath">
+\begin{equation*}
+U
+=
+\begin{pmatrix}
+\alpha_1 &amp; \alpha_2 \\
+\beta_1 &amp; \beta_2
+\end{pmatrix}\text{.}
+\end{equation*}
+</div>
+<p>If we wish to give \({\mathbf x}_1\) and \({\mathbf x}_2\) in terms of \({\mathbf y}_1\) and \({\mathbf y}_2\text{,}\) we need only calculate \(U^{-1}\text{;}\) that is,</p>
+<div class="displaymath">
+\begin{equation*}
+U^{-1}
+\begin{pmatrix}
+{\mathbf y}_1 \\ {\mathbf y}_2
+\end{pmatrix}
+=
+\begin{pmatrix}
+{\mathbf x}_1 \\ {\mathbf x}_2
+\end{pmatrix}\text{.}
+\end{equation*}
+</div>
+<p>Since \(U\) has integer entries, \(U^{-1}\) must also have integer entries; hence the determinants of both \(U\) and \(U^{-1}\) must be integers. Because \(U U^{-1} = I\text{,}\)</p>
+<div class="displaymath">
+\begin{equation*}
+\det(U U^{-1}) =\det(U) \det( U^{-1}) = 1;
+\end{equation*}
+</div>
+<p>consequently, \(\det(U) = \pm 1\text{.}\) A matrix with determinant \(\pm 1\) and integer entries is called <dfn class="terminology">unimodular</dfn>.  For example, the matrix</p>
+<div class="displaymath">
+\begin{equation*}
+\begin{pmatrix}
+3 &amp; 1 \\
+5 &amp; 2
+\end{pmatrix}
+\end{equation*}
+</div>
+<p>is unimodular. It should be clear that there is a minimum length for vectors in a lattice.</p>
+<span class="incontext"><a href="section-symmetry.html#GEb">in-context</a></span>
+</body>
+</html>

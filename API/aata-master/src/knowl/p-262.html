@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:13-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>To compute \(\gcd(a,b) = d\text{,}\) we are using repeated divisions to obtain a decreasing sequence of positive integers \(r_1 \gt r_2 \gt \cdots \gt r_n = d\text{;}\) that is,</p>
+<div class="displaymath">
+\begin{align*}
+b &amp; = a q_1 + r_1\\
+a &amp; = r_1 q_2 + r_2\\
+r_1 &amp; = r_2 q_3 + r_3\\
+&amp; \vdots\\
+r_{n - 2} &amp; = r_{n - 1} q_{n} + r_{n}\\
+r_{n - 1} &amp; = r_n q_{n + 1}\text{.}
+\end{align*}
+</div>
+<p>To find \(r\) and \(s\) such that \(ar + bs = d\text{,}\) we begin with this last equation and substitute results obtained from the previous equations:</p>
+<div class="displaymath">
+\begin{align*}
+d &amp; = r_n\\
+&amp; = r_{n - 2} - r_{n - 1} q_n\\
+&amp; = r_{n - 2} - q_n( r_{n - 3} - q_{n - 1} r_{n - 2} )\\
+&amp; = -q_n r_{n - 3} + ( 1+ q_n q_{n-1} ) r_{n - 2}\\
+&amp; \vdots\\
+&amp; = ra + sb\text{.}
+\end{align*}
+</div>
+<p>The algorithm that we have just used to find the greatest common divisor \(d\) of two integers \(a\) and \(b\) and to write \(d\) as the linear combination of \(a\) and \(b\) is known as the <dfn class="terminology">Euclidean algorithm</dfn>.  </p>
+<span class="incontext"><a href="section-division-algorithm.html#SmZ">in-context</a></span>
+</body>
+</html>

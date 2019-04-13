@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:02-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">2.</span>
+</h6>
+<p>One technique for improving the characteristics of a code is to add an overall parity-check bit, much like the lone parity-check bit of the <abbr class="acronym">ASCII</abbr> code described in <a data-knowl="./knowl/example-algcodes-even-parity.html" title="Example 8.1.3">Example 8.1.3</a>. Such codes are referred to as the <dfn class="terminology">extended</dfn> version of the original.</p>
+<ol class="lower-alpha">
+<li>
+<p>Construct the (binary) Golay code and obtain the parity-check matrix. Use Sage commands to enlarge this matrix to create a new parity check matrix that has an additional overall parity-check bit. You may find the matrix methods <code class="code-inline tex2jax_ignore">.augment()</code>and <code class="code-inline tex2jax_ignore">.stack()</code>useful, as well as the constructors <code class="code-inline tex2jax_ignore">zero_vector()</code>and <code class="code-inline tex2jax_ignore">ones_matrix()</code>(remembering that we specify the binary entries as being from the field <code class="code-inline tex2jax_ignore">GF(2)</code>.)</p>
+<p>Create the extended code by supplying your enlarged parity-check matrix to the <code class="code-inline tex2jax_ignore">codes.from_parity_check_matrix()</code>constructor and compute the length, dimension and minimum distance of the extended code.</p>
+</li>
+<li><p>How are the properties of this new code better? At what cost?</p></li>
+<li><p>Now create the extended (binary) Golay code with the Sage constructor <code class="code-inline tex2jax_ignore">codes.GolayCode()</code>and the correct keyword to obtain the extended version. With luck, the sorted lists of your codewords and Sage's codewords will be equal. If not, the linear code method <code class="code-inline tex2jax_ignore">.is_permutation_equivalent()</code>should return <code class="code-inline tex2jax_ignore">True</code>to indicate that your code and Sage's are just rearrangements of each other.</p></li>
+</ol></article><span class="incontext"><a href="algcodes-sage-exercises.html#Awd">in-context</a></span>
+</body>
+</html>

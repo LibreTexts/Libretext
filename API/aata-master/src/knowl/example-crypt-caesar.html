@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:55-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="example-like"><h6 class="heading">
+<span class="type">Example</span> <span class="codenumber">7.1.1</span>.</h6>
+<p>One of the first and most famous private key cryptosystems was the shift code used by Julius Caesar. We first digitize the alphabet by letting \(\text{A}  = 00, \text{B}  = 01, \ldots, \text{Z} = 25\text{.}\) The encoding function will be</p>
+<div class="displaymath">
+\begin{equation*}
+f(p) = p + 3 \bmod 26;
+\end{equation*}
+</div>
+<p>that is, \(A \mapsto D, B \mapsto E, \ldots, Z \mapsto C\text{.}\) The decoding function is then</p>
+<div class="displaymath">
+\begin{equation*}
+f^{-1}(p) = p - 3 \bmod 26 = p + 23 \bmod 26\text{.}
+\end{equation*}
+</div>
+<p>Suppose we receive the encoded message DOJHEUD. To decode this message, we first digitize it:</p>
+<div class="displaymath">
+\begin{equation*}
+3, 14, 9, 7, 4, 20, 3\text{.}
+\end{equation*}
+</div>
+<p>Next we apply the inverse transformation to get</p>
+<div class="displaymath">
+\begin{equation*}
+0, 11, 6, 4, 1, 17, 0\text{,}
+\end{equation*}
+</div>
+<p>or ALGEBRA. Notice here that there is nothing special about either of the numbers \(3\) or \(26\text{.}\) We could have used a larger alphabet or a different shift.</p></article><span class="incontext"><a href="section-private-key-crypt.html#zWa">in-context</a></span>
+</body>
+</html>

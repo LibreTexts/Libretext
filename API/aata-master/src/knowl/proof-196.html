@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:34-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>We already know that there is no problem if \(F\) is a finite field. Suppose that \(E\) is a finite extension of an infinite field. We will prove the result for \(F(\alpha, \beta)\text{.}\) The general case easily follows when we use mathematical induction. Let \(f(x)\) and \(g(x)\) be  the minimal polynomials of \(\alpha\) and \(\beta\text{,}\) respectively. Let \(K\) be the field in which both \(f(x)\) and \(g(x)\) split. Suppose that \(f(x)\) has zeros \(\alpha = \alpha_1, \ldots, \alpha_n\) in \(K\) and \(g(x)\) has zeros \(\beta = \beta_1, \ldots, \beta_m\) in \(K\text{.}\) All of these zeros have multiplicity \(1\text{,}\) since \(E\) is separable over \(F\text{.}\) Since \(F\) is infinite, we can find an \(a\) in \(F\) such that</p>
+<div class="displaymath">
+\begin{equation*}
+a \neq \frac{\alpha_i - \alpha}{\beta - \beta_j}
+\end{equation*}
+</div>
+<p>for all \(i\) and \(j\) with \(j \neq 1\text{.}\) Therefore, \(a( \beta - \beta_j ) \neq \alpha_i - \alpha\text{.}\) Let \(\gamma = \alpha + a \beta\text{.}\) Then</p>
+<div class="displaymath">
+\begin{equation*}
+\gamma = \alpha + a \beta \neq \alpha_i + a \beta_j;
+\end{equation*}
+</div>
+<p>hence, \(\gamma - a \beta_j \neq \alpha_i\) for all \(i,
+j\) with \(j \neq 1\text{.}\) Define \(h(x) \in F( \gamma )[x]\) by \(h(x) = f( \gamma - ax)\text{.}\) Then \(h( \beta ) = f( \alpha ) = 0\text{.}\) However, \(h( \beta_j ) \neq 0\) for \(j \neq 1\text{.}\) Hence, \(h(x)\) and \(g(x)\) have a single common factor in \(F( \gamma )[x]\text{;}\) that is, the minimal polynomial of \(\beta\) over \(F( \gamma )\) must be linear, since \(\beta\) is the only zero common to both \(g(x)\) and \(h(x)\text{.}\) So \(\beta \in F( \gamma )\) and \(\alpha = \gamma - a \beta\) is in \(F( \gamma )\text{.}\) Hence, \(F( \alpha, \beta ) = F( \gamma )\text{.}\)</p></article><span class="incontext"><a href="section-field-automorphisms.html#EiH">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:26-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">5.</span>
+</h6>
+<p>Form the number field, \(K\text{,}\) which contains a root of the irreducible polynomial \(q(x)=x^3+3x^2+3x-2\text{.}\) Name your root <code class="code-inline tex2jax_ignore">a</code>. Verify that \(q(x)\) factors, but does not split, over \(K\text{.}\) With \(K\) now as the base field, form an extension of \(K\) where the quadratic factor of \(q(x)\) has a root. Name this root <code class="code-inline tex2jax_ignore">b</code>, and call this second extension of the tower \(L\text{.}\)</p>
+<p>Use <code class="code-inline tex2jax_ignore">M.&lt;c&gt; = L.absolute_field()</code>to form the flattened tower that is the absolute number field <code class="code-inline tex2jax_ignore">M</code>. Find the defining polynomial of <code class="code-inline tex2jax_ignore">M</code>with the <code class="code-inline tex2jax_ignore">.polynomial()</code>method. From this polynomial, which must have the generator <code class="code-inline tex2jax_ignore">c</code>as a root, you should be able to use elementary algebra to write the generator as a fairly simple expression.</p>
+<p>\(M\) should be the splitting field of \(q(x)\text{.}\) To see this, start over, and build from scratch a new number field, \(P\text{,}\) using the simple expression for <code class="code-inline tex2jax_ignore">c</code>that you just found. Use <code class="code-inline tex2jax_ignore">d</code>as the name of the root used to construct <code class="code-inline tex2jax_ignore">P</code>. Since <code class="code-inline tex2jax_ignore">d</code>is a root of the simple minimal polynomial for <code class="code-inline tex2jax_ignore">c</code>, you should be able to write an expression for <code class="code-inline tex2jax_ignore">d</code>that a pre-calculus student would recognize.</p>
+<p>Now factor the original polynomial \(q(x)\) (with rational coefficients) over \(P\text{,}\) to see the polynomial split (as expected). Using this factorization, and your simple expression for <code class="code-inline tex2jax_ignore">d</code>write simplified expressions for the three roots of \(q(x)\text{.}\) See if you can convert between the two versions of the roots “by hand”, and without using the isomorphisms provided by the <code class="code-inline tex2jax_ignore">.structure()</code>method on <code class="code-inline tex2jax_ignore">M</code>.</p></article><span class="incontext"><a href="fields-sage-exercises.html#FkA">in-context</a></span>
+</body>
+</html>

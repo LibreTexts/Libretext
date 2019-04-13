@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:10-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Theorem</span> <span class="codenumber">11.2.1</span>. <span class="title">First Isomorphism Theorem.</span>
+</h6>
+<p>If \(\psi : G \rightarrow H\) is a group homomorphism with \(K =\ker \psi\text{,}\) then \(K\) is normal in \(G\text{.}\) Let \(\phi: G \rightarrow G/K\) be the canonical homomorphism. Then there exists a unique isomorphism \(\eta: G/K \rightarrow \psi(G)\) such that \(\psi = \eta \phi\text{.}\)</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>We already know that \(K\) is normal in \(G\text{.}\) Define \(\eta: G/K \rightarrow \psi(G)\) by \(\eta(gK) = \psi(g)\text{.}\) We first show that \(\eta\) is a well-defined map. If \(g_1 K =g_2 K\text{,}\) then for some \(k \in K\text{,}\) \(g_1 k=g_2\text{;}\) consequently,</p>
+<div class="displaymath">
+\begin{equation*}
+\eta(g_1 K) = \psi(g_1) = \psi(g_1) \psi(k) = \psi(g_1k) = \psi(g_2) = \eta(g_2 K)\text{.}
+\end{equation*}
+</div>
+<p>Thus, \(\eta\) does not depend on the choice of coset representatives and the map \(\eta: G/K \rightarrow \psi(G)\) is uniquely defined since \(\psi =  \eta \phi\text{.}\) We must also show that \(\eta\) is a homomorphism, but</p>
+<div class="displaymath">
+\begin{align*}
+\eta( g_1K g_2K ) &amp; = \eta(g_1 g_2K)\\
+&amp; = \psi(g_1 g_2)\\
+&amp; = \psi(g_1) \psi(g_2)\\
+&amp; = \eta( g_1K) \eta( g_2K )\text{.}
+\end{align*}
+</div>
+<p>Clearly, \(\eta\) is onto \(\psi( G)\text{.}\) To show that \(\eta\) is one-to-one, suppose that \(\eta(g_1 K) = \eta(g_2 K)\text{.}\) Then \(\psi(g_1) = \psi(g_2)\text{.}\) This implies that \(\psi( g_1^{-1} g_2 ) = e\text{,}\) or \(g_1^{-1} g_2\) is in the kernel of \(\psi\text{;}\) hence, \(g_1^{-1} g_2K = K\text{;}\) that is, \(g_1K =g_2K\text{.}\)</p></article><span class="incontext"><a href="section-group-isomorphism-theorems.html#gpE">in-context</a></span>
+</body>
+</html>

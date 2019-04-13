@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:55-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>Now let us examine why the <abbr class="acronym">RSA</abbr> cryptosystem works. We know that \(DE \equiv 1 \pmod{ m}\text{;}\) hence, there exists a \(k\) such that</p>
+<div class="displaymath">
+\begin{equation*}
+DE = km + 1 = k \phi(n) + 1\text{.}
+\end{equation*}
+</div>
+<p>There are two cases to consider. In the first case assume that \(\gcd(x, n) = 1\text{.}\) Then by <a data-knowl="./knowl/theorem-eulers_theorem.html" title="Theorem 6.3.2: Euler's Theorem">Theorem 6.3.2</a>,</p>
+<div class="displaymath">
+\begin{equation*}
+y^D = (x^E)^D = x^{DE} = x^{km + 1} = (x^{\phi(n)})^k x = (1)^k x = x \bmod n\text{.}
+\end{equation*}
+</div>
+<p>So we see that Alice recovers the original message \(x\) when she computes \(y^D \bmod n\text{.}\)</p>
+<span class="incontext"><a href="section-public-key-crypt.html#jAF">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:41-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">3.</span>
+</h6>
+<p>The polynomial \(x^5-x-1\) has all of the symmetric group \(S_5\) as its Galois group. Because \(S_5\) is not solvable, we know this polynomial to be an example of a quintic polynomial that is not solvable by radicals. Unfortunately, asking Sage to compute this Galois group takes far too long. So this exercise will simulate that experience with a slightly smaller example.</p>
+<p>Consider the polynomial \(p(x)=x^4+x+1\text{.}\)</p>
+<ol class="lower-alpha">
+<li><p>Build the splitting field of \(p(x)\) one root at a time. Create an extension, factor there, discard linear factors, use the remaining irreducible factor to extend once more. Repeat until \(p(x)\) factors completely. Be sure to do a final extension via just a linear factor. This is a little silly, and Sage will seem to ignore your final generator (so you will want to setermine what it is equivalent to in terms of the previous gfenerators). Directions below depend on taking this extra step.</p></li>
+<li><p>Factor the original polynomial over the final extension field in the tower. What is boring about this factorization in comparison to some other examples we have done?</p></li>
+<li><p>Construct the full tower as an absolute field over \({\mathbb Q}\text{.}\) From the degree of this extension and the degree of the original polynomial, infer the Galois group of the polynomial.</p></li>
+<li><p>Using the mappings that allow you to translate between the tower and the absolute field (obtained from the <code class="code-inline tex2jax_ignore">.structure()</code>method), choose one of the roots (any one) and express it in terms of the single generator of the absolute field. Then reverse the procedure and express the single generator of the absolute field in terms of the roots in the tower.</p></li>
+<li><p>Compute the group of automorphisms of the absolute field (but don't display the whole group in what you submit). Take all four roots (including your silly one from the last step of the tower construction) and apply each field automorphism to the four roots (creating the guaranteed permutations of the roots). Comment on what you see.</p></li>
+<li><p>There is one nontrivial automorphism that has an especially simple form (it is the second one for me) when applied to the generator of the absolute field. What does this automorphism do to the roots of \(p(x)\text{?}\)</p></li>
+<li><p>Consider the extension of \({\mathbb Q}\) formed by adjoining just one of the roots. This is a subfield of the splitting field of the polynomial, so is the fixed field of a subgroup of the Galois group. Give a simple description of the corresponding subgroup using language we typically only apply to permutation groups.</p></li>
+</ol></article><span class="incontext"><a href="galois-sage-exercises.html#cbx">in-context</a></span>
+</body>
+</html>

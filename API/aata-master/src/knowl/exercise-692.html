@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:13-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">1.</span>
+</h6>
+<p>Given two subspaces \(U\) and \(W\) of a vector space \(V\text{,}\) their sum \(U+W\) can be defined as the <em class="emphasis">set</em> \(U+W=\{u+w\mid u\in U,\ w\in W\}\text{,}\) in other words, the set of all possible sums of an element from \(U\) and an element from \(W\text{.}\)</p>
+<p>Notice this is not the direct sum of your text, nor the <code class="code-inline tex2jax_ignore">direct_sum()</code>method in Sage. However, you can build this subspace in Sage as follows. Grab the bases of \(U\) and \(W\) individually, as lists of vectors. Join the two lists together by just using a plus sign between them. Now build the sum subspace by creating a subspace of \(V\) spanned by this set, by using the <code class="code-inline tex2jax_ignore">.subspace()</code>method.</p>
+<p>In the vector space (<code class="code-inline tex2jax_ignore">QQ^10</code>) construct two subspaces that you expect to (a) have dimension \(5\) or \(6\) or so, and (b) have an intersection that is a vector space of dimension \(2\) or so. Compare their individual dimensions with the dimensions of the intersection of \(U\) and \(W\) (\(U\cap W\text{,}\) <code class="code-inline tex2jax_ignore">.intersection()</code>in Sage) and the sum \(U+W\text{.}\)</p>
+<p>Repeat the experiment with the two original vector spaces having dimension \(8\) or so, and with the intersection as small as possible. Form a general conjecture relating these four dimensions based on the results of your two (or more)experiments.</p></article><span class="incontext"><a href="vect-sage-exercises.html#thZ">in-context</a></span>
+</body>
+</html>

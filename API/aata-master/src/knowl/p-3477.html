@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:28-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>In general, we can determine a generator matrix for an \((n, k)\)-code \(C\) by the manner in which the elements \(t^k\) are encoded. Let \(x^n - 1 = g(x) h(x)\) in \({\mathbb Z}_2[x]\text{.}\) If \(g(x) = g_0 + g_1 x + \cdots + g_{n-k} x^{n-k}\) and \(h(x) = h_0 + h_1 x + \cdots + h_k x^k\text{,}\) then the \(n \times k\) matrix</p>
+<div class="displaymath">
+\begin{equation*}
+G = 
+\begin{pmatrix}
+g_0 &amp; 0   &amp; \cdots &amp; 0 \\
+g_1 &amp; g_0 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp;\ddots &amp; \vdots \\
+g_{n-k}   &amp; g_{n-k-1} &amp; \cdots &amp; g_0 \\
+0   &amp; g_{n-k} &amp; \cdots &amp; g_{1} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0   &amp; 0 &amp; \cdots &amp; g_{n-k}
+\end{pmatrix}
+\end{equation*}
+</div>
+<p>is a generator matrix for the code \(C\) with generator polynomial \(g(t)\text{.}\) The parity-check matrix for \(C\) is the \((n - k) \times n\) matrix</p>
+<div class="displaymath">
+\begin{equation*}
+H =
+\begin{pmatrix}
+0   &amp; \cdots &amp; 0   &amp; 0      &amp; h_k    &amp; \cdots &amp; h_0 \\
+0   &amp; \cdots &amp; 0 &amp; h_k &amp; \cdots &amp; h_0    &amp; 0 \\
+\cdots  &amp; \cdots &amp; \cdots  &amp; \cdots &amp;  \cdots &amp;  \cdots &amp; \cdots \\
+h_k &amp; \cdots &amp; h_0 &amp; 0      &amp; 0      &amp; \cdots &amp; 0 
+\end{pmatrix}\text{.}
+\end{equation*}
+</div>
+<p>We will leave the details of the proof of the following proposition as an exercise.</p>
+<span class="incontext"><a href="section-poly-codes.html#kFl">in-context</a></span>
+</body>
+</html>

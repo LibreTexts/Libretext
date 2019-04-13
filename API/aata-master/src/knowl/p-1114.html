@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:55-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>For the other case, assume that \(\gcd(x, n) \neq 1\text{.}\) Since \(n = pq\) and \(x \lt n\text{,}\) we know \(x\) is a multiple of \(p\) or a multiple of \(q\text{,}\) but not both. We will describe the first possibility only, since the second is entirely similar. There is then an integer \(r\text{,}\) with \(r \lt q\) and \(x = rp\text{.}\) Note that we have \(\gcd(x, q) = 1\) and that \(m=\phi(n)=(p - 1)(q - 1)=\phi(p)\phi(q)\text{.}\) Then, using <a data-knowl="./knowl/theorem-eulers_theorem.html" title="Theorem 6.3.2: Euler's Theorem">Theorem 6.3.2</a>, but now mod \(q\text{,}\)</p>
+<div class="displaymath">
+\begin{equation*}
+x^{km} = x^{k\phi(p)\phi(q)} = (x^{\phi(q)})^{k\phi(p)} = (1)^{k\phi(p)} = 1 \bmod q\text{.}
+\end{equation*}
+</div>
+<p>So there is an integer \(t\) such that \(x^{km}=1 + tq\text{.}\) Thus, Alice also recovers the message in this case,</p>
+<div class="displaymath">
+\begin{equation*}
+y^D = x^{km + 1} = x^{km} x = (1 + tq) x = x + tq(rp) = x + trn = x \bmod n\text{.}
+\end{equation*}
+</div>
+<span class="incontext"><a href="section-public-key-crypt.html#PHO">in-context</a></span>
+</body>
+</html>

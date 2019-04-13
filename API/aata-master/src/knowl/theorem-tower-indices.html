@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:16-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Theorem</span> <span class="codenumber">21.1.17</span>.</h6>
+<p>If \(E\) is a finite extension of \(F\) and \(K\) is a finite extension of \(E\text{,}\) then \(K\) is a finite extension of \(F\) and</p>
+<div class="displaymath">
+\begin{equation*}
+[K:F]= [K:E] [E:F]\text{.}
+\end{equation*}
+</div></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>Let \(\{ \alpha_1, \ldots, \alpha_n \}\) be a basis for \(E\) as a vector space over \(F\) and \(\{ \beta_1, \ldots, \beta_m \}\) be a basis for \(K\) as a vector space over \(E\text{.}\) We claim that \(\{ \alpha_i \beta_j \}\) is a basis for \(K\) over \(F\text{.}\) We will first show that these vectors span \(K\text{.}\) Let \(u \in K\text{.}\) Then \(u = \sum_{j = 1}^{m} b_j \beta_j\) and \(b_j = \sum_{i = 1}^{n} a_{ij} \alpha_i\text{,}\) where \(b_j \in E\) and \(a_{ij} \in F\text{.}\) Then</p>
+<div class="displaymath">
+\begin{equation*}
+u = \sum_{j = 1}^{m} \left( \sum_{i = 1}^{n} a_{ij} \alpha_i  \right) \beta_j = \sum_{i,j} a_{ij} ( \alpha_i \beta_j )\text{.}
+\end{equation*}
+</div>
+<p>So the \(mn\) vectors \(\alpha_i \beta_j\) must span \(K\) over \(F\text{.}\)</p>
+<p>We must show that \(\{ \alpha_i \beta_j \}\) are linearly independent. Recall that a set of vectors \(v_1, v_2, \ldots,
+v_n\) in a vector space \(V\) are linearly independent if</p>
+<div class="displaymath">
+\begin{equation*}
+c_1 v_1 + c_2 v_2 + \cdots + c_n v_n = 0
+\end{equation*}
+</div>
+<p>implies that</p>
+<div class="displaymath">
+\begin{equation*}
+c_1 = c_2 = \cdots = c_n = 0\text{.}
+\end{equation*}
+</div>
+<p>Let</p>
+<div class="displaymath">
+\begin{equation*}
+u = \sum_{i,j} c_{ij} ( \alpha_i \beta_j ) = 0
+\end{equation*}
+</div>
+<p>for \(c_{ij} \in F\text{.}\) We need to prove that all of the \(c_{ij}\)'s are zero. We can rewrite \(u\) as</p>
+<div class="displaymath">
+\begin{equation*}
+\sum_{j = 1}^{m} \left( \sum_{i = 1}^{n} c_{ij} \alpha_i \right) \beta_j = 0\text{,}
+\end{equation*}
+</div>
+<p>where \(\sum_i c_{ij} \alpha_i \in E\text{.}\) Since the \(\beta_j\)'s are linearly independent over \(E\text{,}\) it must be the case that</p>
+<div class="displaymath">
+\begin{equation*}
+\sum_{i = 1}^n c_{ij} \alpha_i = 0
+\end{equation*}
+</div>
+<p>for all \(j\text{.}\) However, the \(\alpha_j\) are also linearly independent  over \(F\text{.}\) Therefore, \(c_{ij} = 0\) for all \(i\) and \(j\text{,}\) which completes the proof.</p></article><span class="incontext"><a href="section-extension-fields.html#Nky">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:14-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<script>$(function () {
+    // Make *any* div with class 'sagecell-sage' an executable Sage cell
+    // Their results will be linked, only within language type
+    sagecell.makeSagecell({inputLocation: 'div.sagecell-sage',
+                           linked: true,
+                           languages: ['sage'],
+                           evalButtonText: 'Evaluate (Sage)'});
+});
+</script>
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">2.</span>
+</h6>
+<p>The four homomorphisms created by the direct product construction are each an example of a more general construction of homomorphisms involving groups \(G\text{,}\) \(H\) and \(G\times H\text{.}\) By using the same groups as in the example in the previous subsection, see if you can discover and describe these constructions with exact definitions of the four homomorphisms in general.</p>
+<p>Your tools for investigating a Sage group homomorphism are limited, you might take each generator of the domain and see what its image is. Here is an example of the type of computation you might do repeatedly. We'll investigate the second homomorphism. The domain is the dihedral group, and we will compute the image of the first generator.</p>
+<div class="sagecell-sage" id="sage-332"><script type="text/x-sage">G = CyclicPermutationGroup(3)
+H = DihedralGroup(4)
+results = G.direct_product(H)
+phi = results[2]
+H.gens()
+</script></div>
+<div class="sagecell-sage" id="sage-333"><script type="text/x-sage">a = H.gen(0); a
+</script></div>
+<div class="sagecell-sage" id="sage-334"><script type="text/x-sage">phi(a)
+</script></div></article><span class="incontext"><a href="homomorph-sage-exercises.html#bFL">in-context</a></span>
+</body>
+</html>

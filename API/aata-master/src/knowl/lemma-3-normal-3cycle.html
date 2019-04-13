@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:07-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Lemma</span> <span class="codenumber">10.2.3</span>.</h6>
+<p>For \(n \geq 5\text{,}\) every nontrivial normal subgroup \(N\) of \(A_n\) contains a \(3\)-cycle.</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>Let \(\sigma\) be an arbitrary element in a normal subgroup \(N\text{.}\) There are several possible cycle structures for \(\sigma\text{.}\)</p>
+<ul class="disc">
+<li><p>\(\sigma\) is a \(3\)-cycle.</p></li>
+<li><p>\(\sigma\) is the product of disjoint cycles, \(\sigma = \tau(a_1 a_2 \cdots a_r) \in N\text{,}\) where \(r \gt 3\text{.}\)</p></li>
+<li><p>\(\sigma\) is the product of disjoint cycles, \(\sigma = \tau(a_1 a_2 a_3)(a_4 a_5 a_6)\text{.}\)</p></li>
+<li><p>\(\sigma = \tau(a_1 a_2 a_3)\text{,}\) where \(\tau\) is the product of disjoint 2-cycles.</p></li>
+<li><p>\(\sigma = \tau (a_1 a_2) (a_3 a_4)\text{,}\) where \(\tau\) is the product of an even number of disjoint 2-cycles.</p></li>
+</ul>
+<p>If \(\sigma\) is a \(3\)-cycle, then we are done. If \(N\) contains a product of disjoint cycles, \(\sigma\text{,}\) and at least one of these cycles has length greater than 3, say \(\sigma = \tau(a_1 a_2 \cdots a_r)\text{,}\) then</p>
+<div class="displaymath">
+\begin{equation*}
+(a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1}
+\end{equation*}
+</div>
+<p>is in \(N\) since \(N\) is normal; hence,</p>
+<div class="displaymath">
+\begin{equation*}
+\sigma^{-1}(a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1}
+\end{equation*}
+</div>
+<p>is also in \(N\text{.}\) Since</p>
+<div class="displaymath">
+\begin{align*}
+\sigma^{-1}(a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1} &amp; = \sigma^{-1}(a_1 a_2 a_3)\sigma(a_1 a_3 a_2)\\
+&amp; = (a_1 a_2 \cdots a_r)^{-1}\tau^{-1}(a_1 a_2 a_3) \tau(a_1 a_2 \cdots a_r)(a_1 a_3 a_2)\\
+&amp; = (a_1 a_r a_{r-1} \cdots a_2 )(a_1 a_2 a_3) (a_1 a_2 \cdots a_r)(a_1 a_3 a_2)\\
+&amp; = (a_1 a_3 a_r)\text{,}
+\end{align*}
+</div>
+<p>\(N\) must contain a \(3\)-cycle; hence, \(N = A_n\text{.}\)</p>
+<p>Now suppose that \(N\) contains a disjoint product of the form</p>
+<div class="displaymath">
+\begin{equation*}
+\sigma = \tau(a_1 a_2 a_3)(a_4 a_5 a_6)\text{.}
+\end{equation*}
+</div>
+<p>Then</p>
+<div class="displaymath">
+\begin{equation*}
+\sigma^{-1}(a_1 a_2 a_4)\sigma(a_1 a_2 a_4)^{-1} \in N
+\end{equation*}
+</div>
+<p>since</p>
+<div class="displaymath">
+\begin{equation*}
+(a_1 a_2 a_4)\sigma(a_1 a_2 a_4)^{-1} \in N\text{.}
+\end{equation*}
+</div>
+<p>So</p>
+<div class="displaymath">
+\begin{align*}
+\sigma^{-1}(a_1 a_2 a_4) \sigma(a_1 a_2 a_4)^{-1} &amp; = [ \tau (a_1 a_2 a_3) (a_4 a_5 a_6) ]^{-1} (a_1 a_2 a_4) \tau (a_1 a_2 a_3) (a_4 a_5 a_6) (a_1 a_2 a_4)^{-1}\\
+&amp; = (a_4 a_6 a_5) (a_1 a_3 a_2) \tau^{-1}(a_1 a_2 a_4) \tau (a_1 a_2 a_3) (a_4 a_5 a_6) (a_1 a_4 a_2)\\
+&amp; = (a_4 a_6 a_5)(a_1 a_3 a_2) (a_1 a_2 a_4) (a_1 a_2 a_3) (a_4 a_5 a_6)(a_1 a_4 a_2)\\
+&amp; = (a_1 a_4 a_2 a_6 a_3)\text{.}
+\end{align*}
+</div>
+<p>So \(N\) contains a disjoint cycle of length greater than 3, and we can apply the previous case.</p>
+<p>Suppose \(N\) contains a disjoint product of the form \(\sigma = \tau(a_1 a_2 a_3)\text{,}\) where \(\tau\) is the product of disjoint 2-cycles. Since \(\sigma \in N\text{,}\) \(\sigma^2 \in N\text{,}\) and</p>
+<div class="displaymath">
+\begin{align*}
+\sigma^2 &amp; = \tau(a_1 a_2 a_3)\tau(a_1 a_2 a_3)\\
+&amp; =(a_1 a_3 a_2)\text{.}
+\end{align*}
+</div>
+<p>So \(N\) contains a \(3\)-cycle.</p>
+<p>The only remaining possible case is a disjoint product of the form</p>
+<div class="displaymath">
+\begin{equation*}
+\sigma = \tau (a_1 a_2) (a_3 a_4)\text{,}
+\end{equation*}
+</div>
+<p>where \(\tau\) is the product of an even number of disjoint \(2\)-cycles. But</p>
+<div class="displaymath">
+\begin{equation*}
+\sigma^{-1}(a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1}
+\end{equation*}
+</div>
+<p>is in \(N\) since \((a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1}\) is in \(N\text{;}\) and so</p>
+<div class="displaymath">
+\begin{align*}
+\sigma^{-1}(a_1 a_2 a_3)\sigma(a_1 a_2 a_3)^{-1} &amp; = \tau^{-1} (a_1 a_2) (a_3 a_4) (a_1 a_2 a_3) \tau (a_1 a_2)(a_3 a_4)(a_1 a_2 a_3)^{-1}\\
+&amp; = (a_1 a_3)(a_2 a_4)\text{.}
+\end{align*}
+</div>
+<p>Since \(n \geq 5\text{,}\) we can find \(b \in \{1, 2, \ldots,
+n \}\) such that \(b \neq a_1, a_2, a_3, a_4\text{.}\) Let \(\mu = (a_1 a_3 b)\text{.}\) Then</p>
+<div class="displaymath">
+\begin{equation*}
+\mu^{-1} (a_1 a_3)(a_2 a_4) \mu (a_1 a_3)(a_2 a_4) \in N
+\end{equation*}
+</div>
+<p>and</p>
+<div class="displaymath">
+\begin{align*}
+\mu^{-1} (a_1 a_3)(a_2 a_4) \mu (a_1 a_3)(a_2 a_4) &amp; = (a_1 b a_3)(a_1 a_3)(a_2 a_4) (a_1 a_3 b)(a_1 a_3)(a_2 a_4)\\
+&amp; = (a_1 a_3 b )\text{.}
+\end{align*}
+</div>
+<p>Therefore, \(N\) contains a \(3\)-cycle. This completes the proof of the lemma.</p></article><span class="incontext"><a href="section-simplicity-of-an.html#Hmr">in-context</a></span>
+</body>
+</html>

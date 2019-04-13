@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:00-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Lemma</span> <span class="codenumber">19.2.8</span>.</h6>
+<p>Let \(b \in B\) and \(a_1, \ldots,
+a_n\) be the atoms of \(B\) such that \(a_i \preceq b\text{.}\) Then \(b = a_1 \vee \cdots \vee a_n\text{.}\) Furthermore, if \(a, a_1, \ldots,
+a_n\) are atoms of \(B\) such that \(a \preceq b\text{,}\) \(a_i \preceq b\text{,}\) and \(b = a \vee a_1 \vee \cdots \vee a_n\text{,}\) then \(a = a_i\) for some \(i = 1, \ldots, n\text{.}\)</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>Let \(b_1 = a_1 \vee \cdots \vee a_n\text{.}\) Since \(a_i \preceq b\) for each \(i\text{,}\) we know that \(b_1 \preceq b\text{.}\) If we can show that \(b \preceq b_1\text{,}\) then the lemma is true by antisymmetry. Assume \(b \not\preceq b_1\text{.}\) Then there exists an atom \(a\) such that \(a \preceq b\) and \(a \not\preceq b_1\text{.}\) Since \(a\) is an atom and \(a \preceq b\text{,}\) we can deduce that \(a = a_i\) for some \(a_i\text{.}\) However, this is impossible since \(a \preceq b_1\text{.}\) Therefore, \(b \preceq b_1\text{.}\)</p>
+<p>Now suppose that \(b = a_1 \vee \cdots \vee a_n\text{.}\) If \(a\) is an atom less than \(b\text{,}\)</p>
+<div class="displaymath">
+\begin{equation*}
+a = a \wedge b  = a \wedge( a_1 \vee \cdots \vee a_n ) = (a \wedge a_1) \vee \cdots \vee ( a \wedge a_n )\text{.}
+\end{equation*}
+</div>
+<p>But each term is \(O\) or \(a\) with \(a \wedge a_i\) occurring for only one \(a_i\text{.}\) Hence, by <a data-knowl="./knowl/lemma-zero-vee.html" title="Lemma 19.2.5">Lemma 19.2.5</a>, \(a = a_i\) for some \(i\text{.}\)</p></article><span class="incontext"><a href="section-boolean-algebras.html#RVR">in-context</a></span>
+</body>
+</html>

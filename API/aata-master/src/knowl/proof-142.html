@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:52-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>Let \(p(x)\) be a nonzero polynomial in \(D[x]\text{.}\) If \(p(x)\) is a constant polynomial, then it must have a unique factorization since \(D\) is a <abbr class="acronym">UFD</abbr>. Now suppose that \(p(x)\) is a polynomial of positive degree in \(D[x]\text{.}\) Let \(F\) be the field of fractions of \(D\text{,}\) and let \(p(x) = f_1(x) f_2(x) \cdots f_n(x)\) by a factorization of \(p(x)\text{,}\) where each \(f_i(x)\) is irreducible. Choose \(a_i \in D\) such that \(a_i f_i(x)\) is in \(D[x]\text{.}\) There exist \(b_1, \ldots,
+b_n \in D\) such that \(a_i f_i(x) = b_i g_i(x)\text{,}\) where \(g_i(x)\) is a primitive polynomial in \(D[x]\text{.}\) By <a data-knowl="./knowl/corollary-irreducible-poly.html" title="Corollary 18.2.20">Corollary 18.2.20</a>, each \(g_i(x)\) is irreducible in \(D[x]\text{.}\) Consequently, we can write</p>
+<div class="displaymath">
+\begin{equation*}
+a_1 \cdots a_n p(x) = b_1 \cdots b_n g_1(x) \cdots g_n(x)\text{.}
+\end{equation*}
+</div>
+<p>Let \(b = b_1 \cdots b_n\text{.}\) Since \(g_1(x) \cdots g_n(x)\) is primitive, \(a_1 \cdots a_n\) divides \(b\text{.}\) Therefore, \(p(x) = a g_1(x) \cdots g_n(x)\text{,}\) where \(a \in D\text{.}\) Since \(D\) is a <abbr class="acronym">UFD</abbr>, we can factor \(a\) as \(u c_1 \cdots c_k\text{,}\) where \(u\) is a unit and each of the \(c_i\)'s is irreducible in \(D\text{.}\)</p>
+<p>We will now show the uniqueness of this factorization. Let</p>
+<div class="displaymath">
+\begin{equation*}
+p(x) = a_1 \cdots a_m f_1(x) \cdots f_n(x) = b_1 \cdots b_r g_1(x) \cdots g_s(x)
+\end{equation*}
+</div>
+<p>be two factorizations of \(p(x)\text{,}\) where all of the factors are irreducible in \(D[x]\text{.}\) By <a data-knowl="./knowl/corollary-irreducible-poly.html" title="Corollary 18.2.20">Corollary 18.2.20</a>, each of the \(f_i\)'s and \(g_i\)'s is irreducible in \(F[x]\text{.}\) The \(a_i\)'s and the \(b_i\)'s are units in \(F\text{.}\) Since \(F[x]\) is a <abbr class="acronym">PID</abbr>, it is a <abbr class="acronym">UFD</abbr>; therefore, \(n=s\text{.}\) Now rearrange the \(g_i(x)\)'s so that \(f_i(x)\) and \(g_i(x)\) are associates for \(i = 1, \ldots, n\text{.}\) Then there exist \(c_1, \ldots,
+c_n\) and \(d_1, \ldots,
+d_n\) in \(D\) such that \((c_i / d_i) f_i(x) = g_i(x)\) or \(c_i f_i(x) = d_i g_i(x)\text{.}\) The polynomials \(f_i(x)\) and \(g_i(x)\) are primitive; hence, \(c_i\) and \(d_i\) are associates in \(D\text{.}\) Thus, \(a_1 \cdots a_m = u b_1 \cdots b_r\) in \(D\text{,}\) where \(u\) is a unit in \(D\text{.}\) Since \(D\) is a unique factorization domain, \(m = s\text{.}\) Finally, we can reorder the \(b_i\)'s so that \(a_i\) and \(b_i\) are associates for each \(i\text{.}\) This completes the uniqueness part of the proof.</p></article><span class="incontext"><a href="section-factorization-domains.html#lSi">in-context</a></span>
+</body>
+</html>

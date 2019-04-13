@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:46-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">4.</span>
+</h6>
+<p>Define the polynomials \(p = x^3 + 2x^2 + 2x + 4\) and \(q = x^4 + 2x^2\) as polynomials with coefficients from the integers. Compute <code class="code-inline tex2jax_ignore">gcd(p, q)</code>and verify that the result divides both <code class="code-inline tex2jax_ignore">p</code>and <code class="code-inline tex2jax_ignore">q</code>(just form a fraction in Sage and see that it simplifies cleanly, or use the <code class="code-inline tex2jax_ignore">.quo_rem()</code>method).</p>
+<p><a data-knowl="./knowl/proposition-poly-gcd.html" title="Proposition 17.2.5">Proposition 17.2.5</a> says there are polynomials \(r(x)\) and \(s(x)\) such that the greatest common divisor equals \(r(x)p(x)+s(x)q(x)\text{,}\) <em class="emphasis">if the coefficients come from a field</em>. Since here we have two polynomials over the integers, investigate the results returned by Sage for the extended gcd, <code class="code-inline tex2jax_ignore">xgcd(p, q)</code>. In particular, show that the first result of the returned triple is a multiple of the gcd. Then verify the “linear combination” property of the result.</p></article><span class="incontext"><a href="poly-sage-exercises.html#qzo">in-context</a></span>
+</body>
+</html>

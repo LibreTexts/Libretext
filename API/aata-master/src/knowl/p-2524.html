@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:39-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>Here are three new rings that are best created using this new syntax.</p>
+<ol class="decimal">
+<li><p><code class="code-inline tex2jax_ignore">F.&lt;a&gt; = FiniteField(p^n)</code>: We will later have a theorem that tells us that finite fields only exist with orders equal to to a power of a prime. When the power is larger than 1, then we need a generator, here given as <code class="code-inline tex2jax_ignore">a</code>.</p></li>
+<li><p><code class="code-inline tex2jax_ignore">P.&lt;x&gt;=R[]</code>: the ring of all polynomials in the variable <code class="code-inline tex2jax_ignore">x</code>, with coefficients from the ring <code class="code-inline tex2jax_ignore">R</code>. Notice that <code class="code-inline tex2jax_ignore">R</code>can be <em class="emphasis">any</em> ring, so this is a very general construction that uses one ring to form another. See an example below.</p></li>
+<li><p><code class="code-inline tex2jax_ignore">Q.&lt;r,s,t&gt; = QuaternionAlgebra(n, m)</code>: the rationals combined with indeterminates <code class="code-inline tex2jax_ignore">r</code>, <code class="code-inline tex2jax_ignore">s</code>and <code class="code-inline tex2jax_ignore">t</code>such that \(r^2=n\text{,}\) \(s^2=m\) and \(t = rs = -sr\text{.}\) This is a generalization of the quaternions described in this chapter, though over the rationals rather than the reals, so it is an exact ring. Notice that this is one of the few noncommutative rings in Sage. The “usual” quaternions would be constructed with <code class="code-inline tex2jax_ignore">Q.&lt;I,J,K&gt; = QuaternionAlgebra(-1, -1)</code>. (Notice that using <code class="code-inline tex2jax_ignore">I</code>here is not a good choice, because it will then clobber the symbol <code class="code-inline tex2jax_ignore">I</code>used for complex numbers.)</p></li>
+</ol>
+<span class="incontext"><a href="rings-sage.html#lOi">in-context</a></span>
+</body>
+</html>

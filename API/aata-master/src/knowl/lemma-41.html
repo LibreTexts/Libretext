@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:34-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Lemma</span> <span class="codenumber">23.2.5</span>.</h6>
+<p>Let \(G\) be a finite group of automorphisms of \(E\) and let \(F = E_G\text{.}\) Then \([E:F] \leq |G|\text{.}\)</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>Let \(|G| = n\text{.}\) We must show that any set of \(n + 1\) elements \(\alpha_1, \ldots, \alpha_{n + 1}\) in \(E\) is linearly dependent over \(F\text{;}\) that is, we need to find elements \(a_i \in F\text{,}\) not all zero, such that</p>
+<div class="displaymath">
+\begin{equation*}
+a_1 \alpha_1 + a_2 \alpha_2 + \cdots + a_{n + 1} \alpha_{n + 1} = 0\text{.}
+\end{equation*}
+</div>
+<p>Suppose that \(\sigma_1 = \identity, \sigma_2, \ldots, \sigma_n\) are the automorphisms in \(G\text{.}\) The homogeneous system of linear equations</p>
+<div class="displaymath">
+\begin{align*}
+\sigma_1( \alpha_1 ) x_1 + \sigma_1(\alpha_2) x_2 + \cdots + \sigma_1(\alpha_{n + 1} ) x_{n + 1} &amp; = 0\\
+\sigma_2( \alpha_1 ) x_1 + \sigma_2(\alpha_2) x_2 + \cdots + \sigma_2(\alpha_{n + 1} ) x_{n + 1} &amp; = 0\\
+&amp; \vdots &amp;\\
+\sigma_n( \alpha_1 ) x_1 + \sigma_n(\alpha_2) x_2 + \cdots + \sigma_n(\alpha_{n + 1} ) x_{n + 1} &amp; = 0
+\end{align*}
+</div>
+<p>has more unknowns than equations. From linear algebra we know that this system has a nontrivial solution, say \(x_i = a_i\) for \(i = 1, 2, \ldots, n + 1\text{.}\) Since \(\sigma_1\) is the identity, the first equation translates to</p>
+<div class="displaymath">
+\begin{equation*}
+a_1 \alpha_1 +  a_2 \alpha_2 + \cdots + a_{n + 1} \alpha_{n + 1} = 0\text{.}
+\end{equation*}
+</div>
+<p>The problem is that some of the \(a_i\)'s may be in \(E\) but not in \(F\text{.}\) We must show that this is impossible.</p>
+<p>Suppose that at least one of the \(a_i\)'s is in \(E\) but not in \(F\text{.}\) By rearranging the \(\alpha_i\)'s we may assume that \(a_1\) is nonzero. Since any nonzero multiple of a solution is also a solution, we can also assume that \(a_1 = 1\text{.}\) Of all possible solutions fitting this description, we choose the one with the smallest number of nonzero terms. Again, by rearranging \(\alpha_2, \ldots, \alpha_{n + 1}\) if necessary, we can assume that \(a_2\) is in \(E\) but not in \(F\text{.}\) Since \(F\) is the subfield of \(E\) that is fixed elementwise by \(G\text{,}\) there exists a \(\sigma_i\) in \(G\) such that \(\sigma_i( a_2 ) \neq a_2\text{.}\) Applying \(\sigma_i\) to each equation in the system, we end up with the same homogeneous system, since \(G\) is a group. Therefore, \(x_1 = \sigma_i(a_1) = 1\text{,}\) \(x_2 = \sigma_i(a_2)\text{,}\) \(\ldots\text{,}\) \(x_{n + 1} = \sigma_i(a_{n+1} )\) is also a solution of the original system. We know that a linear combination of two solutions of a homogeneous system is also a solution; consequently,</p>
+<div class="displaymath">
+\begin{align*}
+x_1 &amp; = 1 -1 = 0\\
+x_2 &amp; = a_2 - \sigma_i(a_2)\\
+&amp; \vdots &amp;\\
+x_{n + 1} &amp; = a_{n + 1} - \sigma_i(a_{n + 1})
+\end{align*}
+</div>
+<p>must be another solution of the system. This is a nontrivial solution because \(\sigma_i( a_2 ) \neq a_2\text{,}\) and has fewer nonzero entries than our original solution. This is a contradiction, since the number of nonzero solutions to our original solution was assumed to be minimal. We can therefore conclude that \(a_1, \ldots, a_{n + 1} \in F\text{.}\)</p></article><span class="incontext"><a href="section-fund-theorem-galois-theory.html#JXT">in-context</a></span>
+</body>
+</html>

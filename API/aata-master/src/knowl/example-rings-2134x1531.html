@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:35-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="example-like"><h6 class="heading">
+<span class="type">Example</span> <span class="codenumber">16.5.5</span>.</h6>
+<p>Suppose that we wish to multiply \(2134\) by \(1531\text{.}\) We will use the integers \(95\text{,}\) \(97\text{,}\) \(98\text{,}\) and \(99\) because they are relatively prime. We can break down each integer into four parts:</p>
+<div class="displaymath">
+\begin{align*}
+2134 &amp; \equiv  44 \pmod{95}\\
+2134 &amp; \equiv  0 \pmod{97}\\
+2134 &amp; \equiv  76 \pmod{98}\\
+2134 &amp; \equiv  55 \pmod{99}
+\end{align*}
+</div>
+<p>and</p>
+<div class="displaymath">
+\begin{align*}
+1531 &amp; \equiv  11 \pmod{95}\\
+1531 &amp; \equiv  76 \pmod{97}\\
+1531 &amp; \equiv  61 \pmod{98}\\
+1531 &amp; \equiv  46 \pmod{99}\text{.}
+\end{align*}
+</div>
+<p>Multiplying the corresponding equations, we obtain</p>
+<div class="displaymath">
+\begin{align*}
+2134 \cdot 1531 &amp; \equiv  44 \cdot 11  \equiv  9 \pmod{95}\\
+2134 \cdot 1531 &amp; \equiv  0  \cdot 76  \equiv  0 \pmod{97}\\
+2134 \cdot 1531 &amp; \equiv  76 \cdot 61  \equiv  30 \pmod{98}\\
+2134 \cdot 1531 &amp; \equiv  55 \cdot 46  \equiv 55 \pmod{99}\text{.}
+\end{align*}
+</div>
+<p>Each of these four computations can be sent to a different processor if our computer has several CPUs. By the above calculation, we know that \(2134 \cdot 1531\) is a solution of the system</p>
+<div class="displaymath">
+\begin{align*}
+x &amp; \equiv  9 \pmod{95}\\
+x &amp; \equiv  0 \pmod{97}\\
+x &amp; \equiv  30 \pmod{98}\\
+x &amp; \equiv  55 \pmod{99}\text{.}
+\end{align*}
+</div>
+<p>The Chinese Remainder Theorem tells us that solutions are unique up to modulo \(95 \cdot 97 \cdot 98 \cdot 99 = 89{,}403{,}930\text{.}\) Solving this system of congruences for \(x\) tells us that \(2134 \cdot 1531 = 3{,}267{,}154\text{.}\)</p>
+<p>The conversion of the computation into the four subcomputations will take some computing time. In addition, solving the system of congruences can also take considerable time. However, if we have many computations to be performed on a particular set of numbers, it makes sense to transform the problem as we have done above and to perform the necessary calculations simultaneously.</p></article><span class="incontext"><a href="section-software-application.html#Jsq">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:02-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">4.</span>
+</h6>
+<p>A code with minimum distance \(d\) is called <dfn class="terminology">perfect</dfn> if every possible vector is within Hamming distance \((d-1)/2\) of some codeword. If we expand our notion of geometry to account for the Hamming distance as the metric, then we can speak of a sphere of radius \(r\) around a vector (or codeword. For a code of length \(n\text{,}\) such a sphere will contain</p>
+<div class="displaymath">
+\begin{equation*}
+1 + {n\choose 1} + {n\choose 2} + \cdots + {n\choose r}
+\end{equation*}
+</div>
+<p>vectors within in it. For a perfect code, the spheres of radius \(d\) centered at the codewords of the code will exactly partition the entire set of all possible vectors. (This is the connection that means that coding theory meshes with sphere packing problems.)</p>
+<p>A consequence of a code of dimension \(k\) being perfect is that</p>
+<div class="displaymath">
+\begin{equation*}
+2^k\left({n\choose 0} + {n\choose 1} + {n\choose 2} + \cdots + {n\choose \frac{d-1}{2}}\right) = 2^n
+\end{equation*}
+</div>
+<p>Conversely, if a code has minimum distance \(d\) and the condition above is true, then the code is perfect.</p>
+<p>Write a Python function, named <code class="code-inline tex2jax_ignore">is_perfect()</code>which accepts a linear code as input and returns <code class="code-inline tex2jax_ignore">True</code>or <code class="code-inline tex2jax_ignore">False</code>. Demonstrate your function by checking that the (binary) Golay code is perfect, and then use a loop to verify that the (binary) Hamming codes are perfect for all lengths below \(32\text{.}\)</p></article><span class="incontext"><a href="algcodes-sage-exercises.html#MKv">in-context</a></span>
+</body>
+</html>

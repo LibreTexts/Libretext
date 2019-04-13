@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:34-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>We will use mathematical induction on the number of equations in the system. If there are \(k= 2\) equations, then the theorem is true by  <a data-knowl="./knowl/lemma-chinese-remainder.html" title="Lemma 16.5.1">Lemma 16.5.1</a>. Now suppose that the result is true for a system of \(k\) equations or less and that we wish to find a solution of</p>
+<div class="displaymath">
+\begin{align*}
+x &amp; \equiv  a_1 \pmod{n_1}\\
+x &amp; \equiv  a_2 \pmod{n_2}\\
+&amp; \vdots\\
+x &amp; \equiv  a_{k+1} \pmod{n_{k+1}}\text{.}
+\end{align*}
+</div>
+<p>Considering the first \(k\) equations, there exists a solution that is unique modulo \(n_1 \cdots n_k\text{,}\) say \(a\text{.}\) Since \(n_1 \cdots n_k\) and \(n_{k+1}\) are relatively prime, the system</p>
+<div class="displaymath">
+\begin{align*}
+x &amp; \equiv  a \pmod{n_1 \cdots n_k }\\
+x &amp; \equiv  a_{k+1} \pmod{n_{k+1}}
+\end{align*}
+</div>
+<p>has a solution that is unique modulo \(n_1 \ldots n_{k+1}\) by the lemma.</p></article><span class="incontext"><a href="section-software-application.html#fau">in-context</a></span>
+</body>
+</html>

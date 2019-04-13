@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:55-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>A cryptosystem would be more secure if a ciphertext letter could represent more than one plaintext letter. To give an example of this type of cryptosystem, called a <dfn class="terminology">polyalphabetic cryptosystem</dfn>, we will generalize affine codes by using matrices. The idea works roughly the same as before; however, instead of encrypting one letter at a time we will encrypt pairs of letters. We can store a pair of letters \(p_1\) and \(p_2\) in a vector</p>
+<div class="displaymath">
+\begin{equation*}
+{\mathbf p} = 
+\begin{pmatrix}
+p_1 \\ p_2
+\end{pmatrix}\text{.}
+\end{equation*}
+</div>
+<p>Let \(A\) be a \(2 \times 2\) invertible matrix with entries in \({\mathbb Z}_{26}\text{.}\) We can define an encoding function by</p>
+<div class="displaymath">
+\begin{equation*}
+f({\mathbf p}) = A {\mathbf p} + {\mathbf b}\text{,}
+\end{equation*}
+</div>
+<p>where \({\mathbf b}\) is a fixed column vector and matrix operations are performed in \({\mathbb Z}_{26}\text{.}\) The decoding function must be</p>
+<div class="displaymath">
+\begin{equation*}
+f^{-1}({\mathbf p}) = A^{-1} {\mathbf p} - A^{-1} {\mathbf b}\text{.}
+\end{equation*}
+</div>
+<span class="incontext"><a href="section-private-key-crypt.html#Edq">in-context</a></span>
+</body>
+</html>

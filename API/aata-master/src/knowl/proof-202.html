@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:35-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>(1) Suppose that \(G(E/K) = G(E/L) = G\text{.}\) Both \(K\) and \(L\) are fixed fields of \(G\text{;}\) hence, \(K=L\) and the map defined by \(K \mapsto G(E/K)\) is one-to-one. To show that the map is onto, let \(G\) be a subgroup of \(G(E/F)\) and \(K\) be the field fixed by \(G\text{.}\) Then \(F \subset K \subset E\text{;}\) consequently, \(E\) is a normal extension of \(K\text{.}\) Thus, \(G(E/K) = G\) and the map \(K \mapsto G(E/K)\) is a bijection.</p>
+<p>(2) By Theorem <a data-knowl="./knowl/theorem-extension-order.html" title="Theorem 23.1.7">Theorem 23.1.7</a>, \(|G(E/K)| = [E:K]\text{;}\) therefore,</p>
+<div class="displaymath">
+\begin{equation*}
+|G(E/F)| = [G(E/F):G(E/K)] \cdot |G(E/K)| = [E:F] = [E:K][K:F]\text{.}
+\end{equation*}
+</div>
+<p>Thus, \([K:F] = [G(E/F):G(E/K)]\text{.}\)</p>
+<p>Statement (3) is illustrated in <a data-knowl="./knowl/figure-galois-2.html" title="Figure 23.2.11">Figure 23.2.11</a>. We leave the proof of this property as an exercise.</p>
+<p>(4) This part takes a little more work. Let \(K\) be a normal extension of \(F\text{.}\) If \(\sigma\) is in \(G(E/F)\) and \(\tau\) is in \(G(E/K)\text{,}\) we need to show that \(\sigma^{-1} \tau \sigma\) is in \(G(E/K)\text{;}\) that is, we need to show that \(\sigma^{-1} \tau \sigma( \alpha) = \alpha\) for all \(\alpha \in K\text{.}\) Suppose that \(f(x)\) is the minimal polynomial of \(\alpha\) over \(F\text{.}\) Then \(\sigma( \alpha )\) is also a root of \(f(x)\) lying in \(K\text{,}\) since \(K\) is a normal extension of \(F\text{.}\) Hence, \(\tau( \sigma( \alpha )) = \sigma( \alpha )\) or \(\sigma^{-1} \tau \sigma( \alpha) = \alpha\text{.}\)</p>
+<p>Conversely, let \(G(E/K)\) be a normal subgroup of \(G(E/F)\text{.}\) We need to show that \(F = K_{G(K/F)}\text{.}\) Let \(\tau \in G(E/K)\text{.}\) For all \(\sigma \in G(E/F)\) there exists a \(\overline{\tau} \in G(E/K)\) such that \(\tau \sigma = \sigma \overline{\tau}\text{.}\) Consequently, for all \(\alpha \in K\)</p>
+<div class="displaymath">
+\begin{equation*}
+\tau( \sigma( \alpha ) ) = \sigma( \overline{\tau}( \alpha ) ) = \sigma( \alpha );
+\end{equation*}
+</div>
+<p>hence, \(\sigma( \alpha )\) must be in the fixed field of \(G(E/K)\text{.}\) Let \(\overline{\sigma}\) be the restriction of \(\sigma\) to \(K\text{.}\) Then \(\overline{\sigma}\) is an automorphism of \(K\) fixing \(F\text{,}\) since \(\sigma( \alpha ) \in K\) for all \(\alpha \in K\text{;}\) hence, \(\overline{\sigma} \in G(K/F)\text{.}\) Next, we will show that the fixed field of \(G(K/F)\) is \(F\text{.}\) Let \(\beta\) be an element in \(K\) that is fixed by all automorphisms in \(G(K/F)\text{.}\) In particular, \(\overline{\sigma}(\beta) = \beta\) for all \(\sigma \in G(E/F)\text{.}\) Therefore, \(\beta\) belongs to the fixed field \(F\) of \(G(E/F)\text{.}\)</p>
+<p>Finally, we must show that when \(K\) is a normal extension of \(F\text{,}\)</p>
+<div class="displaymath">
+\begin{equation*}
+G(K/F) \cong G(E/F) / G(E/K)\text{.}
+\end{equation*}
+</div>
+<p>For \(\sigma \in G(E/F)\text{,}\) let \(\sigma_K\) be the automorphism of \(K\) obtained by restricting \(\sigma\) to \(K\text{.}\) Since \(K\) is a normal extension, the argument in the preceding paragraph shows that \(\sigma_K \in G( K/F)\text{.}\) Consequently, we have a map \(\phi:G(E/F) \rightarrow G(K/F)\) defined by \(\sigma \mapsto \sigma_K\text{.}\) This map is a group homomorphism since</p>
+<div class="displaymath">
+\begin{equation*}
+\phi( \sigma \tau ) = (\sigma \tau)_K = \sigma_K \tau_K  = \phi( \sigma) \phi( \tau )\text{.}
+\end{equation*}
+</div>
+<p>The kernel of \(\phi\) is \(G(E/K)\text{.}\) By (2),</p>
+<div class="displaymath">
+\begin{equation*}
+|G(E/F)| / |G(E/K)| = [K:F] = |G(K/F)|\text{.}
+\end{equation*}
+</div>
+<p>Hence, the image of \(\phi\) is \(G(K/F)\) and \(\phi\) is onto. Applying the First Isomorphism Theorem, we have</p>
+<div class="displaymath">
+\begin{equation*}
+G(K/F) \cong G(E/F) / G( E/K )\text{.}
+\end{equation*}
+</div></article><span class="incontext"><a href="section-fund-theorem-galois-theory.html#QwZ">in-context</a></span>
+</body>
+</html>

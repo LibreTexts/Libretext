@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:20-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="proof"><h6 class="heading"><span class="type">Proof</span></h6>
+<p>We will prove this lemma by induction. If \(n = 1\text{,}\) then there is nothing to show. Now suppose that the order of \(G\) is \(n\) the lemma is true for all groups of order \(k\text{,}\) where \(k \lt n\text{.}\) Furthermore, let \(p\) be a prime that divides \(n\text{.}\)</p>
+<p>If \(G\) has no proper nontrivial subgroups, then \(G = \langle a \rangle\text{,}\) where \(a\) is any element other than the identity. By <a data-knowl="./knowl/cyclic-exercise-subgroups-exist.html" title="Exercise 4.4.39">Exercise 4.4.39</a>, the order of \(G\) must be prime. Since \(p\) divides \(n\text{,}\) we know that \(p = n\text{,}\) and \(G\) contains \(p - 1\) elements of order \(p\text{.}\)</p>
+<p>Now suppose that \(G\) contains a nontrivial proper subgroup \(H\text{.}\) Then \(1 \lt |H| \lt n\text{.}\) If \(p \mid |H|\text{,}\) then \(H\) contains an element of order \(p\) by induction and the lemma is true. Suppose that \(p\) does not divide the order of \(H\text{.}\) Since \(G\) is abelian, it must be the case that \(H\) is a normal subgroup of \(G\text{,}\) and \(|G| = |H| \cdot |G/H|\text{.}\) Consequently, \(p\) must divide \(|G/H|\text{.}\) Since \(|G/H| \lt |G| = n\text{,}\) we know that \(G/H\) contains an element \(aH\) of order \(p\) by the induction hypothesis. Thus,</p>
+<div class="displaymath">
+\begin{equation*}
+H = (aH)^p = a^pH\text{,}
+\end{equation*}
+</div>
+<p>and \(a^p \in H\) but \(a \notin H\text{.}\) If \(|H| = r\text{,}\) then \(p\) and \(r\) are relatively prime, and there exist integers \(s\) and \(t\) such that \(sp + tr = 1\text{.}\) Furthermore, the order of \(a^p\) must divide \(r\text{,}\) and \((a^p)^r = (a^r)^p = 1\text{.}\)</p>
+<p>We claim that \(a^r\) has order \(p\text{.}\) We must show that \(a^r \neq 1\text{.}\) Suppose \(a^r = 1\text{.}\) Then</p>
+<div class="displaymath">
+\begin{align*}
+a &amp; = a^{sp + tr}\\
+&amp; = a^{sp} a^{tr}\\
+&amp; = (a^p)^s (a^r)^t\\
+&amp; = (a^p)^s 1\\
+&amp; = (a^p)^s\text{.}
+\end{align*}
+</div>
+<p>Since \(a^p \in H\text{,}\) it must be the case that \(a= (a^p)^s \in H\text{,}\) which is a contradiction. Therefore, \(a^r \neq 1\) is an element of order \(p\) in \(G\text{.}\)</p></article><span class="incontext"><a href="section-finite-abelian-groups.html#xdL">in-context</a></span>
+</body>
+</html>

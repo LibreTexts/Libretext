@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:26-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">3.</span>
+</h6>
+<p>The subsection <a href="section-extension-fields.html#VUq" class="internal" title="Subsection 21.1.1: Algebraic Elements">Algebraic Elements</a> relies on techniques from linear algebra and contains <a data-knowl="./knowl/theorem-finite-extension.html" title="Theorem 21.1.15">Theorem 21.1.15</a>: every finite extension is an algebraic extension. This exercise will help you understand this proof.</p>
+<p>The polynomial \(r(x)=x^4+2x+2\) is irreducible over the rationals (Eisenstein's criterion with prime \(p=2\)). Create a number field that contains a root of \(r(x)\text{.}\) By <a data-knowl="./knowl/theorem-finite-extension.html" title="Theorem 21.1.15">Theorem 21.1.15</a>, and the remark following, every element of this finite field extension is an algebraic number, and hence satisfies some polynomial over the base field (it is this polynomial that Sage will produce with the <code class="code-inline tex2jax_ignore">.minpoly()</code>method). This exercise will show how we can use just linear algebra to determine this minimal polynomial.</p>
+<p>Suppose that <code class="code-inline tex2jax_ignore">a</code>is the generator of the number field you just created with \(r(x)\text{.}\) Then we will determine the minimal polynomial of <code class="code-inline tex2jax_ignore">t = 3a + 1</code>using just linear algebra. According to the proof, the first five powers of <code class="code-inline tex2jax_ignore">t</code> (start counting from zero) will be linearly dependent. (Why?) So a nontrivial relation of linear dependence on these powers will provide the coefficients of a polynomial with <code class="code-inline tex2jax_ignore">t</code>as a root. Compute these five powers, then construct the correct linear system to determine the coefficients of the minimal polynomial, solve the system, and suitably interpret its solutions.</p>
+<p>Hints: The <code class="code-inline tex2jax_ignore">vector()</code>and <code class="code-inline tex2jax_ignore">matrix()</code>commands will create vectors and matrices, and the <code class="code-inline tex2jax_ignore">.solve_right()</code>method for matrices can be used to find solutions. Given an element of the number field, which will necessarily be a polynomial in the generator <code class="code-inline tex2jax_ignore">a</code>, the <code class="code-inline tex2jax_ignore">.vector()</code>method of the element will provide the coefficients of this polynomial in a list.</p></article><span class="incontext"><a href="fields-sage-exercises.html#sWi">in-context</a></span>
+</body>
+</html>

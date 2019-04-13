@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:13-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Theorem</span> <span class="codenumber">2.2.7</span>. <span class="title">Fundamental Theorem of Arithmetic.</span>
+</h6>
+<p>Let \(n\) be an integer such that \(n \gt 1\text{.}\) Then</p>
+<div class="displaymath">
+\begin{equation*}
+n = p_1 p_2 \cdots p_k\text{,}
+\end{equation*}
+</div>
+<p>where \(p_1, \ldots, p_k\) are  primes (not necessarily distinct). Furthermore, this factorization is unique; that is, if</p>
+<div class="displaymath">
+\begin{equation*}
+n = q_1 q_2 \cdots q_l\text{,}
+\end{equation*}
+</div>
+<p>then \(k = l\) and the \(q_i\)'s are just the \(p_i\)'s rearranged.</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p><em class="emphasis">Uniqueness.</em>  To show uniqueness we will use induction on \(n\text{.}\) The theorem is certainly true for \(n = 2\) since in this case \(n\) is prime. Now assume that the result holds for all integers \(m\) such that \(1 \leq m \lt n\text{,}\) and</p>
+<div class="displaymath">
+\begin{equation*}
+n = p_1 p_2 \cdots p_k = q_1 q_2 \cdots q_l\text{,}
+\end{equation*}
+</div>
+<p>where \(p_1 \leq p_2 \leq \cdots \leq p_k\) and \(q_1 \leq q_2 \leq \cdots \leq q_l\text{.}\) By <a data-knowl="./knowl/theorem-integers-prime-divisor.html" title="Lemma 2.2.5: Euclid">Lemma 2.2.5</a>, \(p_1  \mid  q_i\) for some \(i = 1, \ldots,
+l\) and \(q_1  \mid  p_j\) for some \(j = 1, \ldots, k\text{.}\) Since all of the \(p_i\)'s and \(q_i\)'s are prime, \(p_1 = q_i\) and  \(q_1 = p_j\text{.}\) Hence, \(p_1 = q_1\) since \(p_1 \leq p_j = q_1 \leq q_i = p_1\text{.}\) By the induction hypothesis,</p>
+<div class="displaymath">
+\begin{equation*}
+n' = p_2 \cdots p_k = q_2 \cdots q_l
+\end{equation*}
+</div>
+<p>has a unique factorization. Hence, \(k = l\) and \(q_i = p_i\) for \(i = 1, \ldots, k\text{.}\)</p>
+<p><em class="emphasis">Existence.</em> To show existence, suppose that there is some integer that cannot be written as the product of primes. Let \(S\) be the set of all such numbers. By the Principle of Well-Ordering, \(S\) has a smallest number, say \(a\text{.}\) If the only positive factors of \(a\) are \(a\) and \(1\text{,}\) then \(a\) is prime, which is a contradiction. Hence, \(a = a_1 a_2\) where \(1 \lt a_1 \lt a\) and \(1 \lt a_2 \lt a\text{.}\) Neither \(a_1\in S\) nor \(a_2 \in S\text{,}\) since \(a\) is the smallest element in \(S\text{.}\) So</p>
+<div class="displaymath">
+\begin{align*}
+a_1 &amp; = p_1 \cdots p_r\\
+a_2 &amp; = q_1 \cdots q_s\text{.}
+\end{align*}
+</div>
+<p>Therefore,</p>
+<div class="displaymath">
+\begin{equation*}
+a = a_1 a_2 = p_1 \cdots p_r q_1 \cdots q_s\text{.}
+\end{equation*}
+</div>
+<p>So \(a \notin S\text{,}\) which is a contradiction.</p></article><span class="incontext"><a href="section-division-algorithm.html#gEM">in-context</a></span>
+</body>
+</html>

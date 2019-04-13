@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:54-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<script>$(function () {
+    // Make *any* div with class 'sagecell-sage' an executable Sage cell
+    // Their results will be linked, only within language type
+    sagecell.makeSagecell({inputLocation: 'div.sagecell-sage',
+                           linked: true,
+                           languages: ['sage'],
+                           evalButtonText: 'Evaluate (Sage)'});
+});
+</script>
+</head>
+<body>
+<article class="exercise-like"><h6 class="heading">
+<span class="type">Exercise</span> <span class="codenumber">2.</span>
+</h6>
+<p>Verify the truth of Fermat's Little Theorem (either variant) using the composite number \(391=17\cdot 23\) as the choice of the base (either \(a\) or \(b\)), and for \(p\) assuming the value of every prime number between \(100\) and \(1000\text{.}\)</p>
+<p>Build up a solution slowly — make a list of powers (start with just a few primes), then make a list of powers reduced by modular arithmetic, then a list of comparisons with the predicted value, then a check on all these logical values resulting from the comparisons. This is a useful strategy for many similar problems. Eventually you will write a single line that performs the verification by eventually printing out <code class="code-inline tex2jax_ignore">True</code>. Here are some more hints about useful functions.</p>
+<div class="sagecell-sage" id="sage-236"><script type="text/x-sage">a = 20
+b = 6
+a.mod(b)
+</script></div>
+<div class="sagecell-sage" id="sage-237"><script type="text/x-sage">prime_range(50, 100)
+</script></div>
+<div class="sagecell-sage" id="sage-238"><script type="text/x-sage">all([True, True, True, True])
+</script></div>
+<div class="sagecell-sage" id="sage-239"><script type="text/x-sage">all([True, True, False, True])
+</script></div></article><span class="incontext"><a href="cosets-sage-exercises.html#tMc">in-context</a></span>
+</body>
+</html>

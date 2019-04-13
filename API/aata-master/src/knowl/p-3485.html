@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:29-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>Suppose that</p>
+<div class="displaymath">
+\begin{equation*}
+g( \omega^r) = g(\omega^{r + 1}) = \cdots = g( \omega^{r + s - 1}) = 0\text{.}
+\end{equation*}
+</div>
+<p>Let \(f(x)\) be some polynomial in \(C\) with \(s\) or fewer nonzero coefficients. We can assume that</p>
+<div class="displaymath">
+\begin{equation*}
+f(x) = a_{i_0} x^{i_0} + a_{i_1} x^{i_1} + \cdots + a_{i_{s - 1}} x^{i_{s - 1}}
+\end{equation*}
+</div>
+<p>be some polynomial in \(C\text{.}\) It will suffice to show that all of the \(a_i\)'s must be 0. Since</p>
+<div class="displaymath">
+\begin{equation*}
+g( \omega^r) = g(\omega^{r + 1}) = \cdots = g( \omega^{r + s - 1}) = 0
+\end{equation*}
+</div>
+<p>and \(g(x)\) divides \(f(x)\text{,}\)</p>
+<div class="displaymath">
+\begin{equation*}
+f( \omega^r) = f(\omega^{r + 1}) = \cdots = f( \omega^{r + s - 1}) = 0\text{.}
+\end{equation*}
+</div>
+<p>Equivalently, we have the following system of equations:</p>
+<div class="displaymath">
+\begin{align*}
+a_{i_0} (\omega^r)^{i_0} + a_{i_1} (\omega^r)^{i_1} + \cdots + a_{i_{s - 1}} (\omega^r)^{i_{s - 1}} &amp; = 0\\
+a_{i_0} (\omega^{r + 1})^{i_0} + a_{i_1} (\omega^{r + 1})^{i_2} + \cdots + a_{i_{s-1}} (\omega^{r+1})^{i_{s-1}} &amp; = 0\\
+&amp; \vdots\\
+a_{i_0} (\omega^{r + s - 1})^{i_0} + a_{i_1} (\omega^{r + s - 1})^{i_1} + \cdots + a_{i_{s - 1}} (\omega^{r + s - 1})^{i_{s - 1}} &amp; = 0\text{.}
+\end{align*}
+</div>
+<p>Therefore, \((a_{i_0}, a_{i_1}, \ldots,
+a_{i_{s - 1}})\) is a solution to the homogeneous system of linear equations</p>
+<div class="displaymath">
+\begin{align*}
+(\omega^{i_0})^r x_0 + (\omega^{i_1})^r x_1 + \cdots + (\omega^{i_{s - 1}})^r x_{n - 1} &amp; = 0\\
+(\omega^{i_0})^{r + 1} x_0 + (\omega^{i_1})^{r + 1} x_1 + \cdots + (\omega^{i_{s - 1}})^{r + 1} x_{n - 1} &amp; = 0\\
+&amp; \vdots\\
+(\omega^{i_0})^{r + s - 1} x_0 + (\omega^{i_1})^{r + s - 1} x_1 + \cdots + (\omega^{i_{s - 1}})^{r + s - 1} x_{n - 1} &amp; = 0\text{.}
+\end{align*}
+</div>
+<p>However, this system has a unique solution, since the determinant of the matrix</p>
+<div class="displaymath">
+\begin{equation*}
+\begin{pmatrix}
+(\omega^{i_0})^r &amp; (\omega^{i_1})^r &amp; \cdots &amp; (\omega^{i_{s-1}})^r \\
+(\omega^{i_0})^{r+1} &amp; (\omega^{i_1})^{r+1} &amp; \cdots &amp;
+(\omega^{i_{s-1}})^{r+1} \\
+\vdots &amp; \vdots         &amp; \ddots &amp; \vdots \\
+(\omega^{i_0})^{r+s-1} &amp; (\omega^{i_1})^{r+s-1} &amp; \cdots &amp;
+(\omega^{i_{s-1}})^{r+s-1} 
+\end{pmatrix}
+\end{equation*}
+</div>
+<p>can be shown to be nonzero using <a data-knowl="./knowl/lemma-vandermode-det.html" title="Lemma 22.2.7">Lemma 22.2.7</a> and the basic properties of determinants (Exercise). Therefore, this solution must be \(a_{i_0} = a_{i_1} = \cdots = a_{i_{s - 1}} = 0\text{.}\)</p>
+<span class="incontext"><a href="section-poly-codes.html#NDt">in-context</a></span>
+</body>
+</html>

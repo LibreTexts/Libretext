@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:21-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="theorem-like"><h6 class="heading">
+<span class="type">Theorem</span> <span class="codenumber">13.2.8</span>. <span class="title">Jordan-Hölder.</span>
+</h6>
+<p>Any two composition series of \(G\) are isomorphic.</p></article><article class="proof"><h6 class="heading"><span class="type">Proof.</span></h6>
+<p>We shall employ mathematical induction on the length of the composition series. If the length of a composition series is 1, then \(G\) must be a simple group. In this case any two composition series are isomorphic.</p>
+<p>Suppose now that the theorem is true for all groups having a composition series of length \(k\text{,}\) where \(1 \leq k \lt n\text{.}\) Let</p>
+<div class="displaymath">
+\begin{gather*}
+G = H_n \supset H_{n-1} \supset \cdots \supset H_1 \supset H_0 = \{ e \}\\
+G = K_m \supset K_{m-1} \supset \cdots \supset K_1 \supset K_0 = \{ e \}
+\end{gather*}
+</div>
+<p>be two composition series for \(G\text{.}\) We can form two new subnormal series for \(G\) since \(H_i \cap K_{m-1}\) is normal in \(H_{i+1} \cap K_{m-1}\) and \(K_j \cap H_{n-1}\) is normal in \(K_{j+1} \cap H_{n-1}\text{:}\)</p>
+<div class="displaymath">
+\begin{gather*}
+G = H_n \supset H_{n-1} \supset H_{n-1} \cap K_{m-1} \supset \cdots \supset H_0 \cap K_{m-1} = \{ e \}\\
+G = K_m \supset K_{m-1} \supset K_{m-1} \cap H_{n-1} \supset \cdots \supset K_0 \cap H_{n-1} = \{ e \}\text{.}
+\end{gather*}
+</div>
+<p>Since \(H_i \cap K_{m-1}\) is normal in \(H_{i+1} \cap K_{m-1}\text{,}\) the Second Isomorphism Theorem (<a data-knowl="./knowl/theorem-second-isomorphism.html" title="Theorem 11.2.3: Second Isomorphism Theorem">Theorem 11.2.3</a>) implies that</p>
+<div class="displaymath">
+\begin{align*}
+(H_{i+1} \cap K_{m-1}) / (H_i \cap K_{m-1}) &amp; =  (H_{i+1} \cap K_{m-1}) / (H_i \cap ( H_{i+1} \cap K_{m-1} ))\\
+&amp; \cong  H_i (H_{i+1} \cap K_{m-1})/ H_i\text{,}
+\end{align*}
+</div>
+<p>where \(H_i\) is normal in \(H_i (H_{i+1} \cap K_{m-1})\text{.}\) Since \(\{ H_i \}\) is a composition series, \(H_{i+1} / H_i\) must be simple; consequently, \(H_i (H_{i+1} \cap K_{m-1})/ H_i\) is either \(H_{i+1}/H_i\) or \(H_i/H_i\text{.}\) That is, \(H_i (H_{i+1} \cap K_{m-1})\) must be either \(H_i\) or \(H_{i+1}\text{.}\) Removing any nonproper inclusions from the series</p>
+<div class="displaymath">
+\begin{equation*}
+H_{n-1} \supset H_{n-1} \cap K_{m-1} \supset \cdots \supset H_0 \cap K_{m-1} = \{ e \}\text{,}
+\end{equation*}
+</div>
+<p>we have a composition series for \(H_{n-1}\text{.}\) Our induction hypothesis says that this series must be equivalent to the composition series</p>
+<div class="displaymath">
+\begin{equation*}
+H_{n-1} \supset \cdots \supset H_1 \supset H_0 = \{ e \}\text{.}
+\end{equation*}
+</div>
+<p>Hence, the composition series</p>
+<div class="displaymath">
+\begin{equation*}
+G = H_n \supset H_{n-1} \supset \cdots \supset H_1 \supset H_0 = \{ e \}
+\end{equation*}
+</div>
+<p>and</p>
+<div class="displaymath">
+\begin{equation*}
+G = H_n \supset H_{n-1} \supset H_{n-1} \cap K_{m-1} \supset \cdots \supset H_0 \cap K_{m-1} = \{ e \}
+\end{equation*}
+</div>
+<p>are equivalent. If \(H_{n-1} = K_{m-1}\text{,}\) then the composition series \(\{H_i \}\) and \(\{ K_j \}\) are equivalent and we are done; otherwise, \(H_{n-1} K_{m-1}\)  is a normal subgroup of \(G\) properly containing \(H_{n-1}\text{.}\) In this case \(H_{n-1} K_{m-1} = G\) and we can apply the Second Isomorphism Theorem once again; that is,</p>
+<div class="displaymath">
+\begin{equation*}
+K_{m-1} / (K_{m-1} \cap H_{n-1}) \cong (H_{n-1} K_{m-1}) / H_{n-1} = G/H_{n-1}\text{.}
+\end{equation*}
+</div>
+<p>Therefore,</p>
+<div class="displaymath">
+\begin{equation*}
+G = H_n \supset H_{n-1} \supset H_{n-1} \cap K_{m-1} \supset \cdots \supset H_0 \cap K_{m-1} = \{ e \}
+\end{equation*}
+</div>
+<p>and</p>
+<div class="displaymath">
+\begin{equation*}
+G = K_m \supset K_{m-1} \supset K_{m-1} \cap H_{n-1} \supset \cdots \supset K_0 \cap H_{n-1} = \{ e \}
+\end{equation*}
+</div>
+<p>are equivalent and the proof of the theorem is complete.</p></article><span class="incontext"><a href="section-solvable-groups.html#yje">in-context</a></span>
+</body>
+</html>

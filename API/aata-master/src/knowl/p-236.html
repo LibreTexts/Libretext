@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:52:12-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>We will prove the binomial theorem using mathematical induction; that is,</p>
+<div class="displaymath">
+\begin{equation*}
+(a + b)^n = \sum_{k = 0}^{n} \binom{n}{k} a^k b^{n - k}\text{,}
+\end{equation*}
+</div>
+<p>where \(a\) and \(b\) are real numbers, \(n \in \mathbb{N}\text{,}\) and</p>
+<div class="displaymath">
+\begin{equation*}
+\binom{n}{k} = \frac{n!}{k! (n - k)!}
+\end{equation*}
+</div>
+<p>is the binomial coefficient.   We first show that</p>
+<div class="displaymath">
+\begin{equation*}
+\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}\text{.}
+\end{equation*}
+</div>
+<p>This result follows from</p>
+<div class="displaymath">
+\begin{align*}
+\binom{n}{k} + \binom{n}{k - 1} &amp; = \frac{n!}{k!(n - k)!} +\frac{n!}{(k-1)!(n - k + 1)!}\\
+&amp; = \frac{(n + 1)!}{k!(n + 1 - k)!}\\
+&amp; =\binom{n + 1}{k}\text{.}
+\end{align*}
+</div>
+<p>If \(n = 1\text{,}\) the binomial theorem is easy to verify. Now assume that the result is true for \(n\) greater than or equal to \(1\text{.}\) Then</p>
+<div class="displaymath">
+\begin{align*}
+(a + b)^{n + 1} &amp; = (a + b)(a + b)^n\\
+&amp; = (a + b) \left( \sum_{k = 0}^{n} \binom{n}{k} a^k b^{n - k}\right)\\
+&amp; = \sum_{k = 0}^{n} \binom{n}{k} a^{k + 1} b^{n - k} + \sum_{k = 0}^{n} \binom{n}{k} a^k b^{n + 1 - k}\\
+&amp; = a^{n + 1} + \sum_{k = 1}^{n} \binom{n}{k - 1} a^{k} b^{n + 1 - k} + \sum_{k = 1}^{n} \binom{n}{k}  a^k b^{n + 1 - k} + b^{n + 1}\\
+&amp;  = a^{n + 1} + \sum_{k = 1}^{n} \left[ \binom{n}{k - 1} + \binom{n}{k} \right]a^k b^{n + 1 - k} + b^{n + 1}\\
+&amp;  = \sum_{k = 0}^{n + 1}   \binom{n + 1}{k} a^k b^{n + 1- k}\text{.}
+\end{align*}
+</div>
+<span class="incontext"><a href="section-math-induction.html#DzA">in-context</a></span>
+</body>
+</html>

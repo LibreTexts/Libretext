@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:54:40-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>The answer is to use the vector space structure of the flattened tower. As a degree \(8\) extension of the rationals, the first \(8\) powers of the primitive element <code class="code-inline tex2jax_ignore">c</code>form a basis when the field is viewed as a vector space with the rationals as the scalars. It is sufficient to know how each field automorphism behaves on this basis to fully specify the definition of the automorphism. To wit,</p>
+<div class="displaymath">
+\begin{align*}
+\tau(x)&amp;=\tau\left(\sum_{i=0}^7\,q_ic^i\right)&amp;&amp;q_i\in{\mathbb Q}\\
+&amp;=\sum_{i=0}^7\,\tau(q_i)\tau(c^i)&amp;&amp;\tau\text{ is a field automorphism}\\
+&amp;=\sum_{i=0}^7\,q_i\tau(c^i)&amp;&amp;\text{rationals are fixed}
+\end{align*}
+</div>
+<p>So we can compute the value of a field automorphism at any linear combination of powers of the primitive element as a linear combination of the values of the field automorphism at just the powers of the primitive element. This is known as the “power basis”, which we can obtain simply with the <code class="code-inline tex2jax_ignore">.power_basis()</code>method. We will begin with an example of how we can use this basis. We will illustrate with the fourth automorphism of the Galois group. Notice that the <code class="code-inline tex2jax_ignore">.vector()</code>method is a convenience that strips a linear combination of the powers of <code class="code-inline tex2jax_ignore">c</code>into a vector of just the coefficients.  (Notice too that \(\tau\) is totally defined by the value of \(\tau(c)\text{,}\) since as a field automorphism \(\tau(c^k)=(\tau(c))^k\text{.}\) However, we still need to work with the entire power basis to exploit the vector space structure.)</p>
+<span class="incontext"><a href="galois-sage.html#gqe">in-context</a></span>
+</body>
+</html>

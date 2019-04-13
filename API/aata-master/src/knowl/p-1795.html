@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-03-30T21:53:13-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<h6 class="heading"><span class="type">Paragraph</span></h6>
+<p>The principal device for creating a homomorphism is to specify the specific images of the set of generators for the domain. Consider cyclic groups of order \(12\) and \(20\text{:}\)</p>
+<div class="displaymath">
+\begin{align*}
+G &amp;= \{a^i\vert a^{12}=e\} &amp; H &amp;= \{x^i\vert x^{20}=e\}
+\end{align*}
+</div>
+<p>and define a homomorphism by just defining the image of the generator of \(G\text{,}\) and define the rest of the mapping by extending the mapping via the operation-preserving property of a homomorphism.</p>
+<div class="displaymath">
+\begin{align*}
+\phi: G\rightarrow H, &amp;\quad\phi(a)=x^5\\
+\Rightarrow           &amp;\quad\phi(a^i) = \phi(a)^i = (x^5)^i = x ^{5i}
+\end{align*}
+</div>
+<p>The constructor <code class="code-inline tex2jax_ignore">PermutationGroupMorphism</code>requires the two groups, then a list of images for each generator (in order!), and then will create the homomorphism. Note that we can then use the result as a function. In the example below, we first verify that <code class="code-inline tex2jax_ignore">C12</code>has a single generator (no surprise there), which we then send to a particular element of order \(4\) in the codomain. Sage then constructs the unique homomorphism that is consistent with this requirement.</p>
+<span class="incontext"><a href="homomorph-sage.html#LUk">in-context</a></span>
+</body>
+</html>
