@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the PreTeXt Showcase article. -->
+<!--                                                    -->
+<!-- Copyright (©) 2019 The PreTeXt Organization.       -->
+<!-- See the README file for contributing guidelines.   -->
+
+<pretext xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <docinfo>
+    <brandlogo url="https://pretextbook.org" source="images/ptx-logo.png" />
+
+    <images>
+      <archive>eps pdf png svg tex</archive>
+    </images>
+
+    <macros>
+    </macros>
+
+    <latex-image-preamble>
+      \usepackage{tikz}
+      \usepackage{pgfplots}
+      \usepackage{pstricks}
+      \usepackage{phaistos}
+      \usepackage{xcolor}
+    </latex-image-preamble>
+
+    <initialism>PTXSC</initialism>
+
+    <document-id>pretext-SC</document-id>
+
+    <html>
+      <favicon/>
+      <baseurl href="https://pretextbook.org/examples/pretext-showcase/html" />
+    </html>
+  </docinfo>
+
+  <article xml:id="pretext-showcase">
+    <title><pretext/> Showcase</title>
+
+    <frontmatter xml:id="index">
+      <titlepage>
+        <author>
+          <personname>Many Contributors</personname>
+          <department>Some From Academic Departments</department>
+          <institution>
+            <line>From Many Institutions</line>
+            <line>In Many Locations</line>
+          </institution>
+          <email>beezer@pugetsound.edu</email>
+        </author>
+
+        <date><today /></date>
+      </titlepage>
+
+      <abstract>
+        <p>
+          This is a showcase of <pretext/> features.
+          It is meant to be viewed in multiple output forms (HTML, PDF)
+          to demonstrate what is possible from <pretext/> source.
+        </p>
+      </abstract>
+    </frontmatter>
+
+    <xi:include href="latex-image.ptx" />
+
+  </article>
+
+</pretext>
