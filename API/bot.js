@@ -48,7 +48,7 @@ async function handler(request, response) {
 				body = Buffer.concat(body).toString();
 				
 				let input = JSON.parse(body);
-				if (!input.root || !input.user)
+				if (!input.root || !input.user || !input.find)
 					responseError(400, 'Body missing parameters');
 				console.log(`Got ${input.root}`);
 				let pages = LibreTexts.getSubpages(input.root, input.user);

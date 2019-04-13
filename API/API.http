@@ -5,6 +5,18 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-http://localhost/Libretext=http://chem.libretexts.org
+GET http://localhost/Libretext=http://chem.libretexts.org
+
+###
+POST http://localhost/bot/findandreplace
+origin: https://print.libretexts.org
+Content-Type: application/json
+
+{
+"user":"hdagnew@ucdavis.edu",
+"root":"https://chem.libretexts.org/Courses/Sacramento_City_College/SCC%3A_CHEM_300_-_Beginning_Chemistry/SCC%3A_CHEM_300_-_Beginning_Chemistry_(Alviar-Agnew)",
+"find":"atom",
+"replace":""
+}
 
 ###
