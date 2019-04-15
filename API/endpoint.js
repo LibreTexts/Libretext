@@ -4,6 +4,7 @@ const filenamify = require('filenamify');
 const server = http.createServer(handler);
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
+const secure = require('./secure.json');
 const fetch = require("node-fetch");
 const fs = require('fs-extra');
 const md5 = require('md5');
@@ -69,6 +70,51 @@ async function handler(request, response) {
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
 				let requests = await LibreTexts.authenticatedFetch(input.path, 'contents?mode=raw', 'Cross-Library', input.subdomain);
+				if (requests.ok)
+					response.write(await requests.text());
+				else
+					responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+				
+				response.end();
+			});
+		}
+		else {
+			responseError(request.method + " Not Acceptable", 406)
+		}
+	}
+	else if (url.startsWith("/IIAB")) {
+		if (request.headers.host === "computer.miniland1333.com" && request.method === "OPTIONS") { //options checking
+			response.writeHead(200, {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+			});
+			response.end();
+		}
+		else if (request.method === "PUT") {
+			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+				"Access-Control-Allow-Origin": request.headers.origin || null,
+				"Access-Control-Allow-Methods": "PUT",
+				"Content-Type": "application/json",
+			} : {"Content-Type": "application/json"});
+			let body = [];
+			request.on('data', (chunk) => {
+				body.push(chunk);
+			}).on('end', async () => {
+				body = Buffer.concat(body).toString();
+				
+				let input = JSON.parse(body);
+				
+				if (input.key !== secure["IIAB"]) {
+					responseError(`Invalid Key`, 403);
+				}
+				
+				let requests = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(input.path))}/contents`, {
+					headers: {
+						'x-deki-token': authenBrowser[input.subdomain],
+						'x-requested-with': 'XMLHttpRequest',
+						'origin': 'https://api.libretexts.org'
+					}
+				});
 				if (requests.ok)
 					response.write(await requests.text());
 				else

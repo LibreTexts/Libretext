@@ -1,413 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Re-added mathbook">
-      <change afterPath="$PROJECT_DIR$/API/mathbook/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/COPYING" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/hitchman/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/hitchman/tjh-law-html.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/hitchman/tjh-law-print.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/ups-writers/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/ups-writers/ups-writers-html.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/contrib/ups-writers/ups-writers-latex.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/css/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/css/mathbook-3.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/css/mathbook-add-on.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/css/mathbook-content.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/COPYING" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/add-ons.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/advice.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/author-guide.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/backmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/editors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/faq.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/frontmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/gfdl-mathbook.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/git.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/glossary.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/images/hotel-california.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/images/mozart-piano.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/images/sea-hare.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/latex-conversion.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/mbx-script.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/overview.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/principles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/processing.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/quickstart-example.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/schema-install.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/schema.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/start-here.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/topics.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/vagrant.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/webwork.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/welcome.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/windows-wsl.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/author-guide/windows.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/COPYING" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/ancillaries.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/backmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/conversions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/cover-design.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/epub.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/faq.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/frontmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/gfdl-mathbook.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/instructor-version.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/jupyter-notebook.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/latex-styling.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/online-html.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/open-licenses.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/pdf-print.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/pretext-principles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/principles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/print-on-demand.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/production.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/publisher-guide.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/web-hosting.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/doc/publisher-guide/webwork.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/braille/braille-test.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/build.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/epub-sampler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/images/Verne_Tour_du_Monde.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/images/complete-graph.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/images/cubic-function.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/images/sageplot-sentence-multigraph.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/images/tikz-electronics.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/mbx-epub-images.sed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/mbx-epub-xhtml-header.sed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/mbx-epub.sed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/epub/pretext-epub.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/fonts/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/fonts/fonts-and-characters.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/fonts/images/lemniscate-pstricks.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/hello-world/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/hello-world/hello-world.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/hia.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/images/allegretto-in-F-hutchinson-finale-output.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/images/allegretto-in-F-hutchinson.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/images/allegretto-in-F-hutchinson.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/music.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/humanities/poetry.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/letter/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/letter/letterhead-300dpi-1500x175.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/letter/sample-letter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/letter/signature-300dpi-400x100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/memo/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/memo/fictional-masthead.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/memo/ms-initials.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/memo/sample-memo.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/minimal/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/minimal/minimal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/authors-guide/windows.pug" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/build.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/pug-include.pug" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/pug/pug.pug" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/austin/animation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/austin/eigenvectors.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/austin/figures.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/austin/simple-ev.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/d3/collision.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/d3/graph-layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/d3/mention_network.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/d3/welsh.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/d3/welsh.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/dray/SAS.ggb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/jsxgraph/archimedian.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/jsxgraph/bspline.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/jsxgraph/fermats-spiral.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/jsxgraph/infinity.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/jsxgraph/piecewise.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/mcclure/slope.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/mcclure/slope.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/rosoff/astroid.ggb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/code/rosoff/epi-hypocycloids-default.ggb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/data/hodgkin-huxley-data.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/data/runningstatisticstemplate.ots" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/favicon/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/favicon/favicon-16x16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/favicon/favicon-32x32.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/airborne-midnight-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/airborne-midnight-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/animation-preview.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-contour.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-contour.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-contour_0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-contour_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-lever-integral.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-lever-integral.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-lever.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-lever.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-surface.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-surface.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/asymptote-surface_0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/bareilles-love-song.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/big-buck-bunny-frame-one.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/book-cover-google-art-project.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/calcplot3d-full-application-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/calcplot3d-intersection-planes-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/calcplot3d-probability-wavefunction-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/calcplot3d.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/collision-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/complete-graph.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/complete-graph.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/complete-graph.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/cross-rectangle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/cross-square.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/cubic-function.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/desmos-graph.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/desmos-natural-log-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/drone-flight-clip.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/drone-flight-full.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/drone-flight-sbs.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/eigenvectors-preview.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-SAS-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-astroid-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-cycloid-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-right-triangle-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-seed-head-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/geogebra-train-distance-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/graph-layout-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-archimedian-spiral-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-bspline-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-fermats-spiral-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-infinity-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-numerical-integral-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-piecewise-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/interactive-slopes-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/jimmy-page.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/keller-trotter-graph.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/keller-trotter-graph.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/led-zeppelin-kashmir-generic.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/led-zeppelin-kashmir.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/minelli-newyork-newyork.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pgfplots-data-demo.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pgfplots-data-demo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pgfplots-demo.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pgfplots-demo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/pre-roll-countdown-6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/right-triangle-paradox.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-implicit-surface.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-parabola.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-parabola.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-polynomial-approximation.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-polynomial-approximation.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-sentence-multigraph.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-sentence-multigraph.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-updown.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sageplot-updown.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/simple-eigenvector-preview.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/sintel-trailer.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-cone.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-cone.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-electronics.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-electronics.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-geogebra-euler.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-geogebra-euler.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-tex-workflow.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-tex-workflow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-venn-diagram.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/tikz-venn-diagram.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/trefoil.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/ups-promo-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/ups-promo-frame-one.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/ups-promo-preview.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/ups-visitor-guide-360.webm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/welsh-assembly-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/wolfram-sine-curve-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-complicated-network.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-complicated-network.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-kirchoff-law.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-kirchoff-law.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-midpoints-of-quadrilateral.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-midpoints-of-quadrilateral.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-parallel-circuit.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-parallel-circuit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-simple-network.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-simple-network.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-street-network.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-street-network.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-medians-copy.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-medians-copy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-medians.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-medians.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-vectors.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/worksheet-triangle-cyclic-vectors.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/images/zeppelin-playlist.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/problems/mom-2572.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/problems/mom-7492.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/pytutor/happy.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-article/sample-article.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/appendix-two.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/backmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/bookinfo.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/code/symmetric-group-8.sage" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/cyclic.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/exercises/cyclic.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/exercises/groups.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/exercises/integers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/exercises/sets.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/frontmatter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/gfdl-mathbook.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/groups.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/UPCcode.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cover_aata_2014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cyclic-complex-polar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cyclic-complex-rectangular.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cyclic-roots-unity-copy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cyclic-roots-unity.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/cyclic-s3-subgroups.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/groups-rectangle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/groups-s3-symmetry.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/original-front-cover-aata.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/plain-back-cover-aata.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/preface-dependencies.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/sets-composition.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/images/sets-mappings.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/integers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/cyclic-info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/cyclic-sage-exercises.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/groups-info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/groups-sage-exercises.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/groups-sage.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/integers-info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/integers-sage-exercises.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/integers-sage.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/sets-info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/sets-sage-exercises.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sage/sets-sage.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sample-book-solutions-manual.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sample-book-solutions-manual.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sample-book.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/sets.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-book/tikz/cyclic-roots-unity.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/sample-errors-and-warnings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/favicon/favicon-16x16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/favicon/favicon-32x32.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-building-parabola.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-building-parabola.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-building-parabola.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-building-parabola.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-building-parabola.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-gaussian-sum-proof.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-gaussian-sum-proof.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-gaussian-sum-proof.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-gaussian-sum-proof.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-gaussian-sum-proof.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-implicitly-defined-curve.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-implicitly-defined-curve.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-implicitly-defined-curve.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-implicitly-defined-curve.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-implicitly-defined-curve.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-parametrized-surface.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-parametrized-surface.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-parametrized-surface.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-parametrized-surface.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-parametrized-surface.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-rainbow-perception.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-rainbow-perception.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-rainbow-perception.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-rainbow-perception.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-rainbow-perception.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-raindrop-refraction-and-reflection.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-raindrop-refraction-and-reflection.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-raindrop-refraction-and-reflection.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-raindrop-refraction-and-reflection.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/image-raindrop-refraction-and-reflection.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/images/ptx-logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/latex-image.ptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/showcase/pretext-showcase.ptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/Makefile.paths.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/Makefile.paths.original" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/minimal/mini.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/sample-chapter/images/webwork-logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/examples/webwork/sample-chapter/sample-chapter.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/legal/gpl-license-v2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/legal/gpl-license-v3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/release-notes.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/build.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/iso_schematron_cli.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext-schematron.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext.rnc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext.rng" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext.sch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/pretext.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/schema/xml.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/html.sem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/mjpage-sre.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/pretext-braille.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/pretext-liblouis.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/braille/pretext.sem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/mbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/script/mbx.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/entities.ent" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-asymptote.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-identity.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-interactive.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-latex-image.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-mom.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-pg-common.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-pg-ptx.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-pg.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-sageplot.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-tikz.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/extract-youtube.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/latex/pretext-latex-AIM.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/latex/pretext-latex-CLP.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/latex/pretext-latex-chaos.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/af-ZA.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/cs-CZ.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/en-US.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/es-ES.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/fr-FR.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/hu-HU.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/pt-BR.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/localizations/pt-PT.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-common.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-epub.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-html.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-jupyter.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-latex.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-sage-doctest.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-sagenb.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-smc.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/mathbook-units.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-basic-html.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-braille.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-json-manifest.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-litprog.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-merge.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-solution-manual-latex.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-text.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/pretext-ww-problem-sets.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/utilities/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/utilities/author-report.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/utilities/deprecate-autoname.sed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/utilities/deprecate-index.sed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/mathbook/xsl/utilities/fix-deprecations.xsl" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/mathbook" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -425,16 +21,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitattributes">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1032">
-              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+            <state relative-caret-position="523">
+              <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+              <folding>
+                <element signature="e#3056#4419#0" />
+                <element signature="e#4460#5569#0" />
+                <element signature="e#5612#6984#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -455,9 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>email</find>
-      <find>pre</find>
-      <find>getinformation</find>
       <find>LibreTexts.authenticate(subdomain, user)</find>
       <find>page alread</find>
       <find>input</find>
@@ -485,6 +78,9 @@
       <find>getsubpages</find>
       <find>refresh</find>
       <find>getpdf</find>
+      <find>headers</find>
+      <find>authenBrowser</find>
+      <find>contents</find>
     </findStrings>
     <replaceStrings>
       <replace>timestamp('MM/DD hh:mm', Date.now()) + &quot; &quot;</replace>
@@ -556,12 +152,10 @@
         <option value="$PROJECT_DIR$/API/schedule.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" />
         <option value="$PROJECT_DIR$/public/API/analytics.js" />
-        <option value="$PROJECT_DIR$/API/secure.json" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
         <option value="$PROJECT_DIR$/API/import.js" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/API/package.json" />
@@ -585,6 +179,8 @@
         <option value="$PROJECT_DIR$/install/README.md" />
         <option value="$PROJECT_DIR$/install/install.sh" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/API/secure.json" />
       </list>
     </option>
   </component>
@@ -594,8 +190,9 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-11" />
+    <option name="y" value="-11" />
     <option name="width" value="1301" />
     <option name="height" value="1391" />
   </component>
@@ -607,7 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -620,10 +216,16 @@
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1345,14 +947,8 @@
       <workItem from="1555132386994" duration="32000" />
       <workItem from="1555132442186" duration="707000" />
       <workItem from="1555133208274" duration="2113000" />
-      <workItem from="1555137090406" duration="1076000" />
-    </task>
-    <task id="LOCAL-00123" summary="Added TitlePage and InfoPage">
-      <created>1550025341391</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1550025341393</updated>
+      <workItem from="1555137090406" duration="1167000" />
+      <workItem from="1555304605781" duration="1323000" />
     </task>
     <task id="LOCAL-00124" summary="Added 0.5in margins&#10;&#10;May need to chose a different delimiter besides commas">
       <created>1550043744906</created>
@@ -1690,7 +1286,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555136936002</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="Re-added mathbook">
+      <created>1555138209265</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1555138209266</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1726,15 +1329,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1452275000" />
+    <option name="totallyTimeSpent" value="1453689000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="867" height="927" extended-state="0" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.377943" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.16857316" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.31866667" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.23466666" />
@@ -1745,7 +1348,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.264" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26549864" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.19866666" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.5" />
@@ -1854,7 +1457,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added Default Template" />
     <MESSAGE value="Forker Source Tags and emdash" />
     <MESSAGE value="Added Remixer non-attachment file duplication" />
     <MESSAGE value="Initial Bot" />
@@ -1879,7 +1481,8 @@
     <MESSAGE value="Added bot HTTP test" />
     <MESSAGE value="Added mathbook for Pretext testing" />
     <MESSAGE value="Added initial documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added initial documentation" />
+    <MESSAGE value="Re-added mathbook" />
+    <option name="LAST_COMMIT_MESSAGE" value="Re-added mathbook" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1975,20 +1578,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/bundle.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/Main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="415" column="1" selection-start-line="415" selection-start-column="1" selection-end-line="415" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1081">
-          <caret line="47" column="41" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -2015,16 +1608,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/propagator.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11661">
-          <caret line="507" column="34" lean-forward="true" selection-start-line="507" selection-start-column="34" selection-end-line="507" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/nodePrint/batchPrint.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -2142,16 +1725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2664">
-          <caret line="190" column="4" selection-start-line="190" selection-start-column="4" selection-end-line="190" selection-end-column="4" />
-          <folding>
-            <element signature="e#3056#4419#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2320,7 +1893,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/README.md">
       <provider editor-type-id="text-editor" />
-      <provider editor-type-id="restructured-text-editor" />
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="432">
@@ -2329,6 +1901,7 @@
           <second_editor />
         </state>
       </provider>
+      <provider editor-type-id="restructured-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -2345,8 +1918,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1032">
+        <state relative-caret-position="156">
           <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1947">
+          <caret line="1125" column="55" selection-start-line="1125" selection-start-column="47" selection-end-line="1125" selection-end-column="55" />
+          <folding>
+            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/secure.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+          <folding>
+            <element signature="e#3056#4419#0" />
+            <element signature="e#4460#5569#0" />
+            <element signature="e#5612#6984#0" />
+          </folding>
         </state>
       </provider>
     </entry>
