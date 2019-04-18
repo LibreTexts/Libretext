@@ -14,6 +14,25 @@ class Dashboard extends React.Component {
 		super(props);
 	}
 	
+	componentDidMount() {
+		const socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
+		socket.on('connect', function () {
+		});
+		socket.on('welcome', function (data) {
+			console.log(data)
+		});
+		socket.on('page', function (data) {
+			console.log(data)
+		});
+		socket.on('disconnect', function () {
+		});
+		socket.emit('findandreplace',{
+			root: 'https://bio.libretexts.org/Courses/University_of_California_Davis',
+			user: 'hdagnew@ucdavis.edu',
+			find: 'cell',
+			replace: 'life sphere'
+		})
+	}
 	
 	render() {
 		return <div className={'CenterContainer'}>

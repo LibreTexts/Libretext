@@ -16,7 +16,11 @@ export default class FindReplace extends React.Component {
 	render() {
 		return (
 			<div>
-			Hi
+				Work in progress
+				<input placeholder="URL"/>
+				<input placeholder="Find"/>
+				<input placeholder="Replace"/>
+				<button>Verify Request</button>
 			</div>
 		)
 	}

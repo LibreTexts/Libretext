@@ -112,7 +112,22 @@ module.exports = {
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
     },
-
-
+    {
+      name      : 'bot',
+      script    : 'bot.js',
+      env: {
+        COMMON_VARIABLE: 'true',
+	  TZ: 'America/Los_Angeles'
+      },
+      env_production : {
+        NODE_ENV: 'production'
+      },
+      cwd	: '/root/api',
+      watch	: "bot.js",
+      ignore_watch : ["node_modules","public","Data","epubs"],
+      "exec_mode": "cluster_mode",
+      "cron_restart": "30 00 * * *",
+      "log_date_format"  : "YY/MM/DD HH:mm:ss"
+    },
   ],
 };
