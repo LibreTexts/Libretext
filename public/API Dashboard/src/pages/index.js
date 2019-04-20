@@ -21,17 +21,11 @@ class Dashboard extends React.Component {
 		socket.on('welcome', function (data) {
 			console.log(data)
 		});
-		socket.on('page', function (data) {
-			console.log(data)
+		socket.on('error', function (data) {
+			console.error(data)
 		});
 		socket.on('disconnect', function () {
 		});
-		socket.emit('findandreplace',{
-			root: 'https://bio.libretexts.org/Courses/University_of_California_Davis',
-			user: 'hdagnew@ucdavis.edu',
-			find: 'cell',
-			replace: 'life sphere'
-		})
 	}
 	
 	render() {
