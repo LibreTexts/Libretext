@@ -19,10 +19,11 @@ class Dashboard extends React.Component {
 		socket.on('connect', function () {
 		});
 		socket.on('welcome', function (data) {
-			console.log(data)
+			console.log(data);
 		});
-		socket.on('error', function (data) {
-			console.error(data)
+		socket.on('errorMessage', function (data) {
+			console.error(data);
+			alert(data);
 		});
 		socket.on('disconnect', function () {
 		});

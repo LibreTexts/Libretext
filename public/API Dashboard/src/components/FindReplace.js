@@ -8,7 +8,7 @@ export default class FindReplace extends React.Component {
 			root: "",
 			find: "",
 			replace: "",
-			user: document.getElementById('userEmailHolder').textContent,
+			user: document.getElementById('usernameHolder').textContent,
 			results: [],
 			status: '',
 			ID: '',
@@ -123,7 +123,7 @@ export default class FindReplace extends React.Component {
 				<div id="results">
 					{this.state.results.map((page, index) => <div
 						key={this.state.results.length - index}>{this.state.results.length - index} Modified <a
-						target='_blank' href={'/' + page}>{page}</a></div>)}
+						target='_blank' href={page.url}>{page.path}</a></div>)}
 				</div>
 			</div>
 		)

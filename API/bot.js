@@ -93,14 +93,23 @@ async function findAndReplace(input, socket) {
 	
 	await mapLimit(pages, 20, async (page) => {
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
-		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', input.user, input.subdomain);
+		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.user, input.subdomain);
 		if (!content.ok) {
 			console.error("Could not get content from " + path);
+			let error = await content.text();
+			console.error(error);
+			socket.emit('errorMessage', error);
 		}
 		content = await content.text();
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		content = LibreTexts.decodeHTML(content);
+		console.log(content);
 		let result = content.replaceAll(input.find, input.replace);
+		
+/*		if (input.find.includes('&nbsp;')) {
+			result = content.replaceAll(input.find.replaceAll(/&nbsp;/, ''), input.replace);
+		}*/
+		
 		if (result !== content) {
 			count++;
 			/*			const diff = jsdiff.diffWords(content, result);
@@ -129,13 +138,14 @@ async function findAndReplace(input, socket) {
 				let fetchResult = await response.json();
 				let revision = fetchResult.page['@revision'];
 				// console.log(path, revision);
-				socket.emit('page', path);
-				log.push({path: path, revision: revision});
+				let item = {path: path, revision: revision, url: page};
+				socket.emit('page', item);
+				log.push(item);
 			}
 			else {
 				let error = await response.text();
 				console.error(error);
-				socket.emit('error', error);
+				socket.emit('errorMessage', error);
 			}
 		}
 	});
@@ -168,7 +178,7 @@ async function revert(input, socket) {
 	let count = 0;
 	let job = await fs.readJSON(`BotLogs/Completed/${input.user}/${input.ID}.json`);
 	if (job.jobType === 'revert') {
-		socket.emit('error', 'Cannot revert a previous Reversion event');
+		socket.emit('errorMessage', 'Cannot revert a previous Reversion event');
 		return false;
 	}
 	
@@ -193,7 +203,7 @@ async function revert(input, socket) {
 			});
 			if (!response.ok) {
 				let error = await response.text();
-				socket.emit('error', error);
+				socket.emit('errorMessage', error);
 			}
 		}
 		else { //Page Conflict
