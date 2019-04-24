@@ -1,7 +1,7 @@
 class LTForm {
 	static async initialize() {
 		this.formScript = document.currentScript;
-		let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+		let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 		LTForm.keys = await keys.json();
 		
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];

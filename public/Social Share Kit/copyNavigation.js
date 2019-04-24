@@ -424,7 +424,7 @@
 		let headers = {};
 		subdomain = subdomain || current;
 		if (typeof authenticatedFetch.keys === 'undefined') {
-			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 			keys = await keys.json();
 			currentToken = keys[subdomain];
 			authenticatedFetch.keys = keys;

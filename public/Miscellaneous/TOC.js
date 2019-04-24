@@ -121,7 +121,7 @@ async function TOC() {
 			isNumber = true;
 		}
 		if (typeof authenticatedFetch.keys === 'undefined') {
-			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 			authenticatedFetch.keys = await keys.json();
 		}
 		let current = window.location.origin.split('/')[2].split('.')[0];

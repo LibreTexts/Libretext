@@ -348,7 +348,7 @@ template('TranscludeAutoNumTitle');</pre>`;
 	
 	static async getHeaders(subdomain, other = {}) {
 		if (typeof this.keys === 'undefined') {
-			let keys = await fetch('https://api.libretexts.org/endpoint/getKey');
+			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 			this.keys = await keys.json();
 		}
 		if(subdomain.includes('/')){

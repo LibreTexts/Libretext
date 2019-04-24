@@ -80,7 +80,7 @@ async function logCompleted(result) {
 async function findAndReplace(input, socket) {
 	if (!input.root || !input.user || !input.find)
 		socket.emit('Body missing parameters');
-	console.log(`Got ${input.root}`);
+	console.log(`Got ${input.root}  Find:${input.find} Replace:${input.replace}`);
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = 'findAndReplace';
 	let ID = await logStart(input);
@@ -99,16 +99,13 @@ async function findAndReplace(input, socket) {
 			let error = await content.text();
 			console.error(error);
 			socket.emit('errorMessage', error);
+			return false;
 		}
 		content = await content.text();
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		content = LibreTexts.decodeHTML(content);
-		console.log(content);
+		// console.log(content);
 		let result = content.replaceAll(input.find, input.replace);
-		
-/*		if (input.find.includes('&nbsp;')) {
-			result = content.replaceAll(input.find.replaceAll(/&nbsp;/, ''), input.replace);
-		}*/
 		
 		if (result !== content) {
 			count++;
@@ -186,6 +183,7 @@ async function revert(input, socket) {
 		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', input.user, job.subdomain);
 		if (!content.ok) {
 			console.error("Could not get content from " + page.path);
+			return false;
 		}
 		content = await content.json();
 		let currentRevision = content['@revision'];
@@ -230,5 +228,6 @@ async function revert(input, socket) {
 String.prototype.replaceAll = function (search, replacement) {
 	const target = this;
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	search = search.replace(/\\\*/g, "."); //wildcard
 	return target.replace(new RegExp(search, 'g'), replacement);
 };
