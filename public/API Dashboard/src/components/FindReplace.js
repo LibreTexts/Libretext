@@ -43,8 +43,9 @@ export default class FindReplace extends React.Component {
 			alert(`The server has denied your request due to incomplete parameters. Please revise and try again\n${data}`)
 		});
 		this.socket.on('errorMessage', function (data) {
-			console.error(data);
-			alert(data);
+			if (!data.noAlert)
+				alert(data.message || data);
+			console.error(data.message || data);
 		});
 	}
 	
@@ -107,7 +108,7 @@ export default class FindReplace extends React.Component {
 		switch (this.state.status) {
 			case 'working':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
-					Find{this.state.findOnly ?'':' and Replace'} In Progress
+					Find{this.state.findOnly ? '' : ' and Replace'} In Progress
 					<div className="spinner">
 						<div className="bounce1"/>
 						<div className="bounce2"/>

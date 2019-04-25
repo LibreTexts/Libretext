@@ -104,7 +104,10 @@ async function findAndReplace(input, socket) {
 			console.error("Could not get content from " + path);
 			let error = await content.text();
 			console.error(error);
-			socket.emit('errorMessage', error);
+			socket.emit('errorMessage', {
+				noAlert: true,
+				message: error
+			});
 			return false;
 		}
 		content = await content.text();
