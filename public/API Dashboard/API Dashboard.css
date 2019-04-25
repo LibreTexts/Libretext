@@ -8,11 +8,59 @@
 	margin: 20px 5px 20px 5px;
 }
 
+.CenterContainer > .navigationBar {
+	border-radius: 10px;
+	color: white;
+	background-color: #127bc4;
+	display: flex;
+	align-items: center;
+	margin: 10px 0;
+	padding: 10px;
+}
+
+.navigationBar select, .navigationBar > option {
+	background: #127bc4;
+	width: fit-content;
+	color: white;
+}
+
 #results {
 	white-space: pre;
 	max-height: 400px;
 	overflow-y: scroll;
 }
+
+#FindReplace {
+	display: flex;
+	flex-direction: column;
+}
+
+.topPanel {
+	display: flex;
+	margin: 0px 10px;
+}
+
+.topPanel > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: stretch;
+	flex: 1;
+	padding: 10px;
+	background-color: #f3f3f3;
+	border-radius: 10px;
+	margin: 5px;
+}
+.topPanel label{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.topPanel label:after {
+	content: none;
+}
+
+
 
 /*CSS Spinner*/
 .spinner {

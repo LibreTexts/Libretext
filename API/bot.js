@@ -85,6 +85,12 @@ async function findAndReplace(input, socket) {
 	input.jobType = 'findAndReplace';
 	let ID = await logStart(input);
 	socket.emit('findReplaceID', ID);
+	
+	if (input.root.match(/\.libretexts\.org\/?$/)) {
+		input.root = `https://${input.subdomain}.libretexts.org/home`;
+		console.log(`Working on root ${input.subdomain}`);
+	}
+	
 	let pages = LibreTexts.getSubpages(input.root, input.user);
 	pages = LibreTexts.addLinks(await pages);
 	// console.log(pages);
@@ -105,7 +111,7 @@ async function findAndReplace(input, socket) {
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		content = LibreTexts.decodeHTML(content);
 		// console.log(content);
-		let result = content.replaceAll(input.find, input.replace);
+		let result = content.replaceAll(input.find, input.replace, input.isWildcard);
 		
 		if (result !== content) {
 			count++;
@@ -120,8 +126,8 @@ async function findAndReplace(input, socket) {
 						});*/
 			
 			//send update
-			const live = true;
-			if (!live) {
+			if (input.findOnly) {
+				socket.emit('page', {path: path, url: page});
 				return false;
 			}
 			let token = LibreTexts.authenticate(input.user, input.subdomain);
@@ -160,8 +166,9 @@ async function findAndReplace(input, socket) {
 		},
 		pages: log,
 	};
-	await logCompleted(result);
-	socket.emit('findReplaceDone', ID);
+	if (!input.findOnly)
+		await logCompleted(result);
+	socket.emit('findReplaceDone', input.findOnly ? null : ID);
 	
 }
 
@@ -173,6 +180,11 @@ async function revert(input, socket) {
 	let ID = await logStart(input);
 	socket.emit('revertID', ID);
 	let count = 0;
+	if (!await fs.exists(`BotLogs/Completed/${input.user}/${input.ID}.json`)) {
+		socket.emit('errorMessage', `JobID ${input.ID} is not valid for user ${input.user}.`);
+		console.error(`JobID ${input.ID} is not valid for user ${input.user}.`);
+		return false;
+	}
 	let job = await fs.readJSON(`BotLogs/Completed/${input.user}/${input.ID}.json`);
 	if (job.jobType === 'revert') {
 		socket.emit('errorMessage', 'Cannot revert a previous Reversion event');
@@ -225,9 +237,12 @@ async function revert(input, socket) {
 	socket.emit('revertDone', ID);
 }
 
-String.prototype.replaceAll = function (search, replacement) {
+String.prototype.replaceAll = function (search, replacement, isWildcard) {
 	const target = this;
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	search = search.replace(/\\\*/g, "."); //wildcard
+	if (isWildcard) {
+		search = search.replace(/\\\?/g, "."); //wildcard single
+		search = search.replace(/\\\*/g, "[\s\S]*?"); //wildcard multi
+	}
 	return target.replace(new RegExp(search, 'g'), replacement);
 };

@@ -94,7 +94,7 @@ if (!window["batchPrint.js"]) {
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
 				getTOCLink.rel = "nofollow";
-				getTOCLink.href = `https://dynamic.libretexts.org/print/toc=${url}`;
+				getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
 			}
 		}
 	}

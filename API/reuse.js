@@ -26,6 +26,9 @@ async function authenticatedFetch(path, api, username, subdomain) {
 		path = parseInt(path);
 		isNumber = true;
 	}
+	if (path === 'home') {
+		isNumber = true;
+	}
 	if (!username) {
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`);
 	}

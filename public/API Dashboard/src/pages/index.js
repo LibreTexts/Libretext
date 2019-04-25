@@ -12,27 +12,40 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
-	}
-	
-	componentDidMount() {
-		const socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
-		socket.on('connect', function () {
-		});
-		socket.on('welcome', function (data) {
-			console.log(data);
-		});
-		socket.on('errorMessage', function (data) {
-			console.error(data);
-			alert(data);
-		});
-		socket.on('disconnect', function () {
-		});
+		this.state = {
+			panel: 'FindAndReplace'
+		}
 	}
 	
 	render() {
 		return <div className={'CenterContainer'}>
-			<FindReplace/>
+			<div className="navigationBar">
+				<select onChange={this.setPanel} defaultValue={this.state.panel}>
+					<option value={'Revisions'}>Revision Log</option>
+					<option value={'FindAndReplace'}>Find and Replace</option>
+					<option value={'DeadLinks'}>Dead link killer</option>
+					<option value={'HeaderPromoter'}>Header promoter</option>
+				</select>
+			</div>
+			{this.getPanel()}
 		</div>
+	}
+	
+	getPanel() {
+		switch (this.state.panel) {
+			case "Revisions":
+				return null;
+			case "FindAndReplace":
+				return <FindReplace/>;
+			case "DeadLinks":
+				return null;
+			case "HeaderPromoter":
+				return null;
+		}
+	}
+	
+	setPanel = (event) => {
+		this.setState({panel: event.target.value});
 	}
 	
 }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] ]"
+    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ]"
   },
   "author": "",
   "license": "ISC",
@@ -15,12 +15,14 @@
     "react-dom": "^16.8.1",
     "react-helmet": "^5.2.0",
     "react-search-field": "^1.0.0",
-    "react-textfit": "^1.1.0"
+    "react-textfit": "^1.1.0",
+    "react-toggle": "^4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0"
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "latest"
   }
 }

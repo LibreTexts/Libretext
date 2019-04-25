@@ -1,4 +1,5 @@
 import React from 'react';
+import Toggle from 'react-toggle';
 
 
 export default class FindReplace extends React.Component {
@@ -9,6 +10,10 @@ export default class FindReplace extends React.Component {
 			find: "",
 			replace: "",
 			user: document.getElementById('usernameHolder').textContent,
+			isWildcard: false,
+			findOnly: false,
+			
+			
 			results: [],
 			status: '',
 			ID: '',
@@ -27,8 +32,8 @@ export default class FindReplace extends React.Component {
 		this.socket.on('findReplaceID', (data) => {
 			this.setState({ID: data});
 		});
-		this.socket.on('findReplaceDone', () => {
-			this.setState({status: 'done'});
+		this.socket.on('findReplaceDone', (data) => {
+			this.setState({status: 'done', ID: data});
 		});
 		this.socket.on('revertDone', () => {
 			alert(`Revert of ${this.state.ID} complete`);
@@ -37,7 +42,16 @@ export default class FindReplace extends React.Component {
 		this.socket.on('Body missing parameters', (data) => {
 			alert(`The server has denied your request due to incomplete parameters. Please revise and try again\n${data}`)
 		});
+		this.socket.on('errorMessage', function (data) {
+			console.error(data);
+			alert(data);
+		});
 	}
+	
+	componentWillUnmount() {
+		this.socket.disconnect();
+	}
+	
 	
 	verifyRequest() {
 		let request = {
@@ -45,6 +59,8 @@ export default class FindReplace extends React.Component {
 			user: this.state.user,
 			find: this.state.find,
 			replace: this.state.replace,
+			isWildcard: this.state.isWildcard,
+			findOnly: this.state.findOnly,
 		};
 		
 		if (!request.find || !request.root) {
@@ -60,6 +76,9 @@ export default class FindReplace extends React.Component {
 				alert('Search term did not match...Cancelling');
 			}
 		}
+		else if (confirm(`The bot will find all pages with "${request.find}". No Changes will be made.`)) {
+			this.sendRequest(request);
+		}
 		else if (confirm(`The bot will replace "${request.find}" with "${request.replace}". Click OK to proceed.`)) {
 			this.sendRequest(request);
 		}
@@ -71,13 +90,15 @@ export default class FindReplace extends React.Component {
 	}
 	
 	revert() {
-		if (!this.state.ID) {
-			alert('No ID!');
-			return false;
+		let id = this.state.ID;
+		if (!id) {
+			id = prompt('Please enter in the id of the revision you would like to revert');
+			if (!id)
+				return false;
 		}
 		let request = {
 			user: this.state.user,
-			ID: this.state.ID,
+			ID: id,
 		};
 		this.socket.emit('revert', request);
 	}
@@ -86,7 +107,7 @@ export default class FindReplace extends React.Component {
 		switch (this.state.status) {
 			case 'working':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
-					Find and Replace In Progress
+					Find{this.state.findOnly ?'':' and Replace'} In Progress
 					<div className="spinner">
 						<div className="bounce1"/>
 						<div className="bounce2"/>
@@ -105,25 +126,43 @@ export default class FindReplace extends React.Component {
 	
 	render() {
 		return (
-			<div>
-				Find and Replace
-				<input placeholder="URL" onChange={(event) => {
-					this.setState({root: event.target.value})
-				}}/>
-				<input placeholder="Find" onChange={(event) => {
-					this.setState({find: event.target.value})
-				}}/>
-				<input placeholder="Replace" onChange={(event) => {
-					this.setState({replace: event.target.value})
-				}}/>
-				<button onClick={() => this.verifyRequest()}>Verify Request</button>
-				{this.state.ID && this.state.status === 'done' ?
-					<button onClick={() => this.revert()}>Revert Request {this.state.ID}</button> : null}
-				{this.getStatus()}
-				<div id="results">
-					{this.state.results.map((page, index) => <div
-						key={this.state.results.length - index}>{this.state.results.length - index} Modified <a
-						target='_blank' href={page.url}>{page.path}</a></div>)}
+			<div id="FindReplace">
+				<div className="topPanel">
+					<div><input placeholder="URL" onChange={(event) => {
+						this.setState({root: event.target.value})
+					}}/>
+						<input placeholder="Find" onChange={(event) => {
+							this.setState({find: event.target.value})
+						}}/>
+						<input placeholder="Replace" onChange={(event) => {
+							this.setState({replace: event.target.value})
+						}}/>
+						<div>
+							<button onClick={() => this.verifyRequest()}>Verify Request</button>
+							<button onClick={() => this.revert()}>Revert Request {this.state.ID}</button>
+						</div>
+					</div>
+					<div>
+						<label>
+							<Toggle onChange={() => this.setState({isWildcard: !this.state.isWildcard})}
+							        defaultChecked={this.state.isWildcard}/>
+							<span>Enable Wildcards (? or *)</span>
+						</label>
+						<label>
+							<Toggle onChange={() => this.setState({findOnly: !this.state.findOnly})}
+							        defaultChecked={this.state.findOnly}/>
+							<span>Find pages but do not modify (read only mode)</span>
+						</label>
+					</div>
+				</div>
+				
+				<div>
+					{this.getStatus()}
+					<div id="results">
+						{this.state.results.map((page, index) => <div
+							key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found' : 'Modified'}
+							<a target='_blank' href={page.url}>{page.path}</a></div>)}
+					</div>
 				</div>
 			</div>
 		)
