@@ -954,7 +954,7 @@ puppeteer.launch({
 				err = e;
 			}
 			
-			if ((working[escapedURL] && Date.now() - working[escapedURL] > 120000)) {
+			if ((working[escapedURL] && Date.now() - working[escapedURL] > 60000)) {
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
 			
@@ -1486,6 +1486,7 @@ async function getSubpages(rootURL, options = {}) {
 	let origin = rootURL.split("/")[2].split(".");
 	const subdomain = origin[0];
 	let path = rootURL.split('/').splice(3).join('/');
+	options['depth'] = 0;
 	
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 	pages = await pages.json();
@@ -1553,8 +1554,10 @@ async function getSubpages(rootURL, options = {}) {
 			if (hasChildren) { //recurse down
 				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 				children = await children.json();
-				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {delay: options.delay} : {});
-			}
+				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
+					delay: options.delay,
+					depth: options.depth
+				} : {});			}
 			
 			result[index] = {
 				title: subpage.title,
@@ -1573,7 +1576,7 @@ async function getSubpages(rootURL, options = {}) {
 				subpageArray = [subpageArray];
 			}
 			for (let i = 0; i < subpageArray.length; i++) {
-				if (options.delay) {
+				if (options.delay && options.depth < 3) {
 					console.log(`Delay ${subpageArray[i]["uri.ui"]}`);
 					await subpage(subpageArray[i], i, {delay: options.delay});
 				}

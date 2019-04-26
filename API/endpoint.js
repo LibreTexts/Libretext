@@ -107,20 +107,40 @@ async function handler(request, response) {
 				if (input.key !== secure["IIAB"]) {
 					responseError(`Invalid Key`, 403);
 				}
+				switch (input.action) {
+					case 'hierarchy':
+						const rootURL = input.rootURL;
+						console.time(`Hierarchy: ${rootURL}`);
+						response.write(JSON.stringify({url:`https://api.libretexts.org/Hierarchy/${filenamify(rootURL)}.json`}));
+						response.end();
+						let finalResult = await LibreTexts.getSubpages(rootURL, null, {
+							getDetails: input.getDetails,
+							getContents: input.getContents,
+							delay: true
+						});
+						console.timeEnd(`Hierarchy: ${rootURL}`);
+						await fs.ensureDir(`./public/Hierarchy`);
+						await fs.writeFile(`./public/Hierarchy/${filenamify(rootURL)}.json`, JSON.stringify(finalResult));
+						// response.write(JSON.stringify(finalResult));
+						break;
+					case 'contents':
+					default:
+						let requests = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(input.path))}/contents`, {
+							headers: {
+								'x-deki-token': authenBrowser[input.subdomain],
+								'x-requested-with': 'XMLHttpRequest',
+								'origin': 'https://api.libretexts.org'
+							}
+						});
+						if (requests.ok)
+							response.write(await requests.text());
+						else
+							responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+						break;
+				}
 				
-				let requests = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(input.path))}/contents`, {
-					headers: {
-						'x-deki-token': authenBrowser[input.subdomain],
-						'x-requested-with': 'XMLHttpRequest',
-						'origin': 'https://api.libretexts.org'
-					}
-				});
-				if (requests.ok)
-					response.write(await requests.text());
-				else
-					responseError(`${requests.statusText}\n${await requests.text()}`, 400);
-				
-				response.end();
+				if (!response.finished)
+					response.end();
 			});
 		}
 		else {
@@ -188,10 +208,10 @@ async function handler(request, response) {
 				
 				let input = JSON.parse(body);
 				const username = input.username;
-				const rootURL = input.root;
-				
-				let finalResult = await LibreTexts.getSubpages(rootURL, username);
-				console.log(`Subpages: ${rootURL}`);
+				const rootURL = input.rootURL;
+				console.time(`Subpages: ${rootURL}`);
+				let finalResult = await LibreTexts.getSubpages(rootURL, username, {getDetails: true, delay: true});
+				console.timeEnd(`Subpages: ${rootURL}`);
 				response.write(JSON.stringify(finalResult));
 				response.end();
 			});
@@ -216,7 +236,7 @@ async function handler(request, response) {
 			} : {"Content-Type": " application/json", "Cache-Control": "public, max-age=36000",});
 			
 			let subdomain = url.split('/getAuthors/')[1];
-			let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', authen["getAuthors"], subdomain);
+			let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen["public"]);
 			if (contents.ok) {
 				contents = await contents.text();
 				let match = contents.match(/^var authors = {[\s\S]*?^}/m);

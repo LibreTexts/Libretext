@@ -99,7 +99,7 @@ async function findAndReplace(input, socket) {
 	
 	await mapLimit(pages, 20, async (page) => {
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
-		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.user, input.subdomain);
+		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
 		if (!content.ok) {
 			console.error("Could not get content from " + path);
 			let error = await content.text();
@@ -114,7 +114,7 @@ async function findAndReplace(input, socket) {
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		content = LibreTexts.decodeHTML(content);
 		// console.log(content);
-		let result = content.replaceAll(input.find, input.replace, input.isWildcard);
+		let result = content.replaceAll(input.find, input.replace, input);
 		
 		if (result !== content) {
 			count++;
@@ -195,7 +195,7 @@ async function revert(input, socket) {
 	}
 	
 	await mapLimit(job.pages, 20, async (page) => {
-		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', input.user, job.subdomain);
+		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', job.subdomain, input.user);
 		if (!content.ok) {
 			console.error("Could not get content from " + page.path);
 			return false;
@@ -207,7 +207,8 @@ async function revert(input, socket) {
 		if (!live) {
 			return false;
 		}
-		if (page.revision && currentRevision === page.revision) { //unchanged
+		//page.revision && currentRevision === page.revision
+		if (true) { //unchanged
 			let token = LibreTexts.authenticate(input.user, job.subdomain);
 			let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
 			let response = await fetch(url, {
@@ -240,12 +241,16 @@ async function revert(input, socket) {
 	socket.emit('revertDone', ID);
 }
 
-String.prototype.replaceAll = function (search, replacement, isWildcard) {
+String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	if (isWildcard) {
+	if (input.isWildcard) {
 		search = search.replace(/\\\?/g, "."); //wildcard single
-		search = search.replace(/\\\*/g, "[\s\S]*?"); //wildcard multi
+		search = search.replace(/\\\*/g, ".*?"); //wildcard multi [\\s\\S]
+	}
+	if (input.newlines) {
+		let b4 = search;
+		search = search.replace(/\\\\n/g, "\n"); //add newlines
 	}
 	return target.replace(new RegExp(search, 'g'), replacement);
 };
