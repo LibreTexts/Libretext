@@ -2,6 +2,7 @@
   "name": "Bots",
   "version": "1.0.0",
   "dependencies": {
+    "JSONStream": "^1.3.5",
     "async": "^2.6.2",
     "btoa": "^1.2.1",
     "console-timestamp": "^0.3.0",

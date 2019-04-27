@@ -75,6 +75,7 @@ async function logCompleted(result) {
 	await fs.writeJSON(`BotLogs/Completed/${result.user}/${result.ID}.json`, result);
 	await fs.remove(`BotLogs/Working/${result.user}/${result.ID}.json`);
 	await fs.appendFile(`BotLogs/Users/${result.user}.csv`, `${result.ID},`);
+	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result));
 }
 
 async function findAndReplace(input, socket) {
@@ -134,7 +135,7 @@ async function findAndReplace(input, socket) {
 				return false;
 			}
 			let token = LibreTexts.authenticate(input.user, input.subdomain);
-			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=[BOT] Replaced "${input.find}" with "${input.replace}."`;
+			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
 			let response = await fetch(url, {
 				method: 'POST',
 				body: result,

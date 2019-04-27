@@ -73,16 +73,20 @@ async function getSubpages(rootURL, username, options = {}) {
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
 	pages = await pages.json();
 	
-	return {
+	let contentsArray = [{url: rootURL, id: info['@id'], contents: contents}];
+	let result = {
 		title: info.title,
 		url: rootURL,
-		contents: contents,
 		tags: tags,
 		properties: properties,
 		subdomain: subdomain,
 		children: await subpageCallback(pages, options),
 		id: info['@id'],
 	};
+	if (options.getContents)
+		return [result, contentsArray];
+	else
+		return result;
 	
 	
 	async function subpageCallback(info, options = {}) {
@@ -105,10 +109,10 @@ async function getSubpages(rootURL, username, options = {}) {
 					getContents: options.getContents
 				} : {getContents: options.getContents});
 			}
+			contentsArray.push({url: url, id: subpage['@id'], contents: contents});
 			result[index] = {
 				title: subpage.title,
 				url: url,
-				contents: contents,
 				tags: tags,
 				properties: properties,
 				subdomain: subdomain,

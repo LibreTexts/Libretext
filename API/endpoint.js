@@ -5,6 +5,7 @@ const server = http.createServer(handler);
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const secure = require('./secure.json');
+const JSONStream = require("JSONStream");
 const fetch = require("node-fetch");
 const fs = require('fs-extra');
 const md5 = require('md5');
@@ -111,18 +112,33 @@ async function handler(request, response) {
 					case 'hierarchy':
 						const rootURL = input.rootURL;
 						console.time(`Hierarchy: ${rootURL}`);
-						response.write(JSON.stringify({url:`https://api.libretexts.org/Hierarchy/${filenamify(rootURL)}.json`}));
+						response.write(JSON.stringify({url: `https://api.libretexts.org/Hierarchy/${filenamify(rootURL)}.json`}));
 						response.end();
+						
 						let finalResult = await LibreTexts.getSubpages(rootURL, null, {
 							getDetails: input.getDetails,
 							getContents: input.getContents,
 							delay: true
 						});
 						console.timeEnd(`Hierarchy: ${rootURL}`);
+						
+						//write subpages (and contents) to the disk
 						await fs.ensureDir(`./public/Hierarchy`);
-						await fs.writeFile(`./public/Hierarchy/${filenamify(rootURL)}.json`, JSON.stringify(finalResult));
-						// response.write(JSON.stringify(finalResult));
+						if (!input.getContents)
+							await fs.writeFile(`./public/Hierarchy/${filenamify(rootURL)}.json`, JSON.stringify([finalResult]));
+						else {
+							//streaming due to large filesizes
+							let resultStream = JSONStream.stringify();
+							let outStream = fs.createWriteStream(`./public/Hierarchy/${filenamify(rootURL)}.json`);
+							resultStream.pipe(outStream);
+							resultStream.write(finalResult[0]);
+							let contentArray = finalResult[1];
+							contentArray.forEach((item)=>resultStream.write(item));
+							resultStream.end();
+							// response.write(JSON.stringify(finalResult));
+						}
 						break;
+						
 					case 'contents':
 					default:
 						let requests = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(input.path))}/contents`, {
@@ -236,7 +252,7 @@ async function handler(request, response) {
 			} : {"Content-Type": " application/json", "Cache-Control": "public, max-age=36000",});
 			
 			let subdomain = url.split('/getAuthors/')[1];
-			let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen["public"]);
+			let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen["getAuthors"]);
 			if (contents.ok) {
 				contents = await contents.text();
 				let match = contents.match(/^var authors = {[\s\S]*?^}/m);
