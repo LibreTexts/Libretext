@@ -134,7 +134,7 @@ async function findAndReplace(input, socket) {
 				return false;
 			}
 			let token = LibreTexts.authenticate(input.user, input.subdomain);
-			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json`;
+			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=[BOT] Replaced "${input.find}" with "${input.replace}."`;
 			let response = await fetch(url, {
 				method: 'POST',
 				body: result,
@@ -243,14 +243,20 @@ async function revert(input, socket) {
 
 String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
+	let b4 = search;
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	if (input.isWildcard) {
-		search = search.replace(/\\\?/g, "."); //wildcard single
-		search = search.replace(/\\\*/g, ".*?"); //wildcard multi [\\s\\S]
-	}
+	
 	if (input.newlines) {
-		let b4 = search;
 		search = search.replace(/\\\\n/g, "\n"); //add newlines
+		if (input.isWildcard) {
+			search = search.replace(/\\\?/g, "[\\s\\S]"); //wildcard single
+			search = search.replace(/\\\*/g, "[\\s\\S]*?"); //wildcard multi
+		}
 	}
+	else if (input.isWildcard) {
+			search = search.replace(/\\\?/g, "."); //wildcard single
+			search = search.replace(/\\\*/g, ".*?"); //wildcard multi
+	}
+	// console.log(b4, search);
 	return target.replace(new RegExp(search, 'g'), replacement);
 };

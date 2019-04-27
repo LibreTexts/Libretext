@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added silenced alerts">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,16 +26,40 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+        <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="110" column="37" lean-forward="true" selection-start-line="110" selection-start-column="37" selection-end-line="110" selection-end-column="37" />
+            <state relative-caret-position="203">
+              <caret line="249" column="63" lean-forward="true" selection-start-line="249" selection-start-column="63" selection-end-line="249" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1886">
+              <caret line="83" column="9" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
               <folding>
-                <element signature="e#1057#1835#0" />
-                <element signature="e#1875#3085#0" />
-                <element signature="e#5101#6464#0" />
-                <element signature="e#6564#7750#0" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/authen.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="8" column="75" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -58,8 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getKEy</find>
-      <find>getkey</find>
       <find>getk</find>
       <find>ltform</find>
       <find>Waiting</find>
@@ -88,6 +108,8 @@
       <find>depth</find>
       <find>initialdepth</find>
       <find>replaceAll</find>
+      <find>move</find>
+      <find>Verify</find>
     </findStrings>
     <replaceStrings>
       <replace>computer</replace>
@@ -185,9 +207,9 @@
         <option value="$PROJECT_DIR$/API/authen.json" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/API/reuse.js" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
       </list>
     </option>
   </component>
@@ -198,9 +220,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="width" value="1301" />
-    <option name="height" value="1391" />
+    <option name="x" value="-12" />
+    <option name="width" value="1302" />
+    <option name="height" value="1392" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -217,6 +239,11 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -477,8 +504,8 @@
       <item itemvalue="HTTP Request.API#2" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
-      <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.endpoint.js" />
+      <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
@@ -990,6 +1017,7 @@
       <workItem from="1556073897882" duration="328000" />
       <workItem from="1556164923368" duration="9207000" />
       <workItem from="1556239609086" duration="15991000" />
+      <workItem from="1556320166087" duration="15000" />
     </task>
     <task id="LOCAL-00129" summary="Fixed printYoutube Halpern">
       <created>1550812384484</created>
@@ -1370,15 +1398,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1514760000" />
+    <option name="totallyTimeSpent" value="1517740000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.1487056" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.20030235" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.31766382" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.27066666" />
@@ -1390,9 +1418,9 @@
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49848944" weight="0.26933333" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" weight="0.19866666" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="11" sideWeight="0.5049131" side_tool="true" visible="true" weight="0.19800569" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" visible="true" weight="0.22533333" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49508694" weight="0.22533333" />
       <window_info anchor="bottom" id="REST Client" order="14" weight="0.47733334" />
       <window_info anchor="bottom" id="Favorites" order="15" weight="0.32905984" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1646,8 +1674,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/README.md">
-      <provider editor-type-id="text-editor" />
-      <provider editor-type-id="restructured-text-editor" />
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="432">
@@ -1656,6 +1682,8 @@
           <second_editor />
         </state>
       </provider>
+      <provider editor-type-id="restructured-text-editor" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -1846,16 +1874,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="251" column="30" selection-start-line="251" selection-start-column="30" selection-end-line="251" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/pages/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1032">
@@ -1877,13 +1895,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
           <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" column="75" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="75" />
         </state>
       </provider>
     </entry>
@@ -1912,13 +1923,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="141" column="61" selection-start-line="141" selection-start-column="49" selection-end-line="141" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/authen.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="53" column="37" lean-forward="true" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -1985,16 +1989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="979">
-          <caret line="252" column="63" selection-start-line="252" selection-start-column="63" selection-end-line="252" selection-end-column="63" />
-          <folding>
-            <element signature="n#!!block;n#handler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/reuse.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -2005,16 +1999,6 @@
             <element signature="n#!!block;n#authenticate#0" />
             <element signature="n#!!block;n#addLinks#0" />
             <element signature="n#!!block;n#extractSubdomain#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="151" column="32" selection-start-line="151" selection-start-column="32" selection-end-line="151" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2032,5 +2016,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="664" column="12" selection-start-line="664" selection-start-column="12" selection-end-line="664" selection-end-column="12" />
+          <folding>
+            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="249" column="63" lean-forward="true" selection-start-line="249" selection-start-column="63" selection-end-line="249" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1886">
+          <caret line="83" column="9" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authen.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/authenBrowser.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="75" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

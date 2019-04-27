@@ -78,8 +78,9 @@ export default class FindReplace extends React.Component {
 				alert('Search term did not match...Cancelling');
 			}
 		}
-		else if (confirm(`The bot will find all pages with "${request.find}". No Changes will be made.`)) {
-			this.sendRequest(request);
+		else if (request.findOnly) {
+			if (confirm(`The bot will find all pages with "${request.find}". No Changes will be made.`))
+				this.sendRequest(request);
 		}
 		else if (confirm(`The bot will replace "${request.find}" with "${request.replace}". Click OK to proceed.`)) {
 			this.sendRequest(request);
