@@ -168,7 +168,7 @@ export default class FindReplace extends React.Component {
 					{this.getStatus()}
 					<div id="results">
 						{this.state.results.map((page, index) => <div
-							key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found' : 'Modified'}
+							key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found ' : 'Modified '}
 							<a target='_blank' href={page.url}>{page.path}</a></div>)}
 					</div>
 				</div>

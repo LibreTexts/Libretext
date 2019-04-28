@@ -3,7 +3,7 @@ const timestamp = require("console-timestamp");
 const server = http.createServer(handler);
 const io = require('socket.io')(server, {path: '/bot/ws'});
 const nodeStatic = require('node-static');
-const staticFileServer = new nodeStatic.Server('./node_modules/socket.io-client/dist');
+const staticFileServer = new nodeStatic.Server('./BotLogs');
 const fs = require('fs-extra');
 const authen = require('./authen.json');
 const fetch = require("node-fetch");
@@ -31,10 +31,20 @@ async function handler(request, response) {
 	
 	if (url.startsWith('/websocketclient')) {
 		//Serve client socket.io Javascript file
-		staticFileServer.serveFile('./socket.io.js', 200, {}, request, response);
+		staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
 	}
 	else if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 		responseError('Unauthorized', 401);
+	}
+	else if (url.startsWith('/Logs/')) {
+		request.url = request.url.replace("bot/Logs/", "");
+		console.log(request.url);
+		staticFileServer.serve(request, response, function (error, res) {
+			//on error
+			if (error && error.status === 404) {//404 File not Found
+				staticFileServer.serveFile("../public/404.html", 404, {}, request, response);
+			}
+		});
 	}
 	else {
 		responseError('Action not found', 400);
@@ -75,12 +85,15 @@ async function logCompleted(result) {
 	await fs.writeJSON(`BotLogs/Completed/${result.user}/${result.ID}.json`, result);
 	await fs.remove(`BotLogs/Working/${result.user}/${result.ID}.json`);
 	await fs.appendFile(`BotLogs/Users/${result.user}.csv`, `${result.ID},`);
-	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result));
+	if (result.pages)
+		delete result.pages;
+	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result) + '\n');
 }
 
 async function findAndReplace(input, socket) {
 	if (!input.root || !input.user || !input.find)
 		socket.emit('Body missing parameters');
+	input.root = input.root.replace(/\/$/, "");
 	console.log(`Got ${input.root}  Find:${input.find} Replace:${input.replace}`);
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = 'findAndReplace';
@@ -198,7 +211,7 @@ async function revert(input, socket) {
 	await mapLimit(job.pages, 20, async (page) => {
 		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', job.subdomain, input.user);
 		if (!content.ok) {
-			console.error("Could not get content from " + page.path);
+			console.error("Could not get page info from " + page.path);
 			return false;
 		}
 		content = await content.json();
@@ -255,8 +268,8 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		}
 	}
 	else if (input.isWildcard) {
-			search = search.replace(/\\\?/g, "."); //wildcard single
-			search = search.replace(/\\\*/g, ".*?"); //wildcard multi
+		search = search.replace(/\\\?/g, "."); //wildcard single
+		search = search.replace(/\\\*/g, ".*?"); //wildcard multi
 	}
 	// console.log(b4, search);
 	return target.replace(new RegExp(search, 'g'), replacement);
