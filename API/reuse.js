@@ -14,6 +14,7 @@ let LibreTextsFunctions = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
 	clarifySubdomain: clarifySubdomain,
+	encodeHTML: encodeHTML,
 	decodeHTML: decodeHTML,
 	authenticate: authenticate,
 	addLinks: addLinks,
@@ -198,6 +199,16 @@ function decodeHTML(content) {
 	ret = ret.replace(/&quot;/g, '"');
 	ret = ret.replace(/&apos;/g, "'");
 	ret = ret.replace(/&amp;/g, '&');
+	return ret;
+}
+
+function encodeHTML(content) {
+	let ret = content;
+	ret = ret.replace(/&/g, '&amp;');
+	ret = ret.replace(/>/g, '&gt;');
+	ret = ret.replace(/</g, '&lt;');
+	ret = ret.replace(/"/g, '&quot;');
+	ret = ret.replace(/'/g, "&apos;");
 	return ret;
 }
 

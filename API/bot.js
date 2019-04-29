@@ -38,7 +38,6 @@ async function handler(request, response) {
 	}
 	else if (url.startsWith('/Logs/')) {
 		request.url = request.url.replace("bot/Logs/", "");
-		console.log(request.url);
 		staticFileServer.serve(request, response, function (error, res) {
 			//on error
 			if (error && error.status === 404) {//404 File not Found
@@ -271,6 +270,7 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		search = search.replace(/\\\?/g, "."); //wildcard single
 		search = search.replace(/\\\*/g, ".*?"); //wildcard multi
 	}
+	search = LibreTexts.encodeHTML(search);
 	// console.log(b4, search);
 	return target.replace(new RegExp(search, 'g'), replacement);
 };

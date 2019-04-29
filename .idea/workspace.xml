@@ -4,8 +4,7 @@
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,28 +22,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="39" column="51" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+            <state relative-caret-position="192">
+              <caret line="23" column="59" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/reuse.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="68" selection-end-column="60" />
+            <state relative-caret-position="360">
+              <caret line="208" column="36" lean-forward="true" selection-start-line="208" selection-start-column="36" selection-end-line="208" selection-end-column="36" />
               <folding>
-                <element signature="e#3954#5284#0" />
-                <element signature="e#5337#6145#0" />
-                <element signature="e#6183#6415#0" />
-                <element signature="e#6458#6823#0" />
-                <element signature="e#6865#7067#0" />
-                <element signature="e#7110#7602#0" />
-                <element signature="e#7781#11542#0" />
+                <element signature="n#!!block;n#clarifySubdomain#0" />
+                <element signature="n#!!block;n#authenticate#0" />
+                <element signature="n#!!block;n#addLinks#0" />
+                <element signature="n#!!block;n#extractSubdomain#0" />
               </folding>
             </state>
           </provider>
@@ -191,10 +187,10 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/API Dashboard.css" />
         <option value="$PROJECT_DIR$/API/authen.json" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
-        <option value="$PROJECT_DIR$/API/reuse.js" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
+        <option value="$PROJECT_DIR$/API/reuse.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
@@ -218,6 +214,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,7 +247,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -395,7 +391,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.API Dashboard">
+  <component name="RunManager" selected="Node.js.bot.js">
     <configuration name="API#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/API/API.http" index="2">
       <method v="2" />
     </configuration>
@@ -996,14 +992,8 @@
       <workItem from="1556320166087" duration="15000" />
       <workItem from="1556337341286" duration="4060000" />
       <workItem from="1556491622674" duration="1533000" />
-      <workItem from="1556493507272" duration="1270000" />
-    </task>
-    <task id="LOCAL-00131" summary="Added subdomain">
-      <created>1550857078326</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1550857078326</updated>
+      <workItem from="1556493507272" duration="1419000" />
+      <workItem from="1556507530361" duration="672000" />
     </task>
     <task id="LOCAL-00132" summary="Hiding OEW on mobile">
       <created>1550902498646</created>
@@ -1341,7 +1331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556342395179</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <task id="LOCAL-00180" summary="Added log export">
+      <created>1556494801783</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1556494801783</updated>
+    </task>
+    <option name="localTasksCounter" value="181" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1377,7 +1374,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1531697000" />
+    <option name="totallyTimeSpent" value="1532602000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1385,7 +1382,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.29259482" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.2962071" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.31766382" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.27066666" />
@@ -1396,7 +1393,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26933333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" visible="true" weight="0.26933333" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.22533333" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49428055" weight="0.22533333" />
@@ -1505,7 +1502,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="[Needs Testing] hidetop:solutions" />
     <MESSAGE value="Temporarily Disabled Cleanup" />
     <MESSAGE value="Added Refresh chaining&#10;&#10;Also extended printPDF timeout" />
     <MESSAGE value="Removed throw failed" />
@@ -1530,7 +1526,8 @@
     <MESSAGE value="Added wildcard and read-only&#10;&#10;Bugfixed root page" />
     <MESSAGE value="Added silenced alerts" />
     <MESSAGE value="Added streaming JSON output" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added streaming JSON output" />
+    <MESSAGE value="Added log export" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added log export" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1647,7 +1644,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/README.md">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="432">
@@ -1656,6 +1652,7 @@
           <second_editor />
         </state>
       </provider>
+      <provider editor-type-id="text-editor" />
       <provider editor-type-id="restructured-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -1941,20 +1938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="57" column="47" selection-start-line="57" selection-start-column="47" selection-end-line="57" selection-end-column="47" />
-          <folding>
-            <element signature="n#!!block;n#clarifySubdomain#0" />
-            <element signature="n#!!block;n#decodeHTML#0" />
-            <element signature="n#!!block;n#authenticate#0" />
-            <element signature="n#!!block;n#addLinks#0" />
-            <element signature="n#!!block;n#extractSubdomain#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="371">
@@ -1991,8 +1974,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="68" selection-end-column="60" />
+        <state relative-caret-position="1608">
+          <caret line="67" column="31" selection-start-line="67" selection-start-column="31" selection-end-line="68" selection-end-column="60" />
           <folding>
             <element signature="e#3954#5284#0" />
             <element signature="e#5337#6145#0" />
@@ -2007,8 +1990,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
+        <state relative-caret-position="192">
+          <caret line="23" column="59" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="208" column="36" lean-forward="true" selection-start-line="208" selection-start-column="36" selection-end-line="208" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!block;n#clarifySubdomain#0" />
+            <element signature="n#!!block;n#authenticate#0" />
+            <element signature="n#!!block;n#addLinks#0" />
+            <element signature="n#!!block;n#extractSubdomain#0" />
+          </folding>
         </state>
       </provider>
     </entry>
