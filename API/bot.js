@@ -90,27 +90,30 @@ async function logCompleted(result) {
 }
 
 async function findAndReplace(input, socket) {
-	if (!input.root || !input.user || !input.find)
+	if (!input.root || !input.user || !input.find) {
 		socket.emit('Body missing parameters');
+		return;
+	}
 	input.root = input.root.replace(/\/$/, "");
 	console.log(`Got ${input.root}  Find:${input.find} Replace:${input.replace}`);
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = 'findAndReplace';
 	let ID = await logStart(input);
 	socket.emit('findReplaceID', ID);
+	socket.emit('percentage', 0);
 	
-	if (input.root.match(/\.libretexts\.org\/?$/)) {
-		input.root = `https://${input.subdomain}.libretexts.org/home`;
-		console.log(`Working on root ${input.subdomain}`);
-	}
-	
-	let pages = LibreTexts.getSubpages(input.root, input.user);
+	let pages = LibreTexts.getSubpages(input.root, input.user, {delay:true, socket: socket});
 	pages = LibreTexts.addLinks(await pages);
 	// console.log(pages);
 	let count = 0;
+	let index = 0;
 	let log = [];
 	
 	await mapLimit(pages, 20, async (page) => {
+		index++;
+		let fivePercent = Math.round(pages.length / 100);
+		if (index % fivePercent === 0)
+			socket.emit('percentage', index / fivePercent );
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
 		if (!content.ok) {
@@ -185,7 +188,6 @@ async function findAndReplace(input, socket) {
 	if (!input.findOnly)
 		await logCompleted(result);
 	socket.emit('findReplaceDone', input.findOnly ? null : ID);
-	
 }
 
 async function revert(input, socket) {

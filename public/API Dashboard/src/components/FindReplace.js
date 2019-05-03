@@ -16,6 +16,7 @@ export default class FindReplace extends React.Component {
 			
 			results: [],
 			status: '',
+			percentage: 0,
 			ID: '',
 		};
 		
@@ -38,6 +39,9 @@ export default class FindReplace extends React.Component {
 		this.socket.on('revertDone', () => {
 			alert(`Revert of ${this.state.ID} complete`);
 			this.setState({status: 'reverted'});
+		});
+		this.socket.on('percentage', (data) => {
+			this.setState({percentage: data });
 		});
 		this.socket.on('Body missing parameters', (data) => {
 			alert(`The server has denied your request due to incomplete parameters. Please revise and try again\n${data}`)
@@ -110,7 +114,7 @@ export default class FindReplace extends React.Component {
 		switch (this.state.status) {
 			case 'working':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
-					Find{this.state.findOnly ? '' : ' and Replace'} In Progress
+					Find{this.state.findOnly ? '' : ' and Replace'} In Progress ({this.state.percentage}%)
 					<div className="spinner">
 						<div className="bounce1"/>
 						<div className="bounce2"/>

@@ -61,14 +61,18 @@ async function getSubpages(rootURL, username, options = {}) {
 	const subdomain = origin[0];
 	if (rootURL.match(/\.libretexts\.org\/?$/)) {
 		rootURL = `https://${subdomain}.libretexts.org/home`;
+		options['depth'] = 0;
 		console.log(`Working on root ${subdomain}`);
-		origin = rootURL.split("/")[2].split(".");
 	}
+	let count = 0;
 	
 	origin = rootURL.split("/").splice(0, 3).join('/');
 	let path = rootURL.split('/').splice(3).join('/');
-	options['depth'] = (rootURL.split('/').length - 2 || 0);
-	// console.log(`Initial Depth: ${options.depth}`);
+	if (options['depth'] !== 0)
+		options['depth'] = (rootURL.split('/').length - 2 || 0);
+	console.log(`Initial Depth: ${options.depth}`);
+	if (options.depth !== undefined)
+		options.depth = options.depth + 1;
 	
 	let {info, contents, properties, tags} = await getPage(path, username, options);
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
@@ -107,8 +111,9 @@ async function getSubpages(rootURL, username, options = {}) {
 				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
 					delay: options.delay,
 					depth: options.depth,
+					getDetails: options.getDetails,
 					getContents: options.getContents
-				} : {getContents: options.getContents});
+				} : {getDetails: options.getDetails, getContents: options.getContents});
 			}
 			contentsArray.push({url: url, id: subpage['@id'], contents: contents});
 			result[index] = {
@@ -127,9 +132,13 @@ async function getSubpages(rootURL, username, options = {}) {
 			if (!subpageArray.length) {
 				subpageArray = [subpageArray];
 			}
+			/*			if (options.socket) { //not quite working yet
+							count += subpageArray.length;
+							options.socket.emit('percentage', count);
+						}*/
 			for (let i = 0; i < subpageArray.length; i++) {
-				if (options.delay && options.depth < 3) {
-					console.log(`Delay ${subpageArray[i]["uri.ui"]}`);
+				if (options.delay && options.depth < 2) {
+					console.log(`Delay ${options.depth} ${subpageArray[i]["uri.ui"]}`);
 					await subpage(subpageArray[i], i, {
 						delay: options.delay,
 						depth: options.depth + 1,
