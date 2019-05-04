@@ -3974,8 +3974,8 @@ Neither: A structural node that is simply a (visual) subdivision of a chunk
 <!-- Because we allow width settings as consequences of sidebyside     -->
 <!-- layout parameters, we need to "reach up" and get these widths     -->
 <!-- on occassion.  So we consider the PreTeXt markup/situation and    -->
-<!-- produce a percentage as a string.  Consumers need to convert to   -->
-<!-- a percentage, pixels, fractional linewidths - whatever is needed. -->
+<!-- produce a counter as a string.  Consumers need to convert to   -->
+<!-- a counter, pixels, fractional linewidths - whatever is needed. -->
 
 <!-- An image appears -->
 <!--                                                                      -->
@@ -4033,7 +4033,7 @@ Neither: A structural node that is simply a (visual) subdivision of a chunk
 </xsl:template>
 
 <!-- The exception is an image inside a sidebyside in a webwork  -->
-<!-- where the parent sidebyside should only have a single percentage in its @widths -->
+<!-- where the parent sidebyside should only have a single counter in its @widths -->
 <!-- N.B. This should be reworked/removed when there is a one-item sbs equivalent -->
 <xsl:template match="webwork//image[parent::sidebyside/@widths]" mode="get-width-percentage">
     <xsl:value-of select="parent::sidebyside/@widths" />
@@ -5917,7 +5917,7 @@ Neither: A structural node that is simply a (visual) subdivision of a chunk
 <!-- "sbsgroup" (if employed).                              -->
 <!--                                                        -->
 <!-- (a) "margins"                                          -->
-<!--  - one percentage for both left and right (nn%)        -->
+<!--  - one counter for both left and right (nn%)        -->
 <!--  - "auto" => margins are half the space between panels -->
 <!--  - default is "auto"                                   -->
 <!-- (b) "widths"                                           -->

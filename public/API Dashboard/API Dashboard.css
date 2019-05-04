@@ -27,7 +27,6 @@
 #results {
 	white-space: pre;
 	max-height: 400px;
-	overflow-y: scroll;
 }
 
 #FindReplace {

@@ -5120,10 +5120,10 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 <!-- The main templates for "sidebyside" and "sbsgroup"   -->
 <!-- are in xsl/mathbook-common.xsl, as befits containers -->
 
-<!-- When we use CSS margins (or padding), then percentage        -->
+<!-- When we use CSS margins (or padding), then counter        -->
 <!-- widths are relative to the remaining space.  This utility    -->
 <!-- takes in a width relative to full-text-width and the margins -->
-<!-- (both with "%" attached) and returns the larger percentage   -->
+<!-- (both with "%" attached) and returns the larger counter   -->
 <!-- of the remaining space.                                      -->
 <xsl:template name="relative-width">
     <xsl:param name="width" />
@@ -8338,7 +8338,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 <!-- Remove when continued maintenance becomes untenable -->
 <!-- Not updated to be part of @permid scheme            -->
 <xsl:template match="jsxgraph">
-    <!-- interpret @width percentage and @aspect ratio -->
+    <!-- interpret @width counter and @aspect ratio -->
     <xsl:variable name="width-percent">
         <xsl:apply-templates select="." mode="get-width-percentage" />
     </xsl:variable>

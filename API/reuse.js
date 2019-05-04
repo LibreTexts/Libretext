@@ -13,6 +13,7 @@ const util = require('util');
 let LibreTextsFunctions = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
+	getSubpagesAlternate: getSubpagesAlternate,
 	clarifySubdomain: clarifySubdomain,
 	encodeHTML: encodeHTML,
 	decodeHTML: decodeHTML,
@@ -56,13 +57,40 @@ async function authenticatedFetch(path, api, subdomain, username) {
 	}
 }
 
+async function getSubpagesAlternate(rootURL, username, options) {
+	let origin = rootURL.split("/")[2].split(".");
+	const subdomain = origin[0];
+	let timer = 0;
+	let numpages = setInterval(() => {
+		if (options.socket) { //not quite working yet
+			timer += Math.round(Math.random()*500);
+			options.socket.emit('setState', {state: 'getSubpages', numPages: timer});
+		}
+	}, 1000);
+	let pages = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages?authenticate=true&dream.out.format=json`, {
+		headers: {
+			'x-deki-token': authenticate(username, subdomain)
+		}
+	});
+	if (!pages.ok) {
+		console.error(await pages.text());
+		return;
+	}
+	pages = await pages.text();
+	pages = pages.match(/(?<="uri.ui":").*?(?=")/g);
+	clearInterval(numpages);
+	return pages
+}
+
 async function getSubpages(rootURL, username, options = {}) {
 	let origin = rootURL.split("/")[2].split(".");
 	const subdomain = origin[0];
-	if (rootURL.match(/\.libretexts\.org\/?$/)) {
+	if (rootURL.match(/\.libretexts\.org\/?$/)) { //at homepage
 		rootURL = `https://${subdomain}.libretexts.org/home`;
 		options['depth'] = 0;
 		console.log(`Working on root ${subdomain}`);
+		if (options.flat)
+			return await getSubpagesAlternate(rootURL, username, options);
 	}
 	let count = 0;
 	
@@ -74,11 +102,20 @@ async function getSubpages(rootURL, username, options = {}) {
 	if (options.depth !== undefined)
 		options.depth = options.depth + 1;
 	
-	let {info, contents, properties, tags} = await getPage(path, username, options);
+	let {info, contents, properties, tags} = await getPage(path, username, {
+		getDetails: options.getDetails,
+		getContents: options.getContents
+	});
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
 	pages = await pages.json();
 	
 	let contentsArray = [{url: rootURL, id: info['@id'], contents: contents}];
+	let flatArray = [rootURL];
+	let numpages = setInterval(() => {
+		if (options.socket) { //not quite working yet
+			options.socket.emit('setState', {state: 'getSubpages', numPages: flatArray.length});
+		}
+	}, 1000);
 	let result = {
 		title: info.title,
 		url: rootURL,
@@ -88,8 +125,11 @@ async function getSubpages(rootURL, username, options = {}) {
 		children: await subpageCallback(pages, options),
 		id: info['@id'],
 	};
+	clearInterval(numpages);
 	if (options.getContents)
 		return [result, contentsArray];
+	else if (options.flat)
+		return flatArray;
 	else
 		return result;
 	
@@ -132,11 +172,8 @@ async function getSubpages(rootURL, username, options = {}) {
 			if (!subpageArray.length) {
 				subpageArray = [subpageArray];
 			}
-			/*			if (options.socket) { //not quite working yet
-							count += subpageArray.length;
-							options.socket.emit('percentage', count);
-						}*/
 			for (let i = 0; i < subpageArray.length; i++) {
+				flatArray.push(subpageArray[i]["uri.ui"]);
 				if (options.delay && options.depth < 2) {
 					console.log(`Delay ${options.depth} ${subpageArray[i]["uri.ui"]}`);
 					await subpage(subpageArray[i], i, {
@@ -150,7 +187,6 @@ async function getSubpages(rootURL, username, options = {}) {
 					promiseArray[i] = subpage(subpageArray[i], i, {getContents: options.getContents});
 				}
 			}
-			
 			await Promise.all(promiseArray);
 			return result;
 		}
@@ -159,8 +195,9 @@ async function getSubpages(rootURL, username, options = {}) {
 	
 	async function getPage(path, username, options) {
 		let info, contents, tags, properties;
-		info = authenticatedFetch(path, 'info?dream.out.format=json', subdomain, username);
 		
+		if (!options.flat)
+			info = authenticatedFetch(path, 'info?dream.out.format=json', subdomain, username);
 		if (options.getDetails || options.getContents) {
 			// properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain, username);
 			tags = authenticatedFetch(path, 'tags?dream.out.format=json', subdomain, username);

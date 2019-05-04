@@ -417,7 +417,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:call-template>
 </xsl:template>
 
-<!-- 2016-07-31: requiring @width attribute to be a percentage, -->
+<!-- 2016-07-31: requiring @width attribute to be a counter, -->
 <!-- no easy way to fix this, so warnings will have to suffice  -->
 
 <!-- 2016-07-31: withdrew @height attribute on image element -->

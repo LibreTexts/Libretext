@@ -99,21 +99,30 @@ async function findAndReplace(input, socket) {
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = 'findAndReplace';
 	let ID = await logStart(input);
-	socket.emit('findReplaceID', ID);
-	socket.emit('percentage', 0);
+	socket.emit('setState', {state:'starting', ID: ID});
 	
-	let pages = LibreTexts.getSubpages(input.root, input.user, {delay:true, socket: socket});
-	pages = LibreTexts.addLinks(await pages);
+	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
+	// pages = LibreTexts.addLinks(await pages);
 	// console.log(pages);
 	let count = 0;
 	let index = 0;
+	let percentage = 0;
 	let log = [];
+	let backlog = [];
+	let backlogClearer = setInterval(() => {
+		if (backlog.length) { //not quite working yet
+			socket.emit('pages', backlog);
+			backlog = [];
+		}
+	}, 1000);
 	
-	await mapLimit(pages, 20, async (page) => {
+	await mapLimit(pages, 50, async (page) => {
 		index++;
-		let fivePercent = Math.round(pages.length / 100);
-		if (index % fivePercent === 0)
-			socket.emit('percentage', index / fivePercent );
+		let currentPercentage = Math.round(index / pages.length * 100);
+		if(percentage < currentPercentage) {
+			percentage = currentPercentage;
+			socket.volatile.emit('setState', {state:'findReplace', percentage: currentPercentage});
+		}
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
 		if (!content.ok) {
@@ -146,8 +155,8 @@ async function findAndReplace(input, socket) {
 			
 			//send update
 			if (input.findOnly) {
-				socket.emit('page', {path: path, url: page});
-				return false;
+				backlog.unshift({path: path, url: page});
+				return;
 			}
 			let token = LibreTexts.authenticate(input.user, input.subdomain);
 			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
@@ -161,7 +170,7 @@ async function findAndReplace(input, socket) {
 				let revision = fetchResult.page['@revision'];
 				// console.log(path, revision);
 				let item = {path: path, revision: revision, url: page};
-				socket.emit('page', item);
+				backlog.unshift(item);
 				log.push(item);
 			}
 			else {
@@ -172,7 +181,7 @@ async function findAndReplace(input, socket) {
 		}
 	});
 	
-	
+	clearInterval(backlogClearer);
 	let result = {
 		user: input.user,
 		subdomain: input.subdomain,
@@ -187,7 +196,7 @@ async function findAndReplace(input, socket) {
 	};
 	if (!input.findOnly)
 		await logCompleted(result);
-	socket.emit('findReplaceDone', input.findOnly ? null : ID);
+	socket.emit('setState', {state:'done', ID: input.findOnly ? null : ID});
 }
 
 async function revert(input, socket) {
@@ -209,7 +218,7 @@ async function revert(input, socket) {
 		return false;
 	}
 	
-	await mapLimit(job.pages, 20, async (page) => {
+	await mapLimit(job.pages, 50, async (page) => {
 		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', job.subdomain, input.user);
 		if (!content.ok) {
 			console.error("Could not get page info from " + page.path);

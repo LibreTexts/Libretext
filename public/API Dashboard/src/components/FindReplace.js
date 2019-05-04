@@ -1,5 +1,7 @@
 import React from 'react';
 import Toggle from 'react-toggle';
+import {FixedSizeList as List} from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 
 export default class FindReplace extends React.Component {
@@ -16,32 +18,44 @@ export default class FindReplace extends React.Component {
 			
 			results: [],
 			status: '',
-			percentage: 0,
+			counter: 0,
 			ID: '',
+			time: -1,
+			timer: setInterval(() => {
+				if (this.state.time != -1) {
+					this.setState({time: this.state.time + 1})
+				}
+			}, 1000)
 		};
 		
 	}
 	
 	componentDidMount() {
 		this.socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
-		this.socket.on('page', (data) => {
+		this.socket.on('pages', (data) => {
 			// console.log(data);
-			let tempResults = this.state.results;
-			tempResults.unshift(data);
+			let tempResults = data.concat(this.state.results);
 			this.setState({results: tempResults});
 		});
-		this.socket.on('findReplaceID', (data) => {
-			this.setState({ID: data});
-		});
-		this.socket.on('findReplaceDone', (data) => {
-			this.setState({status: 'done', ID: data});
+		this.socket.on('setState', (data) => {
+			switch (data.state) {
+				case 'starting':
+					this.setState({ID: data.ID, counter: 0});
+					break;
+				case 'getSubpages':
+					this.setState({status: 'getSubpages', counter: data.numPages});
+					break;
+				case 'findReplace':
+					this.setState({status: 'findReplace', counter: data.percentage});
+					break;
+				case 'done':
+					this.setState({status: 'done', ID: data.ID, time: -1});
+					break;
+			}
 		});
 		this.socket.on('revertDone', () => {
 			alert(`Revert of ${this.state.ID} complete`);
 			this.setState({status: 'reverted'});
-		});
-		this.socket.on('percentage', (data) => {
-			this.setState({percentage: data });
 		});
 		this.socket.on('Body missing parameters', (data) => {
 			alert(`The server has denied your request due to incomplete parameters. Please revise and try again\n${data}`)
@@ -92,7 +106,7 @@ export default class FindReplace extends React.Component {
 	}
 	
 	sendRequest(request) {
-		this.setState({status: 'working', results: [], ID: ''});
+		this.setState({status: 'getSubpages', results: [], ID: '', time: 0});
 		this.socket.emit('findAndReplace', request);
 	}
 	
@@ -112,15 +126,22 @@ export default class FindReplace extends React.Component {
 	
 	getStatus() {
 		switch (this.state.status) {
-			case 'working':
+			case 'getSubpages':
+			case 'findReplace':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
-					Find{this.state.findOnly ? '' : ' and Replace'} In Progress ({this.state.percentage}%)
+					<div>
+						Find{this.state.findOnly ? '' : ' and Replace'} In Progress
+						({this.state.counter}{this.state.status === 'getSubpages' ? ' pages to process' : '%'})
+					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
 						<div className="bounce2"/>
 						<div className="bounce3"/>
 					</div>
-					{`Request ID: ${this.state.ID}`}
+					<div>
+						{`Request ID: ${this.state.ID}`}<br/>
+						{`Time Elapsed: ${this.state.time} seconds`}
+					</div>
 				</div>;
 			case 'done':
 				return <p className="status" style={{backgroundColor: 'green'}}>Complete!</p>;
@@ -171,9 +192,25 @@ export default class FindReplace extends React.Component {
 				<div>
 					{this.getStatus()}
 					<div id="results">
-						{this.state.results.map((page, index) => <div
-							key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found ' : 'Modified '}
-							<a target='_blank' href={page.url}>{page.path}</a></div>)}
+						
+						<AutoSizer disableHeight={true}>
+							{({height, width}) => (
+								<List
+									className="List"
+									height={Math.min(this.state.results.length * 15, 400)}
+									itemCount={this.state.results.length}
+									itemSize={15}
+									width={width}
+								>
+									{({index, style}) => {
+										let page = this.state.results[index];
+										return <div style={style}
+										            key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found ' : 'Modified '}
+											<a target='_blank' href={page.url}>{page.path}</a></div>
+									}}
+								</List>
+							)}
+						</AutoSizer>
 					</div>
 				</div>
 			</div>
