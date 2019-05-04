@@ -210,15 +210,20 @@ puppeteer.launch({
 					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment'}, request, response);
 					let count = await storage.getItem('downloadCount') || 0;
 					await storage.setItem('downloadCount', count + 1);
+					let now2 = new Date();
+					await fs.appendFile(`./public/StatsFull.txt`,`${timestamp('MM/DD hh:mm', now2)}: ${url}\n`);
 				}
 				else {
 					console.error(url);
 					staticFileServer.serveFile("404.html", 404, {}, request, response);
 				}
 			}
-			else if (url.startsWith('/Stats')) {
+			else if (url ==='/Stats') {
 				response.write("" + (await storage.getItem('downloadCount') || 0));
 				response.end();
+			}
+			else if (url ==='/StatsFull') {
+				staticFileServer.serveFile(`./StatsFull.txt`, 404, {}, request, response);
 			}
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
