@@ -99,7 +99,7 @@ async function findAndReplace(input, socket) {
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = 'findAndReplace';
 	let ID = await logStart(input);
-	socket.emit('setState', {state:'starting', ID: ID});
+	socket.emit('setState', {state: 'starting', ID: ID});
 	
 	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
 	// pages = LibreTexts.addLinks(await pages);
@@ -109,19 +109,21 @@ async function findAndReplace(input, socket) {
 	let percentage = 0;
 	let log = [];
 	let backlog = [];
-	let backlogClearer = setInterval(() => {
+	let backlogClearer = setInterval(clearBacklog, 1000);
+	
+	function clearBacklog() {
 		if (backlog.length) { //not quite working yet
 			socket.emit('pages', backlog);
 			backlog = [];
 		}
-	}, 1000);
+	}
 	
 	await mapLimit(pages, 50, async (page) => {
 		index++;
 		let currentPercentage = Math.round(index / pages.length * 100);
-		if(percentage < currentPercentage) {
+		if (percentage < currentPercentage) {
 			percentage = currentPercentage;
-			socket.volatile.emit('setState', {state:'findReplace', percentage: currentPercentage});
+			socket.volatile.emit('setState', {state: 'findReplace', percentage: currentPercentage});
 		}
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
@@ -182,6 +184,7 @@ async function findAndReplace(input, socket) {
 	});
 	
 	clearInterval(backlogClearer);
+	clearBacklog();
 	let result = {
 		user: input.user,
 		subdomain: input.subdomain,
@@ -196,7 +199,7 @@ async function findAndReplace(input, socket) {
 	};
 	if (!input.findOnly)
 		await logCompleted(result);
-	socket.emit('setState', {state:'done', ID: input.findOnly ? null : ID});
+	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
 }
 
 async function revert(input, socket) {
@@ -281,7 +284,8 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		search = search.replace(/\\\?/g, "."); //wildcard single
 		search = search.replace(/\\\*/g, ".*?"); //wildcard multi
 	}
+	let temp = target.replace(new RegExp(search, 'g'), replacement);
 	search = LibreTexts.encodeHTML(search);
 	// console.log(b4, search);
-	return target.replace(new RegExp(search, 'g'), replacement);
+	return temp.replace(new RegExp(search, 'g'), replacement);
 };
