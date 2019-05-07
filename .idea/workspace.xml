@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added statsFull">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-    </list>
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -24,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2019">
-              <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+            <state relative-caret-position="171">
+              <caret line="109" column="17" lean-forward="true" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
               <folding>
                 <element signature="n#!!block;n#revert#0" />
               </folding>
@@ -985,14 +982,7 @@
       <workItem from="1556856553506" duration="5920000" />
       <workItem from="1556938795133" duration="14258000" />
       <workItem from="1557201222048" duration="2206000" />
-      <workItem from="1557209306882" duration="778000" />
-    </task>
-    <task id="LOCAL-00136" summary="Added Remix name">
-      <created>1550992522448</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1550992522448</updated>
+      <workItem from="1557209306882" duration="1580000" />
     </task>
     <task id="LOCAL-00137" summary="Bugfix Remixer empty space">
       <created>1550994634988</created>
@@ -1330,7 +1320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556954946161</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <task id="LOCAL-00185" summary="Bugfix encodeHTML">
+      <created>1557210187563</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1557210187564</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1366,10 +1363,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1556517000" />
+    <option name="totallyTimeSpent" value="1557319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
@@ -1384,7 +1382,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26933333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" visible="true" weight="0.26933333" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.22533333" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49428055" weight="0.316" />
@@ -1493,7 +1491,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Initial Equation links" />
     <MESSAGE value="Finished Downloads Button" />
     <MESSAGE value="Added schedule.js&#10;&#10;Provides automated batching" />
     <MESSAGE value="Added monthly no-cache refresh" />
@@ -1518,7 +1515,8 @@
     <MESSAGE value="Added percentage to Dashboard" />
     <MESSAGE value="Pages API for root requests" />
     <MESSAGE value="Added statsFull" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added statsFull" />
+    <MESSAGE value="Bugfix encodeHTML" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix encodeHTML" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -2000,8 +1998,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2019">
-          <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+        <state relative-caret-position="171">
+          <caret line="109" column="17" lean-forward="true" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
           <folding>
             <element signature="n#!!block;n#revert#0" />
           </folding>

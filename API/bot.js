@@ -126,6 +126,8 @@ async function findAndReplace(input, socket) {
 			socket.volatile.emit('setState', {state: 'findReplace', percentage: currentPercentage});
 		}
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
+		if (!path)
+			return false;
 		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
 		if (!content.ok) {
 			console.error("Could not get content from " + path);
