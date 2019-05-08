@@ -136,7 +136,8 @@
 		}
 		if (window.location.href.endsWith('OER_Remixer')) {
 			const groups = document.getElementById("groupHolder").innerText;
-			if (groups.includes('Remixer')) {
+			const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+			if (!isAdmin) {
 				$('.mt-edit-page, .mt-new-page, .mt-page-options').remove();
 			}
 		}

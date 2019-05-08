@@ -70,7 +70,7 @@ async function handler(request, response) {
 				
 				let input = JSON.parse(body);
 				//Only get requests are acceptable
-				let requests = await LibreTexts.authenticatedFetch(input.path, 'contents?mode=raw', 'Cross-Library', input.subdomain);
+				let requests = await LibreTexts.authenticatedFetch(input.path, 'contents?mode=raw', input.subdomain, 'Cross-Library');
 				if (requests.ok)
 					response.write(await requests.text());
 				else
@@ -133,12 +133,12 @@ async function handler(request, response) {
 							resultStream.pipe(outStream);
 							resultStream.write(finalResult[0]);
 							let contentArray = finalResult[1];
-							contentArray.forEach((item)=>resultStream.write(item));
+							contentArray.forEach((item) => resultStream.write(item));
 							resultStream.end();
 							// response.write(JSON.stringify(finalResult));
 						}
 						break;
-						
+					
 					case 'contents':
 					default:
 						let requests = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(input.path))}/contents`, {

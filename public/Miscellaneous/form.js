@@ -248,12 +248,12 @@ class LTForm {
 			const isPro = document.getElementById("proHolder").innerText === 'true';
 			const isDemonstration = checkIfDemonstration();
 			const groups = document.getElementById("groupHolder").innerText;
-			let allowed = isAdmin || (isPro && groups.includes('faculty')) || isDemonstration;
+			let allowed = isAdmin || (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isDemonstration;
 			target.innerHTML =
 				"<div id='LTForm'>" +
 				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
 				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
-				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin)}</div>` +
+				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin, isPro, groups)}</div>` +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div>" +
 				`<div id="dialog-form" title="Create a Default Template">
   <p class="validateTips">Choose the number of chapters and pages per chapter you would like.<br/><b>All unsaved changes will be lost!</b></p>
@@ -491,8 +491,9 @@ class LTForm {
 			await LTForm.copyTransclude();
 		}
 		
-		function formMode(isAdmin) {
-			return isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option><option value='deep'>Copy Full [SLOW]</option></select></div>` : '';
+		function formMode(isAdmin, isPro, groups) {
+			
+			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
 		}
 	}
 	
@@ -595,8 +596,8 @@ class LTForm {
 			return false;
 		}
 		let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
-		if (copyMode && copyMode === 'copy' && !isAdmin) {
-			alert("Direct copy is restricted to administratiors. Use Forker afterwards to copy over individual pages.");
+		if (copyMode && copyMode === 'deep' && !isAdmin) {
+			alert("Deep copy is restricted to administratiors. Access Denied.");
 			document.getElementById("LTFormCopyMode").value = 'transclude';
 			return false;
 		}
@@ -1237,7 +1238,7 @@ function formatNumber(it) {
 
 function checkIfDemonstration() {
 	const groups = document.getElementById("groupHolder").innerText;
-	return groups.includes('Remixer');
+	return groups.includes('Workshop');
 }
 
 LTForm.initialize();
