@@ -14,6 +14,7 @@ export default class FindReplace extends React.Component {
 			user: document.getElementById('usernameHolder').textContent,
 			newlines: false,
 			isWildcard: false,
+			regex: false,
 			findOnly: false,
 			
 			results: [],
@@ -80,6 +81,7 @@ export default class FindReplace extends React.Component {
 			replace: this.state.replace,
 			newlines: this.state.newlines,
 			isWildcard: this.state.isWildcard,
+			regex: this.state.regex,
 			findOnly: this.state.findOnly,
 		};
 		
@@ -180,6 +182,11 @@ export default class FindReplace extends React.Component {
 							<Toggle onChange={() => this.setState({newlines: !this.state.newlines})}
 							        defaultChecked={this.state.newlines}/>
 							<span>Enable Newlines (\n)</span>
+						</label>
+						<label>
+							<Toggle onChange={() => this.setState({regex: !this.state.regex})}
+							        defaultChecked={this.state.regex}/>
+							<span>Use Regular Expressions (Regex)</span>
 						</label>
 						<label>
 							<Toggle onChange={() => this.setState({findOnly: !this.state.findOnly})}

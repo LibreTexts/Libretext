@@ -273,6 +273,9 @@ async function revert(input, socket) {
 String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
 	let b4 = search;
+	if (input.regex) {
+		return target.replace(new RegExp(search, 'g'), replacement);
+	}
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	
 	if (input.newlines) {
