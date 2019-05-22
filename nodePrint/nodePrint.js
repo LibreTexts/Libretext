@@ -1149,6 +1149,7 @@ puppeteer.launch({
 						// console.error(e);
 					}
 					clearTimeout(timeout);
+					resolve();
 				});
 				let thing = await renderPDF;
 			} catch (err) {
