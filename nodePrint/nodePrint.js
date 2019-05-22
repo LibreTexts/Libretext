@@ -994,166 +994,166 @@ puppeteer.launch({
 			
 			working[escapedURL] = Date.now();
 			let PDFname = escapedURL;
-			let title;
+			let title = '';
+			
 			try {
-				const promise = new Promise((resolve, reject) => {
-					timeout = setTimeout(() => {
-						throw Error(`Render Timeout Reached  ${url}`)
-					}, 80000);
-					
-				});
-				promise.catch(error => {throw error});
-				
-				try {
-					page.on('dialog', async dialog => {
-						await dialog.dismiss();
-					});
-					await page.goto(url + "?no-cache", {
-						timeout: 50000,
-						waitUntil: ["load", "domcontentloaded", 'networkidle0']
-					});
-				} catch (err) {
-					console.error(`ERROR  Timeout Exceeded ${url}`);
-				}
-				
-				const out = await page.evaluate(function (url) {
-					let prefix = "";
-					let title = document.getElementById("title");
-					let innerText;
-					
-					if (title) {
-						let color = window.getComputedStyle(title).color;
-						innerText = title.textContent;
-						if (innerText && innerText.includes(":")) {
-							prefix = innerText.split(":")[0];
-						}
-						title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
+				let renderPDF = new Promise(async (resolve, reject) => {
+					timeout = setTimeout(() => reject(new Error(`Render Timeout Reached  ${url}`)), 80000);
+					try {
+						page.on('dialog', async dialog => {
+							await dialog.dismiss();
+						});
+						await page.goto(url + "?no-cache", {
+							timeout: 50000,
+							waitUntil: ["load", "domcontentloaded", 'networkidle0']
+						});
+					} catch (err) {
+						console.error(`ERROR  Timeout Exceeded ${url}`);
 					}
-					let tags = document.getElementById('pageTagsHolder').innerText;
 					
-					//Mathjax link handling
-					$("a[href^='#mjx-eqn-eq']").each(function (index) {
-						// console.log(url + $(this).attr('href'));
-						$(this).attr('href', url + $(this).attr('href'))
-					});
-					/*
-					if (tags) {
-						try {
-							tags = tags.replace(/\\/, "");
-							tags = JSON.parse(tags);
-							if (!tags.length)
-								tags = null;
-							if (tags && tags.includes('hidetop:solutions')) {
-								let h3 = $('h3');
-								h3.wrap(doWrap);
-								
-								function doWrap(index) {
-									if (this.id) {
-										return `<a target="_blank" href="${url}#${this.id}"></a>`
+					const out = await page.evaluate(function (url) {
+						let prefix = "";
+						let title = document.getElementById("title");
+						let innerText;
+						
+						if (title) {
+							let color = window.getComputedStyle(title).color;
+							innerText = title.textContent;
+							if (innerText && innerText.includes(":")) {
+								prefix = innerText.split(":")[0];
+							}
+							title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
+						}
+						let tags = document.getElementById('pageTagsHolder').innerText;
+						
+						//Mathjax link handling
+						$("a[href^='#mjx-eqn-eq']").each(function (index) {
+							// console.log(url + $(this).attr('href'));
+							$(this).attr('href', url + $(this).attr('href'))
+						});
+						/*
+						if (tags) {
+							try {
+								tags = tags.replace(/\\/, "");
+								tags = JSON.parse(tags);
+								if (!tags.length)
+									tags = null;
+								if (tags && tags.includes('hidetop:solutions')) {
+									let h3 = $('h3');
+									h3.wrap(doWrap);
+									
+									function doWrap(index) {
+										if (this.id) {
+											return `<a target="_blank" href="${url}#${this.id}"></a>`
+										}
 									}
 								}
+							} catch (e) {
+								console.error(e.toString());
 							}
+						}*/
+						
+						return [prefix, innerText, tags];
+					}, url);
+					let prefix = out[0];
+					title = out[1] || null;
+					if (title) {
+						title = title.trim();
+					}
+					let tags = out[2] || null;
+					if (tags) {
+						tags = tags.replace(/'/g, "'");
+						tags = tags.replace(/\\/g, "");
+						try {
+							tags = JSON.parse(tags);
 						} catch (e) {
-							console.error(e.toString());
+							console.error(e, tags);
 						}
-					}*/
+						
+						if (tags.includes('hidetop:solutions'))
+							await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
+					}
 					
-					return [prefix, innerText, tags];
-				}, url);
-				let prefix = out[0];
-				title = out[1] || null;
-				if (title) {
-					title = title.trim();
-				}
-				let tags = out[2] || null;
-				if (tags) {
-					tags = tags.replace(/'/g, "'");
-					tags = tags.replace(/\\/g, "");
+					const host = url.split("/")[2].split(".");
+					const subdomain = host[0];
+					const topIMG = baseIMG[subdomain];
+					const color = colors[subdomain];
+					prefix = prefix ? prefix + "." : "";
+					const attribution = "";
+					// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
+					let license = getCC(url, subdomain);
+					
+					const cssb = [];
+					cssb.push('<style>');
+					cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
+					cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
+					cssb.push('#main {border: 1px solid blue;}');
+					cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
+					cssb.push('* { -webkit-print-color-adjust: exact}');
+					cssb.push('.date, .pageNumber {display: inline-block}');
+					cssb.push('.added {padding: 0px 4px}');
+					cssb.push('a {text-decoration:none; color: white}');
+					cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
+					cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
+					cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
+					cssb.push('</style>');
+					const css = cssb.join('');
+					
+					
+					const style1 = '<div id="mainH">' +
+						'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
+						'<div class="trapezoid"></div>' +
+						`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
+						'</div>';
+					
+					license = await license;
+					
+					const style2 = `<div id="mainF">` +
+						// `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>` +
+						(license ? `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'><a href="${license.link}">${license.label}</a></div>`
+							: `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>`) +
+						`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
+						`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
+						(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
+						'</div>';
 					try {
-						tags = JSON.parse(tags);
-					} catch (e) {
-						console.error(e, tags);
+						await page.pdf({
+							path: `./PDF/${PDFname}.pdf`,
+							displayHeaderFooter: true,
+							headerTemplate: css + style1,
+							footerTemplate: css + style2,
+							printBackground: true,
+							margin: {
+								top: "90px",
+								bottom: "60px",
+								right: "0.75in",
+								left: "0.75in",
+							}
+						});
+						//Lulu
+						await page.pdf({
+							path: `./PDF/Margin/${PDFname}.pdf`,
+							displayHeaderFooter: true,
+							headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
+							footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+							printBackground: true,
+							margin: {
+								top: "1in",
+								bottom: ".75in",
+								right: "0.75in",
+								left: "0.75in",
+							}
+						});
 					}
-					
-					if (tags.includes('hidetop:solutions'))
-						await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
-				}
-				
-				const host = url.split("/")[2].split(".");
-				const subdomain = host[0];
-				const topIMG = baseIMG[subdomain];
-				const color = colors[subdomain];
-				prefix = prefix ? prefix + "." : "";
-				const attribution = "";
-				// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
-				let license = getCC(url, subdomain);
-				
-				const cssb = [];
-				cssb.push('<style>');
-				cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-				cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-				cssb.push('#main {border: 1px solid blue;}');
-				cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-				cssb.push('* { -webkit-print-color-adjust: exact}');
-				cssb.push('.date, .pageNumber {display: inline-block}');
-				cssb.push('.added {padding: 0px 4px}');
-				cssb.push('a {text-decoration:none; color: white}');
-				cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
-				cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
-				cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
-				cssb.push('</style>');
-				const css = cssb.join('');
-				
-				
-				const style1 = '<div id="mainH">' +
-					'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-					'<div class="trapezoid"></div>' +
-					`<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
-					'</div>';
-				
-				license = await license;
-				
-				const style2 = `<div id="mainF">` +
-					// `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>` +
-					(license ? `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'><a href="${license.link}">${license.label}</a></div>`
-						: `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;">${attribution}</div>`) +
-					`<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-					`<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-					(attribution ? "<div class='added'>Powered by LibretextsPDF:</div>" : "") + `<div>Updated <div class="date"/></div>` +
-					'</div>';
-				await page.pdf({
-					path: `./PDF/${PDFname}.pdf`,
-					displayHeaderFooter: true,
-					headerTemplate: css + style1,
-					footerTemplate: css + style2,
-					printBackground: true,
-					margin: {
-						top: "90px",
-						bottom: "60px",
-						right: "0.75in",
-						left: "0.75in",
+					catch (e) {
+						// console.error(e);
 					}
+					clearTimeout(timeout);
 				});
-				//Lulu
-				await page.pdf({
-					path: `./PDF/Margin/${PDFname}.pdf`,
-					displayHeaderFooter: true,
-					headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-					footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
-					printBackground: true,
-					margin: {
-						top: "1in",
-						bottom: ".75in",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-				
-				
+				let thing = await renderPDF;
 			} catch (err) {
 				failed = err;
 			}
-			clearTimeout(timeout);
 			const end = performance.now();
 			let time = end - start;
 			time /= 100;

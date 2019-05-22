@@ -21,10 +21,10 @@ class Dashboard extends React.Component {
 		return <div className={'CenterContainer'}>
 			<div className="navigationBar">
 				<select onChange={this.setPanel} defaultValue={this.state.panel}>
-					<option value={'Revisions'}>Revision Log</option>
+					{/*<option value={'Revisions'}>Revision Log</option>*/}
 					<option value={'FindAndReplace'}>Find and Replace</option>
-					<option value={'DeadLinks'}>Dead link killer</option>
-					<option value={'HeaderPromoter'}>Header promoter</option>
+					{/*<option value={'DeadLinks'}>Dead link killer</option>*/}
+					{/*<option value={'HeaderPromoter'}>Header promoter</option>*/}
 				</select>
 			</div>
 			{this.getPanel()}
