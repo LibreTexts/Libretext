@@ -2,7 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/tex.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_AMS-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Italic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-BoldItalic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Italic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Italic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Script-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size1-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size2-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size3-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size4-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Typewriter-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Zero.woff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,25 +50,54 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/bot.js">
+        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="278" column="26" lean-forward="true" selection-start-line="278" selection-start-column="26" selection-end-line="278" selection-end-column="26" />
+            <state relative-caret-position="268">
+              <caret line="1064" column="28" lean-forward="true" selection-start-line="1064" selection-start-column="28" selection-end-line="1064" selection-end-column="28" />
               <folding>
-                <element signature="n#!!block;n#revert#0" />
+                <element signature="e#3954#5284#0" />
+                <element signature="e#5337#6145#0" />
+                <element signature="e#6183#6415#0" />
+                <element signature="e#6458#6823#0" />
+                <element signature="e#6865#7067#0" />
+                <element signature="e#7110#7728#0" />
+                <element signature="e#7781#11542#0" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#35643#36890#0" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#!!block;n#authenticatedFetch#0" />
+                <element signature="n#!!block;n#clarifySubdomain#0" />
+                <element signature="n#!!block;n#stop#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="191" column="55" selection-start-line="191" selection-start-column="55" selection-end-line="191" selection-end-column="55" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="410">
+              <caret column="662482" lean-forward="true" selection-start-column="662482" selection-end-column="662482" />
             </state>
           </provider>
         </entry>
@@ -60,20 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>completed</find>
-      <find>append</find>
-      <find>serve</find>
-      <find>addlinks</find>
-      <find>depth</find>
-      <find>delay</find>
-      <find>add</find>
-      <find>getsubpages</find>
-      <find>socket</find>
-      <find>pages</find>
-      <find>emit('page</find>
-      <find>page</find>
-      <find>unshift</find>
-      <find>backlog</find>
       <find>console.log</find>
       <find>percentage</find>
       <find>.ok</find>
@@ -90,6 +134,20 @@
       <find>Remixer</find>
       <find>workshop</find>
       <find>Contributor</find>
+      <find>date</find>
+      <find>Lt</find>
+      <find>checktime</find>
+      <find>getpdf</find>
+      <find>stats</find>
+      <find>throw</find>
+      <find>Timeout Reached</find>
+      <find>render</find>
+      <find>fonts</find>
+      <find>output</find>
+      <find>%%URL%%</find>
+      <find>chtml</find>
+      <find>console.error</find>
+      <find>output/</find>
     </findStrings>
     <replaceStrings>
       <replace>computer</replace>
@@ -139,7 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/API/timetrack.js" />
         <option value="$PROJECT_DIR$/nodePrint/test.js" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
         <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
@@ -158,7 +215,6 @@
         <option value="$PROJECT_DIR$/API/package.json" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/404.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
         <option value="$PROJECT_DIR$/API/API.http" />
         <option value="$PROJECT_DIR$/API/README.rst" />
         <option value="$PROJECT_DIR$/API/README.md" />
@@ -183,13 +239,15 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/package.json" />
         <option value="$PROJECT_DIR$/public/API Dashboard/API Dashboard.css" />
         <option value="$PROJECT_DIR$/API/reuse.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="&lt;bd8ae14e-20c9-4b98-b7d8-0d5951748072&gt;/awesomefiles/nodePrint/public/StatsFull.txt" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" />
       </list>
     </option>
   </component>
@@ -199,11 +257,10 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="870" />
-    <option name="y" value="150" />
-    <option name="width" value="1302" />
-    <option name="height" value="1392" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="793" />
+    <option name="width" value="814" />
+    <option name="height" value="867" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -213,7 +270,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -224,7 +280,7 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -243,14 +299,6 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -258,16 +306,11 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="Social Share Kit" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -282,7 +325,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/public/Hierarchy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Miscellaneous" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -296,18 +339,18 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
   </component>
@@ -1403,18 +1446,18 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1561615000" />
+    <option name="totallyTimeSpent" value="1566241000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="793" y="0" width="814" height="867" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.17399158" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.39257294" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27066666" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26956522" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -1422,7 +1465,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26933333" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26811594" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.22533333" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49428055" weight="0.316" />
@@ -1652,48 +1695,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/install/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="96">
-            <caret line="4" selection-start-line="4" selection-end-line="4" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="96">
-            <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="432">
-            <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="restructured-text-editor" />
-      <provider editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="120">
-            <caret line="5" selection-start-line="5" selection-end-line="5" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1967,41 +1968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="210" column="76" selection-start-line="210" selection-start-column="76" selection-end-line="210" selection-end-column="76" />
-          <folding>
-            <element signature="e#3954#5284#0" />
-            <element signature="e#5337#6145#0" />
-            <element signature="e#6183#6415#0" />
-            <element signature="e#6458#6823#0" />
-            <element signature="e#6865#7067#0" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/reuse.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1152">
@@ -2045,11 +2011,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="278" column="26" lean-forward="true" selection-start-line="278" selection-start-column="26" selection-end-line="278" selection-end-column="26" />
-          <folding>
-            <element signature="n#!!block;n#revert#0" />
-          </folding>
+        <state relative-caret-position="222">
+          <caret line="295" column="2" selection-start-line="295" selection-start-column="2" selection-end-line="295" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -2060,6 +2023,68 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="93" column="1" lean-forward="true" selection-start-line="93" selection-start-column="1" selection-end-line="93" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/output/svg/fonts/tex.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/output/chtml.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="1064" column="28" lean-forward="true" selection-start-line="1064" selection-start-column="28" selection-end-line="1064" selection-end-column="28" />
+          <folding>
+            <element signature="e#3954#5284#0" />
+            <element signature="e#5337#6145#0" />
+            <element signature="e#6183#6415#0" />
+            <element signature="e#6458#6823#0" />
+            <element signature="e#6865#7067#0" />
+            <element signature="e#7110#7728#0" />
+            <element signature="e#7781#11542#0" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#35643#36890#0" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#!!block;n#authenticatedFetch#0" />
+            <element signature="n#!!block;n#clarifySubdomain#0" />
+            <element signature="n#!!block;n#stop#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret column="662482" lean-forward="true" selection-start-column="662482" selection-end-column="662482" />
         </state>
       </provider>
     </entry>

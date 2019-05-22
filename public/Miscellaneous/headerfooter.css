@@ -88,3 +88,7 @@ nav.elm-nav.my-custom-class {
 	align-items: center;
 	height: min-content;
 }
+
+.LTBranding img{
+	object-fit: contain;
+}

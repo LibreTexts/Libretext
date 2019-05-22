@@ -211,18 +211,18 @@ puppeteer.launch({
 					let count = await storage.getItem('downloadCount') || 0;
 					await storage.setItem('downloadCount', count + 1);
 					let now2 = new Date();
-					await fs.appendFile(`./public/StatsFull.txt`,`${timestamp('MM/DD hh:mm', now2)}: ${url}\n`);
+					await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${url}\n`);
 				}
 				else {
 					console.error(url);
 					staticFileServer.serveFile("404.html", 404, {}, request, response);
 				}
 			}
-			else if (url ==='/Stats') {
+			else if (url === '/Stats') {
 				response.write("" + (await storage.getItem('downloadCount') || 0));
 				response.end();
 			}
-			else if (url ==='/StatsFull') {
+			else if (url === '/StatsFull') {
 				staticFileServer.serveFile(`./StatsFull.txt`, 404, {}, request, response);
 			}
 			else if (url.startsWith('/Refresh=')) {
@@ -996,9 +996,14 @@ puppeteer.launch({
 			let PDFname = escapedURL;
 			let title;
 			try {
-				timeout = setTimeout(() => {
-					throw Error(`Render Timeout Reached  ${url}`);
-				}, 80000);
+				const promise = new Promise((resolve, reject) => {
+					timeout = setTimeout(() => {
+						throw Error(`Render Timeout Reached  ${url}`)
+					}, 80000);
+					
+				});
+				promise.catch(error => {throw error});
+				
 				try {
 					page.on('dialog', async dialog => {
 						await dialog.dismiss();
@@ -1162,16 +1167,28 @@ puppeteer.launch({
 			eventEmitter.emit(escapedURL);
 			delete working[escapedURL];
 			if (failed) {
-				console.error(failed);
 				console.error(`FAILED ${ip} [${pages.length}] ${time}s ${PDFname}`);
-				// throw failed;
-				// return {filename: 'restricted'};
+				console.error(failed);
+				let exists = await fs.exists('./PDF/' + PDFname + '.pdf');
+				if (!exists)
+					return {filename: 'restricted'};
+				
+				let stats, err;
+				try {
+					stats = await fs.stat('./PDF/' + PDFname + '.pdf');
+				} catch (e) {
+					err = e;
+				}
+				
+				if (err || Date.now() - stats.mtime < 120000) { //within past two minutes
+					return {filename: 'restricted'};
+					// throw failed;
+				}
 			}
 			else {
 				console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
 				// console.log(pages);
 			}
-			
 			return {filename: PDFname + '.pdf', title: title};
 		}
 		
@@ -1562,7 +1579,8 @@ async function getSubpages(rootURL, options = {}) {
 				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
 					delay: options.delay,
 					depth: options.depth
-				} : {});			}
+				} : {});
+			}
 			
 			result[index] = {
 				title: subpage.title,
