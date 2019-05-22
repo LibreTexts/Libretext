@@ -1,5 +1,6 @@
 import React from 'react';
 import FindReplace from "../components/FindReplace";
+import DeadLinks from "../components/DeadLinks";
 import ReactDOM from 'react-dom';
 
 const target = document.createElement("div");
@@ -23,7 +24,7 @@ class Dashboard extends React.Component {
 				<select onChange={this.setPanel} defaultValue={this.state.panel}>
 					{/*<option value={'Revisions'}>Revision Log</option>*/}
 					<option value={'FindAndReplace'}>Find and Replace</option>
-					{/*<option value={'DeadLinks'}>Dead link killer</option>*/}
+					<option value={'DeadLinks'}>Dead link killer</option>
 					{/*<option value={'HeaderPromoter'}>Header promoter</option>*/}
 				</select>
 			</div>
@@ -38,7 +39,7 @@ class Dashboard extends React.Component {
 			case "FindAndReplace":
 				return <FindReplace/>;
 			case "DeadLinks":
-				return null;
+				return <DeadLinks/>;
 			case "HeaderPromoter":
 				return null;
 		}

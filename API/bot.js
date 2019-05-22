@@ -63,41 +63,39 @@ io.on('connection', function (socket) {
 	socket.volatile.emit('welcome', `Hello!`);
 	
 	//Define callback events;
-	socket.on('findAndReplace', (data) => findAndReplace(data, socket));
+	// socket.on('findAndReplace', (data) => findAndReplace(data, socket));
+	socket.on('findAndReplace', (data) => jobHandler('findAndReplace', data, socket));
+	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
+	
 	socket.on('revert', (data) => revert(data, socket));
 });
 
-async function logStart(input) {
-	let timestamp = new Date();
-	input.timestamp = timestamp.toUTCString();
-	let ID = '' + Math.random().toString(36).substr(2, 9);
-	await fs.ensureDir(`BotLogs/Working/${input.user}`);
-	await fs.writeJSON(`BotLogs/Working/${input.user}/${ID}.json`, input);
-	return ID;
-}
-
-async function logCompleted(result) {
-	let timestamp = new Date();
-	result.timestamp = timestamp.toUTCString();
-	result.status = 'completed';
-	await fs.ensureDir(`BotLogs/Completed/${result.user}`);
-	await fs.writeJSON(`BotLogs/Completed/${result.user}/${result.ID}.json`, result);
-	await fs.remove(`BotLogs/Working/${result.user}/${result.ID}.json`);
-	await fs.appendFile(`BotLogs/Users/${result.user}.csv`, `${result.ID},`);
-	if (result.pages)
-		delete result.pages;
-	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result) + '\n');
-}
-
-async function findAndReplace(input, socket) {
-	if (!input.root || !input.user || !input.find) {
+async function jobHandler(jobType, input, socket) {
+	function verifyParameters() {
+		switch (jobType) {
+			case 'findAndReplace':
+				return input.root && input.user && input.find;
+			case 'deadLinks':
+				return input.root;
+		}
+	}
+	
+	function getParameters() {
+		switch (jobType) {
+			case 'findAndReplace':
+				return {root: input.root, user: input.user, find: input.find};
+			case 'deadLinks':
+				return {root: input.root};
+		}
+	}
+	
+	if (!verifyParameters()) {
 		socket.emit('Body missing parameters');
 		return;
 	}
 	input.root = input.root.replace(/\/$/, "");
-	console.log(`Got ${input.root}  Find:${input.find} Replace:${input.replace}`);
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
-	input.jobType = 'findAndReplace';
+	input.jobType = jobType;
 	let ID = await logStart(input);
 	socket.emit('setState', {state: 'starting', ID: ID});
 	
@@ -123,7 +121,7 @@ async function findAndReplace(input, socket) {
 		let currentPercentage = Math.round(index / pages.length * 100);
 		if (percentage < currentPercentage) {
 			percentage = currentPercentage;
-			socket.volatile.emit('setState', {state: 'findReplace', percentage: currentPercentage});
+			socket.volatile.emit('setState', {state: input.jobType, percentage: currentPercentage});
 		}
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		if (!path)
@@ -143,45 +141,47 @@ async function findAndReplace(input, socket) {
 		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 		content = LibreTexts.decodeHTML(content);
 		// console.log(content);
-		let result = content.replaceAll(input.find, input.replace, input);
 		
-		if (result !== content) {
-			count++;
-			/*			const diff = jsdiff.diffWords(content, result);
-						console.log('----------------------------');
-						diff.forEach(function (part) {
-							// green for additions, red for deletions
-							// grey for common parts
-							var color = part.added ? 'green' :
-								part.removed ? 'red' : 'grey';
-							process.stderr.write(part.value[color]);
-						});*/
-			
-			//send update
-			if (input.findOnly) {
-				backlog.unshift({path: path, url: page});
-				return;
-			}
-			let token = LibreTexts.authenticate(input.user, input.subdomain);
-			let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
-			let response = await fetch(url, {
-				method: 'POST',
-				body: result,
-				headers: {'x-deki-token': token}
-			});
-			if (response.ok) {
-				let fetchResult = await response.json();
-				let revision = fetchResult.page['@revision'];
-				// console.log(path, revision);
-				let item = {path: path, revision: revision, url: page};
-				backlog.unshift(item);
-				log.push(item);
-			}
-			else {
-				let error = await response.text();
-				console.error(error);
-				socket.emit('errorMessage', error);
-			}
+		let result, comment;
+		switch (jobType) {
+			case 'findAndReplace':
+				result = await findAndReplace(content);
+				comment = `[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
+				break;
+			case 'deadLinks':
+				let numLinks = 0;
+				[result, numLinks] = await deadLinks(content);
+				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
+				break;
+		}
+		if (!result || result === content)
+			return;
+		
+		count++;
+		//send update
+		if (input.findOnly) {
+			backlog.unshift({path: path, url: page});
+			return;
+		}
+		let token = LibreTexts.authenticate(input.user, input.subdomain);
+		let url = `https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now&dream.out.format=json&comment=${comment}`;
+		let response = await fetch(url, {
+			method: 'POST',
+			body: result,
+			headers: {'x-deki-token': token}
+		});
+		if (response.ok) {
+			let fetchResult = await response.json();
+			let revision = fetchResult.page['@revision'];
+			// console.log(path, revision);
+			let item = {path: path, revision: revision, url: page};
+			backlog.unshift(item);
+			log.push(item);
+		}
+		else {
+			let error = await response.text();
+			console.error(error);
+			socket.emit('errorMessage', error);
 		}
 	});
 	
@@ -192,16 +192,63 @@ async function findAndReplace(input, socket) {
 		subdomain: input.subdomain,
 		ID: ID,
 		jobType: input.jobType,
-		params: {
-			root: input.root,
-			find: input.find,
-			replace: input.replace,
-		},
+		params: getParameters(),
 		pages: log,
 	};
 	if (!input.findOnly)
 		await logCompleted(result);
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
+	
+	
+	async function findAndReplace(content) {
+		let result = content.replaceAll(input.find, input.replace, input);
+		if (result !== content) {
+			/*			const diff = jsdiff.diffWords(content, result);
+						console.log('----------------------------');
+						diff.forEach(function (part) {
+							// green for additions, red for deletions
+							// grey for common parts
+							var color = part.added ? 'green' :
+								part.removed ? 'red' : 'grey';
+							process.stderr.write(part.value[color]);
+						});*/
+			return result;
+		}
+	}
+	
+	async function deadLinks(content) {
+		let links = content.match(/<a.*?>.*?<\/a>/g);
+		let result = content;
+		let count = 0;
+		await mapLimit(links, 10, async (link) => {
+			let url = link.match(/(?<=<a.*?href=").*?(?=")/);
+			if (url) {
+				url = url[0];
+				if (link.includes('Content Reuse Link:')|| link === 'javascript:void(0);')
+					return;
+				if (!url.startsWith('http')) {
+					url = `https://${input.subdomain}.libretexts.org${url.startsWith('/') ? '' : '/'}${url}`;
+					// console.log(`Mod: ${url}`);
+				}
+				let response = "", failed;
+				try {
+					response = await fetch(url, {method: 'HEAD'});
+				} catch (e) {
+					failed = true;
+					// console.error(e);
+				}
+				if (!failed && response.ok && response.status < 400) {
+					return;
+				}
+				console.log(`Dead ${response.ok} ${response.status}! ${link}`);
+			}
+			
+			result = result.replace(link, link.match(/(?<=<a.*?>).*?(?=<\/a>)/)[0]);
+			count++;
+		});
+		return [result, count];
+	}
+	
 }
 
 async function revert(input, socket) {
@@ -268,6 +315,29 @@ async function revert(input, socket) {
 	};
 	await logCompleted(result);
 	socket.emit('revertDone', ID);
+}
+
+
+async function logStart(input) {
+	let timestamp = new Date();
+	input.timestamp = timestamp.toUTCString();
+	let ID = '' + Math.random().toString(36).substr(2, 9);
+	await fs.ensureDir(`BotLogs/Working/${input.user}`);
+	await fs.writeJSON(`BotLogs/Working/${input.user}/${ID}.json`, input);
+	return ID;
+}
+
+async function logCompleted(result) {
+	let timestamp = new Date();
+	result.timestamp = timestamp.toUTCString();
+	result.status = 'completed';
+	await fs.ensureDir(`BotLogs/Completed/${result.user}`);
+	await fs.writeJSON(`BotLogs/Completed/${result.user}/${result.ID}.json`, result);
+	await fs.remove(`BotLogs/Working/${result.user}/${result.ID}.json`);
+	await fs.appendFile(`BotLogs/Users/${result.user}.csv`, `${result.ID},`);
+	if (result.pages)
+		delete result.pages;
+	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result) + '\n');
 }
 
 String.prototype.replaceAll = function (search, replacement, input) {
