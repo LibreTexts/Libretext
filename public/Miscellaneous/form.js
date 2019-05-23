@@ -9,6 +9,9 @@ class LTForm {
 		LTForm.initializeFancyTree();
 	}
 	
+	static save(tree){
+		localStorage.setItem('RemixerSession', JSON.stringify(tree));
+	}
 	
 	static async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
@@ -51,6 +54,7 @@ class LTForm {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work and replace it with the template you've chosen. Are you sure?")) {
 			const defaultMap = LTForm.generateDefault(chapters, pages)[0];
+			LTForm.save(defaultMap);
 			node.fromDict(defaultMap);
 			node.setExpanded();
 		}
@@ -79,6 +83,7 @@ class LTForm {
 		let shallow = depth < 2;
 		processNode(d, [0], 0, false,);
 		root.fromDict(d);
+		LTForm.save(d);
 		root.setExpanded(true);
 		
 		function processNode(node, sharedIndex, level, overTen) {
@@ -489,6 +494,14 @@ class LTForm {
 			});
 			
 			await LTForm.copyTransclude();
+			
+			//confirm('You have previously saved work available.\nWould you like to restore your previous session?'))
+			if (localStorage.getItem('RemixerSession')) {
+				let d = JSON.parse(localStorage.getItem('RemixerSession'));
+				let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+				root.fromDict(d);
+				root.setExpanded();
+			}
 		}
 		
 		function formMode(isAdmin, isPro, groups) {

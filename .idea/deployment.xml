@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Static" uploadOnCheckin="6d997646-4f52-4f26-b1e4-908a7e47c861" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Front" uploadOnCheckin="6d997646-4f52-4f26-b1e4-908a7e47c861" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
     <serverData>
       <paths name="API">
         <serverdata>
@@ -25,10 +25,11 @@
           </excludedPaths>
         </serverdata>
       </paths>
-      <paths name="Static">
+      <paths name="Front">
         <serverdata>
           <mappings>
             <mapping deploy="/public" local="$PROJECT_DIR$/public" web="/" />
+            <mapping deploy="/front" local="$PROJECT_DIR$/Front" web="/front" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/.idea" />

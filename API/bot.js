@@ -257,10 +257,11 @@ async function jobHandler(jobType, input, socket) {
 	
 	async function headerPromote(content) {
 		let result = content;
-		if (!content.includes('<h1') && content.includes('<h2')) {
+		if (!content.includes('<h1') && content.match(/<h[2-9]/)) {
+			
 			for (let i = 2; i <= 7; i++) {
 				let regex = new RegExp(`<h${i}(?=(| .*?)>)`, 'g');
-				result = result.replace(regex,`<h${i-1})`);
+				result = result.replace(regex,`<h${i-1}`);
 				regex = new RegExp(`</h${i}>(?=(| .*?)>)`, 'g');
 				result = result.replace(regex,`</h${i-1}>`);
 			}

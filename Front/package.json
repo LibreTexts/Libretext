@@ -1,0 +1,10 @@
+{
+  "name": "Bots",
+  "version": "1.0.0",
+  "dependencies": {
+    "console-timestamp": "^0.3.0",
+    "fs-extra": "^7.0.1",
+    "node-fetch": "^2.3.0",
+    "node-static": "^0.7.11"
+  }
+}

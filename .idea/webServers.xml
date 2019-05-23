@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6d997646-4f52-4f26-b1e4-908a7e47c861" name="Static" url="https://awesomefiles.libretexts.org">
-        <fileTransfer host="static.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
+      <webServer id="6d997646-4f52-4f26-b1e4-908a7e47c861" name="Front" url="https://awesomefiles.libretexts.org">
+        <fileTransfer host="front.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
           </advancedOptions>

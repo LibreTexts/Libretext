@@ -114,8 +114,8 @@ export default class HeaderPromote extends React.Component {
 			case 'headerPromote':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
-						Dead Links{this.state.findOnly ? ' Search' : ' Removal'} In Progress
-						({this.state.counter}{this.state.status === 'headerPromote' ? ' pages to process' : '%'})
+						Header Promotion{this.state.findOnly ? ' Search' : ' Removal'} In Progress
+						({this.state.counter}{this.state.status === 'getSubpages' ? ' pages to process' : '%'})
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
@@ -155,7 +155,7 @@ export default class HeaderPromote extends React.Component {
 							<span>Find pages but do not modify (read only mode)</span>
 						</label>
 						<div>
-							DO NOT USE!!! Still in development
+							Beta Testing...Please report any problems
 						</div>
 					</div>
 				</div>
