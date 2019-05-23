@@ -1,6 +1,7 @@
 import React from 'react';
 import FindReplace from "../components/FindReplace";
 import DeadLinks from "../components/DeadLinks";
+import HeaderPromote from "../components/HeaderPromote";
 import ReactDOM from 'react-dom';
 
 const target = document.createElement("div");
@@ -25,7 +26,7 @@ class Dashboard extends React.Component {
 					{/*<option value={'Revisions'}>Revision Log</option>*/}
 					<option value={'FindAndReplace'}>Find and Replace</option>
 					<option value={'DeadLinks'}>Dead link killer</option>
-					{/*<option value={'HeaderPromoter'}>Header promoter</option>*/}
+					<option value={'HeaderPromote'}>Header promoter</option>
 				</select>
 			</div>
 			{this.getPanel()}
@@ -40,8 +41,8 @@ class Dashboard extends React.Component {
 				return <FindReplace/>;
 			case "DeadLinks":
 				return <DeadLinks/>;
-			case "HeaderPromoter":
-				return null;
+			case "HeaderPromote":
+				return <HeaderPromote/>;
 		}
 	}
 	

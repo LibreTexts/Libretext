@@ -63,9 +63,9 @@ io.on('connection', function (socket) {
 	socket.volatile.emit('welcome', `Hello!`);
 	
 	//Define callback events;
-	// socket.on('findAndReplace', (data) => findAndReplace(data, socket));
 	socket.on('findAndReplace', (data) => jobHandler('findAndReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
+	socket.on('headerPromote', (data) => jobHandler('headerPromote', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -76,6 +76,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'findAndReplace':
 				return input.root && input.user && input.find;
 			case 'deadLinks':
+			case 'headerPromote':
 				return input.root;
 		}
 	}
@@ -85,6 +86,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'findAndReplace':
 				return {root: input.root, user: input.user, find: input.find};
 			case 'deadLinks':
+			case 'headerPromote':
 				return {root: input.root};
 		}
 	}
@@ -152,6 +154,10 @@ async function jobHandler(jobType, input, socket) {
 				let numLinks = 0;
 				[result, numLinks] = await deadLinks(content);
 				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
+				break;
+			case 'headerPromote':
+				result = await headerPromote(content);
+				comment = `[BOT ${ID}] Promoted Headers"`;
 				break;
 		}
 		if (!result || result === content)
@@ -221,10 +227,10 @@ async function jobHandler(jobType, input, socket) {
 		let result = content;
 		let count = 0;
 		await mapLimit(links, 10, async (link) => {
-			let url = link.match(/(?<=<a.*?href=").*?(?=")/);
+			let url = link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/);
 			if (url) {
 				url = url[0];
-				if (link.includes('Content Reuse Link:')|| link === 'javascript:void(0);')
+				if (link.includes('Content Reuse Link:') || link === 'javascript:void(0);')
 					return;
 				if (!url.startsWith('http')) {
 					url = `https://${input.subdomain}.libretexts.org${url.startsWith('/') ? '' : '/'}${url}`;
@@ -243,10 +249,23 @@ async function jobHandler(jobType, input, socket) {
 				console.log(`Dead ${response.ok} ${response.status}! ${link}`);
 			}
 			
-			result = result.replace(link, link.match(/(?<=<a.*?>).*?(?=<\/a>)/)[0]);
+			result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
 			count++;
 		});
 		return [result, count];
+	}
+	
+	async function headerPromote(content) {
+		let result = content;
+		if (!content.includes('<h1') && content.includes('<h2')) {
+			for (let i = 2; i <= 7; i++) {
+				let regex = new RegExp(`<h${i}(?=(| .*?)>)`, 'g');
+				result = result.replace(regex,`<h${i-1})`);
+				regex = new RegExp(`</h${i}>(?=(| .*?)>)`, 'g');
+				result = result.replace(regex,`</h${i-1}>`);
+			}
+		}
+		return result;
 	}
 	
 }

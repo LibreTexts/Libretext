@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderPromote.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
@@ -24,65 +24,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="1159" column="24" selection-start-line="1159" selection-start-column="24" selection-end-line="1159" selection-end-column="24" />
-              <folding>
-                <element signature="e#3954#5284#0" />
-                <element signature="e#5337#6145#0" />
-                <element signature="e#6183#6415#0" />
-                <element signature="e#6458#6823#0" />
-                <element signature="e#6865#7067#0" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="158" column="51" selection-start-line="158" selection-start-column="51" selection-end-line="158" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="226" column="73" lean-forward="true" selection-start-line="226" selection-start-column="73" selection-end-line="226" selection-end-column="73" />
+            <state relative-caret-position="135">
+              <caret line="235" column="58" selection-start-line="235" selection-start-column="58" selection-end-line="235" selection-end-column="58" />
               <folding>
-                <element signature="e#5859#6049#0" />
-                <element signature="e#5130#6570#0" />
+                <element signature="n#!!block;n#findAndReplace#0;n#!!block;n#jobHandler#0" />
                 <element signature="n#!!block;n#revert#0" />
                 <element signature="n#!!block;n#logStart#0" />
                 <element signature="n#!!block;n#logCompleted#0" />
-                <element signature="e#9145#9930#0" />
               </folding>
             </state>
           </provider>
@@ -104,8 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>overflow</find>
-      <find>finished</find>
       <find>timestamp</find>
       <find>publish</find>
       <find>deep</find>
@@ -134,6 +83,8 @@
       <find>let title</find>
       <find>maplimit</find>
       <find>no changes</find>
+      <find>regex</find>
+      <find>do not</find>
     </findStrings>
     <replaceStrings>
       <replace>computer</replace>
@@ -183,7 +134,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/package.json" />
         <option value="$PROJECT_DIR$/nodePrint/node_modules/easy-pdf-merge/distribution/lib/PDFMerger.js" />
         <option value="$PROJECT_DIR$/nodePrint/PDFMerger.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/bundle.js" />
@@ -231,8 +181,9 @@
         <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
-        <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" />
+        <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" />
+        <option value="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderPromote.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
@@ -245,9 +196,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="384" />
-    <option name="y" value="-15" />
+    <option name="y" value="-16" />
     <option name="width" value="1302" />
-    <option name="height" value="1389" />
+    <option name="height" value="1390" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -263,11 +214,6 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
@@ -342,19 +288,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\nodePrint" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1069,6 +1015,8 @@
       <workItem from="1557278525498" duration="1013000" />
       <workItem from="1557289590206" duration="1931000" />
       <workItem from="1558153288384" duration="1352000" />
+      <workItem from="1558549643552" duration="1301000" />
+      <workItem from="1558559629612" duration="816000" />
     </task>
     <task id="LOCAL-00141" summary="Español clarifySubdomain();">
       <created>1551406738544</created>
@@ -1449,18 +1397,18 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1579025000" />
+    <option name="totallyTimeSpent" value="1581142000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.16195063" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.22146636" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.336" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33475783" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" />
@@ -1468,7 +1416,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26811594" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" visible="true" weight="0.26780626" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.22533333" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49428055" weight="0.316" />
@@ -1698,13 +1646,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/bundle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API/analytics.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="99">
@@ -2015,16 +1956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/pages/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="27" column="73" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -2035,10 +1966,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="158" column="51" selection-start-line="158" selection-start-column="51" selection-end-line="158" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
-          <caret line="1159" column="24" selection-start-line="1159" selection-start-column="24" selection-end-line="1159" selection-end-column="24" />
+          <caret line="1160" column="24" selection-start-line="1160" selection-start-column="24" selection-end-line="1160" selection-end-column="24" />
           <folding>
             <element signature="e#3954#5284#0" />
             <element signature="e#5337#6145#0" />
@@ -2071,24 +2009,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js">
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/HeaderPromote.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="158" column="51" selection-start-line="158" selection-start-column="51" selection-end-line="158" selection-end-column="51" />
+        <state relative-caret-position="194">
+          <caret line="157" column="62" selection-start-line="157" selection-start-column="62" selection-end-line="157" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#2468#2727#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/pages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="43" column="31" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="226" column="73" lean-forward="true" selection-start-line="226" selection-start-column="73" selection-end-line="226" selection-end-column="73" />
+        <state relative-caret-position="135">
+          <caret line="235" column="58" selection-start-line="235" selection-start-column="58" selection-end-line="235" selection-end-column="58" />
           <folding>
-            <element signature="e#5859#6049#0" />
-            <element signature="e#5130#6570#0" />
+            <element signature="n#!!block;n#findAndReplace#0;n#!!block;n#jobHandler#0" />
             <element signature="n#!!block;n#revert#0" />
             <element signature="n#!!block;n#logStart#0" />
             <element signature="n#!!block;n#logCompleted#0" />
-            <element signature="e#9145#9930#0" />
           </folding>
         </state>
       </provider>
