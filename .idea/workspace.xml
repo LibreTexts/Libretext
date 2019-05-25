@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,10 +22,15 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Front/portals.js">
+        <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+            <state relative-caret-position="315">
+              <caret line="229" column="61" lean-forward="true" selection-start-line="229" selection-start-column="61" selection-end-line="229" selection-end-column="61" />
+              <folding>
+                <element signature="n#!!block;n#revert#0" />
+                <element signature="n#!!block;n#logStart#0" />
+                <element signature="n#!!block;n#logCompleted#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,7 +152,6 @@
         <option value="$PROJECT_DIR$/nodePrint/README.md" />
         <option value="$PROJECT_DIR$/install/README.md" />
         <option value="$PROJECT_DIR$/install/install.sh" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/API/secure.json" />
         <option value="$PROJECT_DIR$/API/ecosystem.config.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/API Dashbaord.css" />
@@ -172,10 +176,11 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderPromote.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/Front/package.json" />
         <option value="$PROJECT_DIR$/Front/portals.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
   </component>
@@ -209,7 +214,7 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="install" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -975,13 +980,8 @@
       <workItem from="1558559629612" duration="816000" />
       <workItem from="1558587042263" duration="4743000" />
       <workItem from="1558591905342" duration="25000" />
-    </task>
-    <task id="LOCAL-00142" summary="rel = &quot;nofollow&quot;">
-      <created>1551480983248</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1551480983253</updated>
+      <workItem from="1558592158467" duration="119000" />
+      <workItem from="1558746807628" duration="574000" />
     </task>
     <task id="LOCAL-00143" summary="Increased heap size for PDFMerger">
       <created>1551755367297</created>
@@ -1319,7 +1319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1558591772324</updated>
     </task>
-    <option name="localTasksCounter" value="191" />
+    <task id="LOCAL-00191" summary="Updated README.md">
+      <created>1558592268022</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1558592268023</updated>
+    </task>
+    <option name="localTasksCounter" value="192" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1355,7 +1362,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1590101000" />
+    <option name="totallyTimeSpent" value="1590794000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1363,7 +1370,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.18302228" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.18783866" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.33466667" />
@@ -1374,7 +1381,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" visible="true" weight="0.26666668" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.26666668" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.22533333" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49428055" weight="0.316" />
@@ -1455,7 +1462,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="NB + Analytics Compatibility" />
     <MESSAGE value="Common Cartridge weblink Fix" />
     <MESSAGE value="Added \\ for lulu tag newline" />
     <MESSAGE value="Created reuse.js" />
@@ -1480,7 +1486,8 @@
     <MESSAGE value="NodePrint RenderTimeout fix" />
     <MESSAGE value="RenderTimeout Resolve" />
     <MESSAGE value="Initial Portals" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Portals" />
+    <MESSAGE value="Updated README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1576,13 +1583,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="347" column="4" lean-forward="true" selection-start-line="347" selection-start-column="4" selection-end-line="347" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1903,18 +1903,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="260" column="12" selection-start-line="260" selection-start-column="12" selection-end-line="260" selection-end-column="12" />
-          <folding>
-            <element signature="n#!!block;n#revert#0" />
-            <element signature="n#!!block;n#logStart#0" />
-            <element signature="n#!!block;n#logCompleted#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="641">
@@ -1971,7 +1959,29 @@
     <entry file="file://$PROJECT_DIR$/Front/portals.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="249">
-          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="48">
+            <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="229" column="61" lean-forward="true" selection-start-line="229" selection-start-column="61" selection-end-line="229" selection-end-column="61" />
+          <folding>
+            <element signature="n#!!block;n#revert#0" />
+            <element signature="n#!!block;n#logStart#0" />
+            <element signature="n#!!block;n#logCompleted#0" />
+          </folding>
         </state>
       </provider>
     </entry>

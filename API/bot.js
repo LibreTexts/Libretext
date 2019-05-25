@@ -227,7 +227,7 @@ async function jobHandler(jobType, input, socket) {
 		let result = content;
 		let count = 0;
 		await mapLimit(links, 10, async (link) => {
-			let url = link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/);
+			let url = link.match(/(?<=<a.*?href=").*?(?=")/);
 			if (url) {
 				url = url[0];
 				if (link.includes('Content Reuse Link:') || link === 'javascript:void(0);')
