@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
 	socket.volatile.emit('welcome', `Hello!`);
 	
 	//Define callback events;
-	socket.on('findAndReplace', (data) => jobHandler('findAndReplace', data, socket));
+	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerPromote', (data) => jobHandler('headerPromote', data, socket));
 	
@@ -73,7 +73,7 @@ io.on('connection', function (socket) {
 async function jobHandler(jobType, input, socket) {
 	function verifyParameters() {
 		switch (jobType) {
-			case 'findAndReplace':
+			case 'findReplace':
 				return input.root && input.user && input.find;
 			case 'deadLinks':
 			case 'headerPromote':
@@ -83,7 +83,7 @@ async function jobHandler(jobType, input, socket) {
 	
 	function getParameters() {
 		switch (jobType) {
-			case 'findAndReplace':
+			case 'findReplace':
 				return {root: input.root, user: input.user, find: input.find};
 			case 'deadLinks':
 			case 'headerPromote':
@@ -146,8 +146,8 @@ async function jobHandler(jobType, input, socket) {
 		
 		let result, comment;
 		switch (jobType) {
-			case 'findAndReplace':
-				result = await findAndReplace(content);
+			case 'findReplace':
+				result = await findReplace(content);
 				comment = `[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
 				break;
 			case 'deadLinks':
@@ -206,7 +206,7 @@ async function jobHandler(jobType, input, socket) {
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
 	
 	
-	async function findAndReplace(content) {
+	async function findReplace(content) {
 		let result = content.replaceAll(input.find, input.replace, input);
 		if (result !== content) {
 			/*			const diff = jsdiff.diffWords(content, result);

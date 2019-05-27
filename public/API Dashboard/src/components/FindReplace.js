@@ -109,7 +109,7 @@ export default class FindReplace extends React.Component {
 	
 	sendRequest(request) {
 		this.setState({status: 'getSubpages', results: [], ID: '', time: 0});
-		this.socket.emit('findAndReplace', request);
+		this.socket.emit('findReplace', request);
 	}
 	
 	revert() {

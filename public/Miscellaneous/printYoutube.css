@@ -42,7 +42,7 @@
 
 	.mt-video-widget .youtubeImage {
 		width: 100%;
-		height: inherit;
+		height: inherit!important;
 	}
 
 	.mt-video-widget .youtubeImage, .mt-video-widget .youtubeImageContainer {
