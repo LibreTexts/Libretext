@@ -114,7 +114,7 @@ export default class HeaderPromote extends React.Component {
 			case 'headerPromote':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
-						Header Promotion{this.state.findOnly ? ' Search' : ' Removal'} In Progress
+						Header Promotion In Progress
 						({this.state.counter}{this.state.status === 'getSubpages' ? ' pages to process' : '%'})
 					</div>
 					<div className="spinner">
