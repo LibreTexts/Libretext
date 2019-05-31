@@ -98,7 +98,7 @@ async function jobHandler(jobType, input, socket) {
 	input.root = input.root.replace(/\/$/, "");
 	input.subdomain = LibreTexts.extractSubdomain(input.root);
 	input.jobType = jobType;
-	let ID = await logStart(input);
+	let ID = await logStart(input, input.findOnly);
 	socket.emit('setState', {state: 'starting', ID: ID});
 	
 	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
@@ -110,9 +110,26 @@ async function jobHandler(jobType, input, socket) {
 	let log = [];
 	let backlog = [];
 	let backlogClearer = setInterval(clearBacklog, 1000);
+	let result = {
+		user: input.user,
+		subdomain: input.subdomain,
+		ID: ID,
+		jobType: input.jobType,
+		params: getParameters(),
+		pages: log,
+	};
 	
-	function clearBacklog() {
-		if (backlog.length) { //not quite working yet
+	async function clearBacklog() {
+		if (backlog.length) {
+			result = {
+				user: input.user,
+				subdomain: input.subdomain,
+				ID: ID,
+				jobType: input.jobType,
+				params: getParameters(),
+				pages: log,
+			};
+			await logProgress(result, input.findOnly);
 			socket.emit('pages', backlog);
 			backlog = [];
 		}
@@ -193,7 +210,7 @@ async function jobHandler(jobType, input, socket) {
 	
 	clearInterval(backlogClearer);
 	clearBacklog();
-	let result = {
+	result = {
 		user: input.user,
 		subdomain: input.subdomain,
 		ID: ID,
@@ -201,8 +218,7 @@ async function jobHandler(jobType, input, socket) {
 		params: getParameters(),
 		pages: log,
 	};
-	if (!input.findOnly)
-		await logCompleted(result);
+	await logCompleted(result, input.findOnly);
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
 	
 	
@@ -238,15 +254,36 @@ async function jobHandler(jobType, input, socket) {
 				}
 				let response = "", failed;
 				try {
-					response = await fetch(url, {method: 'HEAD'});
+					response = await new Promise(async (resolve, reject) => {
+						let seconds = 15;
+						let timeout = setTimeout(() => reject({
+							response: 'none',
+							status: `Timed Out ${seconds}s`
+						}), seconds * 1000);
+						let result;
+						try {
+							result = await fetch(url, {method: 'HEAD'});
+						} catch (e) {
+							reject(e);
+							// console.error(e);
+						}
+						clearTimeout(timeout);
+						resolve(result);
+					});
 				} catch (e) {
 					failed = true;
+					response = e;
 					// console.error(e);
 				}
 				if (!failed && response.ok && response.status < 400) {
 					return;
 				}
-				console.log(`Dead ${response.ok} ${response.status}! ${link}`);
+				if (response.code)
+					console.log(`Dead ${response.code}! ${url}`);
+				else if (response.status)
+					console.log(`Dead ${response.status}! ${url}`);
+				else
+					console.log(`Dead ${response}! ${url}`);
 			}
 			
 			result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
@@ -310,18 +347,18 @@ async function revert(input, socket) {
 			return false;
 		}
 		//page.revision && currentRevision === page.revision
-		if (true) { //unchanged
-			let token = LibreTexts.authenticate(input.user, job.subdomain);
-			let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
-			let response = await fetch(url, {
-				method: 'POST',
-				headers: {'x-deki-token': token}
-			});
-			if (!response.ok) {
-				let error = await response.text();
-				socket.emit('errorMessage', error);
-			}
+		// if (true) { //unchanged
+		let token = LibreTexts.authenticate(input.user, job.subdomain);
+		let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
+		let response = await fetch(url, {
+			method: 'POST',
+			headers: {'x-deki-token': token}
+		});
+		if (!response.ok) {
+			let error = await response.text();
+			socket.emit('errorMessage', error);
 		}
+		// }
 		else { //Page Conflict
 			console.error(`Page Conflict ${page.path}`);
 		}
@@ -344,16 +381,29 @@ async function revert(input, socket) {
 }
 
 
-async function logStart(input) {
+async function logStart(input, isDisabled) {
 	let timestamp = new Date();
 	input.timestamp = timestamp.toUTCString();
 	let ID = '' + Math.random().toString(36).substr(2, 9);
-	await fs.ensureDir(`BotLogs/Working/${input.user}`);
-	await fs.writeJSON(`BotLogs/Working/${input.user}/${ID}.json`, input);
+	if (!isDisabled) {
+		await fs.ensureDir(`BotLogs/Working/${input.user}`);
+		await fs.writeJSON(`BotLogs/Working/${input.user}/${ID}.json`, input);
+	}
 	return ID;
 }
 
-async function logCompleted(result) {
+async function logProgress(result, isDisabled) {
+	if (isDisabled)
+		return false;
+	let timestamp = new Date();
+	result.timestamp = timestamp.toUTCString();
+	await fs.ensureDir(`BotLogs/Completed/${result.user}`);
+	await fs.writeJSON(`BotLogs/Completed/${result.user}/${result.ID}.json`, result);
+}
+
+async function logCompleted(result, isDisabled) {
+	if (isDisabled)
+		return false;
 	let timestamp = new Date();
 	result.timestamp = timestamp.toUTCString();
 	result.status = 'completed';

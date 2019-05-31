@@ -548,7 +548,7 @@ class LTForm {
 		response = await response.json();
 		const subpageArray = (response['@count'] === "1" ? [response["page.subpage"]] : response["page.subpage"]) || [];
 		const result = [];
-		console.log(subpageArray);
+		// console.log(subpageArray);
 		for (let i = 0; i < subpageArray.length; i++) {
 			let institution = subpageArray[i];
 			result.push(`<option value="${institution["uri.ui"]}">${institution.title}</option>`);
