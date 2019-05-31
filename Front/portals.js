@@ -11,16 +11,29 @@ server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
+function getInstitution(subdomain) {
+	switch (subdomain) {
+		case 'scc':
+			return 'Sacramento Community College';
+		case 'ucdavis':
+			return 'University of California, Davis';
+		case 'mcc':
+			return 'Monroe Community College';
+		default:
+			return subdomain;
+	}
+}
+
 async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url.toLowerCase();
 	
 	let host= request.headers.host.toLowerCase();
 	let subdomain = host.replace('.libretexts.org','');
-	if (subdomain && ['scc','ucdavis'].includes(subdomain)) {
+	if (subdomain && ['scc','ucdavis','mcc'].includes(subdomain)) {
 		console.log(subdomain);
 		response.writeHead(200);
-		response.write(`Welcome to ${subdomain}!`);
+		response.write(`Welcome ${getInstitution(subdomain)} to LibreTexts! This will eventually be the portal space for your institution.`);
 		response.end();
 	}
 	else {
