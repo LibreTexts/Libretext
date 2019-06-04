@@ -294,9 +294,9 @@ async function jobHandler(jobType, input, socket) {
 	
 	async function headerPromote(content) {
 		let result = content;
-		if (!content.includes('<h1') && content.match(/<h[2-9]/)) {
-			let current = 1;
-			for (let i = 2; i <= 7; i++) {
+		if (!content.includes('<h1') && !content.includes('<h2') && content.match(/<h[3-9]/)) {
+			let max = 2;
+			for (let i = 3; i <= 7; i++) {
 				let previous = result;
 				let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
 					'g');
