@@ -65,7 +65,7 @@ io.on('connection', function (socket) {
 	//Define callback events;
 	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
-	socket.on('headerPromote', (data) => jobHandler('headerPromote', data, socket));
+	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -76,7 +76,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'findReplace':
 				return input.root && input.user && input.find;
 			case 'deadLinks':
-			case 'headerPromote':
+			case 'headerFix':
 				return input.root;
 		}
 	}
@@ -86,7 +86,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'findReplace':
 				return {root: input.root, user: input.user, find: input.find};
 			case 'deadLinks':
-			case 'headerPromote':
+			case 'headerFix':
 				return {root: input.root};
 		}
 	}
@@ -100,6 +100,7 @@ async function jobHandler(jobType, input, socket) {
 	input.jobType = jobType;
 	let ID = await logStart(input, input.findOnly);
 	socket.emit('setState', {state: 'starting', ID: ID});
+	console.log(`JOB [${ID}] ${jobType}`);
 	
 	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
 	// pages = LibreTexts.addLinks(await pages);
@@ -172,9 +173,9 @@ async function jobHandler(jobType, input, socket) {
 				[result, numLinks] = await deadLinks(content);
 				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
 				break;
-			case 'headerPromote':
-				result = await headerPromote(content);
-				comment = `[BOT ${ID}] Promoted Headers"`;
+			case 'headerFix':
+				result = await headerFix(content);
+				comment = `[BOT ${ID}] Fixed Headers`;
 				break;
 		}
 		if (!result || result === content)
@@ -292,10 +293,23 @@ async function jobHandler(jobType, input, socket) {
 		return [result, count];
 	}
 	
-	async function headerPromote(content) {
+	async function headerFix(content) {
 		let result = content;
-		if (!content.includes('<h1') && !content.includes('<h2') && content.match(/<h[3-9]/)) {
-			let max = 2;
+		if (content.match(/<h1(?=(| .*?)>)/)) { //Header demote
+			for (let i = 7; i >= 1; i--) {
+				let previous = result;
+				let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
+					'g');
+				result = result.replace(regex, `<h${i + 1}`);
+				regex = new RegExp(`</h${i}>`, 'g');
+				result = result.replace(regex, `</h${i + 1}>`);
+				if (result !== previous) {
+					console.log(`${i} => ${i + 1}`);
+				}
+			}
+		}
+		else if (!content.includes('<h2') && content.match(/<h[1-9](?=(| .*?)>)/)) { //Header promote
+			let current = 2;
 			for (let i = 3; i <= 7; i++) {
 				let previous = result;
 				let regex = new RegExp(`<h${i}(?=(| .*?)>)`,

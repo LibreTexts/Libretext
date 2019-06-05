@@ -98,7 +98,7 @@ async function getSubpages(rootURL, username, options = {}) {
 	let path = rootURL.split('/').splice(3).join('/');
 	if (options['depth'] !== 0)
 		options['depth'] = (rootURL.split('/').length - 2 || 0);
-	console.log(`Initial Depth: ${options.depth}`);
+	// console.log(`Initial Depth: ${options.depth}`);
 	if (options.depth !== undefined)
 		options.depth = options.depth + 1;
 	

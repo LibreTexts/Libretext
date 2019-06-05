@@ -4,7 +4,7 @@ import {FixedSizeList as List} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
 
-export default class HeaderPromote extends React.Component {
+export default class HeaderFix extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -41,8 +41,8 @@ export default class HeaderPromote extends React.Component {
 				case 'getSubpages':
 					this.setState({status: 'getSubpages', counter: data.numPages});
 					break;
-				case 'headerPromote':
-					this.setState({status: 'headerPromote', counter: data.percentage});
+				case 'headerFix':
+					this.setState({status: 'headerFix', counter: data.percentage});
 					break;
 				case 'done':
 					this.setState({status: 'done', ID: data.ID, time: -1});
@@ -91,7 +91,7 @@ export default class HeaderPromote extends React.Component {
 	
 	sendRequest(request) {
 		this.setState({status: 'getSubpages', results: [], ID: '', time: 0});
-		this.socket.emit('headerPromote', request);
+		this.socket.emit('headerFix', request);
 	}
 	
 	revert() {
@@ -111,10 +111,10 @@ export default class HeaderPromote extends React.Component {
 	getStatus() {
 		switch (this.state.status) {
 			case 'getSubpages':
-			case 'headerPromote':
+			case 'headerFix':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
-						Header Promotion In Progress
+						Header Fix In Progress
 						({this.state.counter}{this.state.status === 'getSubpages' ? ' pages to process' : '%'})
 					</div>
 					<div className="spinner">
@@ -138,7 +138,7 @@ export default class HeaderPromote extends React.Component {
 	
 	render() {
 		return (
-			<div id="HeaderPromote">
+			<div id="HeaderFix">
 				<div className="topPanel">
 					<div><input placeholder="URL" onChange={(event) => {
 						this.setState({root: event.target.value})
