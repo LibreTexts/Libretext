@@ -2,6 +2,7 @@ import React from 'react';
 import FindReplace from "../components/FindReplace";
 import DeadLinks from "../components/DeadLinks";
 import HeaderFix from "../components/HeaderFix";
+import ForeignImage from "../components/ForeignImage";
 import ReactDOM from 'react-dom';
 
 const target = document.createElement("div");
@@ -27,6 +28,7 @@ class Dashboard extends React.Component {
 					<option value={'FindAndReplace'}>Find and Replace</option>
 					<option value={'DeadLinks'}>Dead link killer</option>
 					<option value={'HeaderFix'}>Header Fixer</option>
+					<option value={'ForeignImage'}>Testing</option>
 				</select>
 			</div>
 			{this.getPanel()}
@@ -43,6 +45,8 @@ class Dashboard extends React.Component {
 				return <DeadLinks/>;
 			case "HeaderFix":
 				return <HeaderFix/>;
+			case "ForeignImage":
+				return <ForeignImage/>;
 		}
 	}
 	

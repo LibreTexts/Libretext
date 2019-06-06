@@ -46,8 +46,8 @@ export default class FindReplace extends React.Component {
 				case 'getSubpages':
 					this.setState({status: 'getSubpages', counter: data.numPages});
 					break;
-				case 'findReplace':
-					this.setState({status: 'findReplace', counter: data.percentage});
+				case 'processing':
+					this.setState({status: 'processing', counter: data.percentage});
 					break;
 				case 'done':
 					this.setState({status: 'done', ID: data.ID, time: -1});
@@ -129,7 +129,7 @@ export default class FindReplace extends React.Component {
 	getStatus() {
 		switch (this.state.status) {
 			case 'getSubpages':
-			case 'findReplace':
+			case 'processing':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Find{this.state.findOnly ? '' : ' and Replace'} In Progress

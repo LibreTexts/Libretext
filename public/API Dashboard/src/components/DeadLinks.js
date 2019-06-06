@@ -41,8 +41,8 @@ export default class DeadLinks extends React.Component {
 				case 'getSubpages':
 					this.setState({status: 'getSubpages', counter: data.numPages});
 					break;
-				case 'deadLinks':
-					this.setState({status: 'deadLinks', counter: data.percentage});
+				case 'processing':
+					this.setState({status: 'processing', counter: data.percentage});
 					break;
 				case 'done':
 					this.setState({status: 'done', ID: data.ID, time: -1});
@@ -111,7 +111,7 @@ export default class DeadLinks extends React.Component {
 	getStatus() {
 		switch (this.state.status) {
 			case 'getSubpages':
-			case 'deadLinks':
+			case 'processing':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Dead Links{this.state.findOnly ? ' Search' : ' Removal'} In Progress

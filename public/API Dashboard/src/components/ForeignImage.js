@@ -113,7 +113,7 @@ export default class ForeignImage extends React.Component {
 			case 'deadLinks':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
-						Dead Links{this.state.findOnly ? ' Search' : ' Removal'} In Progress
+						Foreign Image{this.state.findOnly ? ' Search' : ' Conversion'} In Progress
 						({this.state.counter}{this.state.status === 'getSubpages' ? ' pages to process' : '%'})
 					</div>
 					<div className="spinner">

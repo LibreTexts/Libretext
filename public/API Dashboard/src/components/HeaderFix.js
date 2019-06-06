@@ -41,8 +41,8 @@ export default class HeaderFix extends React.Component {
 				case 'getSubpages':
 					this.setState({status: 'getSubpages', counter: data.numPages});
 					break;
-				case 'headerFix':
-					this.setState({status: 'headerFix', counter: data.percentage});
+				case 'processing':
+					this.setState({status: 'processing', counter: data.percentage});
 					break;
 				case 'done':
 					this.setState({status: 'done', ID: data.ID, time: -1});
@@ -111,7 +111,7 @@ export default class HeaderFix extends React.Component {
 	getStatus() {
 		switch (this.state.status) {
 			case 'getSubpages':
-			case 'headerFix':
+			case 'processing':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Header Fix In Progress

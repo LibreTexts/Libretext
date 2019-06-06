@@ -13,8 +13,11 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 if (!window["batchPrint.js"]) {
 	window["batchPrint.js"] = true;
 	let email = document.getElementById('userEmailHolder').textContent || "";
+	let batchAccess;
+	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+	const isPro = document.getElementById("proHolder").innerText === 'true';
+	const groups = document.getElementById("groupHolder").innerText;
 	const targetComputer = 'batch.libretexts.org';
-	//email === 'hdagnew@ucdavis.edu'
 	let request;
 	let requestJSON;
 	
@@ -26,7 +29,7 @@ if (!window["batchPrint.js"]) {
 			batchName: window["BatchName"],
 			isNoCache: false
 		};
-		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu','grewalma@butte.edu'].includes(email);
+		batchAccess = isAdmin || (isPro && groups.include('BatchAccess') );
 		const batchPrint = document.getElementById("batchPrint");
 		
 		handleInner().then();
@@ -55,8 +58,8 @@ if (!window["batchPrint.js"]) {
 				}
 			}
 			let innerHTML = "";
-			if (email) {
-				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>'
+			if (batchAccess) {
+				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
 			}
 			if (hasDownloads) {
 				let entry = '';
@@ -75,7 +78,7 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${email ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
+					${batchAccess ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
@@ -83,13 +86,15 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 				}
 			}
-			else if (email) {
+			else if (batchAccess) {
 				innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
 			}
 			if (!hasDownloads) {
 				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
 			}
 			
+			
+			$('#pageNumberHolder').append(`<div>Hello ${email}! ${batchAccess}</div>`);
 			batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
@@ -288,7 +293,7 @@ if (!window["batchPrint.js"]) {
 	}
 	
 	function batch(target) {
-		if (!email) {
+		if (!batchAccess) {
 			alert('Authorization Error');
 			return false;
 		}

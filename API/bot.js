@@ -141,7 +141,7 @@ async function jobHandler(jobType, input, socket) {
 		let currentPercentage = Math.round(index / pages.length * 100);
 		if (percentage < currentPercentage) {
 			percentage = currentPercentage;
-			socket.volatile.emit('setState', {state: input.jobType, percentage: currentPercentage});
+			socket.volatile.emit('setState', {state: 'processing', percentage: currentPercentage});
 		}
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		if (!path)
@@ -169,13 +169,16 @@ async function jobHandler(jobType, input, socket) {
 				comment = `[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
 				break;
 			case 'deadLinks':
-				let numLinks = 0;
 				[result, numLinks] = await deadLinks(content);
 				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
 				break;
 			case 'headerFix':
 				result = await headerFix(content);
 				comment = `[BOT ${ID}] Fixed Headers`;
+				break;
+			case 'foreignImage':
+				[result, numLinks] = await foreignImage(content);
+				comment = `[BOT ${ID}] Imported ${numLinks} Foreign Images`;
 				break;
 		}
 		if (!result || result === content)
@@ -334,7 +337,7 @@ async function jobHandler(jobType, input, socket) {
 			let url = image.match(/(?<=src=").*?(?=")/);
 			if (url) {
 				url = url[0];
-				if (url.startsWith('http') && !url.includes('libretexts.org'))
+				if (!url.startsWith('http') || url.includes('libretexts.org'))
 					return;
 				
 				
@@ -362,6 +365,10 @@ async function jobHandler(jobType, input, socket) {
 					// console.error(e);
 				}
 				if (!failed && response.ok && response.status < 400) {
+					if (input.findOnly){
+						result = "findOnly";
+						count++;
+					}
 					//upload image
 					let foreignImage = await response.blob();
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
