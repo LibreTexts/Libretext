@@ -285,10 +285,10 @@ async function jobHandler(jobType, input, socket) {
 					console.log(`Dead ${response.status}! ${url}`);
 				else
 					console.log(`Dead ${response}! ${url}`);
+				
+				result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
+				count++;
 			}
-			
-			result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
-			count++;
 		});
 		return [result, count];
 	}
@@ -324,6 +324,72 @@ async function jobHandler(jobType, input, socket) {
 			}
 		}
 		return result;
+	}
+	
+	async function foreignImage(content) {
+		let images = content.match(/<img.*?>/g);
+		let result = content;
+		let count = 0;
+		await mapLimit(images, 10, async (image) => {
+			let url = image.match(/(?<=src=").*?(?=")/);
+			if (url) {
+				url = url[0];
+				if (url.startsWith('http') && !url.includes('libretexts.org'))
+					return;
+				
+				
+				let response = "", failed;
+				try {
+					response = await new Promise(async (resolve, reject) => {
+						let seconds = 15;
+						let timeout = setTimeout(() => reject({
+							response: 'none',
+							status: `Timed Out ${seconds}s`
+						}), seconds * 1000);
+						let result;
+						try {
+							result = await fetch(url, {method: 'HEAD'});
+						} catch (e) {
+							reject(e);
+							// console.error(e);
+						}
+						clearTimeout(timeout);
+						resolve(result);
+					});
+				} catch (e) {
+					failed = true;
+					response = e;
+					// console.error(e);
+				}
+				if (!failed && response.ok && response.status < 400) {
+					//upload image
+					let foreignImage = await response.blob();
+					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
+					response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+						method: "PUT",
+						body: foreignImage,
+						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+					});
+					if (!response.ok)
+						return false;
+					response = await response.json();
+					
+					//change path to new image
+					let newSRC = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`;
+					result = result.replace(image.match(/(?<=src=").*?(?=")/)[0], newSRC);
+					result = result.replace(image.match(/fileid=".*?"/)[0], "");
+					result = result.replace(image.match(/(?<=<img.*?)>/)[0], `fileid=${response['@id']} >`);
+					count++;
+				}
+				else if (response.code)
+					console.log(`Dead ${response.code}! ${url}`);
+				else if (response.status)
+					console.log(`Dead ${response.status}! ${url}`);
+				else
+					console.log(`Dead ${response}! ${url}`);
+			}
+		});
+		return [result, count];
 	}
 	
 }

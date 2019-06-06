@@ -154,9 +154,6 @@ export default class HeaderFix extends React.Component {
 							        defaultChecked={this.state.findOnly}/>
 							<span>Find pages but do not modify (read only mode)</span>
 						</label>
-						<div>
-							Beta Testing...Please report any problems
-						</div>
 					</div>
 				</div>
 				

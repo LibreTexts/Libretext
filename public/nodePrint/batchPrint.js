@@ -26,7 +26,7 @@ if (!window["batchPrint.js"]) {
 			batchName: window["BatchName"],
 			isNoCache: false
 		};
-		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
+		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu','grewalma@butte.edu'].includes(email);
 		const batchPrint = document.getElementById("batchPrint");
 		
 		handleInner().then();

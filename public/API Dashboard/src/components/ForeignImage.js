@@ -4,7 +4,7 @@ import {FixedSizeList as List} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
 
-export default class DeadLinks extends React.Component {
+export default class ForeignImage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -41,8 +41,8 @@ export default class DeadLinks extends React.Component {
 				case 'getSubpages':
 					this.setState({status: 'getSubpages', counter: data.numPages});
 					break;
-				case 'deadLinks':
-					this.setState({status: 'deadLinks', counter: data.percentage});
+				case 'processing':
+					this.setState({status: 'processing', counter: data.percentage});
 					break;
 				case 'done':
 					this.setState({status: 'done', ID: data.ID, time: -1});
@@ -72,7 +72,6 @@ export default class DeadLinks extends React.Component {
 		let request = {
 			root: this.state.root,
 			user: this.state.user,
-			find: this.state.find,
 			findOnly: this.state.findOnly,
 		};
 		
@@ -81,10 +80,10 @@ export default class DeadLinks extends React.Component {
 			return false;
 		}
 		else if (request.findOnly) {
-			if (confirm(`The bot will find all dead links. No Changes will be made.`))
+			if (confirm(`The bot will find all foreign images. No Changes will be made.`))
 				this.sendRequest(request);
 		}
-		else if (confirm(`The bot will find all dead links. Click OK to proceed.`)) {
+		else if (confirm(`The bot will find all foreign images.`)) {
 			this.sendRequest(request);
 		}
 	}
@@ -154,6 +153,10 @@ export default class DeadLinks extends React.Component {
 							        defaultChecked={this.state.findOnly}/>
 							<span>Find pages but do not modify (read only mode)</span>
 						</label>
+						<div>
+							STILL IN TESTING! Please be cautious and report any problems...
+							6/5/2019 - Henry Agnew
+						</div>
 					</div>
 				</div>
 				
