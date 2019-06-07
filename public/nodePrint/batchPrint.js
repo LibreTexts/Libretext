@@ -29,7 +29,7 @@ if (!window["batchPrint.js"]) {
 			batchName: window["BatchName"],
 			isNoCache: false
 		};
-		batchAccess = isAdmin || (isPro && groups.include('BatchAccess') );
+		batchAccess = isAdmin || (isPro && groups.includes('BatchAccess') );
 		const batchPrint = document.getElementById("batchPrint");
 		
 		handleInner().then();
@@ -52,19 +52,20 @@ if (!window["batchPrint.js"]) {
 				two = two.ok ? await two.json() : [];
 				
 				downloads = downloads.concat(one, two);
-				let downloadLinks = downloads.map((value) => value.link);
+				let downloadLinks = downloads.map((value) => decodeURIComponent(value.link));
 				if (downloadLinks.includes(url) || downloadLinks.includes(decodeURIComponent(url))) {
 					hasDownloads = true;
 				}
 			}
 			let innerHTML = "";
 			if (batchAccess) {
+				$('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
 				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
 			}
 			if (hasDownloads) {
 				let entry = '';
 				for (let i = 0; i < downloads.length; i++) {
-					if (downloads[i].link === url || downloads[i].link === decodeURIComponent(url)) {
+					if (downloads[i].link === url || decodeURIComponent(downloads[i].link) === url || downloads[i].link === decodeURIComponent(url)) {
 						entry = downloads[i];
 					}
 				}
@@ -86,15 +87,15 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 				}
 			}
-			else if (batchAccess) {
-				innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
-			}
-			if (!hasDownloads) {
+			else {
+				if (batchAccess) {
+					innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
+				}
 				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
 			}
 			
 			
-			$('#pageNumberHolder').append(`<div>Hello ${email}! ${batchAccess}</div>`);
+			
 			batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
