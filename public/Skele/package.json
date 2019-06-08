@@ -3,15 +3,17 @@
   "version": "0.0.1",
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
-    "babel-cli": "^6.26.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "three": "^0.89.0"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "latest",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "babelify": "^7.3.0",
-    "browserify-css": "^0.14.0"
+    "browserify-css": "^0.15.0"
   }
 }

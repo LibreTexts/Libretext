@@ -12,25 +12,24 @@
   "dependencies": {
     "async": "^2.6.2",
     "console-timestamp": "^0.3.0",
-    "easy-pdf-merge": "^0.2.0",
+    "easy-pdf-merge": "^0.2.1",
     "filenamify": "^2.0.0",
     "find-remove": "^1.2.2",
     "fs-extra": "^7.0.1",
-    "js-yaml": "^3.13.0",
+    "js-yaml": "^3.13.1",
     "jszip": "^3.2.1",
     "md5": "^2.2.1",
     "node-eta": "^0.9.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.0",
     "node-persist": "^3.0.4",
     "node-static": "^0.7.11",
-    "npm": "^6.8.0",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^1.12.2",
+    "puppeteer": "^1.17.0",
     "zip-local": "^0.3.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.4",
     "request": "*"
   }
 }
