@@ -59,7 +59,7 @@ if (!window["batchPrint.js"]) {
 			}
 			let innerHTML = "";
 			if (batchAccess) {
-				$('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
+				// $('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
 				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
 			}
 			if (hasDownloads) {

@@ -114,12 +114,12 @@ puppeteer.launch({
 							response.end();
 						}
 						else if (withMargin)
-							staticFileServer.serveFile('../PDF/Margin/' + escapedURL + '.pdf', 200, {}, request, response);
+							staticFileServer.serveFile('../PDF/Margin/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
 						else if (result.filename === 'restricted') {
 							responseError('This page is not publicly accessible.', 403)
 						}
 						else
-							staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+							staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
 					}
 				}, (err) => responseError("Server \n" + err, 500));
 				
@@ -187,12 +187,12 @@ puppeteer.launch({
 					url = url.slice(0, -4);
 				}
 				let file = await getTOC(url, null);
-				staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {}, request, response);
+				staticFileServer.serveFile(`../PDF/TOC/${file}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
 			}
 			else if (url.startsWith('/testCover')) {
 				let current = await getSubpages('https://chem.libretexts.org/Bookshelves/General_Chemistry/Book:_Chemistry_(OpenSTAX)', {children: []});
 				let file = await getCover(current, url.includes('num') ? 478 : undefined, url.includes('pad'), url.includes('hard')); //, 478
-				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {}, request, response);
+				staticFileServer.serveFile(`../PDF/Cover/${file}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
 			}
 			else if (url.startsWith('/tocHTML=')) {
 				url = url.split('/tocHTML=')[1];
@@ -207,7 +207,7 @@ puppeteer.launch({
 				url = url.split('/Finished/')[1];
 				url = decodeURIComponent(url);
 				if (await fs.exists(`./PDF/Finished/${url}`)) {
-					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment'}, request, response);
+					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment', 'cache-control': 'no-cache'}, request, response);
 					let count = await storage.getItem('downloadCount') || 0;
 					await storage.setItem('downloadCount', count + 1);
 					let now2 = new Date();
@@ -223,7 +223,7 @@ puppeteer.launch({
 				response.end();
 			}
 			else if (url === '/StatsFull') {
-				staticFileServer.serveFile(`./StatsFull.txt`, 404, {}, request, response);
+				staticFileServer.serveFile(`./StatsFull.txt`, 404, {'cache-control': 'no-cache'}, request, response);
 			}
 			else if (url.startsWith('/Refresh=')) {
 				//Remove all files older than 2 months.
@@ -978,7 +978,7 @@ puppeteer.launch({
 			else if (working[escapedURL]) { //another thread is already working
 				eventEmitter.on(escapedURL, () => {
 					console.log(`DUPE   ${ip} ${url}`);
-					// staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {}, request, response);
+					// staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
 				});
 				return false;
 			}
