@@ -507,6 +507,7 @@ String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
 	let b4 = search;
 	if (input.regex) {
+		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
 		return target.replace(new RegExp(search, 'g'), replacement);
 	}
 	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
