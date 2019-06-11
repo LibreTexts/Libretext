@@ -1,3 +1,15 @@
+const LibreTexts = {
+	authenticatedFetch: authenticatedFetch,
+	getSubpages: getSubpages,
+	// getSubpagesAlternate: getSubpagesAlternate,
+	// clarifySubdomain: clarifySubdomain,
+	encodeHTML: encodeHTML,
+	decodeHTML: decodeHTML,
+	// authenticate: authenticate,
+	// addLinks: addLinks,
+	// extractSubdomain: extractSubdomain,
+};
+
 async function authenticatedFetch(path, api, subdomain) {
 	let isNumber;
 	if (!isNaN(path)) {
@@ -76,4 +88,23 @@ async function getSubpages(rootURL, username) {
 			return [];
 		}
 	}
+}
+
+function decodeHTML(content) {
+	let ret = content.replace(/&gt;/g, '>');
+	ret = ret.replace(/&lt;/g, '<');
+	ret = ret.replace(/&quot;/g, '"');
+	ret = ret.replace(/&apos;/g, "'");
+	ret = ret.replace(/&amp;/g, '&');
+	return ret;
+}
+
+function encodeHTML(content) {
+	let ret = content;
+	ret = ret.replace(/&/g, '&amp;');
+	ret = ret.replace(/>/g, '&gt;');
+	ret = ret.replace(/</g, '&lt;');
+	ret = ret.replace(/"/g, '&quot;');
+	ret = ret.replace(/'/g, "&apos;");
+	return ret;
 }

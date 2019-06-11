@@ -227,6 +227,7 @@ async function jobHandler(jobType, input, socket) {
 	
 	
 	async function findReplace(content) {
+		content = content.replace(/\\n/g,'\n');
 		let result = content.replaceAll(input.find, input.replace, input);
 		if (result !== content) {
 			/*			const diff = jsdiff.diffWords(content, result);
@@ -365,7 +366,7 @@ async function jobHandler(jobType, input, socket) {
 					// console.error(e);
 				}
 				if (!failed && response.ok && response.status < 400) {
-					if (input.findOnly){
+					if (input.findOnly) {
 						result = "findOnly";
 						count++;
 					}
@@ -506,25 +507,28 @@ async function logCompleted(result, isDisabled) {
 String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
 	let b4 = search;
-	if (input.regex) {
-		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
-		return target.replace(new RegExp(search, 'g'), replacement);
-	}
-	search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	
-	if (input.newlines) {
+	if (input.regex)
+		search = search.replace(/^\/|\/$/g, '');
+	else
+		search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	
+	let temp = target.replace(new RegExp(search, 'gm'), replacement);
+	// console.log(b4, search);
+	search = LibreTexts.encodeHTML(search);
+	return temp.replace(new RegExp(search, 'gm'), replacement);
+	
+/*	if (input.newlines) {
 		search = search.replace(/\\\\n/g, "\n"); //add newlines
 		if (input.isWildcard) {
 			search = search.replace(/\\\?/g, "[\\s\\S]"); //wildcard single
-			search = search.replace(/\\\*/g, "[\\s\\S]*?"); //wildcard multi
+			search = search.replace(/\\\*!/g, "[\\s\\S]*?"); //wildcard multi
 		}
 	}
 	else if (input.isWildcard) {
 		search = search.replace(/\\\?/g, "."); //wildcard single
-		search = search.replace(/\\\*/g, ".*?"); //wildcard multi
+		search = search.replace(/\\\*!/g, ".*?"); //wildcard multi
 	}
-	let temp = target.replace(new RegExp(search, 'g'), replacement);
-	search = LibreTexts.encodeHTML(search);
-	// console.log(b4, search);
-	return temp.replace(new RegExp(search, 'g'), replacement);
+	let temp = target.replace(new RegExp(search, 'g'), replacement);*/
+	
 };

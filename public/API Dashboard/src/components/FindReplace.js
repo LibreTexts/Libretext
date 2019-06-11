@@ -2,6 +2,7 @@ import React from 'react';
 import Toggle from 'react-toggle';
 import {FixedSizeList as List} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import fetch from "node-fetch";
 
 
 export default class FindReplace extends React.Component {
@@ -12,8 +13,7 @@ export default class FindReplace extends React.Component {
 			find: "",
 			replace: "",
 			user: document.getElementById('usernameHolder').textContent,
-			newlines: false,
-			isWildcard: false,
+			presets:[],
 			regex: false,
 			findOnly: false,
 			
@@ -66,6 +66,17 @@ export default class FindReplace extends React.Component {
 				alert(data.message || data);
 			console.error(data.message || data);
 		});
+		fetch(`https://chem.libretexts.org/@api/deki/pages/155916/contents`).then(async (response) => {
+			if (!response.ok)
+				console.error('Cannot get API Dashboard Presets');
+			else {
+				let presets = await response.text();
+				presets = presets.match(/(?<=var presets = )\[[\S\s]*?](?=;)/)[0];
+				presets = LibreTexts.decodeHTML(presets);
+				presets = JSON.parse(presets);
+				this.setState({presets: presets})
+			}
+		})
 	}
 	
 	componentWillUnmount() {
@@ -79,8 +90,6 @@ export default class FindReplace extends React.Component {
 			user: this.state.user,
 			find: this.state.find,
 			replace: this.state.replace,
-			newlines: this.state.newlines,
-			isWildcard: this.state.isWildcard,
 			regex: this.state.regex,
 			findOnly: this.state.findOnly,
 		};
@@ -161,36 +170,54 @@ export default class FindReplace extends React.Component {
 					<div><input placeholder="URL" onChange={(event) => {
 						this.setState({root: event.target.value})
 					}}/>
-						<input placeholder="Find" onChange={(event) => {
-							this.setState({find: event.target.value})
-						}}/>
-						<input placeholder="Replace" onChange={(event) => {
-							this.setState({replace: event.target.value})
-						}}/>
+						<input placeholder="Basic Find or /Regex/" value={this.state.find}
+						       onChange={(event) => {
+							       let find = event.target.value;
+							       let isRegex = Boolean(find.match(/^\/[\s\S]*\/$/));
+							       this.setState({find: find, regex: isRegex});
+							
+						       }}/>
+						<input placeholder="Replace" value={this.state.replace}
+						       onChange={(event) => {
+							       this.setState({replace: event.target.value})
+						       }}/>
 						<div>
 							<button onClick={() => this.verifyRequest()}>Verify Request</button>
 							<button onClick={() => this.revert()}>Revert Request {this.state.ID}</button>
 						</div>
 					</div>
 					<div>
-						<label>
-							<Toggle onChange={() => this.setState({isWildcard: !this.state.isWildcard})}
-							        defaultChecked={this.state.isWildcard}/>
-							<span>Enable Wildcards (? or *)</span>
-						</label>
-						<label>
-							<Toggle onChange={() => this.setState({newlines: !this.state.newlines})}
-							        defaultChecked={this.state.newlines}/>
-							<span>Enable Newlines (\n)</span>
-						</label>
+						<select style={{marginBottom: '20px'}} onChange={(e) => {
+							let value = e.target.value;
+							if (value) {
+								value = JSON.parse(value);
+								let find = value.find;
+								let isRegex = Boolean(find.match(/^\/[\s\S]*\/$/));
+								this.setState({find: find, replace: value.replace, regex: isRegex})
+							}
+						}}>
+							<option value="">Select a Find/Replace Preset</option>
+							<option value={JSON.stringify({
+								find: '',
+								replace: ''
+							})}>Blank
+							</option>
+							{
+								this.state.presets.map((preset)=><option key={preset.text} value={JSON.stringify({
+									find: preset.find,
+									replace: preset.replace
+								})}>{preset.text}
+								</option>)
+							}
+						</select>
 						<label>
 							<Toggle onChange={() => this.setState({regex: !this.state.regex})}
-							        defaultChecked={this.state.regex}/>
+							        checked={this.state.regex}/>
 							<span>Use Regular Expressions (Regex)</span>
 						</label>
 						<label>
 							<Toggle onChange={() => this.setState({findOnly: !this.state.findOnly})}
-							        defaultChecked={this.state.findOnly}/>
+							        checked={this.state.findOnly}/>
 							<span>Find pages but do not modify (read only mode)</span>
 						</label>
 					</div>
@@ -199,12 +226,11 @@ export default class FindReplace extends React.Component {
 				<div>
 					{this.getStatus()}
 					<div id="results">
-						
 						<AutoSizer disableHeight={true}>
 							{({height, width}) => (
 								<List
 									className="List"
-									height={Math.min(this.state.results.length * 15, 400)}
+									height={Math.min(this.state.results.length * 30, 400)}
 									itemCount={this.state.results.length}
 									itemSize={15}
 									width={width}
