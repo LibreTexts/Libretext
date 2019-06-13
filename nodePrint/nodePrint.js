@@ -70,8 +70,12 @@ puppeteer.launch({
 			let url = clarifySubdomain(request.url);
 			
 			if (url.startsWith("/url=")) { //single page
+				url = url.split('/url=')[1];
+				
+				//query string handling
 				let isNoCache = false;
 				let isOffload = false;
+				let withMargin = false;
 				if (url.includes("?nocache")) {
 					isNoCache = true;
 					url = url.replace("?nocache", "");
@@ -86,7 +90,12 @@ puppeteer.launch({
 					url = url.replace("&offload", "");
 					ip = 'BatchOffload';
 				}
-				url = url.split('/url=')[1];
+				if (url.endsWith("?margin")) {
+					url = url.slice(0, -7);
+					withMargin = true;
+				}
+				if (url.includes('Grewal_and_Wakim'))
+					withMargin = true;
 				if (url.endsWith(".pdf")) {
 					url = url.slice(0, -4);
 				}
@@ -94,13 +103,6 @@ puppeteer.launch({
 				if (!url.includes("libretexts.org")) {
 					responseError();
 					return;
-				}
-				
-				//TODO: Remove this testing feature
-				let withMargin = false;
-				if (url.endsWith("marg")) {
-					url = url.slice(0, -4);
-					withMargin = true;
 				}
 				const escapedURL = md5(url);
 				
@@ -114,12 +116,12 @@ puppeteer.launch({
 							response.end();
 						}
 						else if (withMargin)
-							staticFileServer.serveFile('../PDF/Margin/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
+							staticFileServer.serveFile(`../PDF/Margin/${escapedURL}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
 						else if (result.filename === 'restricted') {
 							responseError('This page is not publicly accessible.', 403)
 						}
 						else
-							staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
+							staticFileServer.serveFile(`../PDF/${escapedURL}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
 					}
 				}, (err) => responseError("Server \n" + err, 500));
 				
@@ -207,7 +209,10 @@ puppeteer.launch({
 				url = url.split('/Finished/')[1];
 				url = decodeURIComponent(url);
 				if (await fs.exists(`./PDF/Finished/${url}`)) {
-					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {'Content-Disposition': 'attachment', 'cache-control': 'no-cache'}, request, response);
+					staticFileServer.serveFile(`../PDF/Finished/${url}`, 200, {
+						'Content-Disposition': 'attachment',
+						'cache-control': 'no-cache'
+					}, request, response);
 					let count = await storage.getItem('downloadCount') || 0;
 					await storage.setItem('downloadCount', count + 1);
 					let now2 = new Date();
@@ -554,7 +559,7 @@ puppeteer.launch({
 				await page.setContent(content,
 					{waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 			} catch (e) {
-				
+			
 			}
 			
 			await page.pdf({
@@ -671,7 +676,7 @@ puppeteer.launch({
 				await page.setContent(content,
 					{waitUntil: ["load", "domcontentloaded", 'networkidle0']});
 			} catch (e) {
-				
+			
 			}
 			
 			async function getLevel(subpages, level = 2, isSubTOC) {
@@ -1144,8 +1149,7 @@ puppeteer.launch({
 								left: "0.75in",
 							}
 						});
-					}
-					catch (e) {
+					} catch (e) {
 						// console.error(e);
 					}
 					clearTimeout(timeout);

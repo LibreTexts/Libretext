@@ -62,7 +62,7 @@ async function getSubpagesAlternate(rootURL, username, options) {
 	const subdomain = origin[0];
 	let timer = 0;
 	let numpages = setInterval(() => {
-		if (options.socket) { //not quite working yet
+		if (options.socket) {
 			timer += Math.round(Math.random()*500);
 			options.socket.emit('setState', {state: 'getSubpages', numPages: timer});
 		}

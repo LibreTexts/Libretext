@@ -73,7 +73,7 @@ export default class FindReplace extends React.Component {
 				let presets = await response.text();
 				presets = presets.match(/(?<=var presets = )\[[\S\s]*?](?=;)/)[0];
 				presets = LibreTexts.decodeHTML(presets);
-				presets = presets.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+				presets = presets.replace(/\\/g, "\\\\");
 				presets = JSON.parse(presets);
 				this.setState({presets: presets})
 			}
