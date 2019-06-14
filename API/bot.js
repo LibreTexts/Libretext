@@ -5,7 +5,6 @@ const io = require('socket.io')(server, {path: '/bot/ws'});
 const nodeStatic = require('node-static');
 const staticFileServer = new nodeStatic.Server('./BotLogs');
 const fs = require('fs-extra');
-const authen = require('./authen.json');
 const fetch = require("node-fetch");
 const jsdiff = require('diff');
 require('colors');
@@ -66,6 +65,7 @@ io.on('connection', function (socket) {
 	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
+	socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -77,6 +77,7 @@ async function jobHandler(jobType, input, socket) {
 				return input.root && input.user && input.find;
 			case 'deadLinks':
 			case 'headerFix':
+			case 'foreignImage':
 				return input.root;
 		}
 	}
@@ -87,6 +88,7 @@ async function jobHandler(jobType, input, socket) {
 				return {root: input.root, user: input.user, find: input.find};
 			case 'deadLinks':
 			case 'headerFix':
+			case 'foreignImage':
 				return {root: input.root};
 		}
 	}
@@ -177,8 +179,10 @@ async function jobHandler(jobType, input, socket) {
 				comment = `[BOT ${ID}] Fixed Headers`;
 				break;
 			case 'foreignImage':
-				[result, numLinks] = await foreignImage(content);
-				comment = `[BOT ${ID}] Imported ${numLinks} Foreign Images`;
+				[result, count] = await foreignImage(content, path);
+				comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
+				if (input.findOnly && count)
+					result = 'findOnly';
 				break;
 		}
 		if (!result || result === content)
@@ -227,7 +231,7 @@ async function jobHandler(jobType, input, socket) {
 	
 	
 	async function findReplace(content) {
-		content = content.replace(/\\n/g,'\n');
+		content = content.replace(/\\n/g, '\n');
 		let result = content.replaceAll(input.find, input.replace, input);
 		if (result !== content) {
 			/*			const diff = jsdiff.diffWords(content, result);
@@ -330,12 +334,13 @@ async function jobHandler(jobType, input, socket) {
 		return result;
 	}
 	
-	async function foreignImage(content) {
+	async function foreignImage(content, path) {
 		let images = content.match(/<img.*?>/g);
 		let result = content;
 		let count = 0;
 		await mapLimit(images, 10, async (image) => {
 			let url = image.match(/(?<=src=").*?(?=")/);
+			let newImage = image;
 			if (url) {
 				url = url[0];
 				if (!url.startsWith('http') || url.includes('libretexts.org'))
@@ -352,7 +357,7 @@ async function jobHandler(jobType, input, socket) {
 						}), seconds * 1000);
 						let result;
 						try {
-							result = await fetch(url, {method: 'HEAD'});
+							result = await fetch(url);
 						} catch (e) {
 							reject(e);
 							// console.error(e);
@@ -369,32 +374,39 @@ async function jobHandler(jobType, input, socket) {
 					if (input.findOnly) {
 						result = "findOnly";
 						count++;
+						return;
 					}
+					//https://chem.libretexts.org/@api/deki/files/190409/Acute-Dog-Diarrhea-47066074.jpg?origin=mt-web
+					//https://chem.libretexts.org/@api/deki/files/190409/Acute-Dog-Diarrhea-47066074.jpg?revision=1
 					//upload image
 					let foreignImage = await response.blob();
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
-					response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
-						method: "PUT",
-						body: foreignImage,
-						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
-					});
-					if (!response.ok)
-						return false;
-					response = await response.json();
-					
+					let token = LibreTexts.authenticate(input.user, input.subdomain);
+						response = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+							method: "PUT",
+							body: foreignImage,
+							headers: {'x-deki-token': token}
+						});
+						if (!response.ok) {
+							response = await response.text();
+							console.error(response);
+							return;
+						}
+						response = await response.json();
 					//change path to new image
 					let newSRC = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`;
-					result = result.replace(image.match(/(?<=src=").*?(?=")/)[0], newSRC);
-					result = result.replace(image.match(/fileid=".*?"/)[0], "");
-					result = result.replace(image.match(/(?<=<img.*?)>/)[0], `fileid=${response['@id']} >`);
+					
+					newImage = newImage.replace(/(?<=src=").*?(?=")/, newSRC);
+					newImage = newImage.replace(/(?<=<img.*?)\/>/, `fileid="${response['@id']}" \/>`);
+					result = result.replace(image, newImage);
 					count++;
 				}
-				else if (response.code)
+/*				else if (response.code)
 					console.log(`Dead ${response.code}! ${url}`);
 				else if (response.status)
 					console.log(`Dead ${response.status}! ${url}`);
 				else
-					console.log(`Dead ${response}! ${url}`);
+					console.log(`Dead ${response}! ${url}`);*/
 			}
 		});
 		return [result, count];
@@ -518,17 +530,17 @@ String.prototype.replaceAll = function (search, replacement, input) {
 	search = LibreTexts.encodeHTML(search);
 	return temp.replace(new RegExp(search, 'gm'), replacement);
 	
-/*	if (input.newlines) {
-		search = search.replace(/\\\\n/g, "\n"); //add newlines
-		if (input.isWildcard) {
-			search = search.replace(/\\\?/g, "[\\s\\S]"); //wildcard single
-			search = search.replace(/\\\*!/g, "[\\s\\S]*?"); //wildcard multi
+	/*	if (input.newlines) {
+			search = search.replace(/\\\\n/g, "\n"); //add newlines
+			if (input.isWildcard) {
+				search = search.replace(/\\\?/g, "[\\s\\S]"); //wildcard single
+				search = search.replace(/\\\*!/g, "[\\s\\S]*?"); //wildcard multi
+			}
 		}
-	}
-	else if (input.isWildcard) {
-		search = search.replace(/\\\?/g, "."); //wildcard single
-		search = search.replace(/\\\*!/g, ".*?"); //wildcard multi
-	}
-	let temp = target.replace(new RegExp(search, 'g'), replacement);*/
+		else if (input.isWildcard) {
+			search = search.replace(/\\\?/g, "."); //wildcard single
+			search = search.replace(/\\\*!/g, ".*?"); //wildcard multi
+		}
+		let temp = target.replace(new RegExp(search, 'g'), replacement);*/
 	
 };

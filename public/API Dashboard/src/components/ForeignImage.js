@@ -90,7 +90,7 @@ export default class ForeignImage extends React.Component {
 	
 	sendRequest(request) {
 		this.setState({status: 'getSubpages', results: [], ID: '', time: 0});
-		this.socket.emit('deadLinks', request);
+		this.socket.emit('foreignImage', request);
 	}
 	
 	revert() {
@@ -110,7 +110,7 @@ export default class ForeignImage extends React.Component {
 	getStatus() {
 		switch (this.state.status) {
 			case 'getSubpages':
-			case 'deadLinks':
+			case 'processing':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Foreign Image{this.state.findOnly ? ' Search' : ' Conversion'} In Progress
@@ -137,7 +137,7 @@ export default class ForeignImage extends React.Component {
 	
 	render() {
 		return (
-			<div id="DeadLinks">
+			<div id="ForeignImage">
 				<div className="topPanel">
 					<div><input placeholder="URL" onChange={(event) => {
 						this.setState({root: event.target.value})
@@ -168,7 +168,7 @@ export default class ForeignImage extends React.Component {
 							{({height, width}) => (
 								<List
 									className="List"
-									height={Math.min(this.state.results.length * 15, 400)}
+									height={Math.min(this.state.results.length * 30, 400)}
 									itemCount={this.state.results.length}
 									itemSize={15}
 									width={width}

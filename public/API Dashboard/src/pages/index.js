@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
 					<option value={'FindAndReplace'}>Find and Replace</option>
 					<option value={'DeadLinks'}>Dead link killer</option>
 					<option value={'HeaderFix'}>Header Fixer</option>
-					<option value={'ForeignImage'}>Testing</option>
+					<option value={'ForeignImage'}>Foreign Image Importer</option>
 				</select>
 			</div>
 			{this.getPanel()}

@@ -9,7 +9,7 @@ class LTForm {
 		LTForm.initializeFancyTree();
 	}
 	
-	static save(tree){
+	static save(tree) {
 		localStorage.setItem('RemixerSession', JSON.stringify(tree));
 	}
 	
@@ -195,15 +195,16 @@ class LTForm {
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
-				result[index] = {
-					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
-					url: url,
-					path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
-					id: parseInt(subpage['@id']),
-					children: children,
-					lazy: !full,
-					subdomain: subdomain,
-				};
+				if (!url.endsWith('/link'))
+					result[index] = {
+						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+						url: url,
+						path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
+						id: parseInt(subpage['@id']),
+						children: children,
+						lazy: !full,
+						subdomain: subdomain,
+					};
 			}
 			
 			if (subpageArray && subpageArray.length) {
@@ -257,7 +258,7 @@ class LTForm {
 			target.innerHTML =
 				"<div id='LTForm'>" +
 				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
-				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
+				`<div id='LTFormContainer'><div>Library Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Remix Panel<div id='LTRight'></div></div></div>` +
 				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin, isPro, groups)}</div>` +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div>" +
 				`<div id="dialog-form" title="Create a Default Template">
@@ -506,7 +507,7 @@ class LTForm {
 		
 		function formMode(isAdmin, isPro, groups) {
 			
-			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
+			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remix Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
 		}
 	}
 	

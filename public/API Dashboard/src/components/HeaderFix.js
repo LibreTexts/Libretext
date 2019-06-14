@@ -165,7 +165,7 @@ export default class HeaderFix extends React.Component {
 							{({height, width}) => (
 								<List
 									className="List"
-									height={Math.min(this.state.results.length * 15, 400)}
+									height={Math.min(this.state.results.length * 30, 400)}
 									itemCount={this.state.results.length}
 									itemSize={15}
 									width={width}
