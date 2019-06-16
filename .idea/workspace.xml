@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Mandeep margins">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Foreign Image">
+      <change afterPath="$PROJECT_DIR$/public/Remixer/API Dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/react-toggle.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/src/pages/404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/portals.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/portals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/ForeignImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/ForeignImage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderFix.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderFix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,26 +36,43 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Front/portals.js">
+        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="47" column="147" selection-start-line="47" selection-start-column="147" selection-end-line="47" selection-end-column="147" />
+            <state relative-caret-position="363">
+              <caret line="1373" column="43" selection-start-line="1373" selection-start-column="43" selection-end-line="1373" selection-end-column="43" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/API/reuse.js">
+        <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/universalify/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="172" column="23" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
-              <folding>
-                <element signature="n#!!block;n#authenticatedFetch#0" />
-                <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
-                <element signature="n#!!block;n#clarifySubdomain#0" />
-                <element signature="n#!!block;n#authenticate#0" />
-                <element signature="n#!!block;n#extractSubdomain#0" />
-              </folding>
+            <state relative-caret-position="192">
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -64,45 +88,44 @@
         <option value="JavaScript File" />
         <option value="README" />
         <option value="CSS File" />
+        <option value="HTTP Request" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>institutions</find>
-      <find>getauthors</find>
-      <find>fetch</find>
-      <find>map</find>
-      <find>console.log</find>
-      <find>replaceall</find>
-      <find>number</find>
-      <find>title</find>
-      <find>remixer</find>
-      <find>order</find>
-      <find>getpdf</find>
-      <find>/PDF/</find>
-      <find>Margin</find>
-      <find>getPDF</find>
-      <find>.href</find>
-      <find>printme</find>
-      <find>batch</find>
-      <find>/Margin</find>
-      <find>prive</find>
-      <find>updateTime</find>
-      <find>type</find>
-      <find>source</find>
-      <find>LTForm.content</find>
-      <find>processing</find>
-      <find>dead</find>
-      <find>deadLinks</find>
-      <find>processFile</find>
-      <find>LTForm</find>
-      <find>findOnly</find>
       <find>15</find>
+      <find>static</find>
+      <find>ltform</find>
+      <find>formMode</find>
+      <find>console.log</find>
+      <find>oninput</find>
+      <find>setname</find>
+      <find>for</find>
+      <find>local</find>
+      <find>ltleft</find>
+      <find>.content</find>
+      <find>classnamename</find>
+      <find>generate</find>
+      <find>regular</find>
+      <find>Cover Page</find>
+      <find>presets</find>
+      <find>select</find>
+      <find>getinstitutions</find>
+      <find>username</find>
+      <find>authenticate</find>
+      <find>authenticated</find>
+      <find>getsubpages</find>
+      <find>CORS</find>
+      <find>contents</find>
+      <find>fetch</find>
+      <find>subpages</find>
+      <find>relativePath</find>
+      <find>path</find>
+      <find>:A</find>
+      <find>thin</find>
     </findStrings>
     <replaceStrings>
-      <replace>LTform.content</replace>
-      <replace>Cover Page</replace>
       <replace>LTForm</replace>
       <replace>f3f3f3</replace>
       <replace>/move?to=&quot; + child.title</replace>
@@ -131,6 +154,8 @@
       <replace>RemixerSession</replace>
       <replace>findReplace</replace>
       <replace>findAndReplace</replace>
+      <replace>this.</replace>
+      <replace>onChange</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -148,10 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/nodePrint/public/cover.css" />
-        <option value="$PROJECT_DIR$/API/import.js" />
-        <option value="$PROJECT_DIR$/API/propagator.js" />
-        <option value="$PROJECT_DIR$/API/package.json" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/404.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/API.http" />
@@ -173,7 +194,6 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/package.json" />
         <option value="$PROJECT_DIR$/public/API Dashboard/API Dashboard.css" />
         <option value="&lt;bd8ae14e-20c9-4b98-b7d8-0d5951748072&gt;/awesomefiles/nodePrint/public/StatsFull.txt" />
-        <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/headerfooter.css" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" />
@@ -181,24 +201,29 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderPromote.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
-        <option value="$PROJECT_DIR$/public/Remixer/package.json" />
-        <option value="$PROJECT_DIR$/public/Remixer/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/nodePrint/batchPrint.js" />
         <option value="$PROJECT_DIR$/public/Skele/package.json" />
         <option value="$PROJECT_DIR$/public/Converter/package.json" />
         <option value="$PROJECT_DIR$/nodePrint/package.json" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
-        <option value="$PROJECT_DIR$/API/reuse.js" />
-        <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/licenses.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/ForeignImage.js" />
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/HeaderFix.js" />
         <option value="$PROJECT_DIR$/Front/portals.js" />
+        <option value="$PROJECT_DIR$/public/Remixer/src/components/DeadLinks.js" />
+        <option value="$PROJECT_DIR$/public/Remixer/src/pages/index.js" />
+        <option value="$PROJECT_DIR$/public/Remixer/package.json" />
+        <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
+        <option value="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" />
+        <option value="$PROJECT_DIR$/nodePrint/Matter Test.http" />
+        <option value="$PROJECT_DIR$/API/endpoint.js" />
+        <option value="$PROJECT_DIR$/API/reuse.js" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
+        <option value="$PROJECT_DIR$/API/propagator.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
       </list>
     </option>
   </component>
@@ -222,7 +247,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -233,51 +257,34 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="API" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="Front" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="PDF" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="PDF" type="462c0819:PsiDirectoryNode" />
+              <item name="Finished" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="API Dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
+              <item name="PDF" type="462c0819:PsiDirectoryNode" />
+              <item name="Finished" type="462c0819:PsiDirectoryNode" />
+              <item name="bio-Human Biology-fc9fd7f2d2db2cac" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -422,11 +429,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.API Dashboard">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="API#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/API/API.http" index="2">
-      <method v="2" />
-    </configuration>
-    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="https://awesomefiles.libretexts.org/MoleculeGenerator/index.html">
       <method v="2" />
     </configuration>
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
@@ -483,6 +487,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="Remixer" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/Remixer/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="package" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/public/MoleculeGenerator/package.json" />
       <command value="run" />
@@ -508,18 +522,17 @@
     <list>
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="HTTP Request.API#2" />
-      <item itemvalue="JavaScript Debug.index.html" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="npm.API Dashboard" />
+      <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.Downloads Center" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JavaScript Debug.index.html" />
         <item itemvalue="HTTP Request.API#2" />
       </list>
     </recent_temporary>
@@ -1066,14 +1079,13 @@
       <workItem from="1560380208273" duration="1640000" />
       <workItem from="1560389563232" duration="607000" />
       <workItem from="1560391076869" duration="7294000" />
-      <workItem from="1560450458010" duration="7179000" />
-    </task>
-    <task id="LOCAL-00150" summary="Added All refresh">
-      <created>1552439889918</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1552439889918</updated>
+      <workItem from="1560450458010" duration="7389000" />
+      <workItem from="1560471769827" duration="5705000" />
+      <workItem from="1560531100596" duration="4522000" />
+      <workItem from="1560546505360" duration="8127000" />
+      <workItem from="1560616206071" duration="4586000" />
+      <workItem from="1560667396614" duration="3791000" />
+      <workItem from="1560719056694" duration="6998000" />
     </task>
     <task id="LOCAL-00151" summary="Fixed Lulu Covers">
       <created>1552714572430</created>
@@ -1411,7 +1423,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560405494609</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="Foreign Image">
+      <created>1560471493895</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1560471493896</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1447,7 +1466,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1649900000" />
+    <option name="totallyTimeSpent" value="1683839000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1455,12 +1474,12 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.19987959" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17399158" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" visible="true" weight="0.21733333" />
+      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" weight="0.24533333" />
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" weight="0.18700266" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
@@ -1478,7 +1497,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.29440096" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.3446712" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.30945215" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1575,7 +1594,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Re-added mathbook" />
     <MESSAGE value="Initial Bot" />
     <MESSAGE value="Moved authenBrowser to keys.lt.org" />
     <MESSAGE value="Added wildcard and read-only&#10;&#10;Bugfixed root page" />
@@ -1600,7 +1618,8 @@
     <MESSAGE value="updated css-loader" />
     <MESSAGE value="Preset escaping" />
     <MESSAGE value="Mandeep margins" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mandeep margins" />
+    <MESSAGE value="Foreign Image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Foreign Image" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1696,29 +1715,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/output/svg/fonts/tex.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/output/chtml.js" />
-    <entry file="file://$PROJECT_DIR$/nodePrint/enlargeNFS.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret column="762109" selection-start-column="762100" selection-end-column="762109" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/puppeteer/lib/Page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="952" column="38" selection-start-line="952" selection-start-column="38" selection-end-line="952" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -1763,24 +1759,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/HeaderFix.js" />
     <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/ForeignImage.js" />
-    <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/DeadLinks.js" />
     <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/FindReplace.js" />
     <entry file="file://$PROJECT_DIR$/public/Downloads Center/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Remixer/package.json" />
-    <entry file="file://$PROJECT_DIR$/public/Remixer/src/pages/index.js" />
     <entry file="file://$PROJECT_DIR$/public/Remixer/src/pages/404.js" />
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="802" column="152" selection-start-line="802" selection-start-column="139" selection-end-line="802" selection-end-column="152" />
-          <folding>
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/formDraft.js" />
     <entry file="file://$PROJECT_DIR$/API/credentials.json" />
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/siunitx.js">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1849,13 +1833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/PDFMerger.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1895,11 +1872,169 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/pages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-314">
+          <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="167" column="83" selection-start-line="167" selection-start-column="83" selection-end-line="167" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/HeaderFix.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="167" column="83" selection-start-line="167" selection-start-column="83" selection-end-line="167" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/ForeignImage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="170" column="83" selection-start-line="170" selection-start-column="83" selection-end-line="170" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front/portals.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="44" column="65" lean-forward="true" selection-start-line="44" selection-start-column="65" selection-end-line="44" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="77" column="48" selection-start-line="77" selection-start-column="48" selection-end-line="77" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/src/pages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-288">
+          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/Remixer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="479" column="37" selection-start-line="479" selection-start-column="37" selection-end-line="479" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="1153" column="38" lean-forward="true" selection-start-line="1153" selection-start-column="38" selection-end-line="1153" selection-end-column="38" />
+          <folding>
+            <element signature="n#!!block;n#copyTransclude#0;n#LTForm#0" />
+            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/restClient/lib/restClient.jar!/com/intellij/ws/rest/client/requests/collection/get-requests.http">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/Matter Test.http" />
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/node-fetch/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="271" column="43" selection-start-line="271" selection-start-column="43" selection-end-line="271" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="264" column="17" selection-start-line="264" selection-start-column="17" selection-end-line="264" selection-end-column="17" />
+          <folding>
+            <element signature="e#7433#8619#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1776">
+          <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
+          <folding>
+            <element signature="n#!!block;n#findReplace#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#revert#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding>
+            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
+            <element signature="n#!!block;n#clarifySubdomain#0" />
+            <element signature="n#!!block;n#authenticate#0" />
+            <element signature="n#!!block;n#extractSubdomain#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/universalify/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="123" column="63" selection-start-line="123" selection-start-column="63" selection-end-line="123" selection-end-column="63" />
+        <state relative-caret-position="363">
+          <caret line="1373" column="43" selection-start-line="1373" selection-start-column="43" selection-end-line="1373" selection-end-column="43" />
           <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -1922,106 +2057,6 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-267">
-          <caret line="1104" column="38" selection-start-line="1104" selection-start-column="27" selection-end-line="1104" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="404" column="25" lean-forward="true" selection-start-line="404" selection-start-column="25" selection-end-line="404" selection-end-column="25" />
-          <folding>
-            <element signature="n#!!block;n#findReplace#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#revert#0" />
-            <element signature="e#15704#16551#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/pages/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-314">
-          <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/DeadLinks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="167" column="83" selection-start-line="167" selection-start-column="83" selection-end-line="167" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="233" column="83" selection-start-line="233" selection-start-column="81" selection-end-line="233" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/HeaderFix.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="167" column="83" selection-start-line="167" selection-start-column="83" selection-end-line="167" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/ForeignImage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="170" column="83" selection-start-line="170" selection-start-column="83" selection-end-line="170" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="203" column="43" selection-start-line="203" selection-start-column="43" selection-end-line="203" selection-end-column="43" />
-          <folding>
-            <element signature="e#7433#8619#0" />
-            <element signature="e#8662#10034#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="172" column="23" selection-start-line="172" selection-start-column="23" selection-end-line="172" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!block;n#authenticatedFetch#0" />
-            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
-            <element signature="n#!!block;n#clarifySubdomain#0" />
-            <element signature="n#!!block;n#authenticate#0" />
-            <element signature="n#!!block;n#extractSubdomain#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front/portals.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="47" column="147" selection-start-line="47" selection-start-column="147" selection-end-line="47" selection-end-column="147" />
         </state>
       </provider>
     </entry>

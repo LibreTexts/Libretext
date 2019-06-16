@@ -65,7 +65,7 @@ io.on('connection', function (socket) {
 	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
-	socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
+	// socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -90,6 +90,16 @@ async function jobHandler(jobType, input, socket) {
 			case 'headerFix':
 			case 'foreignImage':
 				return {root: input.root};
+		}
+	}
+	function parallelCount() {
+		switch (jobType) {
+			case 'foreignImage':
+				return 2;
+			case 'findReplace':
+			case 'deadLinks':
+			case 'headerFix':
+				return 50;
 		}
 	}
 	
@@ -138,7 +148,7 @@ async function jobHandler(jobType, input, socket) {
 		}
 	}
 	
-	await mapLimit(pages, 50, async (page) => {
+	await mapLimit(pages, parallelCount(), async (page) => {
 		index++;
 		let currentPercentage = Math.round(index / pages.length * 100);
 		if (percentage < currentPercentage) {
@@ -338,7 +348,7 @@ async function jobHandler(jobType, input, socket) {
 		let images = content.match(/<img.*?>/g);
 		let result = content;
 		let count = 0;
-		await mapLimit(images, 10, async (image) => {
+		await mapLimit(images, 5, async (image) => {
 			let url = image.match(/(?<=src=").*?(?=")/);
 			let newImage = image;
 			if (url) {

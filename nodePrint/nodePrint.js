@@ -127,7 +127,7 @@ puppeteer.launch({
 				
 			}
 			else if (url.startsWith("/Libretext=")) {
-				if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
+				if ((request.headers.origin && request.headers.origin.endsWith("libretexts.org")) || request.headers.host === 'localhost') {
 					if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 						response.writeHead(200, {
 							"Access-Control-Allow-Origin": request.headers.origin || null,
@@ -1287,30 +1287,40 @@ puppeteer.launch({
 			const thinName = md5(zipFilename).slice(0, 6);
 			
 			//Try to get special files
-			let titlePage = fetch(`${current.url}/TitlePage`);
-			let infoPage = await fetch(`${current.url}/InfoPage`);
-			titlePage = await titlePage;
-			if (infoPage.ok) {
-				current.children.push({
-					title: "InfoPage",
-					url: `${current.url}/InfoPage`,
-					subdomain: current.subdomain,
-					tags: [],
-					properties: [],
-					children: []
-				});
-			}
-			if (titlePage.ok) {
-				current.children.push({
-					title: "TitlePage",
-					url: `${current.url}/TitlePage`,
-					subdomain: current.subdomain,
-					tags: [],
-					properties: [],
-					children: []
-				});
-			}
+			let totalIndex = 1;
+			let frontArray = await getMatter('Front');
+			let TOCIndex = ++totalIndex;
+			let middleArray = await getMatter('Middle');
 			
+			
+			async function getMatter(text) {
+				let path = current.url.split('/').splice(3).join('/');
+				let miniIndex = 1;
+				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
+				if (!response.ok) {
+					console.error(await response.text());
+					return [];
+				}
+				response = (await response.json());
+				if (!response["page.subpage"])
+					return false;
+				response = response["page.subpage"];
+				if (!response.length)
+					response = [response];
+				
+				response = response.map(subpage => {
+					return {
+						title: subpage.title,
+						url: subpage['uri.ui'],
+						subdomain: current.subdomain,
+						id: subpage['@id'],
+						matter: text,
+						index: ++totalIndex,
+						miniIndex: miniIndex,
+					}
+				});
+				return response;
+			}
 			
 			if (!refreshOnly) {
 				await fs.emptyDir(directory);
@@ -1321,9 +1331,13 @@ puppeteer.launch({
 			let urlArray = [current];
 			urlArray = urlArray.concat(addLinks(current.children));
 			urlArray = urlArray.map((item, index) => {
-				item.index = index + 10; //Have 10 open for beginning materials
+				item.index = index + totalIndex; //Have 10 open for beginning materials
 				return item;
 			});
+			urlArray = frontArray.concat(middleArray, urlArray);
+			totalIndex = urlArray.length;
+			
+			urlArray = urlArray.concat(await getMatter('Back'));
 			
 			if (response)
 				response.write(JSON.stringify({
@@ -1346,22 +1360,23 @@ puppeteer.launch({
 				await mapLimit(urlArray, number, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
-					if (title === 'TitlePage') {
+					if (page.matter) {
 						filename = `${await getSpecial(page)}.pdf`;
-						title = '00000:B Title Page';
-						page.index = 2;
-					}
-					else if (title === 'InfoPage') {
-						filename = `${await getSpecial(page)}.pdf`;
-						title = '00000:C Information Page';
-						page.index = 3;
+						if (page.matter !== 'Back') {
+							title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
+						}
+						else {
+							title = `99999:${String.fromCharCode(64 + page.miniIndex)} ${page.title}`;
+						}
+						
 					}
 					else if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
 						filename = `TOC/${await getTOC(page.url, page)}.pdf`;
 						
 						if (page.tags.includes('coverpage:yes')) {
-							title = '00000:D Table of Contents';
-							page.index = 4;
+							page.index = TOCIndex;
+							
+							title = `00000:${String.fromCharCode(64 + page.index)} Table of Contents`;
 						}
 					}
 					else if (kubernetesServiceHost) {

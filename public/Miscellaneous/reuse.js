@@ -42,7 +42,6 @@ async function getSubpages(rootURL, username) {
 	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', username, subdomain);
 	pages = await pages.json();
 	
-	
 	let info = await authenticatedFetch(path, 'info?dream.out.format=json', username, subdomain);
 	info = await info.json();
 	return {

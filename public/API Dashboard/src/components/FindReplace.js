@@ -13,7 +13,7 @@ export default class FindReplace extends React.Component {
 			find: "",
 			replace: "",
 			user: document.getElementById('usernameHolder').textContent,
-			presets:[],
+			presets: [],
 			regex: false,
 			findOnly: false,
 			
@@ -66,18 +66,24 @@ export default class FindReplace extends React.Component {
 				alert(data.message || data);
 			console.error(data.message || data);
 		});
-		fetch(`https://chem.libretexts.org/@api/deki/pages/155916/contents`).then(async (response) => {
-			if (!response.ok)
-				console.error('Cannot get API Dashboard Presets');
-			else {
-				let presets = await response.text();
-				presets = presets.match(/(?<=var presets = )\[[\S\s]*?](?=;)/)[0];
-				presets = LibreTexts.decodeHTML(presets);
-				presets = presets.replace(/\\/g, "\\\\");
-				presets = JSON.parse(presets);
-				this.setState({presets: presets})
-			}
-		})
+		fetch(`https://chem.libretexts.org/@api/deki/pages/155916/contents`, {headers: {'cache-control': 'no-cache'}})
+			.then(async (response) => {
+				if (!response.ok)
+					console.error('Cannot get API Dashboard Presets');
+				else {
+					let presets = await response.text();
+					presets = presets.match(/(?<=var presets = )\[[\S\s]*?](?=;)/)[0];
+					presets = LibreTexts.decodeHTML(presets);
+					presets = presets.replace(/\\/g, "\\\\");
+					presets = presets.replace(/\\"/g, "\"");
+					try {
+						presets = JSON.parse(presets);
+						this.setState({presets: presets})
+					} catch (e) {
+						alert(e);
+					}
+				}
+			})
 	}
 	
 	componentWillUnmount() {
@@ -204,7 +210,7 @@ export default class FindReplace extends React.Component {
 							})}>Blank
 							</option>
 							{
-								this.state.presets.map((preset)=><option key={preset.text} value={JSON.stringify({
+								this.state.presets.map((preset) => <option key={preset.text} value={JSON.stringify({
 									find: preset.find,
 									replace: preset.replace
 								})}>{preset.text}
@@ -212,8 +218,10 @@ export default class FindReplace extends React.Component {
 							}
 						</select>
 						<label>
-							<Toggle onChange={() => this.setState({regex: !this.state.regex})}
-							        checked={this.state.regex}/>
+							<Toggle
+								onClick={() => alert(this.state.regex ? 'Remove /backslaskes/ around your query to disable Regex.' : 'Add /backslaskes/ around your query to enable Regex!')}
+								checked={this.state.regex} onChange={() => {
+							}}/>
 							<span>Use Regular Expressions (Regex)</span>
 						</label>
 						<label>

@@ -264,6 +264,9 @@ async function handler(request, response) {
 					response.write(contents);
 				}
 			}
+			else{
+				console.error(await contents.text());
+			}
 			response.end();
 		}
 	}

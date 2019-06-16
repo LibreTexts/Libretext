@@ -1,19 +1,276 @@
-class LTForm {
-	static async initialize() {
-		this.formScript = document.currentScript;
-		let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
-		LTForm.keys = await keys.json();
-		
+import React from 'react';
+import Toggle from 'react-toggle';
+
+
+export default class Remixer extends React.Component {
+	constructor() {
+		super();
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
-		LTForm.content = await this.getSubpages("", subdomain, false, true);
-		LTForm.initializeFancyTree();
+		
+		this.state = {
+			mode: 'Pro',
+			subdomain: subdomain,
+			title:'Testing',
+			LibraryTree: {},
+			RemixTree: Remixer.generateDefault(5,0),
+		};
+		
 	}
 	
-	static save(tree){
-		localStorage.setItem('RemixerSession', JSON.stringify(tree));
+	async componentDidMount() {
+		if (localStorage.getItem('RemixerState')) {
+			let state = JSON.parse(localStorage.getItem('RemixerState'));
+			this.setState(state);
+			/*			let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+						root.fromDict(d);
+						root.setExpanded();*/
+		}
+		this.setState({LibraryTree: await Remixer.getSubpages("", this.state.subdomain, false, true)});
+		
+		const LTLeft = $("#LTLeft");
+		const LTRight = $("#LTRight");
+		LTLeft.fancytree({
+			source: this.state.LibraryTree,
+			debugLevel: 0,
+			autoScroll: true,
+			extensions: ["dnd5"],
+			lazyLoad: function (event, data) {
+				const dfd = new $.Deferred();
+				let node = data.node;
+				data.result = dfd.promise();
+				Remixer.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+			},
+			dnd5: {
+				// autoExpandMS: 400,
+				// preventForeignNodes: true,
+				// preventNonNodes: true,
+				// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+				// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+				// scroll: true,
+				// scrollSpeed: 7,
+				// scrollSensitivity: 10,
+				
+				// --- Drag-support:
+				
+				dragStart: function (node, data) {
+					/* This function MUST be defined to enable dragging for the tree.
+					 *
+					 * Return false to cancel dragging of node.
+					 * data.dataTransfer.setData() and .setDragImage() is available
+					 * here.
+					 */
+//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
+					data.dataTransfer.dropEffect = "copy";
+					return true;
+				},
+				/*dragDrag: function (node, data) {
+					data.dataTransfer.dropEffect = "move";
+				},
+				dragEnd: function (node, data) {
+				},*/
+				
+				// --- Drop-support:
+				
+				/*dragEnter: function (node, data) {
+					// node.debug("dragEnter", data);
+					data.dataTransfer.dropEffect = "move";
+					// data.dataTransfer.effectAllowed = "copy";
+					return true;
+				},
+				dragOver: function (node, data) {
+					data.dataTransfer.dropEffect = "move";
+					// data.dataTransfer.effectAllowed = "copy";
+				},
+				dragLeave: function (node, data) {
+				},*/
+			},
+			icon: function (event, data) {
+				let subdomain = window.location.origin.split("/")[2].split(".")[0];
+				if ((!LTForm.subdomain || LTForm.subdomain === subdomain) && data.node.getLevel() === 1)
+					return `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+			}
+		});
+		LTRight.fancytree({
+			source: this.state.RemixTree,
+			debugLevel: 0,
+			autoScroll: true,
+			extensions: ["dnd5", "edit"],
+			lazyLoad: function (event, data) {
+				const dfd = new $.Deferred();
+				let node = data.node;
+				data.result = dfd.promise();
+				Remixer.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
+			},
+			tooltip: (event, data) => {
+				return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
+			},
+			edit: {
+				// Available options with their default:
+				adjustWidthOfs: 4,   // null: don't adjust input size to content
+				inputCss: {minWidth: "3em"},
+				triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
+				beforeEdit: function (event, data) {
+					return data.node.key !== "ROOT";
+				},
+				/*save: function (event, data) {
+					setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
+				},*/
+				close: function (event, data) {
+					Remixer.renumber();
+				}
+			},
+			dnd5: {
+				// autoExpandMS: 400,
+				// preventForeignNodes: true,
+				// preventNonNodes: true,
+				// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+				// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+				// scroll: true,
+				// scrollSpeed: 7,
+				// scrollSensitivity: 10,
+				
+				// --- Drag-support:
+				
+				dragStart: function (node, data) {
+					/* This function MUST be defined to enable dragging for the tree.
+					 *
+					 * Return false to cancel dragging of node.
+					 * data.dataTransfer.setData() and .setDragImage() is available
+					 * here.
+					 */
+//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
+					return true;
+				},
+				dragDrag: function (node, data) {
+					// data.dataTransfer.dropEffect = "move";
+				},
+				dragEnd: function (node, data) {
+				},
+				
+				// --- Drop-support:
+				
+				dragEnter: function (node, data) {
+					// node.debug("dragEnter", data);
+					// data.dataTransfer.dropEffect = "move";
+					return true;
+				},
+				/*dragOver: function (node, data) {
+					data.dataTransfer.dropEffect = "move";
+				},
+				dragLeave: function (node, data) {
+				},*/
+				dragDrop: async function (node, data) {
+					/* This function MUST be defined to enable dropping of items on
+					 * the tree.
+					 */
+					const transfer = data.dataTransfer;
+					
+					if (data.otherNode) {
+						// Drop another Fancytree node from same frame
+						// (maybe from another tree however)
+						var sameTree = (data.otherNode.tree === data.tree);
+						if (node.getLevel() <= 1) {
+							data.hitMode = "over";
+						}
+						if (data.hitMode === "over") {
+							node.setExpanded(true);
+						}
+						await doTransfer();
+					}
+					else if (data.otherNodeData) {
+						// Drop Fancytree node from different frame or window, so we only have
+						// JSON representation available
+						node.addChild(data.otherNodeData, data.hitMode);
+					}
+					else {
+						// Drop a non-node
+						node.addNode({
+							title: transfer.getData("text")
+						}, data.hitMode);
+					}
+					await LTForm.renumber();
+					
+					async function doTransfer() {
+						if (sameTree) {
+							data.otherNode.moveTo(node, data.hitMode);
+						}
+						else {
+							data.otherNode.copyTo(node, data.hitMode, function (n) {
+								n.title = n.title.replace(/<a.* ><\/a>/, "");
+								n.key = null; // make sure, a new key is generated
+							});
+							let LTRight = $("#LTRight").fancytree("getTree");
+							LTRight.enable(false);
+							const RightAlert = $("#LTRightAlert");
+							RightAlert.text('Importing content. Please wait...');
+							RightAlert.slideDown();
+							await data.otherNode.visitAndLoad();
+							RightAlert.slideUp();
+							LTRight.enable(true);
+						}
+					}
+				}
+			},
+		});
+		await this.getInstitutions();
+		
+		
+		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
+		LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
+		$("#LTRightAlert,#LTLeftAlert").hide();
 	}
 	
-	static async new() {
+	render() {
+		let target = document.createElement("div");
+		target.id = "LTRemixer";
+		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+		const isPro = document.getElementById("proHolder").innerText === 'true';
+		const isDemonstration = checkIfDemonstration();
+		const groups = document.getElementById("groupHolder").innerText;
+		let allowed = isAdmin || (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isDemonstration;
+		
+		console.log(this.state);
+		return <div id='LTForm'>
+			<div className="LTFormHeader">
+				<div className='LTTitle'>{this.state.mode} Mode</div>
+				<button onClick={this.new}>New Page</button>
+				<button onClick={this.delAll}>Delete</button>
+				<button onClick={this.mergeUp}>Merge Folder Up</button>
+				<button onClick={()=>this.dialog.dialog("open")}> Default Template</button>
+				<button onClick={this.reset}>Clear All</button>
+			</div>
+			<div id='LTFormContainer'>
+				<div>Library Panel<select id='LTFormSubdomain'
+				                          onChange={this.setSubdomain}>{this.getSelectOptions()}</select>
+					<div id='LTLeft'></div>
+				</div>
+				<div>Remix Panel
+					{/*<select id='LTFormInsitution'>{await this.getInstitutions()}</select>*/}
+					<div id='LTRight'></div>
+				</div>
+			</div>
+			<div id='LTFormFooter'>
+				<div>Select your college<select id='LTFormInstitutions'></select></div>
+				<div>Name for your LibreText (Usually your course name)<input id='LTFormName' onInput={this.setName}/></div>
+				{formMode(isAdmin, isPro, groups)}</div>
+			<div>
+				<button onClick={this.publish}>Publish your LibreText</button>
+				<div id='copyResults'></div>
+				<div id='copyErrors'></div>
+				<div id="dialog-form" title="Create a Default Template">
+					<p className="validateTips">Choose the number of chapters and pages per chapter you would like.<br/>
+						<b>All unsaved changes will be lost!</b>
+					</p>
+				</div>
+			</div>
+		</div>;
+		
+		function formMode(isAdmin, isPro, groups) {
+			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remix Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
+		}
+	}
+	
+	 async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node) {
 			node.addChildren({
@@ -24,11 +281,11 @@ class LTForm {
 				tooltip: "Newly Created Page",
 			});
 			await node.setExpanded();
-			await LTForm.renumber();
+			await this.renumber();
 		}
 	}
 	
-	static mergeUp() {
+	 mergeUp() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
 			node.setExpanded(true).done(() => {
@@ -42,32 +299,32 @@ class LTForm {
 		}
 	}
 	
-	static delAll() {
+	 delAll() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
 			node.remove();
-			LTForm.renumber();
+			this.renumber();
 		}
 	}
 	
-	static default(chapters = 5, pages = 0) {
+	 default(chapters = 5, pages = 0) {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work and replace it with the template you've chosen. Are you sure?")) {
-			const defaultMap = LTForm.generateDefault(chapters, pages)[0];
-			LTForm.save(defaultMap);
+			const defaultMap = this.generateDefault(chapters, pages)[0];
+			this.save(defaultMap);
 			node.fromDict(defaultMap);
 			node.setExpanded();
 		}
 	}
 	
-	static async reset() {
+	 async reset() {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work. Are you sure?")) {
 			node.removeChildren();
 		}
 	}
 	
-	static async renumber() {
+	 async renumber() {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (!root.children) {
 			return false;
@@ -83,7 +340,7 @@ class LTForm {
 		let shallow = depth < 2;
 		processNode(d, [0], 0, false,);
 		root.fromDict(d);
-		LTForm.save(d);
+		this.save(d);
 		root.setExpanded(true);
 		
 		function processNode(node, sharedIndex, level, overTen) {
@@ -123,15 +380,14 @@ class LTForm {
 		}
 	}
 	
-	static debug() {
+	 debug() {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		return root.toDict(true);
 	}
 	
-	static async setSubdomain() {
+	 async setSubdomain() {
 		let select = document.getElementById('LTFormSubdomain');
 		let subdomain = select.value;
-		this.subdomain = subdomain;
 		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
 		let LTLeft = $("#LTLeft").fancytree("getTree");
 		let LeftAlert = $("#LTLeftAlert");
@@ -139,10 +395,10 @@ class LTForm {
 		LTLeft.enable(false);
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		LTForm.content = await this.getSubpages("", subdomain, false, true);
+		this.content = await Remixer.getSubpages(`https://${subdomain}.libretexts.org`, subdomain, false, true);
 		let root = LTLeft.getRootNode();
 		root.removeChildren();
-		root.addChildren(LTForm.content);
+		root.addChildren(this.content);
 		
 		for (let i = 0; i < root.children.length; i++) {
 			let node = root.children[i];
@@ -152,15 +408,16 @@ class LTForm {
 		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
+		this.setState({subdomain: subdomain, LibraryTree: this.content})
 	}
 	
-	static setName() {
-		let name = document.getElementById("LTFormName").value;
+	 setName(e) {
+		let name = e.target.value;
 		name = name.replace('&', 'and');
 		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
 	}
 	
-	static getDepth(tree) {
+	 getDepth(tree) {
 		let depth = 0;
 		while (tree && tree.children) {
 			depth++;
@@ -169,348 +426,7 @@ class LTForm {
 		return depth;
 	}
 	
-	static async getSubpages(path, subdomain, full, linkTitle) {
-		path = path.replace(`https://${subdomain}.libretexts.org/`, "");
-		let response = await this.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
-		response = await response.json();
-		return await subpageCallback(response);
-		
-		async function subpageCallback(info) {
-			let subpageArray = info["page.subpage"];
-			if (subpageArray) {
-				subpageArray = subpageArray.length ? info["page.subpage"] : [info["page.subpage"]];
-			}
-			const result = [];
-			const promiseArray = [];
-			
-			async function subpage(subpage, index) {
-				let url = subpage["uri.ui"];
-				let path = subpage.path["#text"];
-				url = url.replace('?title=', '');
-				path = path.replace('?title=', '');
-				const hasChildren = subpage["@subpages"] === "true";
-				let children = hasChildren ? undefined : [];
-				if (hasChildren && (full)) { //recurse down
-					children = await LTForm.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
-					children = await children.json();
-					children = await subpageCallback(children, false);
-				}
-				result[index] = {
-					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
-					url: url,
-					path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
-					id: parseInt(subpage['@id']),
-					children: children,
-					lazy: !full,
-					subdomain: subdomain,
-				};
-			}
-			
-			if (subpageArray && subpageArray.length) {
-				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
-				}
-				
-				await Promise.all(promiseArray);
-				return result;
-			}
-			else {
-				return [];
-			}
-		}
-	}
-	
-	static async copyTransclude() {
-		let LTRight = $("#LTRight").fancytree("getTree");
-		let RightAlert = $("#LTRightAlert");
-		let url = window.location.href;
-		
-		if (url.includes('?url=')) {
-			url = decodeURIComponent(url);
-			url = url.split('url=')[1];
-			let subdomain = url.split('/')[2].split('.')[0];
-			let path = url.split('/').splice(3).join('/');
-			
-			LTRight.enable(false);
-			RightAlert.text(`Loading Copy-Transclude`);
-			RightAlert.slideDown();
-			let content = await this.getSubpages(path, subdomain);
-			let root = LTRight.getNodeByKey("ROOT");
-			root.removeChildren();
-			root.addChildren(content);
-			await LTForm.renumber();
-			RightAlert.slideUp();
-			LTRight.enable(true);
-		}
-	}
-	
-	static async initializeFancyTree() {
-		
-		if (LTForm.content) {
-			let target = document.createElement("div");
-			target.id = "LTRemixer";
-			const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-			const isPro = document.getElementById("proHolder").innerText === 'true';
-			const isDemonstration = checkIfDemonstration();
-			const groups = document.getElementById("groupHolder").innerText;
-			let allowed = isAdmin || (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isDemonstration;
-			target.innerHTML =
-				"<div id='LTForm'>" +
-				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
-				`<div id='LTFormContainer'><div>Source Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Editor Panel<div id='LTRight'></div></div></div>` +
-				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin, isPro, groups)}</div>` +
-				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div>" +
-				`<div id="dialog-form" title="Create a Default Template">
-  <p class="validateTips">Choose the number of chapters and pages per chapter you would like.<br/><b>All unsaved changes will be lost!</b></p>
- 
-  <form>
-    <fieldset>
-      <label for="chapters">Number of Chapters</label>
-      <input type="number" name="chapters" id="chapters" value="0" min='0' max='100' step='1' class="text ui-widget-content ui-corner-all">
-      <label for="pages">Number of Pages per Chapter</label>
-      <input type="number" name="pages" id="pages" value="0" min='0' max='100' step='1' class="text ui-widget-content ui-corner-all">
- 
-      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-    </fieldset>
-  </form>
-</div>` + "</div>";
-			
-			LTForm.formScript.parentElement.insertBefore(target, LTForm.formScript);
-			const LTLeft = $("#LTLeft");
-			const LTRight = $("#LTRight");
-			LTLeft.fancytree({
-				source: LTForm.content,
-				debugLevel: 0,
-				autoScroll: true,
-				extensions: ["dnd5"],
-				lazyLoad: function (event, data) {
-					const dfd = new $.Deferred();
-					let node = data.node;
-					data.result = dfd.promise();
-					LTForm.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
-				},
-				dnd5: {
-					// autoExpandMS: 400,
-					// preventForeignNodes: true,
-					// preventNonNodes: true,
-					// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-					// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-					// scroll: true,
-					// scrollSpeed: 7,
-					// scrollSensitivity: 10,
-					
-					// --- Drag-support:
-					
-					dragStart: function (node, data) {
-						/* This function MUST be defined to enable dragging for the tree.
-						 *
-						 * Return false to cancel dragging of node.
-						 * data.dataTransfer.setData() and .setDragImage() is available
-						 * here.
-						 */
-//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
-						data.dataTransfer.dropEffect = "copy";
-						return true;
-					},
-					/*dragDrag: function (node, data) {
-						data.dataTransfer.dropEffect = "move";
-					},
-					dragEnd: function (node, data) {
-					},*/
-					
-					// --- Drop-support:
-					
-					/*dragEnter: function (node, data) {
-						// node.debug("dragEnter", data);
-						data.dataTransfer.dropEffect = "move";
-						// data.dataTransfer.effectAllowed = "copy";
-						return true;
-					},
-					dragOver: function (node, data) {
-						data.dataTransfer.dropEffect = "move";
-						// data.dataTransfer.effectAllowed = "copy";
-					},
-					dragLeave: function (node, data) {
-					},*/
-				},
-				icon: function (event, data) {
-					let subdomain = window.location.origin.split("/")[2].split(".")[0];
-					if ((!LTForm.subdomain || LTForm.subdomain === subdomain) && data.node.getLevel() === 1)
-						return `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
-				}
-			});
-			LTRight.fancytree({
-				source: LTForm.generateDefault(5, 0),
-				debugLevel: 0,
-				autoScroll: true,
-				extensions: ["dnd5", "edit"],
-				lazyLoad: function (event, data) {
-					const dfd = new $.Deferred();
-					let node = data.node;
-					data.result = dfd.promise();
-					LTForm.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
-				},
-				tooltip: (event, data) => {
-					return data.node.data.url ? "Originally " + data.node.data.url : "Newly created page";
-				},
-				edit: {
-					// Available options with their default:
-					adjustWidthOfs: 4,   // null: don't adjust input size to content
-					inputCss: {minWidth: "3em"},
-					triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
-					beforeEdit: function (event, data) {
-						return data.node.key !== "ROOT";
-					},
-					/*save: function (event, data) {
-						setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
-					},*/
-					close: function (event, data) {
-						LTForm.renumber();
-					}
-				},
-				dnd5: {
-					// autoExpandMS: 400,
-					// preventForeignNodes: true,
-					// preventNonNodes: true,
-					// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-					// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-					// scroll: true,
-					// scrollSpeed: 7,
-					// scrollSensitivity: 10,
-					
-					// --- Drag-support:
-					
-					dragStart: function (node, data) {
-						/* This function MUST be defined to enable dragging for the tree.
-						 *
-						 * Return false to cancel dragging of node.
-						 * data.dataTransfer.setData() and .setDragImage() is available
-						 * here.
-						 */
-//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
-						return true;
-					},
-					dragDrag: function (node, data) {
-						// data.dataTransfer.dropEffect = "move";
-					},
-					dragEnd: function (node, data) {
-					},
-					
-					// --- Drop-support:
-					
-					dragEnter: function (node, data) {
-						// node.debug("dragEnter", data);
-						// data.dataTransfer.dropEffect = "move";
-						return true;
-					},
-					/*dragOver: function (node, data) {
-						data.dataTransfer.dropEffect = "move";
-					},
-					dragLeave: function (node, data) {
-					},*/
-					dragDrop: async function (node, data) {
-						/* This function MUST be defined to enable dropping of items on
-						 * the tree.
-						 */
-						const transfer = data.dataTransfer;
-						
-						if (data.otherNode) {
-							// Drop another Fancytree node from same frame
-							// (maybe from another tree however)
-							var sameTree = (data.otherNode.tree === data.tree);
-							if (node.getLevel() <= 1) {
-								data.hitMode = "over";
-							}
-							if (data.hitMode === "over") {
-								node.setExpanded(true);
-							}
-							await doTransfer();
-						}
-						else if (data.otherNodeData) {
-							// Drop Fancytree node from different frame or window, so we only have
-							// JSON representation available
-							node.addChild(data.otherNodeData, data.hitMode);
-						}
-						else {
-							// Drop a non-node
-							node.addNode({
-								title: transfer.getData("text")
-							}, data.hitMode);
-						}
-						await LTForm.renumber();
-						
-						async function doTransfer() {
-							if (sameTree) {
-								data.otherNode.moveTo(node, data.hitMode);
-							}
-							else {
-								data.otherNode.copyTo(node, data.hitMode, function (n) {
-									n.title = n.title.replace(/<a.* ><\/a>/, "");
-									n.key = null; // make sure, a new key is generated
-								});
-								let LTRight = $("#LTRight").fancytree("getTree");
-								LTRight.enable(false);
-								const RightAlert = $("#LTRightAlert");
-								RightAlert.text('Importing content. Please wait...');
-								RightAlert.slideDown();
-								await data.otherNode.visitAndLoad();
-								RightAlert.slideUp();
-								LTRight.enable(true);
-							}
-						}
-					}
-				},
-			});
-			await LTForm.getInstitutions();
-			
-			
-			LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
-			LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
-			$("#LTRightAlert,#LTLeftAlert").hide();
-			
-			LTForm.dialog = $("#dialog-form").dialog({
-				autoOpen: false,
-				height: 400,
-				width: 350,
-				modal: true,
-				buttons: {
-					"Create this default template structure": function () {
-						let chapters, pages;
-						chapters = Math.min(100, parseInt($('#chapters').val()));
-						pages = Math.min(100, parseInt($('#pages').val()));
-						
-						LTForm.default(chapters, pages);
-						LTForm.dialog.dialog("close");
-					},
-					Cancel: function () {
-						LTForm.dialog.dialog("close");
-					},
-				},
-				classes: {'ui-dialog-buttonset': 'buttonsetForm'},
-				close: function () {
-					LTForm.dialog.dialog("close");
-				}
-			});
-			
-			await LTForm.copyTransclude();
-			
-			//confirm('You have previously saved work available.\nWould you like to restore your previous session?'))
-			if (localStorage.getItem('RemixerSession')) {
-				let d = JSON.parse(localStorage.getItem('RemixerSession'));
-				let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
-				root.fromDict(d);
-				root.setExpanded();
-			}
-		}
-		
-		function formMode(isAdmin, isPro, groups) {
-			
-			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remixer Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
-		}
-	}
-	
-	static getSelectOptions() {
+	 getSelectOptions() {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let libraries = {
 			'Biology': 'bio',
@@ -534,7 +450,58 @@ class LTForm {
 		return result;
 	}
 	
-	static async getInstitutions() {
+	static async getSubpages(path, subdomain, full, linkTitle) {
+		path = path.replace(`https://${subdomain}.libretexts.org/`, "");
+		let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+		response = await response.json();
+		return await subpageCallback(response);
+		
+		async function subpageCallback(info) {
+			let subpageArray = info["page.subpage"];
+			if (subpageArray) {
+				subpageArray = subpageArray.length ? info["page.subpage"] : [info["page.subpage"]];
+			}
+			const result = [];
+			const promiseArray = [];
+			
+			async function subpage(subpage, index) {
+				let url = subpage["uri.ui"];
+				let path = subpage.path["#text"];
+				url = url.replace('?title=', '');
+				path = path.replace('?title=', '');
+				const hasChildren = subpage["@subpages"] === "true";
+				let children = hasChildren ? undefined : [];
+				if (hasChildren && (full)) { //recurse down
+					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+					children = await children.json();
+					children = await subpageCallback(children, false);
+				}
+				if (!url.endsWith('/link'))
+					result[index] = {
+						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+						url: url,
+						path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
+						id: parseInt(subpage['@id']),
+						children: children,
+						lazy: !full,
+						subdomain: subdomain,
+					};
+			}
+			
+			if (subpageArray && subpageArray.length) {
+				for (let i = 0; i < subpageArray.length; i++) {
+					promiseArray[i] = subpage(subpageArray[i], i);
+				}
+				
+				await Promise.all(promiseArray);
+				return result;
+			}
+			else {
+				return [];
+			}
+		}
+	}
+	 async getInstitutions() {
 		let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		
 		const select = document.getElementById("LTFormInstitutions");
@@ -544,7 +511,7 @@ class LTForm {
 			return;
 		}
 		
-		let response = await this.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
+		let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
 		response = await response.json();
 		const subpageArray = (response['@count'] === "1" ? [response["page.subpage"]] : response["page.subpage"]) || [];
 		const result = [];
@@ -558,7 +525,7 @@ class LTForm {
 		select.innerHTML = result.concat();
 	}
 	
-	static async publish() {
+	 async publish() {
 		let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let institution = document.getElementById("LTFormInstitutions");
 		if (institution.value === "") {
@@ -573,14 +540,14 @@ class LTForm {
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/contents?edittime=now", {
 				method: "POST",
 				body: "<p>{{template.ShowCategory()}}</p>",
-				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, "")}`)) + "/tags", {
 				method: "PUT",
 				body: '<tags><tag value="article:topic-category"/></tags>',
 				headers: {
 					"Content-Type": "text/xml; charset=utf-8",
-					'x-deki-token': LTForm.keys[subdomain],
+					'x-deki-token': this.keys[subdomain],
 					'x-requested-with': 'XMLHttpRequest'
 				}
 			});
@@ -590,12 +557,12 @@ class LTForm {
 			alert("No name provided!");
 			return false
 		}
-		let response = await this.authenticatedFetch(`${college.replace(window.location.origin, "")}/${name}`, 'info', subdomain);
+		let response = await LibreTexts.authenticatedFetch(`${college.replace(window.location.origin, "")}/${name}`, 'info', subdomain);
 		if (response.ok) {
 			alert(`The page ${url} already exists!`);
 			return false;
 		}
-		LTForm.renumber();
+		this.renumber();
 		
 		
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
@@ -658,7 +625,7 @@ class LTForm {
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
 				method: "POST",
 				body: content,
-				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			let tags = '<tags><tag value="article:topic-category"/><tag value="coverpage:yes"/></tags>';
 			let propertyArray = [putProperty('mindtouch.page#welcomeHidden', true), putProperty('mindtouch.idf#subpageListing', 'simple'), fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
@@ -666,7 +633,7 @@ class LTForm {
 				body: tags,
 				headers: {
 					"Content-Type": "text/xml; charset=utf-8",
-					'x-deki-token': LTForm.keys[subdomain],
+					'x-deki-token': this.keys[subdomain],
 					'x-requested-with': 'XMLHttpRequest'
 				}
 			})];
@@ -674,7 +641,7 @@ class LTForm {
 			await Promise.all(propertyArray);
 			await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + tree.title + "&name=" + encodeURIComponent(tree.title.replace(" ", "_")), {
 				method: "POST",
-				headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 			});
 			
 			async function putProperty(name, value) {
@@ -683,7 +650,7 @@ class LTForm {
 					body: value,
 					headers: {
 						"Slug": name,
-						'x-deki-token': LTForm.keys[subdomain],
+						'x-deki-token': this.keys[subdomain],
 						'x-requested-with': 'XMLHttpRequest'
 					}
 				})
@@ -713,9 +680,9 @@ class LTForm {
 					const isGuide = depth === 1;
 					await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?abort=exists", {
 						method: "POST",
-						body: isGuide ? "<p>{{template.ShowGuide()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>\n"
+						body: isGuide ? "<p>{{template.ShowGuide()}}</p><p className=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>\n"
 							: "",
-						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+						headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					let tags = `<tags><tag value="${isGuide ? "article:topic-guide" : "article:topic"}"/></tags>`;
 					await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
@@ -723,7 +690,7 @@ class LTForm {
 						body: tags,
 						headers: {
 							"Content-Type": "text/xml; charset=utf-8",
-							'x-deki-token': LTForm.keys[subdomain],
+							'x-deki-token': this.keys[subdomain],
 							'x-requested-with': 'XMLHttpRequest'
 						}
 					});
@@ -731,7 +698,7 @@ class LTForm {
 					if (child.data.padded) {
 						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
 							method: "POST",
-							headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+							headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 						}).then();
 					}
 					if (isGuide) {
@@ -743,7 +710,7 @@ class LTForm {
 						let current = window.location.origin.split('/')[2].split('.')[0];
 						let headers = {
 							headers: {
-								'x-deki-token': LTForm.keys['chem'],
+								'x-deki-token': this.keys['chem'],
 							}
 						};
 						if (current === 'chem')
@@ -755,7 +722,7 @@ class LTForm {
 							method: "PUT",
 							body: image,
 							headers: {
-								'x-deki-token': LTForm.keys[subdomain],
+								'x-deki-token': this.keys[subdomain],
 								'x-requested-with': 'XMLHttpRequest'
 							}
 						}).then();
@@ -766,12 +733,12 @@ class LTForm {
 					child.path = child.data.path;
 					let content;
 					//get info
-					let info = await LTForm.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
+					let info = await LibreTexts.authenticatedFetch(child.path, 'info?dream.out.format=json', child.data.subdomain);
 					
 					//get Tags
 					let copyMode = document.getElementById("LTFormCopyMode") ? document.getElementById("LTFormCopyMode").value : undefined;
 					let copyContent = copyMode && copyMode !== 'transclude';
-					let response = await LTForm.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
+					let response = await LibreTexts.authenticatedFetch(child.path, 'tags?dream.out.format=json', child.data.subdomain);
 					let tags = await response.json();
 					if (response.ok && tags["@count"] !== "0") {
 						if (tags.tag) {
@@ -800,7 +767,7 @@ class LTForm {
 					let current = window.location.origin.split('/')[2].split('.')[0];
 					if (copyContent) {
 						if (child.data.subdomain === current) {
-							content = await LTForm.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain, {isLimited: isDemonstration});
+							content = await LibreTexts.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain, {isLimited: isDemonstration});
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
@@ -826,7 +793,7 @@ class LTForm {
 							}
 							else if (copyMode === 'deep') {
 								//Fancy file transfer VERY SLOW BUT EFFECTIVE
-								response = await LTForm.authenticatedFetch(child.path, 'files?dream.out.format=json', child.data.subdomain);
+								response = await LibreTexts.authenticatedFetch(child.path, 'files?dream.out.format=json', child.data.subdomain);
 								if (response.ok) {
 									let files = await response.json();
 									if (files["@count"] !== "0") {
@@ -855,7 +822,7 @@ class LTForm {
 								}
 								
 								// Handling of hotlinked images (not attached to the page)
-								response = await LTForm.authenticatedFetch(path, 'files?dream.out.format=json');
+								response = await LibreTexts.authenticatedFetch(path, 'files?dream.out.format=json');
 								if (response.ok) {
 									let files = await response.json();
 									if (files["@count"] !== "0") {
@@ -894,25 +861,25 @@ class LTForm {
 						}
 					}
 					else if (child.data.subdomain !== current) {
-						content = `<p class="mt-script-comment">Cross Library Transclusion</p>
+						content = `<p className="mt-script-comment">Cross Library Transclusion</p>
 
-<pre class="script">
+<pre className="script">
 template('CrossTransclude/Web',{'Library':'${child.data.subdomain}','PageID':${child.data.id}});</pre>
 
-<div class="comment">
-<div class="mt-comment-content">
+<div className="comment">
+<div className="mt-comment-content">
 <p><a href="${child.data.url}">Cross-Library Link: ${child.data.url}</a><br/>source-${child.data.subdomain}-${info['@id']}</p>
 </div>
 </div>`
 					}
 					else {
-						content = `<div class="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
-<pre class="script">
+						content = `<div className="mt-contentreuse-widget" data-page="${child.path}" data-section="" data-show="false">
+<pre className="script">
 wiki.page("${child.path}", NULL)</pre>
 </div>
 
-<div class="comment">
-<div class="mt-comment-content">
+<div className="comment">
+<div className="mt-comment-content">
 <p><a href="${child.data.url}">Content Reuse Link: ${child.data.url}</a></p>
 </div>
 </div>`;
@@ -920,7 +887,7 @@ wiki.page("${child.path}", NULL)</pre>
 					response = await fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/contents?edittime=now", {
 						method: "POST",
 						body: content,
-						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+						headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					if (response.status >= 400) {
 						failedCounter++;
@@ -946,13 +913,13 @@ wiki.page("${child.path}", NULL)</pre>
 									body: tagsHTML,
 									headers: {
 										"Content-Type": "text/xml; charset=utf-8",
-										'x-deki-token': LTForm.keys[subdomain],
+										'x-deki-token': this.keys[subdomain],
 										'x-requested-with': 'XMLHttpRequest'
 									}
 								}).then();
 							}
 							//Properties
-							LTForm.authenticatedFetch(child.path, 'properties?dream.out.format=json', child.data.subdomain).then(async (response) => {
+							LibreTexts.authenticatedFetch(child.path, 'properties?dream.out.format=json', child.data.subdomain).then(async (response) => {
 								let content = await response.json();
 								if (content["@count"] !== "0") {
 									if (content.property) {
@@ -979,7 +946,7 @@ wiki.page("${child.path}", NULL)</pre>
 													body: content[i].value,
 													headers: {
 														"Slug": content[i].name,
-														'x-deki-token': LTForm.keys[subdomain],
+														'x-deki-token': this.keys[subdomain],
 														'x-requested-with': 'XMLHttpRequest'
 													}
 												}).then();
@@ -993,7 +960,7 @@ wiki.page("${child.path}", NULL)</pre>
 													body: content[i].value,
 													headers: {
 														"Slug": content[i].name,
-														'x-deki-token': LTForm.keys[subdomain],
+														'x-deki-token': this.keys[subdomain],
 														'x-requested-with': 'XMLHttpRequest'
 													}
 												}).then();
@@ -1009,7 +976,7 @@ wiki.page("${child.path}", NULL)</pre>
 												body: content[i].value,
 												headers: {
 													"Slug": content[i].name,
-													'x-deki-token': LTForm.keys[subdomain],
+													'x-deki-token': this.keys[subdomain],
 													'x-requested-with': 'XMLHttpRequest'
 												}
 											}).then();
@@ -1023,25 +990,25 @@ wiki.page("${child.path}", NULL)</pre>
 								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
 									method: "POST",
 									headers: {
-										'x-deki-token': LTForm.keys[subdomain],
+										'x-deki-token': this.keys[subdomain],
 										'x-requested-with': 'XMLHttpRequest'
 									}
 								}).then();
 							}
 							
 							//Thumbnail
-							LTForm.authenticatedFetch(child.path, 'files', child.data.subdomain).then(async (response) => {
+							LibreTexts.authenticatedFetch(child.path, 'files', child.data.subdomain).then(async (response) => {
 								if (response.ok) {
 									let files = await response.text();
 									if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail')) {
-										let image = await LTForm.authenticatedFetch(child.path, 'thumbnail', child.data.subdomain);
+										let image = await LibreTexts.authenticatedFetch(child.path, 'thumbnail', child.data.subdomain);
 										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
 											method: "PUT",
 											body: image,
 											headers: {
-												'x-deki-token': LTForm.keys[subdomain],
+												'x-deki-token': this.keys[subdomain],
 												'x-requested-with': 'XMLHttpRequest'
 											}
 										}).then();
@@ -1050,7 +1017,7 @@ wiki.page("${child.path}", NULL)</pre>
 										let current = window.location.origin.split('/')[2].split('.')[0];
 										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', {
 											headers: {
-												'x-deki-token': LTForm.keys['chem'],
+												'x-deki-token': this.keys['chem'],
 												'x-requested-with': current === 'chem' ? 'XMLHttpRequest' : ''
 											}
 										});
@@ -1060,7 +1027,7 @@ wiki.page("${child.path}", NULL)</pre>
 											method: "PUT",
 											body: image,
 											headers: {
-												'x-deki-token': LTForm.keys[subdomain],
+												'x-deki-token': this.keys[subdomain],
 												'x-requested-with': 'XMLHttpRequest'
 											}
 										}).then();
@@ -1095,7 +1062,7 @@ wiki.page("${child.path}", NULL)</pre>
 					body: value,
 					headers: {
 						"Slug": name,
-						'x-deki-token': LTForm.keys[subdomain],
+						'x-deki-token': this.keys[subdomain],
 						'x-requested-with': 'XMLHttpRequest'
 					}
 				})
@@ -1105,10 +1072,10 @@ wiki.page("${child.path}", NULL)</pre>
 				let image, filename;
 				if (!file) {
 					image = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`, {
-						headers: {'x-deki-token': LTForm.keys[child.data.subdomain]}
+						headers: {'x-deki-token': this.keys[child.data.subdomain]}
 					});
 					filename = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`, {
-						headers: {'x-deki-token': LTForm.keys[child.data.subdomain]}
+						headers: {'x-deki-token': this.keys[child.data.subdomain]}
 					});
 					if (!image.ok || !filename.ok)
 						return false;
@@ -1119,7 +1086,7 @@ wiki.page("${child.path}", NULL)</pre>
 				else if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
 					//only files with extensions
 					filename = file['filename'];
-					image = await LTForm.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+					image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
 					if (!image.ok)
 						return false;
 				}
@@ -1131,7 +1098,7 @@ wiki.page("${child.path}", NULL)</pre>
 					let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 						method: "PUT",
 						body: image,
-						headers: {'x-deki-token': LTForm.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
+						headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'}
 					});
 					if (!response.ok)
 						return false;
@@ -1150,24 +1117,7 @@ wiki.page("${child.path}", NULL)</pre>
 		}
 	}
 	
-	static async authenticatedFetch(path, api, subdomain, options) {
-		let current = window.location.origin.split('/')[2].split('.')[0];
-		let headers = {};
-		if (api === 'contents?mode=raw' && options.isLimited) {
-			return await fetch(`https://api.libretexts.org/endpoint/contents`,
-				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
-		}
-		subdomain = subdomain || current;
-		let token = LTForm.keys[subdomain];
-		headers['x-deki-token'] = token;
-		if (current === subdomain)
-			headers['X-Requested-With'] = 'XMLHttpRequest';
-		
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-			{headers: headers});
-	}
-	
-	static generateDefault(chapters, pages) {
+	 static generateDefault(chapters, pages) {
 		let key = 1;
 		let children = [];
 		for (let i = 1; i <= chapters; i++) {
@@ -1196,7 +1146,7 @@ wiki.page("${child.path}", NULL)</pre>
 			})
 		}
 		
-		return [{
+		return {
 			title: "Cover Page. Drag onto me to get started",
 			key: "ROOT",
 			url: "",
@@ -1204,7 +1154,7 @@ wiki.page("${child.path}", NULL)</pre>
 			unselectable: true,
 			expanded: true,
 			children: children
-		}]
+		}
 	}
 }
 
@@ -1253,5 +1203,3 @@ function checkIfDemonstration() {
 	const groups = document.getElementById("groupHolder").innerText;
 	return groups.includes('Workshop');
 }
-
-LTForm.initialize();
