@@ -12,17 +12,29 @@ server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
-function getInstitution(subdomain) {
-	switch (subdomain) {
-		case 'scc':
-			return 'Sacramento Community College';
-		case 'ucdavis':
-			return 'University of California, Davis';
-		case 'mcc':
-			return 'Monroe Community College';
-		default:
-			return subdomain;
+function getConfig(contents) {
+	let config = contents.match(/(?<=var configObject = ){[\S\s]*?}(?=;)/);
+	if (!config)
+		return {};
+	config = config[0];
+	config = decodeHTML(config);
+	config = config.replace(/\\/g, "\\\\");
+	config = config.replace(/\\"/g, "\"");
+	try{
+		config = JSON.parse(config)
+	}catch (e) {
+		return {}
 	}
+	return config;
+}
+
+function decodeHTML(content) {
+	let ret = content.replace(/&gt;/g, '>');
+	ret = ret.replace(/&lt;/g, '<');
+	ret = ret.replace(/&quot;/g, '"');
+	ret = ret.replace(/&apos;/g, "'");
+	ret = ret.replace(/&amp;/g, '&');
+	return ret;
 }
 
 async function handler(request, response) {
@@ -45,14 +57,18 @@ async function handler(request, response) {
 	if (subdomain && portals.includes(subdomain.toLowerCase())) {
 		console.log(subdomain);
 		
-		let contents = `<h1>Welcome ${getInstitution(subdomain)} to LibreTexts! This will eventually be the portal space for your institution.</h1>`;
-		let importContent = await fetch(`https://chem.libretexts.org/@api/deki/pages/=Under_Construction%252FInstitution_Portals%252F${subdomain}/contents?dream.out.format=json`, {
+		let contents = await fetch(`https://chem.libretexts.org/@api/deki/pages/=Under_Construction%252FInstitution_Portals%252F${subdomain}/contents?dream.out.format=json`, {
 			headers: {'x-deki-token': authenBrowser['chem'], 'x-requested-with': 'XMLHttpRequest'}
 		});
-		importContent = await importContent.json();
+		contents = await contents.json();
+		contents = contents.body[0];
+		
+		let configObject = getConfig(contents);
+		
+		contents = `<h1>Welcome ${configObject.fullName || subdomain} to LibreTexts! This will eventually be the portal space for your institution.</h1>${contents}`;
 		
 		response.writeHead(200);
-		response.write(contents + importContent.body[0]);
+		response.write(contents);
 		response.end();
 	}
 	else {
@@ -64,8 +80,8 @@ async function handler(request, response) {
 	
 	function responseError(message, status) {
 		//else fall through to error
-		response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
-		response.write(("Bad Request\n" + (message ? message : url)));
+		response.writeHead(status || 400, {"Content-Type": "text/html"});
+		response.write(("Bad Request\n" + (message || url)));
 		response.end();
 	}
 }
