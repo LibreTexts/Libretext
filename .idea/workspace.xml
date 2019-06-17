@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/portals.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/portals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,32 +23,14 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
+        <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-32173">
-              <caret line="293" column="74" lean-forward="true" selection-start-line="293" selection-start-column="74" selection-end-line="293" selection-end-column="74" />
+            <state relative-caret-position="202">
+              <caret line="196" column="9" lean-forward="true" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#src#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
+                <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
+                <element signature="n#!!block;n#revert#0" />
               </folding>
             </state>
           </provider>
@@ -72,8 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>oninput</find>
-      <find>setname</find>
       <find>for</find>
       <find>local</find>
       <find>ltleft</find>
@@ -90,7 +69,6 @@
       <find>authenticated</find>
       <find>getsubpages</find>
       <find>CORS</find>
-      <find>contents</find>
       <find>fetch</find>
       <find>subpages</find>
       <find>relativePath</find>
@@ -99,9 +77,12 @@
       <find>thin</find>
       <find>decodeHTML</find>
       <find>?</find>
-      <find>?</find>
       <find>refresh</find>
       <find>refres</find>
+      <find>false</find>
+      <find>replaceall</find>
+      <find>contents</find>
+      <find>\n</find>
     </findStrings>
     <replaceStrings>
       <replace>LTForm</replace>
@@ -197,11 +178,11 @@
         <option value="$PROJECT_DIR$/nodePrint/Matter Test.http" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
         <option value="$PROJECT_DIR$/API/reuse.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/Front/portals.js" />
-        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
+        <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
   </component>
@@ -225,7 +206,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -236,12 +216,18 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1043,14 +1029,8 @@
       <workItem from="1560616206071" duration="4586000" />
       <workItem from="1560667396614" duration="3791000" />
       <workItem from="1560719056694" duration="7399000" />
-      <workItem from="1560728419761" duration="3756000" />
-    </task>
-    <task id="LOCAL-00153" summary="Temporarily Disabled Cleanup">
-      <created>1552784020554</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1552784020555</updated>
+      <workItem from="1560728419761" duration="4036000" />
+      <workItem from="1560741538182" duration="1704000" />
     </task>
     <task id="LOCAL-00154" summary="Added Refresh chaining&#10;&#10;Also extended printPDF timeout">
       <created>1552846186732</created>
@@ -1388,7 +1368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560729681927</updated>
     </task>
-    <option name="localTasksCounter" value="202" />
+    <task id="LOCAL-00202" summary="Downloads Center remove Remixer University">
+      <created>1560732437244</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1560732437244</updated>
+    </task>
+    <option name="localTasksCounter" value="203" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1424,7 +1411,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1687996000" />
+    <option name="totallyTimeSpent" value="1689980000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1432,12 +1419,12 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2600843" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.19205298" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" visible="true" weight="0.24533333" />
+      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" weight="0.24533333" />
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" weight="0.18700266" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
@@ -1455,7 +1442,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.29440096" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.30945215" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.28958458" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1552,7 +1539,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added wildcard and read-only&#10;&#10;Bugfixed root page" />
     <MESSAGE value="Added silenced alerts" />
     <MESSAGE value="Added streaming JSON output" />
     <MESSAGE value="Added log export" />
@@ -1577,7 +1563,8 @@
     <MESSAGE value="Foreign Image" />
     <MESSAGE value="Front, Middle, Back Matter" />
     <MESSAGE value="Portal Config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Portal Config" />
+    <MESSAGE value="Downloads Center remove Remixer University" />
+    <option name="LAST_COMMIT_MESSAGE" value="Downloads Center remove Remixer University" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1673,23 +1660,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Front/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="48">
-            <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/HenryTest.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1909,20 +1879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/propagator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/universalify/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -1953,19 +1909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="52" column="35" lean-forward="true" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="44" />
-          <folding>
-            <element signature="n#!!block;n#findReplace#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#revert#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/favicon.ico">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1986,11 +1929,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/async/asyncify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/md5/md5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="151" column="6" selection-start-line="151" selection-start-column="6" selection-end-line="151" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/node_modules/universalify/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-32173">
-          <caret line="293" column="74" lean-forward="true" selection-start-line="293" selection-start-column="74" selection-end-line="293" selection-end-column="74" />
+        <state relative-caret-position="1330">
+          <caret line="1415" column="13" lean-forward="true" selection-start-line="1415" selection-start-column="13" selection-end-line="1415" selection-end-column="13" />
           <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -2012,6 +1977,25 @@
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="65" column="161" selection-start-line="65" selection-start-column="153" selection-end-line="65" selection-end-column="161" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="196" column="9" lean-forward="true" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#revert#0" />
           </folding>
         </state>
       </provider>

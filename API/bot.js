@@ -158,7 +158,7 @@ async function jobHandler(jobType, input, socket) {
 		let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
 		if (!path)
 			return false;
-		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit', input.subdomain, input.user);
+		let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit&dream.out.format=json', input.subdomain, input.user);
 		if (!content.ok) {
 			console.error("Could not get content from " + path);
 			let error = await content.text();
@@ -169,8 +169,8 @@ async function jobHandler(jobType, input, socket) {
 			});
 			return false;
 		}
-		content = await content.text();
-		content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
+		content = await content.json();
+		content = content.body;
 		content = LibreTexts.decodeHTML(content);
 		// console.log(content);
 		
@@ -241,7 +241,7 @@ async function jobHandler(jobType, input, socket) {
 	
 	
 	async function findReplace(content) {
-		content = content.replace(/\\n/g, '\n');
+		// content = content.replace(/\\n/g, '\n');
 		let result = content.replaceAll(input.find, input.replace, input);
 		if (result !== content) {
 			/*			const diff = jsdiff.diffWords(content, result);
@@ -536,7 +536,7 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	
 	let temp = target.replace(new RegExp(search, 'gm'), replacement);
-	// console.log(b4, search);
+	console.log(b4, search);
 	search = LibreTexts.encodeHTML(search);
 	return temp.replace(new RegExp(search, 'gm'), replacement);
 	

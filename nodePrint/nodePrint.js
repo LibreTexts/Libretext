@@ -1303,7 +1303,7 @@ puppeteer.launch({
 				}
 				response = (await response.json());
 				if (!response["page.subpage"])
-					return false;
+					return [];
 				response = response["page.subpage"];
 				if (!response.length)
 					response = [response];
