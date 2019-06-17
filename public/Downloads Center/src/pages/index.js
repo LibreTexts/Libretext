@@ -65,6 +65,7 @@ async function doCenter() {
 	two = two.ok ? await two.json() : [];
 	
 	downloads = downloads.concat(one, two);
+	downloads = downloads.filter((text) => !text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide");
 	ReactDOM.render(<Center downloads={downloads}/>, target);
 }
 

@@ -1370,7 +1370,7 @@ puppeteer.launch({
 						}
 						
 					}
-					else if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')) {
+					else if (page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
 						filename = `TOC/${await getTOC(page.url, page)}.pdf`;
 						
 						if (page.tags.includes('coverpage:yes')) {

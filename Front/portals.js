@@ -65,7 +65,7 @@ async function handler(request, response) {
 		
 		let configObject = getConfig(contents);
 		
-		contents = `<h1>Welcome ${configObject.fullName || subdomain} to LibreTexts! This will eventually be the portal space for your institution.</h1>${contents}`;
+		contents = `<title>${configObject.thinName || subdomain} Portal</title><h1>Welcome ${configObject.fullName || subdomain} to LibreTexts! This will eventually be the portal space for your institution.</h1>${contents}`;
 		
 		response.writeHead(200);
 		response.write(contents);
