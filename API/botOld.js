@@ -198,47 +198,73 @@ async function jobHandler(jobType, input, socket) {
 		}
 		
 		//Page summaries
-		if (input.summaries && !input.findOnly) {
-			let summary = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview', input.subdomain, input.user);
+		let summary, summaryResult;
+		if (jobType === 'findReplace' &&  input.summaries) {
+			summary = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview', input.subdomain, input.user);
 			if (summary.ok) {
 				summary = await summary.text();
 				summary = LibreTexts.decodeHTML(summary);
-				let summaryResult = summary.replaceAll(input.find, input.replace, input);
-				// summaryResult = LibreTexts.encodeHTML(summaryResult);
-				await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
-					method: "PUT",
-					body: summaryResult
-				});
-				pageSummaryCount++;
+				summaryResult = summary.replaceAll(input.find, input.replace, input);
 			}
 		}
 		
-		if (!result || result === content )
+		//If nothing to update
+		if ((!result || result === content) && (input.summaries && (!summary || summary === summaryResult)))
 			return;
 		
-		//send update
+		//send findOnly update
 		if (input.findOnly) {
 			backlog.unshift({path: path, url: page});
 			return;
 		}
-		// result = LibreTexts.encodeHTML(result);
-		let response = await LibreTexts.authenticatedFetch(path,`contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}` ,input.subdomain, input.user, {
-			method: 'POST',
-			body: result,
-			headers: {'x-deki-token': token}
-		});
-		if (response.ok) {
-			let fetchResult = await response.json();
-			let revision = fetchResult.page['@revision'];
-			// console.log(path, revision);
-			let item = {path: path, revision: revision, url: page};
-			backlog.unshift(item);
-			log.push(item);
+		
+		//Process edit
+		if (result) { //Content change processing
+			let response = await LibreTexts.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}`, input.subdomain, input.user, {
+				method: 'POST',
+				body: result
+			});
+			if (response.ok) {
+				let fetchResult = await response.json();
+				let revision = fetchResult.page['@revision'];
+				// console.log(path, revision);
+				let item = {path: path, revision: revision, url: page};
+				backlog.unshift(item);
+				log.push(item);
+			}
+			else {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
+			}
 		}
-		else {
-			let error = await response.text();
-			console.error(error);
-			socket.emit('errorMessage', error);
+		
+		if (summaryResult) { //Summary Processing
+			// summaryResult = LibreTexts.encodeHTML(summaryResult);
+			let response = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
+				method: "PUT",
+				body: summaryResult
+			});
+			if (response.ok) {
+				if (!result) {
+					let content = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', input.subdomain, input.user);
+					if (!content.ok) {
+						console.error("Could not get page info from " + path);
+						return false;
+					}
+					content = await content.json();
+					let currentRevision = content['@revision'];
+					let item = {path: path, revision: currentRevision - 1, url: page};
+					backlog.unshift(item);
+					log.push(item);
+				}
+			}
+			else {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
+			}
+			pageSummaryCount++;
 		}
 	});
 	
@@ -253,8 +279,6 @@ async function jobHandler(jobType, input, socket) {
 		pages: log,
 	};
 	await logCompleted(result, input.findOnly);
-	if (pageSummaryCount)
-		socket.emit('errorMessage', `Changed ${pageSummaryCount} Summaries`);
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
 	
 	
@@ -409,7 +433,8 @@ async function jobHandler(jobType, input, socket) {
 					//upload image
 					let foreignImage = await response.blob();
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
-					response = await LibreTexts.authenticatedFetch(path, 'files/${filename}?dream.out.format=json',input.subdomain, input.user, {
+					let token = LibreTexts.authenticate(input.user, input.subdomain);
+					response = await fetch(`https://${input.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
 						method: "PUT",
 						body: foreignImage,
 						headers: {'x-deki-token': token}
@@ -466,27 +491,20 @@ async function revert(input, socket) {
 			console.error("Could not get page info from " + page.path);
 			return false;
 		}
-		content = await content.json();
-		let currentRevision = content['@revision'];
 		//send update
 		const live = true;
 		if (!live) {
 			return false;
 		}
-		//page.revision && currentRevision === page.revision
-		// if (true) { //unchanged
+		let token = LibreTexts.authenticate(input.user, job.subdomain);
 		let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
-		let response = await authenticatedFetch(page.path,`revert?fromrevision=${page.revision - 1}&dream.out.format=json`, input.subdomain, input.user, {
+		let response = await fetch(url, {
 			method: 'POST',
 			headers: {'x-deki-token': token}
 		});
 		if (!response.ok) {
 			let error = await response.text();
 			socket.emit('errorMessage', error);
-		}
-		// }
-		else { //Page Conflict
-			console.error(`Page Conflict ${page.path}`);
 		}
 	});
 	

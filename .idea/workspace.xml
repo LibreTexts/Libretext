@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/API/botOld.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,12 +31,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/API/bot.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="196" column="9" lean-forward="true" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
+            <state relative-caret-position="219">
+              <caret line="411" column="66" selection-start-line="411" selection-start-column="31" selection-end-line="411" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/reuse.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4224">
+              <caret line="258" column="22" selection-start-line="258" selection-start-column="22" selection-end-line="258" selection-end-column="22" />
               <folding>
-                <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
-                <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
-                <element signature="n#!!block;n#revert#0" />
+                <element signature="n#!!block;n#getSubpagesAlternate#0" />
+                <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
+                <element signature="n#!!block;n#clarifySubdomain#0" />
+                <element signature="n#!!block;n#authenticate#0" />
+                <element signature="n#!!block;n#extractSubdomain#0" />
               </folding>
             </state>
           </provider>
@@ -44,32 +61,15 @@
         <option value="package.json" />
         <option value="XSLT Stylesheet" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="README" />
         <option value="CSS File" />
         <option value="HTTP Request" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>for</find>
-      <find>local</find>
-      <find>ltleft</find>
-      <find>.content</find>
-      <find>classnamename</find>
-      <find>generate</find>
-      <find>regular</find>
-      <find>Cover Page</find>
-      <find>presets</find>
-      <find>select</find>
-      <find>getinstitutions</find>
-      <find>username</find>
-      <find>authenticate</find>
-      <find>authenticated</find>
-      <find>getsubpages</find>
-      <find>CORS</find>
-      <find>fetch</find>
       <find>subpages</find>
       <find>relativePath</find>
       <find>path</find>
@@ -80,9 +80,26 @@
       <find>refresh</find>
       <find>refres</find>
       <find>false</find>
-      <find>replaceall</find>
       <find>contents</find>
       <find>\n</find>
+      <find>toc</find>
+      <find>html</find>
+      <find>cleaning</find>
+      <find>./PDF</find>
+      <find>checkTime</find>
+      <find>days</find>
+      <find>70</find>
+      <find>properties</find>
+      <find>fetch</find>
+      <find>fetch</find>
+      <find>replaceall</find>
+      <find>putProperty</find>
+      <find>console.log</find>
+      <find>revert</find>
+      <find>@revision</find>
+      <find>changed</find>
+      <find>await fetch</find>
+      <find>await LibreTexts.authenticatedFetch</find>
     </findStrings>
     <replaceStrings>
       <replace>LTForm</replace>
@@ -132,7 +149,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/Miscellaneous/Main.css" />
         <option value="$PROJECT_DIR$/API/API.http" />
         <option value="$PROJECT_DIR$/API/README.rst" />
         <option value="$PROJECT_DIR$/API/README.md" />
@@ -172,16 +188,17 @@
         <option value="$PROJECT_DIR$/public/Remixer/src/components/DeadLinks.js" />
         <option value="$PROJECT_DIR$/public/Remixer/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Remixer/package.json" />
-        <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
         <option value="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" />
         <option value="$PROJECT_DIR$/nodePrint/Matter Test.http" />
         <option value="$PROJECT_DIR$/API/endpoint.js" />
-        <option value="$PROJECT_DIR$/API/reuse.js" />
         <option value="$PROJECT_DIR$/API/propagator.js" />
         <option value="$PROJECT_DIR$/Front/portals.js" />
         <option value="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" />
         <option value="$PROJECT_DIR$/nodePrint/nodePrint.js" />
+        <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
+        <option value="$PROJECT_DIR$/API/reuse.js" />
+        <option value="$PROJECT_DIR$/API/botOld.js" />
         <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
@@ -218,11 +235,6 @@
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="nodePrint" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -256,19 +268,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -372,7 +384,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.API Dashboard">
     <configuration name="API#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/API/API.http" index="2">
       <method v="2" />
     </configuration>
@@ -1030,14 +1042,9 @@
       <workItem from="1560667396614" duration="3791000" />
       <workItem from="1560719056694" duration="7399000" />
       <workItem from="1560728419761" duration="4036000" />
-      <workItem from="1560741538182" duration="1704000" />
-    </task>
-    <task id="LOCAL-00154" summary="Added Refresh chaining&#10;&#10;Also extended printPDF timeout">
-      <created>1552846186732</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1552846186733</updated>
+      <workItem from="1560741538182" duration="1755000" />
+      <workItem from="1560748617593" duration="2020000" />
+      <workItem from="1560826568989" duration="12031000" />
     </task>
     <task id="LOCAL-00155" summary="Removed throw failed">
       <created>1552849277997</created>
@@ -1375,7 +1382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560732437244</updated>
     </task>
-    <option name="localTasksCounter" value="203" />
+    <task id="LOCAL-00203" summary="Bugfix newlines">
+      <created>1560743256657</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1560743256658</updated>
+    </task>
+    <option name="localTasksCounter" value="204" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1411,7 +1425,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1689980000" />
+    <option name="totallyTimeSpent" value="1704082000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
@@ -1419,7 +1433,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.19205298" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.19446117" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
@@ -1442,7 +1456,7 @@
       <window_info anchor="right" id="Remote Host" order="3" weight="0.29440096" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
-      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.28958458" />
+      <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.37748346" />
     </layout>
     <layout-to-restore>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
@@ -1539,7 +1553,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added silenced alerts" />
     <MESSAGE value="Added streaming JSON output" />
     <MESSAGE value="Added log export" />
     <MESSAGE value="Added encodeHTML" />
@@ -1564,7 +1577,8 @@
     <MESSAGE value="Front, Middle, Back Matter" />
     <MESSAGE value="Portal Config" />
     <MESSAGE value="Downloads Center remove Remixer University" />
-    <option name="LAST_COMMIT_MESSAGE" value="Downloads Center remove Remixer University" />
+    <MESSAGE value="Bugfix newlines" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix newlines" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1660,12 +1674,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/HenryTest.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/default">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Miscellaneous/headerfooter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-343" />
@@ -1694,13 +1702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1847,17 +1848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="1153" column="38" lean-forward="true" selection-start-line="1153" selection-start-column="38" selection-end-line="1153" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!block;n#copyTransclude#0;n#LTForm#0" />
-            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/restClient/lib/restClient.jar!/com/intellij/ws/rest/client/requests/collection/get-requests.http">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1883,29 +1873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="344" column="29" lean-forward="true" selection-start-line="344" selection-start-column="29" selection-end-line="344" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="38" column="92" selection-start-line="38" selection-start-column="91" selection-end-line="38" selection-end-column="92" />
-          <folding>
-            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
-            <element signature="n#!!block;n#clarifySubdomain#0" />
-            <element signature="n#!!block;n#authenticate#0" />
-            <element signature="n#!!block;n#extractSubdomain#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="78" column="25" lean-forward="true" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1950,10 +1917,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="65" column="161" selection-start-line="65" selection-start-column="153" selection-end-line="65" selection-end-column="161" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/schedule.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodePrint/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodePrint/nodePrint.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1330">
-          <caret line="1415" column="13" lean-forward="true" selection-start-line="1415" selection-start-column="13" selection-end-line="1415" selection-end-column="13" />
+        <state relative-caret-position="-151">
+          <caret line="242" column="29" lean-forward="true" selection-start-line="242" selection-start-column="29" selection-end-line="242" selection-end-column="29" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -1981,22 +1969,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/propagator.js">
+    <entry file="file://$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="65" column="161" selection-start-line="65" selection-start-column="153" selection-end-line="65" selection-end-column="161" />
+        <state relative-caret-position="240">
+          <caret line="232" column="71" selection-start-line="232" selection-start-column="71" selection-end-line="232" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="680" column="23" selection-start-line="680" selection-start-column="23" selection-end-line="680" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!block;n#copyTransclude#0;n#LTForm#0" />
+            <element signature="n#!!block;n#generateDefault#0;n#LTForm#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/botOld.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="589" column="2" selection-start-line="589" selection-start-column="2" selection-end-line="589" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4224">
+          <caret line="258" column="22" selection-start-line="258" selection-start-column="22" selection-end-line="258" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!block;n#getSubpagesAlternate#0" />
+            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
+            <element signature="n#!!block;n#clarifySubdomain#0" />
+            <element signature="n#!!block;n#authenticate#0" />
+            <element signature="n#!!block;n#extractSubdomain#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/API/bot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="196" column="9" lean-forward="true" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#revert#0" />
-          </folding>
+        <state relative-caret-position="219">
+          <caret line="411" column="66" selection-start-line="411" selection-start-column="31" selection-end-line="411" selection-end-column="66" />
         </state>
       </provider>
     </entry>

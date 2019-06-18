@@ -238,8 +238,11 @@ puppeteer.launch({
 					if (response)
 						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 				}, 1000);
-				findRemoveSync('./PDF', {age: {seconds: 70 * 8.64e+4}, extensions: '.pdf',});
-				
+				findRemoveSync('./PDF', {
+					age: {seconds: 40 * 8.64e+4},
+					dir: "*",
+					files: "*.*",
+				});
 				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 					responseError('Unauthorized', 401);
 				}
@@ -648,15 +651,18 @@ puppeteer.launch({
 				properties.contents['#text'] : '';
 			let tags = subpages.tags;
 			
-			let content = `${!tags.includes('coverpage:yes') ? `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>` : '<h1>Table of Contents</h1>'}
+			let content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>`}
 <div style="padding: 0 0 10px 0" class="summary">${properties}</div></div>${await getLevel(subpages)}`;
 			content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
 				'<style>a {text-decoration: none; color:#127bc4}' +
 				'body>ul {list-style-type: none; color:black}' +
 				'h2>a{color:#127bc4}' +
-				'ul {margin: 0; padding: 0;}' +
+				'li {list-style-type:none}' +
+				// '* {border: 1px solid blue}' +
+				'ul {margin: 10px 0 0 0; padding: 0; column-gap: 30px}' +
 				'.indent {margin-left: 10px;}' +
 				'h2, h3, h4, h5, h, l {margin: 10px 0 0 0; font-weight: normal;}' +
+				'li:first-child > div > h2 {margin: 0;}' +
 				'h1, h2, h3, h4, h5, h {text-transform: uppercase; font-family:"Tahoma", Arial, serif}' +
 				'.nobreak {page-break-inside: avoid;}' +
 				'.summary {text-align: justify; text-justify: inter-word;}' +
@@ -682,6 +688,7 @@ puppeteer.launch({
 			async function getLevel(subpages, level = 2, isSubTOC) {
 				let result = '';
 				if (subpages.children && subpages.children.length) {
+					let twoColumn = tags.includes('columns:two') && tags.includes('coverpage:yes');
 					
 					if (level === 2 && tags.includes('article:topic-guide')) {
 						isSubTOC = 'yes';
@@ -694,11 +701,9 @@ puppeteer.launch({
 					let temp = [];
 					for (let i = 0; i < subpages.children.length; i++) {
 						hasLower = hasLower || subpages.children[i].children.length;
-						if (!['InfoPage', 'TitlePage'].includes(subpages.children[i].title)) {
-							temp.push(subpages.children[i]);
-						}
+						temp.push(subpages.children[i]);
 					}
-					subpages.children = temp; // hide InfoPage and TitlePage
+					subpages.children = temp;
 					if (!hasLower) { //at lowest level
 						prefix = isSubTOC === 'yes' ? 'h' : 'l';
 					}
@@ -717,11 +722,11 @@ puppeteer.launch({
 							}
 						}
 						
-						return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
+						return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}${twoColumn ? '' : '</div>'}${await getLevel(elem, level + 1, isSubTOC)}${twoColumn ? '</div>' : ''}</li>`
 					});
 					inner = inner.join('');
 					
-					result = `<ul>${inner}</ul>`;
+					result = `<ul ${twoColumn ? 'style="column-count: 2"' : ''}>${inner}</ul>`;
 				}
 				
 				return result;
@@ -968,7 +973,7 @@ puppeteer.launch({
 				delete working[escapedURL];					//5 min timeout for DUPE
 			}
 			
-			const daysCache = 65; //valid for ~ 2 months
+			const daysCache = 35; //valid for ~ 2 months
 			const updateTime = await checkTime(url);
 			let marginExists = await fs.exists(`./PDF/Margin/${escapedURL}.pdf`);
 			if (updateTime === 'restricted') {

@@ -8,6 +8,8 @@ const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const async = require('async');
 const util = require('util');
+const deepMerge = require('deepmerge');
+const he = require('he');
 
 
 let LibreTextsFunctions = {
@@ -22,7 +24,7 @@ let LibreTextsFunctions = {
 	extractSubdomain: extractSubdomain,
 };
 
-async function authenticatedFetch(path, api, subdomain, username) {
+async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
 	if (!isNaN(path)) {
 		path = parseInt(path);
@@ -36,12 +38,13 @@ async function authenticatedFetch(path, api, subdomain, username) {
 		return false;
 	}
 	if (!username) {
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, {
+		options = deepMerge({
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest',
 				'x-deki-token': authenBrowser[subdomain]
 			}
-		});
+		}, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
 	}
 	else {
 		const user = "=" + username;
@@ -52,8 +55,8 @@ async function authenticatedFetch(path, api, subdomain, username) {
 		const hash = hmac.digest('hex');
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-			{headers: {'x-deki-token': token}});
+		options = deepMerge({headers: {'x-deki-token': token}}, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
 	}
 }
 
@@ -63,7 +66,7 @@ async function getSubpagesAlternate(rootURL, username, options) {
 	let timer = 0;
 	let numpages = setInterval(() => {
 		if (options.socket) {
-			timer += Math.round(Math.random()*500);
+			timer += Math.round(Math.random() * 500);
 			options.socket.emit('setState', {state: 'getSubpages', numPages: timer});
 		}
 	}, 1000);
@@ -240,22 +243,22 @@ function clarifySubdomain(url) {
 }
 
 function decodeHTML(content) {
-	let ret = content.replace(/&gt;/g, '>');
+/*	let ret = content.replace(/&gt;/g, '>');
 	ret = ret.replace(/&lt;/g, '<');
 	ret = ret.replace(/&quot;/g, '"');
 	ret = ret.replace(/&apos;/g, "'");
-	ret = ret.replace(/&amp;/g, '&');
-	return ret;
+	ret = ret.replace(/&amp;/g, '&');*/
+	return he.decode(content);
 }
 
 function encodeHTML(content) {
-	let ret = content;
+/*	let ret = content;
 	ret = ret.replace(/&/g, '&amp;');
 	ret = ret.replace(/>/g, '&gt;');
 	ret = ret.replace(/</g, '&lt;');
 	ret = ret.replace(/"/g, '&quot;');
-	ret = ret.replace(/'/g, "&apos;");
-	return ret;
+	ret = ret.replace(/'/g, "&apos;");*/
+	return he.encode(content);
 }
 
 function authenticate(username, subdomain) {

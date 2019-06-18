@@ -15,6 +15,7 @@ export default class FindReplace extends React.Component {
 			user: document.getElementById('usernameHolder').textContent,
 			presets: [],
 			regex: false,
+			summaries: false,
 			findOnly: false,
 			
 			results: [],
@@ -98,6 +99,7 @@ export default class FindReplace extends React.Component {
 			find: this.state.find,
 			replace: this.state.replace,
 			regex: this.state.regex,
+			summaries: this.state.summaries,
 			findOnly: this.state.findOnly,
 		};
 		
@@ -223,6 +225,17 @@ export default class FindReplace extends React.Component {
 								checked={this.state.regex} onChange={() => {
 							}}/>
 							<span>Use Regular Expressions (Regex)</span>
+						</label>
+						<label>
+							<Toggle
+								onClick={() => {
+									if (!this.state.summaries)
+										alert('Warning, Page Summaries do not have a Reversion History.\nUse with caution!');
+									this.setState({summaries: !this.state.summaries})
+								}}
+								checked={this.state.summaries} onChange={() => {
+							}}/>
+							<span>Also Find/Replace Page Summaries</span>
 						</label>
 						<label>
 							<Toggle onChange={() => this.setState({findOnly: !this.state.findOnly})}
