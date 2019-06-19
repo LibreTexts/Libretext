@@ -68,6 +68,8 @@ class LTForm {
 	}
 	
 	static async renumber() {
+		if (window['disableAutonumber'])
+			return false;
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (!root.children) {
 			return false;
@@ -257,7 +259,7 @@ class LTForm {
 			let allowed = isAdmin || (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isDemonstration;
 			target.innerHTML =
 				"<div id='LTForm'>" +
-				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button></div>` +
+				`<div class='LTFormHeader'><div class='LTTitle'>${isDemonstration ? 'Workshop Mode' : allowed ? "Edit Mode" : "Demonstration Mode"}</div><button onclick='LTForm.new()'>New Page</button><button onclick='LTForm.delAll()'>Delete</button><button onclick='LTForm.mergeUp()'>Merge Folder Up</button><button onclick='LTForm.dialog.dialog("open")'> Default Template</button><button onclick='LTForm.reset()'>Clear All</button><button id='disableAutoNumber' onclick='LTForm.changeAutonumber()'>Disable AutoNumber</button></div>` +
 				`<div id='LTFormContainer'><div>Library Panel<select id='LTFormSubdomain' onchange='LTForm.setSubdomain()'>${LTForm.getSelectOptions()}</select><div id='LTLeft'></div></div><div>Remix Panel<div id='LTRight'></div></div></div>` +
 				`<div id='LTFormFooter'><div>Select your college<select id='LTFormInstitutions'></select></div><div>Name for your LibreText (Usually your course name)<input id='LTFormName' oninput='LTForm.setName()'/></div>${formMode(isAdmin, isPro, groups)}</div>` +
 				"<div><button onclick='LTForm.publish()'>Publish your LibreText</button><div id='copyResults'></div><div id='copyErrors'></div>" +
@@ -1206,6 +1208,17 @@ wiki.page("${child.path}", NULL)</pre>
 			expanded: true,
 			children: children
 		}]
+	}
+	
+	static changeAutonumber() {
+		let button = $('#disableAutoNumber');
+		if (window['disableAutonumber']) {
+			button.text('Disable Autonumber');
+		}
+		else {
+			button.text('Enable Autonumber');
+		}
+		window['disableAutonumber'] = !window['disableAutonumber'];
 	}
 }
 

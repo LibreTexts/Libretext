@@ -10,9 +10,9 @@ export default class Remixer extends React.Component {
 		this.state = {
 			mode: 'Pro',
 			subdomain: subdomain,
-			title:'Testing',
+			title: 'Testing',
 			LibraryTree: {},
-			RemixTree: Remixer.generateDefault(5,0),
+			RemixTree: Remixer.generateDefault(5, 0),
 		};
 		
 	}
@@ -25,7 +25,7 @@ export default class Remixer extends React.Component {
 						root.fromDict(d);
 						root.setExpanded();*/
 		}
-		this.setState({LibraryTree: await Remixer.getSubpages("", this.state.subdomain, false, true)});
+		this.setState({LibraryTree: await Remixer.getSubpages("home", this.state.subdomain, false, true)});
 		
 		const LTLeft = $("#LTLeft");
 		const LTRight = $("#LTRight");
@@ -84,10 +84,9 @@ export default class Remixer extends React.Component {
 				dragLeave: function (node, data) {
 				},*/
 			},
-			icon: function (event, data) {
-				let subdomain = window.location.origin.split("/")[2].split(".")[0];
-				if ((!LTForm.subdomain || LTForm.subdomain === subdomain) && data.node.getLevel() === 1)
-					return `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
+			icon: (event, data) => {
+				if ( data.node.getLevel() === 1)
+					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
 			}
 		});
 		LTRight.fancytree({
@@ -116,7 +115,7 @@ export default class Remixer extends React.Component {
 					setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
 				},*/
 				close: function (event, data) {
-					Remixer.renumber();
+					this.renumber();
 				}
 			},
 			dnd5: {
@@ -188,7 +187,7 @@ export default class Remixer extends React.Component {
 							title: transfer.getData("text")
 						}, data.hitMode);
 					}
-					await LTForm.renumber();
+					await this.renumber();
 					
 					async function doTransfer() {
 						if (sameTree) {
@@ -236,12 +235,13 @@ export default class Remixer extends React.Component {
 				<button onClick={this.new}>New Page</button>
 				<button onClick={this.delAll}>Delete</button>
 				<button onClick={this.mergeUp}>Merge Folder Up</button>
-				<button onClick={()=>this.dialog.dialog("open")}> Default Template</button>
+				<button onClick={() => this.dialog.dialog("open")}> Default Template</button>
 				<button onClick={this.reset}>Clear All</button>
 			</div>
 			<div id='LTFormContainer'>
 				<div>Library Panel<select id='LTFormSubdomain'
-				                          onChange={this.setSubdomain}>{this.getSelectOptions()}</select>
+				                          onChange={this.setSubdomain}
+				                          value={this.state.subdomain}>{this.getSelectOptions()}</select>
 					<div id='LTLeft'></div>
 				</div>
 				<div>Remix Panel
@@ -251,7 +251,8 @@ export default class Remixer extends React.Component {
 			</div>
 			<div id='LTFormFooter'>
 				<div>Select your college<select id='LTFormInstitutions'></select></div>
-				<div>Name for your LibreText (Usually your course name)<input id='LTFormName' onInput={this.setName}/></div>
+				<div>Name for your LibreText (Usually your course name)<input id='LTFormName' onInput={this.setName}/>
+				</div>
 				{formMode(isAdmin, isPro, groups)}</div>
 			<div>
 				<button onClick={this.publish}>Publish your LibreText</button>
@@ -270,7 +271,7 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 async new() {
+	async new() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node) {
 			node.addChildren({
@@ -285,7 +286,7 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 mergeUp() {
+	mergeUp() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
 			node.setExpanded(true).done(() => {
@@ -299,7 +300,7 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 delAll() {
+	delAll() {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node && node.key !== "ROOT") {
 			node.remove();
@@ -307,7 +308,7 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 default(chapters = 5, pages = 0) {
+	default(chapters = 5, pages = 0) {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work and replace it with the template you've chosen. Are you sure?")) {
 			const defaultMap = this.generateDefault(chapters, pages)[0];
@@ -317,14 +318,14 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 async reset() {
+	async reset() {
 		let node = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (confirm("This will delete your work. Are you sure?")) {
 			node.removeChildren();
 		}
 	}
 	
-	 async renumber() {
+	renumber = async () => {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		if (!root.children) {
 			return false;
@@ -342,6 +343,7 @@ export default class Remixer extends React.Component {
 		root.fromDict(d);
 		this.save(d);
 		root.setExpanded(true);
+		this.setState({RemixTree: d});
 		
 		function processNode(node, sharedIndex, level, overTen) {
 			node.title = node.title.replace('&amp;', 'and');
@@ -380,12 +382,12 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	 debug() {
+	debug() {
 		let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
 		return root.toDict(true);
 	}
 	
-	 async setSubdomain() {
+	setSubdomain = async () => {
 		let select = document.getElementById('LTFormSubdomain');
 		let subdomain = select.value;
 		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
@@ -395,29 +397,23 @@ export default class Remixer extends React.Component {
 		LTLeft.enable(false);
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		this.content = await Remixer.getSubpages(`https://${subdomain}.libretexts.org`, subdomain, false, true);
+		let content = await Remixer.getSubpages('home', subdomain, false, true);
 		let root = LTLeft.getRootNode();
 		root.removeChildren();
-		root.addChildren(this.content);
-		
-		for (let i = 0; i < root.children.length; i++) {
-			let node = root.children[i];
-			node.icon = `https://libretexts.org/img/LibreTexts/glyphs/${subdomain}.png`;
-			node.renderTitle();
-		}
+		root.addChildren(content);
 		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
-		this.setState({subdomain: subdomain, LibraryTree: this.content})
-	}
+		this.setState({subdomain: subdomain, LibraryTree: content})
+	};
 	
-	 setName(e) {
+	setName(e) {
 		let name = e.target.value;
 		name = name.replace('&', 'and');
 		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
 	}
 	
-	 getDepth(tree) {
+	getDepth(tree) {
 		let depth = 0;
 		while (tree && tree.children) {
 			depth++;
@@ -426,7 +422,7 @@ export default class Remixer extends React.Component {
 		return depth;
 	}
 	
-	 getSelectOptions() {
+	getSelectOptions() {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let libraries = {
 			'Biology': 'bio',
@@ -443,9 +439,9 @@ export default class Remixer extends React.Component {
 			'Statistics': 'stats',
 			'Workforce': 'workforce'
 		};
-		let result = '';
+		let result = [];
 		Object.keys(libraries).map(function (key, index) {
-			result += `<option value="${libraries[key]}" ${current === libraries[key] ? 'selected' : ''}>${key}</option>`;
+			result.push(<option value={libraries[key]} key={key}>{key}</option>);
 		});
 		return result;
 	}
@@ -501,7 +497,8 @@ export default class Remixer extends React.Component {
 			}
 		}
 	}
-	 async getInstitutions() {
+	
+	async getInstitutions() {
 		let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		
 		const select = document.getElementById("LTFormInstitutions");
@@ -525,7 +522,7 @@ export default class Remixer extends React.Component {
 		select.innerHTML = result.concat();
 	}
 	
-	 async publish() {
+	async publish() {
 		let subdomain = window.location.origin.split("/")[2].split(".")[0];
 		let institution = document.getElementById("LTFormInstitutions");
 		if (institution.value === "") {
@@ -1117,7 +1114,7 @@ wiki.page("${child.path}", NULL)</pre>
 		}
 	}
 	
-	 static generateDefault(chapters, pages) {
+	static generateDefault(chapters, pages) {
 		let key = 1;
 		let children = [];
 		for (let i = 1; i <= chapters; i++) {

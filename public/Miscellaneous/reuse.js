@@ -16,6 +16,9 @@ async function authenticatedFetch(path, api, subdomain) {
 		path = parseInt(path);
 		isNumber = true;
 	}
+	if (path === 'home') {
+		isNumber = true;
+	}
 	if (typeof authenticatedFetch.keys === 'undefined') {
 		let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 		authenticatedFetch.keys = await keys.json();

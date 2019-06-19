@@ -8,10 +8,6 @@
 			let media = document.getElementsByClassName("elm-social-share")[0];
 			media.parentElement.insertBefore(nav, media);
 		}
-		if (window !== window.top && window.location.href.includes("contentOnly")) {
-			document.getElementsByClassName("elm-header")[0].style.display = "none";
-			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
-		}
 		propagatorOption();
 		downloadOption();
 		remixerOption();
@@ -471,6 +467,11 @@
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => setTimeout(fn, 800));
+	document.addEventListener('DOMContentLoaded', () => {
+		if (window !== window.top && window.location.href.includes("contentOnly")) {
+			document.getElementsByClassName("elm-header")[0].style.display = "none";
+			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
+		}});
 })();
 
 

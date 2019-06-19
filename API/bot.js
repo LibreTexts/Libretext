@@ -59,7 +59,7 @@ async function handler(request, response) {
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
 	// console.log('an user connected');
-	socket.volatile.emit('welcome', `Hello!`);
+	socket.emit('welcome', `Hello!`);
 	
 	//Define callback events;
 	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
@@ -224,8 +224,7 @@ async function jobHandler(jobType, input, socket) {
 		// result = LibreTexts.encodeHTML(result);
 		let response = await LibreTexts.authenticatedFetch(path,`contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}` ,input.subdomain, input.user, {
 			method: 'POST',
-			body: result,
-			headers: {'x-deki-token': token}
+			body: result
 		});
 		if (response.ok) {
 			let fetchResult = await response.json();
@@ -411,8 +410,7 @@ async function jobHandler(jobType, input, socket) {
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
 					response = await LibreTexts.authenticatedFetch(path, 'files/${filename}?dream.out.format=json',input.subdomain, input.user, {
 						method: "PUT",
-						body: foreignImage,
-						headers: {'x-deki-token': token}
+						body: foreignImage
 					});
 					if (!response.ok) {
 						response = await response.text();
@@ -477,8 +475,7 @@ async function revert(input, socket) {
 		// if (true) { //unchanged
 		let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
 		let response = await authenticatedFetch(page.path,`revert?fromrevision=${page.revision - 1}&dream.out.format=json`, input.subdomain, input.user, {
-			method: 'POST',
-			headers: {'x-deki-token': token}
+			method: 'POST'
 		});
 		if (!response.ok) {
 			let error = await response.text();
