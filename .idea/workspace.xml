@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/MoleculeGenerator/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/form.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,10 +23,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/MoleculeGenerator/package-lock.json">
+        <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="3161" column="52" selection-start-line="3161" selection-start-column="46" selection-end-line="3161" selection-end-column="52" />
+            <state relative-caret-position="203">
+              <caret line="1059" column="99" lean-forward="true" selection-start-line="1059" selection-start-column="99" selection-end-line="1059" selection-end-column="99" />
+              <folding>
+                <element signature="n#style#0;n#input#2;n#fieldset#0;n#form#0;n#div#2;n#div#3;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,9 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>checkTime</find>
-      <find>days</find>
-      <find>70</find>
       <find>properties</find>
       <find>fetch</find>
       <find>replaceall</find>
@@ -80,6 +78,9 @@
       <find>contentloaded</find>
       <find>contentOnly</find>
       <find>eslint</find>
+      <find>default</find>
+      <find>ltform.keys</find>
+      <find>default.png</find>
     </findStrings>
     <replaceStrings>
       <replace>LTForm</replace>
@@ -173,13 +174,13 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/FindReplace.js" />
         <option value="$PROJECT_DIR$/API/reuse.js" />
         <option value="$PROJECT_DIR$/API/botOld.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
-        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/public/Remixer/src/pages/index.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
         <option value="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" />
         <option value="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" />
         <option value="$PROJECT_DIR$/public/MoleculeGenerator/package.json" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
+        <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
       </list>
     </option>
   </component>
@@ -219,22 +220,7 @@
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="MoleculeGenerator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="MoleculeGenerator" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="MoleculeGenerator" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="Miscellaneous" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1062,13 +1048,8 @@
       <workItem from="1560893931163" duration="623000" />
       <workItem from="1560898730514" duration="599000" />
       <workItem from="1560924267373" duration="4531000" />
-    </task>
-    <task id="LOCAL-00156" summary="Fixed Refresh link">
-      <created>1552857098092</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1552857098092</updated>
+      <workItem from="1561361333124" duration="1638000" />
+      <workItem from="1561405856325" duration="1002000" />
     </task>
     <task id="LOCAL-00157" summary="Fixed Refresh link">
       <created>1552869006701</created>
@@ -1406,7 +1387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560843782565</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="Security Fix MoleculeGenerator">
+      <created>1561273711273</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1561273711275</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1442,7 +1430,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1712311000" />
+    <option name="totallyTimeSpent" value="1715096000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
@@ -1450,18 +1438,18 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.26096824" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2700454" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" visible="true" weight="0.26353276" />
+      <window_info anchor="bottom" x="854" y="30" width="853" height="890" id="Run" order="4" weight="0.26353276" />
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" weight="0.18700266" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.27868852" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" visible="true" weight="0.2777778" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.2249675" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="REST Client" order="13" weight="0.47733334" />
@@ -1470,7 +1458,7 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.29440096" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.29425114" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
       <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.37748346" />
@@ -1570,7 +1558,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added log export" />
     <MESSAGE value="Added encodeHTML" />
     <MESSAGE value="Added percentage to Dashboard" />
     <MESSAGE value="Pages API for root requests" />
@@ -1595,7 +1582,8 @@
     <MESSAGE value="Downloads Center remove Remixer University" />
     <MESSAGE value="Bugfix newlines" />
     <MESSAGE value="FindReplace summaries" />
-    <option name="LAST_COMMIT_MESSAGE" value="FindReplace summaries" />
+    <MESSAGE value="Security Fix MoleculeGenerator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Security Fix MoleculeGenerator" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -1955,23 +1943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="477" column="26" selection-start-line="477" selection-start-column="26" selection-end-line="477" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="1220" column="35" selection-start-line="1220" selection-start-column="8" selection-end-line="1220" selection-end-column="35" />
-          <folding>
-            <element signature="n#style#0;n#input#2;n#fieldset#0;n#form#0;n#div#2;n#div#3;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/reuse.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="329">
@@ -2038,6 +2009,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
           <caret line="3161" column="52" selection-start-line="3161" selection-start-column="46" selection-end-line="3161" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="559" column="5" lean-forward="true" selection-start-line="559" selection-start-column="5" selection-end-line="559" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Miscellaneous/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="1059" column="99" lean-forward="true" selection-start-line="1059" selection-start-column="99" selection-end-line="1059" selection-end-column="99" />
+          <folding>
+            <element signature="n#style#0;n#input#2;n#fieldset#0;n#form#0;n#div#2;n#div#3;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

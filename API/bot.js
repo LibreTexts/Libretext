@@ -213,7 +213,7 @@ async function jobHandler(jobType, input, socket) {
 			}
 		}
 		
-		if (!result || result === content )
+		if (!result || result === content)
 			return;
 		
 		//send update
@@ -222,7 +222,7 @@ async function jobHandler(jobType, input, socket) {
 			return;
 		}
 		// result = LibreTexts.encodeHTML(result);
-		let response = await LibreTexts.authenticatedFetch(path,`contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}` ,input.subdomain, input.user, {
+		let response = await LibreTexts.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}`, input.subdomain, input.user, {
 			method: 'POST',
 			body: result
 		});
@@ -408,7 +408,7 @@ async function jobHandler(jobType, input, socket) {
 					//upload image
 					let foreignImage = await response.blob();
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
-					response = await LibreTexts.authenticatedFetch(path, 'files/${filename}?dream.out.format=json',input.subdomain, input.user, {
+					response = await LibreTexts.authenticatedFetch(path, 'files/${filename}?dream.out.format=json', input.subdomain, input.user, {
 						method: "PUT",
 						body: foreignImage
 					});
@@ -474,7 +474,7 @@ async function revert(input, socket) {
 		//page.revision && currentRevision === page.revision
 		// if (true) { //unchanged
 		let url = `https://${job.subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(page.path))}/revert?fromrevision=${page.revision - 1}&dream.out.format=json`;
-		let response = await authenticatedFetch(page.path,`revert?fromrevision=${page.revision - 1}&dream.out.format=json`, input.subdomain, input.user, {
+		let response = await authenticatedFetch(page.path, `revert?fromrevision=${page.revision - 1}&dream.out.format=json`, input.subdomain, input.user, {
 			method: 'POST'
 		});
 		if (!response.ok) {
@@ -548,10 +548,17 @@ String.prototype.replaceAll = function (search, replacement, input) {
 	else
 		search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	
-	let temp = target.replace(new RegExp(search, 'gm'), replacement);
+	let regex = new RegExp(search, 'gm');
+	let temp = target.replace(regex, replacement);
 	// console.log(b4, search);
-	search = LibreTexts.encodeHTML(search);
-	return temp.replace(new RegExp(search, 'gm'), replacement);
+	try {
+		search = LibreTexts.encodeHTML(search);
+		regex = new RegExp(search, 'gm');
+		temp = temp.replace(regex, replacement);
+	} catch (e) {
+	
+	}
+	return temp;
 	
 	/*	if (input.newlines) {
 			search = search.replace(/\\\\n/g, "\n"); //add newlines

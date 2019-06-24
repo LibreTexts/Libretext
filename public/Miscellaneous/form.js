@@ -1051,12 +1051,14 @@ wiki.page("${child.path}", NULL)</pre>
 									}
 									else if (tags.includes("article:topic-category") || tags.includes("article:topic-guide")) {
 										let current = window.location.origin.split('/')[2].split('.')[0];
-										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', {
+										let headers = {
 											headers: {
 												'x-deki-token': LTForm.keys['chem'],
-												'x-requested-with': current === 'chem' ? 'XMLHttpRequest' : ''
 											}
-										});
+										};
+										if (current === 'chem')
+											headers.headers['x-requested-with'] = 'XMLHttpRequest';
+										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web',headers);
 										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
