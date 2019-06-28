@@ -7,7 +7,8 @@ const LibreTexts = {
 	decodeHTML: decodeHTML,
 	// authenticate: authenticate,
 	// addLinks: addLinks,
-	// extractSubdomain: extractSubdomain,
+	extractSubdomain: extractSubdomain,
+	getCurrent: getCurrent,
 };
 
 async function authenticatedFetch(path, api, subdomain) {
@@ -109,4 +110,17 @@ function encodeHTML(content) {
 	ret = ret.replace(/"/g, '&quot;');
 	ret = ret.replace(/'/g, "&apos;");
 	return ret;
+}
+
+function extractSubdomain(url) {
+	let origin = url.split("/")[2].split(".");
+	const subdomain = origin[0];
+	return subdomain;
+}
+
+async function getCurrent() {
+	let page = window.location.href;
+	let subdomain = extractSubdomain(page);
+	let path = page.replace(/^.*?libretexts.org\//, '');
+	LibreTexts.authenticatedFetch(path, 'contents?mode=edit', subdomain).then(async (data) => console.log(await data.text()))
 }

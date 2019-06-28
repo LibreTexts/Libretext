@@ -355,7 +355,7 @@ function handler(request, response) {
 				epub.getImage = util.promisify(epub.getImage);
 				epub.readFile = util.promisify(epub.readFile);
 				let content = await epub.getChapterRaw(page.id);
-				let pressBooksContent = content.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>)/m);
+				let pressBooksContent = content.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>\n*<\/body>)/m);
 				if (pressBooksContent) {
 					content = pressBooksContent[0];
 				}

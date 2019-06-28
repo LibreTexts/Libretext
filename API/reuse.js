@@ -258,7 +258,7 @@ function encodeHTML(content) {
 	ret = ret.replace(/</g, '&lt;');
 	ret = ret.replace(/"/g, '&quot;');
 	ret = ret.replace(/'/g, "&apos;");*/
-	return he.encode(content);
+	return he.encode(content,{'useNamedReferences': true});
 }
 
 function authenticate(username, subdomain) {

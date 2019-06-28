@@ -173,7 +173,7 @@ async function jobHandler(jobType, input, socket) {
 		content = await content.json();
 		content = content.body;
 		content = LibreTexts.decodeHTML(content);
-		// console.log(content);
+		console.log(content);
 		
 		let result, comment;
 		switch (jobType) {
@@ -541,20 +541,32 @@ async function logCompleted(result, isDisabled) {
 
 String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;
-	let b4 = search;
+	let b4 = search, regex;
 	
 	if (input.regex)
 		search = search.replace(/^\/|\/$/g, '');
 	else
 		search = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	
-	let regex = new RegExp(search, 'gm');
-	let temp = target.replace(regex, replacement);
-	// console.log(b4, search);
-	try {
-		search = LibreTexts.encodeHTML(search);
+	if (input.regex)
 		regex = new RegExp(search, 'gm');
-		temp = temp.replace(regex, replacement);
+	let temp = target.replace(input.regex ? regex : search, replacement);
+	console.log(b4, search);
+	try {
+		let searchDEC = LibreTexts.decodeHTML(search);
+		if (input.regex)
+			regex = new RegExp(searchDEC, 'gm');
+		temp = temp.replace(input.regex ? regex : searchDEC, replacement);
+		// console.log(b4, search);
+	} catch (e) {
+	
+	}
+	try {
+		let searchENC = LibreTexts.encodeHTML(search);
+		if (input.regex)
+			regex = new RegExp(searchENC, 'gm');
+		temp = temp.replace(input.regex ? regex : searchENC, replacement);
+		// console.log(b4, search);
 	} catch (e) {
 	
 	}
