@@ -12,7 +12,7 @@ export default class Remixer extends React.Component {
 			subdomain: subdomain,
 			title: 'Testing',
 			LibraryTree: {},
-			RemixTree: Remixer.generateDefault(5, 0),
+			RemixTree: [Remixer.generateDefault(5, 0)],
 		};
 		
 	}
@@ -85,7 +85,7 @@ export default class Remixer extends React.Component {
 				},*/
 			},
 			icon: (event, data) => {
-				if ( data.node.getLevel() === 1)
+				if (data.node.getLevel() === 1)
 					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
 			}
 		});
@@ -108,13 +108,10 @@ export default class Remixer extends React.Component {
 				adjustWidthOfs: 4,   // null: don't adjust input size to content
 				inputCss: {minWidth: "3em"},
 				triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
-				beforeEdit: function (event, data) {
-					return data.node.key !== "ROOT";
-				},
 				/*save: function (event, data) {
 					setTimeout(() => data.node.setTitle(data.orgTitle.replace(/(?<=target="_blank">).*?(?=<\/a>$)/, data.node.title)), 500);
 				},*/
-				close: function (event, data) {
+				close: (event, data) => {
 					this.renumber();
 				}
 			},
@@ -158,7 +155,7 @@ export default class Remixer extends React.Component {
 				},
 				dragLeave: function (node, data) {
 				},*/
-				dragDrop: async function (node, data) {
+				dragDrop: async  (node, data) => {
 					/* This function MUST be defined to enable dropping of items on
 					 * the tree.
 					 */
@@ -251,8 +248,6 @@ export default class Remixer extends React.Component {
 			</div>
 			<div id='LTFormFooter'>
 				<div>Select your college<select id='LTFormInstitutions'></select></div>
-				<div>Name for your LibreText (Usually your course name)<input id='LTFormName' onInput={this.setName}/>
-				</div>
 				{formMode(isAdmin, isPro, groups)}</div>
 			<div>
 				<button onClick={this.publish}>Publish your LibreText</button>
@@ -271,7 +266,12 @@ export default class Remixer extends React.Component {
 		}
 	}
 	
-	async new() {
+	
+	save = (tree) => {
+		localStorage.setItem('RemixerSession', JSON.stringify(tree));
+	};
+	
+	new = async () => {
 		let node = $("#LTRight").fancytree("getActiveNode");
 		if (node) {
 			node.addChildren({
@@ -284,7 +284,7 @@ export default class Remixer extends React.Component {
 			await node.setExpanded();
 			await this.renumber();
 		}
-	}
+	};
 	
 	mergeUp() {
 		let node = $("#LTRight").fancytree("getActiveNode");
@@ -407,11 +407,6 @@ export default class Remixer extends React.Component {
 		this.setState({subdomain: subdomain, LibraryTree: content})
 	};
 	
-	setName(e) {
-		let name = e.target.value;
-		name = name.replace('&', 'and');
-		$("#LTRight").fancytree("getTree").getNodeByKey("ROOT").setTitle(name);
-	}
 	
 	getDepth(tree) {
 		let depth = 0;
@@ -1144,7 +1139,7 @@ wiki.page("${child.path}", NULL)</pre>
 		}
 		
 		return {
-			title: "Cover Page. Drag onto me to get started",
+			title: "Untitled LibreText. Drag onto me to get started",
 			key: "ROOT",
 			url: "",
 			padded: "",
