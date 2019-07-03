@@ -550,26 +550,21 @@ String.prototype.replaceAll = function(search, replacement, input) {
   else
     search = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   
-  if (input.regex)
-    regex = new RegExp(search, 'gm');
-  let temp = target.replace(input.regex ? regex : search, replacement);
-  // console.log(b4, search);
-  try {
-    let searchDEC = LibreTexts.encodeHTML(search);
-    if (input.regex)
-      regex = new RegExp(searchDEC, 'gm');
-    temp = temp.replace(input.regex ? regex : searchDEC, replacement);
-    // console.log(b4, search);
   
-    try {
-      let searchENC = LibreTexts.encodeHTML(searchDEC);
-      if (input.regex)
-        regex = new RegExp(searchENC, 'gm');
-      temp = temp.replace(input.regex ? regex : searchENC, replacement);
-      // console.log(b4, search);
-    } catch (e) {
-    
-    }
+  regex = new RegExp(search, 'gm');
+  let temp = target.replace(regex, replacement);
+  console.log(b4, search);
+  try {
+    let searchDEC = LibreTexts.decodeHTML(search);
+    regex = new RegExp(searchDEC, 'gm');
+    temp = temp.replace(regex, replacement);
+  } catch (e) {
+  
+  }
+  try {
+    let searchENC = LibreTexts.encodeHTML(search);
+    regex = new RegExp(searchENC, 'gm');
+    temp = temp.replace(regex, replacement);
   } catch (e) {
   
   }
