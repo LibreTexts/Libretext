@@ -20,6 +20,7 @@ const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
 const JSZip = require("jszip");
+const he = require("he");
 
 var Gbrowser;
 var Gserver;
@@ -640,15 +641,19 @@ puppeteer.launch({
 			subpages = subpages || await getSubpages(url);
 			const page = await browser.newPage();
 			
+			function safe(input) {
+				if (input)
+					return he.encode(input, {'useNamedReferences': true});
+			}
 			
-			let origin = url.split("/")[2].split(".");
+			let origin = url.split('/')[2].split('.');
 			const subdomain = origin[0];
 			let path = url.split('/').splice(3).join('/');
 			
 			let properties = subpages.properties;
 			properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
 			properties = properties && properties.contents && properties.contents['#text'] ?
-				properties.contents['#text'] : '';
+				safe(properties.contents['#text']) : '';
 			let tags = subpages.tags;
 			
 			let content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>`}
@@ -718,7 +723,7 @@ puppeteer.launch({
 							properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
 							let good = properties && properties.contents && properties.contents['#text'];
 							if (good && (!elem.tags.includes('article:topic') || isSubTOC)) {
-								summary = `<div style="padding-bottom:10px" class="summary">${properties.contents['#text']}</div>`;
+								summary = `<div style="padding-bottom:10px" class="summary">${safe(properties.contents['#text'])}</div>`;
 							}
 						}
 						
