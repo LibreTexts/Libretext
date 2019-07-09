@@ -29,7 +29,7 @@ if (!window["batchPrint.js"]) {
 			batchName: window["BatchName"],
 			isNoCache: false
 		};
-		batchAccess = isAdmin || (isPro && groups.includes('BatchAccess') );
+		batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 		const batchPrint = document.getElementById("batchPrint");
 		
 		handleInner().then();
@@ -39,7 +39,7 @@ if (!window["batchPrint.js"]) {
 			let tags = document.getElementById('pageTagsHolder').innerText;
 			let downloads = [];
 			let hasDownloads = false;
-			let url = window.location.href.replace(/#$/,'');
+			let url = window.location.href.replace(/#$/, '');
 			if (tags.includes('coverpage:yes')) {
 				
 				let subdomain = window.location.origin.split("/")[2].split(".")[0];
@@ -79,7 +79,7 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${batchAccess ?`<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
+					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
@@ -93,7 +93,6 @@ if (!window["batchPrint.js"]) {
 				}
 				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
 			}
-			
 			
 			
 			batchPrint.innerHTML = innerHTML;
@@ -119,10 +118,12 @@ if (!window["batchPrint.js"]) {
 	}
 	
 	function thinCC() {
+		alert('This feature is currently under maintenance. 7/9/19');
+		return false;
 		const zip = new JSZip();
 		const textToSave = JSONtoXML();
-		zip.file('imsmanifest.xml',textToSave);
-		zip.generateAsync({type:"blob"})
+		zip.file('imsmanifest.xml', textToSave);
+		zip.generateAsync({type: "blob"})
 			.then(function (blob) {
 				const textToSaveAsURL = window.URL.createObjectURL(blob);
 				const fileNameToSaveAs = `${window["BatchName"]}.imscc`;
@@ -185,14 +186,19 @@ if (!window["batchPrint.js"]) {
 				return result;
 			}
 			
-			function escapeTitle(unsafe){
+			function escapeTitle(unsafe) {
 				return unsafe.replace(/[<>&'"]/g, function (c) {
 					switch (c) {
-						case '<': return '&lt;';
-						case '>': return '&gt;';
-						case '&': return '&amp;';
-						case '\'': return '&apos;';
-						case '"': return '&quot;';
+						case '<':
+							return '&lt;';
+						case '>':
+							return '&gt;';
+						case '&':
+							return '&amp;';
+						case '\'':
+							return '&apos;';
+						case '"':
+							return '&quot;';
 					}
 				});
 			}
@@ -225,7 +231,7 @@ if (!window["batchPrint.js"]) {
             <file href="${identifier}_F.xml"/>
         </resource>`;
 							zip.file(`${identifier}_F.xml`,
-`<?xml version="1.0" encoding="UTF-8"?>
+								`<?xml version="1.0" encoding="UTF-8"?>
 <webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
 	<title>${escapeTitle(resource.title)}</title>
 	<url href="${resource.url}" target="_iframe"/>
@@ -268,7 +274,7 @@ if (!window["batchPrint.js"]) {
 	}
 	
 	function HTMLtoJSON() {
-		let HTML = $("#batchTreeHolder .wiki-tree");
+		// let HTML = $("#batchTreeHolder .wiki-tree");
 		let JSON = {};
 		let URL = window.location.href;
 		const title = document.getElementById("titleHolder").textContent;
@@ -276,19 +282,19 @@ if (!window["batchPrint.js"]) {
 		//get content root
 		URL = URL.split("/").slice(0, 6).join("/");
 		
-		if (HTML[0].children.length) {
-			HTML = HTML[0].children[0].children;
-			let link;
-			
-			for (let i = 0; i < HTML.length; i++) {
-				link = HTML[i].children[0];
-				JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
-			}
-		}
+		/*		if (HTML[0].children.length) {
+					HTML = HTML[0].children[0].children;
+					let link;
+					
+					for (let i = 0; i < HTML.length; i++) {
+						link = HTML[i].children[0];
+						JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
+					}
+				}*/
 		window["BatchTable"] = JSON;
 		window["BatchName"] = title + URL.length;
 		window["BatchTitle"] = title;
-		console.log(window["BatchTable"], window["BatchName"]);
+		// console.log(window["BatchTable"], window["BatchName"]);
 		
 		
 	}
