@@ -1,6 +1,9 @@
 import React from 'react';
-import Remixer from "../components/Remixer";
 import ReactDOM from 'react-dom';
+import Remixer from "../components/Remixer.jsx";
+import ReRemixer from "../components/ReRemixer.jsx";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -19,11 +22,12 @@ class Dashboard extends React.Component {
 	
 	render() {
 		return <div className={'CenterContainer'}>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 			<div className="navigationBar">
-				<select onChange={this.setPanel} defaultValue={this.state.panel}>
-					<option value={'Remixer'}>Remixer</option>
-					<option value={'Re-Remixer'}>Re-Remixer</option>
-				</select>
+				<Select onChange={this.setPanel} value={this.state.panel}>
+					<MenuItem  value={'Remixer'}>Remixer</MenuItem >
+					<MenuItem  value={'Re-Remixer'}>Re-Remixer</MenuItem >
+				</Select>
 			</div>
 			{this.getPanel()}
 		</div>
@@ -34,7 +38,7 @@ class Dashboard extends React.Component {
 			case "Remixer":
 				return <Remixer/>;
 			case "Re-Remixer":
-				return null;
+				return <ReRemixer/>;
 		}
 	}
 	

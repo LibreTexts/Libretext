@@ -4,25 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ]"
+    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ]",
+    "test": ""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.1.3",
     "babelify": "^10.0.0",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
-    "react-textfit": "^1.1.0",
-    "react-toggle": "^4.0.2"
+    "react-textfit": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "latest",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
     "@babel/preset-react": "^7.0.0"
   }
 }

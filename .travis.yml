@@ -1,9 +1,14 @@
 language: node_js
 node_js:
-- "lts/*"
+  - "lts/*"
 
-before_install:
-- cd nodePrint
+env:
+  - TESTFOLDER=nodePrint
+  - TESTFOLDER=public/Remixer
+
+install: npm install --prefix $TESTFOLDER
+
+script: npm test --prefix $TESTFOLDER
 
 notifications:
   slack: libretexts:hXjfcY7jkwpmvJ2xzQ0cEtHl

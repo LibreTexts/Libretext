@@ -500,10 +500,14 @@ class LTForm {
 			
 			//confirm('You have previously saved work available.\nWould you like to restore your previous session?'))
 			if (localStorage.getItem('RemixerSession')) {
-				let d = JSON.parse(localStorage.getItem('RemixerSession'));
-				let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
-				root.fromDict(d);
-				root.setExpanded();
+				try {
+					let d = JSON.parse(localStorage.getItem('RemixerSession'));
+					let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+					root.fromDict(d);
+					root.setExpanded();
+				} catch (e) {
+					console.error(e)
+				}
 			}
 		}
 		
@@ -1058,7 +1062,7 @@ wiki.page("${child.path}", NULL)</pre>
 										};
 										if (current === 'chem')
 											headers.headers['x-requested-with'] = 'XMLHttpRequest';
-										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web',headers);
+										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', headers);
 										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
