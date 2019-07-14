@@ -2,774 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Remixer panels are rendering">
-      <change beforePath="$PROJECT_DIR$/public/GLmol/I3.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/LICENSE-GPL3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/LICENSE-LGPL3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/embedding-examplesEN.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/index0.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/js/Three49custom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/js/jquery-1.7.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/GLmol/viewer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/JSmol.full.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/JSmol.full.nojq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/Jmol.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/aflow/AFLOWReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/cif/Cif2Reader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/cif/CifReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/cif/MMCifReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/cif/MMTFReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/cif/Subsystem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/molxyz/MolReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/molxyz/XyzReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/BinaryDcdReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/ForceFieldReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/JcampdxReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/MdCrdReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/MdTopReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/more/TlsDataOnlyReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pdb/JmolDataReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pymol/JmolObject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pymol/PickleReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pymol/PyMOL.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pymol/PyMOLGroup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/pymol/PyMOLReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/AdfReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/GamessUKReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/GamessUSReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/GaussianFchkReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/GaussianWfnReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/GenNBOReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/JaguarReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/MOReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/MoldenReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/MopacGraphfReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/MopacSlaterReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/PsiReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/QCJSONReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/QchemReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/SlaterReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/quantum/WebMOReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/simple/CubeReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/simple/FoldingXyzReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/simple/GhemicalMMReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/simple/HyperChemReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/simple/InputReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/spartan/SpartanReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlArgusReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlChem3dReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlMOReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlMagResReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlOdysseyReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlQEReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlVaspReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xml/XmlXsdReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/AbinitReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/AimsReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/BilbaoReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/CrystalReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/DmolReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/EspressoReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/MagresReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/VaspPoscarReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/readers/xtal/XcrysdenReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/Atom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/AtomIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/AtomSetCollection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/AtomSetCollectionReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/AtomSetObject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/Bond.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/BondIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/Resolver.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/SmarterJmolAdapter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/Structure.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/smarter/StructureIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/adapter/writers/QCJSONWriter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/AtomIndexIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JSVInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAbstractButton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAdapter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAdapterAtomIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAnnotationParser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAppAPI.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAppConsoleInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolAudioPlayer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolCallbackListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolDataManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolDialogInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolDomReaderInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolDropEditor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolEnvCalc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolGestureServerInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolJDXMOLParser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolJSpecView.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolMeasurementClient.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolModulationSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolPatternMatcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolRendererInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolScriptEvaluator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolScriptFunction.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolScriptManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolToJSmolInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolViewer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/JmolZipUtilities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/SmilesMatcherInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/api/Translator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/appletjs/Jmol.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/atomdata/AtomDataServer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/atomdata/RadiusData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs/Platform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs2d/Display.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs2d/Image.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs2d/JSFile.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs2d/JSFont.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/awtjs2d/Platform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/bspt/Bspf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/bspt/Bspt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/bspt/Element.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/bspt/Leaf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/bspt/Node.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/c/CBK.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/c/HB.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/c/STER.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/c/STR.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/c/VDW.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/console/GenericConsole.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/consolejs/AppletConsole.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/consolejs/JSConsole.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/dssx/DSSR1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/Export3D.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/JSExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_MayaExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_PovrayExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_StlExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_TachyonExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_VrmlExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/_X3dExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/export/__CartesianExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/CircleRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/CylinderRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/HermiteRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/Pixelator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/PixelatorScreened.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/PixelatorShaded.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/PixelatorT.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/Platform3D.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/TextRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/TextString.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/g3d/TriangleRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/geodesic/EnvelopeCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/i18n/Language.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/io/FileReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/io/JmolUtil.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jsv/JDXMOLParser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jsv/JSpecView.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/api/MeshDataServer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/calc/MarchingSquares.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/data/JvxlCoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/data/MeshData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/data/VolumeData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/AtomDataReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/AtomPropertyMapper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/BCifDensityReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/CastepDensityReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/CubeReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/DelPhiBinaryReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/Dsn6BinaryReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoFxyReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoFxyzReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoMepReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoMlpReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoPlaneReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoShapeReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/IsoSolventReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/JaguarReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/JvxlReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/KinemageReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/MapFileReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/MsmsReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/NffReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/ObjReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/Parameters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/PltFormattedReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/Pmesh4Reader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/PmeshReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/PolygonFileReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/PyMOLMeshReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/Ras3DReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/SurfaceFileReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/SurfaceReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/VolumeDataReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/VolumeFileReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/jvxl/readers/XplorReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/modelkit/images/bonds.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/modelkit/images/dotdotdot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/navigate/Navigator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/popup/JSSwingPopupHelper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/popup/JmolGenericPopup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/popup/MainPopupResourceBundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/popup/PopupResource.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/MOCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/MlpCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/NMRCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/NciCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/QMAtom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/QS.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/QuantumCalculation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/SlaterData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/atomicLipophilicity.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/quantum/nmr_data.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/EchoRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/FontLineShapeRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/HalosRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/LabelsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/ShapeRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/StarsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/SticksRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/render/TextRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/BackboneRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/BioShapeRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/MeshRibbonRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/NucleicRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/RibbonsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/RocketRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/RocketsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderbio/TraceRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderspecial/DipolesRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderspecial/DotsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderspecial/DrawRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderspecial/PolyhedraRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/renderspecial/VectorsRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/rendersurface/ContactRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/rendersurface/LcaoCartoonRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/rendersurface/NBORenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/rendersurface/Plot3DRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/AtomShape.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Axes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Bbcage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Echo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Frank.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Halos.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Hover.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Labels.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/MeshCollection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Shape.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Stars.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/Sticks.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shape/TextShape.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapebio/Strands.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapebio/Trace.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapecgo/CGO.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Dipole.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Dipoles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Dots.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Draw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Polyhedra.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapespecial/Polyhedron.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/Contact.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/IsosurfaceMesh.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/LcaoCartoon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/MolecularOrbital.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/NBO.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/PMeshWriter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/Plot3D.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/shapesurface/Pmesh.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/thread/SpinThread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/thread/TimeoutThread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/J/thread/VibrationThread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/AlphaMonomer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/AlphaPolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/AminoPolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Annotation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/AtomCollection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/AtomIteratorWithinModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BioExt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BioModelSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BioPolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BioResolver.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BondCollection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/BondSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/CarbohydratePolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/AtomType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/Calculations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/CalculationsMMFF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/CalculationsUFF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/FFParam.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/ForceField.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/ForceFieldUFF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/MMFFDistanceCalc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/MMFFVDWCalc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/UFFOOPCalc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/UFFVDWCalc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/data/MMFF94-smarts.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/FF/data/UFF.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/HBond.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/LabelToken.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MeasurementData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MeasurementPending.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MinAngle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MinAtom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MinBond.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/MinPosition.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Minimizer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Model.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Monomer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/NucleicMonomer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/NucleicPolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Orientation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/PhosphorusPolymer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/ProteinStructure.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Sheet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/StateScript.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Structure.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Text.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Turn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JM/Util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/CIPData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/CommandWatcherThread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/HallInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/HallRotationTerm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/IsoExt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/PointGroup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/PolyhedronStereoSorter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SV.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptEval.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptExpr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptExt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptFunction.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptInterruption.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptParallelProcessor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptProcessRunnable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/ScriptQueueThread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SmilesBond.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SmilesGenerator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SmilesMeasure.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SmilesRing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SmilesStereo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SpaceGroup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/Symmetry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SymmetryInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/SymmetryOperation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/UnitCell.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/UnitCellIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JS/VTemp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/AppletFrame.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/ExportInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVAppletInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVFileDropper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVFileHelper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVMainPanel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVPrintDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVTreeNode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVTreePath.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVZipInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/JSVZipReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/PlatformDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/ScriptInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/api/SourceReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/app/GenericMouse.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/app/JSVApp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/app/JSVAppPro.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/appletjs/JSVApplet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Annotation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ColoredAnnotation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Coordinate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ExportType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ImageView.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Integral.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/IntegralData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/JSVZipFileSequentialReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/JSVZipUtil.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/JSVersion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Measurement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/PanelData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/PanelNode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/PeakInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/PlotWidget.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/PrintLayout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/RepaintManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ScaleData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ScriptToken.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Spectrum.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/SubSpecChangeEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/TODO.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/ViewData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/common/Visible.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/dialog/DialogParams.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/dialog/MeasurementsDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/dialog/ViewsDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/exception/JSVException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/CMLExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/ExportInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/Exporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/FormContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/FormExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/JDXExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/SVGExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/XMLExporter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/resources/animl_nmr.vm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/resources/animl_tmp.vm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/resources/cml_nmr.vm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/resources/plot.vm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/export/resources/plot_ink.vm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/DialogTableModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/Display.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/Image.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/JsDialogManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/JsFileHelper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/JsG2D.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/JsPlatform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/js2d/JsPopup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/popup/JSVPopupResourceBundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/AnIMLReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/CMLReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/JDXSource.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/JDXSourceStreamTokenizer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/XMLParser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/source/XMLReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/tree/SimpleTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/tree/SimpleTreeEnumeration.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/tree/SimpleTreeModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JSV/tree/SimpleTreePath.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/AjaxURLConnection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/AjaxURLStreamHandlerFactory.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/ArrayDataReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BArray.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BS.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BSUtil.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BZone.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/BoxInfo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CRC32.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CU.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Checksum.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CifDataParser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/ColorEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CommandHistory.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CompoundDocDirEntry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/CompoundDocHeader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/DF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/DebugJS.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Deflate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/DeflaterOutputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/EigenSort.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Elements.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Encoding.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/GData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/GZIPHeader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/GZIPInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/GenericApplet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Geodesic.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/InfTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Inflate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Inflater.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/InflaterInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Int2IntHash.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/JSONException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/JSONWriter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/JZlib.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Lst.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/M3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/M34.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Measure.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/MeshCapper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/MeshSurface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/MessagePackReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Modulation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Normix.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/P3i.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/PT.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/PatternMatcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Point3fi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Quat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Rdr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Shader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/SimpleEdge.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/SimpleNode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/StaticTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/StringDataReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/T3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/T4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Tensor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Tree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/Txt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/ZStreamException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/ZipData.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JU/package.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/ChimeMessenger.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/ColorManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/DataManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/GlobalSettings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/JC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/JmolAsyncException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/ModelManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/MouseState.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/OutputManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/OutputManagerJS.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/PropertyManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/SelectionManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/ShapeManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/StateCreator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/StateManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/StatusManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/TransformManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/Viewer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/binding/Binding.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/binding/DragBinding.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/JV/binding/RasmolBinding.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/Jmol.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corebio.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coreconsole.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejmoljsv.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejsv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejsvdialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejsvexport.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejsvmenu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corejsvmenu.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coremenu.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coremin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coreprop.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corepymol.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corepymol.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corescript.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corescriptcmd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corescriptcmd.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coresmiles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coresurface.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coreswing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coresym.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/coretext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corezip.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/core/corezip.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/img/cursor_wait.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/img/play_make_live.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/awt/event/InputEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/awt/event/KeyEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/awt/event/MouseEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/awt/event/MouseWheelEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/error.z.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/BufferedWriter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/ByteArrayInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/CharConversionException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/Closeable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/DataInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/DataOutput.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/FileNotFoundException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/FileOutputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/Flushable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/IOException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/InputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/InputStreamReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/InvalidObjectException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/ObjectStreamException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/SequenceInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/StreamCorruptedException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/StringBufferInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/StringWriter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/SyncFailedException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/UTFDataFormatException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/UnsupportedEncodingException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/io/Writer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/AbstractMethodError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/AbstractStringBuilder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Appendable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ArrayIndexOutOfBoundsException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ArrayStoreException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Byte.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/CharSequence.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Class.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassCastException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassCircularityError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassExt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassFormatError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassLoader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ClassLoaderProgressMonitor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/CloneNotSupportedException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Cloneable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Comparable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Console.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Enum.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Exception.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IllegalAccessError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IllegalAccessException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IllegalArgumentException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IllegalStateException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IllegalThreadStateException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/IndexOutOfBoundsException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/InstantiationError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Integer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Iterable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/LinkageError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/NoSuchFieldError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/NoSuchFieldException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/NoSuchMethodError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/NoSuchMethodException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/NullPointerException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Number.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/OutOfMemoryError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Readable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Runnable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/SecurityException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Short.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/StrictMath.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/String.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/StringBuffer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/StringBuilder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/StringIndexOutOfBoundsException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Thread.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ThreadDeath.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/ThreadGroup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Throwable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/TypeNotPresentException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/UnknownError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/UnsupportedClassVersionError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/Void.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/AccessibleObject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/InvocationHandler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/InvocationTargetException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/Method.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/Modifier.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/TypeVariable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/lang/reflect/UndeclaredThrowableException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/net/MalformedURLException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/net/URL.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/net/URLDecoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/net/URLEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/AbstractQueue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/AbstractSequentialList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/AbstractSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/ArrayList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Arrays.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Collection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Collections.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Comparator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/ConcurrentModificationException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Dictionary.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/DuplicateFormatFlagsException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/EmptyStackException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Enumeration.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/EventListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/FormatterClosedException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/HashSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/IdentityHashMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/IllegalFormatCodePointException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/IllegalFormatFlagsException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/IllegalFormatWidthException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/InputMismatchException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/InvalidPropertiesFormatException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/LinkedHashMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/LinkedHashSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/List.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/ListIterator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/ListResourceBundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/MapEntry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/MissingResourceException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/NoSuchElementException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Observable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Observer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Properties.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Queue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Random.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/RandomAccess.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Set.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Stack.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/TooManyListenersException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/TreeSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/Vector.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/regex/MatchResult.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/regex/Matcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/regex/Pattern.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/CheckedInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/Deflater.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/DeflaterOutputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/GZIPInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/Inflater.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/InflaterInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/ZStreamRef.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/ZipConstants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/ZipException.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/ZipInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/java/util/zip/ZipOutputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/J2SIgnoreImport.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/EigenInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/EventManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericBinaryDocument.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericBinaryDocumentReader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericColor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericImageDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericMenuInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericMouseInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/GenericPlatform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/HTMLElement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/Interface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/JSInterface.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/JSONEncodable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/SC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/api/ZInputStream.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/BorderLayout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/Color.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/Component.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/Container.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/Dimension.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/Font.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/LayoutManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/event/ActionEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/event/ActionListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/awt/event/WindowListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/export/PDFCreator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/export/PDFObject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/BMPDecoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/ImageEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/Jpg64Encoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/JpgEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/PngEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/PpmEncoder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/img/package.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/AbstractTableModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/ColumnSelectionModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/FlowLayout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/Grid.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/GridBagConstraints.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/Insets.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JButton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JCheckBoxMenuItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JComponentImp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JEditorPane.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JMenu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JMenuItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JPanel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JPopupMenu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JRadioButtonMenuItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JSplitPane.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JTable.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/JTextField.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/SwingConstants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/javajs/swing/TableColumn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/j2s/org/apache/tools/bzip2/CRC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/jquery/jquery-1.11.0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/jquery/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/Symmetry @ Otterbein - Acknowledgements.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/css/slider.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/css/sym.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/handle.horizontal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/rotate (1).gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/rotate.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/rotate_over.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/select_bottom.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/select_top.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/images/sym_header.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/js/molsym.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/js/prototype.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/symmetry/js/slider.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/JSmol/temp.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -786,7 +20,36 @@
     <favorites_list name="Libretext" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/bot.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1128">
+              <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+              <folding>
+                <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
+                <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/reuse.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2256">
+              <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
+              <folding>
+                <element signature="n#!!block;n#getSubpagesAlternate#0" />
+                <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
+                <element signature="n#!!block;n#clarifySubdomain#0" />
+                <element signature="n#!!block;n#authenticate#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -803,8 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>token</find>
-      <find>innerhtml</find>
       <find>this.authenticated</find>
       <find>authenticated</find>
       <find>componentdidmount</find>
@@ -833,6 +94,8 @@
       <find>copy</find>
       <find>move</find>
       <find>ROOT</find>
+      <find>enabled</find>
+      <find>revert</find>
     </findStrings>
     <replaceStrings>
       <replace>LTForm</replace>
@@ -930,9 +193,9 @@
         <option value="$PROJECT_DIR$/public/API Dashboard/src/components/ViewContents.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/reuse.js" />
         <option value="$PROJECT_DIR$/API/reuse.js" />
-        <option value="$PROJECT_DIR$/API/bot.js" />
         <option value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
         <option value="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" />
+        <option value="$PROJECT_DIR$/API/bot.js" />
       </list>
     </option>
   </component>
@@ -942,10 +205,10 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="843" />
     <option name="width" value="1728" />
-    <option name="height" value="930" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -966,7 +229,7 @@
             <path>
               <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
               <item name="Libretext" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1800,7 +1063,8 @@
       <workItem from="1561603662209" duration="283000" />
       <workItem from="1561617227397" duration="451000" />
       <workItem from="1561709180000" duration="4159000" />
-      <workItem from="1563002416422" duration="246000" />
+      <workItem from="1563002416422" duration="795000" />
+      <workItem from="1563074630390" duration="1126000" />
     </task>
     <task id="LOCAL-00158" summary="Initial Equation links">
       <created>1553374608660</created>
@@ -2181,14 +1445,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1724615000" />
+    <option name="totallyTimeSpent" value="1726290000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="562" y="0" width="1152" height="620" extended-state="0" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.24907063" />
       <window_info id="DB Browser" order="1" weight="0.32992172" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2591575" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.17218544" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.52533334" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
@@ -2199,7 +1464,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32533333" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.7945493" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.27733332" />
+      <window_info anchor="bottom" id="File Transfer" order="10" sideWeight="0.49789283" weight="0.292" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5057194" side_tool="true" weight="0.2249675" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3276316" />
       <window_info anchor="bottom" id="REST Client" order="13" weight="0.47733334" />
@@ -2208,7 +1473,7 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.29425114" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.29379892" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32992172" />
       <window_info anchor="right" x="475" y="113" width="757" height="694" id="Debug" order="6" sideWeight="0.4972908" weight="0.37748346" />
@@ -2429,13 +1694,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/API Dashboard/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="27" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Converter/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -2717,30 +1975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/API/reuse.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-213">
-          <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!block;n#getSubpagesAlternate#0" />
-            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
-            <element signature="n#!!block;n#clarifySubdomain#0" />
-            <element signature="n#!!block;n#authenticate#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/API/bot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="566" column="48" lean-forward="true" selection-start-line="566" selection-start-column="48" selection-end-line="566" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
-            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/API/schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -2779,19 +2013,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="52" column="54" lean-forward="true" selection-start-line="52" selection-start-column="54" selection-end-line="52" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLmol.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="46" column="52" selection-start-line="46" selection-start-column="45" selection-end-line="46" selection-end-column="52" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/GLmol/js/GLWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4440">
+          <caret line="52" column="54" lean-forward="true" selection-start-line="52" selection-start-column="54" selection-end-line="52" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/JSmol/JSmolWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2256">
+          <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!block;n#getSubpagesAlternate#0" />
+            <element signature="n#!!block;n#getPage#0;n#!!block;n#getSubpages#0" />
+            <element signature="n#!!block;n#clarifySubdomain#0" />
+            <element signature="n#!!block;n#authenticate#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/bot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1128">
+          <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!block;n#deadLinks#0;n#!!block;n#jobHandler#0" />
+            <element signature="n#!!block;n#headerFix#0;n#!!block;n#jobHandler#0" />
           </folding>
         </state>
       </provider>
