@@ -197,21 +197,23 @@ class LTForm {
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
-				if (!url.endsWith('/link'))
-					result[index] = {
-						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
-						url: url,
-						path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
-						id: parseInt(subpage['@id']),
-						children: children,
-						lazy: !full,
-						subdomain: subdomain,
-					};
+				result[index] = {
+					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+					url: url,
+					path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
+					id: parseInt(subpage['@id']),
+					children: children,
+					lazy: !full,
+					subdomain: subdomain,
+				};
 			}
 			
 			if (subpageArray && subpageArray.length) {
+				let resultIndex = 0;
 				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
+					if (subpageArray[i]["uri.ui"].endsWith('/link'))
+						continue;
+					promiseArray[resultIndex] = subpage(subpageArray[i], resultIndex++);
 				}
 				
 				await Promise.all(promiseArray);
@@ -1058,7 +1060,7 @@ wiki.page("${child.path}", NULL)</pre>
 										};
 										if (current === 'chem')
 											headers.headers['x-requested-with'] = 'XMLHttpRequest';
-										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web',headers);
+										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', headers);
 										
 										image = await image.blob();
 										fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {

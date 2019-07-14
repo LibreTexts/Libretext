@@ -9,7 +9,7 @@ const fetch = require('node-fetch');
 const jsdiff = require('diff');
 require('colors');
 const util = require('util');
-const mapLimit = util.promisify(require('async/mapLimit'));
+const async = require('async');
 const LibreTexts = require('./reuse.js');
 let port = 3006;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -149,7 +149,7 @@ async function jobHandler(jobType, input, socket) {
 		}
 	}
 	
-	await mapLimit(pages, parallelCount(), async (page) => {
+	await async.mapLimit(pages, parallelCount(), async (page) => {
 		index++;
 		let currentPercentage = Math.round(index / pages.length * 100);
 		if (percentage < currentPercentage) {
@@ -280,7 +280,7 @@ async function jobHandler(jobType, input, socket) {
 		let links = content.match(/<a.*?>.*?<\/a>/g);
 		let result = content;
 		let count = 0;
-		await mapLimit(links, 10, async (link) => {
+		await async.mapLimit(links, 10, async (link) => {
 			let url = link.match(/(?<=<a.*?href=").*?(?=")/);
 			if (url) {
 				url = url[0];
@@ -367,7 +367,7 @@ async function jobHandler(jobType, input, socket) {
 		let images = content.match(/<img.*?>/g);
 		let result = content;
 		let count = 0;
-		await mapLimit(images, 5, async (image) => {
+		await async.mapLimit(images, 5, async (image) => {
 			let url = image.match(/(?<=src=").*?(?=")/);
 			let newImage = image;
 			if (url) {
@@ -460,7 +460,7 @@ async function revert(input, socket) {
 		return false;
 	}
 	
-	await mapLimit(job.pages, 50, async (page) => {
+	await async.mapLimit(job.pages, 50, async (page) => {
 		let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', job.subdomain, input.user);
 		if (!content.ok) {
 			console.error('Could not get page info from ' + page.path);

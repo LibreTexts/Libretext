@@ -8,8 +8,7 @@ const colors = require("./colors");
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
 const util = require('util');
-const mapLimit = util.promisify(require("async/mapLimit"));
-const map = util.promisify(require("async/map"));
+const async = require("async");
 const Eta = require('node-eta');
 const md5 = require('md5');
 const events = require('events');
@@ -312,7 +311,7 @@ puppeteer.launch({
 						
 						//process Texts
 						console.log(`Processing ${texts.length} LibreTexts`);
-						await mapLimit(texts, 2, async (current) => {
+						await async.mapLimit(texts, 2, async (current) => {
 							finished.push(await getLibretext(current.url, null, {
 								current: current,
 								ip: ip,
@@ -323,7 +322,7 @@ puppeteer.launch({
 						
 						
 						console.log(`Processing ${standalone.length} standalone pages`);
-						await mapLimit(standalone, kubernetesServiceHost ? 10 : 6, async (pageURL) => {
+						await async.mapLimit(standalone, kubernetesServiceHost ? 10 : 6, async (pageURL) => {
 							if (kubernetesServiceHost) {
 								let offloadURL = `http://${kubernetesServiceHost}/url=${pageURL}`;
 								if (isNoCache)
@@ -1367,7 +1366,7 @@ puppeteer.launch({
 					number /= 2;
 					number = Math.floor(number); //integer check
 				}
-				await mapLimit(urlArray, number, async (page) => {
+				await async.mapLimit(urlArray, number, async (page) => {
 					let filename, title = page.title;
 					let url = page.url;
 					if (page.matter) {

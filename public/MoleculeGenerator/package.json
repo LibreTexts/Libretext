@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "latest",
     "babel-loader": "^8.0.6",
     "copyfiles": "^1.2.0",
@@ -42,8 +42,8 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "rimraf": "^2.6.3",
     "style-loader": "^0.20.3",
-    "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.4",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {

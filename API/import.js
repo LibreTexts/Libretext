@@ -19,9 +19,6 @@ server.listen(port);
 const now1 = new Date();
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
-const mapLimit = util.promisify(async.mapLimit);
-const map = util.promisify(async.map);
-
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
@@ -279,7 +276,7 @@ function handler(request, response) {
 		}
 		
 		async function processChapters(root, subroot, chapters) {
-			await mapLimit(chapters, 5, processChapter);
+			await async.mapLimit(chapters, 5, processChapter);
 			
 			async function processChapter(chapter) {
 				const token = LibreTexts.authenticate(user, subdomain);
@@ -492,7 +489,7 @@ function handler(request, response) {
 				}
 			}
 			
-			return await mapLimit(splice, 5, processPage);
+			return await async.mapLimit(splice, 5, processPage);
 		}
 		
 		async function putProperty(name, value, path) {
@@ -567,6 +564,6 @@ async function processXHTML(text) {
 			return {title: title, content: content, sourceImages: sourceImages, filenames};
 		}
 
-		return await mapLimit(splice, 10, processPage);
+		return await async.mapLimit(splice, 10, processPage);
 	}
 }*/
