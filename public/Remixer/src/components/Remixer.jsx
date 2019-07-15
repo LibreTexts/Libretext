@@ -15,7 +15,7 @@ export default class Remixer extends React.Component {
       mode: 'Pro',
       subdomain: subdomain,
       options: {
-        autonumber: true,
+        enableAutonumber: true,
       },
       RemixTree: RemixerFunctions.generateDefault(5, 0),
     };
@@ -30,6 +30,7 @@ export default class Remixer extends React.Component {
   
   updateRemixer = (newState) => {
     this.setState(newState);
+    var developmentRemixer = newState;
     this.save();
   };
   
@@ -38,7 +39,7 @@ export default class Remixer extends React.Component {
   };
   
   render() {
-    console.log(this.state, 'Rerender');
+    // console.log(this.state, 'Rerender');
     return <>{this.renderState()}</>;
   }
   

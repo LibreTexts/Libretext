@@ -1,6 +1,7 @@
 
-let LibreTextsFunctions = {
-  generateDefault: generateDefault
+let RemixerFunctions = {
+  generateDefault: generateDefault,
+  checkIfDemonstration: checkIfDemonstration,
 };
 
 function generateDefault(chapters, pages) {
@@ -43,8 +44,11 @@ function generateDefault(chapters, pages) {
   }
 }
 
+function checkIfDemonstration() {
+  const groups = document.getElementById('groupHolder').innerText;
+  return groups.includes('Workshop');
+}
 
 
 
-
-module.exports = LibreTextsFunctions;
+module.exports = RemixerFunctions;

@@ -197,7 +197,6 @@ export default class RemixerPanel extends React.Component {
         },
       },
     });
-    await this.getInstitutions();
     
     
     LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
@@ -223,7 +222,7 @@ export default class RemixerPanel extends React.Component {
     target.id = 'LTRemixer';
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     const isPro = document.getElementById('proHolder').innerText === 'true';
-    const isDemonstration = checkIfDemonstration();
+    const isDemonstration = RemixerFunctions.checkIfDemonstration();
     const groups = document.getElementById('groupHolder').innerText;
     let allowed = isAdmin || (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isDemonstration;
     
@@ -479,30 +478,6 @@ export default class RemixerPanel extends React.Component {
     }
   }
   
-  async getInstitutions() {
-    let subdomain = window.location.origin.split('/')[2].split('.')[0];
-    
-    const select = document.getElementById('LTFormInstitutions');
-    const isDemonstration = checkIfDemonstration();
-    if (isDemonstration) {
-      select.innerHTML = `<option value="https://${subdomain}.libretexts.org/Workshops/Workshop_University">Workshop University</option>`;
-      return;
-    }
-    
-    let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
-    response = await response.json();
-    const subpageArray = (response['@count'] === '1' ? [response['page.subpage']] : response['page.subpage']) || [];
-    const result = [];
-    // console.log(subpageArray);
-    for (let i = 0; i < subpageArray.length; i++) {
-      let institution = subpageArray[i];
-      result.push(`<option value="${institution['uri.ui']}">${institution.title}</option>`);
-    }
-    result.push(`<option value="">Not listed? Contact info@libretexts.org</option>`);
-    
-    select.innerHTML = result.concat();
-  }
-  
   async publish() {
     let subdomain = window.location.origin.split('/')[2].split('.')[0];
     let institution = document.getElementById('LTFormInstitutions');
@@ -546,7 +521,7 @@ export default class RemixerPanel extends React.Component {
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     const isPro = document.getElementById('proHolder').innerText === 'true';
     const groups = document.getElementById('groupHolder').innerText.toLowerCase();
-    const isDemonstration = checkIfDemonstration();
+    const isDemonstration = RemixerFunctions.checkIfDemonstration();
     let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
     if (!allowed) {
       if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
@@ -1135,9 +1110,4 @@ function millisecondsToStr(milliseconds) {
 
 function formatNumber(it) {
   return it.toPrecision(4);
-}
-
-function checkIfDemonstration() {
-  const groups = document.getElementById('groupHolder').innerText;
-  return groups.includes('Workshop');
 }
