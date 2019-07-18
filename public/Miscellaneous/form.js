@@ -523,7 +523,7 @@ class LTForm {
 			'Chemistry': 'chem',
 			'Engineering': 'eng',
 			'Espanol': 'espanol',
-			'Geology': 'geo',
+			'Geosciences': 'geo',
 			'Humanities': 'human',
 			'Mathematics': 'math',
 			'Medicine': 'med',
