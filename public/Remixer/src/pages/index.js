@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
 			<div className="navigationBar">
 				<Select onChange={this.setPanel} value={this.state.panel}>
 					<MenuItem  value={'Remixer'}>Remixer</MenuItem >
-					<MenuItem  value={'Re-Remixer'}>Re-Remixer</MenuItem >
+					<MenuItem  value={'Re-Remixer'}>Re<sup>2</sup>mixer</MenuItem >
 				</Select>
 			</div>
 			{this.getPanel()}

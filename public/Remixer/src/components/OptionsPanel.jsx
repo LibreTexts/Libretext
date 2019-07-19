@@ -64,12 +64,15 @@ export default class OptionsPanel extends React.Component {
 				display: 'flex',
 				flexDirection: 'column',
 				background: '#f3f3f3',
-				padding: 20
+				padding: 20,
+				borderRadius:10
 			}}>
 				Remixer Options
 				<FormControlLabel
 					control={
 						<Switch
+							checked={this.props.options.tutorial}
+							onChange={event => this.changeOption('tutorial', event.target.checked)}
 							color="primary"
 							inputProps={{'aria-label': 'primary checkbox'}}
 						/>}
