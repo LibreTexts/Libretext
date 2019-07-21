@@ -8,7 +8,6 @@ const fs = require('fs-extra');
 const fetch = require('node-fetch');
 const jsdiff = require('diff');
 require('colors');
-const util = require('util');
 const async = require('async');
 const LibreTexts = require('./reuse.js');
 let port = 3006;

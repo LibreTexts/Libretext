@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ScriptTag from 'react-script-tag';
 import ClipboardJS from "clipboard";
 import InputField from "./InputField.js";
 import "./all.css";
