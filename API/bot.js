@@ -112,7 +112,7 @@ async function jobHandler(jobType, input, socket) {
 	input.jobType = jobType;
 	let ID = await logStart(input, input.findOnly);
 	socket.emit('setState', {state: 'starting', ID: ID});
-	console.log(`JOB [${ID}] ${jobType}`);
+	console.log(`JOB [${ID}](${input.user}) ${jobType}`);
 	
 	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
 	// pages = LibreTexts.addLinks(await pages);
@@ -197,17 +197,18 @@ async function jobHandler(jobType, input, socket) {
 		}
 		
 		//Page summaries
-		if (input.summaries && !input.findOnly) {
+		if (input.summaries) {
 			let summary = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview', input.subdomain, input.user);
 			if (summary.ok) {
 				summary = await summary.text();
 				summary = LibreTexts.decodeHTML(summary);
 				let summaryResult = summary.replaceAll(input.find, input.replace, input);
 				// summaryResult = LibreTexts.encodeHTML(summaryResult);
-				await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
-					method: 'PUT',
-					body: summaryResult,
-				});
+				if (!input.findOnly)
+					await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
+						method: 'PUT',
+						body: summaryResult,
+					});
 				pageSummaryCount++;
 			}
 		}
@@ -219,7 +220,9 @@ async function jobHandler(jobType, input, socket) {
 		
 		//send update
 		if (input.findOnly) {
-			backlog.unshift({path: path, url: page});
+			let item = {path: path, url: page};
+			backlog.unshift(item);
+			log.push(item);
 			return;
 		}
 		// result = LibreTexts.encodeHTML(result);
@@ -254,8 +257,8 @@ async function jobHandler(jobType, input, socket) {
 	};
 	await logCompleted(result, input.findOnly);
 	if (pageSummaryCount)
-		socket.emit('errorMessage', `Changed ${pageSummaryCount} Summaries`);
-	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID});
+		socket.emit('errorMessage', `${input.findOnly?'Found':'Changed'} ${pageSummaryCount} Summaries`);
+	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID, log: log});
 	
 	
 	async function findReplace(content) {
@@ -443,7 +446,7 @@ async function jobHandler(jobType, input, socket) {
 async function revert(input, socket) {
 	if (!input.ID || !input.user)
 		socket.emit('Body missing parameters');
-	console.log(`Revert ${input.ID} from ${input.user}`);
+	console.log(`Revert [${input.ID}] from (${input.user})`);
 	input.jobType = 'revert';
 	let ID = await logStart(input);
 	socket.emit('revertID', ID);
@@ -552,7 +555,7 @@ String.prototype.replaceAll = function (search, replacement, input) {
 	
 	regex = new RegExp(search, 'gm');
 	let temp = target.replace(regex, replacement);
-	console.log(b4, search);
+	// console.log(b4, search);
 	try {
 		let searchDEC = LibreTexts.decodeHTML(search);
 		regex = new RegExp(searchDEC, 'gm');

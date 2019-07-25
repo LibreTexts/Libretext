@@ -67,6 +67,7 @@ puppeteer.launch({
 			let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 			ip = ip.padEnd(15);
 			request.url = request.url.replace("print/", "");
+			request.url = request.url.replace(/https?:\/([A-z].*?).libretexts.org/, "https://$1.libretexts.org/");
 			let url = clarifySubdomain(request.url);
 			
 			if (url.startsWith("/url=")) { //single page
@@ -713,7 +714,7 @@ puppeteer.launch({
 					}
 					
 					//Summary Handling
-					let inner = await map(subpages.children, async (elem, callback) => {
+					let inner = await async.map(subpages.children, async (elem, callback) => {
 						let summary = '';
 						let isSubtopic = elem.title.match(/^[0-9.]+\.[0-9]+\.[A-Z]: /) && elem.tags.includes('article:topic') ? 'indent' : null;
 						if (prefix !== 'l' && !isSubtopic) {
@@ -802,7 +803,7 @@ puppeteer.launch({
 			time = Math.round(time);
 			time /= 10;
 			await page.close();
-			// console.log(`TOC Created: ${time}s ${escapedURL}`);
+			console.log(`TOC Created: ${time}s ${escapedURL}`);
 			return escapedURL;
 		}
 		

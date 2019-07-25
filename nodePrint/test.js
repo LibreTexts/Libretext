@@ -22,6 +22,7 @@ describe('dynamic response', function () {
 	customTest(200, 'print/url=https://chem.libretexts.org/');
 	customTest(403, 'print/url=https://chem.libretexts.org/NodePrintTest');
 	customTest(200, 'print/testCover');
+	customTest(200, 'print/tocHTML=https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Map%3A_Introductory_Chemistry_(Tro)');
 });
 
 after(function () {
