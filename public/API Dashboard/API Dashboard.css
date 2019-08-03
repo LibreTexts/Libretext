@@ -18,6 +18,11 @@
 	padding: 10px;
 }
 
+.navigationBar {
+	display: flex;
+	justify-content: space-between;
+}
+
 .navigationBar select, .navigationBar > option {
 	background: #127bc4;
 	width: fit-content;
@@ -55,7 +60,7 @@
 	align-items: center;
 	justify-content: space-between;
 }
-.topPanel label:after {
+.topPanel label:after, .navigationBar label:after {
 	content: none;
 }
 

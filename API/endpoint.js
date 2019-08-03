@@ -166,8 +166,8 @@ async function handler(request, response) {
         body = Buffer.concat(body).toString();
         
         let input = JSON.parse(body);
-        console.log(input);
-        if (input && input.identifier && input.identifier === md5(authenBrowser[input.subdomain])
+        console.log(`${input.subdomain}/${input.path}`);
+        if (input && input.identifier === md5(authenBrowser[input.subdomain])
           && ['Courses', 'Bookshelves', 'home'].includes(input.path)) {
           await fs.ensureDir(`./public/DownloadsCenter/${input.subdomain}`);
           await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, input.content);

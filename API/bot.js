@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
 	socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
-	// socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
+	socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -99,7 +99,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'findReplace':
 			case 'deadLinks':
 			case 'headerFix':
-				return 50;
+				return 10;
 		}
 	}
 	
@@ -557,15 +557,15 @@ String.prototype.replaceAll = function (search, replacement, input) {
 	let temp = target.replace(regex, replacement);
 	// console.log(b4, search);
 	try {
-		let searchDEC = LibreTexts.decodeHTML(search);
-		regex = new RegExp(searchDEC, 'gm');
+		search = LibreTexts.encodeHTML(search);
+		regex = new RegExp(search, 'gm');
 		temp = temp.replace(regex, replacement);
 	} catch (e) {
 	
 	}
 	try {
-		let searchENC = LibreTexts.encodeHTML(search);
-		regex = new RegExp(searchENC, 'gm');
+		search = LibreTexts.encodeHTML(search);
+		regex = new RegExp(search, 'gm');
 		temp = temp.replace(regex, replacement);
 	} catch (e) {
 	

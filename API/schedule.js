@@ -5,20 +5,20 @@ const timestamp = require("console-timestamp");
 
 const now1 = new Date();
 const schedule = {
-	'10 0 * * Saturday': 'bio',
-	'10 12 * * Saturday': 'biz',
-	'10 0 * * Sunday': 'chem',
-	'10 12 * * Sunday': 'eng',
-	'10 0 * * Monday': 'espanol',
-	'10 12 * * Monday': 'geo',
-	'10 0 * * Tuesday': 'human',
-	// '10 12 * * Tuesday': 'law',
-	'10 0 * * Wednesday': 'math',
-	'10 12 * * Wednesday': 'med',
-	'10 0 * * Thursday': 'phys',
-	'10 12 * * Thursday': 'socialsci',
-	'10 0 * * Friday': 'stats',
-	'10 12 * * Friday': 'workforce',
+	'30 0 * * Saturday': 'bio',
+	'30 12 * * Saturday': 'biz',
+	'30 0 * * Sunday': 'chem',
+	'30 12 * * Sunday': 'eng',
+	'30 0 * * Monday': 'espanol',
+	'30 12 * * Monday': 'geo',
+	'30 0 * * Tuesday': 'human',
+	// '30 12 * * Tuesday': 'law',
+	'30 0 * * Wednesday': 'math',
+	'30 12 * * Wednesday': 'med',
+	'30 0 * * Thursday': 'phys',
+	'30 12 * * Thursday': 'socialsci',
+	'30 0 * * Friday': 'stats',
+	'30 12 * * Friday': 'workforce',
 };
 let times = Object.keys(schedule);
 for (let i = 0; i < times.length; i++) {

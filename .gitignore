@@ -63,3 +63,6 @@ Temporary Items
 /nodePrint/public/FullPDF/
 /public/Downloads Center/.cache/
 /API/public/Hierarchy/
+/nodePrint/authenBrowser.json
+/nodePrint/authen.json
+/API/BotLogs/
