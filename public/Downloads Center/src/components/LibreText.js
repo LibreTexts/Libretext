@@ -20,7 +20,7 @@ export default class LibreText extends React.Component {
 		let email = document.getElementById('userEmailHolder').textContent;
 		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
 		
-		let root = 'https://batch.libretexts.org/print/Finished/';
+		let root = `https://batch.libretexts.org/print/${this.props.format}/Finished/`;
 		if (this.props.item.zipFilename)
 			root += this.props.item.zipFilename.replace('/Full.pdf', '');
 		return (

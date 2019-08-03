@@ -14,7 +14,8 @@ class Center extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			downloads: props.downloads
+			downloads: props.downloads,
+			format: 'Letter'
 		}
 	}
 	
@@ -38,7 +39,8 @@ class Center extends React.Component {
 	}
 	
 	render() {
-		let result = this.state.downloads.map((item, index) => <LibreText key={index} item={item}/>);
+		let result = this.state.downloads.map((item, index) => <LibreText key={index} item={item}
+		                                                                  format={this.state.format}/>);
 		return <div className={'CenterContainer'}>
 			<SearchField
 				placeholder="Search for a LibreText by Title, Author, or Institution"
@@ -65,7 +67,7 @@ async function doCenter() {
 	two = two.ok ? await two.json() : [];
 	
 	downloads = downloads.concat(one, two);
-	downloads = downloads.filter((text) => !text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide");
+	downloads = downloads.filter((text) => text.link && (!text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide"));
 	ReactDOM.render(<Center downloads={downloads}/>, target);
 }
 

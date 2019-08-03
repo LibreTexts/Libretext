@@ -71,26 +71,25 @@
 	}
 
 	function socialShareConfig() {
+		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		if ($(".elm-social-share").length) {
-			$(".elm-social-share")[0].innerHTML = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><a id="printme" class="material-icons notSS" href="" target="_blank" title="Get a PDF of this page">picture_as_pdf</a><div id="batchPrint"></div><a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
+			let html = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><div id="batchPrint"></div>';
+			if(!isAdmin)
+				html += '<a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
+			$(".elm-social-share")[0].innerHTML = html;
 			SocialShareKit.init();
 			window.DonorBox = {widgetLinkClassName: 'custom-dbox-popup'};
 		}
 		
-		const donor = document.createElement("script");
-		donor.type = "text/javascript";
-		donor.src = "https://donorbox.org/install-popup-button.js";
-		if (document.getElementById("donate"))
-			document.getElementById("donate").appendChild(donor);
 		
-		let printme = document.getElementById("printme");
-		let email = document.getElementById('userEmailHolder').textContent;
-		if (printme) {
-			// printme.rel = "nofollow";
-			printme.type = "application/pdf";
-			//${email === 'hdagnew@ucdavis.edu' ? 'home.miniland1333.com' : 'dynamic.libretexts.org'}
-			printme.href = `https://batch.libretexts.org/print/url=${window.location}.pdf`;
+		if(!isAdmin) {
+			const donor = document.createElement("script");
+			donor.type = "text/javascript";
+			donor.src = "https://donorbox.org/install-popup-button.js";
+			if (document.getElementById("donate"))
+				document.getElementById("donate").appendChild(donor);
 		}
+		
 		const thing = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)
 			$("li.elm-page-restriction")[0].after(thing);

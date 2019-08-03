@@ -57,7 +57,12 @@ if (!window["batchPrint.js"]) {
 					hasDownloads = true;
 				}
 			}
-			let innerHTML = "";
+			let innerHTML = `<div id="PrintDropdown" class="LTdropdown"  style="float:right;"><a id="printme" class="material-icons notSS" href="https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
+			innerHTML += `<div class="LTdropdown-content">
+					<a onclick = "localStorage.setItem('PDFSize','Letter')" href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf"  target="_blank" title="Get a Letter PDF of this page" type="application/pdf">Letter</a>
+					<a onclick = "localStorage.setItem('PDFSize','A4')" href="https://batch.libretexts.org/print/A4/url=${window.location}.pdf" target="_blank" title="Get an A4 PDF of this page" type="application/pdf">A4</a>
+				</div></div>`;
+			
 			if (batchAccess) {
 				// $('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
 				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
@@ -70,11 +75,11 @@ if (!window["batchPrint.js"]) {
 					}
 				}
 				if (entry) {
-					let root = 'https://batch.libretexts.org/print/Finished/';
+					let root = `https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/Finished/`;
 					if (entry.zipFilename)
 						root += entry.zipFilename.replace('/Full.pdf', '');
-					innerHTML += '<div id="DownloadsDropdown" class="dropdown"  style="float:right;"><div class="dropbtn" style="margin-right: 2px" title="Downloads Center"><span>Downloads</span></div>';
-					innerHTML += `<div class="dropdown-content">
+					innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right;"><div class="dropbtn" style="margin-right: 2px" title="Downloads Center"><span>Downloads</span></div>';
+					innerHTML += `<div class="LTdropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
@@ -92,6 +97,9 @@ if (!window["batchPrint.js"]) {
 					innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
 				}
 				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
+				if (batchAccess) {
+					innerHTML += `<a id="getContents" href="/Under_Construction/Users/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS" target="_blank">Get<br/>Contents</a>`;
+				}
 			}
 			
 			
@@ -99,7 +107,7 @@ if (!window["batchPrint.js"]) {
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
 				getTOCLink.rel = "nofollow";
-				getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
+				getTOCLink.href = `https://batch.libretexts.org/print/Letter/toc=${url}`;
 			}
 		}
 	}
@@ -308,7 +316,7 @@ if (!window["batchPrint.js"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://${targetComputer}/print/Letter/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
@@ -335,9 +343,13 @@ if (!window["batchPrint.js"]) {
 					batchButton.innerText = "Refresh complete";
 					return;
 				}
+				if (out.message === 'error') {
+					alert(out.text);
+					return;
+				}
 				batchButton.innerText = "Redownload";
-				window.location = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`
+				window.location = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
+				window["batchComplete"] = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`
 			}
 		}
 		

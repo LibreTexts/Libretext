@@ -112,7 +112,7 @@ async function jobHandler(jobType, input, socket) {
 	input.jobType = jobType;
 	let ID = await logStart(input, input.findOnly);
 	socket.emit('setState', {state: 'starting', ID: ID});
-	console.log(`JOB [${ID}](${input.user}) ${jobType}`);
+	console.log(`JOB [${ID}](${input.user}) ${jobType} ${jobType === 'findReplace' ? input.find : ''}`);
 	
 	let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
 	// pages = LibreTexts.addLinks(await pages);
@@ -257,7 +257,7 @@ async function jobHandler(jobType, input, socket) {
 	};
 	await logCompleted(result, input.findOnly);
 	if (pageSummaryCount)
-		socket.emit('errorMessage', `${input.findOnly?'Found':'Changed'} ${pageSummaryCount} Summaries`);
+		socket.emit('errorMessage', `${input.findOnly ? 'Found' : 'Changed'} ${pageSummaryCount} Summaries`);
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID, log: log});
 	
 	
