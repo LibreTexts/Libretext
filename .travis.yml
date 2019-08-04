@@ -1,9 +1,11 @@
 language: node_js
 node_js:
-- "lts/*"
+  - "lts/*"
 
 before_install:
-- cd nodePrint
+  - cd nodePrint
+  - openssl aes-256-cbc -K $encrypted_0c53577ee95f_key -iv $encrypted_0c53577ee95f_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
 
 notifications:
   slack: libretexts:hXjfcY7jkwpmvJ2xzQ0cEtHl

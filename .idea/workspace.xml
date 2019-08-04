@@ -1,43 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="A4 and better covers">
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/qrcode.js" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/bio.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/bio.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/biz.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/biz.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/eng.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/eng.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/espanol.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/espanol.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/geo.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/geo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/human.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/human.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/law.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/law.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/math.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/math.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/med.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/med.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/phys.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/phys.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/socialsci.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/socialsci.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/stats.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/stats.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/LuluSpine/workforce.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/LuluSpine/workforce.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/bio.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/bio.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/biz.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/biz.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/chem.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/chem.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/eng.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/eng.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/espanol.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/espanol.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/geo.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/geo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/human.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/human.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/law.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/law.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/math.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/math.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/med.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/med.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/phys.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/phys.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/socialsci.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/socialsci.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/stats.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/stats.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/NormalSpine/workforce.png" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/NormalSpine/workforce.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/lulu.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/nodePrint/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -921,14 +887,9 @@
       <workItem from="1564816576113" duration="3692000" />
       <workItem from="1564820569038" duration="42000" />
       <workItem from="1564820714912" duration="166000" />
-      <workItem from="1564868029150" duration="14379000" />
-    </task>
-    <task id="LOCAL-00160" summary="Added schedule.js&#10;&#10;Provides automated batching">
-      <created>1553477408497</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1553477408499</updated>
+      <workItem from="1564868029150" duration="16163000" />
+      <workItem from="1564896505722" duration="523000" />
+      <workItem from="1564902118011" duration="531000" />
     </task>
     <task id="LOCAL-00161" summary="Added monthly no-cache refresh">
       <created>1553487534036</created>
@@ -1266,7 +1227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564074794207</updated>
     </task>
-    <option name="localTasksCounter" value="209" />
+    <task id="LOCAL-00209" summary="nodePrint A4 and new Covers">
+      <created>1564894139181</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1564894139181</updated>
+    </task>
+    <option name="localTasksCounter" value="210" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1322,7 +1290,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added statsFull" />
     <MESSAGE value="Bugfix encodeHTML" />
     <MESSAGE value="Contributor copy-source" />
     <MESSAGE value="Added regular expressions to Dashboard" />
@@ -1347,7 +1314,8 @@
     <MESSAGE value="Bugfix Remixer cross-origin" />
     <MESSAGE value="Spacing fix" />
     <MESSAGE value="Bugfix async" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix async" />
+    <MESSAGE value="nodePrint A4 and new Covers" />
+    <option name="LAST_COMMIT_MESSAGE" value="nodePrint A4 and new Covers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1355,13 +1323,11 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
           <line>521</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
           <line>508</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
