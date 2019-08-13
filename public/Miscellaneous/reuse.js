@@ -13,6 +13,13 @@ const LibreTexts = {
 
 async function authenticatedFetch(path, api, subdomain) {
 	let isNumber;
+	if (path && !api && !subdomain) { // default to current page
+		api = path;
+		let page = window.location.href;
+		subdomain = extractSubdomain(page);
+		path = page.replace(/^.*?libretexts.org\//, '');
+	}
+	
 	if (!isNaN(path)) {
 		path = parseInt(path);
 		isNumber = true;

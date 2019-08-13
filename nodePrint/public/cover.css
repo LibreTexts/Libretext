@@ -55,10 +55,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	flex: 1;
 	margin-right: 190px;
 }
-#frontContainer > div:first-child, #backContainer > div:first-child, #spine > div:first-child {
+#spine > div:first-child {
 	margin-bottom: 70px;
 }
 
@@ -77,20 +78,23 @@ body {
 }
 
 #backLogo {
-	max-height: 90%;
-	max-width: 800%;
+	max-height: 70%;
+	max-width: 80%;
 	object-fit: contain;
 }
 
 div#backOverview {
-	height: 100%;
-	padding: 40px 20px 0 20px;
+	flex: 1;
+	margin: 20px;
 	text-align: justify;
 	display: flex;
+	justify-content: center;
 	flex-direction: column;
-	align-items: center;
  }
 
-#spineCite {
-	font-size: 120%;
+#canvas{
+	align-self: flex-end;
+}
+#spineCite{
+	font-size: 80%;
 }

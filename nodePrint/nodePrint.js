@@ -198,11 +198,11 @@ puppeteer.launch({
 				}
 				let options = url.split('&options=');
 				if (options[1]) {
-					options = JSON.parse(decodeURIComponent(options[1]));
 					url = options[0];
+					options = JSON.parse(decodeURIComponent(options[1]));
 				}
 				else
-					options = {hasExtraPadding: true};
+					options = {};
 				
 				let current = await getSubpages(url, {children: []});
 				
@@ -567,16 +567,16 @@ puppeteer.launch({
 			let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/><script src="http://localhost:${port}/print/qrcode.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
 			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${current.name || ''}</i><br/>${current.companyname || ''}</div></div></div>`;
-			let backContent = `<div id="backContainer"><div>${logo ? `<img id="backLogo" src="${logo}">` : ''}</div><div><div id="backOverview">${overview}<br/><canvas id="canvas"></canvas></div></div></div>`;
+			let backContent = `<div id="backContainer"><div>${logo ? `<img id="backLogo" src="${logo}">` : ''}</div><div><div id="backOverview">${overview}</div><canvas id="canvas"></canvas></div></div></div>`;
 			let spine = `<div id="spine"><div>${current.spineTitle || current.title || ''}</div><div id="spineCite"><b style="flex:1; text-align: center">${current.name || ''}</b><img src="http://localhost:${port}/print/header_logo_mini.png"/></div></div><style>#spine{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
 			spine += `<style>#spine{ width: ${getSpine() / getWidth() * 100}%; font-size: ${getSpine() / getWidth() * 500}px}</style>`;
 			
 			let content = numPages ? `${style}${backContent}${(options.thin ? '' : spine)}${frontContent}` : `${style}${frontContent}`;
 			if (options.hasExtraPadding) {
-				content += `<style>#frontContainer, #backContainer {padding: 135px 50px;} #spine {padding: 117px 0;}</style>`;
+				content += `<style>#frontContainer, #backContainer {padding: 117px 50px;} #spine {padding: 117px 0;}</style>`;
 			}
-			let QRoptions = {errorCorrectionLevel:'L', margin:4, scale: 3, color: {dark: '#fff', light: '#0000'} };
-			content += `<script>QRCode.toCanvas(document.getElementById('canvas'), 'https://${current.subdomain}.libretexts.org/link?${current.id}', ${JSON.stringify(QRoptions)},  function (error) {if (error) console.error(error);console.log('success!');})</script>`;
+			let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2, color: {dark: '#127bc4', light: '#fff'}};
+			content += `<script>QRCode.toCanvas(document.getElementById('canvas'), '${current.url}', ${JSON.stringify(QRoptions)},  function (error) {if (error) console.error(error);console.log('success!');})</script>`;
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			
 			try {
@@ -752,7 +752,7 @@ puppeteer.launch({
 					body: content + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
 			}
-			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<div class="nobreak"><a href="${subpages.url}"><h2>${subpages.title}</h2></a>`}` + content;
+			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<div class="nobreak"><a href="${subpages.url}"><h1>${subpages.title}</h1></a>`}` + content;
 			content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
 				'<style>a {text-decoration: none; color:#127bc4}' +
 				'body>ul {list-style-type: none; color:black}' +
@@ -1202,6 +1202,7 @@ puppeteer.launch({
 					if (title) {
 						title = title.trim();
 					}
+					let showHeaders = true;
 					let tags = out[2] || null;
 					if (tags) {
 						tags = tags.replace(/'/g, "'");
@@ -1214,6 +1215,8 @@ puppeteer.launch({
 						
 						if (tags.includes('hidetop:solutions'))
 							await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
+						if (tags.includes('printoptions:no-header') || tags.includes('printoptions:no-header-title'))
+							showHeaders = false;
 					}
 					
 					const host = url.split("/")[2].split(".");
@@ -1222,7 +1225,6 @@ puppeteer.launch({
 					const color = colors[subdomain];
 					prefix = prefix ? prefix + "." : "";
 					const attribution = "";
-					// "<a href='https://openstax.org/'>Content from OpenStax:</a>"
 					let license = getLicense(url, subdomain);
 					
 					const cssb = [];
@@ -1261,11 +1263,11 @@ puppeteer.launch({
 					try {
 						await page.pdf({ //Letter
 							path: `./PDF/Letter/${PDFname}.pdf`,
-							displayHeaderFooter: true,
+							displayHeaderFooter: showHeaders,
 							headerTemplate: css + style1,
 							footerTemplate: css + style2,
 							printBackground: true,
-							margin: {
+							margin:  {
 								top: "90px",
 								bottom: "60px",
 								right: "0.75in",
@@ -1274,7 +1276,7 @@ puppeteer.launch({
 						});
 						await page.pdf({ //A4
 							path: `./PDF/A4/${PDFname}.pdf`,
-							displayHeaderFooter: true,
+							displayHeaderFooter: showHeaders,
 							headerTemplate: css + style1,
 							footerTemplate: css + style2,
 							printBackground: true,
@@ -1288,27 +1290,37 @@ puppeteer.launch({
 						});
 						await page.pdf({ //Letter Margin
 							path: `./PDF/Letter/Margin/${PDFname}.pdf`,
-							displayHeaderFooter: true,
+							displayHeaderFooter: showHeaders,
 							headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
 							footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
 							printBackground: true,
-							margin: {
+							margin: showHeaders ? {
 								top: "1in",
 								bottom: ".75in",
+								right: "0.75in",
+								left: "0.75in",
+							} : {
+								top: "0.5in",
+								bottom: "0.5in",
 								right: "0.75in",
 								left: "0.75in",
 							}
 						});
 						await page.pdf({ //A4 Margin
 							path: `./PDF/A4/Margin/${PDFname}.pdf`,
-							displayHeaderFooter: true,
+							displayHeaderFooter: showHeaders,
 							headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
 							footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
 							printBackground: true,
 							format: 'A4',
-							margin: {
+							margin: showHeaders ? {
 								top: "1in",
 								bottom: ".75in",
+								right: "0.75in",
+								left: "0.75in",
+							} : {
+								top: "0.5in",
+								bottom: "0.5in",
 								right: "0.75in",
 								left: "0.75in",
 							}
@@ -1359,77 +1371,6 @@ puppeteer.launch({
 				// console.log(pages);
 			}
 			return {filename: PDFname + '.pdf', title: title};
-		}
-		
-		async function getSpecial(current) {
-			let url = current.url;
-			let escapedURL = md5(url);
-			
-			const page = await browser.newPage();
-			const timeout = setTimeout(() => {
-				if (!page.isClosed())
-					page.close();
-			}, 60000);
-			
-			let PDFname = escapedURL;
-			try {
-				try {
-					await page.goto(url + "?no-cache", {
-						timeout: 30000,
-						waitUntil: ["load", "domcontentloaded", 'networkidle0']
-					});
-				} catch (err) {
-				}
-				await page.addStyleTag({content: '#title{display:none}'});
-				await page.pdf({
-					path: `./PDF/Letter/${PDFname}.pdf`,
-					printBackground: true,
-					margin: {
-						top: "90px",
-						bottom: "60px",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-				await page.pdf({
-					path: `./PDF/A4/${PDFname}.pdf`,
-					printBackground: true,
-					format: 'A4',
-					margin: {
-						top: "90px",
-						bottom: "60px",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-				await page.pdf({
-					path: `./PDF/Letter/Margin/${PDFname}.pdf`,
-					printBackground: true,
-					margin: {
-						top: "0.5in",
-						bottom: "0.5in",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-				await page.pdf({
-					path: `./PDF/A4/Margin/${PDFname}.pdf`,
-					printBackground: true,
-					format: 'A4',
-					margin: {
-						top: "0.5in",
-						bottom: "0.5in",
-						right: "0.75in",
-						left: "0.75in",
-					}
-				});
-			} catch (err) {
-			
-			}
-			await page.close();
-			clearTimeout(timeout);
-			
-			return PDFname;
 		}
 		
 		async function getLibretext(url, response, options) {
@@ -1584,8 +1525,10 @@ puppeteer.launch({
 					if (page.matter) {
 						if (page.title === 'Table of Contents')
 							filename = `TOC/${await getTOC(current.url, current)}.pdf`;
-						else
-							filename = `${await getSpecial(page)}.pdf`;
+						else {
+							let temp = await getPDF(url, options.ip, isNoCache);
+							filename = temp.filename;
+						}
 						if (page.matter !== 'Back') {
 							title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
 						}
