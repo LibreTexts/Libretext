@@ -16,7 +16,7 @@ if (!window["youtubeIFrame"]) {
 					iframe.src = iframe.src.replace('www.youtube.com','www.youtube-nocookie.com');
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");
-					youtubeImgContainer.innerHTML = "<img class='youtubeImage' src="+ "\"https://img.youtube.com/vi/" + videoID + "/0.jpg\""+"/>";
+					youtubeImgContainer.innerHTML = `<img class="youtubeImage" src="https://img.youtube.com/vi/${videoID}/0.jpg\"/>`;
 					youtubeImgContainer.href = "https://www.youtube.com/watch?v="+videoID;
 
 					youtubeImgContainer.classList.add("youtubeImageContainer");
