@@ -13,15 +13,15 @@ Ladda.bind('getLibretext',{callback:(instance)=>{
 if (!window["batchPrint.js"]) {
 	window["batchPrint.js"] = true;
 	let email = document.getElementById('userEmailHolder').textContent || "";
-	let batchAccess;
 	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 	const isPro = document.getElementById("proHolder").innerText === 'true';
 	const groups = document.getElementById("groupHolder").innerText;
+	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	const targetComputer = 'batch.libretexts.org';
 	let request;
 	let requestJSON;
 	
-	function fn() {
+	let fn = () => {
 		HTMLtoJSON();
 		request = new XMLHttpRequest();
 		requestJSON = {
@@ -29,7 +29,7 @@ if (!window["batchPrint.js"]) {
 			batchName: window["BatchName"],
 			isNoCache: false
 		};
-		batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
+		
 		const batchPrint = document.getElementById("batchPrint");
 		
 		handleInner().then();
@@ -354,5 +354,6 @@ if (!window["batchPrint.js"]) {
 		}
 		
 	}
+	
+	document.addEventListener('DOMContentLoaded', fn);
 }
-document.addEventListener('DOMContentLoaded', fn);

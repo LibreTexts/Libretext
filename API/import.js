@@ -3,13 +3,16 @@ const timestamp = require("console-timestamp");
 const EPub = require("epub");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
+const io = require('socket.io')(server, {path: '/import/ws'});
 const fs = require('fs-extra');
 const {performance} = require('perf_hooks');
 const fetch = require("node-fetch");
 const download = require('download');
 const async = require('async');
+const md5 = require('md5');
 const util = require('util');
 const Eta = require('node-eta');
+// const JSZip = require("jszip");
 const LibreTexts = require("./reuse.js");
 let port = 3003;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -17,14 +20,22 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
+fs.emptyDir('ImportFiles');
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+
+// let authorization = [];
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 	let url = request.url;
 	url = LibreTexts.clarifySubdomain(url);
+	console.log(url);
 	
-	if (url.startsWith("/import")) {
+	if (url.startsWith('/websocketclient')) {
+		//Serve client socket.io Javascript file
+		staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
+	}
+	else if (url === "/import") {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
 			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
 				response.writeHead(200, {
@@ -85,7 +96,7 @@ function handler(request, response) {
 					body.push(chunk);
 				}).on('end', async () => {
 					body = Buffer.concat(body).toString();
-
+					
 					let input = JSON.parse(body);
 					if (!(input.url && input.url.match(/^(http|https):\/\//))) {
 						reportMessage('This source is not valid, please check your URL', true);
@@ -104,6 +115,36 @@ function handler(request, response) {
 			}
 		}
 	}
+	/*else if (url === '/import/sendFile') {
+		console.log(authorization);
+		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
+			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
+				response.writeHead(200, {
+					"Access-Control-Allow-Origin": request.headers.origin || null,
+					"Access-Control-Allow-Methods": "POST",
+				});
+				response.end();
+			}
+			else if (request.method === "POST") {
+				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
+					"Access-Control-Allow-Origin": request.headers.origin || null,
+					"Access-Control-Allow-Methods": "POST",
+				} : {});
+				let body = [];
+				request.on('data', (chunk) => {
+					body.push(chunk);
+				}).on('end', async () => {
+					body = Buffer.concat(body);
+					console.log(body);
+					await fs.writeFile('test.txt', body);
+					response.end();
+				});
+			}
+			else {
+				responseError(request.method + " Not Acceptable", 406)
+			}
+		}
+	}*/
 	else {
 		responseError('Action not found', 400);
 	}
@@ -500,6 +541,54 @@ function handler(request, response) {
 				headers: {"Slug": name, 'x-deki-token': token}
 			})
 		}
+	}
+}
+
+
+//Set up Websocket connection using Socket.io
+io.on('connection', function (socket) {
+	// console.log('an user connected');
+	socket.emit('welcome', `Hello!`);
+	
+	//Define callback events;
+	socket.on('commoncartridge', (data) => jobHandler('commoncartridge', data, socket));
+	socket.on('sendFile', (data, done) => sendFile(data, socket, done));
+});
+
+async function jobHandler(jobType, input, socket) {
+	switch (jobType) {
+		case 'commoncartridge':
+			break;
+		default:
+			break;
+	}
+}
+
+async function sendFile(data, socket, done) {
+	if (data.status === 'start') {
+		await fs.ensureDir(`./ImportFiles/${data.user}/${data.type}`);
+		socket.sendFile = {
+			path: `./ImportFiles/${data.user}/${data.type}/${data.filename}`,
+			buffer: [],
+			length: data.length
+		};
+		
+	}
+	if (socket.sendFile) {
+		socket.sendFile.buffer[data.index] = data.buffer;
+		socket.emit('progress', Math.round(socket.sendFile.buffer.length / socket.sendFile.length * 1000) / 10);
+		done(data.index);
+	}
+	
+	if (socket.sendFile.buffer.length === socket.sendFile.length) {
+		let complete = true;
+		for (let i = 0; i < socket.sendFile.buffer.length; i++) {
+			if (!socket.sendFile.buffer[i])
+				complete = false;
+		}
+		let body = Buffer.concat(socket.sendFile.buffer);
+		await fs.writeFile(socket.sendFile.path, body);
+		socket.emit('setState', {state: 'processing', percentage: 0});
 	}
 }
 

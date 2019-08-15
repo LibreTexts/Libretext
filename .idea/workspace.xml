@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Fixing Travis.ci&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;">
-      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/qrcode.js" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,8 +59,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Importer/package.json" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -79,19 +74,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -195,7 +190,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Mocha.nodePrintTest">
+  <component name="RunManager" selected="npm.Importer">
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -251,6 +246,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="Importer" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/Importer/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="package" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="Remixer" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/public/Remixer/package.json" />
       <command value="run" />
@@ -291,6 +296,7 @@
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="npm.API Dashboard" />
+      <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.Downloads Center" />
     </list>
@@ -913,14 +919,19 @@
       <workItem from="1565501948484" duration="699000" />
       <workItem from="1565665120503" duration="1525000" />
       <workItem from="1565672057475" duration="2515000" />
-      <workItem from="1565675855094" duration="956000" />
-    </task>
-    <task id="LOCAL-00162" summary="Reenabled findRemoveSync">
-      <created>1553487860231</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1553487860231</updated>
+      <workItem from="1565675855094" duration="1180000" />
+      <workItem from="1565723516297" duration="1927000" />
+      <workItem from="1565730999957" duration="1328000" />
+      <workItem from="1565735258376" duration="19911000" />
+      <workItem from="1565759999910" duration="696000" />
+      <workItem from="1565800939847" duration="1939000" />
+      <workItem from="1565818040624" duration="3028000" />
+      <workItem from="1565822215306" duration="539000" />
+      <workItem from="1565824024962" duration="2498000" />
+      <workItem from="1565830362767" duration="5533000" />
+      <workItem from="1565839149363" duration="10746000" />
+      <workItem from="1565852574167" duration="1793000" />
+      <workItem from="1565892473574" duration="1708000" />
     </task>
     <task id="LOCAL-00163" summary="Downgraded Thin CC to v1.1 Common Cartridge">
       <created>1553583532685</created>
@@ -1258,7 +1269,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564902887976</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="Updated README.md">
+      <created>1565893345929</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1565893345930</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1319,7 +1337,6 @@
     <MESSAGE value="NodePrint RenderTimeout fix" />
     <MESSAGE value="RenderTimeout Resolve" />
     <MESSAGE value="Initial Portals" />
-    <MESSAGE value="Updated README.md" />
     <MESSAGE value="findReplace =&gt; findAndReplace" />
     <MESSAGE value="Deadlinks timeout" />
     <MESSAGE value="Mandeep BatchAccess fix" />
@@ -1339,7 +1356,8 @@
     <MESSAGE value="Bugfix async" />
     <MESSAGE value="nodePrint A4 and new Covers" />
     <MESSAGE value="Fixing Travis.ci" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing Travis.ci" />
+    <MESSAGE value="Updated README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
