@@ -12,7 +12,9 @@ const async = require('async');
 const md5 = require('md5');
 const util = require('util');
 const Eta = require('node-eta');
-// const JSZip = require("jszip");
+const zipLocal = require('zip-local');
+const convert = require('xml-js');
+
 const LibreTexts = require("./reuse.js");
 let port = 3003;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -20,7 +22,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-fs.emptyDir('ImportFiles');
+// fs.emptyDir('ImportFiles');
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
 // let authorization = [];
@@ -564,7 +566,7 @@ async function jobHandler(jobType, input, socket) {
 	}
 }
 
-async function sendFile(data, socket, done) {
+async function sendFile(data, socket, done) { //upload file to server for processing
 	if (data.status === 'start') {
 		await fs.ensureDir(`./ImportFiles/${data.user}/${data.type}`);
 		socket.sendFile = {
@@ -588,8 +590,218 @@ async function sendFile(data, socket, done) {
 		}
 		let body = Buffer.concat(socket.sendFile.buffer);
 		await fs.writeFile(socket.sendFile.path, body);
-		socket.emit('setState', {state: 'processing', percentage: 0});
+		socket.emit('setState', {state: 'processing', percentage: 0, path: socket.sendFile.path});
 	}
+}
+
+//TODO: Remove this testing query
+processCommonCartridge({
+	path: './ImportFiles/hdagnew@ucdavis.edu/CommonCartridge/DCW-English-10-Semester-2_Curated.imscc',
+	user: 'hdagnew@ucdavis.edu',
+	subdomain: 'chem'
+}, {emit: (a, b) => console.error(b)});
+
+async function processCommonCartridge(data, socket) {
+	//ensure file exists
+	if (!data.path.endsWith) {
+		socket.emit('errorMessage', 'File is not a Common Cartridge!');
+		return;
+	}
+	else if (!await fs.exists(data.path)) {
+		socket.emit('errorMessage', 'File does not exist!');
+		return;
+	}
+	
+	try {
+		zipLocal.unzip = util.promisify(zipLocal.unzip);
+		let unzipped = await zipLocal.unzip(data.path);
+		unzipped.save = util.promisify(unzipped.save);
+		let filename = data.path.match(/(?<=\/)[\w-.]+$/)[0];
+		await fs.emptyDir(`${data.path}-Unzipped`);
+		await unzipped.save(`${data.path}-Unzipped`);
+		if (!await fs.exists(`${data.path}-Unzipped/imsmanifest.xml`)) {
+			socket.emit('errorMessage', 'imsmanifest.xml is invalid');
+			return;
+		}
+		
+		socket.emit('progress', Math.round(0 / 0 * 1000) / 10);
+		
+		let rootPath = `${data.path}-Unzipped`;
+		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+		const Working = {}; // since user and subdomain are unchanged for these calls
+		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
+		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
+		
+		//go through html and upload
+		//setup parent pages
+		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+		}, data.subdomain);
+		onlinePath += `/${filename}`;
+		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
+		}, data.subdomain);
+		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
+		
+		//parse imsmanifest.xml
+		let manifest = await fs.readFile(rootPath + '/imsmanifest.xml');
+		manifest = convert.xml2js(manifest);
+		let [metadata, organization, resources] = manifest.elements[0].elements;
+		if (!resources.elements || !organization.elements)
+			return;
+		let temp = {};
+		resources.elements.forEach(elem => {
+				temp[elem.attributes.identifier] = {
+					name: elem.attributes.identifier,
+					file: elem.elements.find(elem => elem.name === 'file').attributes.href,
+					type: elem.attributes.type,
+				}
+			}
+		);
+		resources = temp;
+		organization = organization.elements;
+		while (organization.length === 1)
+			organization = organization[0].elements;
+		organization = organization.filter(elem => elem.elements.length > 1);
+		let totalPages = 0;
+		organization = organization.map((page) => digestPage(page, resources));
+		
+		
+		for (let i = 0; i < organization.length; i++) {
+			await processPage(organization[i], rootPath, onlinePath, i);
+		}
+		
+		
+		function digestPage(page, resources) {
+			let result = {};
+			result.title = page.elements.find(elem => elem.name === 'title').elements[0].text;
+			result.title = result.title.replace(/&/g, 'and');
+			result.subpages = page.elements.filter(elem => elem.name === 'item');
+			
+			if (!result.subpages.length) {
+				result.type = 'topic';
+			}
+			else {
+				result.subpages = result.subpages.map(elem => digestPage(elem, resources));
+				if (result.subpages[0].type === 'topic')
+					result.type = 'guide';
+				else
+					result.type = 'category';
+			}
+			if (page.attributes && page.attributes.identifierref)
+				result.href = resources[page.attributes.identifierref];
+			totalPages++;
+			return result;
+		}
+		
+		async function processPage(page, rootPath, onlinePath, index) {
+			let safeTitle = encodeURIComponent(page.title);
+			let path = `${onlinePath}/${("" + index).padStart(2, "0")}: ${page.title.replace(/[?/&]/g, '_')}`;
+			if (page.type === 'category') {
+				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+				}, data.subdomain);
+				await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+			}
+			else if (page.type === 'guide') {
+				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
+				}, data.subdomain);
+				await Promise.all(
+					[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+						Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+						Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+				
+			}
+			console.log(page.type, safeTitle);
+			
+			if (page.type === 'topic') {
+				if (!page.href)
+					return;
+				let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
+				let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
+				let images = contents.match(/<img .*?src=".*?\/.*?>/g);
+				let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
+				if (src) {
+					for (let i = 0; i < src.length; i++) {
+						if (!src[i].startsWith('http')) {
+							const fileID = await uploadImage(src[i], path, currentPath);
+							let toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+							contents = contents.replace(images[i], toReplace);
+							// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+						}
+					}
+				}
+				
+				
+				let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
+					method: 'POST',
+					body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+				});
+				if (!response.ok) {
+					let error = await response.text();
+					socket.emit('errorMessage', error);
+				}
+				await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
+				
+			}
+			else {
+				for (let i = 0; i < page.subpages.length; i++) {
+					await processPage(page.subpages[i], rootPath, path, i)
+				}
+			}
+			
+			
+			async function uploadImage(filename, path, workingPath) {
+				filename = decodeURIComponent(filename);
+				if (filename.startsWith('../')) {
+					workingPath = workingPath.match(/.*\/(?=.*?\/$)/)[0];
+					filename = filename.match(/(?<=\.\.\/).*/)[0];
+				}
+				let image = await fs.readFile(workingPath + filename);
+				
+				if (!image) {
+					socket.emit('errorMessage', filename);
+					return false;
+				}
+				let shortname = filename.match(/(?<=\/).*?$/);
+				if (shortname) {
+					filename = shortname[0];
+				}
+				let response = await Working.authenticatedFetch(path, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
+					method: 'PUT',
+					body: image,
+					// headers: {'Content-Type': 'application/octet-stream'}
+				});
+				if (response.ok) {
+					let fileID = await response.json();
+					return fileID['@id'];
+				}
+				else {
+					socket.emit('errorMessage', filename);
+					return false;
+				}
+			}
+		}
+		
+	} catch (e) {
+		console.error(e);
+		socket.emit('errorMessage', e);
+	}
+}
+
+async function putProperty(name, value, path, subdomain, username) {
+	await LibreTexts.authenticatedFetch(path, "properties", subdomain, username, {
+		method: "POST",
+		body: value,
+		headers: {
+			"Slug": name
+		}
+	})
 }
 
 async function main() {

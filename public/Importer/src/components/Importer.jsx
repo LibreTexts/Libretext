@@ -8,6 +8,7 @@ export default function Importer(props) {
 	const [counter, setCounter] = useState(0);
 	const [state, setState] = useState('');
 	const [results, setResults] = useState([]);
+	const [files, setFiles] = useState([]);
 	const [time, setTime] = useState(-1);
 	const [url, setURL] = useState('');
 	const [socket, setSocket] = useState(null);
@@ -36,6 +37,9 @@ export default function Importer(props) {
 		};
 		socket.on('progress', (data) => {
 			setCounter(data);
+		});
+		socket.on('getFiles', (data) => {
+			setFiles(data);
 		});
 		socket.on('pages', (data) => {
 			setResults(data.concat(results));
@@ -84,7 +88,7 @@ export default function Importer(props) {
 					<input placeholder="URL" onChange={(event) => {
 					setURL(event.target.value);
 				}}/>OR<br/>
-					<input placeholder="URL" type='file' accept=".imscc" onChange={(event) => {
+					<input placeholder="URL" type='file' accept=".imscc,.zip" onChange={(event) => {
 						let file = event.target.files[0];
 						if (!file) {
 							setURL('');
