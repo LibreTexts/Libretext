@@ -1,4 +1,4 @@
-const scheduler = require('node-schedule');
+const cron = require('node-cron');
 const fetch = require("node-fetch");
 const timestamp = require("console-timestamp");
 
@@ -22,7 +22,7 @@ const schedule = {
 };
 let times = Object.keys(schedule);
 for (let i = 0; i < times.length; i++) {
-	scheduler.scheduleJob(times[i], () => {
+	cron.schedule(times[i], () => {
 		
 		if (now1.getDate() <= 7) { //beginning of month
 			console.log(`Running Refresh no-cache for ${schedule[times[i]]}`);

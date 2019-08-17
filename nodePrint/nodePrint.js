@@ -151,7 +151,22 @@ puppeteer.launch({
 						}
 						params.ip = ip;
 						console.log(`Received Libretext request ${ip}`);
-						await getLibretext(url, response, params);
+						let finished = await getLibretext(url, response, params);
+						let [subdomain, path] = parseURL(url);
+						
+						await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
+							method: 'PUT',
+							body: JSON.stringify({
+								subdomain: subdomain,
+								path: path.match(/^.*?(?=\/)/)[0],
+								identifier: md5(keys[subdomain]),
+								content: finished
+							}),
+							headers: {
+								origin: 'print.libretexts.org'
+							}
+						});
+						
 						response.end();
 					}
 					else {
@@ -1870,6 +1885,15 @@ async function getSubpages(rootURL, options = {}) {
 function clarifySubdomain(url) {
 	url = url.replace('https://espa%C3%B1ol.libretexts.org', 'https://espanol.libretexts.org');
 	return url;
+}
+
+function parseURL(url) {
+	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
+	}
+	else {
+		return [];
+	}
 }
 
 function stop() {

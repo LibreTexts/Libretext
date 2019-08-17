@@ -288,4 +288,13 @@ function extractSubdomain(url) {
 	return subdomain;
 }
 
+function parseURL(url) {
+	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
+	}
+	else {
+		return [];
+	}
+}
+
 module.exports = LibreTextsFunctions;
