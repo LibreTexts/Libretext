@@ -145,7 +145,7 @@ async function handler(request, response) {
 			responseError(request.method + ' Not Acceptable', 406);
 		}
 	}
-	else if (url.startsWith('/refreshList')) {
+	else if (url === '/refreshList') {
 		if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
 			response.writeHead(200, {
 				'Access-Control-Allow-Origin': request.headers.origin || null,
@@ -183,7 +183,7 @@ async function handler(request, response) {
 			responseError(request.method + ' Not Acceptable', 406);
 		}
 	}
-	else if (url.startsWith('/refreshListAdd')) {
+	else if (url === '/refreshListAdd') {
 		if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
 			response.writeHead(200, {
 				'Access-Control-Allow-Origin': request.headers.origin || null,
@@ -204,15 +204,19 @@ async function handler(request, response) {
 				body = Buffer.concat(body).toString();
 				
 				let input = JSON.parse(body);
-				console.log(`${input.subdomain}/${input.path}`);
+				console.log(`Add ${input.subdomain}/${input.path}`);
 				if (input && input.identifier === md5(authenBrowser[input.subdomain])
 					&& ['Courses', 'Bookshelves', 'home'].includes(input.path)) {
 					await fs.ensureDir(`./public/DownloadsCenter/${input.subdomain}`);
 					if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
 						let content = await fs.readJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`);
-						content = content.push(input.content);
-						await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
+						if (content && !content.find(elem => elem.link === input.content.link)) {
+							content.push(input.content);
+							await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
+						}
 					}
+					else
+						await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, [input.content]);
 				}
 				else {
 					responseError(`Bad Request\nRejected path ${input.path}`, 400);

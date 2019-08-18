@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Spacing fix">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/schedule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +193,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.testSchedule.js">
+  <component name="RunManager" selected="Node.js.endpoint.js">
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -207,9 +204,6 @@
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
-      <method v="2" />
-    </configuration>
-    <configuration name="testSchedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="testSchedule.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -285,6 +279,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -308,11 +312,11 @@
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.Downloads Center" />
-      <item itemvalue="Node.js.testSchedule.js" />
+      <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.testSchedule.js" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -948,14 +952,9 @@
       <workItem from="1565852574167" duration="1793000" />
       <workItem from="1565892473574" duration="1708000" />
       <workItem from="1566023871169" duration="332000" />
-      <workItem from="1566024270562" duration="2913000" />
-    </task>
-    <task id="LOCAL-00163" summary="Downgraded Thin CC to v1.1 Common Cartridge">
-      <created>1553583532685</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1553583532686</updated>
+      <workItem from="1566024270562" duration="3010000" />
+      <workItem from="1566090954440" duration="6301000" />
+      <workItem from="1566108426799" duration="475000" />
     </task>
     <task id="LOCAL-00164" summary="NB + Analytics Compatibility">
       <created>1553751712590</created>
@@ -1293,7 +1292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565893345930</updated>
     </task>
-    <option name="localTasksCounter" value="212" />
+    <task id="LOCAL-00212" summary="refreshListAdd">
+      <created>1566027234221</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1566027234221</updated>
+    </task>
+    <option name="localTasksCounter" value="213" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1349,7 +1355,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Contributor copy-source" />
     <MESSAGE value="Added regular expressions to Dashboard" />
     <MESSAGE value="NodePrint RenderTimeout fix" />
     <MESSAGE value="RenderTimeout Resolve" />
@@ -1374,7 +1379,8 @@
     <MESSAGE value="nodePrint A4 and new Covers" />
     <MESSAGE value="Fixing Travis.ci" />
     <MESSAGE value="Updated README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md" />
+    <MESSAGE value="refreshListAdd" />
+    <option name="LAST_COMMIT_MESSAGE" value="refreshListAdd" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

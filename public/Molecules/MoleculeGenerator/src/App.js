@@ -81,7 +81,7 @@ export default class App extends Component {
 					<br/><br/>
 					<button onClick={() => $(".help").slideToggle()}>Show/Hide Help</button>
 					<img className={"help"} style={{display: "none"}}
-					     src={"https://awesomefiles.libretexts.org/MoleculeGenerator/help.png"}/>
+					     src={"https://awesomefiles.libretexts.org/Molecules/MoleculeGenerator/help.png"}/>
 					<button className={"help"} style={{display: "none"}} onClick={() => $(".help").slideUp()}>Hide
 						Help
 					</button>
@@ -203,12 +203,12 @@ export default class App extends Component {
 				sampleContent.style.width = "400px";
 				break;
 			case "GLmol":
-				sampleContent.src = this.state.path + "/GLmol/js/GLWrapper.js";
+				sampleContent.src = this.state.path + "/Molecules/GLmol/js/GLWrapper.js";
 				sampleContent = this.processDataset(this.state.options, GLoptions, sampleContent);
 				// sampleContent.dataset.id = "=1ugu";
 				break;
 			case "JSmol":
-				sampleContent.src = this.state.path + "/JSmol/JSmolWrapper.js";
+				sampleContent.src = this.state.path + "/Molecules/JSmol/JSmolWrapper.js";
 				sampleContent.dataset.id = "=1blu";
 				break;
 		}

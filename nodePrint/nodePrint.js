@@ -1718,6 +1718,7 @@ puppeteer.launch({
 			return {
 				zipFilename: zipFilename,
 				title: current.title,
+				id: current.id,
 				author: current.name,
 				institution: current.companyname,
 				link: link,
