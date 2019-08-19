@@ -8,25 +8,13 @@ export default function Importer(props) {
 	const [counter, setCounter] = useState(0);
 	const [state, setState] = useState('');
 	const [results, setResults] = useState([]);
+	const [file, setFile] = useState();
 	const [files, setFiles] = useState([]);
-	const [time, setTime] = useState(-1);
+	const [seconds, setSeconds] = useState(-1);
 	const [url, setURL] = useState('');
 	const [socket, setSocket] = useState(null);
-	
-	function getPanel() {
-		switch (props.panel) {
-			case "epub":
-				return null;
-			case "commoncartridge":
-				return ;
-			case "pdf":
-				return null;
-			case "pretext":
-				return null;
-			default:
-				return null;
-		}
-	}
+	const [finished, setFinished] = useState('');
+	const user = document.getElementById('usernameHolder').innerText;
 	
 	useEffect(() => { //setup websocket
 		let socket = io(props.devMode ? 'https://home.miniland1333.com/' : 'https://api.libretexts.org/', {path: '/import/ws'});
@@ -38,25 +26,28 @@ export default function Importer(props) {
 		socket.on('progress', (data) => {
 			setCounter(data);
 		});
-		socket.on('getFiles', (data) => {
+		socket.on('listFiles', (data) => {
+			let tempFiles = data;
 			setFiles(data);
 		});
 		socket.on('pages', (data) => {
-			setResults(data.concat(results));
+			setResults(results => data.concat(results));
 		});
-		socket.on('setState', (data) => {
+		socket.on('setState', async (data) => {
 			switch (data.state) {
 				case 'download':
 					setCounter(0);
 					break;
-				case 'processing':
-					setState('processing');
-					setCounter(data.percentage);
+				case 'downloadDone':
+					setState('downloadDone');
+					setSeconds(-1);
+					setFile(data.filename);
 					break;
 				case 'done':
 					setState('done');
-					setTime(-1);
+					setSeconds(-1);
 					setResults(data.log);
+					setFinished(data.url);
 					break;
 			}
 		});
@@ -66,6 +57,7 @@ export default function Importer(props) {
 			console.error(data.message || data);
 		});
 		setSocket(socket);
+		socket.emit('listFiles', {user: user, type: props.panel});
 		
 		return () => {
 			socket.disconnect();
@@ -74,41 +66,57 @@ export default function Importer(props) {
 	
 	useEffect(() => { //timer
 		const interval = setInterval(() => {
-			if (time !== -1)
-				setTime(time => time + 1);
+			setSeconds(seconds => seconds !== -1 ? seconds + 1 : seconds);
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
 	
+	useEffect(() => {
+		if (socket)
+			socket.emit('listFiles', {user: user, type: props.panel});
+		setSeconds(-1);
+		setFile('');
+		setState('');
+		setURL('');
+	}, [props.panel]);
+	
 	return (
 		<div id="CommonCartridge">
+			{getDownloadBar()}
 			<div className="topPanel">
 				<div>
-					{props.panel}
-					<input placeholder="URL" onChange={(event) => {
-					setURL(event.target.value);
-				}}/>OR<br/>
-					<input placeholder="URL" type='file' accept=".imscc,.zip" onChange={(event) => {
-						let file = event.target.files[0];
-						if (!file) {
-							setURL('');
-							return;
-						}
-						let reader = new FileReader();
-						reader.onload = function (loadedEvent) {
-							let arrayBuffer = loadedEvent.target.result;
-							setURL({filename: file.name, buffer: arrayBuffer});
-						};
+					<h3>{getName()}</h3>
+					<h4>Step 1: Send a file to the server</h4>
+					<input placeholder="URL of File" onChange={(event) => {
+						setURL(event.target.value);
+					}}/>OR<br/>
+					<input placeholder="Upload a file" type='file' accept={acceptableFiles().join()}
+					       onChange={(event) => {
+						       let file = event.target.files[0];
+						       if (!file) {
+							       setURL('');
+							       return;
+						       }
+						       let reader = new FileReader();
+						       reader.onload = function (loadedEvent) {
+							       let arrayBuffer = loadedEvent.target.result;
+							       setURL({filename: file.name, buffer: arrayBuffer});
+						       };
 						
-						reader.readAsArrayBuffer(file);
+						       reader.readAsArrayBuffer(file);
 						
-					}}/>
+					       }}/>
 					<div>
-						<button onClick={sendRequest}>Send Request</button>
+						<button onClick={sendFile}>Upload file</button>
 					</div>
 				</div>
 				<div>
-					Text
+					<h4>Step 2: Select file to process.</h4>
+					Uploaded Files are flushed nightly!
+					<select onChange={(event) => setFile(event.target.value)} value={file}>
+						<option disabled value=''>Upload{files.length ? ' or Select' : ''} a file</option>
+						{files.map(file => <option key={file}>{file}</option>)}</select>
+					<button onClick={sendImport}>Import {file}</button>
 				</div>
 			</div>
 			<div>
@@ -126,8 +134,8 @@ export default function Importer(props) {
 								{({index, style}) => {
 									let page = results[index];
 									return <div style={style}
-									            key={results.length - index}>{results.length - index} {'Pages '}
-										<a target='_blank' href={page.url}>{page.path}</a></div>
+									            key={results.length - index - 1}>{results.length - index - 1} Created {page.type}&nbsp;
+										<a target='_blank' href={page.url}>{page.title}</a></div>
 								}}
 							</List>
 						)}
@@ -137,14 +145,13 @@ export default function Importer(props) {
 		</div>
 	);
 	
-	function getStatusBar() {
+	function getDownloadBar() {
 		switch (state) {
 			case 'download':
-			case 'processing':
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
-						Import In Progress
-						({counter}{state === 'download' ? ' %uploaded' : '%'})
+						Upload In Progress
+						({counter}% Received)
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
@@ -152,40 +159,153 @@ export default function Importer(props) {
 						<div className="bounce3"/>
 					</div>
 					<div>
-						{`Time Elapsed: ${time} seconds`}
+						{`Time Elapsed: ${seconds} seconds`}
 					</div>
 				</div>;
-			case 'done':
-				return <p className="status" style={{backgroundColor: 'green'}}>Complete!</p>;
+			case 'downloadDone':
+				return <p className="status" style={{backgroundColor: 'green'}}>Upload Complete!</p>;
 			default:
 				return null;
 		}
 	}
 	
-	async function sendRequest() {
-		setState('download');
-		setTime(0);
-		setCounter(0);
-		let buffer = url.buffer;
-		let inc = 5e+5;
-		let end = buffer.byteLength;
-		let index = 0;
+	function getStatusBar() {
+		switch (state) {
+			case 'processing':
+				return <div className="status" style={{backgroundColor: 'orange'}}>
+					<div>
+						Import In Progress
+						({counter.percentage}%)<br/>
+						{counter.pages} pages processed
+					</div>
+					<div className="spinner">
+						<div className="bounce1"/>
+						<div className="bounce2"/>
+						<div className="bounce3"/>
+					</div>
+					<div>
+						{`Time Elapsed: ${seconds} seconds`}<br/>
+						{`Time Remaining: ${counter.eta}`}
+					</div>
+				</div>;
+			case 'done':
+				return <p className="status" style={{backgroundColor: 'green'}}>Import Complete!<br/>View your results
+				                                                                here <a target='_blank'
+				                                                                        href={finished}>{finished}</a></p>;
+			default:
+				return null;
+		}
+	}
+	
+	async function sendFile() {
+		if (!isReady()) {
+			alert('Please wait for the current process to finish...');
+			return;
+		}
 		
-		//buffer chunking over the network
-		for (let start = 0; start <= end; start += inc) {
-			let response = {};
-			if (start === 0) {
-				response = {
-					user: document.getElementById('usernameHolder').innerText,
-					status: 'start',
-					type: 'CommonCartridge',
+		setSeconds(0);
+		setCounter(0);
+		if (typeof url === "string") {
+			let response = {
+				user: user,
+				url: url,
+				type: props.panel,
+			};
+			setState('download');
+			socket.emit('downloadFile', response);
+		}
+		else if (typeof url === "object" && url.buffer) {
+			let buffer = url.buffer;
+			let inc = 5e+5;
+			let end = buffer.byteLength;
+			let index = 0;
+			
+			//buffer chunking over the network
+			for (let start = 0; start <= end; start += inc) {
+				let response = {
+					user: user,
+					type: props.panel,
 					filename: url.filename,
 					length: Math.ceil(end / inc)
 				};
+				if (start === 0) {
+					setState('download');
+					response.status = 'start';
+				}
+				response.buffer = buffer.slice(start, Math.min(start + inc, end));
+				response.index = index++;
+				await socket.emitWait('sendFile', response);
 			}
-			response.buffer = buffer.slice(start, Math.min(start + inc, end));
-			response.index = index++;
-			await socket.emitWait('sendFile', response);
+		}
+	}
+	
+	async function sendImport() {
+		if (!isReady()) {
+			alert('Please wait for the current process to finish...');
+			return;
+		}
+		else if (!file) {
+			alert('Please select a file first');
+			return;
+		}
+		let filetype = file.match(/.[A-z]*?$/);
+		if (filetype && acceptableFiles().includes(filetype[0])) {
+			let response = {
+				user: user,
+				filename: file,
+				type: props.panel,
+				origin: window.location.href
+			};
+			socket.emit('import', response);
+			setState('processing');
+			setCounter({
+				percentage: 0,
+				pages: `0 / Calculating`,
+				eta: 'Calculating',
+			});
+			setSeconds(0);
+			setResults([]);
+		}
+		else {
+			alert(`${file} is not of acceptable filetype [${acceptableFiles().join(', ')}]`);
+		}
+		
+	}
+	
+	function getName() {
+		switch (props.panel) {
+			case "epub":
+				return 'EPUB';
+			case "commoncartridge":
+				return 'Common Cartridge';
+			case "pdf":
+				return 'PDF';
+			case "pretext":
+				return 'PreTeXt';
+			default:
+				return null;
+		}
+	}
+	
+	function acceptableFiles() {
+		switch (props.panel) {
+			case 'epub':
+				return [".epub"];
+			case 'commoncartridge':
+				return [".imscc", ".zip"];
+			default:
+				return [];
+		}
+	}
+	
+	function isReady() {
+		switch (state) {
+			case '':
+			case 'done':
+			case 'downloadDone':
+				return true;
+			default:
+				return false;
 		}
 	}
 }

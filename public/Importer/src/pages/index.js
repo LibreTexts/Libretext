@@ -21,8 +21,8 @@ function Dashboard() {
 				{/*<option value={'Revisions'}>Revision Log</option>*/}
 				<option value={'epub'}>Import EPUB</option>
 				<option value={'commoncartridge'}>Import Common Cartridge</option>
-				<option value={'pdf'}>Import PDF</option>
-				<option value={'pretext'}>Import PreTeXt</option>
+				{/*<option value={'pdf'}>Import PDF</option>*/}
+				{/*<option value={'pretext'}>Import PreTeXt</option>*/}
 			</select>
 			<div>
 				<label style={{display: 'flex', alignItems: 'center'}}>

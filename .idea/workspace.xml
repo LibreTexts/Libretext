@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Importer/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/src/pages/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,11 +82,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
@@ -193,7 +197,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.endpoint.js">
+  <component name="RunManager" selected="npm.Importer">
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -955,6 +959,10 @@
       <workItem from="1566024270562" duration="3010000" />
       <workItem from="1566090954440" duration="6301000" />
       <workItem from="1566108426799" duration="475000" />
+      <workItem from="1566109009673" duration="2437000" />
+      <workItem from="1566149697636" duration="13722000" />
+      <workItem from="1566169968463" duration="6725000" />
+      <workItem from="1566186552193" duration="4199000" />
     </task>
     <task id="LOCAL-00164" summary="NB + Analytics Compatibility">
       <created>1553751712590</created>
@@ -1387,13 +1395,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>519</line>
-          <option name="timeStamp" value="27" />
+          <line>879</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>779</line>
-          <option name="timeStamp" value="33" />
+          <line>864</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>847</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

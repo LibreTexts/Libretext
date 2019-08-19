@@ -511,7 +511,7 @@ function handler(request, response) {
 						reportMessage(filename, true);
 						return false;
 					}
-					let shortname = filename.match(/(?<=\/).*?$/);
+					let shortname = filename.match(/(?<=\/)[^\/]*?$/);
 					if (shortname) {
 						filename = shortname[0];
 					}
@@ -553,17 +553,58 @@ io.on('connection', function (socket) {
 	socket.emit('welcome', `Hello!`);
 	
 	//Define callback events;
-	socket.on('commoncartridge', (data) => jobHandler('commoncartridge', data, socket));
+	socket.on('downloadFile', (data) => downloadFile(data, socket));
 	socket.on('sendFile', (data, done) => sendFile(data, socket, done));
+	socket.on('listFiles', (data) => listFiles(data, socket));
+	socket.on('import', (data) => jobHandler(data, socket));
 });
 
-async function jobHandler(jobType, input, socket) {
-	switch (jobType) {
+async function jobHandler(data, socket) {
+	switch (data.type) {
+		case "epub":
+			return null;
 		case 'commoncartridge':
-			break;
+			return processCommonCartridge(data, socket);
+		case "pdf":
+			return null;
+		case "pretext":
+			return null;
 		default:
 			break;
 	}
+}
+
+async function downloadFile(data, socket) {
+	
+	let response = await fetch(data.url);
+	// Step 2: get total length
+	const contentLength = +response.headers.get('Content-Length');
+	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/))
+		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/)[0];
+	
+	// Step 3: read the data
+	let receivedLength = 0; // received that many bytes at the moment
+	let chunks = []; // array of received binary chunks (comprises the body)
+	await new Promise((resolve, reject) => {
+		response.body.on('data', (value) => {
+			chunks.push(value);
+			receivedLength += value.length;
+			socket.emit('progress', Math.round(receivedLength / contentLength * 1000) / 10);
+		});
+		response.body.on('end', resolve);
+	});
+	// Step 4: concatenate chunks into single Uint8Array
+	let chunksAll = new Uint8Array(receivedLength);
+	let position = 0;
+	for (let chunk of chunks) {
+		chunksAll.set(chunk, position);
+		position += chunk.length;
+	}
+	data.filename = data.filename || data.url.match(/(?<=\/)[^\/]*?$/)[0];
+	await fs.ensureDir(`./ImportFiles/${data.user}/${data.type}`);
+	await fs.writeFile(`./ImportFiles/${data.user}/${data.type}/${data.filename}`, chunksAll);
+	await listFiles(data, socket);
+	socket.emit('setState', {state: 'downloadDone', filename: data.filename});
 }
 
 async function sendFile(data, socket, done) { //upload file to server for processing
@@ -590,24 +631,33 @@ async function sendFile(data, socket, done) { //upload file to server for proces
 		}
 		let body = Buffer.concat(socket.sendFile.buffer);
 		await fs.writeFile(socket.sendFile.path, body);
-		socket.emit('setState', {state: 'processing', percentage: 0, path: socket.sendFile.path});
+		await listFiles(data, socket);
+		socket.emit('setState', {state: 'downloadDone', filename: data.filename});
+	}
+}
+
+async function listFiles(data, socket) {
+	await fs.ensureDir(`./ImportFiles/${data.user}/${data.type}`);
+	let files = await fs.readdir(`./ImportFiles/${data.user}/${data.type}`, {withFileTypes: true});
+	if (files) {
+		files = files.filter(elem => elem.isFile());
+		files = files.map(elem => elem.name);
+		socket.emit('listFiles', files);
 	}
 }
 
 //TODO: Remove this testing query
-processCommonCartridge({
+/*processCommonCartridge({
 	path: './ImportFiles/hdagnew@ucdavis.edu/CommonCartridge/DCW-English-10-Semester-2_Curated.imscc',
 	user: 'hdagnew@ucdavis.edu',
 	subdomain: 'chem'
-}, {emit: (a, b) => console.error(b)});
+}, {emit: (a, b) => console.error(b)});*/
 
 async function processCommonCartridge(data, socket) {
 	//ensure file exists
-	if (!data.path.endsWith) {
-		socket.emit('errorMessage', 'File is not a Common Cartridge!');
-		return;
-	}
-	else if (!await fs.exists(data.path)) {
+	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	data.subdomain = LibreTexts.extractSubdomain(data.origin);
+	if (!await fs.exists(data.path)) {
 		socket.emit('errorMessage', 'File does not exist!');
 		return;
 	}
@@ -616,15 +666,12 @@ async function processCommonCartridge(data, socket) {
 		zipLocal.unzip = util.promisify(zipLocal.unzip);
 		let unzipped = await zipLocal.unzip(data.path);
 		unzipped.save = util.promisify(unzipped.save);
-		let filename = data.path.match(/(?<=\/)[\w-.]+$/)[0];
 		await fs.emptyDir(`${data.path}-Unzipped`);
 		await unzipped.save(`${data.path}-Unzipped`);
 		if (!await fs.exists(`${data.path}-Unzipped/imsmanifest.xml`)) {
 			socket.emit('errorMessage', 'imsmanifest.xml is invalid');
 			return;
 		}
-		
-		socket.emit('progress', Math.round(0 / 0 * 1000) / 10);
 		
 		let rootPath = `${data.path}-Unzipped`;
 		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
@@ -638,7 +685,7 @@ async function processCommonCartridge(data, socket) {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
 		}, data.subdomain);
-		onlinePath += `/${filename}`;
+		onlinePath += `/${data.filename}`;
 		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
@@ -662,18 +709,35 @@ async function processCommonCartridge(data, socket) {
 		);
 		resources = temp;
 		organization = organization.elements;
-		while (organization.length === 1)
+		while (organization.length === 1) {
 			organization = organization[0].elements;
-		organization = organization.filter(elem => elem.elements.length > 1);
+			if (organization[0].name === 'title')
+				organization.shift();
+		}
+		// organization = organization.filter(elem => elem.elements.length > 1);
 		let totalPages = 0;
 		organization = organization.map((page) => digestPage(page, resources));
 		
+		//begin page uploads
+		let firstEntry = {
+			title: data.filename,
+			type: 'Coverpage',
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`,
+		};
+		let log = [firstEntry];
+		let backlog = [firstEntry];
+		const eta = new Eta(totalPages, true);
+		let backlogClearer = setInterval(clearBacklog, 1000);
 		
 		for (let i = 0; i < organization.length; i++) {
 			await processPage(organization[i], rootPath, onlinePath, i);
 		}
+		//finishing up
+		socket.emit('setState', {state: 'done', log: log, url:`https://${data.subdomain}.libretexts.org/${onlinePath}`});
+		clearInterval(backlogClearer);
+		await clearBacklog();
 		
-		
+		//Function Zone
 		function digestPage(page, resources) {
 			let result = {};
 			result.title = page.elements.find(elem => elem.name === 'title').elements[0].text;
@@ -717,47 +781,63 @@ async function processCommonCartridge(data, socket) {
 						Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
 				
 			}
-			console.log(page.type, safeTitle);
-			
-			if (page.type === 'topic') {
-				if (!page.href)
-					return;
-				let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
-				let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
-				let images = contents.match(/<img .*?src=".*?\/.*?>/g);
-				let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
-				if (src) {
-					for (let i = 0; i < src.length; i++) {
-						if (!src[i].startsWith('http')) {
-							const fileID = await uploadImage(src[i], path, currentPath);
-							let toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
-							contents = contents.replace(images[i], toReplace);
-							// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+			else if (page.type === 'topic') {
+				if (!page.href || !(page.href.file.endsWith('.html') || page.href.file.endsWith('.xml'))) {
+					page.type = 'skipped';
+				}
+				else {
+					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
+					let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
+					let images = contents.match(/<img .*?src=".*?\/.*?>/g);
+					let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
+					if (src) {
+						for (let i = 0; i < src.length; i++) {
+							if (!src[i].startsWith('http')) {
+								const fileID = await uploadImage(src[i], path, currentPath);
+								let toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+								contents = contents.replace(images[i], toReplace);
+								// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+							}
 						}
 					}
+					let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
+						method: 'POST',
+						body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+					});
+					if (!response.ok) {
+						let error = await response.text();
+						console.error(error);
+						socket.emit('errorMessage', error);
+					}
+					await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
 				}
-				
-				
-				let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
-					method: 'POST',
-					body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
-				});
-				if (!response.ok) {
-					let error = await response.text();
-					socket.emit('errorMessage', error);
-				}
-				await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
-				
 			}
-			else {
+			
+			//report page upload
+			console.log(page.type, page.title);
+			let entry = {
+				title: page.title,
+				type: page.type,
+				url: `https://${data.subdomain}.libretexts.org/${path}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			eta.iterate();
+			socket.emit('progress', {
+				percentage: Math.round(log.length / totalPages * 1000) / 10,
+				pages: `${log.length} / ${totalPages}`,
+				eta: eta.format("{{etah}}"),
+			});
+			
+			//recurse down
+			if (page.type !== 'topic') {
 				for (let i = 0; i < page.subpages.length; i++) {
 					await processPage(page.subpages[i], rootPath, path, i)
 				}
 			}
 			
-			
 			async function uploadImage(filename, path, workingPath) {
-				filename = decodeURIComponent(filename);
+				filename = decodeURIComponent(filename).replace('$IMS-CC-FILEBASE$', '');
 				if (filename.startsWith('../')) {
 					workingPath = workingPath.match(/.*\/(?=.*?\/$)/)[0];
 					filename = filename.match(/(?<=\.\.\/).*/)[0];
@@ -768,29 +848,36 @@ async function processCommonCartridge(data, socket) {
 					socket.emit('errorMessage', filename);
 					return false;
 				}
-				let shortname = filename.match(/(?<=\/).*?$/);
+				let shortname = filename.match(/(?<=\/)[^\/]*?$/);
 				if (shortname) {
 					filename = shortname[0];
 				}
 				let response = await Working.authenticatedFetch(path, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
 					method: 'PUT',
 					body: image,
-					// headers: {'Content-Type': 'application/octet-stream'}
 				});
 				if (response.ok) {
 					let fileID = await response.json();
 					return fileID['@id'];
 				}
 				else {
+					console.error(filename);
 					socket.emit('errorMessage', filename);
 					return false;
 				}
 			}
 		}
 		
+		async function clearBacklog() {
+			if (backlog.length) {
+				socket.emit('pages', backlog);
+				backlog = [];
+			}
+		}
+		
 	} catch (e) {
 		console.error(e);
-		socket.emit('errorMessage', e);
+		socket.emit('errorMessage', JSON.stringify(e));
 	}
 }
 
@@ -803,68 +890,3 @@ async function putProperty(name, value, path, subdomain, username) {
 		}
 	})
 }
-
-async function main() {
-	//https://opentextbc.ca/geology/open/download?type=xhtml
-	// let target = 'https://opentextbc.ca/geology/';
-	// let target = 'https://ohiostate.pressbooks.pub/sciencebites/';
-	let target = 'http://pressbooks.oer.hawaii.edu/humannutrition/';
-	target = target.replace(/\/$/, "");
-	await processEPUB(target);
-	
-	/*	let response = await fetch(target + '/open/download?type=xhtml');
-		if (response.ok) {
-			await processXHTML(await response.text());
-		}
-		else {
-			console.log("Cannot get xhtml for this book!\nFalling back to EPUB.");
-			await processXHTML(await response.text());
-		}*/
-}
-
-/*
-async function processXHTML(text) {
-	let title = getProperty("title");
-	let copyright = getProperty("book-license");
-	let author = getProperty("authors");
-	let coverImage = getProperty("cover-image");
-
-	let splice = text.match(/<div .*?\n^<\/div>/gm);
-	let filtered = [];
-	for (let i = 0; i < splice.length; i++) {
-		if (splice[i].startsWith("<div class=\"chapter")) {
-			//front and back matter ignored
-			filtered.push(splice[i]);
-		}
-	}
-	let root = `https://${subdomain}.libretexts.org/Under_Construction/Users/Henry/${title}`;
-	let contentArray = await processPages(filtered, root);
-	reportMessage(contentArray);
-
-	function getProperty(property) {
-		let regex = new RegExp(`(?<=<meta name="pb-${property}" content=).*(?=" \\/>)`);
-		let result = text.match(regex);
-		return result ? result[0] : null;
-	}
-
-	async function processPages(splice, root) {
-		async function processPage(page) {
-			let title = page.match(/(?<=<div class=".*?-title-wrap">.*?-title">).*?(?=<.*?<\/div>)/)[0];
-			let content = page.match(/(?<=<div class=".*?-title-wrap">.*?<\/div><.*?>).*(?=<\/div)/)[0];
-			let sourceImages = page.match(/(?<=<img .*src=").*?(?=")/g);
-			let filenames = sourceImages.map((image) => {
-				return image.match(/[^/]+(?=\/$|$)/)[0];
-			});
-			let path = "";
-
-			for (let i = 0; i < content.length; i++) {
-				let regex = new RegExp(`(?<=<img .*src=")${sourceImages[i]}(?=")`);
-				content = content.replace(regex, `${root}${path}/${filenames[i]}`)
-			}
-
-			return {title: title, content: content, sourceImages: sourceImages, filenames};
-		}
-
-		return await async.mapLimit(splice, 10, processPage);
-	}
-}*/

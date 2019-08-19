@@ -8,7 +8,6 @@ const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const async = require('async');
 const util = require('util');
-const deepMerge = require('deepmerge');
 const he = require('he');
 
 
@@ -22,6 +21,7 @@ let LibreTextsFunctions = {
 	authenticate: authenticate,
 	addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
+	parseURL: parseURL,
 };
 
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
@@ -38,11 +38,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		return false;
 	}
 	if (!username) {
-		options = deepMerge({
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest',
-				'x-deki-token': authenBrowser[subdomain]
-			}
+		options = optionsMerge({
+			'X-Requested-With': 'XMLHttpRequest',
+			'x-deki-token': authenBrowser[subdomain]
+			
 		}, options);
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
 	}
@@ -55,8 +54,17 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		const hash = hmac.digest('hex');
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
-		options = deepMerge({headers: {'x-deki-token': token}}, options);
+		options = optionsMerge({'x-deki-token': token}, options);
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
+	}
+	
+	function optionsMerge(headers, options) {
+		if (options.headers) {
+			options.headers = Object.assign(headers, options.headers)
+		}
+		else
+			options.headers = headers;
+		return options;
 	}
 }
 
@@ -243,22 +251,22 @@ function clarifySubdomain(url) {
 }
 
 function decodeHTML(content) {
-/*	let ret = content.replace(/&gt;/g, '>');
-	ret = ret.replace(/&lt;/g, '<');
-	ret = ret.replace(/&quot;/g, '"');
-	ret = ret.replace(/&apos;/g, "'");
-	ret = ret.replace(/&amp;/g, '&');*/
+	/*	let ret = content.replace(/&gt;/g, '>');
+		ret = ret.replace(/&lt;/g, '<');
+		ret = ret.replace(/&quot;/g, '"');
+		ret = ret.replace(/&apos;/g, "'");
+		ret = ret.replace(/&amp;/g, '&');*/
 	return he.decode(content);
 }
 
 function encodeHTML(content) {
-/*	let ret = content;
-	ret = ret.replace(/&/g, '&amp;');
-	ret = ret.replace(/>/g, '&gt;');
-	ret = ret.replace(/</g, '&lt;');
-	ret = ret.replace(/"/g, '&quot;');
-	ret = ret.replace(/'/g, "&apos;");*/
-	return he.encode(content,{'useNamedReferences': true});
+	/*	let ret = content;
+		ret = ret.replace(/&/g, '&amp;');
+		ret = ret.replace(/>/g, '&gt;');
+		ret = ret.replace(/</g, '&lt;');
+		ret = ret.replace(/"/g, '&quot;');
+		ret = ret.replace(/'/g, "&apos;");*/
+	return he.encode(content, {'useNamedReferences': true});
 }
 
 function authenticate(username, subdomain) {
