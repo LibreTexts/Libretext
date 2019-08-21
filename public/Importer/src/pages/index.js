@@ -10,14 +10,14 @@ target.id = Math.random() * 100;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 function Dashboard() {
-	const [panel, setPanel] = useState('commoncartridge');
-	const [devMode, setDevMode] = useState(true);
+	const [panel, setPanel] = useState('epub');
+	const [devMode, setDevMode] = useState(localStorage.getItem('devMode') === "true");
 	
 	return <div className={'CenterContainer'}>
 		<div className="navigationBar">
 			<select onChange={(event) => {
 				setPanel(event.target.value);
-			}	} defaultValue={panel}>
+			}} defaultValue={panel}>
 				{/*<option value={'Revisions'}>Revision Log</option>*/}
 				<option value={'epub'}>Import EPUB</option>
 				<option value={'commoncartridge'}>Import Common Cartridge</option>
@@ -27,7 +27,10 @@ function Dashboard() {
 			<div>
 				<label style={{display: 'flex', alignItems: 'center'}}>
 					<span style={{marginRight: '10px'}}>Dev Mode</span>
-					<Toggle onChange={() => setDevMode(!devMode)}
+					<Toggle onChange={() => {
+						localStorage.setItem('devMode', !devMode);
+						setDevMode(!devMode);
+					}}
 					        defaultChecked={devMode}/>
 				</label>
 			</div>

@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 		super(props);
 		this.state = {
 			panel: 'FindAndReplace',
-			devMode: false,
+			devMode: localStorage.getItem('devMode') === "true",
 		}
 	}
 	
@@ -33,9 +33,12 @@ class Dashboard extends React.Component {
 					<option value={'ForeignImage'}>Foreign Image Importer</option>
 				</select>
 				<div>
-					<label style={{display: 'flex', alignItems:'center'}}>
-						<span style={{marginRight:'10px'}}>Dev Mode</span>
-						<Toggle onChange={() => this.setState({devMode: !this.state.devMode})}
+					<label style={{display: 'flex', alignItems: 'center'}}>
+						<span style={{marginRight: '10px'}}>Dev Mode</span>
+						<Toggle onChange={() => {
+							localStorage.setItem('devMode', !this.state.devMode);
+							this.setState({devMode: !this.state.devMode});
+						}}
 						        defaultChecked={this.state.devMode}/>
 					</label>
 				</div>

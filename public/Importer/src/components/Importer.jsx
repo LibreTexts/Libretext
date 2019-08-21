@@ -14,6 +14,7 @@ export default function Importer(props) {
 	const [url, setURL] = useState('');
 	const [socket, setSocket] = useState(null);
 	const [finished, setFinished] = useState('');
+	const [subdomain, setSubdomain] = useState(LibreTexts.extractSubdomain());
 	const user = document.getElementById('usernameHolder').innerText;
 	
 	useEffect(() => { //setup websocket
@@ -34,17 +35,13 @@ export default function Importer(props) {
 			setResults(results => data.concat(results));
 		});
 		socket.on('setState', async (data) => {
+			setState(data.state);
 			switch (data.state) {
-				case 'download':
-					setCounter(0);
-					break;
 				case 'downloadDone':
-					setState('downloadDone');
 					setSeconds(-1);
 					setFile(data.filename);
 					break;
 				case 'done':
-					setState('done');
 					setSeconds(-1);
 					setResults(data.log);
 					setFinished(data.url);
@@ -87,9 +84,10 @@ export default function Importer(props) {
 				<div>
 					<h3>{getName()}</h3>
 					<h4>Step 1: Send a file to the server</h4>
-					<input placeholder="URL of File" onChange={(event) => {
-						setURL(event.target.value);
-					}}/>OR<br/>
+					<input placeholder="URL of File" value={typeof url === 'string' ? url : 'File Chosen'}
+					       onChange={(event) => {
+						       setURL(event.target.value);
+					       }}/>OR<br/>
 					<input placeholder="Upload a file" type='file' accept={acceptableFiles().join()}
 					       onChange={(event) => {
 						       let file = event.target.files[0];
@@ -116,7 +114,12 @@ export default function Importer(props) {
 					<select onChange={(event) => setFile(event.target.value)} value={file}>
 						<option disabled value=''>Upload{files.length ? ' or Select' : ''} a file</option>
 						{files.map(file => <option key={file}>{file}</option>)}</select>
-					<button onClick={sendImport}>Import {file}</button>
+					<select onChange={(event) => setSubdomain(event.target.value)} value={subdomain}>
+						{Object.keys(LibreTexts.libraries).map(function (key, index) {
+							return <option value={LibreTexts.libraries[key]} key={key}>{key}</option>;
+						})}
+					</select>
+					<button onClick={sendImport}>Import {file} into {subdomain}</button>
 				</div>
 			</div>
 			<div>
@@ -164,6 +167,9 @@ export default function Importer(props) {
 				</div>;
 			case 'downloadDone':
 				return <p className="status" style={{backgroundColor: 'green'}}>Upload Complete!</p>;
+			case 'downloadFail':
+				return <p className="status" style={{backgroundColor: 'red'}}>Upload Failed! Please try a different
+				                                                              url</p>;
 			default:
 				return null;
 		}
@@ -189,9 +195,14 @@ export default function Importer(props) {
 					</div>
 				</div>;
 			case 'done':
-				return <p className="status" style={{backgroundColor: 'green'}}>Import Complete!<br/>View your results
-				                                                                here <a target='_blank'
-				                                                                        href={finished}>{finished}</a></p>;
+				return <div className="status"
+				            style={{backgroundColor: 'green', display: 'flex', flexDirection: 'column'}}>Import
+				                                                                                         Complete! View
+				                                                                                         your results
+				                                                                                         here <a
+						target='_blank'
+						href={finished}>{finished}</a>
+				</div>;
 			default:
 				return null;
 		}
@@ -254,7 +265,7 @@ export default function Importer(props) {
 				user: user,
 				filename: file,
 				type: props.panel,
-				origin: window.location.href
+				subdomain: subdomain
 			};
 			socket.emit('import', response);
 			setState('processing');
@@ -303,9 +314,10 @@ export default function Importer(props) {
 			case '':
 			case 'done':
 			case 'downloadDone':
+			case 'downloadFail':
 				return true;
 			default:
-				return false;
+				return props.devMode;
 		}
 	}
 }

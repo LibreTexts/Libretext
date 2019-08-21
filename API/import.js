@@ -117,36 +117,6 @@ function handler(request, response) {
 			}
 		}
 	}
-	/*else if (url === '/import/sendFile') {
-		console.log(authorization);
-		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
-			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-				});
-				response.end();
-			}
-			else if (request.method === "POST") {
-				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-				} : {});
-				let body = [];
-				request.on('data', (chunk) => {
-					body.push(chunk);
-				}).on('end', async () => {
-					body = Buffer.concat(body);
-					console.log(body);
-					await fs.writeFile('test.txt', body);
-					response.end();
-				});
-			}
-			else {
-				responseError(request.method + " Not Acceptable", 406)
-			}
-		}
-	}*/
 	else {
 		responseError('Action not found', 400);
 	}
@@ -562,7 +532,7 @@ io.on('connection', function (socket) {
 async function jobHandler(data, socket) {
 	switch (data.type) {
 		case "epub":
-			return null;
+			return processEPUB(data, socket);
 		case 'commoncartridge':
 			return processCommonCartridge(data, socket);
 		case "pdf":
@@ -575,9 +545,29 @@ async function jobHandler(data, socket) {
 }
 
 async function downloadFile(data, socket) {
+	let response;
+	if (!data.url.startsWith('http')) {
+		socket.emit('setState', {state: 'downloadFail'});
+		return;
+	}
 	
-	let response = await fetch(data.url);
+	if (data.url.includes('dropbox.com')) {
+		response = await fetch(data.url + '?dl=1', {mode: "HEAD"});
+		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('attachment'))
+			data.url = data.url + '?dl=1';
+	}
+	else if (data.type === 'epub') {
+		response = await fetch(data.url + '/open/download?type=epub', {mode: "HEAD"});
+		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('.epub'))
+			data.url = data.url + '/open/download?type=epub';
+	}
+	response = await fetch(data.url);
+	
 	// Step 2: get total length
+	if (!response.ok || !response.headers.get('content-disposition')) {
+		socket.emit('setState', {state: 'downloadFail'});
+		return;
+	}
 	const contentLength = +response.headers.get('Content-Length');
 	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/))
 		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/)[0];
@@ -646,9 +636,8 @@ async function listFiles(data, socket) {
 	}
 }
 
-//TODO: Remove this testing query
-/*processCommonCartridge({
-	path: './ImportFiles/hdagnew@ucdavis.edu/CommonCartridge/DCW-English-10-Semester-2_Curated.imscc',
+/*processEUPB({
+	path: './ImportFiles/hdagnew@ucdavis.edu/epub/Copy%20of%2088%20Open%20Essays.epub',
 	user: 'hdagnew@ucdavis.edu',
 	subdomain: 'chem'
 }, {emit: (a, b) => console.error(b)});*/
@@ -656,7 +645,6 @@ async function listFiles(data, socket) {
 async function processCommonCartridge(data, socket) {
 	//ensure file exists
 	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	data.subdomain = LibreTexts.extractSubdomain(data.origin);
 	if (!await fs.exists(data.path)) {
 		socket.emit('errorMessage', 'File does not exist!');
 		return;
@@ -733,7 +721,11 @@ async function processCommonCartridge(data, socket) {
 			await processPage(organization[i], rootPath, onlinePath, i);
 		}
 		//finishing up
-		socket.emit('setState', {state: 'done', log: log, url:`https://${data.subdomain}.libretexts.org/${onlinePath}`});
+		socket.emit('setState', {
+			state: 'done',
+			log: log,
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`
+		});
 		clearInterval(backlogClearer);
 		await clearBacklog();
 		
@@ -788,18 +780,19 @@ async function processCommonCartridge(data, socket) {
 				else {
 					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
 					let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
-					let images = contents.match(/<img .*?src=".*?\/.*?>/g);
-					let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
-					if (src) {
-						for (let i = 0; i < src.length; i++) {
-							if (!src[i].startsWith('http')) {
-								const fileID = await uploadImage(src[i], path, currentPath);
-								let toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
-								contents = contents.replace(images[i], toReplace);
-								// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
-							}
+					
+					contents = await uploadImages(contents, path, imageProcessor, data);
+					
+					async function imageProcessor(imagePath) {
+						let filename = decodeURIComponent(imagePath).replace('$IMS-CC-FILEBASE$', '');
+						if (filename.startsWith('../')) {
+							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
+							filename = filename.match(/(?<=\.\.\/).*/)[0];
 						}
+						return [filename, await fs.readFile(currentPath + filename)];
 					}
+					
+					
 					let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
 						method: 'POST',
 						body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
@@ -817,7 +810,7 @@ async function processCommonCartridge(data, socket) {
 			console.log(page.type, page.title);
 			let entry = {
 				title: page.title,
-				type: page.type,
+				type: page.type.capitalize(),
 				url: `https://${data.subdomain}.libretexts.org/${path}`,
 			};
 			backlog.push(entry);
@@ -835,37 +828,6 @@ async function processCommonCartridge(data, socket) {
 					await processPage(page.subpages[i], rootPath, path, i)
 				}
 			}
-			
-			async function uploadImage(filename, path, workingPath) {
-				filename = decodeURIComponent(filename).replace('$IMS-CC-FILEBASE$', '');
-				if (filename.startsWith('../')) {
-					workingPath = workingPath.match(/.*\/(?=.*?\/$)/)[0];
-					filename = filename.match(/(?<=\.\.\/).*/)[0];
-				}
-				let image = await fs.readFile(workingPath + filename);
-				
-				if (!image) {
-					socket.emit('errorMessage', filename);
-					return false;
-				}
-				let shortname = filename.match(/(?<=\/)[^\/]*?$/);
-				if (shortname) {
-					filename = shortname[0];
-				}
-				let response = await Working.authenticatedFetch(path, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
-					method: 'PUT',
-					body: image,
-				});
-				if (response.ok) {
-					let fileID = await response.json();
-					return fileID['@id'];
-				}
-				else {
-					console.error(filename);
-					socket.emit('errorMessage', filename);
-					return false;
-				}
-			}
 		}
 		
 		async function clearBacklog() {
@@ -881,6 +843,263 @@ async function processCommonCartridge(data, socket) {
 	}
 }
 
+async function processEPUB(data, socket) {
+	data.socket = socket;
+	const Working = {}; // since user and subdomain are unchanged for these calls
+	Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
+	Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
+	
+	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	if (!await fs.exists(data.path)) {
+		socket.emit('errorMessage', 'File does not exist!');
+		return;
+	}
+	
+	let epub = new EPub(data.path);
+	epub.parse();
+	await new Promise((resolve, reject) => {
+		epub.on("end", resolve);
+	});
+	const title = epub.metadata.title;
+	
+	let filtered = [];
+	let chapters = [];
+	let whole = [];
+	const toc = epub.flow;
+	let chapterIndex = 0;
+	let pageIndex = 1;
+	
+	for (let i = 0; i < toc.length; i++) {
+		if (toc[i].level) {
+			//front and back matter ignored
+			let page = toc[i];
+			let indexes = page.title.match(/^[0-9]+\.[0-9]/);
+			if (indexes) {
+				indexes = indexes[0];
+				page.title = page.title.replace(indexes, indexes + ':');
+			}
+			else {
+				page.title = `${chapterIndex}.${pageIndex}: ${page.title}`;
+			}
+			pageIndex++;
+			filtered.push({title: page.title, id: page.id, href: page.href});
+		}
+		else if (toc[i].href.includes('-chapter-') || toc[i].href.includes('part-')) {
+			chapters.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
+			chapterIndex++;
+			pageIndex = 1;
+		}
+		whole.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
+	}
+	
+	let filteredChapters = [];
+	for (let i = 0; i < chapters.length; i++) {
+		let current = chapters[i];
+		if (!current.title.includes('Summary')) {
+			current.index = i;
+			filteredChapters.push(current);
+		}
+	}
+	
+	let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+	await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+		method: "POST",
+		body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+	}, data.subdomain);
+	onlinePath += `/${data.filename}`;
+	const isSimple = !filtered.length || !filteredChapters.length;
+	//begin page uploads
+	let firstEntry = {
+		title: data.filename,
+		type: 'Coverpage',
+		url: `https://${data.subdomain}.libretexts.org/${onlinePath}`,
+	};
+	let log = [firstEntry];
+	let backlog = [firstEntry];
+	const eta = new Eta(whole.length, true);
+	let backlogClearer = setInterval(clearBacklog, 1000);
+	
+	if (await coverPage(onlinePath, isSimple)) {
+		if (isSimple) { //falling back to simple import
+			socket.emit('errorMessage', 'Warning: Cannot determine structure. Falling back to simple import.');
+			await processPages(whole, onlinePath, null);
+		}
+		else {
+			await processChapters(onlinePath, filteredChapters);
+			await processPages(filtered, onlinePath, filteredChapters);
+		}
+		
+		//finishing up
+		socket.emit('setState', {
+			state: 'done',
+			log: log,
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`
+		});
+		clearInterval(backlogClearer);
+		await clearBacklog();
+	}
+	
+	async function clearBacklog() {
+		if (backlog.length) {
+			socket.emit('pages', backlog);
+			backlog = [];
+		}
+	}
+	
+	async function coverPage(path, isSimple) {
+		let content = `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-${isSimple ? 'guide' : 'category'}</a><a href=\"#\">coverpage:yes</a></p>`;
+		let response = await Working.authenticatedFetch(path, 'contents?edittime=now', {
+			method: "POST",
+			body: content,
+		});
+		if (!response.ok) {
+			let error = await response.text();
+			socket.emit('errorMessage', error);
+			return false;
+		}
+		
+		let propertyArray = isSimple ? [Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+				Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+				Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]
+			: [Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+				Working.putProperty('mindtouch.idf#subpageListing', 'simple', path)];
+		
+		
+		await Promise.all(propertyArray);
+		return true;
+	}
+	
+	async function processChapters(onlinePath, chapters) {
+		await async.mapLimit(chapters, 2, processChapter);
+		
+		async function processChapter(chapter) {
+			let title = chapter.title;
+			title = title.replace("Chapter ", "");
+			let number = title.match(/[0-9]+(?= )/);
+			if (number) {
+				number = number[0];
+			}
+			else {
+				number = chapter.index + 1;
+				if (!title.startsWith(`${chapter.index + 1}:`))
+					title = `${chapter.index + 1}: ${title}`;
+			}
+			let padded = title.replace(number, ("" + number).padStart(2, "0"));
+			chapter.title = title;
+			chapter.padded = padded;
+			let path = `${onlinePath}/${padded}`;
+			let response = await Working.authenticatedFetch(path, `contents?edittime=now${padded !== title ? `&title=${encodeURIComponent(title)}` : ''}`, {
+				method: "POST",
+				body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`,
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				socket.emit('errorMessage', error);
+				return false;
+			}
+			
+			await Promise.all(
+				[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+					Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+					Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]
+			);
+			console.log('Chapter', title);
+			let entry = {
+				title: title,
+				type: 'Chapter',
+				url: `https://${data.subdomain}.libretexts.org/${path}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			eta.iterate();
+			socket.emit('progress', {
+				percentage: Math.round(log.length / whole.length * 1000) / 10,
+				pages: `${log.length} / ${whole.length}`,
+				eta: eta.format("{{etah}}"),
+			});
+			return true;
+			
+		}
+	}
+	
+	
+	async function processPages(pageArray, onlinePath, filteredChapters) {
+		let isSimple = filteredChapters === null;
+		let untitled = 0;
+		return await async.mapLimit(pageArray, 2, processPage);
+		
+		async function processPage(page) {
+			epub.getChapterRaw = util.promisify(epub.getChapterRaw);
+			epub.getImage = util.promisify(epub.getImage);
+			epub.readFile = util.promisify(epub.readFile);
+			let contents = await epub.getChapterRaw(page.id);
+			let pressBooksContent = contents.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>\n*<\/body>)/m);
+			if (pressBooksContent) {
+				contents = pressBooksContent[0];
+			}
+			
+			let title = page.title || `Untitled Page ${("" + ++untitled).padStart(2, "0")}`;
+			let path = title;
+			
+			let chapterNumber = path.match(/.*?(?=\.)/);
+			if (!isSimple && chapterNumber) { //adds padding if necessary
+				chapterNumber = parseInt(chapterNumber[0]);
+				path = chapterNumber < 10 ? "0" + path : false;
+			}
+			path = isSimple ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
+			
+			//remove extraneous link tags
+			let containerTags = contents.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
+			if (containerTags) {
+				for (let i = 0; i < containerTags.length; i++) {
+					let toReplace = containerTags[i].match(/<img.*?"\/>/)[0];
+					contents = contents.replace(containerTags[i], toReplace);
+				}
+			}
+			
+			contents = await uploadImages(contents, path, imageProcessor, data);
+			
+			async function imageProcessor(imagePath) {
+				let filename = decodeURIComponent(imagePath);
+				let prefix = page.href.match(/.*\//);
+				prefix = prefix ? prefix[0] : '';
+				if (prefix && filename.startsWith('../')) {
+					prefix = prefix.match(/.*\/(?=.*?\/$)/)[0];
+					filename = filename.match(/(?<=\.\.\/).*/)[0];
+				}
+				return [filename, await epub.readFile(prefix + filename)];
+			}
+			
+			let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
+				method: 'POST',
+				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
+			}
+			await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
+			
+			//report page upload
+			console.log('Topic', page.title || title);
+			let entry = {
+				title: page.title,
+				type: 'Topic',
+				url: `https://${data.subdomain}.libretexts.org/${path}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			eta.iterate();
+			socket.emit('progress', {
+				percentage: Math.round(log.length / whole.length * 1000) / 10,
+				pages: `${log.length} / ${whole.length}`,
+				eta: eta.format("{{etah}}"),
+			});
+		}
+	}
+}
+
 async function putProperty(name, value, path, subdomain, username) {
 	await LibreTexts.authenticatedFetch(path, "properties", subdomain, username, {
 		method: "POST",
@@ -889,4 +1108,57 @@ async function putProperty(name, value, path, subdomain, username) {
 			"Slug": name
 		}
 	})
+}
+
+async function uploadImages(contents, path, imageProcessor, data) {
+	//Rewrite image src url
+	let images = contents.match(/<img .*?src=".*?\/.*?>/g);
+	let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
+	const atRoot = images === null;
+	if (atRoot) {
+		images = contents.match(/<img .*?src=".*?>/g);
+	}
+	if (src) {
+		for (let i = 0; i < src.length; i++) {
+			if (!src[i].startsWith('http')) {
+				let [filename, image] = await imageProcessor(src[i]);
+				const fileID = await uploadImage(filename, path, image, data.subdomain, data.user, data.socket);
+				let toReplace;
+				if (atRoot) { // at root url
+					toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
+				}
+				else {
+					toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+				}
+				
+				contents = contents.replace(images[i], toReplace);
+				contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+			}
+		}
+	}
+	return contents;
+	
+	async function uploadImage(filename, path, image, subdomain, username, socket) {
+		if (!image) {
+			socket.emit('errorMessage', filename);
+			return false;
+		}
+		let shortname = filename.match(/(?<=\/)[^\/]*?$/);
+		if (shortname) {
+			filename = shortname[0];
+		}
+		let response = await LibreTexts.authenticatedFetch(path, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, subdomain, username, {
+			method: 'PUT',
+			body: image,
+		});
+		if (response.ok) {
+			let fileID = await response.json();
+			return fileID['@id'];
+		}
+		else {
+			console.error(filename);
+			socket.emit('errorMessage', filename);
+			return false;
+		}
+	}
 }

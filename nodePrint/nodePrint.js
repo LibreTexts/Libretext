@@ -1822,7 +1822,7 @@ async function getSubpages(rootURL, options = {}) {
 			let properties = authenticatedFetch(path, 'properties?dream.out.format=json', subdomain);
 			tags = await (await tags).json();
 			properties = await (await properties).json();
-			if (properties['@count'] !== '0') {
+			if (properties['@count'] !== '0' && properties.property) {
 				properties = properties.property.length ? properties.property : [properties.property]
 			}
 			else {

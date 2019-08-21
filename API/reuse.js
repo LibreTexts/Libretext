@@ -10,7 +10,21 @@ const async = require('async');
 const util = require('util');
 const he = require('he');
 
-
+const libraries = {
+	'Biology': 'bio',
+	'Business': 'biz',
+	'Chemistry': 'chem',
+	'Engineering': 'eng',
+	'Espanol': 'espanol',
+	'Geology': 'geo',
+	'Humanities': 'human',
+	'Mathematics': 'math',
+	'Medicine': 'med',
+	'Physics': 'phys',
+	'Social Sciences': 'socialsci',
+	'Statistics': 'stats',
+	'Workforce': 'workforce'
+};
 let LibreTextsFunctions = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
@@ -22,8 +36,11 @@ let LibreTextsFunctions = {
 	addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
 	parseURL: parseURL,
+	libraries: libraries,
 };
 
+
+//Function Zone
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
 	if (!isNaN(path)) {

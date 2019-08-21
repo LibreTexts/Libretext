@@ -1,3 +1,19 @@
+const libraries = {
+	'Biology': 'bio',
+	'Business': 'biz',
+	'Chemistry': 'chem',
+	'Engineering': 'eng',
+	'Espanol': 'espanol',
+	'Geology': 'geo',
+	'Humanities': 'human',
+	'Mathematics': 'math',
+	'Medicine': 'med',
+	'Physics': 'phys',
+	'Social Sciences': 'socialsci',
+	'Statistics': 'stats',
+	'Workforce': 'workforce'
+};
+
 const LibreTexts = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
@@ -9,6 +25,7 @@ const LibreTexts = {
 	// addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
 	getCurrent: getCurrent,
+	libraries: libraries,
 };
 
 async function authenticatedFetch(path, api, subdomain) {
@@ -119,7 +136,7 @@ function encodeHTML(content) {
 	return ret;
 }
 
-function extractSubdomain(url) {
+function extractSubdomain(url = window.location.href) {
 	let origin = url.split("/")[2].split(".");
 	const subdomain = origin[0];
 	return subdomain;
@@ -131,3 +148,4 @@ async function getCurrent() {
 	let path = page.replace(/^.*?libretexts.org\//, '');
 	LibreTexts.authenticatedFetch(path, 'contents?mode=edit', subdomain).then(async (data) => console.log(await data.text()))
 }
+
