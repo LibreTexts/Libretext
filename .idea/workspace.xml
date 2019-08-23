@@ -3,16 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/ecosystem.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/install/ecosystem.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Importer/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +197,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Importer">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -963,14 +959,9 @@
       <workItem from="1566270165558" duration="2017000" />
       <workItem from="1566275008960" duration="13241000" />
       <workItem from="1566355505034" duration="4716000" />
-      <workItem from="1566361440319" duration="395000" />
-    </task>
-    <task id="LOCAL-00165" summary="Common Cartridge weblink Fix">
-      <created>1553751747172</created>
-      <option name="number" value="00165" />
-      <option name="presentableId" value="LOCAL-00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1553751747172</updated>
+      <workItem from="1566361440319" duration="1510000" />
+      <workItem from="1566362969576" duration="2823000" />
+      <workItem from="1566496267474" duration="22814000" />
     </task>
     <task id="LOCAL-00166" summary="Added \\ for lulu tag newline">
       <created>1554258133363</created>
@@ -1308,7 +1299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566192889434</updated>
     </task>
-    <option name="localTasksCounter" value="214" />
+    <task id="LOCAL-00214" summary="Importer Beta">
+      <created>1566361853035</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1566361853035</updated>
+    </task>
+    <option name="localTasksCounter" value="215" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1364,7 +1362,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="NodePrint RenderTimeout fix" />
     <MESSAGE value="RenderTimeout Resolve" />
     <MESSAGE value="Initial Portals" />
     <MESSAGE value="findReplace =&gt; findAndReplace" />
@@ -1389,17 +1386,11 @@
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="refreshListAdd" />
     <MESSAGE value="Importer Alpha" />
-    <option name="LAST_COMMIT_MESSAGE" value="Importer Alpha" />
+    <MESSAGE value="Importer Beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Importer Beta" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>841</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" type="javascript-exception" />
       </default-breakpoints>

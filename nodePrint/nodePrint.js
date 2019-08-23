@@ -21,12 +21,13 @@ const storage = require('node-persist');
 const JSZip = require("jszip");
 const he = require("he");
 const deepMerge = require('deepmerge');
+const convert = require('xml-js');
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 
-var Gbrowser;
-var Gserver;
-var keys;
+let Gbrowser;
+let Gserver;
+let keys;
 
 puppeteer.launch({
 	args: [
@@ -564,6 +565,10 @@ puppeteer.launch({
 		async function getCover(current, numPages, options = {}) {
 			await fs.ensureDir(`./PDF/Letter/Cover`);
 			await fs.ensureDir(`./PDF/A4/Cover`);
+			
+			if (!options.thin && (numPages < 32 && options.hasExtraPadding && !options.isHardcover) || (numPages < 24 && options.hasExtraPadding && options.isHardcover))
+				return false;
+			
 			let escapedURL = md5(current.url);
 			const page = await browser.newPage();
 			
@@ -1652,15 +1657,29 @@ puppeteer.launch({
 				filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
 				await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
 				await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
-				filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
-				await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
-				await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
-				filename = `Cover/${await getCover(current, lulu.numpages, {
-					hasExtraPadding: true,
-					isHardcover: true
-				})}.pdf`;
-				await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
-				await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+				if (lulu.numpages >= 32) {
+					filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
+					await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
+					await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
+				}
+				else {
+					let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
+					await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.pdf`, notice);
+					await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_PerfectBound.pdf`, notice);
+				}
+				if (lulu.numpages >= 24) {
+					filename = `Cover/${await getCover(current, lulu.numpages, {
+						hasExtraPadding: true,
+						isHardcover: true
+					})}.pdf`;
+					await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+					await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+				}
+				else {
+					let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
+					await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.pdf`, notice);
+					await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Casewrap.pdf`, notice);
+				}
 				filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true, thin: true})}.pdf`;
 				await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
 				await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
@@ -1843,10 +1862,11 @@ async function getSubpages(rootURL, options = {}) {
 					if (!children['page.subpage'].length)
 						delete children['page.subpage'];
 				}
-				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
-					delay: options.delay,
-					depth: options.depth
-				} : {});
+				else
+					children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
+						delay: options.delay,
+						depth: options.depth
+					} : {});
 			}
 			
 			result[index] = {
@@ -1881,6 +1901,123 @@ async function getSubpages(rootURL, options = {}) {
 		}
 		return {};
 	}
+}
+
+// getSubpagesFull('https://bio.libretexts.org/Courses').then(result => console.log(result));
+
+async function getSubpagesFull(rootURL) { //More performant for entire libraries
+	let origin = rootURL.split("/")[2].split(".");
+	const subdomain = origin[0];
+	let path = rootURL.split('/').splice(3).join('/');
+	
+	let full = await getSitemap();
+	if (path) {
+		for (let i = 0; i < full.subpages.length; i++) {
+			if (full.subpages[i].url === rootURL)
+				return full.subpages[i];
+		}
+	}
+	return full;
+	
+	async function getSitemap() {
+		/*		let map = await fetch(`https://${subdomain}.libretexts.org/sitemap.xml`);
+				if (map.ok) {
+					map = await map.text();
+					map = convert.xml2js(map).elements[0];
+				}
+				else {
+					let error = await map.text();
+					console.error(error);
+					return false;
+				}*/
+		let map = await fs.readFile('./sitemap.xml', 'utf8');
+		map = convert.xml2js(map).elements[0];
+		if (map.name === 'sitemapindex') {
+		
+		}
+		let originalMap;
+		if (map.name === 'urlset') {
+			map = map.elements.map(elem => {
+				let url = elem.elements.find(i => i.name === 'loc');
+				if (!url)
+					return false;
+				else return url.elements[0].text;
+			});
+			
+			if (map.length) {
+				map.sort();
+				originalMap = [...map];
+				const start = performance.now();
+				let lastNode;
+				
+				// Add an item node in the tree, at the right position
+				function addToTree(node, treeNodes) {
+					let parentNode;
+					if (lastNode && node.match(/^.*(?=\/)/)[0] === lastNode.url)
+						parentNode = lastNode.subpages;
+					else
+						parentNode = GetTheParentNodeChildArray(node, treeNodes) || treeNodes;
+					if (parentNode && parentNode.subpages)
+						parentNode.subpages.push({
+							url: node,
+							subpages: [],
+							parent: parentNode
+						});
+				}
+				
+				function GetTheParentNodeChildArray(path, treeNodes) {
+					for (let i = 0; i < treeNodes.length; i++) {
+						const treeNode = treeNodes[i];
+						
+						if (path === treeNode.url)
+							return false;
+						
+						if (path.match(/^.*(?=\/)/)[0] === treeNode.url) { //found parent
+							lastNode = treeNode;
+							return treeNode;
+						}
+						else if (path.match(new RegExp(`^${treeNode.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\/`))) { //found ancestor
+							if (treeNode.subpages.find(item => path.startsWith(item.url))) {
+								return GetTheParentNodeChildArray(path, treeNode.subpages);
+							}
+							else {//create subpage
+								let pathPart = path.replace(treeNode.url, '').match(/^\/.*?(?=\/)/)[0];
+								treeNode.subpages.push({
+									url: `${treeNode.url}${pathPart}`,
+									subpages: [],
+									parent: treeNode
+								});
+								return GetTheParentNodeChildArray(path, treeNode.subpages);
+							}
+						}
+					}
+				}
+				
+				
+				//Create the item tree starting from menuItems
+				function createTree(nodes) {
+					const tree = [];
+					
+					for (let i = 0; i < nodes.length; i++) {
+						const node = nodes[i];
+						addToTree(node, tree);
+					}
+					return tree;
+				}
+				
+				map = createTree(map)[0];
+				const end = performance.now();
+				let time = end - start;
+				time /= 100;
+				time = Math.round(time);
+				time /= 10;
+				console.log(time);
+			}
+		}
+		console.log(originalMap);
+		return map;
+	}
+	
 }
 
 function clarifySubdomain(url) {

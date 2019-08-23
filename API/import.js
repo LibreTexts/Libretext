@@ -720,6 +720,8 @@ async function processCommonCartridge(data, socket) {
 		for (let i = 0; i < organization.length; i++) {
 			await processPage(organization[i], rootPath, onlinePath, i);
 		}
+		await processAttachments(resources.filter(res => !res.active), rootPath, `${onlinePath}/Attachments`);
+		
 		//finishing up
 		socket.emit('setState', {
 			state: 'done',
@@ -746,8 +748,10 @@ async function processCommonCartridge(data, socket) {
 				else
 					result.type = 'category';
 			}
-			if (page.attributes && page.attributes.identifierref)
+			if (page.attributes && page.attributes.identifierref) {
 				result.href = resources[page.attributes.identifierref];
+				resources[page.attributes.identifierref].active = true;
+			}
 			totalPages++;
 			return result;
 		}
@@ -775,7 +779,8 @@ async function processCommonCartridge(data, socket) {
 			}
 			else if (page.type === 'topic') {
 				if (!page.href || !(page.href.file.endsWith('.html') || page.href.file.endsWith('.xml'))) {
-					page.type = 'skipped';
+					page.type = 'attachment';
+					await processAttachments([page.href], rootPath, path);
 				}
 				else {
 					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
@@ -810,7 +815,7 @@ async function processCommonCartridge(data, socket) {
 			console.log(page.type, page.title);
 			let entry = {
 				title: page.title,
-				type: page.type.capitalize(),
+				type: page.type,
 				url: `https://${data.subdomain}.libretexts.org/${path}`,
 			};
 			backlog.push(entry);
@@ -827,6 +832,50 @@ async function processCommonCartridge(data, socket) {
 				for (let i = 0; i < page.subpages.length; i++) {
 					await processPage(page.subpages[i], rootPath, path, i)
 				}
+			}
+		}
+		
+		async function processAttachments(resources, rootPath, onlinePath) {
+			resources = resources.filter(elem => elem);
+			if (!resources.length)
+				return false;
+			let entries = [];
+			
+			for (let i = 0; i < resources.length; i++) {
+				try {
+					let filename = decodeURIComponent(resources[i].file).replace('$IMS-CC-FILEBASE$', '');
+					let currentPath = rootPath;
+					if (filename.startsWith('../')) {
+						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
+						filename = filename.match(/(?<=\.\.\/).*/)[0];
+					}
+					let file = await fs.readFile(currentPath + filename);
+					
+					let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
+						method: 'PUT',
+						body: file,
+					});
+					if (response.ok) {
+						let fileID = await response.json();
+						entries.push({title: filename.match(/(?<=\/)[^\/]*?$/)[0], id: fileID});
+					}
+				} catch (e) {
+				
+				}
+			}
+			if (!entries.length)
+				return false;
+			let contents = entries.map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
+			
+			
+			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&dream.out.format=json`, {
+				method: 'POST',
+				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
 			}
 		}
 		
