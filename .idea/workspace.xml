@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/nodePrint/bio.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/socialsci.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/ecosystem.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/install/ecosystem.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,16 +75,16 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\epub" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
@@ -961,14 +959,20 @@
       <workItem from="1566355505034" duration="4716000" />
       <workItem from="1566361440319" duration="1510000" />
       <workItem from="1566362969576" duration="2823000" />
-      <workItem from="1566496267474" duration="22814000" />
-    </task>
-    <task id="LOCAL-00166" summary="Added \\ for lulu tag newline">
-      <created>1554258133363</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1554258133364</updated>
+      <workItem from="1566496267474" duration="23133000" />
+      <workItem from="1566577943941" duration="1293000" />
+      <workItem from="1566590145380" duration="5431000" />
+      <workItem from="1566597226805" duration="36000" />
+      <workItem from="1566597405182" duration="35000" />
+      <workItem from="1566597456292" duration="6462000" />
+      <workItem from="1566926116578" duration="7296000" />
+      <workItem from="1566949165082" duration="8759000" />
+      <workItem from="1566972075709" duration="653000" />
+      <workItem from="1567016281748" duration="3573000" />
+      <workItem from="1567102255385" duration="5442000" />
+      <workItem from="1567121851982" duration="6887000" />
+      <workItem from="1567224633231" duration="661000" />
+      <workItem from="1567227860991" duration="6349000" />
     </task>
     <task id="LOCAL-00167" summary="Created reuse.js">
       <created>1554437398891</created>
@@ -1306,7 +1310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566361853035</updated>
     </task>
-    <option name="localTasksCounter" value="215" />
+    <task id="LOCAL-00215" summary="Initial getSubpagesFull">
+      <created>1566543835848</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1566543835849</updated>
+    </task>
+    <option name="localTasksCounter" value="216" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1362,7 +1373,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="RenderTimeout Resolve" />
     <MESSAGE value="Initial Portals" />
     <MESSAGE value="findReplace =&gt; findAndReplace" />
     <MESSAGE value="Deadlinks timeout" />
@@ -1387,7 +1397,8 @@
     <MESSAGE value="refreshListAdd" />
     <MESSAGE value="Importer Alpha" />
     <MESSAGE value="Importer Beta" />
-    <option name="LAST_COMMIT_MESSAGE" value="Importer Beta" />
+    <MESSAGE value="Initial getSubpagesFull" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial getSubpagesFull" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

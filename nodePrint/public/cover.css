@@ -55,15 +55,19 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
 	flex: 1;
 	margin-right: 190px;
 }
+
+#backContainer > div {
+	align-items: center;
+}
+
 #spine > div:first-child {
 	margin-bottom: 70px;
 }
 
-#backContainer > div{
+#backContainer > div {
 	margin-left: 190px;
 	margin-right: unset;
 }
@@ -90,11 +94,12 @@ div#backOverview {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
- }
+}
 
-#canvas{
+#canvas {
 	align-self: flex-end;
 }
-#spineCite{
+
+#spineCite {
 	font-size: 80%;
 }
