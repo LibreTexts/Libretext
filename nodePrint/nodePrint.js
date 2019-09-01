@@ -561,7 +561,7 @@ puppeteer.launch({
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
 			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${current.name || ''}</i><br/>${current.companyname || ''}</div></div></div>`;
 			let backContent = `<div id="backContainer"><div>${logo ? `<img id="backLogo" src="${logo}">` : ''}</div><div><div id="backOverview">${overview}</div><canvas id="canvas"></canvas></div></div></div>`;
-			let spine = `<div id="spine"><div>${current.spineTitle || current.title || ''}</div><div id="spineCite"><b style="flex:1; text-align: center">${current.name || ''}</b><img src="http://localhost:${port}/print/header_logo_mini.png"/></div></div><style>#spine{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
+			let spine = `<div id="spine"><div>${current.spineTitle || current.title || ''}</div><div id="spineCite"><b style="flex:1; text-align: center">${current.name || ''}</b><img src="http://localhost:${port}/print/stacked.png"/></div></div><style>#spine{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
 			spine += `<style>#spine{ width: ${getSpine() / getWidth() * 100}%; font-size: ${getSpine() / getWidth() * 500}px}</style>`;
 			
 			let content = numPages ? `${style}${backContent}${(options.thin ? '' : spine)}${frontContent}` : `${style}${frontContent}`;
@@ -723,6 +723,8 @@ puppeteer.launch({
 			if (!current.subpages)
 				current.subpages = (await getSubpages(current)).subpages;
 			let escapedURL = `${current.subdomain}-${current.id}`;
+			if (current.modified === 'restricted') //private page
+				return 'restricted';
 			const page = await browser.newPage();
 			
 			function safe(input) {
@@ -1102,7 +1104,7 @@ puppeteer.launch({
 			let url = current.url;
 			
 			if (updateTime === 'restricted') {
-				console.error(`PRIVE  ${ip} ${url}`);
+				console.error(`PRIVA  ${ip} ${url}`);
 				return {filename: 'restricted'};
 			}
 			else if (!isNoCache && allExist && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date

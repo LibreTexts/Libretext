@@ -39,7 +39,7 @@ body {
 }
 
 #spineCite > img {
-	max-width: 80%;
+	/*max-width: 80%;*/
 	max-height: 6vh;
 	/*margin-top: 20px;*/
 }

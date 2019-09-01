@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nodePrint/bio.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nodePrint/socialsci.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/public/stacked.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/public/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/public/cover.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,19 +77,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\epub" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Social Share Kit" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\epub" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -972,14 +970,11 @@
       <workItem from="1567102255385" duration="5442000" />
       <workItem from="1567121851982" duration="6887000" />
       <workItem from="1567224633231" duration="661000" />
-      <workItem from="1567227860991" duration="6349000" />
-    </task>
-    <task id="LOCAL-00167" summary="Created reuse.js">
-      <created>1554437398891</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1554437398892</updated>
+      <workItem from="1567227860991" duration="7255000" />
+      <workItem from="1567281653433" duration="1135000" />
+      <workItem from="1567283376180" duration="246000" />
+      <workItem from="1567362595078" duration="303000" />
+      <workItem from="1567363572642" duration="66000" />
     </task>
     <task id="LOCAL-00168" summary="Changed zip-local to jszip due to synchronous issues">
       <created>1554535845646</created>
@@ -1317,7 +1312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566543835849</updated>
     </task>
-    <option name="localTasksCounter" value="216" />
+    <task id="LOCAL-00216" summary="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix">
+      <created>1567238992193</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1567238992194</updated>
+    </task>
+    <option name="localTasksCounter" value="217" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1373,7 +1375,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Initial Portals" />
     <MESSAGE value="findReplace =&gt; findAndReplace" />
     <MESSAGE value="Deadlinks timeout" />
     <MESSAGE value="Mandeep BatchAccess fix" />
@@ -1398,7 +1399,8 @@
     <MESSAGE value="Importer Alpha" />
     <MESSAGE value="Importer Beta" />
     <MESSAGE value="Initial getSubpagesFull" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial getSubpagesFull" />
+    <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
