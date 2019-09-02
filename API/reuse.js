@@ -54,13 +54,15 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		console.error(`Invalid subdomain ${subdomain}`);
 		return false;
 	}
+	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+		api = `/${api}`;
 	if (!username) {
 		options = optionsMerge({
 			'X-Requested-With': 'XMLHttpRequest',
 			'x-deki-token': authenBrowser[subdomain]
 			
 		}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	else {
 		const user = "=" + username;
@@ -72,7 +74,7 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
 		options = optionsMerge({'x-deki-token': token}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	
 	function optionsMerge(headers, options) {

@@ -326,7 +326,7 @@ puppeteer.launch({
 						let path = subdomain === 'espanol' ? 'home' : paths[j];
 						
 						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
-						let all = await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
+						let all = subdomain === 'chem' ? await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true}) : await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
 						let texts = [];
 						let standalone = [];
 						let finished = [];
@@ -1134,7 +1134,7 @@ puppeteer.launch({
 			
 			try {
 				let renderPDF = new Promise(async (resolve, reject) => {
-					timeout = setTimeout(() => reject(new Error(`Render Timeout Reached  ${url}`)), 100000);
+					timeout = setTimeout(() => reject(new Error(`Render Timeout Reached  ${url}`)), 200000);
 					try {
 						page.on('dialog', async dialog => {
 							await dialog.dismiss();
@@ -1146,7 +1146,6 @@ puppeteer.launch({
 					} catch (err) {
 						console.error(`ERROR  Timeout Exceeded ${url}`);
 					}
-					
 					const out = await page.evaluate(function (url) {
 						let prefix = "";
 						let title = document.getElementById("title");
@@ -1163,10 +1162,10 @@ puppeteer.launch({
 						let tags = document.getElementById('pageTagsHolder').innerText;
 						
 						//Mathjax link handling
-						$("a[href^='#mjx-eqn-eq']").each(function (index) {
+						/*$("a[href^='#mjx-eqn-eq']").each(function (index) {
 							// console.log(url + $(this).attr('href'));
 							$(this).attr('href', url + $(this).attr('href'))
-						});
+						});*/
 						/*
 						if (tags) {
 							try {
@@ -1247,6 +1246,8 @@ puppeteer.launch({
 						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
 						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="${current.subdomain}.libretexts.org/link?${current.id}&pdf">https://${current.subdomain}.libretexts.org/link?${current.id}</a>` +
 						'</div>';
+					if ((performance.now() - start) / 1000 > 20)
+						console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
 					try {
 						await page.pdf({ //Letter
 							path: `./PDF/Letter/${PDFname}.pdf`,
@@ -1261,6 +1262,7 @@ puppeteer.launch({
 								left: "0.75in",
 							}
 						});
+						// console.log(`1 ${(performance.now()-start)/1000}`);
 						await page.pdf({ //A4
 							path: `./PDF/A4/${PDFname}.pdf`,
 							displayHeaderFooter: showHeaders,
@@ -1275,6 +1277,7 @@ puppeteer.launch({
 								left: "0.75in",
 							}
 						});
+						// console.log(`2 ${(performance.now()-start)/1000}`);
 						await page.pdf({ //Letter Margin
 							path: `./PDF/Letter/Margin/${PDFname}.pdf`,
 							displayHeaderFooter: showHeaders,
@@ -1293,6 +1296,7 @@ puppeteer.launch({
 								left: "0.75in",
 							}
 						});
+						// console.log(`3 ${(performance.now()-start)/1000}`);
 						await page.pdf({ //A4 Margin
 							path: `./PDF/A4/Margin/${PDFname}.pdf`,
 							displayHeaderFooter: showHeaders,

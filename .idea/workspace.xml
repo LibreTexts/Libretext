@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nodePrint/public/stacked.png" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Updated Cover Spine logo">
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/tagFormat.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/tex.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/tex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_AMS-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_AMS-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Bold.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Bold.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Bold.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Italic.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-BoldItalic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-BoldItalic.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-Italic.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Bold.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Italic.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Script-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Script-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size1-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size1-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size2-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size2-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size3-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size3-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size4-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size4-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Typewriter-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Typewriter-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Vector-Bold.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Vector-Regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Zero.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Zero.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/mathjax3beta.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/siunitx.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/siunitx.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +90,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Miscellaneous/input/tex" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -77,19 +105,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex\extensions" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\epub" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -975,13 +1003,12 @@
       <workItem from="1567283376180" duration="246000" />
       <workItem from="1567362595078" duration="303000" />
       <workItem from="1567363572642" duration="66000" />
-    </task>
-    <task id="LOCAL-00168" summary="Changed zip-local to jszip due to synchronous issues">
-      <created>1554535845646</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1554535845647</updated>
+      <workItem from="1567363782483" duration="474000" />
+      <workItem from="1567364842805" duration="178000" />
+      <workItem from="1567365288802" duration="888000" />
+      <workItem from="1567366937686" duration="599000" />
+      <workItem from="1567376690251" duration="6174000" />
+      <workItem from="1567402604297" duration="247000" />
     </task>
     <task id="LOCAL-00169" summary="Added bot HTTP test">
       <created>1555122324332</created>
@@ -1319,7 +1346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567238992194</updated>
     </task>
-    <option name="localTasksCounter" value="217" />
+    <task id="LOCAL-00217" summary="Updated Cover Spine logo">
+      <created>1567363903069</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1567363903069</updated>
+    </task>
+    <option name="localTasksCounter" value="218" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1375,7 +1409,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="findReplace =&gt; findAndReplace" />
     <MESSAGE value="Deadlinks timeout" />
     <MESSAGE value="Mandeep BatchAccess fix" />
     <MESSAGE value="npm update&#10;&#10;Github Security Fixes" />
@@ -1400,7 +1433,8 @@
     <MESSAGE value="Importer Beta" />
     <MESSAGE value="Initial getSubpagesFull" />
     <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
-    <option name="LAST_COMMIT_MESSAGE" value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
+    <MESSAGE value="Updated Cover Spine logo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Cover Spine logo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
