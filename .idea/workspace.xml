@@ -1,38 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Updated Cover Spine logo">
-      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/tagFormat.js" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/tex.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/tex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_AMS-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_AMS-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Bold.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Caligraphic-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Bold.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Fraktur-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Bold.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Italic.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Main-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Main-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-BoldItalic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-BoldItalic.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-Italic.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Math-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Math-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Bold.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Italic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Italic.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_SansSerif-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Script-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Script-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size1-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size1-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size2-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size2-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size3-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size3-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Size4-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Size4-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Typewriter-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Typewriter-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Bold.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Vector-Bold.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Vector-Regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Vector-Regular.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3Fonts/woff-v2/MathJax_Zero.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/Mathjax3Fonts/woff-v2/MathJax_Zero.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/mathjax3beta.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/mathjax3beta.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/siunitx.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/Mathjax3/siunitx.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1008,14 +979,8 @@
       <workItem from="1567365288802" duration="888000" />
       <workItem from="1567366937686" duration="599000" />
       <workItem from="1567376690251" duration="6174000" />
-      <workItem from="1567402604297" duration="247000" />
-    </task>
-    <task id="LOCAL-00169" summary="Added bot HTTP test">
-      <created>1555122324332</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1555122324334</updated>
+      <workItem from="1567402604297" duration="477000" />
+      <workItem from="1567457421875" duration="981000" />
     </task>
     <task id="LOCAL-00170" summary="Added mathbook for Pretext testing">
       <created>1555122483461</created>
@@ -1353,7 +1318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567363903069</updated>
     </task>
-    <option name="localTasksCounter" value="218" />
+    <task id="LOCAL-00218" summary="authenticatedFetch /pages endpoint">
+      <created>1567403066808</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1567403066809</updated>
+    </task>
+    <option name="localTasksCounter" value="219" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1409,7 +1381,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Deadlinks timeout" />
     <MESSAGE value="Mandeep BatchAccess fix" />
     <MESSAGE value="npm update&#10;&#10;Github Security Fixes" />
     <MESSAGE value="updated css-loader" />
@@ -1434,7 +1405,8 @@
     <MESSAGE value="Initial getSubpagesFull" />
     <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
     <MESSAGE value="Updated Cover Spine logo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Cover Spine logo" />
+    <MESSAGE value="authenticatedFetch /pages endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="authenticatedFetch /pages endpoint" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
