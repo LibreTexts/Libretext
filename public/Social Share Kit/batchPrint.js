@@ -99,7 +99,7 @@ if (!window["batchPrint.js"]) {
 				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
 			}
 			if (batchAccess) {
-				innerHTML += `<a id="getContents" href="/Under_Construction/Users/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS" target="_blank">Get<br/>Contents</a>`;
+				innerHTML += `<a id="getContents" href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS" target="_blank">Get<br/>Contents</a>`;
 			}
 			
 			

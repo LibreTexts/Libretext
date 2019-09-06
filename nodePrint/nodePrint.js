@@ -142,7 +142,7 @@ puppeteer.launch({
 				}, (err) => responseError("Server \n" + err, 500));
 				
 			}
-			else if (url.startsWith("/Libretext=")) {
+			else if (url.startsWith("/Libretext=") || url.startsWith("/LibreText=")) {
 				if ((request.headers.origin && request.headers.origin.endsWith("libretexts.org")) || request.headers.host === 'localhost') {
 					if (request.method === "GET") {
 						response.writeHead(200, {"Content-Type": " application/json"});
@@ -1430,7 +1430,7 @@ puppeteer.launch({
 			async function getMatter(text) {
 				let path = current.url.split('/').splice(3).join('/');
 				let miniIndex = 1;
-				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, 'contents?abort=exists&restriction=Semi-Private&dream.out.format=json', current.subdomain, 'PrintBot', {
+				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, 'contents?abort=exists&dream.out.format=json', current.subdomain, 'PrintBot', {
 					method: "POST",
 					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
 				});
@@ -1438,6 +1438,7 @@ puppeteer.launch({
 					await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
 						putProperty('mindtouch.page#welcomeHidden', true),
 						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
+					//TODO: Add security grant
 					
 					async function putProperty(property, value) {
 						await authenticatedFetch(`${path}/${text}_Matter`, 'properties?dream.out.format=json', current.subdomain, 'PrintBot', {
@@ -1450,10 +1451,10 @@ puppeteer.launch({
 				//TODO: Move into above if statement in a week
 				let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web');
 				image = await image.blob();
-				authenticatedFetch(`${path}/${text}_Matter`, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot',{
+				authenticatedFetch(`${path}/${text}_Matter`, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot', {
 					method: "PUT",
 					body: image,
-				}).then(async (result)=> console.log(`IMAGE ${await result.text()}`));
+				}).then(async (result) => console.log(`IMAGE ${await result.text()}`));
 				
 				
 				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);

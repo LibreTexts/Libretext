@@ -181,8 +181,8 @@ export default function Importer(props) {
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Import In Progress
-						({counter.percentage}%)<br/>
-						{counter.pages} pages processed
+						({counter.percentage})<br/>
+						{counter.pages}
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>

@@ -22,10 +22,9 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-// fs.emptyDir('ImportFiles');
+//TODO: fs.emptyDir('ImportFiles');
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
-// let authorization = [];
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -644,7 +643,9 @@ async function listFiles(data, socket) {
 
 async function processCommonCartridge(data, socket) {
 	//ensure file exists
+	console.log(`Processing ${data.filename}`);
 	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	data.socket = socket;
 	if (!await fs.exists(data.path)) {
 		socket.emit('errorMessage', 'File does not exist!');
 		return;
@@ -687,12 +688,22 @@ async function processCommonCartridge(data, socket) {
 		if (!resources.elements || !organization.elements)
 			return;
 		let temp = {};
+		let resourceTypes = {};
 		resources.elements.forEach(elem => {
-				temp[elem.attributes.identifier] = {
+				let item = {
 					name: elem.attributes.identifier,
 					file: elem.elements.find(elem => elem.name === 'file').attributes.href,
 					type: elem.attributes.type,
+				};
+				temp[elem.attributes.identifier] = item;
+				
+				if (!resourceTypes[elem.attributes.type]) {
+					resourceTypes[elem.attributes.type] = [item];
 				}
+				else {
+					resourceTypes[elem.attributes.type].push(item);
+				}
+				
 			}
 		);
 		resources = temp;
@@ -714,13 +725,42 @@ async function processCommonCartridge(data, socket) {
 		};
 		let log = [firstEntry];
 		let backlog = [firstEntry];
-		const eta = new Eta(totalPages, true);
+		let eta = new Eta(totalPages, true);
 		let backlogClearer = setInterval(clearBacklog, 1000);
 		
+		//process content pages
 		for (let i = 0; i < organization.length; i++) {
 			await processPage(organization[i], rootPath, onlinePath, i);
 		}
-		await processAttachments(resources.filter(res => !res.active), rootPath, `${onlinePath}/Attachments`);
+		
+		
+		//process attachments and non-content pages
+		let path = `${onlinePath}/Resources`;
+		await Working.authenticatedFetch(path, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
+		}, data.subdomain);
+		await Promise.all(
+			[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+				Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+				Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+		for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
+			socket.emit('progress', {
+				percentage: key,
+				pages: `Uploading ${value.length} items for ${key}`,
+				eta: 'Waiting on Resource uploads',
+			});
+			await processAttachments(value, rootPath, `${onlinePath}/Resources/${key.replace(/\//g, '***')}`, socket);
+			let entry = {
+				title: key,
+				type: 'resources',
+				url: `https://${data.subdomain}.libretexts.org/${onlinePath}/Resources/${key.replace(/\//g, '_')}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			console.log(key, value.length);
+		}
+		
 		
 		//finishing up
 		socket.emit('setState', {
@@ -794,7 +834,8 @@ async function processCommonCartridge(data, socket) {
 							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
 							filename = filename.match(/(?<=\.\.\/).*/)[0];
 						}
-						return [filename, await fs.readFile(currentPath + filename)];
+						let okay = await fs.exists(currentPath + filename);
+						return [filename, okay ? await fs.readFile(currentPath + filename) : false, currentPath + filename];
 					}
 					
 					
@@ -822,8 +863,8 @@ async function processCommonCartridge(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: Math.round(log.length / totalPages * 1000) / 10,
-				pages: `${log.length} / ${totalPages}`,
+				percentage: `${Math.round(log.length / totalPages * 1000) / 10}%`,
+				pages: `${log.length} / ${totalPages} pages processed`,
 				eta: eta.format("{{etah}}"),
 			});
 			
@@ -835,11 +876,13 @@ async function processCommonCartridge(data, socket) {
 			}
 		}
 		
-		async function processAttachments(resources, rootPath, onlinePath) {
+		async function processAttachments(resources, rootPath, onlinePath, socket) {
 			resources = resources.filter(elem => elem);
 			if (!resources.length)
 				return false;
 			let entries = [];
+			let title = onlinePath.replace(/\*\*\*/g, '/');
+			onlinePath = onlinePath.replace(/\*\*\*/g, '_');
 			
 			for (let i = 0; i < resources.length; i++) {
 				try {
@@ -849,16 +892,26 @@ async function processCommonCartridge(data, socket) {
 						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
 						filename = filename.match(/(?<=\.\.\/).*/)[0];
 					}
-					let file = await fs.readFile(currentPath + filename);
-					
-					let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
-						method: 'PUT',
-						body: file,
-					});
-					if (response.ok) {
-						let fileID = await response.json();
-						entries.push({title: filename.match(/(?<=\/)[^\/]*?$/)[0], id: fileID});
+					if (await fs.exists(currentPath + '/' + filename)) {
+						let file = await fs.readFile(currentPath + '/' + filename);
+						filename = filename.match(/(?<=\/)[^\/]*?$/)[0];
+						let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
+							method: 'PUT',
+							body: file,
+						});
+						if (response.ok) {
+							let fileID = await response.json();
+							entries.push({title: filename, id: fileID['@id']});
+						}
 					}
+					if (socket) {
+						socket.emit('progress', {
+							percentage: `${i} / ${resources.length} files`,
+							pages: `Uploading ${resources[i].type}`,
+							eta: `Waiting on attachments`,
+						});
+					}
+					
 				} catch (e) {
 				
 				}
@@ -868,7 +921,7 @@ async function processCommonCartridge(data, socket) {
 			let contents = entries.map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
 			
 			
-			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&dream.out.format=json`, {
+			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&title=${encodeURIComponent(title)}&dream.out.format=json`, {
 				method: 'POST',
 				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
 			});
@@ -1170,7 +1223,11 @@ async function uploadImages(contents, path, imageProcessor, data) {
 	if (src) {
 		for (let i = 0; i < src.length; i++) {
 			if (!src[i].startsWith('http')) {
-				let [filename, image] = await imageProcessor(src[i]);
+				let [filename, image, filePath] = await imageProcessor(src[i]);
+				if (!image) {
+					console.error(`Could not find ${filePath}`);
+					continue;
+				}
 				const fileID = await uploadImage(filename, path, image, data.subdomain, data.user, data.socket);
 				let toReplace;
 				if (atRoot) { // at root url
