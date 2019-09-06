@@ -54,8 +54,11 @@ puppeteer.launch({
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF/Letter/Margin');
 		fs.ensureDir('./PDF/A4/Margin');
-		fs.emptyDir('./PDF/Letter/order');
-		fs.emptyDir('./PDF/A4/order');
+		
+		['order', 'TOC', 'Cover', 'libretexts'].forEach(path => { //clean on restart
+			fs.emptyDir(`./PDF/Letter/${path}`);
+			fs.emptyDir(`./PDF/A4/${path}`);
+		});
 		
 		let working = {};
 		const eventEmitter = new events.EventEmitter();
@@ -326,7 +329,7 @@ puppeteer.launch({
 						let path = subdomain === 'espanol' ? 'home' : paths[j];
 						
 						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
-						let all = subdomain === 'chem' ? await getSubpages(`https://${subdomain}.libretexts.org/${path}`, {delay: true}) : await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
+						let all = await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
 						let texts = [];
 						let standalone = [];
 						let finished = [];
@@ -1444,6 +1447,15 @@ puppeteer.launch({
 						});
 					}
 				}
+				//TODO: Move into above if statement in a week
+				let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web');
+				image = await image.blob();
+				authenticatedFetch(`${path}/${text}_Matter`, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot',{
+					method: "PUT",
+					body: image,
+				}).then(async (result)=> console.log(`IMAGE ${await result.text()}`));
+				
+				
 				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
 				if (!response.ok) {
 					// console.error(await response.text());
@@ -1752,11 +1764,11 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 	let isNumber;
 	if (!path)
 		path = 'home';
-	if (path === 'home') {
-		isNumber = true;
-	}
 	if (!isNaN(path)) {
 		path = parseInt(path);
+		isNumber = true;
+	}
+	if (path === 'home') {
 		isNumber = true;
 	}
 	if (!subdomain) {
@@ -1766,11 +1778,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
 	if (!username) {
-		options = deepMerge({
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest',
-				'x-deki-token': authenBrowser[subdomain]
-			}
+		options = optionsMerge({
+			'X-Requested-With': 'XMLHttpRequest',
+			'x-deki-token': authenBrowser[subdomain]
+			
 		}, options);
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
@@ -1783,8 +1794,17 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		const hash = hmac.digest('hex');
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
-		options = deepMerge({headers: {'x-deki-token': token}}, options);
+		options = optionsMerge({'x-deki-token': token}, options);
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+	}
+	
+	function optionsMerge(headers, options) {
+		if (options.headers) {
+			options.headers = Object.assign(headers, options.headers)
+		}
+		else
+			options.headers = headers;
+		return options;
 	}
 }
 
@@ -1895,10 +1915,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 		}
 		// let map = await fs.readFile('./socialsci.xml', 'utf8'); //Test using local files
 		// map = convert.xml2js(map).elements[0];
-		if (map.name === 'sitemapindex') {
-		
-		}
-		if (map.name === 'urlset') {
+		if (map.name === 'sitemapindex') { //
 			map = map.elements.map(elem => {
 				let url = elem.elements.find(i => i.name === 'loc');
 				if (!url)
@@ -1907,79 +1924,115 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 				url = url.elements[0].text;
 				return url;
 			});
-			
-			if (map.length) {
-				map.sort();
-				const start = performance.now();
-				let lastNode;
-				
-				// Add an item node in the tree, at the right position
-				function addToTree(node, treeNodes) {
-					let parentNode;
-					if (lastNode && node.match(/^.*(?=\/)/)[0] === lastNode.url)
-						parentNode = lastNode;
-					else
-						parentNode = GetTheParentNodeChildArray(node, treeNodes) || treeNodes;
-					if (parentNode && parentNode.subpages)
-						parentNode.subpages.push({
-							url: node,
-							subpages: [],
-							parent: parentNode
+			let submaps = [];
+			await async.mapLimit(map, 1, async (submap) => {
+				submap = await fetch(submap);
+				if (submap.ok) {
+					submap = await submap.text();
+					submap = convert.xml2js(submap).elements[0];
+					if (submap.name === 'urlset') { //extract urls from submap
+						submap = submap.elements.map(elem => {
+							let url = elem.elements.find(i => i.name === 'loc');
+							if (!url)
+								return false;
+							
+							url = url.elements[0].text;
+							return url;
 						});
-				}
-				
-				function GetTheParentNodeChildArray(path, treeNodes) {
-					for (let i = 0; i < treeNodes.length; i++) {
-						const treeNode = treeNodes[i];
-						
-						let parentPath = path.match(/^.*(?=\/)/);
-						if (path === treeNode.url) { // same as parent, so skip
-							return false;
-						}
-						if (parentPath && parentPath[0] === treeNode.url) { //found parent
-							lastNode = treeNode;
-							return treeNode;
-						}
-						else if (path.match(new RegExp(`^${treeNode.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\/`))) { //found ancestor
-							if (treeNode.subpages.find(item => path.startsWith(item.url))) {
-								return GetTheParentNodeChildArray(path, treeNode.subpages);
-							}
-							else {//create subpage
-								let pathPart = path.replace(treeNode.url, '').match(/^\/.*?(?=\/)/)[0];
-								treeNode.subpages.push({
-									url: `${treeNode.url}${pathPart}`,
-									subpages: [],
-									parent: treeNode
-								});
-								return GetTheParentNodeChildArray(path, treeNode.subpages);
-							}
-						}
+						submaps = submaps.concat(submap);
 					}
 				}
-				
-				
-				//Create the item tree starting from menuItems
-				function createTree(nodes) {
-					const tree = [{url: `https://${subdomain}.libretexts.org`, subpages: []}];
-					
-					for (let i = 0; i < nodes.length; i++) {
-						const node = nodes[i].replace(/\s/g, '');
-						addToTree(node, tree);
-					}
-					return tree;
+				else {
+					let error = await submap.text();
+					console.error(error);
+					return false;
 				}
 				
-				map = createTree(map);
-				if (map.length !== 1)
-					console.err(`Incorrect sitemap.xml ${subdomain} ${map.length}`);
-				map = map[0];
-				const end = performance.now();
-				let time = end - start;
-				time /= 100;
-				time = Math.round(time);
-				time /= 10;
-				console.log(time);
+			});
+			map = submaps;
+		}
+		else if (map.name === 'urlset') { //extract urls from map
+			map = map.elements.map(elem => {
+				let url = elem.elements.find(i => i.name === 'loc');
+				if (!url)
+					return false;
+				
+				url = url.elements[0].text;
+				return url;
+			});
+		}
+		
+		if (map.length) { //process map into a tree
+			map.sort();
+			const start = performance.now();
+			let lastNode;
+			
+			// Add an item node in the tree, at the right position
+			function addToTree(node, treeNodes) {
+				let parentNode;
+				if (lastNode && node.match(/^.*(?=\/)/)[0] === lastNode.url)
+					parentNode = lastNode;
+				else
+					parentNode = GetTheParentNodeChildArray(node, treeNodes) || treeNodes;
+				if (parentNode && parentNode.subpages)
+					parentNode.subpages.push({
+						url: node,
+						subpages: [],
+						parent: parentNode
+					});
 			}
+			
+			function GetTheParentNodeChildArray(path, treeNodes) {
+				for (let i = 0; i < treeNodes.length; i++) {
+					const treeNode = treeNodes[i];
+					
+					let parentPath = path.match(/^.*(?=\/)/);
+					if (path === treeNode.url) { // same as parent, so skip
+						return false;
+					}
+					if (parentPath && parentPath[0] === treeNode.url) { //found parent
+						lastNode = treeNode;
+						return treeNode;
+					}
+					else if (path.match(new RegExp(`^${treeNode.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\/`))) { //found ancestor
+						if (treeNode.subpages.find(item => path.startsWith(item.url))) {
+							return GetTheParentNodeChildArray(path, treeNode.subpages);
+						}
+						else {//create subpage
+							let pathPart = path.replace(treeNode.url, '').match(/^\/.*?(?=\/)/)[0];
+							treeNode.subpages.push({
+								url: `${treeNode.url}${pathPart}`,
+								subpages: [],
+								parent: treeNode
+							});
+							return GetTheParentNodeChildArray(path, treeNode.subpages);
+						}
+					}
+				}
+			}
+			
+			
+			//Create the item tree starting from menuItems
+			function createTree(nodes) {
+				const tree = [{url: `https://${subdomain}.libretexts.org`, subpages: []}];
+				
+				for (let i = 0; i < nodes.length; i++) {
+					const node = nodes[i].replace(/\s/g, '');
+					addToTree(node, tree);
+				}
+				return tree;
+			}
+			
+			map = createTree(map);
+			if (map.length !== 1)
+				console.err(`Incorrect sitemap.xml ${subdomain} ${map.length}`);
+			map = map[0];
+			const end = performance.now();
+			let time = end - start;
+			time /= 100;
+			time = Math.round(time);
+			time /= 10;
+			console.log(time);
 		}
 		return map;
 	}

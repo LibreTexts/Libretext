@@ -407,12 +407,10 @@ async function jobHandler(jobType, input, socket) {
 						count++;
 						return;
 					}
-					//https://chem.libretexts.org/@api/deki/files/190409/Acute-Dog-Diarrhea-47066074.jpg?origin=mt-web
-					//https://chem.libretexts.org/@api/deki/files/190409/Acute-Dog-Diarrhea-47066074.jpg?revision=1
 					//upload image
 					let foreignImage = await response.blob();
 					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
-					response = await LibreTexts.authenticatedFetch(path, 'files/${filename}?dream.out.format=json', input.subdomain, input.user, {
+					response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
 						method: 'PUT',
 						body: foreignImage,
 					});

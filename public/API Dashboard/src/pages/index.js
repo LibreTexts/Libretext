@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 		super(props);
 		this.state = {
 			panel: 'FindAndReplace',
-			devMode: localStorage.getItem('devMode') === "true",
+			devMode: localStorage.getItem('devMode'),
 		}
 	}
 	
@@ -36,10 +36,22 @@ class Dashboard extends React.Component {
 					<label style={{display: 'flex', alignItems: 'center'}}>
 						<span style={{marginRight: '10px'}}>Dev Mode</span>
 						<Toggle onChange={() => {
-							localStorage.setItem('devMode', !this.state.devMode);
-							this.setState({devMode: !this.state.devMode});
+							if (this.state.devMode) {
+								let answer = confirm('Exiting Dev mode will refresh the page. Confirm?');
+								if (answer) {
+									localStorage.removeItem('devMode');
+									location.reload();
+								}
+							}
+							else {
+								let answer = prompt('Please enter in development user. This will refresh the page!');
+								if (answer) {
+									localStorage.setItem('devMode', answer);
+									location.reload();
+								}
+							}
 						}}
-						        defaultChecked={this.state.devMode}/>
+						        checked={Boolean(this.state.devMode)}/>
 					</label>
 				</div>
 			</div>

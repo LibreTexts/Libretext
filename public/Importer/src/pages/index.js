@@ -11,7 +11,7 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 function Dashboard() {
 	const [panel, setPanel] = useState('epub');
-	const [devMode, setDevMode] = useState(localStorage.getItem('devMode') === "true");
+	const devMode = localStorage.getItem('devMode');
 	
 	return <div className={'CenterContainer'}>
 		<div className="navigationBar">
@@ -28,10 +28,22 @@ function Dashboard() {
 				<label style={{display: 'flex', alignItems: 'center'}}>
 					<span style={{marginRight: '10px'}}>Dev Mode</span>
 					<Toggle onChange={() => {
-						localStorage.setItem('devMode', !devMode);
-						setDevMode(!devMode);
+						if (devMode) {
+							let answer = confirm('Exiting Dev mode will refresh the page. Confirm?');
+							if (answer) {
+								localStorage.removeItem('devMode');
+								location.reload();
+							}
+						}
+						else {
+							let answer = prompt('Please enter in development user. This will refresh the page!');
+							if (answer) {
+								localStorage.setItem('devMode', answer);
+								location.reload();
+							}
+						}
 					}}
-					        defaultChecked={devMode}/>
+					        checked={Boolean(devMode)}/>
 				</label>
 			</div>
 		</div>
