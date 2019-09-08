@@ -206,12 +206,18 @@ async function handler(request, response) {
 				let input = JSON.parse(body);
 				console.log(`Add ${input.subdomain}/${input.path}`);
 				if (input && input.identifier === md5(authenBrowser[input.subdomain])
-					&& ['Courses', 'Bookshelves', 'home'].includes(input.path)) {
+					&& ['Courses', 'Bookshelves', 'home'].includes(input.path) && input.content) {
 					await fs.ensureDir(`./public/DownloadsCenter/${input.subdomain}`);
 					if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
 						let content = await fs.readJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`);
-						if (content && !content.find(elem => elem.link === input.content.link)) {
-							content.push(input.content);
+						if (content) {
+							let index = content.findIndex(elem => elem.id === input.content.id);
+							if (index && index !== -1) {
+								content[index] = input.content;
+							}
+							else {
+								content.push(input.content);
+							}
 							await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
 						}
 					}

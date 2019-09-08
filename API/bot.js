@@ -177,19 +177,19 @@ async function jobHandler(jobType, input, socket) {
 		let result, comment;
 		switch (jobType) {
 			case 'findReplace':
-				result = await findReplace(content);
+				result = await findReplace(input, content);
 				comment = `[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
 				break;
 			case 'deadLinks':
-				[result, numLinks] = await deadLinks(content);
+				[result, numLinks] = await deadLinks(input, content);
 				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
 				break;
 			case 'headerFix':
-				result = await headerFix(content);
+				result = await headerFix(input, content);
 				comment = `[BOT ${ID}] Fixed Headers`;
 				break;
 			case 'foreignImage':
-				[result, count] = await foreignImage(content, path);
+				[result, count] = await foreignImage(input, content, path);
 				comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
 				if (input.findOnly && count)
 					result = 'findOnly';
@@ -259,186 +259,6 @@ async function jobHandler(jobType, input, socket) {
 	if (pageSummaryCount)
 		socket.emit('errorMessage', `${input.findOnly ? 'Found' : 'Changed'} ${pageSummaryCount} Summaries`);
 	socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID, log: log});
-	
-	
-	async function findReplace(content) {
-		// content = content.replace(/\\n/g, '\n');
-		let result = content.replaceAll(input.find, input.replace, input);
-		if (result !== content) {
-			/*      const diff = jsdiff.diffWords(content, result);
-				  console.log('----------------------------');
-				  diff.forEach(function(part) {
-					// green for additions, red for deletions
-					// grey for common parts
-					var color = part.added ? 'green' :
-					  part.removed ? 'red' : 'grey';
-					process.stderr.write(part.value[color]);
-				  });*/
-			return result;
-		}
-	}
-	
-	async function deadLinks(content) {
-		let links = content.match(/<a.*?>.*?<\/a>/g);
-		let result = content;
-		let count = 0;
-		await async.mapLimit(links, 10, async (link) => {
-			let url = link.match(/(?<=<a.*?href=").*?(?=")/);
-			if (url) {
-				url = url[0];
-				if (link.includes('Content Reuse Link:') || link === 'javascript:void(0);')
-					return;
-				if (!url.startsWith('http')) {
-					url = `https://${input.subdomain}.libretexts.org${url.startsWith('/') ? '' : '/'}${url}`;
-					// console.log(`Mod: ${url}`);
-				}
-				let response = '', failed;
-				try {
-					response = await new Promise(async (resolve, reject) => {
-						let seconds = 15;
-						let timeout = setTimeout(() => reject({
-							response: 'none',
-							status: `Timed Out ${seconds}s`,
-						}), seconds * 1000);
-						let result;
-						try {
-							result = await fetch(url, {method: 'HEAD'});
-						} catch (e) {
-							reject(e);
-							// console.error(e);
-						}
-						clearTimeout(timeout);
-						resolve(result);
-					});
-				} catch (e) {
-					failed = true;
-					response = e;
-					// console.error(e);
-				}
-				if (!failed && response.ok && response.status < 400) {
-					return;
-				}
-				if (response.code)
-					console.log(`Dead ${response.code}! ${url}`);
-				else if (response.status)
-					console.log(`Dead ${response.status}! ${url}`);
-				else
-					console.log(`Dead ${response}! ${url}`);
-				
-				result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
-				count++;
-			}
-		});
-		return [result, count];
-	}
-	
-	async function headerFix(content) {
-		let result = content;
-		if (content.match(/<h1(?=(| .*?)>)/)) { //Header demote
-			for (let i = 7; i >= 1; i--) {
-				let previous = result;
-				let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
-					'g');
-				result = result.replace(regex, `<h${i + 1}`);
-				regex = new RegExp(`</h${i}>`, 'g');
-				result = result.replace(regex, `</h${i + 1}>`);
-				if (result !== previous) {
-					console.log(`${i} => ${i + 1}`);
-				}
-			}
-		}
-		else if (!content.includes('<h2') && content.match(/<h[1-9](?=(| .*?)>)/)) { //Header promote
-			let current = 2;
-			for (let i = 3; i <= 7; i++) {
-				let previous = result;
-				let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
-					'g');
-				result = result.replace(regex, `<h${current}`);
-				regex = new RegExp(`</h${i}>`, 'g');
-				result = result.replace(regex, `</h${current}>`);
-				if (result !== previous) {
-					console.log(`${i} => ${current}`);
-					current++;
-				}
-			}
-		}
-		return result;
-	}
-	
-	async function foreignImage(content, path) {
-		let images = content.match(/<img.*?>/g);
-		let result = content;
-		let count = 0;
-		await async.mapLimit(images, 5, async (image) => {
-			let url = image.match(/(?<=src=").*?(?=")/);
-			let newImage = image;
-			if (url) {
-				url = url[0];
-				if (!url.startsWith('http') || url.includes('libretexts.org'))
-					return;
-				
-				
-				let response = '', failed;
-				try {
-					response = await new Promise(async (resolve, reject) => {
-						let seconds = 15;
-						let timeout = setTimeout(() => reject({
-							response: 'none',
-							status: `Timed Out ${seconds}s`,
-						}), seconds * 1000);
-						let result;
-						try {
-							result = await fetch(url);
-						} catch (e) {
-							reject(e);
-							// console.error(e);
-						}
-						clearTimeout(timeout);
-						resolve(result);
-					});
-				} catch (e) {
-					failed = true;
-					response = e;
-					// console.error(e);
-				}
-				if (!failed && response.ok && response.status < 400) {
-					if (input.findOnly) {
-						result = 'findOnly';
-						count++;
-						return;
-					}
-					//upload image
-					let foreignImage = await response.blob();
-					let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
-					response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
-						method: 'PUT',
-						body: foreignImage,
-					});
-					if (!response.ok) {
-						response = await response.text();
-						console.error(response);
-						return;
-					}
-					response = await response.json();
-					//change path to new image
-					let newSRC = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`;
-					
-					newImage = newImage.replace(/(?<=src=").*?(?=")/, newSRC);
-					newImage = newImage.replace(/(?<=<img.*?)\/>/, `fileid="${response['@id']}" \/>`);
-					result = result.replace(image, newImage);
-					count++;
-				}
-				/*				else if (response.code)
-						  console.log(`Dead ${response.code}! ${url}`);
-						else if (response.status)
-						  console.log(`Dead ${response.status}! ${url}`);
-						else
-						  console.log(`Dead ${response}! ${url}`);*/
-			}
-		});
-		return [result, count];
-	}
-	
 }
 
 async function revert(input, socket) {
@@ -505,7 +325,186 @@ async function revert(input, socket) {
 	socket.emit('revertDone', ID);
 }
 
+//Operator Functions
+async function findReplace(input, content) {
+	// content = content.replace(/\\n/g, '\n');
+	let result = content.replaceAll(input.find, input.replace, input);
+	if (result !== content) {
+		/*      const diff = jsdiff.diffWords(content, result);
+			  console.log('----------------------------');
+			  diff.forEach(function(part) {
+				// green for additions, red for deletions
+				// grey for common parts
+				var color = part.added ? 'green' :
+				  part.removed ? 'red' : 'grey';
+				process.stderr.write(part.value[color]);
+			  });*/
+		return result;
+	}
+}
 
+async function deadLinks(input, content) {
+	let links = content.match(/<a.*?>.*?<\/a>/g);
+	let result = content;
+	let count = 0;
+	await async.mapLimit(links, 10, async (link) => {
+		let url = link.match(/(?<=<a.*?href=").*?(?=")/);
+		if (url) {
+			url = url[0];
+			if (link.includes('Content Reuse Link:') || link === 'javascript:void(0);')
+				return;
+			if (!url.startsWith('http')) {
+				url = `https://${input.subdomain}.libretexts.org${url.startsWith('/') ? '' : '/'}${url}`;
+				// console.log(`Mod: ${url}`);
+			}
+			let response = '', failed;
+			try {
+				response = await new Promise(async (resolve, reject) => {
+					let seconds = 15;
+					let timeout = setTimeout(() => reject({
+						response: 'none',
+						status: `Timed Out ${seconds}s`,
+					}), seconds * 1000);
+					let result;
+					try {
+						result = await fetch(url, {method: 'HEAD'});
+					} catch (e) {
+						reject(e);
+						// console.error(e);
+					}
+					clearTimeout(timeout);
+					resolve(result);
+				});
+			} catch (e) {
+				failed = true;
+				response = e;
+				// console.error(e);
+			}
+			if (!failed && response.ok && response.status < 400) {
+				return;
+			}
+			if (response.code)
+				console.log(`Dead ${response.code}! ${url}`);
+			else if (response.status)
+				console.log(`Dead ${response.status}! ${url}`);
+			else
+				console.log(`Dead ${response}! ${url}`);
+			
+			result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
+			count++;
+		}
+	});
+	return [result, count];
+}
+
+async function headerFix(input, content) {
+	let result = content;
+	if (content.match(/<h1(?=(| .*?)>)/)) { //Header demote
+		for (let i = 7; i >= 1; i--) {
+			let previous = result;
+			let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
+				'g');
+			result = result.replace(regex, `<h${i + 1}`);
+			regex = new RegExp(`</h${i}>`, 'g');
+			result = result.replace(regex, `</h${i + 1}>`);
+			if (result !== previous) {
+				console.log(`${i} => ${i + 1}`);
+			}
+		}
+	}
+	else if (!content.includes('<h2') && content.match(/<h[1-9](?=(| .*?)>)/)) { //Header promote
+		let current = 2;
+		for (let i = 3; i <= 7; i++) {
+			let previous = result;
+			let regex = new RegExp(`<h${i}(?=(| .*?)>)`,
+				'g');
+			result = result.replace(regex, `<h${current}`);
+			regex = new RegExp(`</h${i}>`, 'g');
+			result = result.replace(regex, `</h${current}>`);
+			if (result !== previous) {
+				console.log(`${i} => ${current}`);
+				current++;
+			}
+		}
+	}
+	return result;
+}
+
+async function foreignImage(input, content, path) {
+	let images = content.match(/<img.*?>/g);
+	let result = content;
+	let count = 0;
+	await async.mapLimit(images, 5, async (image) => {
+		let url = image.match(/(?<=src=").*?(?=")/);
+		let newImage = image;
+		if (url) {
+			url = url[0];
+			if (!url.startsWith('http') || url.includes('libretexts.org'))
+				return;
+			
+			
+			let response = '', failed;
+			try {
+				response = await new Promise(async (resolve, reject) => {
+					let seconds = 15;
+					let timeout = setTimeout(() => reject({
+						response: 'none',
+						status: `Timed Out ${seconds}s`,
+					}), seconds * 1000);
+					let result;
+					try {
+						result = await fetch(url);
+					} catch (e) {
+						reject(e);
+						// console.error(e);
+					}
+					clearTimeout(timeout);
+					resolve(result);
+				});
+			} catch (e) {
+				failed = true;
+				response = e;
+				// console.error(e);
+			}
+			if (!failed && response.ok && response.status < 400) {
+				if (input.findOnly) {
+					result = 'findOnly';
+					count++;
+					return;
+				}
+				//upload image
+				let foreignImage = await response.blob();
+				let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
+				response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
+					method: 'PUT',
+					body: foreignImage,
+				});
+				if (!response.ok) {
+					response = await response.text();
+					console.error(response);
+					return;
+				}
+				response = await response.json();
+				//change path to new image
+				let newSRC = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`;
+				
+				newImage = newImage.replace(/(?<=src=").*?(?=")/, newSRC);
+				newImage = newImage.replace(/(?<=<img.*?)\/>/, `fileid="${response['@id']}" \/>`);
+				result = result.replace(image, newImage);
+				count++;
+			}
+			/*				else if (response.code)
+					  console.log(`Dead ${response.code}! ${url}`);
+					else if (response.status)
+					  console.log(`Dead ${response.status}! ${url}`);
+					else
+					  console.log(`Dead ${response}! ${url}`);*/
+		}
+	});
+	return [result, count];
+}
+
+//Helper Logging functions
 async function logStart(input, isDisabled) {
 	let timestamp = new Date();
 	input.timestamp = timestamp.toUTCString();
@@ -540,6 +539,7 @@ async function logCompleted(result, isDisabled) {
 		delete result.pages;
 	await fs.appendFile(`BotLogs/Users/${result.user}.json`, JSON.stringify(result) + '\n');
 }
+
 
 String.prototype.replaceAll = function (search, replacement, input) {
 	const target = this;

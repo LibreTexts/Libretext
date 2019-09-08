@@ -881,7 +881,7 @@ async function processCommonCartridge(data, socket) {
 			if (!resources.length)
 				return false;
 			let entries = [];
-			let title = onlinePath.replace(/\*\*\*/g, '/');
+			let title = onlinePath.match(/(?<=\/)[^\/]*?$/)[0].replace(/\*\*\*/g, '/');
 			onlinePath = onlinePath.replace(/\*\*\*/g, '_');
 			
 			for (let i = 0; i < resources.length; i++) {

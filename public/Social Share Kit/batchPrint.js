@@ -57,7 +57,7 @@ if (!window["batchPrint.js"]) {
 					hasDownloads = true;
 				}
 			}
-			let innerHTML = `<div id="PrintDropdown" class="LTdropdown"  style="float:right;"><a id="printme" class="material-icons notSS" href="https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
+			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
 			innerHTML += `<div class="LTdropdown-content">
 					<a onclick = "localStorage.setItem('PDFSize','Letter')" href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf"  target="_blank" title="Get a Letter PDF of this page" type="application/pdf">Letter</a>
 					<a onclick = "localStorage.setItem('PDFSize','A4')" href="https://batch.libretexts.org/print/A4/url=${window.location}.pdf" target="_blank" title="Get an A4 PDF of this page" type="application/pdf">A4</a>
@@ -69,8 +69,9 @@ if (!window["batchPrint.js"]) {
 			}
 			if (hasDownloads) {
 				let entry = '';
+				let id = document.getElementById('pageIDHolder').innerText;
 				for (let i = 0; i < downloads.length; i++) {
-					if (downloads[i].link === url || decodeURIComponent(downloads[i].link) === url || downloads[i].link === decodeURIComponent(url)) {
+					if (downloads[i].id === id) {
 						entry = downloads[i];
 					}
 				}
@@ -78,7 +79,7 @@ if (!window["batchPrint.js"]) {
 					let root = `https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/Finished/`;
 					if (entry.zipFilename)
 						root += entry.zipFilename.replace('/Full.pdf', '');
-					innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right;"><div class="dropbtn" style="margin-right: 2px" title="Downloads Center"><span>Downloads</span></div>';
+					innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
 					innerHTML += `<div class="LTdropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
@@ -92,14 +93,15 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 				}
 			}
-			else {
-				if (batchAccess) {
-					innerHTML += '<a id="getTOCLink" class="notSS" target="_blank">TOC</a>';
-				}
-				innerHTML += '<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/18%3A_Importing_LibreTexts_into_an_LMS" target="_blank" id="thinCC" onClick="thinCC()" style="margin-right: 2px" title="Export to LMS"><span>LMS</span></a>';
+			if (isPro) {
+				innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
+				innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
+				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
+				innerHTML += `<a onclick = "event.preventDefault(); nikGetCitation()" href='#' class='mt-icon-quote'>Get Citation</a>`;
+				innerHTML += `</div></div>`;
 			}
-			if (batchAccess) {
-				innerHTML += `<a id="getContents" href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS" target="_blank">Get<br/>Contents</a>`;
+			else {
+			
 			}
 			
 			
@@ -110,7 +112,7 @@ if (!window["batchPrint.js"]) {
 				getTOCLink.href = `https://batch.libretexts.org/print/Letter/toc=${url}`;
 			}
 		}
-	}
+	};
 	
 	function getChildren(HTML) {
 		let JSON = {};
@@ -305,6 +307,15 @@ if (!window["batchPrint.js"]) {
 		// console.log(window["BatchTable"], window["BatchName"]);
 		
 		
+	}
+	function cover(target) {
+		let number = prompt('Number of content pages:');
+		if (number && !isNaN(number)) {
+			window.open(`https://batch.libretexts.org/print/Letter/cover=${target}&options={"numPages":"${number}", "hasExtraPadding":true}`);
+		}
+		else {
+			alert(`${number} is not recognized as a number. Please try again.`);
+		}
 	}
 	
 	function batch(target) {

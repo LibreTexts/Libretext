@@ -565,7 +565,7 @@ puppeteer.launch({
 			let frontContent = `<div id="frontContainer"><div><div id="frontTitle">${current.title || ''}</div></div><div><div id="frontCite"><i>${current.name || ''}</i><br/>${current.companyname || ''}</div></div></div>`;
 			let backContent = `<div id="backContainer"><div>${logo ? `<img id="backLogo" src="${logo}">` : ''}</div><div><div id="backOverview">${overview}</div><canvas id="canvas"></canvas></div></div></div>`;
 			let spine = `<div id="spine"><div>${current.spineTitle || current.title || ''}</div><div id="spineCite"><b style="flex:1; text-align: center">${current.name || ''}</b><img src="http://localhost:${port}/print/stacked.png"/></div></div><style>#spine{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluSpine' : 'NormalSpine'}/${current.subdomain}.png")}></style>`;
-			spine += `<style>#spine{ width: ${getSpine() / getWidth() * 100}%; font-size: ${getSpine() / getWidth() * 500}px}</style>`;
+			spine += `<style>#spine{ width: ${getSpine() / getWidth() * 100}%; font-size: ${Math.min(getSpine() / getWidth() * 500, 40)}px}</style>`;
 			
 			let content = numPages ? `${style}${backContent}${(options.thin ? '' : spine)}${frontContent}` : `${style}${frontContent}`;
 			if (options.hasExtraPadding) {
@@ -1438,6 +1438,7 @@ puppeteer.launch({
 					await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
 						putProperty('mindtouch.page#welcomeHidden', true),
 						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
+					
 					//TODO: Add security grant
 					
 					async function putProperty(property, value) {
