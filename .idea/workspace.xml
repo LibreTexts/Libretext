@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/F67CE0200E2E2B188CCAD99152E77516.cache.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/JSmol.min.nojq.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/JSmolJME.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/clear.cache.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/gwt/chrome/chrome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/gwt/chrome/mosaic.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/info.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/jsa.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol/jsme.nocache.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Molecules/JSmol/JSmolWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Molecules/JSmol/JSmolWrapper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +70,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles/hdagnew@ucdavis.edu/commoncartridge" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Molecules/JSmol/hack-a-mol" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -80,19 +85,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex\extensions" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1003,6 +1008,7 @@
       <workItem from="1567804228895" duration="4161000" />
       <workItem from="1567895600466" duration="2976000" />
       <workItem from="1567918190960" duration="3066000" />
+      <workItem from="1567925724662" duration="2286000" />
     </task>
     <task id="LOCAL-00173" summary="Initial Bot">
       <created>1555750704130</created>

@@ -64,7 +64,7 @@ var Info = {
 	color: "white",
 	addSelectionOptions: false,
 	use: currentScript.dataset.webgl ? "WEBGL" : "HTML5",
-	j2sPath: "https://awesomefiles.libretexts.org/JSmol/j2s",
+	j2sPath: "https://awesomefiles.libretexts.org/Molecules/JSmol/j2s",
 	readyFunction: jmol_isReady,
 	script: script,
 	// disableJ2SLoadMonitor: false,
