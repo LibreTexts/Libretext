@@ -16,10 +16,12 @@ if (!window["batchPrint.js"]) {
 	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 	const isPro = document.getElementById("proHolder").innerText === 'true';
 	const groups = document.getElementById("groupHolder").innerText;
+	const tags = JSON.parse(document.getElementById("tagsHolder").innerText);
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	const targetComputer = 'batch.libretexts.org';
 	let request;
 	let requestJSON;
+	let bookstore = tags.find(elem => elem.startsWith('store:'));
 	
 	let fn = () => {
 		HTMLtoJSON();
@@ -61,6 +63,7 @@ if (!window["batchPrint.js"]) {
 			innerHTML += `<div class="LTdropdown-content">
 					<a onclick = "localStorage.setItem('PDFSize','Letter')" href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf"  target="_blank" title="Get a Letter PDF of this page" type="application/pdf">Letter</a>
 					<a onclick = "localStorage.setItem('PDFSize','A4')" href="https://batch.libretexts.org/print/A4/url=${window.location}.pdf" target="_blank" title="Get an A4 PDF of this page" type="application/pdf">A4</a>
+					<a href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf?margin" target="_blank" title="Get a Lulu size PDF of this page" type="application/pdf">Lulu</a>
 				</div></div>`;
 			
 			if (batchAccess) {
@@ -76,6 +79,10 @@ if (!window["batchPrint.js"]) {
 					}
 				}
 				if (entry) {
+					if(bookstore)
+						bookstore = bookstore.split('store:')[1];
+					
+					
 					let root = `https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/Finished/`;
 					if (entry.zipFilename)
 						root += entry.zipFilename.replace('/Full.pdf', '');
@@ -88,6 +95,7 @@ if (!window["batchPrint.js"]) {
 					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
+					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
@@ -308,6 +316,7 @@ if (!window["batchPrint.js"]) {
 		
 		
 	}
+	
 	function cover(target) {
 		let number = prompt('Number of content pages:');
 		if (number && !isNaN(number)) {

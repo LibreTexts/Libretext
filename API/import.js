@@ -834,7 +834,7 @@ async function processCommonCartridge(data, socket) {
 							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
 							filename = filename.match(/(?<=\.\.\/).*/)[0];
 						}
-						let okay = await fs.exists(currentPath + filename);
+						let okay = filename && await fs.exists(currentPath + filename);
 						return [filename, okay ? await fs.readFile(currentPath + filename) : false, currentPath + filename];
 					}
 					

@@ -108,10 +108,10 @@ puppeteer.launch({
 					ip = 'BatchOffload';
 				}
 				if (url.endsWith("?margin")) {
-					url = url.slice(0, -7);
+					url = url.replace("?margin", "");
 					withMargin = true;
 				}
-				if (url.includes('Grewal_and_Wakim'))
+				if (url.includes('Wakim_and_Grewal'))
 					withMargin = true;
 				if (url.endsWith(".pdf")) {
 					url = url.slice(0, -4);
