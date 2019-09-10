@@ -442,19 +442,6 @@ function handler(request, response) {
 					}
 					
 					await putProperty('mindtouch.page#welcomeHidden', true, path);
-					if (padded) {
-						let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + encodeURIComponent(page.title) + "&name=" + encodeURIComponent(padded), {
-							method: "POST",
-							headers: {'x-deki-token': token}
-						});
-						if (!response.ok) {
-							let error = await response.text();
-							reportMessage(error, true);
-						}
-						else {
-							// reportMessage(await response.text());
-						}
-					}
 					let tags = '<tags><tag value="article:topic"/></tags>';
 					await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
 						method: "PUT",
@@ -774,7 +761,10 @@ async function processCommonCartridge(data, socket) {
 		//Function Zone
 		function digestPage(page, resources) {
 			let result = {};
-			result.title = page.elements.find(elem => elem.name === 'title').elements[0].text;
+			result.title = page.elements.find(elem => elem.name === 'title');
+			if (!result.title.elements)
+				result.title = `Untitled Page ${totalPages}`;
+			else result.title = result.title.elements[0].text;
 			result.title = result.title.replace(/&/g, 'and');
 			result.subpages = page.elements.filter(elem => elem.name === 'item');
 			
@@ -1146,7 +1136,7 @@ async function processEPUB(data, socket) {
 			let chapterNumber = path.match(/.*?(?=\.)/);
 			if (!isSimple && chapterNumber) { //adds padding if necessary
 				chapterNumber = parseInt(chapterNumber[0]);
-				path = chapterNumber < 10 ? "0" + path : false;
+				path = chapterNumber < 10 ? "0" + path : path;
 			}
 			path = isSimple ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
 			
@@ -1194,8 +1184,8 @@ async function processEPUB(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: Math.round(log.length / whole.length * 1000) / 10,
-				pages: `${log.length} / ${whole.length}`,
+				percentage: `${Math.round(log.length / whole.length * 1000) / 10}%`,
+				pages: `${log.length} / ${whole.length} pages uploaded`,
 				eta: eta.format("{{etah}}"),
 			});
 		}

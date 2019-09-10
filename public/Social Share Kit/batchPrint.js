@@ -40,7 +40,7 @@ if (!window["batchPrint.js"]) {
 			//Download widget handling
 			let tags = document.getElementById('pageTagsHolder').innerText;
 			let downloads = [];
-			let hasDownloads = false;
+			let downloadEntry = false;
 			let url = window.location.href.replace(/#$/, '');
 			if (tags.includes('coverpage:yes')) {
 				
@@ -53,11 +53,11 @@ if (!window["batchPrint.js"]) {
 				one = one.ok ? await one.json() : [];
 				two = two.ok ? await two.json() : [];
 				
+				let id = document.getElementById('pageIDHolder').innerText;
 				downloads = downloads.concat(one, two);
-				let downloadLinks = downloads.map((value) => decodeURIComponent(value.link));
-				if (downloadLinks.includes(url) || downloadLinks.includes(decodeURIComponent(url))) {
-					hasDownloads = true;
-				}
+				downloadEntry = downloads.find((entry) => entry.id === id);
+				if (!isPro && downloadEntry.tags.includes('luluPro'))
+					downloadEntry = false;
 			}
 			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
 			innerHTML += `<div class="LTdropdown-content">
@@ -70,24 +70,16 @@ if (!window["batchPrint.js"]) {
 				// $('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
 				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
 			}
-			if (hasDownloads) {
-				let entry = '';
-				let id = document.getElementById('pageIDHolder').innerText;
-				for (let i = 0; i < downloads.length; i++) {
-					if (downloads[i].id === id) {
-						entry = downloads[i];
-					}
-				}
-				if (entry) {
-					if(bookstore)
-						bookstore = bookstore.split('store:')[1];
-					
-					
-					let root = `https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/Finished/`;
-					if (entry.zipFilename)
-						root += entry.zipFilename.replace('/Full.pdf', '');
-					innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
-					innerHTML += `<div class="LTdropdown-content">
+			if (downloadEntry) {
+				if (bookstore)
+					bookstore = bookstore.split('store:')[1];
+				
+				
+				let root = `https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/Finished/`;
+				if (downloadEntry.zipFilename)
+					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
+				innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
+				innerHTML += `<div class="LTdropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
@@ -99,7 +91,6 @@ if (!window["batchPrint.js"]) {
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
-				}
 			}
 			if (isPro) {
 				innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
@@ -109,7 +100,7 @@ if (!window["batchPrint.js"]) {
 				innerHTML += `</div></div>`;
 			}
 			else {
-			
+				
 			}
 			
 			

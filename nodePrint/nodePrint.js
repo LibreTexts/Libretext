@@ -1597,7 +1597,7 @@ puppeteer.launch({
 			} catch (err) {
 				throw err;
 			}
-			let heartbeat;
+			let heartbeat, numPages;
 			
 			if (!refreshOnly) {
 				//Overall cover
@@ -1652,6 +1652,7 @@ puppeteer.launch({
 				if (!failed && await fs.exists(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`)) {
 					let dataBuffer = await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
 					let lulu = await pdf(dataBuffer);
+					numPages = lulu.numpages;
 					console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
 					filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
 					await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
@@ -1756,6 +1757,7 @@ puppeteer.launch({
 				link: current.url,
 				tags: current.tags,
 				failed: failed,
+				numPages: numPages,
 			};
 		}
 	}

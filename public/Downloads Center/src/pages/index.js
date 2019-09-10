@@ -68,6 +68,9 @@ async function doCenter() {
 	
 	downloads = downloads.concat(one, two);
 	downloads = downloads.filter((text) => text.link && (!text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide"));
+	if (!JSON.parse(document.getElementById("proHolder").innerText))
+		downloads = downloads.filter((text) => !text.tags.includes('luluPro'));
+	
 	ReactDOM.render(<Center downloads={downloads}/>, target);
 }
 

@@ -12,8 +12,7 @@ export default class LibreText extends React.Component {
 	}
 	
 	handleClick(state) {
-		if (!this.props.item.title.toLowerCase().includes('coming soon'))
-			this.setState({isFlipped: !state});
+		this.setState({isFlipped: !state});
 	}
 	
 	render() {
@@ -23,11 +22,16 @@ export default class LibreText extends React.Component {
 		let root = `https://batch.libretexts.org/print/${this.props.format}/Finished/`;
 		if (this.props.item.zipFilename)
 			root += this.props.item.zipFilename.replace('/Full.pdf', '');
+		
+		let bookstore = this.props.item.tags.find(elem => elem.startsWith('store:'));
+		if (bookstore)
+			bookstore = bookstore.split('store:')[1];
+		
 		return (
 			<div className='Text' onMouseEnter={() => this.handleClick(true)}
 			     onMouseLeave={() => this.handleClick(false)}>
 				<ReactCardFlip isFlipped={this.state.isFlipped}>
-					<div key="back" className='textSide textFront'>
+					<div key="back" className='textSide textFront' style={this.borderStripe()}>
 						<div style={{flex: 2}} className='headerFit'><Textfit max={20}>{this.props.item.title}</Textfit>
 						</div>
 						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
@@ -48,11 +52,25 @@ export default class LibreText extends React.Component {
 						}} href='#' className={'mt-icon-spinner6'}>Refresh Text</a> : ''}
 						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 						   target='_blank'>Individual ZIP</a>
+						{bookstore ?
+							<a href={bookstore} className='mt-icon-cart2' target='_blank'>Buy Paper Copy</a> : ''}
 						<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}
 						   target='_blank'>Print Book Files</a>
 					</div>
 				</ReactCardFlip>
 			</div>
 		)
+	}
+	
+	borderStripe() {
+		let color = '#0a446c';
+		if (this.props.item.tags.includes('luluPro'))
+			color = 'orange';
+		else if (this.props.item.link.includes('/Courses/'))
+			color = 'yellowgreen';
+		else if (this.props.item.link.includes('/Bookshelves/'))
+			color = 'slategrey';
+		
+		return {borderRightColor: color};
 	}
 }
