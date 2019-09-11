@@ -495,6 +495,8 @@ puppeteer.launch({
 		}
 		
 		async function getInformation(current) {
+			if (current.gotInformation) return; //exit if already ran
+			else current.gotInformation = true;
 			for (let i = 0; i < current.tags.length; i++) {
 				let tag = current.tags[i];
 				let items;
@@ -1426,7 +1428,6 @@ puppeteer.launch({
 			let frontArray = await getMatter('Front');
 			let TOCIndex = ++totalIndex;
 			
-			
 			async function getMatter(text) {
 				let path = current.url.split('/').splice(3).join('/');
 				let miniIndex = 1;
@@ -1439,23 +1440,18 @@ puppeteer.launch({
 						putProperty('mindtouch.page#welcomeHidden', true),
 						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
 					
-					//TODO: Add security grant
+					/*let userID = await authenticatedFetch('', `@api/deki/users/=PrintBot?dream.out.format=json`, current.subdomain, 'PrintBot');
+					userID = (await userID.json())['@id'];
 					
-					async function putProperty(property, value) {
-						await authenticatedFetch(`${path}/${text}_Matter`, 'properties?dream.out.format=json', current.subdomain, 'PrintBot', {
-							method: "POST",
-							body: value,
-							headers: {"Slug": property}
-						});
-					}
+					await authenticatedFetch(`${path}/${text}_Matter`, 'security?dream.out.format=json', current.subdomain, 'PrintBot', {
+						method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
+						body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
+					});*/
 				}
 				//TODO: Move into above if statement in a week
-				let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web');
-				image = await image.blob();
-				authenticatedFetch(`${path}/${text}_Matter`, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot', {
-					method: "PUT",
-					body: image,
-				}).then(async (result) => console.log(`IMAGE ${await result.text()}`));
+				getImage(`${path}/${text}_Matter`, text).then();
+				if (text === 'Front')
+					await defaultMatter(text);
 				
 				
 				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
@@ -1486,6 +1482,63 @@ puppeteer.launch({
 						uploadedTOC = current.url;
 				});
 				return response;
+				
+				async function putProperty(property, value) {
+					return await authenticatedFetch(`${path}/${text}_Matter`, 'properties?dream.out.format=json', current.subdomain, 'PrintBot', {
+						method: "POST",
+						body: value,
+						headers: {"Slug": property}
+					});
+				}
+				
+				async function defaultMatter(text) {
+					if (text === 'Front') {
+						current = await getAPI(current);
+						await getInformation(current);
+						//Create TitlePage
+						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
+							method: "POST",
+							body: `${spacer(11)}
+<p class="mt-align-center"><span class="mt-font-size-36">${current.companyname}</span></p>
+<p class="mt-align-center"><span class="mt-font-size-36">${current.title}</span></p> ${spacer(14)}
+<p class="mt-align-center"><span class="mt-font-size-24">${current.name}</span></p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">printoptions:no-header-title</a></p>`
+						});
+						
+						//Create InfoPage
+						await authenticatedFetch(`${path}/${text}_Matter/02:_InfoPage`, 'contents?abort=exists&title=InfoPage&dream.out.format=json', current.subdomain, 'PrintBot', {
+							method: "POST",
+							body: "<p class=\"mt-script-comment\">Cross Library Transclusion</p><pre class=\"script\">template('CrossTransclude/Web',{'Library':'chem','PageID':170365});</pre>" +
+								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header-title</a></p>"
+						});
+					}
+					else if (text === 'Back') {
+					
+					}
+				}
+				
+				async function getImage(path, text) {
+					let image;
+					switch (text) {
+						case 'Front':
+							image = 'https://chem.libretexts.org/@api/deki/files/239315/Front_Matter.jpg?origin=mt-web';
+							break;
+						case 'Back':
+							image = 'https://chem.libretexts.org/@api/deki/files/239316/Back_matter.jpg?origin=mt-web';
+							break;
+						default:
+							image = 'https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web'
+					}
+					image = await fetch(image);
+					image = await image.blob();
+					authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot', {
+						method: "PUT",
+						body: image,
+					}).then();
+				}
+				
+				function spacer(num) {
+					return '<p className="Matter">&nbsp;</p>'.repeat(num);
+				}
 			}
 			
 			
@@ -1761,11 +1814,11 @@ puppeteer.launch({
 			};
 		}
 	}
-)
-;
+);
 
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
+	let url;
 	if (!path)
 		path = 'home';
 	if (!isNaN(path)) {
@@ -1781,15 +1834,22 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 	}
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
-	if (!username) {
+	
+	
+	if (api.startsWith('/@api/deki'))  // for non-pages calls
+		url = `https://${subdomain}.libretexts.org${api}`;
+	else
+		url = `https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`;
+	
+	if (!username) { //anonymous request
 		options = optionsMerge({
 			'X-Requested-With': 'XMLHttpRequest',
 			'x-deki-token': authenBrowser[subdomain]
 			
 		}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+		return await fetch(url, options);
 	}
-	else {
+	else { //server request
 		const user = "=" + username;
 		const crypto = require('crypto');
 		const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
@@ -1799,7 +1859,7 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
 		options = optionsMerge({'x-deki-token': token}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+		return await fetch(url, options);
 	}
 	
 	function optionsMerge(headers, options) {

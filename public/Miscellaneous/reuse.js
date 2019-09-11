@@ -30,9 +30,11 @@ const LibreTexts = {
 	libraries: libraries,
 };
 
-async function authenticatedFetch(path, api, subdomain) {
-	let isNumber;
-	
+async function authenticatedFetch(path, api, subdomain, options = {}) {
+	let isNumber, current;
+	if (!path) {
+		[current, path] = parseURL();
+	}
 	if (!isNaN(path)) {
 		path = parseInt(path);
 		isNumber = true;
@@ -43,8 +45,7 @@ async function authenticatedFetch(path, api, subdomain) {
 	let keys = await getKeys();
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
-	let current = window.location.origin.split('/')[2].split('.')[0];
-	let headers = {};
+	let headers = options.headers || {};
 	subdomain = subdomain || current;
 	let token = keys[subdomain];
 	headers['x-deki-token'] = token;
@@ -52,7 +53,7 @@ async function authenticatedFetch(path, api, subdomain) {
 		headers['X-Requested-With'] = 'XMLHttpRequest';
 	
 	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`,
-		{headers: headers});
+		options);
 }
 
 async function getKeys() {

@@ -707,7 +707,7 @@ export default class Remixer extends React.Component {
 						};
 						if (current === 'chem')
 							headers.headers['x-requested-with'] = 'XMLHttpRequest';
-						let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', headers);
+						let image = await fetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web', headers);
 						
 						image = await image.blob();
 						fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/files/=mindtouch.page%2523thumbnail", {
@@ -720,7 +720,7 @@ export default class Remixer extends React.Component {
 						}).then();
 					}
 				}
-				else { //copying from an exisitg source
+				else { //copying from an exisiting source
 					// child.path = child.data.url.replace(window.location.origin + "/", ""); //source
 					child.path = child.data.path;
 					let content;
@@ -1007,7 +1007,7 @@ wiki.page("${child.path}", NULL)</pre>
 									}
 									else if (tags.includes("article:topic-category") || tags.includes("article:topic-guide")) {
 										let current = window.location.origin.split('/')[2].split('.')[0];
-										let image = await fetch('https://chem.libretexts.org/@api/deki/files/170427/default.png?origin=mt-web', {
+										let image = await fetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web', {
 											headers: {
 												'x-deki-token': this.keys['chem'],
 												'x-requested-with': current === 'chem' ? 'XMLHttpRequest' : ''
