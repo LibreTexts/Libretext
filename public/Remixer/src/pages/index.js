@@ -5,6 +5,7 @@ import ReRemixer from "../components/ReRemixer.jsx";
 
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import {SnackbarProvider, useSnackbar} from 'notistack';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -31,15 +32,17 @@ function Dashboard() {
 	}
 	
 	return <div className={'CenterContainer'}>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-		<div className="navigationBar" style={{justifyContent:'space-between'}}>
-			<Select onChange={(e) => setPanel(e.target.value)} value={panel}>
-				<MenuItem value={'Remixer'}>Remixer</MenuItem>
-				<MenuItem value={'Re-Remixer'}>Re<sup>2</sup>mixer</MenuItem>
-			</Select>
-			<span>{lastSave}</span>
-		</div>
-		{getPanel()}
+		<SnackbarProvider maxSnack={3}>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
+			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
+				<Select onChange={(e) => setPanel(e.target.value)} value={panel}>
+					<MenuItem value={'Remixer'}>Remixer</MenuItem>
+					<MenuItem value={'Re-Remixer'}>Re<sup>2</sup>mixer</MenuItem>
+				</Select>
+				<span>{lastSave}</span>
+			</div>
+			{getPanel()}
+		</SnackbarProvider>
 	</div>
 }
 

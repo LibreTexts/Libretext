@@ -10,8 +10,9 @@ export default class Remixer extends React.Component {
 		super();
 		
 		this.state = {
+			type: 'Remix',
 			stage: 'Remixing',
-			mode: 'Pro',
+			mode: 'Pro', //Todo add privelages back in
 			options: {
 				tutorial: false,
 				enableAutonumber: true,

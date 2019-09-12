@@ -13,15 +13,101 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
+import {useSnackbar} from 'notistack';
 
-export default function OptionsPanel(props){
-	let [open, setOpen] = useState(false);
+export default function OptionsPanel(props) {
+	let [autonumberOpen, setAutonumberOpen] = useState(false);
+	let [fileOpen, setFileOpen] = useState(false);
+	let [file, setFile] = useState();
+	const {enqueueSnackbar} = useSnackbar();
 	
 	
-	
-	function handleClose () {
-		setOpen(false);
+	function handleAutonumberClose() {
+		setAutonumberOpen(false);
 	}
+	
+	function handleFileClose() {
+		setFileOpen(false);
+	}
+	
+	function saveJSON() {
+		let result = new Blob([JSON.stringify(props, 2)], {type: 'application/json;charset=utf-8'});
+		const textToSaveAsURL = window.URL.createObjectURL(result);
+		const fileNameToSaveAs = `${props.name || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.json`;
+		
+		const downloadLink = document.createElement("a");
+		downloadLink.download = fileNameToSaveAs;
+		downloadLink.innerHTML = "Download File";
+		downloadLink.href = textToSaveAsURL;
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+		
+		downloadLink.click();
+		
+		function destroyClickedElement(event) {
+			document.body.removeChild(event.target);
+		}
+	}
+	
+	function loadJSON() {
+		$("#fileToLoad").click();
+		const fileToLoad = document.getElementById("fileToLoad").files[0];
+		if (fileToLoad) {
+			setFile(fileToLoad);
+			setFileOpen(true);
+		}
+		$("#fileToLoad").val("");
+	}
+	
+	let loadFile = (optionsOverwrite) => () => { //example of a curried function
+		const fileReader = new FileReader();
+		fileReader.onload = function (fileLoadedEvent) {
+			let textFromFileLoaded = fileLoadedEvent.target.result;
+			try {
+				if (file.name.endsWith('.json')) {
+					textFromFileLoaded = JSON.parse(textFromFileLoaded);
+					if (!optionsOverwrite)
+						delete textFromFileLoaded.options;
+					textFromFileLoaded.mode = props.mode;
+					props.updateRemixer(textFromFileLoaded);
+					enqueueSnackbar(`Loaded ${file.name} successfully!`, {
+						variant: 'success',
+						anchorOrigin: {
+							vertical: 'bottom',
+							horizontal: 'right',
+						},
+						autoHideDuration: 5000,
+					});
+				}
+				else if (file.name.endsWith('.csv')) {
+					enqueueSnackbar(`I don't know what to do with ${file.name}`, {
+						variant: 'warning',
+						anchorOrigin: {
+							vertical: 'bottom',
+							horizontal: 'right',
+						},
+						autoHideDuration: 5000,
+					});
+				}
+				else {
+					enqueueSnackbar(`Invalid file ${file.name}`, {
+						variant: 'error',
+						anchorOrigin: {
+							vertical: 'bottom',
+							horizontal: 'right',
+						},
+						autoHideDuration: 5000,
+					});
+				}
+			} catch (err) {
+				alert("Invalid File!");
+			}
+			setFile();
+			setFileOpen(false);
+		};
+		fileReader.readAsText(file, "UTF-8");
+	};
 	
 	let changeOption = (option, value) => {
 		let newOptions = {...props.options};
@@ -62,31 +148,33 @@ export default function OptionsPanel(props){
 				/>}
 			label="Enable Autonumber"/>
 		<Button variant="contained" color="primary" disabled={!props.options.enableAutonumber}
-		        onClick={() => setOpen(true)}>
+		        onClick={() => setAutonumberOpen(true)}>
 			Autonumber Options
 		</Button>
 		<ButtonGroup
 			variant="outlined"
 			size="large"
-			style={{marginTop:10}}
+			style={{marginTop: 10}}
 			aria-label="large contained secondary button group">
 			<Tooltip title="This will save your work to a file that you can download to your computer.">
-				<Button onClick={() => console.log(1)}>
-					Save JSON
+				<Button onClick={saveJSON}>
+					Save File
 				</Button>
 			</Tooltip>
 			<Tooltip title="This will load a Remix from a file and replace your current workspace.">
-				<Button onClick={() => console.log(2)}>
-					Load JSON
+				<Button onClick={() => $("#fileToLoad").click()}>
+					Load File
 				</Button>
 			</Tooltip>
 		</ButtonGroup>
-		<Dialog
-			onClose={handleClose}
+		<input type="file" id="fileToLoad" accept=".csv,.json" onChange={loadJSON}
+		       style={{position: "absolute", display: "none", width: 0, height: 0}}/>
+		<Dialog // Dialog for Autonumber Options
+			onClose={handleAutonumberClose}
 			aria-labelledby="autonumber-dialog-title"
-			open={open}
+			open={autonumberOpen}
 		>
-			<DialogTitle id="autonumber-dialog-title" onClose={handleClose}>
+			<DialogTitle id="autonumber-dialog-title" onClose={handleAutonumberClose}>
 				Autonumber Options
 			</DialogTitle>
 			<DialogContent style={{display: 'flex', flexDirection: 'column', alignItems: 'stretch'}}>
@@ -156,8 +244,38 @@ export default function OptionsPanel(props){
 				</TextField>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose} color="primary">
+				<Button onClick={handleAutonumberClose} color="primary">
 					Done
+				</Button>
+			</DialogActions>
+		</Dialog>
+		<Dialog //Dialog for file loading
+			onClose={handleFileClose}
+			aria-labelledby="autonumber-dialog-title"
+			open={fileOpen}
+		>
+			<DialogTitle id="autonumber-dialog-title" onClose={handleFileClose}>
+				Confirm loading previous Remix
+			</DialogTitle>
+			<DialogContent style={{display: 'flex', flexDirection: 'column', alignItems: 'stretch'}}>
+				<DialogContentText>
+					Loading a Remix from a file <b>will clear your workspace</b> and then load the file's contents.
+					If you are
+					currently working on something in your workspace, please save your work to a file first before
+					continuing. When loading a Remix, you can optionally load the options that you were using when
+					the
+					file was saved.
+				</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleFileClose} color="primary">
+					Cancel
+				</Button>
+				<Button onClick={loadFile(true)} color="primary">
+					Load Remix and previous Options
+				</Button>
+				<Button onClick={loadFile()} color="primary" autoFocus>
+					Load Just Remix
 				</Button>
 			</DialogActions>
 		</Dialog>
