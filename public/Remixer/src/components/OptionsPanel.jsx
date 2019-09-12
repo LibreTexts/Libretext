@@ -1,153 +1,165 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RemixerFunctions from '../reusableFunctions';
 
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 
-export default class OptionsPanel extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			institution: "",
-			open: false,
-			institutions: <MenuItem value=""><em>Loading</em></MenuItem>
+export default function OptionsPanel(props){
+	let [open, setOpen] = useState(false);
+	
+	
+	
+	function handleClose () {
+		setOpen(false);
+	}
+	
+	let changeOption = (option, value) => {
+		let newOptions = {...props.options};
+		if (option.includes('.')) {
+			let [mainOption, suboption] = option.split('.');
+			newOptions[mainOption][suboption] = value;
 		}
-	}
-	
-	componentDidMount() {
-		this.getInstitutions();
-	}
-	
-	changeOption = (option, value) => {
-		let newOptions = {...this.props.options, [option] : value};
-		this.props.updateRemixer({options: newOptions});
+		else
+			newOptions[option] = value;
+		
+		props.updateRemixer({options: newOptions});
 	};
 	
-	render() {
-		return <div style={{display: 'flex', margin: 10}}>
-			<div style={{
-				display: 'flex',
-				flexDirection: 'column',
-				marginRight: 10,
-				flex: 1
-			}}><TextField
-				label="LibreText name"
-				margin="normal"
-				variant="outlined"
-				value={this.props.name || ""}
-				onChange={(event) => {
-					this.props.updateRemixer({name: event.target.value});
-				}}
-			/>
+	return <div style={{
+		display: 'flex',
+		flexDirection: 'column',
+		background: '#f3f3f3',
+		padding: 20,
+		borderRadius: 10
+	}}>
+		Remixer Options
+		<FormControlLabel
+			control={
+				<Switch
+					checked={props.options.tutorial}
+					onChange={event => changeOption('tutorial', event.target.checked)}
+					color="primary"
+					inputProps={{'aria-label': 'primary checkbox'}}
+				/>}
+			label="Show tutorial"/>
+		<FormControlLabel
+			control={
+				<Switch
+					checked={props.options.enableAutonumber}
+					onChange={event => changeOption('enableAutonumber', event.target.checked)}
+					color="primary"
+					inputProps={{'aria-label': 'primary checkbox'}}
+				/>}
+			label="Enable Autonumber"/>
+		<Button variant="contained" color="primary" disabled={!props.options.enableAutonumber}
+		        onClick={() => setOpen(true)}>
+			Autonumber Options
+		</Button>
+		<ButtonGroup
+			variant="outlined"
+			size="large"
+			style={{marginTop:10}}
+			aria-label="large contained secondary button group">
+			<Tooltip title="This will save your work to a file that you can download to your computer.">
+				<Button onClick={() => console.log(1)}>
+					Save JSON
+				</Button>
+			</Tooltip>
+			<Tooltip title="This will load a Remix from a file and replace your current workspace.">
+				<Button onClick={() => console.log(2)}>
+					Load JSON
+				</Button>
+			</Tooltip>
+		</ButtonGroup>
+		<Dialog
+			onClose={handleClose}
+			aria-labelledby="autonumber-dialog-title"
+			open={open}
+		>
+			<DialogTitle id="autonumber-dialog-title" onClose={handleClose}>
+				Autonumber Options
+			</DialogTitle>
+			<DialogContent style={{display: 'flex', flexDirection: 'column', alignItems: 'stretch'}}>
+				<DialogContentText>
+					These options affect how the Autonumber operates. When enabled, the Autonumberer
+					automatically updates the Chapter and Page numbers based on any changes you make.
+				</DialogContentText>
+				<div style={{display: 'flex', justifyContent: 'space-between'}}>
+					<TextField
+						style={{margin: 0}}
+						id="standard-number"
+						label="Initial Chapter Number"
+						type="number"
+						margin="normal"
+						value={props.options.autonumber.offset}
+						onChange={event => changeOption('autonumber.offset', Math.max(event.target.value, 0))}
+						variant="filled"/>
+					<div style={{
+						display: 'flex',
+						alignItems: 'center',
+						background: '#e8e8e8',
+						padding: 5,
+						borderRadius: 5
+					}}>
+						<Tooltip title="Renumbers pages previously indexed with letters (11.E: => 11.10:)">
+							<FormControlLabel
+								style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+								control={
+									<Switch
+										color="primary"
+										inputProps={{'aria-label': 'primary checkbox'}}
+										value={props.options.autonumber.overwriteSuffix}
+										onChange={event => changeOption('autonumber.overwriteSuffix', event.target.checked)}
+									/>}
+								label="Overwrite non-number titles"/>
+						</Tooltip>
+					</div>
+				</div>
 				<TextField
 					select
-					label="Institution"
-					value={this.props.institution || ""}
+					label="Chapter prefix"
+					value={props.options.autonumber.chapterPrefix || ''}
 					onChange={(event) => {
-						this.props.updateRemixer({institution: event.target.value});
+						changeOption('autonumber.chapterPrefix', event.target.value);
 					}}
-					helperText="Please select your institution"
+					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix || ''} 1:)`}
 					margin="normal"
-					variant="outlined"
-				>{this.state.institutions}
+					variant="filled">
+					<MenuItem value={false}>No Prefix</MenuItem>
+					<MenuItem value='Chapter'>Chapter</MenuItem>
+					<MenuItem value='Section'>Section</MenuItem>
 				</TextField>
-			</div>
-			<div style={{
-				display: 'flex',
-				flexDirection: 'column',
-				background: '#f3f3f3',
-				padding: 20,
-				borderRadius:10
-			}}>
-				Remixer Options
-				<FormControlLabel
-					control={
-						<Switch
-							checked={this.props.options.tutorial}
-							onChange={event => this.changeOption('tutorial', event.target.checked)}
-							color="primary"
-							inputProps={{'aria-label': 'primary checkbox'}}
-						/>}
-					label="Show tutorial"/>
-				<FormControlLabel
-					control={
-						<Switch
-							checked={this.props.options.enableAutonumber}
-							onChange={event => this.changeOption('enableAutonumber', event.target.checked)}
-							color="primary"
-							inputProps={{'aria-label': 'primary checkbox'}}
-						/>}
-					label="Enable Autonumber"/>
-				<Button variant="contained" color="primary" disabled={!this.props.options.enableAutonumber} onClick={() => this.setState({open: true})}>
-					Autonumber Options
+				<TextField
+					select
+					label="Page Prefix"
+					value={props.options.autonumber.pagePrefix || ''}
+					onChange={(event) => {
+						changeOption('autonumber.pagePrefix', event.target.value);
+					}}
+					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix || ''} 1.1:)`}
+					margin="normal"
+					variant="filled">
+					<MenuItem value={false}>No Prefix</MenuItem>
+					<MenuItem value='Page'>Page</MenuItem>
+					<MenuItem value='Topic'>Topic</MenuItem>
+					<MenuItem value='Section'>Section</MenuItem>
+				</TextField>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleClose} color="primary">
+					Done
 				</Button>
-				<Dialog
-					onClose={this.handleClose}
-					aria-labelledby="autonumber-dialog-title"
-					open={this.state.open}
-				>
-					<DialogTitle id="autonumber-dialog-title" onClose={this.handleClose}>
-						Autonumber Options
-					</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-							facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-							at eros.
-						</DialogContentText>
-						<FormControlLabel
-							control={
-								<Switch
-									color="primary"
-									inputProps={{'aria-label': 'primary checkbox'}}
-								/>}
-							label="Ignore Suffix"/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={this.handleClose} color="primary">
-							Done
-						</Button>
-					</DialogActions>
-				</Dialog>
-			</div>
-		</div>;
-	}
-	
-	getInstitutions = async () => {
-		let subdomain = window.location.origin.split('/')[2].split('.')[0];
-		
-		const isDemonstration = RemixerFunctions.checkIfDemonstration();
-		if (isDemonstration) {
-			return <MenuItem key={`https://${subdomain}.libretexts.org/Workshops/Workshop_University`}
-			                 value={`https://${subdomain}.libretexts.org/Workshops/Workshop_University`}>Workshop
-			                                                                                             University</MenuItem>;
-		}
-		
-		let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
-		response = await response.json();
-		const subpageArray = (response['@count'] === '1' ? [response['page.subpage']] : response['page.subpage']) || [];
-		const result = [];
-		// console.log(subpageArray);
-		for (let i = 0; i < subpageArray.length; i++) {
-			let institution = subpageArray[i];
-			result.push(<MenuItem key={institution['uri.ui']}
-			                      value={institution['uri.ui']}>{institution.title}</MenuItem>);
-		}
-		result.push(<MenuItem key="" value="">Not listed? Contact info@libretexts.org</MenuItem>);
-		this.setState({institutions: result});
-		this.props.updateRemixer({institution: result[0].props.value});
-	};
-	
-	
-	handleClose = () => {
-		this.setState({open: false});
-	};
+			</DialogActions>
+		</Dialog>
+	</div>
 }

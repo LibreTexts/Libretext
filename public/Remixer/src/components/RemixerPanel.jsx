@@ -12,11 +12,12 @@ import Redo from '@material-ui/icons/Redo';
 import Refresh from '@material-ui/icons/Refresh';
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 import Slide from '@material-ui/core/Slide';
+import Tooltip from "@material-ui/core/Tooltip";
 
 export default class RemixerPanel extends React.Component {
 	constructor() {
@@ -103,13 +104,16 @@ export default class RemixerPanel extends React.Component {
 			source: this.props.RemixTree,
 			debugLevel: 0,
 			autoScroll: true,
-			extensions: ['dnd5', 'edit'],
+			extensions: ['dnd5'],
 			/*			lazyLoad: function (event, data) {
 							const dfd = new $.Deferred();
 							let node = data.node;
 							data.result = dfd.promise();
 							RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
 						},*/
+			contextmenu: function (event, data) {
+				console.log(data.node);
+			},
 			dnd5: {
 				// autoExpandMS: 400,
 				// preventForeignNodes: true,
@@ -240,7 +244,10 @@ export default class RemixerPanel extends React.Component {
 					<Add/></Button>
 				<Button variant="contained" onClick={this.delete}>Delete
 					<Remove/></Button>
-				<Button variant="contained" onClick={this.mergeUp}>Merge Folder Up</Button>
+				
+				<Tooltip title="Merges the contents of the selected folder with its parent's contents.">
+					<Button variant="contained" onClick={this.mergeUp}>Merge Folder Up</Button>
+				</Tooltip>
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}>Start Over
 					<Refresh/></Button>
 				{/*<Undo/>
@@ -249,7 +256,7 @@ export default class RemixerPanel extends React.Component {
 			<div id='LTFormContainer'>
 				<Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
 					<div><h3>Tutorial Panel</h3>
-						Why hello there {document.getElementById('usernameHolder').innerText}!
+						What do you need help with {document.getElementById('displaynameHolder').innerText}?
 						<Tutorial/>
 					</div>
 				</Slide>
@@ -366,6 +373,42 @@ export default class RemixerPanel extends React.Component {
 		if (!root.children) {
 			return false;
 		}
+		
+		
+		
+		let processNode = (node, sharedIndex, level) => {
+			node.title = node.title.replace('&amp;', 'and');
+			
+			let index = sharedIndex[0]++;
+			if (level && depth - level <= 1 && node.title.includes(': ')) {
+				node.title = node.title.replace(/^[^:]*: /, '');
+			}
+			if ((!shallow && depth - level === 1) || (shallow && level === 1)) { //Chapter handling
+				node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
+				
+				let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
+				node.title = `${prefix}${index}: ${node.title}`;
+				chapter = index;
+			}
+			else if (!shallow && depth - level === 0) { //Page handling
+				node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+				
+				let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
+				node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+			}
+			else {
+				node.data['padded'] = false;
+			}
+			node.lazy = false;
+			if (node.children) {
+				let sharedIndex = [1];
+				for (let i = 0; i < node.children.length; i++) {
+					node.children[i] = processNode(node.children[i], sharedIndex, level + 1);
+				}
+			}
+			return node;
+		};
+		
 		for (let i = 0; i < root.children.length; i++) {
 			if (root.children[i].lazy) {
 				await root.children[i].visitAndLoad();
@@ -375,46 +418,12 @@ export default class RemixerPanel extends React.Component {
 		let depth = this.getDepth(d);
 		let chapter = 1;
 		let shallow = depth < 2;
-		if (this.props.options.autonumber)
-			processNode(d, [0], 0, false);
+		if (this.props.options.autonumber) {
+			let sharedIndex = [Number(this.props.options.autonumber.offset) || 1];
+			processNode(d, sharedIndex, 0);
+		}
 		
 		this.save(d);
-		
-		function processNode(node, sharedIndex, level, overTen) {
-			node.title = node.title.replace('&amp;', 'and');
-			let isEscaped = node.title.match(/{.*}/);
-			let fullyEscaped = node.title.match(/{}/) || node.title.match(/^{.*}$/); // skip renumbering
-			if (isEscaped) {
-				node.data['padded'] = false;
-			}
-			else {
-				++sharedIndex[0];
-				let index = sharedIndex;
-				if (level && depth - level <= 1 && node.title.includes(': ')) {
-					node.title = node.title.replace(/^[^:]*: /, '');
-				}
-				if ((!shallow && depth - level === 1) || (shallow && level === 1)) { //Chapter handling
-					node.data['padded'] = `${overTen ? ('' + index).padStart(2, '0') : index}: ${node.title}`;
-					node.title = `${index}: ${node.title}`;
-					chapter = index;
-				}
-				else if (!shallow && depth - level === 0) { //Page handling
-					node.data['padded'] = `${chapter}.${overTen ? ('' + index).padStart(2, '0') : index}: ${node.title}`;
-					node.title = `${chapter}.${index}: ${node.title}`;
-				}
-				else {
-					node.data['padded'] = false;
-				}
-			}
-			node.lazy = false;
-			if (node.children) {
-				let sharedIndex = [0];
-				for (let i = 0; i < node.children.length; i++) {
-					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node.children.length >= 10);
-				}
-			}
-			return node;
-		}
 	};
 	
 	debug() {

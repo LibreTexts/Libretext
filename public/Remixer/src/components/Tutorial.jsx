@@ -39,7 +39,7 @@ export default function Tutorial() {
 				aria-controls="panel1bh-content"
 				id="panel1bh-header"
 			>
-				<Typography className={classes.heading}>General settings</Typography>
+				<Typography className={classes.heading}>Step 1</Typography>
 				<Typography className={classes.secondaryHeading}>I am an expansion panel</Typography>
 			</ExpansionPanelSummary>
 			<ExpansionPanelDetails>
@@ -91,7 +91,10 @@ export default function Tutorial() {
 				aria-controls="panel4bh-content"
 				id="panel4bh-header"
 			>
-				<Typography className={classes.heading}>Personal data</Typography>
+				<Typography className={classes.heading}>Step 4</Typography>
+				<Typography className={classes.secondaryHeading}>
+					Publishing
+				</Typography>
 			</ExpansionPanelSummary>
 			<ExpansionPanelDetails>
 				<Typography>

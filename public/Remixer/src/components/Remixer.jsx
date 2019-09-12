@@ -1,8 +1,8 @@
 import React from 'react';
-import OptionsPanel from './OptionsPanel.jsx';
 import RemixerPanel from './RemixerPanel.jsx';
 import PublishPanel from './PublishPanel.jsx';
 import RemixerFunctions from '../reusableFunctions';
+import RemixerOptions from "./RemixerOptions.jsx";
 
 
 export default class Remixer extends React.Component {
@@ -15,25 +15,27 @@ export default class Remixer extends React.Component {
 			options: {
 				tutorial: false,
 				enableAutonumber: true,
+				autonumber: {offset: 1},
 			},
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 		};
 	}
 	
 	async componentDidMount() {
-		/*    if (localStorage.getItem('RemixerState')) {
-			  let state = JSON.parse(localStorage.getItem('RemixerState'));
-			  this.setState(state);
-			}*/
+		if (localStorage.getItem('RemixerState')) {
+			let state = JSON.parse(localStorage.getItem('RemixerState'));
+			this.setState(state);
+		}
 	}
 	
 	updateRemixer = (newState) => {
 		this.setState(newState);
-		this.save();
+		this.save({...this.state, ...newState});
 	};
 	
-	save = () => {
-		localStorage.setItem('RemixerState', JSON.stringify(this.state));
+	save = (newState) => {
+		localStorage.setItem('RemixerState', JSON.stringify(newState));
+		this.props.save();
 	};
 	
 	render() {
@@ -46,7 +48,7 @@ export default class Remixer extends React.Component {
 		switch (this.state.stage) {
 			case 'Remixing':
 				return <>
-					<OptionsPanel {...this.state} updateRemixer={this.updateRemixer}/>
+					<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
 					<RemixerPanel {...this.state} updateRemixer={this.updateRemixer}/>
 				</>;
 			case 'Publishing':

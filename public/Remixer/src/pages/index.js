@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import Remixer from "../components/Remixer.jsx";
 import ReRemixer from "../components/ReRemixer.jsx";
@@ -12,41 +12,35 @@ target.id = Math.random() * 100;
 // noinspection XHTMLIncompatabilitiesJS
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
-
-class Dashboard extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			panel: 'Remixer'
-		}
-	}
+function Dashboard() {
+	let [panel, setPanel] = useState('Remixer');
+	let [lastSave, setLastSave] = useState('');
 	
-	render() {
-		return <div className={'CenterContainer'}>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-			<div className="navigationBar">
-				<Select onChange={this.setPanel} value={this.state.panel}>
-					<MenuItem  value={'Remixer'}>Remixer</MenuItem >
-					<MenuItem  value={'Re-Remixer'}>Re<sup>2</sup>mixer</MenuItem >
-				</Select>
-			</div>
-			{this.getPanel()}
-		</div>
-	}
-	
-	getPanel() {
-		switch (this.state.panel) {
+	function getPanel() {
+		switch (panel) {
 			case "Remixer":
-				return <Remixer/>;
+				return <Remixer save={save}/>;
 			case "Re-Remixer":
-				return <ReRemixer/>;
+				return <ReRemixer save={save}/>;
 		}
 	}
 	
-	setPanel = (event) => {
-		this.setState({panel: event.target.value});
+	function save() {
+		let today = new Date();
+		setLastSave(`Autosaved @ ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}:${today.getSeconds().toString().padStart(2, '0')}`);
 	}
 	
+	return <div className={'CenterContainer'}>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
+		<div className="navigationBar" style={{justifyContent:'space-between'}}>
+			<Select onChange={(e) => setPanel(e.target.value)} value={panel}>
+				<MenuItem value={'Remixer'}>Remixer</MenuItem>
+				<MenuItem value={'Re-Remixer'}>Re<sup>2</sup>mixer</MenuItem>
+			</Select>
+			<span>{lastSave}</span>
+		</div>
+		{getPanel()}
+	</div>
 }
 
 
