@@ -1,28 +1,28 @@
-const cron = require('node-cron');
+const scheduler = require('node-schedule');
 const fetch = require("node-fetch");
 const timestamp = require("console-timestamp");
 
 
 const now1 = new Date();
 const schedule = {
-	'10 0 * * Saturday': 'bio',
-	'10 12 * * Saturday': 'biz',
-	'10 0 * * Sunday': 'chem',
-	'10 12 * * Sunday': 'eng',
-	'10 0 * * Monday': 'espanol',
-	'10 12 * * Monday': 'geo',
-	'10 0 * * Tuesday': 'human',
-	// '10 12 * * Tuesday': 'law',
-	'10 0 * * Wednesday': 'math',
-	'10 12 * * Wednesday': 'med',
-	'10 0 * * Thursday': 'phys',
-	'10 12 * * Thursday': 'socialsci',
-	'10 0 * * Friday': 'stats',
-	'10 12 * * Friday': 'workforce',
+	'30 0 * * sat': 'bio',
+	'30 12 * * sat': 'biz',
+	'30 0 * * sun': 'chem',
+	'30 12 * * sun': 'eng',
+	'30 0 * * mon': 'espanol',
+	'30 12 * * mon': 'geo',
+	'30 0 * * tue': 'human',
+	// '30 12 * * tue': 'law',
+	'30 0 * * wed': 'math',
+	'30 12 * * wed': 'med',
+	'30 0 * * thu': 'phys',
+	'30 12 * * thu': 'socialsci',
+	'30 0 * * fri': 'stats',
+	'30 12 * * fri': 'workforce',
 };
 let times = Object.keys(schedule);
 for (let i = 0; i < times.length; i++) {
-	cron.schedule(times[i], () => {
+	scheduler.scheduleJob(times[i], () => {
 		
 		if (now1.getDate() <= 7) { //beginning of month
 			console.log(`Running Refresh no-cache for ${schedule[times[i]]}`);
@@ -40,3 +40,4 @@ for (let i = 0; i < times.length; i++) {
 	// console.log(`Set ${schedule[times[i]]} for ${times[i]}`);
 }
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+setInterval(() => {}, 10000);

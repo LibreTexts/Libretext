@@ -1,4 +1,5 @@
 import React from 'react';
+import Toggle from 'react-toggle';
 import FindReplace from "../components/FindReplace";
 import DeadLinks from "../components/DeadLinks";
 import HeaderFix from "../components/HeaderFix";
@@ -16,7 +17,8 @@ class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			panel: 'FindAndReplace'
+			panel: 'FindAndReplace',
+			devMode: localStorage.getItem('devMode'),
 		}
 	}
 	
@@ -30,6 +32,28 @@ class Dashboard extends React.Component {
 					<option value={'HeaderFix'}>Header Fixer</option>
 					<option value={'ForeignImage'}>Foreign Image Importer</option>
 				</select>
+				<div>
+					<label style={{display: 'flex', alignItems: 'center'}}>
+						<span style={{marginRight: '10px'}}>Dev Mode</span>
+						<Toggle onChange={() => {
+							if (this.state.devMode) {
+								let answer = confirm('Exiting Dev mode will refresh the page. Confirm?');
+								if (answer) {
+									localStorage.removeItem('devMode');
+									location.reload();
+								}
+							}
+							else {
+								let answer = prompt('Please enter in development user. This will refresh the page!');
+								if (answer) {
+									localStorage.setItem('devMode', answer);
+									location.reload();
+								}
+							}
+						}}
+						        checked={Boolean(this.state.devMode)}/>
+					</label>
+				</div>
 			</div>
 			{this.getPanel()}
 		</div>
@@ -40,13 +64,13 @@ class Dashboard extends React.Component {
 			case "Revisions":
 				return null;
 			case "FindAndReplace":
-				return <FindReplace/>;
+				return <FindReplace devMode={this.state.devMode}/>;
 			case "DeadLinks":
-				return <DeadLinks/>;
+				return <DeadLinks devMode={this.state.devMode}/>;
 			case "HeaderFix":
-				return <HeaderFix/>;
+				return <HeaderFix devMode={this.state.devMode}/>;
 			case "ForeignImage":
-				return <ForeignImage/>;
+				return <ForeignImage devMode={this.state.devMode}/>;
 		}
 	}
 	

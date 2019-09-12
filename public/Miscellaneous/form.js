@@ -197,21 +197,23 @@ class LTForm {
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
-				if (!url.endsWith('/link'))
-					result[index] = {
-						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
-						url: url,
-						path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
-						id: parseInt(subpage['@id']),
-						children: children,
-						lazy: !full,
-						subdomain: subdomain,
-					};
+				result[index] = {
+					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+					url: url,
+					path: url.replace(`https://${subdomain}.libretexts.org/`, ""),
+					id: parseInt(subpage['@id']),
+					children: children,
+					lazy: !full,
+					subdomain: subdomain,
+				};
 			}
 			
 			if (subpageArray && subpageArray.length) {
+				let resultIndex = 0;
 				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
+					if (subpageArray[i]["uri.ui"].endsWith('/link'))
+						continue;
+					promiseArray[resultIndex] = subpage(subpageArray[i], resultIndex++);
 				}
 				
 				await Promise.all(promiseArray);
@@ -525,7 +527,7 @@ class LTForm {
 			'Chemistry': 'chem',
 			'Engineering': 'eng',
 			'Espanol': 'espanol',
-			'Geology': 'geo',
+			'Geosciences': 'geo',
 			'Humanities': 'human',
 			'Mathematics': 'math',
 			'Medicine': 'med',

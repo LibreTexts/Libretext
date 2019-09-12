@@ -1,6 +1,23 @@
+const libraries = {
+	'Biology': 'bio',
+	'Business': 'biz',
+	'Chemistry': 'chem',
+	'Engineering': 'eng',
+	'Espanol': 'espanol',
+	'Geology': 'geo',
+	'Humanities': 'human',
+	'Mathematics': 'math',
+	'Medicine': 'med',
+	'Physics': 'phys',
+	'Social Sciences': 'socialsci',
+	'Statistics': 'stats',
+	'Workforce': 'workforce'
+};
+
 const LibreTexts = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
+	getKeys: getKeys,
 	// getSubpagesAlternate: getSubpagesAlternate,
 	// clarifySubdomain: clarifySubdomain,
 	encodeHTML: encodeHTML,
@@ -8,11 +25,16 @@ const LibreTexts = {
 	// authenticate: authenticate,
 	// addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
+	parseURL: parseURL,
 	getCurrent: getCurrent,
+	libraries: libraries,
 };
 
-async function authenticatedFetch(path, api, subdomain) {
-	let isNumber;
+async function authenticatedFetch(path, api, subdomain, options = {}) {
+	let isNumber, current;
+	if (!path) {
+		[current, path] = parseURL();
+	}
 	if (!isNaN(path)) {
 		path = parseInt(path);
 		isNumber = true;
@@ -20,20 +42,26 @@ async function authenticatedFetch(path, api, subdomain) {
 	if (path === 'home') {
 		isNumber = true;
 	}
-	if (typeof authenticatedFetch.keys === 'undefined') {
-		let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
-		authenticatedFetch.keys = await keys.json();
-	}
-	let current = window.location.origin.split('/')[2].split('.')[0];
-	let headers = {};
+	let keys = await getKeys();
+	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+		api = `/${api}`;
+	let headers = options.headers || {};
 	subdomain = subdomain || current;
-	let token = authenticatedFetch.keys[subdomain];
+	let token = keys[subdomain];
 	headers['x-deki-token'] = token;
 	if (current === subdomain)
 		headers['X-Requested-With'] = 'XMLHttpRequest';
 	
-	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-		{headers: headers});
+	return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`,
+		options);
+}
+
+async function getKeys() {
+	if (typeof getKeys.keys === 'undefined') {
+		let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
+		getKeys.keys = await keys.json();
+	}
+	return getKeys.keys;
 }
 
 async function getSubpages(rootURL, username) {
@@ -112,10 +140,19 @@ function encodeHTML(content) {
 	return ret;
 }
 
-function extractSubdomain(url) {
+function extractSubdomain(url = window.location.href) {
 	let origin = url.split("/")[2].split(".");
 	const subdomain = origin[0];
 	return subdomain;
+}
+
+function parseURL(url = window.location.href) {
+	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
+	}
+	else {
+		return [];
+	}
 }
 
 async function getCurrent() {
@@ -124,3 +161,4 @@ async function getCurrent() {
 	let path = page.replace(/^.*?libretexts.org\//, '');
 	LibreTexts.authenticatedFetch(path, 'contents?mode=edit', subdomain).then(async (data) => console.log(await data.text()))
 }
+

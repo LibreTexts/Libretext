@@ -27,7 +27,7 @@ export default class DeadLinks extends React.Component {
 	}
 	
 	componentDidMount() {
-		this.socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
+		this.socket = io(this.props.devMode?'https://home.miniland1333.com/':'https://api.libretexts.org/', {path: '/bot/ws'});
 		this.socket.on('pages', (data) => {
 			// console.log(data);
 			let tempResults = data.concat(this.state.results);
@@ -45,7 +45,7 @@ export default class DeadLinks extends React.Component {
 					this.setState({status: 'processing', counter: data.percentage});
 					break;
 				case 'done':
-					this.setState({status: 'done', ID: data.ID, time: -1});
+					this.setState({status: 'done', ID: data.ID, time: -1, results: data.log});
 					break;
 			}
 		});
@@ -165,7 +165,7 @@ export default class DeadLinks extends React.Component {
 							{({height, width}) => (
 								<List
 									className="List"
-									height={Math.min(this.state.results.length * 30, 400)}
+									height={Math.min(this.state.results.length * 40, 400)}
 									itemCount={this.state.results.length}
 									itemSize={15}
 									width={width}

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Default Matter pages&#10;&#10;Adds InfoPage and TitlePage if they don't exist">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +33,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="IceBucketChallenge" />
+        <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
       </map>
     </option>
     <option name="SIGN_OFF_COMMIT" value="true" />
@@ -50,7 +47,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectId" id="1Qi5Eln0Hrf3BWAccfq5gAD9luu" />
+  <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
   </component>
@@ -65,8 +62,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Remixer" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles/hdagnew@ucdavis.edu/commoncartridge" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -78,22 +75,23 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Remixer" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\public\Hierarchy" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Front" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint\public" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\src\components" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center\.next" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -203,13 +201,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Remixer">
-    <configuration default="true" type="CompoundRunConfigurationType">
-      <toRun name="Remixer" type="js.build_tools.npm" />
-      <toRun name="serveRemixer" type="NodeJSConfigurationType" />
-      <method v="2" />
-    </configuration>
-    <configuration name="API#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/API/API.http" index="2">
+  <component name="RunManager" selected="Node.js.nodePrint">
+    <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
@@ -224,13 +217,14 @@
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
-    <configuration name="serveRemixer" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="serve.js" working-dir="$PROJECT_DIR$/public/Remixer">
+    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
           <option name="JSONFilePath" value="" />
+          <option name="buildCliOptions" value="" />
           <option name="command" value="" />
           <option name="containerName" value="nodeprint" />
           <option name="entrypoint" value="" />
@@ -261,6 +255,16 @@
     </configuration>
     <configuration name="Downloads Center" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/public/Downloads Center/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="package" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Importer" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/Importer/package.json" />
       <command value="run" />
       <scripts>
         <script value="package" />
@@ -302,52 +306,38 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
       <item itemvalue="Docker.nodePrint Docker" />
-      <item itemvalue="HTTP Request.API#2" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Node.js.serveRemixer" />
+      <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="npm.API Dashboard" />
-      <item itemvalue="npm.Downloads Center" />
+      <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
+      <item itemvalue="npm.Downloads Center" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.API#2" />
+        <item itemvalue="Node.js.schedule.js" />
       </list>
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
-        <option name="contentProportion" value="0.13123718" />
         <treeState>
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@83ee2e77" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47ceac21" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@83ee2e77" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f8b88000" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@a7eec5a7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@a7eec5a7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1cb91730" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@a7eec5a7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@566db318" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47ceac21" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47b1563b" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -919,131 +909,115 @@
       <workItem from="1561603662209" duration="283000" />
       <workItem from="1561617227397" duration="451000" />
       <workItem from="1561709180000" duration="4159000" />
-      <workItem from="1562869667452" duration="2581000" />
-      <workItem from="1562880648549" duration="240000" />
-      <workItem from="1562988787281" duration="599000" />
-      <workItem from="1563298654258" duration="2181000" />
-      <workItem from="1563317533950" duration="6757000" />
-      <workItem from="1563334288839" duration="639000" />
-      <workItem from="1563338751235" duration="1315000" />
-      <workItem from="1563415401542" duration="275000" />
-      <workItem from="1563420993575" duration="1198000" />
-      <workItem from="1563504704878" duration="9766000" />
-      <workItem from="1568240472908" duration="7466000" />
-      <workItem from="1568256858032" duration="11201000" />
-      <workItem from="1568312856528" duration="7489000" />
-    </task>
-    <task id="LOCAL-00160" summary="Added schedule.js&#10;&#10;Provides automated batching">
-      <created>1553477408497</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1553477408499</updated>
-    </task>
-    <task id="LOCAL-00161" summary="Added monthly no-cache refresh">
-      <created>1553487534036</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1553487534038</updated>
-    </task>
-    <task id="LOCAL-00162" summary="Reenabled findRemoveSync">
-      <created>1553487860231</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1553487860231</updated>
-    </task>
-    <task id="LOCAL-00163" summary="Downgraded Thin CC to v1.1 Common Cartridge">
-      <created>1553583532685</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1553583532686</updated>
-    </task>
-    <task id="LOCAL-00164" summary="NB + Analytics Compatibility">
-      <created>1553751712590</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1553751712591</updated>
-    </task>
-    <task id="LOCAL-00165" summary="Common Cartridge weblink Fix">
-      <created>1553751747172</created>
-      <option name="number" value="00165" />
-      <option name="presentableId" value="LOCAL-00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1553751747172</updated>
-    </task>
-    <task id="LOCAL-00166" summary="Added \\ for lulu tag newline">
-      <created>1554258133363</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1554258133364</updated>
-    </task>
-    <task id="LOCAL-00167" summary="Created reuse.js">
-      <created>1554437398891</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1554437398892</updated>
-    </task>
-    <task id="LOCAL-00168" summary="Changed zip-local to jszip due to synchronous issues">
-      <created>1554535845646</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1554535845647</updated>
-    </task>
-    <task id="LOCAL-00169" summary="Added bot HTTP test">
-      <created>1555122324332</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1555122324334</updated>
-    </task>
-    <task id="LOCAL-00170" summary="Added mathbook for Pretext testing">
-      <created>1555122483461</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1555122483461</updated>
-    </task>
-    <task id="LOCAL-00171" summary="Added initial documentation">
-      <created>1555136936001</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1555136936002</updated>
-    </task>
-    <task id="LOCAL-00172" summary="Re-added mathbook">
-      <created>1555138209265</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1555138209266</updated>
-    </task>
-    <task id="LOCAL-00173" summary="Initial Bot">
-      <created>1555750704130</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1555750704130</updated>
-    </task>
-    <task id="LOCAL-00174" summary="Initial Bot">
-      <created>1555796820044</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1555796820045</updated>
-    </task>
-    <task id="LOCAL-00175" summary="Moved authenBrowser to keys.lt.org">
-      <created>1556070005775</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1556070005776</updated>
+      <workItem from="1563002416422" duration="795000" />
+      <workItem from="1563074630390" duration="4265000" />
+      <workItem from="1563686070385" duration="207000" />
+      <workItem from="1563757285052" duration="1396000" />
+      <workItem from="1563913150377" duration="1460000" />
+      <workItem from="1563922716811" duration="625000" />
+      <workItem from="1564028914863" duration="4502000" />
+      <workItem from="1564074219222" duration="12910000" />
+      <workItem from="1564111188488" duration="7368000" />
+      <workItem from="1564362242318" duration="1218000" />
+      <workItem from="1564370255886" duration="8240000" />
+      <workItem from="1564454365522" duration="5888000" />
+      <workItem from="1564461444460" duration="3793000" />
+      <workItem from="1564516206871" duration="6818000" />
+      <workItem from="1564526870382" duration="16332000" />
+      <workItem from="1564560221688" duration="1190000" />
+      <workItem from="1564626684487" duration="7085000" />
+      <workItem from="1564732947061" duration="4107000" />
+      <workItem from="1564737642063" duration="448000" />
+      <workItem from="1564738214496" duration="543000" />
+      <workItem from="1564816576113" duration="3692000" />
+      <workItem from="1564820569038" duration="42000" />
+      <workItem from="1564820714912" duration="166000" />
+      <workItem from="1564868029150" duration="16163000" />
+      <workItem from="1564896505722" duration="523000" />
+      <workItem from="1564902118011" duration="2404000" />
+      <workItem from="1564949248955" duration="10099000" />
+      <workItem from="1564982679832" duration="1047000" />
+      <workItem from="1565159869369" duration="771000" />
+      <workItem from="1565161698784" duration="8000" />
+      <workItem from="1565161973435" duration="227000" />
+      <workItem from="1565501948484" duration="699000" />
+      <workItem from="1565665120503" duration="1525000" />
+      <workItem from="1565672057475" duration="2515000" />
+      <workItem from="1565675855094" duration="1180000" />
+      <workItem from="1565723516297" duration="1927000" />
+      <workItem from="1565730999957" duration="1328000" />
+      <workItem from="1565735258376" duration="19911000" />
+      <workItem from="1565759999910" duration="696000" />
+      <workItem from="1565800939847" duration="1939000" />
+      <workItem from="1565818040624" duration="3028000" />
+      <workItem from="1565822215306" duration="539000" />
+      <workItem from="1565824024962" duration="2498000" />
+      <workItem from="1565830362767" duration="5533000" />
+      <workItem from="1565839149363" duration="10746000" />
+      <workItem from="1565852574167" duration="1793000" />
+      <workItem from="1565892473574" duration="1708000" />
+      <workItem from="1566023871169" duration="332000" />
+      <workItem from="1566024270562" duration="3010000" />
+      <workItem from="1566090954440" duration="6301000" />
+      <workItem from="1566108426799" duration="475000" />
+      <workItem from="1566109009673" duration="2437000" />
+      <workItem from="1566149697636" duration="13722000" />
+      <workItem from="1566169968463" duration="6725000" />
+      <workItem from="1566186552193" duration="4394000" />
+      <workItem from="1566270165558" duration="2017000" />
+      <workItem from="1566275008960" duration="13241000" />
+      <workItem from="1566355505034" duration="4716000" />
+      <workItem from="1566361440319" duration="1510000" />
+      <workItem from="1566362969576" duration="2823000" />
+      <workItem from="1566496267474" duration="23133000" />
+      <workItem from="1566577943941" duration="1293000" />
+      <workItem from="1566590145380" duration="5431000" />
+      <workItem from="1566597226805" duration="36000" />
+      <workItem from="1566597405182" duration="35000" />
+      <workItem from="1566597456292" duration="6462000" />
+      <workItem from="1566926116578" duration="7296000" />
+      <workItem from="1566949165082" duration="8759000" />
+      <workItem from="1566972075709" duration="653000" />
+      <workItem from="1567016281748" duration="3573000" />
+      <workItem from="1567102255385" duration="5442000" />
+      <workItem from="1567121851982" duration="6887000" />
+      <workItem from="1567224633231" duration="661000" />
+      <workItem from="1567227860991" duration="7255000" />
+      <workItem from="1567281653433" duration="1135000" />
+      <workItem from="1567283376180" duration="246000" />
+      <workItem from="1567362595078" duration="303000" />
+      <workItem from="1567363572642" duration="66000" />
+      <workItem from="1567363782483" duration="474000" />
+      <workItem from="1567364842805" duration="178000" />
+      <workItem from="1567365288802" duration="888000" />
+      <workItem from="1567366937686" duration="599000" />
+      <workItem from="1567376690251" duration="6174000" />
+      <workItem from="1567402604297" duration="477000" />
+      <workItem from="1567457421875" duration="1606000" />
+      <workItem from="1567472603480" duration="1961000" />
+      <workItem from="1567557712748" duration="1098000" />
+      <workItem from="1567651719784" duration="3589000" />
+      <workItem from="1567664443397" duration="530000" />
+      <workItem from="1567702887409" duration="262000" />
+      <workItem from="1567708748919" duration="290000" />
+      <workItem from="1567710143450" duration="1697000" />
+      <workItem from="1567712603976" duration="27000" />
+      <workItem from="1567713256881" duration="6277000" />
+      <workItem from="1567745214282" duration="6005000" />
+      <workItem from="1567799301872" duration="4895000" />
+      <workItem from="1567804228895" duration="4161000" />
+      <workItem from="1567895600466" duration="2976000" />
+      <workItem from="1567918190960" duration="3066000" />
+      <workItem from="1567925724662" duration="2385000" />
+      <workItem from="1567989617370" duration="1206000" />
+      <workItem from="1567995707253" duration="2828000" />
+      <workItem from="1567999793398" duration="59000" />
+      <workItem from="1568000020970" duration="821000" />
+      <workItem from="1568007563947" duration="2827000" />
+      <workItem from="1568091442542" duration="7198000" />
+      <workItem from="1568140676489" duration="11729000" />
+      <workItem from="1568172190628" duration="2193000" />
+      <workItem from="1568233758804" duration="674000" />
     </task>
     <task id="LOCAL-00176" summary="Added wildcard and read-only&#10;&#10;Bugfixed root page">
       <created>1556172942026</created>
@@ -1262,54 +1236,134 @@
       <option name="project" value="LOCAL" />
       <updated>1561406914179</updated>
     </task>
-    <task id="LOCAL-00207" summary="Hooking up options panel">
-      <created>1563153360314</created>
+    <task id="LOCAL-00207" summary="Spacing fix">
+      <created>1563075794870</created>
       <option name="number" value="00207" />
       <option name="presentableId" value="LOCAL-00207" />
       <option name="project" value="LOCAL" />
-      <updated>1563153360315</updated>
+      <updated>1563075794871</updated>
     </task>
-    <task id="LOCAL-00208" summary="Completed OptionsPanel">
-      <created>1568271583089</created>
+    <task id="LOCAL-00208" summary="Bugfix async">
+      <created>1564074794207</created>
       <option name="number" value="00208" />
       <option name="presentableId" value="LOCAL-00208" />
       <option name="project" value="LOCAL" />
-      <updated>1568271583089</updated>
+      <updated>1564074794207</updated>
     </task>
-    <option name="localTasksCounter" value="209" />
+    <task id="LOCAL-00209" summary="nodePrint A4 and new Covers">
+      <created>1564894139181</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1564894139181</updated>
+    </task>
+    <task id="LOCAL-00210" summary="Fixing Travis.ci">
+      <created>1564902887976</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1564902887976</updated>
+    </task>
+    <task id="LOCAL-00211" summary="Updated README.md">
+      <created>1565893345929</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1565893345930</updated>
+    </task>
+    <task id="LOCAL-00212" summary="refreshListAdd">
+      <created>1566027234221</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1566027234221</updated>
+    </task>
+    <task id="LOCAL-00213" summary="Importer Alpha">
+      <created>1566192889434</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1566192889434</updated>
+    </task>
+    <task id="LOCAL-00214" summary="Importer Beta">
+      <created>1566361853035</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1566361853035</updated>
+    </task>
+    <task id="LOCAL-00215" summary="Initial getSubpagesFull">
+      <created>1566543835848</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1566543835849</updated>
+    </task>
+    <task id="LOCAL-00216" summary="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix">
+      <created>1567238992193</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1567238992194</updated>
+    </task>
+    <task id="LOCAL-00217" summary="Updated Cover Spine logo">
+      <created>1567363903069</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1567363903069</updated>
+    </task>
+    <task id="LOCAL-00218" summary="authenticatedFetch /pages endpoint">
+      <created>1567403066808</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1567403066809</updated>
+    </task>
+    <task id="LOCAL-00219" summary="Reuse.js getKeys">
+      <created>1567463164951</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1567463164951</updated>
+    </task>
+    <task id="LOCAL-00220" summary="Nodejs clean on restart">
+      <created>1567729433295</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1567729433295</updated>
+    </task>
+    <task id="LOCAL-00221" summary="Importer Common Cartridge">
+      <created>1567804885236</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1567804885237</updated>
+    </task>
+    <task id="LOCAL-00222" summary="Hack-a-Mole">
+      <created>1567930301339</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1567930301340</updated>
+    </task>
+    <task id="LOCAL-00223" summary="Added Store: to downloads bar">
+      <created>1568009265497</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1568009265498</updated>
+    </task>
+    <task id="LOCAL-00224" summary="Bugfix Importer Padded titles">
+      <created>1568100699034</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1568100699034</updated>
+    </task>
+    <option name="localTasksCounter" value="225" />
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="nodePrintTest - 2019.02.27 at 20h 49m 18s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.02.28 at 18h 21m 25s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.02.28 at 18h 21m 50s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="basic_response - 2019.02.28 at 18h 35m 08s.xml">
-      <configuration name="basic response" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.05.21 at 20h 23m 49s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.06.07 at 19h 39m 06s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.06.07 at 19h 39m 28s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.06.18 at 00h 48m 29s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.06.18 at 00h 48m 47s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="nodePrintTest - 2019.06.18 at 00h 49m 32s.xml">
-      <configuration name="nodePrintTest" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1364,22 +1418,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added statsFull" />
-    <MESSAGE value="Bugfix encodeHTML" />
-    <MESSAGE value="Contributor copy-source" />
-    <MESSAGE value="Added regular expressions to Dashboard" />
-    <MESSAGE value="NodePrint RenderTimeout fix" />
-    <MESSAGE value="RenderTimeout Resolve" />
-    <MESSAGE value="Initial Portals" />
-    <MESSAGE value="Updated README.md" />
-    <MESSAGE value="findReplace =&gt; findAndReplace" />
-    <MESSAGE value="Deadlinks timeout" />
-    <MESSAGE value="Mandeep BatchAccess fix" />
-    <MESSAGE value="npm update&#10;&#10;Github Security Fixes" />
-    <MESSAGE value="updated css-loader" />
-    <MESSAGE value="Preset escaping" />
-    <MESSAGE value="Mandeep margins" />
-    <MESSAGE value="Foreign Image" />
     <MESSAGE value="Front, Middle, Back Matter" />
     <MESSAGE value="Portal Config" />
     <MESSAGE value="Downloads Center remove Remixer University" />
@@ -1387,102 +1425,44 @@
     <MESSAGE value="FindReplace summaries" />
     <MESSAGE value="Security Fix MoleculeGenerator" />
     <MESSAGE value="Bugfix Remixer cross-origin" />
-    <MESSAGE value="Hooking up options panel" />
-    <MESSAGE value="Completed OptionsPanel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed OptionsPanel" />
+    <MESSAGE value="Spacing fix" />
+    <MESSAGE value="Bugfix async" />
+    <MESSAGE value="nodePrint A4 and new Covers" />
+    <MESSAGE value="Fixing Travis.ci" />
+    <MESSAGE value="Updated README.md" />
+    <MESSAGE value="refreshListAdd" />
+    <MESSAGE value="Importer Alpha" />
+    <MESSAGE value="Importer Beta" />
+    <MESSAGE value="Initial getSubpagesFull" />
+    <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
+    <MESSAGE value="Updated Cover Spine logo" />
+    <MESSAGE value="authenticatedFetch /pages endpoint" />
+    <MESSAGE value="Reuse.js getKeys" />
+    <MESSAGE value="Nodejs clean on restart" />
+    <MESSAGE value="Importer Common Cartridge" />
+    <MESSAGE value="Hack-a-Mole" />
+    <MESSAGE value="Added Store: to downloads bar" />
+    <MESSAGE value="Bugfix Importer Padded titles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix Importer Padded titles" />
   </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="breakpointCondition">
-      <expression>
-        <expression-string>!subpages.tags</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>properties['@count'] === '0'</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>!line.actor.platform</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>!line.actor.platform.description</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>!line</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>!containerTags</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="setValue">
-      <expression>
-        <expression-string>&quot;Tom\\n Weideman&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>&quot;Tom\n Weideman&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>tags.length</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>decodeURIComponent(url)</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>url.replace(rootURL, '')</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>sizes[24]</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>sizes(24)</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>params['param']</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>params['no-cache']</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>params.no-cache</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>params</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
+          <line>1961</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>1254</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
