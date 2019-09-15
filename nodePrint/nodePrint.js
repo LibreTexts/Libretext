@@ -724,7 +724,7 @@ puppeteer.launch({
 			await fs.ensureDir('./PDF/A4/Margin/TOC');
 			console.log('Starting TOC');
 			const start = performance.now();
-			current = await getAPI(current);
+			current = await getAPI(current, true);
 			if (!current.subpages)
 				current.subpages = (await getSubpages(current)).subpages;
 			let escapedURL = `${current.subdomain}-${current.id}`;
@@ -745,14 +745,25 @@ puppeteer.launch({
 				safe(properties.contents['#text']) : '';
 			let tags = current.tags;
 			
-			let content = `<div style="padding: 0 0 10px 0" class="summary">${properties}</div></div>${await getLevel(current)}`;
+			let summary = '';
+			if (properties) {
+				summary = properties
+			}
+			else if (current.content) {
+				summary = current.content.body[0].match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content"[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
+				if (summary) {
+					summary = summary[0];
+				}
+			}
+			
+			let content = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
 				await authenticatedFetch(`${path}/Front_Matter/10: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
 					method: 'POST',
 					body: content + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
 			}
-			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<div class="nobreak"><a href="${current.url}"><h1>${current.title}</h1></a>`}` + content;
+			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h1>${current.title}</h1></a>`}` + content;
 			content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
 				'<style>a {text-decoration: none; color:#127bc4}' +
 				'body>ul {list-style-type: none; color:black}' +
@@ -774,7 +785,7 @@ puppeteer.launch({
 				time /= 100;
 				time = Math.round(time);
 				time /= 10;
-				// console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
+				console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
 				return content;
 			}
 			
@@ -1254,6 +1265,10 @@ puppeteer.launch({
 					if ((performance.now() - start) / 1000 > 20)
 						console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
 					try {
+						if (url.includes('Wakim_and_Grewal')) {
+							await page.addStyleTag({content: `.mt-content-container {font-size: 93%}`});
+						}
+						
 						await page.pdf({ //Letter
 							path: `./PDF/Letter/${PDFname}.pdf`,
 							displayHeaderFooter: showHeaders,
@@ -1374,9 +1389,10 @@ puppeteer.launch({
 			let refreshOnly = options.refreshOnly;
 			let isNoCache = options['no-cache'] || options.nocache;
 			
+			let heartbeat;
 			if (typeof current === 'string') {
 				let count = 0;
-				let heartbeat = setInterval(() => {
+				heartbeat = setInterval(() => {
 					if (response)
 						response.write(JSON.stringify({
 							message: "subpages",
@@ -1385,7 +1401,6 @@ puppeteer.launch({
 						}) + "\r\n")
 				}, 1000);
 				current = await getSubpages(current);
-				clearInterval(heartbeat);
 			}
 			current = await getAPI(current);
 			
@@ -1407,6 +1422,7 @@ puppeteer.launch({
 				current = content;
 			}
 			await getInformation(current);
+			const topPage = current;
 			
 			if (!current.subpages || !current.subpages.length) {
 				if (response)
@@ -1435,7 +1451,7 @@ puppeteer.launch({
 					method: "POST",
 					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
 				});
-				if (createMatter.ok) { //Add properties if it is new
+				// if (createMatter.ok) { //Add properties if it is new
 					await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
 						putProperty('mindtouch.page#welcomeHidden', true),
 						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
@@ -1447,7 +1463,7 @@ puppeteer.launch({
 						method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
 						body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
 					});*/
-				}
+				// }
 				//TODO: Move into above if statement in a week
 				getImage(`${path}/${text}_Matter`, text).then();
 				if (text === 'Front')
@@ -1495,13 +1511,20 @@ puppeteer.launch({
 					if (text === 'Front') {
 						current = await getAPI(current);
 						await getInformation(current);
+						
 						//Create TitlePage
-						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
+						let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2};
+						//TODO: Replace edittime with abort=exists
+						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?edittime=now&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
 							method: "POST",
-							body: `${spacer(11)}
-<p class="mt-align-center"><span class="mt-font-size-36">${current.companyname}</span></p>
-<p class="mt-align-center"><span class="mt-font-size-36">${current.title}</span></p> ${spacer(14)}
-<p class="mt-align-center"><span class="mt-font-size-24">${current.name}</span></p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">printoptions:no-header-title</a></p>`
+							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative;">
+<div style=" display:flex; flex:1; flex-direction: column; justify-content: center">
+<p class="mt-align-center"><span class="mt-font-size-36">${current.companyname || ''}</span></p>
+<p class="mt-align-center"><span class="mt-font-size-36">${current.title || ''}</span></p></div>
+<p style="position: absolute; bottom: 0; right: 0"><canvas id="canvas"></canvas></p>
+<p class="mt-align-center"><span class="mt-font-size-24">${current.name || ''}</span></p>
+<script>QRCode.toCanvas(document.getElementById('canvas'), '${topPage.url}', ${JSON.stringify(QRoptions)})</script>
+<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">printoptions:no-header-title</a></p></div>`
 						});
 						
 						//Create InfoPage
@@ -1564,6 +1587,8 @@ puppeteer.launch({
 			urlArray = urlArray.concat(await getMatter('Back'));
 			urlArray.reverse();
 			
+			if (heartbeat)
+				clearInterval(heartbeat);
 			if (response)
 				response.write(JSON.stringify({
 					message: "start",
@@ -1650,7 +1675,7 @@ puppeteer.launch({
 			} catch (err) {
 				throw err;
 			}
-			let heartbeat, numPages;
+			let numPages;
 			
 			if (!refreshOnly) {
 				//Overall cover
@@ -2104,7 +2129,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 }
 
 async function getAPI(page, getContents) {
-	if (page.title && page.properties && page.id && page.tags)
+	if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
 		return page;
 	else if (typeof page === 'string')
 		page = {
@@ -2137,6 +2162,7 @@ async function getAPI(page, getContents) {
 		page.subdomain = subdomain;
 		page.path = response.path['#text'];
 		page.modified = new Date(response['date.modified']);
+		page.content = response.content;
 	}
 	else {
 		let error = response = await response.json();

@@ -26,6 +26,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="4d0ba47b-3ce7-49df-9533-4c62f2808c28" name="Test" url="http://test.libretexts.org">
+        <fileTransfer host="test.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

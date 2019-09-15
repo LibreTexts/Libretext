@@ -36,6 +36,18 @@
           </excludedPaths>
         </serverdata>
       </paths>
+      <paths name="Test">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/development" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/PDF" />
+            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/ZIP" />
+            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/FullPDF" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
     </serverData>
     <option name="myUploadOnCheckinName" value="Front" />
     <option name="myAutoUpload" value="ALWAYS" />
