@@ -20,7 +20,6 @@ const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
 const JSZip = require("jszip");
 const he = require("he");
-const deepMerge = require('deepmerge');
 const convert = require('xml-js');
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
@@ -700,7 +699,7 @@ puppeteer.launch({
 				else if (options.isHardcover) {
 					let result = '';
 					for (let number in sizes) {
-						if (numPages > parseInt(number)) {
+						if (numPages >= parseInt(number)) {
 							result = sizes[parseInt(number)];
 						}
 					}
