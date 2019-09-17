@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1021,21 +1019,11 @@
       <workItem from="1568536593846" duration="68000" />
       <workItem from="1568575629888" duration="599000" />
       <workItem from="1568606290416" duration="32000" />
-      <workItem from="1568606353880" duration="374000" />
-    </task>
-    <task id="LOCAL-00177" summary="Added silenced alerts">
-      <created>1556174960362</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1556174960363</updated>
-    </task>
-    <task id="LOCAL-00178" summary="Added streaming JSON output">
-      <created>1556340276552</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1556340276553</updated>
+      <workItem from="1568606353880" duration="547000" />
+      <workItem from="1568607120682" duration="606000" />
+      <workItem from="1568614004401" duration="1048000" />
+      <workItem from="1568678286658" duration="3656000" />
+      <workItem from="1568684821034" duration="9189000" />
     </task>
     <task id="LOCAL-00179" summary="Added streaming JSON output">
       <created>1556342395179</created>
@@ -1366,7 +1354,21 @@
       <option name="project" value="LOCAL" />
       <updated>1568535324281</updated>
     </task>
-    <option name="localTasksCounter" value="226" />
+    <task id="LOCAL-00226" summary="Bugfix for LibreTexts that are exactly 24 pages.">
+      <created>1568606876382</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1568606876382</updated>
+    </task>
+    <task id="LOCAL-00227" summary="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC.">
+      <created>1568688088049</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1568688088049</updated>
+    </task>
+    <option name="localTasksCounter" value="228" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1422,8 +1424,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Portal Config" />
-    <MESSAGE value="Downloads Center remove Remixer University" />
     <MESSAGE value="Bugfix newlines" />
     <MESSAGE value="FindReplace summaries" />
     <MESSAGE value="Security Fix MoleculeGenerator" />
@@ -1447,7 +1447,9 @@
     <MESSAGE value="Added Store: to downloads bar" />
     <MESSAGE value="Bugfix Importer Padded titles" />
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
+    <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
+    <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1458,9 +1460,6 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
-      <default-breakpoints>
-        <breakpoint enabled="true" type="javascript-exception" />
-      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="masterDetails">

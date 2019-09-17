@@ -749,10 +749,15 @@ puppeteer.launch({
 				summary = properties
 			}
 			else if (current.content) {
-				summary = current.content.body[0].match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content"[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
-				if (summary) {
-					summary = summary[0];
+				let body = current.content.body[0];
+				if (body.includes('class="mt-guide-content"') || body.includes('class="mt-category-container')) {
+					summary = body.match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
+					if (summary) {
+						summary = summary[0];
+					}
 				}
+				else
+					summary = body;
 			}
 			
 			let content = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${await getLevel(current)}`;
@@ -762,7 +767,7 @@ puppeteer.launch({
 					body: content + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
 			}
-			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h1>${current.title}</h1></a>`}` + content;
+			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h2>${current.title}</h2></a>`}` + content;
 			content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
 				'<style>a {text-decoration: none; color:#127bc4}' +
 				'body>ul {list-style-type: none; color:black}' +
@@ -1402,6 +1407,16 @@ puppeteer.launch({
 				current = await getSubpages(current);
 			}
 			current = await getAPI(current);
+			if (current.modified === 'restricted') {
+				if (response)
+					response.write(JSON.stringify({
+						message: "error",
+						text: `LibreText is not Public!`,
+						percent: -1,
+						eta: "LibreText is not Public!",
+					}));
+				return false;
+			}
 			
 			//Merge up Text or Chapters
 			let content;
@@ -1436,6 +1451,7 @@ puppeteer.launch({
 			console.log(`Getting LibreText ${options.index ? `[${options.index}] ` : ''}${current.title}`);
 			const zipFilename = `${current.subdomain}-${current.id}`;
 			const thinName = md5(zipFilename).slice(0, 6);
+			let privatePages = [];
 			
 			//Try to get special files
 			let totalIndex = 1;
@@ -1451,20 +1467,19 @@ puppeteer.launch({
 					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
 				});
 				// if (createMatter.ok) { //Add properties if it is new
-					await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
-						putProperty('mindtouch.page#welcomeHidden', true),
-						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
-					
-					/*let userID = await authenticatedFetch('', `@api/deki/users/=PrintBot?dream.out.format=json`, current.subdomain, 'PrintBot');
-					userID = (await userID.json())['@id'];
-					
-					await authenticatedFetch(`${path}/${text}_Matter`, 'security?dream.out.format=json', current.subdomain, 'PrintBot', {
-						method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
-						body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
-					});*/
-				// }
-				//TODO: Move into above if statement in a week
+				await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
+					putProperty('mindtouch.page#welcomeHidden', true),
+					putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
+				
+				/*let userID = await authenticatedFetch('', `@api/deki/users/=PrintBot?dream.out.format=json`, current.subdomain, 'PrintBot');
+				userID = (await userID.json())['@id'];
+				
+				await authenticatedFetch(`${path}/${text}_Matter`, 'security?dream.out.format=json', current.subdomain, 'PrintBot', {
+					method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
+					body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
+				});*/
 				getImage(`${path}/${text}_Matter`, text).then();
+				// }
 				if (text === 'Front')
 					await defaultMatter(text);
 				
@@ -1513,8 +1528,7 @@ puppeteer.launch({
 						
 						//Create TitlePage
 						let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2};
-						//TODO: Replace edittime with abort=exists
-						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?edittime=now&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
 							method: "POST",
 							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative;">
 <div style=" display:flex; flex:1; flex-direction: column; justify-content: center">
@@ -1663,6 +1677,8 @@ puppeteer.launch({
 						await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/libretexts/${zipFilename}/${title}.pdf`);
 						await fs.copy(`./PDF/A4/Margin/${filename}`, `./PDF/A4/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
 					}
+					else
+						privatePages.push(page.url);
 					if (response)
 						response.write(JSON.stringify({
 							message: "progress",
@@ -1741,8 +1757,8 @@ puppeteer.launch({
 					}
 					else {
 						let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
-						await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.pdf`, notice);
-						await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_PerfectBound.pdf`, notice);
+						await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
+						await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
 					}
 					if (lulu.numpages >= 24) {
 						filename = `Cover/${await getCover(current, lulu.numpages, {
@@ -1754,8 +1770,8 @@ puppeteer.launch({
 					}
 					else {
 						let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
-						await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.pdf`, notice);
-						await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Casewrap.pdf`, notice);
+						await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
+						await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
 					}
 					filename = `Cover/${await getCover(current, lulu.numpages, {
 						hasExtraPadding: true,
@@ -1763,6 +1779,11 @@ puppeteer.launch({
 					})}.pdf`;
 					await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
 					await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
+				}
+				//save log of private pages
+				if (privatePages.length) {
+					await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages);
+					await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages);
 				}
 				
 				console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
