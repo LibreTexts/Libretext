@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Default Matter pages&#10;&#10;Adds InfoPage and TitlePage if they don't exist">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +202,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Remixer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -218,6 +219,9 @@
       <method v="2" />
     </configuration>
     <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
+      <method v="2" />
+    </configuration>
+    <configuration name="serve.js" type="NodeJSConfigurationType" temporary="true" application-parameters="80" nameIsGenerated="true" path-to-js-file="serve.js" working-dir="$PROJECT_DIR$/public/Remixer">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -314,6 +318,7 @@
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
+      <item itemvalue="Node.js.serve.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
@@ -321,6 +326,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.serve.js" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
     </recent_temporary>
@@ -328,16 +334,26 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
+        <option name="contentProportion" value="0.2508544" />
         <treeState>
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47ceac21" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@53d29333" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47ceac21" type="9fbbdea:ServiceModel$ServiceNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@47b1563b" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@53d29333" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@276486d5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@91b74d29" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@91b74d29" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ceddd71f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -1018,6 +1034,7 @@
       <workItem from="1568140676489" duration="11729000" />
       <workItem from="1568172190628" duration="2193000" />
       <workItem from="1568233758804" duration="674000" />
+      <workItem from="1568776971821" duration="3761000" />
     </task>
     <task id="LOCAL-00176" summary="Added wildcard and read-only&#10;&#10;Bugfixed root page">
       <created>1556172942026</created>
@@ -1448,11 +1465,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>1961</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
           <line>1254</line>

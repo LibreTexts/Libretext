@@ -6,7 +6,9 @@ import Tutorial from './Tutorial.jsx';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Add from '@material-ui/icons/Add';
+import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/Remove';
+import MergeType from '@material-ui/icons/MergeType';
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
 import Refresh from '@material-ui/icons/Refresh';
@@ -240,18 +242,25 @@ export default class RemixerPanel extends React.Component {
 		return <div id='LTForm'>
 			<div className="LTFormHeader">
 				<div className='LTTitle'>{this.props.mode} Mode</div>
-				<Button variant="contained" onClick={this.new}>New Page
+				<Button variant="contained" onClick={this.new}><span>New Page</span>
 					<Add/></Button>
-				<Button variant="contained" onClick={this.delete}>Delete
+				<Button variant="contained" onClick={this.edit}><span>Edit Page</span>
+					<Edit/></Button>
+				<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
 					<Remove/></Button>
 				
+				
+				<Button variant="contained"><span>Undo</span>
+					<Undo/></Button>
+				<Button variant="contained"><span>Redo</span>
+					<Redo/></Button>
+				
+				
 				<Tooltip title="Merges the contents of the selected folder with its parent's contents.">
-					<Button variant="contained" onClick={this.mergeUp}>Merge Folder Up</Button>
+					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
 				</Tooltip>
-				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}>Start Over
+				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
-				{/*<Undo/>
-				<Redo/>*/}
 			</div>
 			<div id='LTFormContainer'>
 				<Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
@@ -270,6 +279,40 @@ export default class RemixerPanel extends React.Component {
 				</div>
 			</div>
 			<Dialog open={this.state.resetDialog} onClose={this.handleReset} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Want to Start Over?</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						This action will clear your work in the Remix Panel. If you would like to start out with a
+						template, select the number of chapters and number of pages per chapter you would like.
+					</DialogContentText>
+					<TextField
+						autoFocus
+						margin="dense"
+						label="Number of Chapters"
+						type="number"
+						value={this.state.chapters}
+						onChange={this.handleChange('chapters')}
+						fullWidth
+					/>
+					<TextField
+						margin="dense"
+						label="Number of Pages per Chaoter"
+						type="number"
+						value={this.state.pages}
+						onChange={this.handleChange('pages')}
+						fullWidth
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={this.handleReset} color="primary">
+						Cancel
+					</Button>
+					<Button onClick={() => this.handleReset(this.state.chapters, this.state.pages)} color="primary">
+						Start Over
+					</Button>
+				</DialogActions>
+			</Dialog>
+			<Dialog open={this.state.editDialog} onClose={this.handleReset} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Want to Start Over?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
@@ -332,11 +375,15 @@ export default class RemixerPanel extends React.Component {
 				lazy: false,
 				expanded: true,
 				status: 'new',
-				tooltip: 'Newly Created Page',
 			});
 			await node.setExpanded();
 			await this.autonumber();
 		}
+	};
+	
+	edit = async () => {
+		let node = $('#LTRight').fancytree('getActiveNode');
+		console.log(node);
 	};
 	
 	delete = () => {

@@ -28,7 +28,7 @@
 	content: unset;
 }
 
-.MuiTooltip-tooltip{
+.MuiTooltip-tooltip {
 	font-size: 0.8rem;
 }
 
@@ -86,4 +86,17 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: unset;
 	margin: unset;
 	padding: unset;
+}
+
+.LTFormHeader > button {
+	margin: 0 2px;
+}
+/*hide action button labels*/
+.LTFormHeader > button > span > span {
+	font-size: 0;
+	transition-duration: 500ms;
+}
+
+.LTFormHeader > button:hover > span > span {
+	font-size: inherit;
 }
