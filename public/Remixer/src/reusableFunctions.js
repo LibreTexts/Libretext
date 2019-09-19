@@ -17,6 +17,7 @@ function generateDefault(chapters, pages) {
 				"lazy": false,
 				"title": `${i}.${j}: New Page`,
 				"tooltip": "Newly Created Page",
+				"status": 'new',
 				"data": {"padded": `${i.toString().padStart(2, '0')}.${i.toString().padStart(2, '0')}: New Page`}
 			})
 		}
@@ -40,7 +41,8 @@ function generateDefault(chapters, pages) {
 		padded: "",
 		unselectable: true,
 		expanded: true,
-		children: children
+		children: children,
+		articleType: 'topic-category'
 	}
 }
 

@@ -7,11 +7,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
-import Remove from '@material-ui/icons/Remove';
+import Remove from '@material-ui/icons/Delete';
 import MergeType from '@material-ui/icons/MergeType';
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
 import Refresh from '@material-ui/icons/Refresh';
+import Warning from "@material-ui/icons/Warning";
+import {withSnackbar} from 'notistack';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -20,16 +22,23 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Slide from '@material-ui/core/Slide';
 import Tooltip from "@material-ui/core/Tooltip";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Chip from "@material-ui/core/Chip";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-export default class RemixerPanel extends React.Component {
+class RemixerPanel extends React.Component {
 	constructor() {
 		super();
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		
 		this.state = {
 			initialized: false,
+			edit: {},
 			LibraryTree: {},
 			subdomain: subdomain,
+			editDialog: false,
 			resetDialog: false,
 			chapters: 0,
 			pages: 0
@@ -107,12 +116,12 @@ export default class RemixerPanel extends React.Component {
 			debugLevel: 0,
 			autoScroll: true,
 			extensions: ['dnd5'],
-			/*			lazyLoad: function (event, data) {
-							const dfd = new $.Deferred();
-							let node = data.node;
-							data.result = dfd.promise();
-							RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
-						},*/
+			lazyLoad: function (event, data) {
+				const dfd = new $.Deferred();
+				let node = data.node;
+				data.result = dfd.promise();
+				RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
+			},
 			contextmenu: function (event, data) {
 				console.log(data.node);
 			},
@@ -192,7 +201,7 @@ export default class RemixerPanel extends React.Component {
 							data.otherNode.moveTo(node, data.hitMode);
 						}
 						else {
-							data.otherNode.copyTo(node, data.hitMode, function (n) {
+							let newNode = data.otherNode.copyTo(node, data.hitMode, function (n) {
 								n.title = n.title.replace(/<a.* ><\/a>/, '');
 								n.key = null; // make sure, a new key is generated
 								n.status = 'new'; // make sure, a new key is generated
@@ -202,7 +211,7 @@ export default class RemixerPanel extends React.Component {
 							const RightAlert = $('#LTRightAlert');
 							RightAlert.text('Importing content. Please wait...');
 							RightAlert.slideDown();
-							await data.otherNode.visitAndLoad();
+							await newNode.visitAndLoad();
 							RightAlert.slideUp();
 							LTRight.enable(true);
 						}
@@ -282,7 +291,8 @@ export default class RemixerPanel extends React.Component {
 				<DialogTitle id="form-dialog-title">Want to Start Over?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						This action will clear your work in the Remix Panel. If you would like to start out with a
+						This action will clear your work in the Remix Panel and undo history. Consider saving your
+						current workspace to a file with the "Save File" button. If you would like to start out with a
 						template, select the number of chapters and number of pages per chapter you would like.
 					</DialogContentText>
 					<TextField
@@ -296,7 +306,7 @@ export default class RemixerPanel extends React.Component {
 					/>
 					<TextField
 						margin="dense"
-						label="Number of Pages per Chaoter"
+						label="Number of Pages per Chapter"
 						type="number"
 						value={this.state.pages}
 						onChange={this.handleChange('pages')}
@@ -312,37 +322,95 @@ export default class RemixerPanel extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			<Dialog open={this.state.editDialog} onClose={this.handleReset} aria-labelledby="form-dialog-title">
-				<DialogTitle id="form-dialog-title">Want to Start Over?</DialogTitle>
+			<Dialog open={this.state.editDialog} onClose={this.handleEdit} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Properties for {this.state.edit.title || 'this Page'}</DialogTitle>
 				<DialogContent>
-					<DialogContentText>
-						This action will clear your work in the Remix Panel. If you would like to start out with a
-						template, select the number of chapters and number of pages per chapter you would like.
-					</DialogContentText>
 					<TextField
 						autoFocus
 						margin="dense"
-						label="Number of Chapters"
-						type="number"
-						value={this.state.chapters}
-						onChange={this.handleChange('chapters')}
+						label="Page Title"
+						value={this.state.edit.title || ''}
+						onChange={(event) => this.changeEdit('title', event.target.value)}
 						fullWidth
 					/>
 					<TextField
 						margin="dense"
-						label="Number of Pages per Chaoter"
-						type="number"
-						value={this.state.pages}
-						onChange={this.handleChange('pages')}
+						label="Source URL (optional)"
+						value={this.state.edit.url || ''}
+						onChange={(event) => this.changeEdit('url', event.target.value)}
 						fullWidth
 					/>
+					<div style={{display: 'flex'}}>
+						<TextField
+							select
+							label="Article type"
+							value={this.state.edit.articleType || ''}
+							onChange={(event) => {
+								this.changeEdit('articleType', event.target.value);
+								if (this.checkStructure(event.target.value)) {
+									let message = `The article type ${articleTypeToTitle(event.target.value)} is not recommended under ${articleTypeToTitle(this.state.edit.parentType)}.\nWe recommend swapping to a different article type.`;
+									this.props.enqueueSnackbar(message, {
+										variant: 'warning',
+										anchorOrigin: {
+											vertical: 'bottom',
+											horizontal: 'right',
+										},
+										autoHideDuration: 10000,
+									});
+									alert(message);
+								}
+							}}
+							helperText={`Unit(s) >> Chapter >> Topic(s)`}
+							margin="normal"
+							error={this.checkStructure(this.state.edit.articleType)}
+							variant="filled">
+							<MenuItem value={false}>Not set</MenuItem>
+							{this.ArticleType("topic-category")}
+							{this.ArticleType("topic-guide")}
+							{this.ArticleType("topic")}
+						</TextField>
+						<div style={{
+							padding: '16px 10px 8px 10px',
+							display: 'flex',
+							flex: 1,
+						}}>
+							<Paper style={{
+								display: 'flex',
+								flex: 1,
+								justifyContent: 'space-evenly',
+								alignItems: 'center',
+								padding: 10,
+								borderRadius: 4,
+								flexWrap: 'wrap',
+							}}>
+								{(this.state.edit.tags || []).map((item, index) =>
+									<Chip key={item} label={item} style={{margin: 10}}
+									      onDelete={() => {
+										      this.changeEdit('tags', this.state.edit.tags.filter(elem => elem !== item))
+									      }}/>)}
+								<Chip key={Math.random()} label="Add Tag"
+								      icon={<Add/>}
+								      style={{margin: 10}}
+								      variant="outlined"
+								      color="primary"
+								      clickable
+								      onClick={() => {
+									      let tag = prompt('Name for the new tag');
+									      if (tag) {
+										      this.state.edit.tags.push(tag);
+										      this.changeEdit('tags', this.state.edit.tags);
+									      }
+								      }}/>
+							</Paper>
+						</div>
+					</div>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.handleReset} color="primary">
+					<Button onClick={this.handleEdit} color="primary">
 						Cancel
 					</Button>
-					<Button onClick={() => this.handleReset(this.state.chapters, this.state.pages)} color="primary">
-						Start Over
+					<Button onClick={() => this.handleEdit(this.state.edit)} color="primary">
+						Save edits
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -351,6 +419,25 @@ export default class RemixerPanel extends React.Component {
 		function formMode(isAdmin, isPro, groups) {
 			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remix Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
 		}
+	}
+	
+	checkStructure(type) {
+		let parentType = this.state.edit.parentType;
+		if (!type || !parentType)
+			return false;
+		switch (type) {
+			case 'topic-category':
+				return !(parentType === 'topic-category');
+			case 'topic-guide':
+				return !(parentType === 'topic-category');
+			case 'topic':
+				return !(parentType !== 'topic-category');
+			default:
+				return false;
+		}
+		
+		
+		return true;
 	}
 	
 	handleChange = name => event => {
@@ -383,7 +470,25 @@ export default class RemixerPanel extends React.Component {
 	
 	edit = async () => {
 		let node = $('#LTRight').fancytree('getActiveNode');
-		console.log(node);
+		if (!node || node.key === 'ROOT')
+			return;
+		let newEdit = {
+			...node.data,
+			title: node.title,
+			parentType: node.getParent().data.articleType
+		};
+		if (!newEdit.original)
+			newEdit.original = JSON.parse(JSON.stringify(newEdit));
+		newEdit.node = node;
+		console.log(node, newEdit);
+		this.setState({edit: newEdit, editDialog: true});
+	};
+	
+	changeEdit = (option, value) => {
+		let newOptions = {...this.state.edit};
+		newOptions[option] = value;
+		
+		this.setState({edit: newOptions});
 	};
 	
 	delete = () => {
@@ -415,12 +520,21 @@ export default class RemixerPanel extends React.Component {
 		this.setState({resetDialog: false});
 	};
 	
+	
+	handleEdit = () => {
+		let newEdit = this.state.edit;
+		
+		newEdit.status = 'modified';
+		this.setState({editDialog: false});
+		newEdit.node.fromDict(newEdit);
+		setTimeout(()=> this.save(d),1000);
+	};
+	
 	autonumber = async () => {
 		let root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
 		if (!root.children) {
 			return false;
 		}
-		
 		
 		
 		let processNode = (node, sharedIndex, level) => {
@@ -507,21 +621,7 @@ export default class RemixerPanel extends React.Component {
 	
 	getSelectOptions() {
 		let current = window.location.origin.split('/')[2].split('.')[0];
-		let libraries = {
-			'Biology': 'bio',
-			'Business': 'biz',
-			'Chemistry': 'chem',
-			'Engineering': 'eng',
-			'Espanol': 'espanol',
-			'Geology': 'geo',
-			'Humanities': 'human',
-			'Mathematics': 'math',
-			'Medicine': 'med',
-			'Physics': 'phys',
-			'Social Sciences': 'socialsci',
-			'Statistics': 'stats',
-			'Workforce': 'workforce',
-		};
+		let libraries = LibreTexts.libraries;
 		let result = [];
 		Object.keys(libraries).map(function (key, index) {
 			result.push(<option value={libraries[key]} key={key}>{key}</option>);
@@ -550,21 +650,28 @@ export default class RemixerPanel extends React.Component {
 				path = path.replace('?title=', '');
 				const hasChildren = subpage['@subpages'] === 'true';
 				let children = hasChildren ? undefined : [];
-				if (hasChildren && (full)) { //recurse down
+				if (hasChildren && full) { //recurse down
 					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 					children = await children.json();
-					children = await subpageCallback(children, false);
+					children = await subpageCallback(children);
 				}
-				if (!url.endsWith('/link'))
-					result[index] = {
+				if (!url.endsWith('/link') && subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter') {
+					let miniResult = {
 						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
 						url: url,
-						path: url.replace(`https://${subdomain}.libretexts.org/`, ''),
-						id: parseInt(subpage['@id']),
 						children: children,
 						lazy: !full,
-						subdomain: subdomain,
 					};
+					miniResult = await LibreTexts.getAPI(miniResult);
+					
+					let type = miniResult.tags.find(elem => elem.startsWith('article:'));
+					if (type) {
+						miniResult.articleType = type.split('article:')[1];
+						miniResult.extraClasses = `article-${miniResult.articleType}`;
+					}
+					miniResult.tags = miniResult.tags.filter(elem => !elem.startsWith('article:'));
+					result[index] = miniResult;
+				}
 			}
 			
 			if (subpageArray && subpageArray.length) {
@@ -573,7 +680,7 @@ export default class RemixerPanel extends React.Component {
 				}
 				
 				await Promise.all(promiseArray);
-				return result;
+				return result.filter(elem => elem);
 			}
 			else {
 				return [];
@@ -1172,6 +1279,22 @@ wiki.page("${child.path}", NULL)</pre>
 			}
 		}
 	}
+	
+	ArticleType = (type) => {
+		let badStructure = this.checkStructure(type);
+		let inner = <div style={{display: 'flex', alignItems: 'center', flex: 1}}>
+			<ListItemText primary={articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
+			{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
+				<Warning/>
+			</ListItemIcon> : null}
+		</div>;
+		return <MenuItem
+			value={type}>{badStructure ? <Tooltip
+			title='Warning: This article type currently violates the recommended content structure'
+		>{inner}
+		</Tooltip> : inner}
+		</MenuItem>;
+	}
 }
 
 
@@ -1215,3 +1338,16 @@ function millisecondsToStr(milliseconds) {
 function formatNumber(it) {
 	return it.toPrecision(4);
 }
+
+function articleTypeToTitle(type) {
+	switch (type) {
+		case 'topic-category':
+			return 'Unit';
+		case 'topic-guide':
+			return 'Chapter';
+		case 'topic':
+			return 'Topic';
+	}
+}
+
+export default withSnackbar(RemixerPanel); //Allows snackbars
