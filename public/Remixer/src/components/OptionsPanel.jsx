@@ -78,7 +78,6 @@ export default function OptionsPanel(props) {
 							vertical: 'bottom',
 							horizontal: 'right',
 						},
-						autoHideDuration: 5000,
 					});
 				}
 				else if (file.name.endsWith('.csv')) {
@@ -88,7 +87,6 @@ export default function OptionsPanel(props) {
 							vertical: 'bottom',
 							horizontal: 'right',
 						},
-						autoHideDuration: 5000,
 					});
 				}
 				else {
@@ -98,7 +96,6 @@ export default function OptionsPanel(props) {
 							vertical: 'bottom',
 							horizontal: 'right',
 						},
-						autoHideDuration: 5000,
 					});
 				}
 			} catch (err) {
@@ -143,7 +140,13 @@ export default function OptionsPanel(props) {
 			control={
 				<Switch
 					checked={props.options.enableAutonumber}
-					onChange={event => changeOption('enableAutonumber', event.target.checked)}
+					onChange={event => {
+						if (event.target.checked && !props.options.autonumber.guideDepth) {
+							changeOption('autonumber.guideDepth', 1);
+							setAutonumberOpen(true);
+						}
+						changeOption('enableAutonumber', event.target.checked)
+					}}
 					color="primary"
 					inputProps={{'aria-label': 'primary checkbox'}}
 				/>}
@@ -183,7 +186,21 @@ export default function OptionsPanel(props) {
 					These options affect how the Autonumber operates. When enabled, the Autonumberer
 					automatically updates the Chapter and Page numbers based on any changes you make.
 				</DialogContentText>
-				<div style={{display: 'flex', justifyContent: 'space-between'}}>
+				<Tooltip
+					title={`All pages shallower than ${props.options.autonumber.guideDepth || 1} will be categories, all pages at this depth will be guides, and all deeper will be topics.`}>
+					<TextField
+						style={{margin: 0}}
+						id="standard-number"
+						label="Guide Depth"
+						helperText={`This determines the tree depth at which the pages are automatically guides.`}
+						type="number"
+						margin="normal"
+						fullWidth
+						value={props.options.autonumber.guideDepth || 1}
+						onChange={event => changeOption('autonumber.guideDepth', Math.max(event.target.value, 0))}
+						variant="filled"/>
+				</Tooltip>
+				<div style={{display: 'flex', justifyContent: 'space-between', marginTop: 20}}>
 					<TextField
 						style={{margin: 0}}
 						id="standard-number"
@@ -217,11 +234,11 @@ export default function OptionsPanel(props) {
 				<TextField
 					select
 					label="Chapter prefix"
-					value={props.options.autonumber.chapterPrefix || ''}
+					value={props.options.autonumber.chapterPrefix}
 					onChange={(event) => {
 						changeOption('autonumber.chapterPrefix', event.target.value);
 					}}
-					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix || ''} 1:)`}
+					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
 					margin="normal"
 					variant="filled">
 					<MenuItem value={false}>No Prefix</MenuItem>
@@ -231,11 +248,11 @@ export default function OptionsPanel(props) {
 				<TextField
 					select
 					label="Page Prefix"
-					value={props.options.autonumber.pagePrefix || ''}
+					value={props.options.autonumber.pagePrefix}
 					onChange={(event) => {
 						changeOption('autonumber.pagePrefix', event.target.value);
 					}}
-					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix || ''} 1.1:)`}
+					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
 					margin="normal"
 					variant="filled">
 					<MenuItem value={false}>No Prefix</MenuItem>

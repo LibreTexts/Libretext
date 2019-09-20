@@ -15,8 +15,11 @@ export default class Remixer extends React.Component {
 			mode: 'Pro', //Todo add privelages back in
 			options: {
 				tutorial: false,
-				enableAutonumber: true,
+				enableAutonumber: false,
 				autonumber: {offset: 1},
+				chapterPrefix:'',
+				pagePrefix:'',
+				overwriteSuffix: false,
 			},
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 		};

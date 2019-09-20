@@ -27,6 +27,7 @@ import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import {Toolbar} from "@material-ui/core";
 
 class RemixerPanel extends React.Component {
 	constructor() {
@@ -341,37 +342,40 @@ class RemixerPanel extends React.Component {
 						fullWidth
 					/>
 					<div style={{display: 'flex'}}>
-						<TextField
-							select
-							label="Article type"
-							value={this.state.edit.articleType || ''}
-							onChange={(event) => {
-								this.changeEdit('articleType', event.target.value);
-								if (this.checkStructure(event.target.value)) {
-									let message = `The article type ${articleTypeToTitle(event.target.value)} is not recommended under ${articleTypeToTitle(this.state.edit.parentType)}.\nWe recommend swapping to a different article type.`;
-									this.props.enqueueSnackbar(message, {
-										variant: 'warning',
-										anchorOrigin: {
-											vertical: 'bottom',
-											horizontal: 'right',
-										},
-										autoHideDuration: 10000,
-									});
-									alert(message);
-								}
-							}}
-							helperText={`Unit(s) >> Chapter >> Topic(s)`}
-							margin="normal"
-							error={this.checkStructure(this.state.edit.articleType)}
-							variant="filled">
-							<MenuItem value={false}>Not set</MenuItem>
-							{this.ArticleType("topic-category")}
-							{this.ArticleType("topic-guide")}
-							{this.ArticleType("topic")}
-						</TextField>
+						<Tooltip
+							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
+							<TextField
+								select
+								label="Article type"
+								disabled={this.props.options.enableAutonumber}
+								value={this.state.edit.articleType || ''}
+								onChange={(event) => {
+									this.changeEdit('articleType', event.target.value);
+									if (this.checkStructure(event.target.value)) {
+										let message = `The article type ${articleTypeToTitle(event.target.value)} is not recommended under ${articleTypeToTitle(this.state.edit.parentType)}.\nWe recommend swapping to a different article type.`;
+										alert(message);
+										this.props.enqueueSnackbar(message, {
+											variant: 'warning',
+											anchorOrigin: {
+												vertical: 'bottom',
+												horizontal: 'right',
+											},
+										});
+									}
+								}}
+								helperText={`Unit(s) >> Chapter >> Topic(s)`}
+								margin="normal"
+								error={this.checkStructure(this.state.edit.articleType)}
+								variant="filled">
+								{this.ArticleType("topic-category")}
+								{this.ArticleType("topic-guide")}
+								{this.ArticleType("topic")}
+							</TextField>
+						</Tooltip>
 						<div style={{
 							padding: '16px 10px 8px 10px',
 							display: 'flex',
+							flexDirection: 'column',
 							flex: 1,
 						}}>
 							<Paper style={{
@@ -521,13 +525,19 @@ class RemixerPanel extends React.Component {
 	};
 	
 	
-	handleEdit = () => {
-		let newEdit = this.state.edit;
+	handleEdit = async (newEdit) => {
+		if (!newEdit || !newEdit.original) {
+			this.setState({editDialog: false});
+			return;
+		}
+		
 		
 		newEdit.status = 'modified';
+		let node = $('#LTRight').fancytree('getTree').getNodeByKey(newEdit.node.key);
+		delete newEdit.node;
+		node.fromDict(newEdit);
+		await this.autonumber();
 		this.setState({editDialog: false});
-		newEdit.node.fromDict(newEdit);
-		setTimeout(()=> this.save(d),1000);
 	};
 	
 	autonumber = async () => {
@@ -539,29 +549,43 @@ class RemixerPanel extends React.Component {
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
-			
-			let index = sharedIndex[0]++;
-			if (level && depth - level <= 1 && node.title.includes(': ')) {
+			if (node.title.includes(': '))
 				node.title = node.title.replace(/^[^:]*: /, '');
+			
+			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth) {
+				let index = sharedIndex[0]++;
+				if (level < this.props.options.autonumber.guideDepth) { //Unit
+					node.data.articleType = 'topic-category';
+					node.data['padded'] = false;
+				}
+				else if (level === this.props.options.autonumber.guideDepth) { //Guide
+					if (Number(this.props.options.autonumber.offset) > sharedIndex[0]) { //apply offset
+						sharedIndex[0] = Number(this.props.options.autonumber.offset);
+						index = sharedIndex[0]++;
+					}
+					node.data.articleType = 'topic-guide';
+					node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
+					
+					let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
+					node.title = `${prefix}${index}: ${node.title}`;
+					chapter = index;
+				}
+				else if (level > this.props.options.autonumber.guideDepth) { //Topic
+					node.data.articleType = 'topic';
+					node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+					
+					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
+					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+				}
 			}
-			if ((!shallow && depth - level === 1) || (shallow && level === 1)) { //Chapter handling
-				node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
-				
-				let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
-				node.title = `${prefix}${index}: ${node.title}`;
-				chapter = index;
-			}
-			else if (!shallow && depth - level === 0) { //Page handling
-				node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
-				
-				let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
-				node.title = `${prefix}${chapter}.${index}: ${node.title}`;
-			}
-			else {
-				node.data['padded'] = false;
-			}
+			
+			//ensure structure matches tags
+			if (node.data.articleType)
+				node.extraClasses = [`article-${node.data.articleType}`];
+			
+			
 			node.lazy = false;
-			if (node.children) {
+			if (node.children) { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
 					node.children[i] = processNode(node.children[i], sharedIndex, level + 1);
@@ -578,11 +602,8 @@ class RemixerPanel extends React.Component {
 		let d = root.toDict(true);
 		let depth = this.getDepth(d);
 		let chapter = 1;
-		let shallow = depth < 2;
-		if (this.props.options.autonumber) {
-			let sharedIndex = [Number(this.props.options.autonumber.offset) || 1];
-			processNode(d, sharedIndex, 0);
-		}
+		let sharedIndex = [1];
+		processNode(d, sharedIndex, 0);
 		
 		this.save(d);
 	};
@@ -1282,17 +1303,17 @@ wiki.page("${child.path}", NULL)</pre>
 	
 	ArticleType = (type) => {
 		let badStructure = this.checkStructure(type);
-		let inner = <div style={{display: 'flex', alignItems: 'center', flex: 1}}>
-			<ListItemText primary={articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
-			{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
-				<Warning/>
-			</ListItemIcon> : null}
-		</div>;
 		return <MenuItem
-			value={type}>{badStructure ? <Tooltip
-			title='Warning: This article type currently violates the recommended content structure'
-		>{inner}
-		</Tooltip> : inner}
+			value={type}>
+			<Tooltip
+				title={badStructure ? 'Warning: This article type currently violates the recommended content structure' : ''}>
+				<div style={{display: 'flex', alignItems: 'center', flex: 1}}>
+					<ListItemText primary={articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
+					{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
+						<Warning/>
+					</ListItemIcon> : null}
+				</div>
+			</Tooltip>
 		</MenuItem>;
 	}
 }
