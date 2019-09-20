@@ -96,6 +96,10 @@
 		else
 			thing.style.display = "none";
 	}
-	
-	document.addEventListener('DOMContentLoaded', fn)
+	function ccDetector(){  
+		var selectedText = window.getSelection().toString();
+		alert(selectedText);
+		}
+	document.addEventListener("copy", ccDetector);
+	document.addEventListener('DOMContentLoaded', fn);
 })();
