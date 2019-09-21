@@ -1,6 +1,6 @@
 let RemixerFunctions = {
 	generateDefault: generateDefault,
-	checkIfDemonstration: checkIfDemonstration,
+	userPermissions: userPermissions,
 };
 
 function generateDefault(chapters, pages) {
@@ -46,9 +46,37 @@ function generateDefault(chapters, pages) {
 	}
 }
 
-function checkIfDemonstration() {
-	const groups = document.getElementById('groupHolder').innerText;
-	return groups.includes('Workshop');
+function userPermissions(full) {
+	
+	let permission = 'Demonstration';
+	const isAdmin = document.getElementById('adminHolder').innerText === 'true';
+	const isPro = document.getElementById('proHolder').innerText === 'true';
+	const groups = document.getElementById('groupHolder').innerText.toLowerCase();
+	
+	if (isAdmin)
+		permission = "Admin";
+	else if (isPro && groups.includes('faculty'))
+		permission = 'Pro';
+	else if (groups.includes('workshop'))
+		permission = 'Workshop';
+	
+	const colors = {
+		Admin: '#323232',
+		Pro: '#127bc4',
+		Workshop: '#098a0e',
+		Demonstration: '#767676',
+	};
+	const descriptions = {
+		Admin: 'Administrators have full access to the Remixer, including the ReRemixer',
+		Pro: 'Registered Faculty can use the Remixer and Re-Remixer ',
+		Workshop: 'Workshop users have access to the Remixer and can publish to the Workshop University',
+		Demonstration: 'In Demonstration mode, the Remixer is functional but users cannot publish their end result to LibreTexts. Contact info@libretexts.org if you are a faculty who is interested in publishing their own Remix!',
+	};
+	
+	if (!full)
+		return permission;
+	else
+		return {permission: permission, color: colors[permission], description: descriptions[permission]}
 }
 
 

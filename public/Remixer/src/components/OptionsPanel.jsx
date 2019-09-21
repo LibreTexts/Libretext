@@ -34,7 +34,7 @@ export default function OptionsPanel(props) {
 	function saveJSON() {
 		let result = new Blob([JSON.stringify(props, 2)], {type: 'application/json;charset=utf-8'});
 		const textToSaveAsURL = window.URL.createObjectURL(result);
-		const fileNameToSaveAs = `${props.name || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.json`;
+		const fileNameToSaveAs = `${props.name || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.libremap`;
 		
 		const downloadLink = document.createElement("a");
 		downloadLink.download = fileNameToSaveAs;
@@ -66,7 +66,7 @@ export default function OptionsPanel(props) {
 		fileReader.onload = function (fileLoadedEvent) {
 			let textFromFileLoaded = fileLoadedEvent.target.result;
 			try {
-				if (file.name.endsWith('.json')) {
+				if (file.name.endsWith('.libremap')) {
 					textFromFileLoaded = JSON.parse(textFromFileLoaded);
 					if (!optionsOverwrite)
 						delete textFromFileLoaded.options;
@@ -162,16 +162,16 @@ export default function OptionsPanel(props) {
 			aria-label="large contained secondary button group">
 			<Tooltip title="This will save your work to a file that you can download to your computer.">
 				<Button onClick={saveJSON}>
-					Save File
+					Save Map
 				</Button>
 			</Tooltip>
 			<Tooltip title="This will load a Remix from a file and replace your current workspace.">
 				<Button onClick={() => $("#fileToLoad").click()}>
-					Load File
+					Load Map
 				</Button>
 			</Tooltip>
 		</ButtonGroup>
-		<input type="file" id="fileToLoad" accept=".csv,.json" onChange={loadJSON}
+		<input type="file" id="fileToLoad" accept=".libremap,.csv" onChange={loadJSON}
 		       style={{position: "absolute", display: "none", width: 0, height: 0}}/>
 		<Dialog // Dialog for Autonumber Options
 			onClose={handleAutonumberClose}
@@ -241,7 +241,7 @@ export default function OptionsPanel(props) {
 					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
 					margin="normal"
 					variant="filled">
-					<MenuItem value={false}>No Prefix</MenuItem>
+					<MenuItem value=''>No Prefix</MenuItem>
 					<MenuItem value='Chapter'>Chapter</MenuItem>
 					<MenuItem value='Section'>Section</MenuItem>
 				</TextField>
@@ -255,7 +255,7 @@ export default function OptionsPanel(props) {
 					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
 					margin="normal"
 					variant="filled">
-					<MenuItem value={false}>No Prefix</MenuItem>
+					<MenuItem value=''>No Prefix</MenuItem>
 					<MenuItem value='Page'>Page</MenuItem>
 					<MenuItem value='Topic'>Topic</MenuItem>
 					<MenuItem value='Section'>Section</MenuItem>

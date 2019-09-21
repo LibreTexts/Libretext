@@ -12,13 +12,15 @@ export default class Remixer extends React.Component {
 		this.state = {
 			type: 'Remix',
 			stage: 'Remixing',
-			mode: 'Pro', //Todo add privelages back in
+			mode: RemixerFunctions.userPermissions(),
 			options: {
 				tutorial: false,
 				enableAutonumber: false,
-				autonumber: {offset: 1},
-				chapterPrefix:'',
-				pagePrefix:'',
+				autonumber: {
+					offset: 1,
+					chapterPrefix: '',
+					pagePrefix: '',
+				},
 				overwriteSuffix: false,
 			},
 			RemixTree: RemixerFunctions.generateDefault(5, 0),

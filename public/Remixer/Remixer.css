@@ -91,6 +91,7 @@ h1, h2, h3, h4, h5, h6 {
 .LTFormHeader > button {
 	margin: 0 2px;
 }
+
 /*hide action button labels*/
 .LTFormHeader > button > span > span {
 	font-size: 0;
@@ -100,19 +101,29 @@ h1, h2, h3, h4, h5, h6 {
 .LTFormHeader > button:hover > span > span {
 	font-size: inherit;
 }
+
 /*category*/
 #LTForm .article-topic-category span.fancytree-icon:before {
-	content:'\e635'
+	content: '\e635'
 }
+
 #LTForm .article-topic-category.fancytree-expanded span.fancytree-icon:before {
-	content:'\e636'
+	content: '\e636'
 }
 
 /*guide*/
 #LTForm .article-topic-guide span.fancytree-icon:before {
-	content:'\e7ed'
+	content: '\e7ed'
 }
+
 /*topic*/
 #LTForm .article-topic span.fancytree-icon:before {
-	content:'\e8aa'
+	content: '\e8aa'
+}
+
+#editDialog .MuiChip-root > span {
+	text-overflow: ellipsis;
+	max-width: 90px;
+	overflow: hidden;
+	display: block;
 }
