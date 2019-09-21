@@ -4,6 +4,7 @@ import RemixerFunctions from '../reusableFunctions';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import OptionsPanel from "./OptionsPanel.jsx";
+import {Tooltip} from "@material-ui/core";
 
 export default function RemixerOptions(props) {
 	let [institutions, setInstitutions] = useState([{url: '', title: <em>Loading</em>}]);
@@ -67,6 +68,39 @@ export default function RemixerOptions(props) {
 				variant="outlined"
 			>{institutions.map(elem => <MenuItem key={elem.url}
 			                                     value={elem.url}>{elem.title}</MenuItem>)}
+			</TextField>
+			<TextField
+				select
+				id='defaultCopyMode'
+				label="Default Copy Mode"
+				value={props.copyMode}
+				onChange={(event) => {
+					props.updateRemixer({copyMode: event.target.value});
+				}}
+				helperText="Choose the default copy mode. This can be overridden when editing an individual page."
+				margin="normal"
+				variant="outlined"
+			>
+				<MenuItem value='transclude'>
+					<Tooltip
+						title="In transclude mode, pages will be automatically updated from the source (Recommended)">
+						<div>Transclude</div>
+					</Tooltip>
+				</MenuItem>
+				<MenuItem value='fork'>
+					<Tooltip
+						title="In fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
+						<div>Fork</div>
+					</Tooltip>
+				</MenuItem>
+				{props.mode === 'Admin' ?
+					<MenuItem value='full'>
+						<Tooltip
+							title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
+							<div>Full-Copy</div>
+						</Tooltip>
+					</MenuItem>
+					: null}
 			</TextField>
 		</div>
 		<OptionsPanel {...props}/>

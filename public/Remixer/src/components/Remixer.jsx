@@ -11,8 +11,9 @@ export default class Remixer extends React.Component {
 		
 		this.state = {
 			type: 'Remix',
-			stage: 'Remixing',
+			stage: 'Publishing',
 			mode: RemixerFunctions.userPermissions(),
+			copyMode: 'transclude',
 			options: {
 				tutorial: false,
 				enableAutonumber: false,

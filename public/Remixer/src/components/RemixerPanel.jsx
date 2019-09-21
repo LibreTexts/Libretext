@@ -123,9 +123,6 @@ class RemixerPanel extends React.Component {
 				data.result = dfd.promise();
 				RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
 			},
-			contextmenu: function (event, data) {
-				console.log(data.node);
-			},
 			dnd5: {
 				// autoExpandMS: 400,
 				// preventForeignNodes: true,
@@ -291,7 +288,7 @@ class RemixerPanel extends React.Component {
 				<DialogTitle id="form-dialog-title">Want to Start Over?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						This action will clear your work in the Remix Panel and undo history. Consider saving your
+						This action will clear your work in the Remix Panel and your undo history. Consider saving your
 						current workspace to a file with the "Save File" button. If you would like to start out with a
 						template, select the number of chapters and number of pages per chapter you would like.
 					</DialogContentText>
@@ -372,53 +369,92 @@ class RemixerPanel extends React.Component {
 								{this.ArticleType("topic")}
 							</TextField>
 						</Tooltip>
-						<div style={{
-							padding: '16px 10px 8px 10px',
-							display: 'flex',
-							flexDirection: 'column',
-							flex: 1,
-						}}>
-							<Paper style={{
-								display: 'flex',
-								flex: 1,
-								justifyContent: 'space-evenly',
-								alignItems: 'center',
-								padding: 10,
-								borderRadius: 4,
-								flexWrap: 'wrap',
-							}}>
-								{(this.state.edit.tags || []).map((item, index) =>
-									<Tooltip title={item}>
-										<Chip key={item} label={item}
-										      style={{margin: 10}}
-										      onClick={() => {
-											      let edit = prompt('New name for this tag', item);
-											      if (edit) {
-												      let index = this.state.edit.tags.indexOf(item);
-												      this.state.edit.tags[index] = edit;
-												      this.changeEdit('tags', this.state.edit.tags);
-											      }
-										      }}
-										      onDelete={() => {
-											      this.changeEdit('tags', this.state.edit.tags.filter(elem => elem !== item))
-										      }}/>
+						<TextField
+							select
+							id='copyMode'
+							label="Override Copy Mode"
+							value={this.state.edit.copyMode}
+							onChange={(event) => {
+								this.changeEdit('copyMode', event.target.value);
+							}}
+							helperText="This will override the Default Copy Mode (recommended)"
+							margin="normal"
+							variant="filled"
+						>
+							<MenuItem value=''>
+								<Tooltip
+									title="This page will be copied according to the Default Copy Mode">
+									<div>Default</div>
+								</Tooltip>
+							</MenuItem>
+							<MenuItem value='transclude'>
+								<Tooltip
+									title="In transclude mode, pages will be automatically updated from the source">
+									<div>Transclude</div>
+								</Tooltip>
+							</MenuItem>
+							<MenuItem value='fork'>
+								<Tooltip
+									title="In fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
+									<div>Fork</div>
+								</Tooltip>
+							</MenuItem>
+							{this.props.mode === 'Admin' ?
+								<MenuItem value='full'>
+									<Tooltip
+										title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
+										<div>Full-Copy</div>
 									</Tooltip>
-								)}
-								<Chip key={Math.random()} label="Add Tag"
-								      icon={<Add/>}
-								      style={{margin: 10}}
-								      variant="outlined"
-								      color="primary"
-								      clickable
-								      onClick={() => {
-									      let tag = prompt('Name for the new tag');
-									      if (tag) {
-										      this.state.edit.tags.push(tag);
-										      this.changeEdit('tags', this.state.edit.tags);
-									      }
-								      }}/>
-							</Paper>
-						</div>
+								</MenuItem>
+								: null}
+						</TextField>
+					</div>
+					<div style={{
+						padding: '16px 10px 8px 10px',
+						display: 'flex',
+						flexDirection: 'column',
+						flex: 1,
+					}}>
+						<Paper style={{
+							display: 'flex',
+							flex: 1,
+							justifyContent: 'space-evenly',
+							alignItems: 'center',
+							padding: 10,
+							borderRadius: 4,
+							flexWrap: 'wrap',
+						}}>
+							{(this.state.edit.tags || []).map((item, index) =>
+								<Tooltip title={item}>
+									<Chip key={item} label={item}
+									      style={{margin: 10}}
+									      onClick={() => {
+										      let edit = prompt('New name for this tag', item);
+										      if (edit) {
+											      let index = this.state.edit.tags.indexOf(item);
+											      this.state.edit.tags[index] = edit;
+											      this.changeEdit('tags', this.state.edit.tags);
+										      }
+									      }}
+									      onDelete={() => {
+										      this.changeEdit('tags', this.state.edit.tags.filter(elem => elem !== item))
+									      }}/>
+								</Tooltip>
+							)}
+							<Chip key={Math.random()} label="Add Tag"
+							      icon={<Add/>}
+							      style={{margin: 10}}
+							      variant="outlined"
+							      color="primary"
+							      clickable
+							      onClick={() => {
+								      let tag = prompt('Name for the new tag');
+								      if (tag) {
+									      this.state.edit.tags.push(tag);
+									      this.changeEdit('tags', this.state.edit.tags);
+								      }
+							      }}/>
+						</Paper>
 					</div>
 				</DialogContent>
 				<DialogActions>
@@ -431,10 +467,6 @@ class RemixerPanel extends React.Component {
 				</DialogActions>
 			</Dialog>
 		</div>;
-		
-		function formMode(isAdmin, isPro, groups) {
-			return (isPro && (groups.includes('contributor') || groups.includes('Contributor'))) || isAdmin ? `<div>Remix Type<select id='LTFormCopyMode'><option value='transclude'>Transclude</option><option value='copy'>Copy Source</option>${isAdmin ? `<option value='deep'>Copy Full [SLOW]</option>` : ''}</select></div>` : '';
-		}
 	}
 	
 	checkStructure(type) {
@@ -451,9 +483,6 @@ class RemixerPanel extends React.Component {
 			default:
 				return false;
 		}
-		
-		
-		return true;
 	}
 	
 	handleChange = name => event => {
@@ -491,7 +520,8 @@ class RemixerPanel extends React.Component {
 		let newEdit = {
 			...node.data,
 			title: node.title,
-			parentType: node.getParent().data.articleType
+			parentType: node.getParent().data.articleType,
+			copyMode : '',
 		};
 		if (!newEdit.original)
 			newEdit.original = JSON.parse(JSON.stringify(newEdit));

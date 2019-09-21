@@ -32,6 +32,10 @@
 	font-size: 0.8rem;
 }
 
+.MuiMenuItem-root > div {
+	width: 100%;
+}
+
 #results {
 	white-space: pre;
 	max-height: 400px;
