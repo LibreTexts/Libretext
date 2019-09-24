@@ -1,6 +1,7 @@
 let RemixerFunctions = {
 	generateDefault: generateDefault,
 	userPermissions: userPermissions,
+	statusColor: statusColor,
 };
 
 function generateDefault(chapters, pages) {
@@ -79,5 +80,18 @@ function userPermissions(full) {
 		return {permission: permission, color: colors[permission], description: descriptions[permission]}
 }
 
+
+function statusColor(status) {
+	switch (status) {
+		case 'unchanged':
+			return 'gray';
+		case 'new':
+			return 'green';
+		case 'modified':
+			return 'orange';
+		case 'deleted':
+			return 'red';
+	}
+}
 
 module.exports = RemixerFunctions;

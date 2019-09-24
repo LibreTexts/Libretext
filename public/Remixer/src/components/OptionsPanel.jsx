@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useSnackbar} from 'notistack';
-import {Toolbar} from "@material-ui/core";
+import Toolbar from "@material-ui/core";
 
 export default function OptionsPanel(props) {
 	let [autonumberOpen, setAutonumberOpen] = useState(false);
@@ -131,7 +131,7 @@ export default function OptionsPanel(props) {
 			control={
 				<Switch
 					checked={props.options.tutorial}
-					onChange={event => changeOption('tutorial', event.target.checked)}
+					onChange={(e, value) => changeOption('tutorial', value)}
 					color="primary"
 					inputProps={{'aria-label': 'primary checkbox'}}
 				/>}
@@ -140,12 +140,12 @@ export default function OptionsPanel(props) {
 			control={
 				<Switch
 					checked={props.options.enableAutonumber}
-					onChange={event => {
-						if (event.target.checked && !props.options.autonumber.guideDepth) {
+					onChange={(e, value) => {
+						if (value && !props.options.autonumber.guideDepth) {
 							changeOption('autonumber.guideDepth', 1);
 							setAutonumberOpen(true);
 						}
-						changeOption('enableAutonumber', event.target.checked)
+						changeOption('enableAutonumber', value)
 					}}
 					color="primary"
 					inputProps={{'aria-label': 'primary checkbox'}}
@@ -225,7 +225,7 @@ export default function OptionsPanel(props) {
 										color="primary"
 										inputProps={{'aria-label': 'primary checkbox'}}
 										value={props.options.autonumber.overwriteSuffix}
-										onChange={event => changeOption('autonumber.overwriteSuffix', event.target.checked)}
+										onChange={(e, value) => changeOption('autonumber.overwriteSuffix', value)}
 									/>}
 								label="Overwrite non-number titles"/>
 						</Tooltip>
@@ -235,8 +235,8 @@ export default function OptionsPanel(props) {
 					select
 					label="Chapter prefix"
 					value={props.options.autonumber.chapterPrefix}
-					onChange={(event) => {
-						changeOption('autonumber.chapterPrefix', event.target.value);
+					onChange={(e, value) => {
+						changeOption('autonumber.chapterPrefix', value);
 					}}
 					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
 					margin="normal"
@@ -249,8 +249,8 @@ export default function OptionsPanel(props) {
 					select
 					label="Page Prefix"
 					value={props.options.autonumber.pagePrefix}
-					onChange={(event) => {
-						changeOption('autonumber.pagePrefix', event.target.value);
+					onChange={(e, value) => {
+						changeOption('autonumber.pagePrefix', value);
 					}}
 					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
 					margin="normal"

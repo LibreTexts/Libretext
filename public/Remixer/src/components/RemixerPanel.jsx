@@ -14,6 +14,7 @@ import Redo from '@material-ui/icons/Redo';
 import Refresh from '@material-ui/icons/Refresh';
 import Warning from "@material-ui/icons/Warning";
 import Info from "@material-ui/icons/Info";
+import Publish from "@material-ui/icons/Publish";
 import {withSnackbar} from 'notistack';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -223,7 +224,7 @@ class RemixerPanel extends React.Component {
 		LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 		$('#LTRightAlert,#LTLeftAlert').hide();
 		this.setState({initialized: true});
-		
+		this.autonumber();
 	}
 	
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -267,6 +268,9 @@ class RemixerPanel extends React.Component {
 				</Tooltip>
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
+				<Button variant="contained" color='secondary'
+				        onClick={() => this.props.updateRemixer({stage: 'Publishing'})}><span>Publish</span>
+					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer'>
 				<Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
@@ -278,10 +282,10 @@ class RemixerPanel extends React.Component {
 				<div>Library Panel<select id='LTFormSubdomain'
 				                          onChange={this.setSubdomain}
 				                          value={this.state.subdomain}>{this.getSelectOptions()}</select>
-					<div id='LTLeft'></div>
+					<div id='LTLeft' className='treePanel'></div>
 				</div>
 				<div>Remix Panel
-					<div id='LTRight'></div>
+					<div id='LTRight' className='treePanel'></div>
 				</div>
 			</div>
 			<Dialog open={this.state.resetDialog} onClose={this.handleReset} aria-labelledby="form-dialog-title">
@@ -321,7 +325,9 @@ class RemixerPanel extends React.Component {
 			</Dialog>
 			<Dialog open={this.state.editDialog} onClose={this.handleEdit} aria-labelledby="form-dialog-title"
 			        id="editDialog">
-				<DialogTitle id="form-dialog-title">Properties for {this.state.edit.title || 'this Page'}</DialogTitle>
+				<DialogTitle id="form-dialog-title">Properties
+				                                    for {this.state.edit.title || 'this Page'} {this.PageStatus()}
+				</DialogTitle>
 				<DialogContent>
 					<TextField
 						autoFocus
@@ -377,7 +383,7 @@ class RemixerPanel extends React.Component {
 							onChange={(event) => {
 								this.changeEdit('copyMode', event.target.value);
 							}}
-							helperText="This will override the Default Copy Mode (recommended)"
+							helperText="This will override the Default Copy Mode"
 							margin="normal"
 							variant="filled"
 						>
@@ -521,7 +527,7 @@ class RemixerPanel extends React.Component {
 			...node.data,
 			title: node.title,
 			parentType: node.getParent().data.articleType,
-			copyMode : '',
+			copyMode: '',
 		};
 		if (!newEdit.original)
 			newEdit.original = JSON.parse(JSON.stringify(newEdit));
@@ -587,7 +593,7 @@ class RemixerPanel extends React.Component {
 		if (!root.children) {
 			return false;
 		}
-		
+		//TODO: status => modified on renumber
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
@@ -766,7 +772,24 @@ class RemixerPanel extends React.Component {
 				</div>
 			</Tooltip>
 		</MenuItem>;
-	}
+	};
+	
+	PageStatus = () => {
+		const status = this.state.edit.status;
+		const color = RemixerFunctions.statusColor(status);
+		switch (status) {
+			case 'unchanged':
+				return <span style={{color: color}}>[ Unchanged ]</span>;
+			case 'new':
+				return <span style={{color: color}}>[ New ]</span>;
+			case 'modified':
+				return <span style={{color: color}}>[ Modified ]</span>;
+			case 'deleted':
+				return <span style={{color: color}}>[ Deleted ]</span>;
+			default:
+				return null;
+		}
+	};
 }
 
 

@@ -1,13 +1,278 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import RemixerFunctions from "../reusableFunctions";
 import Tooltip from "@material-ui/core/Tooltip";
 import Info from "@material-ui/core/SvgIcon/SvgIcon";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
+import Publish from "@material-ui/icons/Publish";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import AppBar from "@material-ui/core/AppBar";
+import Tab from "@material-ui/core/Tab";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Description from "@material-ui/icons/Description";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import {FixedSizeList} from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 
-export default class PublishPanel extends React.Component {
-	async publish() {
+export default function PublishPanel(props) {
+	let permission = RemixerFunctions.userPermissions(true);
+	let [pageArray, setPageArray] = useState([]);
+	let [sorted, setSorted] = useState({});
+	const [panel, setPanel] = React.useState('summary');
+	let [initialized, setInitialized] = React.useState();
+	let [working, setWorking] = React.useState();
+	
+	useEffect(() => {
+		let LTPreview = $('#LTPreviewForm');
+		if (!LTPreview)
+			return;
+		else if (panel === 'tree') {
+			if (!initialized) {
+				LTPreview.fancytree({
+					source: props.RemixTree,
+					debugLevel: 0,
+					autoScroll: true,
+				});
+				setInitialized(true);
+			}
+		}
+	});
+	
+	function sortPages() {
+		let tree = props.RemixTree;
+		let arrayResult = addLinks(tree);
+		let objectResult = {};
+		
+		function addLinks(parent) {
+			let array = [parent];
+			if (parent && parent.children && parent.children.length) {
+				parent.children.forEach((child) => {
+					array = array.concat(addLinks(child));
+				});
+			}
+			return array;
+		}
+		
+		arrayResult.forEach((page) => {
+			if (props.type === 'Remix') {
+				let copyMode = page.copyMode || props.options.defaultCopyMode;
+				page.copyMode = copyMode;
+				if (!page.url)
+					copyMode = 'blank'; //pages without a source are blank
+				
+				if (objectResult[copyMode])
+					objectResult[copyMode].push(page);
+				else
+					objectResult[copyMode] = [page];
+			}
+			else if (props.type === 'ReRemix') {
+				if (objectResult[page.status])
+					objectResult[page.status].push(page);
+				else
+					objectResult[page.status] = [page];
+			}
+		});
+		
+		setPageArray(arrayResult);
+		setSorted(objectResult);
+	}
+	
+	useEffect(() => {
+		if (!pageArray || !pageArray.length) {
+			sortPages();
+		}
+	}, [props.RemixTree]);
+	
+	function generateSummary() {
+		const listStyle = {
+			flex: 1,
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'space-evenly',
+			fontSize: 'larger'
+		};
+		if (props.type === 'Remix') {
+			return <List style={listStyle}>
+				{listItem(sorted.blank, 'unchanged', 'blank pages')}
+				{listItem(sorted.transclude, 'new', 'transcluded')}
+				{listItem(sorted.fork, 'new', 'forked')}
+				{listItem(sorted.full, 'modified', 'full-copied')}
+			</List>;
+		}
+		else if (props.type === 'ReRemix') {
+			return <List style={listStyle}>
+				{listItem(sorted.new, 'new', 'added')}
+				{listItem(sorted.modified, 'modified', 'modified')}
+				{listItem(sorted.deleted, 'deleted', 'deleted')}
+				{listItem(sorted.unchanged, 'unchanged', ' unchanged')}
+			</List>;
+		}
+		else
+			return <div style={{flex: 1}}>Invalid Mode</div>;
+		
+		function listItem(array, statusColor, text) {
+			let length = 0;
+			statusColor = RemixerFunctions.statusColor(statusColor);
+			if (array && array.length)
+				length = array.length;
+			return <ListItem style={{color: statusColor}}><ListItemIcon>
+				<Description style={{color: statusColor}}/>
+			</ListItemIcon>
+				{length} pages will be {text}
+			</ListItem>;
+		}
+	}
+	
+	return <div id='LTForm' className='publishPanel'>
+		<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
+			<div className='LTTitle'><Tooltip title={permission.description}>
+				<div style={{display: 'flex', alignItems: 'center'}}>{props.mode} Mode
+					<Info style={{marginLeft: 10}}/></div>
+			</Tooltip></div>
+		</div>
+		<div id='LTFormContainer'>
+			<Paper>
+				<AppBar position="static" style={{backgroundColor: '#F44336'}}>
+					<Tabs value={panel} onChange={(e, v) => setPanel(v)} centered
+					      aria-label="wrapped label tabs example">
+						<Tab value="summary" label="Publish Summary"/>
+						<Tab
+							value="tree"
+							label="LibreText Preview"
+						/>
+					</Tabs>
+				</AppBar>
+				{panel === 'summary' ? generateSummary() : null}
+				<div id='LTPreviewForm' className='treePanel'
+				     style={{display: panel === 'tree' ? 'flex' : 'none'}}></div>
+				<ButtonGroup
+					variant="outlined"
+					size="large"
+					style={{marginTop: 10}}
+					aria-label="large contained secondary button group">
+					<Tooltip title="This will save your work to a file that you can download to your computer.">
+						<Button onClick={() => props.updateRemixer({stage: 'Remixing'})}>
+							<ArrowBack/>Revise
+						</Button>
+					</Tooltip>
+					<Tooltip title="This will load a Remix from a file and replace your current workspace.">
+						<Button color='primary' onClick={() => setWorking(pageArray)}>
+							Publish<Publish/>
+						</Button>
+					</Tooltip>
+				</ButtonGroup>
+			</Paper>
+			<PublishSubPanel working={working}/>
+		</div>
+	</div>;
+}
+
+function PublishSubPanel(props) {
+	const [counter, setCounter] = useState(0);
+	const [results, setResults] = useState([]);
+	const [seconds, setSeconds] = useState(-1);
+	const [state, setState] = useState('');
+	
+	
+	useEffect(() => {
+		if (props.working) {
+			console.log('Publishing!!!');
+			publish().then();
+		}
+	}, [props.working]);
+	
+	useEffect(() => { //timer
+		const interval = setInterval(() => {
+			setSeconds(seconds => seconds !== -1 ? seconds + 1 : seconds);
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
+	
+	return <Paper>
+		{generateStatusBar()}
+		<div id="results">
+			<AutoSizer disableHeight={true}>
+				{({height, width}) => (
+					<FixedSizeList
+						className="List"
+						height='60vh'
+						itemCount={results.length}
+						itemSize={15}
+						width={width}
+					>
+						{({index, style}) => {
+							let page = results[index];
+							return <div style={style}
+							            key={results.length - index - 1}>{results.length - index - 1} Created {page.type}&nbsp;
+								<a target='_blank' href={page.url}>{page.title}</a></div>
+						}}
+					</FixedSizeList>
+				)}
+			</AutoSizer>
+		
+		</div>
+	</Paper>;
+	
+	function generateStatusBar() {
+		switch (state) {
+			case 'processing':
+				return <div className="status" style={{backgroundColor: 'orange'}}>
+					<div>
+						Publish In Progress
+						({counter.percentage})<br/>
+						{counter.pages}
+					</div>
+					<div className="spinner">
+						<div className="bounce1"/>
+						<div className="bounce2"/>
+						<div className="bounce3"/>
+					</div>
+					<div>
+						{`Time Elapsed: ${seconds} seconds`}<br/>
+						{`Time Remaining: ${counter.eta}`}
+					</div>
+				</div>;
+			case 'done':
+				return <div className="status"
+				            style={{backgroundColor: 'green', display: 'flex', flexDirection: 'column'}}>Import
+				                                                                                         Complete! View
+				                                                                                         your results
+				                                                                                         here <a
+						target='_blank'
+						href={finished}>{finished}</a>
+				</div>;
+			default:
+				return <div className="status"
+				            style={{backgroundColor: 'grey', display: 'flex', flexDirection: 'column'}}>Results
+				</div>;
+		}
+	}
+	
+	async function publish() {
+		let subdomain = window.location.origin.split('/')[2].split('.')[0];
+		if (props.institution === '') {
+			if (confirm('Would you like to send an email to info@libretexts.com to request your institution?'))
+				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
+			return false;
+		}
+		
+		setState('processing');
+		setCounter({
+			percentage: 0,
+			pages: `0 / Calculating`,
+			eta: 'Calculating',
+		});
+		setSeconds(0);
+		setResults([]);
+		
+		
+	}
+	
+	async function oldPublish() {
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		let institution = document.getElementById('LTFormInstitutions');
 		if (institution.value === '') {
@@ -598,50 +863,19 @@ wiki.page("${child.path}", NULL)</pre>
 			}
 		}
 	};
-	
-	async componentDidMount() {
-		const LTPreview = $('#LTPreview');
-		LTPreview.fancytree({
-			source: this.props.RemixTree,
-			debugLevel: 0,
-			autoScroll: true,
-		});
-		this.setState({initialized: true});
-	}
-	
-	
-	render() {
-		let permission = RemixerFunctions.userPermissions(true);
-		return <div id='LTForm'>
-			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
-				<div className='LTTitle'><Tooltip title={permission.description}>
-					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
-						<Info style={{marginLeft: 10}}/></div>
-				</Tooltip></div>
-				<Button variant="contained"><span>Back</span>
-					<ArrowBack/></Button>
-			</div>
-			<div id='LTFormContainer'>
-				<div>Remix Panel
-					<div id='LTPreview' className=''></div>
-				</div>
-			</div>
-		</div>;
-	}
-	
-	checkStructure(type) {
-		let parentType = this.state.edit.parentType;
-		if (!type || !parentType)
+}
+
+function checkStructure(type, parentType) {
+	if (!type || !parentType)
+		return false;
+	switch (type) {
+		case 'topic-category':
+			return !(parentType === 'topic-category');
+		case 'topic-guide':
+			return !(parentType === 'topic-category');
+		case 'topic':
+			return !(parentType !== 'topic-category');
+		default:
 			return false;
-		switch (type) {
-			case 'topic-category':
-				return !(parentType === 'topic-category');
-			case 'topic-guide':
-				return !(parentType === 'topic-category');
-			case 'topic':
-				return !(parentType !== 'topic-category');
-			default:
-				return false;
-		}
 	}
 }

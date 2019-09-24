@@ -73,9 +73,9 @@ export default function RemixerOptions(props) {
 				select
 				id='defaultCopyMode'
 				label="Default Copy Mode"
-				value={props.copyMode}
+				value={props.defaultCopyMode}
 				onChange={(event) => {
-					props.updateRemixer({copyMode: event.target.value});
+					props.updateRemixer({defaultCopyMode: event.target.value});
 				}}
 				helperText="Choose the default copy mode. This can be overridden when editing an individual page."
 				margin="normal"

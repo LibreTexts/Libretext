@@ -13,7 +13,7 @@ export default class Remixer extends React.Component {
 			type: 'Remix',
 			stage: 'Publishing',
 			mode: RemixerFunctions.userPermissions(),
-			copyMode: 'transclude',
+			defaultCopyMode: 'transclude',
 			options: {
 				tutorial: false,
 				enableAutonumber: false,

@@ -1,11 +1,12 @@
-.status {
+.publishPanel .status {
 	padding: 10px;
 	border-radius: 10px;
 	color: white;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	margin: 20px 5px 20px 5px;
+	height: 30px;
+	width: 100%;
 }
 
 .CenterContainer > .navigationBar {
@@ -130,4 +131,9 @@ h1, h2, h3, h4, h5, h6 {
 	max-width: 90px;
 	overflow: hidden;
 	display: block;
+}
+
+div#LTPreviewForm {
+	margin: 0;
+	width: 100%;
 }
