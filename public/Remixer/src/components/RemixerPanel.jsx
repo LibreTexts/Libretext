@@ -269,7 +269,7 @@ class RemixerPanel extends React.Component {
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
 				<Button variant="contained" color='secondary'
-				        onClick={() => this.props.updateRemixer({stage: 'Publishing'})}><span>Publish</span>
+				        onClick={() => {this.autonumber(); this.props.updateRemixer({stage: 'Publishing'})}}><span>Publish</span>
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer'>
@@ -355,7 +355,7 @@ class RemixerPanel extends React.Component {
 								onChange={(event) => {
 									this.changeEdit('articleType', event.target.value);
 									if (this.checkStructure(event.target.value)) {
-										let message = `The article type ${articleTypeToTitle(event.target.value)} is not recommended under ${articleTypeToTitle(this.state.edit.parentType)}.\nWe recommend swapping to a different article type.`;
+										let message = `The article type ${RemixerFunctions.articleTypeToTitle(event.target.value)} is not recommended under ${RemixerFunctions.articleTypeToTitle(this.state.edit.parentType)}.\nWe recommend swapping to a different article type.`;
 										alert(message);
 										this.props.enqueueSnackbar(message, {
 											variant: 'warning',
@@ -597,6 +597,7 @@ class RemixerPanel extends React.Component {
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
+			//TODO: suffix
 			if (node.title.includes(': '))
 				node.title = node.title.replace(/^[^:]*: /, '');
 			
@@ -765,7 +766,7 @@ class RemixerPanel extends React.Component {
 			<Tooltip
 				title={badStructure ? 'Warning: This article type currently violates the recommended content structure' : ''}>
 				<div style={{display: 'flex', alignItems: 'center', flex: 1}}>
-					<ListItemText primary={articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
+					<ListItemText primary={RemixerFunctions.articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
 					{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
 						<Warning/>
 					</ListItemIcon> : null}
@@ -790,59 +791,6 @@ class RemixerPanel extends React.Component {
 				return null;
 		}
 	};
-}
-
-
-function secondsToStr(seconds) {
-	return millisecondsToStr(seconds * 1000);
-}
-
-// http://stackoverflow.com/a/8212878
-function millisecondsToStr(milliseconds) {
-	// TIP: to find current time in milliseconds, use:
-	// var  current_time_milliseconds = new Date().getTime();
-	
-	function numberEnding(number) {
-		return (number > 1) ? 's' : '';
-	}
-	
-	let temp = Math.floor(milliseconds / 1000);
-	const years = Math.floor(temp / 31536000);
-	if (years) {
-		return years + ' year' + numberEnding(years);
-	}
-	const days = Math.floor((temp %= 31536000) / 86400);
-	if (days) {
-		return days + ' day' + numberEnding(days);
-	}
-	const hours = Math.floor((temp %= 86400) / 3600);
-	if (hours) {
-		return hours + ' hour' + numberEnding(hours);
-	}
-	const minutes = Math.floor((temp %= 3600) / 60);
-	if (minutes) {
-		return minutes + ' minute' + numberEnding(minutes);
-	}
-	const seconds = temp % 60;
-	if (seconds) {
-		return seconds + ' second' + numberEnding(seconds);
-	}
-	return 'less than a second'; //'just now' //or other string you like;
-}
-
-function formatNumber(it) {
-	return it.toPrecision(4);
-}
-
-function articleTypeToTitle(type) {
-	switch (type) {
-		case 'topic-category':
-			return 'Unit';
-		case 'topic-guide':
-			return 'Chapter';
-		case 'topic':
-			return 'Topic';
-	}
 }
 
 export default withSnackbar(RemixerPanel); //Allows snackbars

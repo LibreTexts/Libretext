@@ -39,7 +39,7 @@
 
 #results {
 	white-space: pre;
-	max-height: 400px;
+	flex: 1;
 }
 
 #FindReplace {

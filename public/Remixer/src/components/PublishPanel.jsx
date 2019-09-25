@@ -16,6 +16,10 @@ import Description from "@material-ui/icons/Description";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import LibreText from "../../../Downloads Center/src/components/LibreText";
+import {Switch} from "@material-ui/core";
+import Toolbar from "@material-ui/core/Toolbar";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
 export default function PublishPanel(props) {
@@ -44,14 +48,16 @@ export default function PublishPanel(props) {
 	
 	function sortPages() {
 		let tree = props.RemixTree;
-		let arrayResult = addLinks(tree);
+		let arrayResult = addLinks(tree, '');
 		let objectResult = {};
 		
-		function addLinks(parent) {
-			let array = [parent];
+		function addLinks(parent, parentPath) {
+			parent = {...parent, ...parent.data};
+			parent.path = parent.key === "ROOT" ? '' : `${parentPath}/${parent.padded || parent.title}`;
+			let array = parent.key === "ROOT" ? [] : [parent];
 			if (parent && parent.children && parent.children.length) {
 				parent.children.forEach((child) => {
-					array = array.concat(addLinks(child));
+					array = array.concat(addLinks(child, parent.path));
 				});
 			}
 			return array;
@@ -60,9 +66,9 @@ export default function PublishPanel(props) {
 		arrayResult.forEach((page) => {
 			if (props.type === 'Remix') {
 				let copyMode = page.copyMode || props.options.defaultCopyMode;
-				page.copyMode = copyMode;
 				if (!page.url)
 					copyMode = 'blank'; //pages without a source are blank
+				page.copyMode = copyMode;
 				
 				if (objectResult[copyMode])
 					objectResult[copyMode].push(page);
@@ -76,7 +82,7 @@ export default function PublishPanel(props) {
 					objectResult[page.status] = [page];
 			}
 		});
-		
+		console.log(arrayResult, objectResult);
 		setPageArray(arrayResult);
 		setSorted(objectResult);
 	}
@@ -166,7 +172,7 @@ export default function PublishPanel(props) {
 					</Tooltip>
 				</ButtonGroup>
 			</Paper>
-			<PublishSubPanel working={working}/>
+			<PublishSubPanel {...props} working={working}/>
 		</div>
 	</div>;
 }
@@ -176,6 +182,8 @@ function PublishSubPanel(props) {
 	const [results, setResults] = useState([]);
 	const [seconds, setSeconds] = useState(-1);
 	const [state, setState] = useState('');
+	const [finished, setFinished] = useState('');
+	let [show, setShow] = React.useState({success: true, failed: true});
 	
 	
 	useEffect(() => {
@@ -206,15 +214,46 @@ function PublishSubPanel(props) {
 					>
 						{({index, style}) => {
 							let page = results[index];
-							return <div style={style}
-							            key={results.length - index - 1}>{results.length - index - 1} Created {page.type}&nbsp;
-								<a target='_blank' href={page.url}>{page.title}</a></div>
+							if (page.isFailed && show.failed)
+								return <div style={{color: 'red'}}
+								            key={results.length - index - 1}>{results.length - index - 1} FAILED&nbsp;
+									<a target='_blank' href={page.url}>{page.title}</a></div>;
+							else if (!page.isFailed && show.success)
+								return <div style={{color: page.color}}
+								            key={results.length - index - 1}>{results.length - index - 1} {page.type}&nbsp;
+									<a target='_blank' href={page.url}>{page.title}</a></div>;
+							else return null;
 						}}
 					</FixedSizeList>
 				)}
 			</AutoSizer>
-		
 		</div>
+		<AppBar position="static" style={{backgroundColor: RemixerFunctions.userPermissions(true).color}}>
+			<Toolbar style={{display: 'flex', flexDirection: 'column'}}>
+				<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+					<FormControlLabel
+						style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+						control={
+							<Switch
+								inputProps={{'aria-label': 'primary checkbox'}}
+								checked={show.success}
+								onChange={() => setShow({...show, ...{success: !show.success}})}
+							/>}
+						label="Show Successful"/>
+					<FormControlLabel
+						style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+						control={
+							<Switch
+								inputProps={{'aria-label': 'primary checkbox'}}
+								checked={show.failed}
+								onChange={() => setShow({...show, ...{failed: !show.failed}})}
+							/>}
+						label="Show Failed"/>
+				</div>
+				{finished ?
+					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6> : null}
+			</Toolbar>
+		</AppBar>
 	</Paper>;
 	
 	function generateStatusBar() {
@@ -224,7 +263,7 @@ function PublishSubPanel(props) {
 					<div>
 						Publish In Progress
 						({counter.percentage})<br/>
-						{counter.pages}
+						{counter.pages} / {props.working.length}
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
@@ -253,171 +292,237 @@ function PublishSubPanel(props) {
 	}
 	
 	async function publish() {
-		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		if (props.institution === '') {
 			if (confirm('Would you like to send an email to info@libretexts.com to request your institution?'))
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
+			return false;
+		}
+		if (!props.name) {
+			alert('No LibreText name provided!');
 			return false;
 		}
 		
 		setState('processing');
 		setCounter({
 			percentage: 0,
-			pages: `0 / Calculating`,
+			pages: 0,
 			eta: 'Calculating',
 		});
 		setSeconds(0);
 		setResults([]);
-		
-		
-	}
-	
-	async function oldPublish() {
-		let subdomain = window.location.origin.split('/')[2].split('.')[0];
-		let institution = document.getElementById('LTFormInstitutions');
-		if (institution.value === '') {
-			if (confirm('Would you like to send an email to info@libretexts.com to request your institution?'))
-				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
-			return false;
-		}
-		let name = document.getElementById('LTFormName').value;
-		let college = institution.value;
-		if (college.includes('Remixer_University')) {
-			college += `/Username:_${document.getElementById('usernameHolder').innerText}`;
-			await fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, '')}`)) + '/contents?edittime=now', {
+		console.log(props);
+		let destRoot = props.institution;
+		if (destRoot.includes('Remixer_University')) {
+			destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
+			await LibreTexts.authenticatedFetch(destRoot, 'contents?edittime=now', null, {
 				method: 'POST',
-				body: '<p>{{template.ShowCategory()}}</p>',
-				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'},
-			});
-			await fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(`${college.replace(window.location.origin, '')}`)) + '/tags', {
-				method: 'PUT',
-				body: '<tags><tag value="article:topic-category"/></tags>',
-				headers: {
-					'Content-Type': 'text/xml; charset=utf-8',
-					'x-deki-token': this.keys[subdomain],
-					'x-requested-with': 'XMLHttpRequest',
-				},
+				body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
 			});
 		}
-		let url = `${college}/${name.replace(/ /g, '_')}`;
-		if (!name) {
-			alert('No name provided!');
+		destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
+		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
+		/*if (response.ok) { TODO: Reenable
+			alert(`The page ${destRoot} already exists!`);
 			return false;
-		}
-		let response = await LibreTexts.authenticatedFetch(`${college.replace(window.location.origin, '')}/${name}`, 'info', subdomain);
-		if (response.ok) {
-			alert(`The page ${url} already exists!`);
-			return false;
-		}
-		this.autonumber();
+		}*/
 		
-		
-		const isAdmin = document.getElementById('adminHolder').innerText === 'true';
-		const isPro = document.getElementById('proHolder').innerText === 'true';
-		const groups = document.getElementById('groupHolder').innerText.toLowerCase();
-		const isDemonstration = RemixerFunctions.userPermissions() === 'Workshop';
-		let allowed = isAdmin || (isPro && groups.includes('faculty') || isDemonstration);
-		if (!allowed) {
+		if (props.mode === 'Anonymous') {
 			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
 			return false;
 		}
-		let copyMode = document.getElementById('LTFormCopyMode') ? document.getElementById('LTFormCopyMode').value : undefined;
-		if (copyMode && copyMode === 'deep' && !isAdmin) {
-			alert('Deep copy is restricted to administratiors. Access Denied.');
-			document.getElementById('LTFormCopyMode').value = 'transclude';
-			return false;
-		}
-		
-		// let subdomain = window.location.origin.split("/")[2].split(".")[0];
-		let LTRight = $('#LTRight').fancytree('getTree');
-		let RightAlert = $('#LTRightAlert');
-		
-		RightAlert.text('Beginning Publication process');
-		RightAlert.slideDown();
-		LTRight.enable(false);
-		let tree = LTRight.toDict()[0];
-		tree.data = {url: url};
-		let destRoot = tree.data.url;
-		const results = document.getElementById('copyResults');
-		const errors = document.getElementById('copyErrors');
-		results.innerText = 'Processing';
-		console.log(tree);
-		let counter = 0;
 		let startedAt = new Date();
-		let failedCounter = 0;
-		let errorText = '';
-		const total = getTotal(tree.children);
 		
-		await coverPage(tree);
-		await doCopy(destRoot, tree.children, 1);
-		const text = `${'Finished: ' + counter + ' pages completed' + (failedCounter ? '\\nFailed: ' + failedCounter : '')}`;
-		results.innerHTML = `<div><div>${text}</div><a href="${destRoot}" target="_blank">Visit your new LibreText here</a></div>`;
-		RightAlert.text(text);
-		RightAlert.slideUp();
-		LTRight.enable(true);
-		
-		function decodeHTML(content) {
-			let ret = content.replace(/&gt;/g, '>');
-			ret = ret.replace(/&lt;/g, '<');
-			ret = ret.replace(/&quot;/g, '"');
-			ret = ret.replace(/&apos;/g, '\'');
-			ret = ret.replace(/&amp;/g, '&');
-			return ret;
+		//process cover
+		await LibreTexts.authenticatedFetch(destRoot, `contents?abort=exists`, null, {
+			method: 'POST',
+			body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
+		});
+		await putProperty('mindtouch.idf#subpageListing', 'simple', destRoot);
+		setFinished(destRoot);
+		for (const page of props.working) {
+			await processPage(page);
 		}
+		setState('done');
 		
-		async function coverPage(tree) {
-			let path = tree.data.url.replace(window.location.origin + '/', '');
-			let content = '<p>{{template.ShowCategory()}}</p>';
-			await fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(path)) + '/contents?abort=exists', {
-				method: 'POST',
-				body: content,
-				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'},
-			});
-			let tags = '<tags><tag value="article:topic-category"/><tag value="coverpage:yes"/></tags>';
-			let propertyArray = [putProperty('mindtouch.page#welcomeHidden', true), putProperty('mindtouch.idf#subpageListing', 'simple'), fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(path)) + '/tags', {
-				method: 'PUT',
-				body: tags,
-				headers: {
-					'Content-Type': 'text/xml; charset=utf-8',
-					'x-deki-token': this.keys[subdomain],
-					'x-requested-with': 'XMLHttpRequest',
-				},
-			})];
-			
-			await Promise.all(propertyArray);
-			await fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(path)) + '/move?title=' + tree.title + '&name=' + encodeURIComponent(tree.title.replace(' ', '_')), {
-				method: 'POST',
-				headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'},
-			});
-			
-			async function putProperty(name, value) {
-				await fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(path)) + '/properties', {
-					method: 'POST',
-					body: value,
-					headers: {
-						'Slug': name,
-						'x-deki-token': this.keys[subdomain],
-						'x-requested-with': 'XMLHttpRequest',
-					},
-				});
-			}
-		}
-		
-		function getTotal(treeArray) {
-			let result = treeArray.length;
-			for (let i = 0; i < treeArray.length; i++) {
-				let child = treeArray[i].children;
-				if (child) {
-					result += getTotal(child);
+		function completedPage(page, text, color, isFailed) {
+			setCounter(
+				(counter) => {
+					const total = props.working.length;
+					let current = counter.pages + 1;
+					const elapsed = (new Date() - startedAt) / 1000;
+					const rate = current / elapsed;
+					const estimated = total / rate;
+					const eta = estimated - elapsed;
+					
+					return {
+						percentage: `${Math.round(current / total * 1000) / 10}%`,
+						pages: current,
+						eta: secondsToStr(eta),
+					}
 				}
-			}
-			return result;
+			);
+			setResults(results => {
+				results.unshift({
+					title: page.title,
+					url: page.url,
+					color: color,
+					isFailed: isFailed,
+				});
+				return results
+			});
 		}
 		
-		async function doCopy(destRoot, tree, depth) {
+		async function processPage(page) {
+			let url = destRoot + (page.path);
 			
-			for (let i = 0; i < tree.length; i++) {
+			if (page.status === 'new' || page.status === 'edited') {
+				let contents, response, source;
+				//TODO: Title and Move for ReRemix
+				
+				if (page.copyMode === 'blank') {
+					contents = `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:${page.articleType}</a></p>`;
+					if (['topic-category', 'topic-guide'].includes(page.articleType))
+						contents = '<p>{{template.ShowOrg()}}</p>' + contents;
+					
+					response = await LibreTexts.authenticatedFetch(url, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+						method: 'POST',
+						body: contents,
+					});
+					if (!response.ok) {
+						completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new', true);
+					}
+					else {
+						if (page.articleType === 'topic-guide') {
+							await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", url),
+								putProperty('mindtouch.page#welcomeHidden', true, url),
+								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", url)]
+							)
+						}
+						else if (page.articleType === 'topic-category')
+							await putProperty('mindtouch.idf#subpageListing', 'simple', url);
+						
+						
+						await putProperty('mindtouch.page#welcomeHidden', true, url);
+						if (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide')){
+							let image = await fetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+							image = await image.blob();
+							await LibreTexts.authenticatedFetch(path, 'files/=mindtouch.page%2523thumbnail', null, {
+								method: 'PUT',
+								body: image,
+							})
+						}
+						completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new');
+					}
+					return;
+				} // end for new pages
+				
+				switch (page.copyMode) {
+					case 'transclude':
+						const [currentSubdomain] = LibreTexts.parseURL();
+						source = LibreTexts.getAPI(url);
+						source.tags.push('transcluded:yes');
+						
+						source.push(`source-[${index}]-${source.subdomain}-${source.id}`);
+						
+						if (currentSubdomain !== source.subdomain) {
+							contents = `<p className="mt-script-comment">Cross Library Transclusion</p>
+
+<pre className="script">
+template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${source.id}});</pre>
+
+<div className="comment">
+<div className="mt-comment-content">
+<p><a href="${source.url}">Cross-Library Link: ${source.url}</a><br/>source-${source.subdomain}-${source.id}</p>
+</div>
+${renderTags(source.tags)}
+</div>`;
+						}
+						else {
+							let [tempSubdomain, tempPath] = LibreTexts.parseURL(url);
+							contents = `<div className="mt-contentreuse-widget" data-page="${tempPath}" data-section="" data-show="false">
+<pre className="script">
+wiki.page("${tempPath}", NULL)</pre>
+</div>
+
+<div className="comment">
+<div className="mt-comment-content">
+<p><a href="${url}">Content Reuse Link: ${url}</a></p>
+</div>
+${renderTags(source.tags)}
+</div>`;
+						}
+						response = await LibreTexts.authenticatedFetch(url, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+							method: 'POST',
+							body: contents,
+						});
+						if (!response.ok) {
+							completedPage(page, 'Transcluded', 'new', true);
+							return;
+						}
+						completedPage(page, 'Transcluded', 'new');
+						break;
+					case 'fork':
+						//TODO: Fork
+						
+						completedPage(page, 'Forked', 'new');
+						break;
+					case 'full':
+						//TODO: Full-Copy
+						
+						completedPage(page, 'Full-Copied', 'modified');
+						break;
+				}
+				//Handle properties
+				if (page.articleType === 'topic-guide')
+					source.properties = source.properties.concat([{
+						name: "mindtouch.idf#guideDisplay",
+						value: "single"
+					}, {
+						name: "mindtouch#idf.guideTabs",
+						value: "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]"
+					}]);
+				else if (page.articleType === 'topic-category')
+					source.properties.push({name: 'mindtouch.idf#subpageListing', value: 'simple'});
+				source.properties.push({name: 'mindtouch.page#welcomeHidden', value: true});
+				source.properties = [...new Set(source.properties)]; //deduplicate
+				await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value)));
+				
+				//Thumbnail
+				let files = source.files, image;
+				if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail'))
+					image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', child.data.subdomain);
+				
+				else if (tags.includes('article:topic-category') || tags.includes('article:topic-guide'))
+					image = await fetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+				if (image) {
+					image = await image.blob();
+					await LibreTexts.authenticatedFetch(path, 'files/=mindtouch.page%2523thumbnail', null, {
+						method: 'PUT',
+						body: image,
+					})
+				}
+				
+				completedPage(page, 'Modified', 'modified');
+				return;
+			}
+			else if (page.status === 'deleted') {
+				await LibreTexts.authenticatedFetch(path, '', null, {
+					method: 'DELETE',
+					body: image,
+				});
+				completedPage(page, 'Deleted', 'deleted');
+			}
+			else if (page.status === 'unchanged') {
+				completedPage(page, 'Skipped', 'unchanged');
+			}
+			
+			function renderTags(tags) {
+				let tagsHTML = tags.map((tag) => <a href="#">${tag}</a>).join('');
+				return `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em>${tagsHTML}</p>`
+			}
+			
+			/*for (let i = 0; i < tree.length; i++) {
 				const child = tree[i];
 				child.title = child.title.replace(/[{}]/g, '');
 				child.data.padded = child.data.padded ? child.data.padded.replace(/[{}]/g, '') : false;
@@ -517,7 +622,7 @@ function PublishSubPanel(props) {
 							content = await LibreTexts.authenticatedFetch(child.path, 'contents?mode=raw', child.data.subdomain, {isLimited: isDemonstration});
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace('<body>', '').replace('</body>', '');
-							content = decodeHTML(content);
+							content = LibreTexts.decodeHTML(content);
 						}
 						else {
 							//Get cross content
@@ -531,7 +636,7 @@ function PublishSubPanel(props) {
 							});
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace('<body>', '').replace('</body>', '');
-							content = decodeHTML(content);
+							content = LibreTexts.decodeHTML(content);
 							
 							let copyMode = document.getElementById('LTFormCopyMode') ? document.getElementById('LTFormCopyMode').value : undefined;
 							if (copyMode === 'copy') {
@@ -783,86 +888,68 @@ wiki.page("${child.path}", NULL)</pre>
 							});
 					}
 				}
-				
-				
-				counter++;
-				var elapsed = (new Date() - startedAt) / 1000;
-				var rate = counter / elapsed;
-				var estimated = total / rate;
-				var eta = estimated - elapsed;
-				var etah = secondsToStr(eta);
-				const text = `Processing: ${counter}/${total} pages completed (${Math.round(counter * 100 / total)}%)` + (failedCounter ? '\nFailed: ' + failedCounter : '');
-				
-				
-				results.innerText = `${text} ETA: ${etah}`;
-				RightAlert.text(text);
-				errors.innerText = errorText;
-				if (child.children) {
-					await doCopy(url, child.children, depth + 1);
-				}
-			}
-			
-			
-			async function putProperty(name, value, path) {
-				fetch('/@api/deki/pages/=' + encodeURIComponent(encodeURIComponent(path)) + '/properties', {
-					method: 'POST',
-					body: value,
-					headers: {
-						'Slug': name,
-						'x-deki-token': this.keys[subdomain],
-						'x-requested-with': 'XMLHttpRequest',
-					},
+			}*/
+		}
+		
+		
+		async function processFile(file, child, path, id) {
+			let image, filename;
+			if (!file) {
+				image = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`, {
+					headers: {'x-deki-token': this.keys[child.data.subdomain]},
 				});
+				filename = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`, {
+					headers: {'x-deki-token': this.keys[child.data.subdomain]},
+				});
+				if (!image.ok || !filename.ok)
+					return false;
+				filename = await filename.json();
+				filename = filename['filename'];
+				
+			}
+			else if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
+				//only files with extensions
+				filename = file['filename'];
+				image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+				if (!image.ok)
+					return false;
 			}
 			
-			async function processFile(file, child, path, id) {
-				let image, filename;
-				if (!file) {
-					image = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`, {
-						headers: {'x-deki-token': this.keys[child.data.subdomain]},
-					});
-					filename = await fetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`, {
-						headers: {'x-deki-token': this.keys[child.data.subdomain]},
-					});
-					if (!image.ok || !filename.ok)
-						return false;
-					filename = await filename.json();
-					filename = filename['filename'];
-					
-				}
-				else if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
-					//only files with extensions
-					filename = file['filename'];
-					image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
-					if (!image.ok)
-						return false;
-				}
+			
+			if (filename) {
+				image = await image.blob();
 				
+				let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+					method: 'PUT',
+					body: image,
+					headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'},
+				});
+				if (!response.ok)
+					return false;
 				
-				if (filename) {
-					image = await image.blob();
-					
-					let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
-						method: 'PUT',
-						body: image,
-						headers: {'x-deki-token': this.keys[subdomain], 'x-requested-with': 'XMLHttpRequest'},
-					});
-					if (!response.ok)
-						return false;
-					
-					response = await response.json();
-					let original = file ? file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '') : `/@api/deki/files/${id}`;
-					return {
-						original: original,
-						oldID: id,
-						newID: response['@id'],
-						final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`,
-					};
-				}
-				return false;
+				response = await response.json();
+				let original = file ? file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '') : `/@api/deki/files/${id}`;
+				return {
+					original: original,
+					oldID: id,
+					newID: response['@id'],
+					final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`,
+				};
 			}
+			return false;
+		}
+		
+		async function putProperty(name, value, path) {
+			await LibreTexts.authenticatedFetch(path, 'properties', null, {
+				method: 'POST',
+				body: value,
+				headers: {
+					'Slug': name,
+				},
+			});
 		}
 	};
+	
 }
 
 function checkStructure(type, parentType) {
@@ -878,4 +965,46 @@ function checkStructure(type, parentType) {
 		default:
 			return false;
 	}
+}
+
+
+function secondsToStr(seconds) {
+	return millisecondsToStr(seconds * 1000);
+	
+	// http://stackoverflow.com/a/8212878
+	function millisecondsToStr(milliseconds) {
+		// TIP: to find current time in milliseconds, use:
+		// var  current_time_milliseconds = new Date().getTime();
+		
+		function numberEnding(number) {
+			return (number > 1) ? 's' : '';
+		}
+		
+		let temp = Math.floor(milliseconds / 1000);
+		const years = Math.floor(temp / 31536000);
+		if (years) {
+			return years + ' year' + numberEnding(years);
+		}
+		const days = Math.floor((temp %= 31536000) / 86400);
+		if (days) {
+			return days + ' day' + numberEnding(days);
+		}
+		const hours = Math.floor((temp %= 86400) / 3600);
+		if (hours) {
+			return hours + ' hour' + numberEnding(hours);
+		}
+		const minutes = Math.floor((temp %= 3600) / 60);
+		if (minutes) {
+			return minutes + ' minute' + numberEnding(minutes);
+		}
+		const seconds = temp % 60;
+		if (seconds) {
+			return seconds + ' second' + numberEnding(seconds);
+		}
+		return 'less than a second'; //'just now' //or other string you like;
+	}
+}
+
+function formatNumber(it) {
+	return it.toPrecision(4);
 }

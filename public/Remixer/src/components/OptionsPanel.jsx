@@ -224,7 +224,7 @@ export default function OptionsPanel(props) {
 									<Switch
 										color="primary"
 										inputProps={{'aria-label': 'primary checkbox'}}
-										value={props.options.autonumber.overwriteSuffix}
+										checked={props.options.autonumber.overwriteSuffix}
 										onChange={(e, value) => changeOption('autonumber.overwriteSuffix', value)}
 									/>}
 								label="Overwrite non-number titles"/>
@@ -235,8 +235,8 @@ export default function OptionsPanel(props) {
 					select
 					label="Chapter prefix"
 					value={props.options.autonumber.chapterPrefix}
-					onChange={(e, value) => {
-						changeOption('autonumber.chapterPrefix', value);
+					onChange={(e) => {
+						changeOption('autonumber.chapterPrefix', e.target.value);
 					}}
 					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
 					margin="normal"
@@ -249,8 +249,8 @@ export default function OptionsPanel(props) {
 					select
 					label="Page Prefix"
 					value={props.options.autonumber.pagePrefix}
-					onChange={(e, value) => {
-						changeOption('autonumber.pagePrefix', value);
+					onChange={(e) => {
+						changeOption('autonumber.pagePrefix', e.target.value);
 					}}
 					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
 					margin="normal"

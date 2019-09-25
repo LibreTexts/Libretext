@@ -39,11 +39,14 @@ function LibreTextsReuse() {
 		let isNumber;
 		let [current, currentPath] = parseURL();
 		path = path || currentPath;
-		if (!isNaN(path)) {
+		if (path.startsWith('https://')) { //gets path from a url
+			[current, path] = parseURL(path);
+		}
+		if (!isNaN(path)) { //if using pageIDs
 			path = parseInt(path);
 			isNumber = true;
 		}
-		if (path === 'home') {
+		if (path === 'home') { //if at root page
 			isNumber = true;
 		}
 		let keys = await getKeys();
@@ -194,6 +197,7 @@ function LibreTextsReuse() {
 			page.tags = page.tags || tags;
 			page.properties = page.properties || properties;
 			page.subdomain = subdomain;
+			page.files = response.files;
 			page.path = response.path['#text'];
 			page.modified = new Date(response['date.modified']);
 			page.content = response.content;

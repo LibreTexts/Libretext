@@ -2,6 +2,7 @@ let RemixerFunctions = {
 	generateDefault: generateDefault,
 	userPermissions: userPermissions,
 	statusColor: statusColor,
+	articleTypeToTitle:articleTypeToTitle,
 };
 
 function generateDefault(chapters, pages) {
@@ -19,7 +20,7 @@ function generateDefault(chapters, pages) {
 				"title": `${i}.${j}: New Page`,
 				"tooltip": "Newly Created Page",
 				"status": 'new',
-				"data": {"padded": `${i.toString().padStart(2, '0')}.${i.toString().padStart(2, '0')}: New Page`}
+				"data": {"padded": `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`}
 			})
 		}
 		
@@ -91,6 +92,20 @@ function statusColor(status) {
 			return 'orange';
 		case 'deleted':
 			return 'red';
+		default:
+			return status;
+	}
+}
+
+
+function articleTypeToTitle(type) {
+	switch (type) {
+		case 'topic-category':
+			return 'Unit';
+		case 'topic-guide':
+			return 'Chapter';
+		case 'topic':
+			return 'Topic';
 	}
 }
 
