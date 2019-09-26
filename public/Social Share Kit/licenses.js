@@ -96,10 +96,50 @@
 		else
 			thing.style.display = "none";
 	}
-	function ccDetector(){  
+	function ccDetector(){
+		const cc = getCC();
 		var selectedText = window.getSelection().toString();
-		alert(selectedText);
+
+		if(cc){
+			if(cc.label === "cc-BY"){
+				alert("This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. ");
+			}
+			
+			else if (cc.label === "cc-by-sa"){
+				alert("This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. ");
+			}
+			else if (cc.label === "cc-by-nd"){
+				alert("This license lets others reuse the work for any purpose, including commercially;");
+			}
+			else if (cc.label === "cc-by-nc"){
+				alert("This license lets others remix, tweak, and build upon your work non-commercially.");
+			}
+			else if (cc.label === "cc-by-nc-sa"){
+				alert("This license lets others remix, tweak, and build upon your work non-commercially.");
+			}
+			else if (cc.label === "cc-by-nc-nd"){
+				alert("This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you.");
+			}
+			else if (cc.label ==="gnu"){
+				alert("This content copied is free to use, run, share, and modify");
+			}
+			else if (cc.label ==="gnudsl"){
+				alert("This copied content gives certain exclusive rights to the author of a work, including the rights to copy, modify and distribute the work .");
+			}
+			else if (cc.label === "gnufdl"){
+				alert("This copied content is to assure everyone the effective freedom to copy and redistribute it, with or without modifying it, either commercially or noncommercially")
+			}
+			else if (cc.label === "arr"){
+				return null;
+			}
+			else{
+				return null;
+			}		
 		}
+	}
+	
+	
+	
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
 })();
