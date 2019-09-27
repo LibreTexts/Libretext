@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Test Page</title>
+	<title>CateTest2</title>
 	<script src="printYoutubeTest.js"></script>
-	<script type="text/javascript">
-	new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
-	</script>
+	<script src="Libretext/public/Miscellaneous/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
+	<script src= "https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js"></script>
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="printYoutube.css" type="text/css" rel="stylesheet"/>
 </head>
 
@@ -34,8 +34,22 @@
 		</div>
 	</div>
 
-	<div id="qrcode">
-	</div>
+
+<!--  -->below is the video title and the qrcode
+
+
+<input id="text" type="text" value="link" style="width:80%" /><br />
+<img id="qrcode"></img>
+
+
+
+<script>
+
+QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
+
+QRCode.toDataURL("stuff2")
+
+</script>
 
 	<p> Content that separates these videos</p>
 
