@@ -35,19 +35,22 @@ function LibreTextsReuse() {
 	};
 	
 	//Function Zone
-	async function authenticatedFetch(path, api, subdomain, options = {}) {
+	async function authenticatedFetch(path, api = '', subdomain, options = {}) {
 		let isNumber;
 		let [current, currentPath] = parseURL();
 		path = path || currentPath;
-		if (path.startsWith('https://')) { //gets path from a url
-			[current, path] = parseURL(path);
-		}
-		if (!isNaN(path)) { //if using pageIDs
-			path = parseInt(path);
-			isNumber = true;
-		}
-		if (path === 'home') { //if at root page
-			isNumber = true;
+		let arbitraryPage = !api && !subdomain && path.startsWith('https://');
+		if (!arbitraryPage) {
+			if (path.startsWith('https://')) { //gets path from a url
+				[, path] = parseURL(path);
+			}
+			if (!isNaN(path)) { //if using pageIDs
+				path = parseInt(path);
+				isNumber = true;
+			}
+			if (path === 'home') { //if at root page
+				isNumber = true;
+			}
 		}
 		let keys = await getKeys();
 		if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
@@ -61,8 +64,11 @@ function LibreTextsReuse() {
 			headers['x-deki-token'] = token;
 		
 		options.headers = headers;
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`,
-			options);
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`,
+				options);
 	}
 	
 	async function getKeys() {

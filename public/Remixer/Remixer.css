@@ -5,6 +5,7 @@
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+	flex: none;
 	height: 30px;
 	width: 100%;
 }
@@ -40,6 +41,7 @@
 #results {
 	white-space: pre;
 	flex: 1;
+	width: 95%;
 }
 
 #FindReplace {
@@ -131,6 +133,10 @@ h1, h2, h3, h4, h5, h6 {
 	max-width: 90px;
 	overflow: hidden;
 	display: block;
+}
+
+#editDialog .MuiFilledInput-root {
+	flex: 1
 }
 
 div#LTPreviewForm {

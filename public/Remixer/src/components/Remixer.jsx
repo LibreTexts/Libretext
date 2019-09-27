@@ -8,8 +8,7 @@ import RemixerOptions from "./RemixerOptions.jsx";
 export default class Remixer extends React.Component {
 	constructor() {
 		super();
-		
-		this.state = {
+		let state = {
 			type: 'Remix',
 			stage: 'Remixing',
 			mode: RemixerFunctions.userPermissions(),
@@ -26,12 +25,10 @@ export default class Remixer extends React.Component {
 			},
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 		};
-	}
-	
-	async componentDidMount() {
 		if (localStorage.getItem('RemixerState')) {
-			let state = JSON.parse(localStorage.getItem('RemixerState'));
-			this.setState(state);
+			state = JSON.parse(localStorage.getItem('RemixerState'));
+			
+			this.state = state;
 		}
 	}
 	

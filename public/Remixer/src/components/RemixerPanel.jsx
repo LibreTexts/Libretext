@@ -49,75 +49,19 @@ class RemixerPanel extends React.Component {
 	}
 	
 	async componentDidMount() {
-		this.setState({LibraryTree: await RemixerPanel.getSubpages('home', this.state.subdomain, false, true)});
-		
 		const LTLeft = $('#LTLeft');
 		const LTRight = $('#LTRight');
-		LTLeft.fancytree({
-			source: this.state.LibraryTree,
-			debugLevel: 0,
-			autoScroll: true,
-			extensions: ['dnd5'],
-			lazyLoad: function (event, data) {
-				const dfd = new $.Deferred();
-				let node = data.node;
-				data.result = dfd.promise();
-				RemixerPanel.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
-			},
-			dnd5: {
-				// autoExpandMS: 400,
-				// preventForeignNodes: true,
-				// preventNonNodes: true,
-				// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-				// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-				// scroll: true,
-				// scrollSpeed: 7,
-				// scrollSensitivity: 10,
-				
-				// --- Drag-support:
-				
-				dragStart: function (node, data) {
-					/* This function MUST be defined to enable dragging for the tree.
-					 *
-					 * Return false to cancel dragging of node.
-					 * data.dataTransfer.setData() and .setDragImage() is available
-					 * here.
-					 */
-//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
-					data.dataTransfer.dropEffect = 'copy';
-					return true;
-				},
-				/*dragDrag: function (node, data) {
-				  data.dataTransfer.dropEffect = "move";
-				},
-				dragEnd: function (node, data) {
-				},*/
-				
-				// --- Drop-support:
-				
-				/*dragEnter: function (node, data) {
-				  // node.debug("dragEnter", data);
-				  data.dataTransfer.dropEffect = "move";
-				  // data.dataTransfer.effectAllowed = "copy";
-				  return true;
-				},
-				dragOver: function (node, data) {
-				  data.dataTransfer.dropEffect = "move";
-				  // data.dataTransfer.effectAllowed = "copy";
-				},
-				dragLeave: function (node, data) {
-				},*/
-			},
-			icon: (event, data) => {
-				if (data.node.getLevel() === 1)
-					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
-			},
-		});
 		LTRight.fancytree({
 			source: this.props.RemixTree,
 			debugLevel: 0,
 			autoScroll: true,
 			extensions: ['dnd5'],
+			generateIds: true, // Generate id attributes like <span id='fancytree-id-KEY'>
+			dblclick: (event, data) => {
+				if (data.targetType === 'title') {
+					this.edit();
+				}
+			},
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -128,8 +72,8 @@ class RemixerPanel extends React.Component {
 				// autoExpandMS: 400,
 				// preventForeignNodes: true,
 				// preventNonNodes: true,
-				// preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-				// preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+				preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+				preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
 				// scroll: true,
 				// scrollSpeed: 7,
 				// scrollSensitivity: 10,
@@ -218,6 +162,80 @@ class RemixerPanel extends React.Component {
 				},
 			},
 		});
+		LTRight.on('contextmenu', (event) => {
+			if (event.target && event.target.classList.contains("fancytree-title") && event.target.parentNode
+				&& event.target.parentNode.parentNode && event.target.parentNode.parentNode.id.startsWith('ft_')) {
+				event.preventDefault();
+				let key = event.target.parentNode.parentNode.id.split('ft_')[1];
+				$("#LTRight").fancytree("getTree").getNodeByKey(key).setActive();
+				this.edit();
+			}
+		});
+		let LeftAlert = $('#LTLeftAlert');
+		LeftAlert.text(`Loading ${name}`);
+		LeftAlert.slideDown();
+		this.setState({LibraryTree: await RemixerPanel.getSubpages('home', this.state.subdomain, false, true)});
+		LeftAlert.slideUp();
+		LTLeft.fancytree({
+			source: this.state.LibraryTree,
+			debugLevel: 0,
+			autoScroll: true,
+			extensions: ['dnd5'],
+			lazyLoad: function (event, data) {
+				const dfd = new $.Deferred();
+				let node = data.node;
+				data.result = dfd.promise();
+				RemixerPanel.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+			},
+			dnd5: {
+				// autoExpandMS: 400,
+				preventForeignNodes: true,
+				// preventNonNodes: true,
+				preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+				preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+				// scroll: true,
+				// scrollSpeed: 7,
+				// scrollSensitivity: 10,
+				
+				// --- Drag-support:
+				
+				dragStart: function (node, data) {
+					/* This function MUST be defined to enable dragging for the tree.
+					 *
+					 * Return false to cancel dragging of node.
+					 * data.dataTransfer.setData() and .setDragImage() is available
+					 * here.
+					 */
+//					data.dataTransfer.setDragImage($("<div>hurz</div>").appendTo("body")[0], -10, -10);
+					data.dataTransfer.dropEffect = 'copy';
+					return true;
+				},
+				/*dragDrag: function (node, data) {
+				  data.dataTransfer.dropEffect = "move";
+				},
+				dragEnd: function (node, data) {
+				},*/
+				
+				// --- Drop-support:
+				
+				/*dragEnter: function (node, data) {
+				  // node.debug("dragEnter", data);
+				  data.dataTransfer.dropEffect = "move";
+				  // data.dataTransfer.effectAllowed = "copy";
+				  return true;
+				},
+				dragOver: function (node, data) {
+				  data.dataTransfer.dropEffect = "move";
+				  // data.dataTransfer.effectAllowed = "copy";
+				},
+				dragLeave: function (node, data) {
+				},*/
+			},
+			icon: (event, data) => {
+				if (data.node.getLevel() === 1)
+					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
+			},
+		});
 		
 		
 		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
@@ -269,7 +287,10 @@ class RemixerPanel extends React.Component {
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
 				<Button variant="contained" color='secondary'
-				        onClick={() => {this.autonumber(); this.props.updateRemixer({stage: 'Publishing'})}}><span>Publish</span>
+				        onClick={() => {
+					        this.autonumber();
+					        this.props.updateRemixer({stage: 'Publishing'})
+				        }}><span>Publish</span>
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer'>
@@ -390,26 +411,26 @@ class RemixerPanel extends React.Component {
 							<MenuItem value=''>
 								<Tooltip
 									title="This page will be copied according to the Default Copy Mode">
-									<div>Default</div>
+									<ListItemText>Default</ListItemText>
 								</Tooltip>
 							</MenuItem>
 							<MenuItem value='transclude'>
 								<Tooltip
 									title="In transclude mode, pages will be automatically updated from the source">
-									<div>Transclude</div>
+									<ListItemText>Transclude</ListItemText>
 								</Tooltip>
 							</MenuItem>
 							<MenuItem value='fork'>
 								<Tooltip
 									title="In fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
-									<div>Fork</div>
+									<ListItemText>Fork</ListItemText>
 								</Tooltip>
 							</MenuItem>
 							{this.props.mode === 'Admin' ?
 								<MenuItem value='full'>
 									<Tooltip
 										title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
-										<div>Full-Copy</div>
+										<ListItemText>Full-Copy</ListItemText>
 									</Tooltip>
 								</MenuItem>
 								: null}
@@ -597,11 +618,15 @@ class RemixerPanel extends React.Component {
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
-			//TODO: suffix
-			if (node.title.includes(': '))
-				node.title = node.title.replace(/^[^:]*: /, '');
+			
 			
 			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth) {
+				
+				//TODO: suffix
+				if (node.title.includes(': '))
+					node.title = node.title.replace(/^[^:]*: /, '');
+				
+				
 				let index = sharedIndex[0]++;
 				if (level < this.props.options.autonumber.guideDepth) { //Unit
 					node.data.articleType = 'topic-category';
@@ -766,7 +791,8 @@ class RemixerPanel extends React.Component {
 			<Tooltip
 				title={badStructure ? 'Warning: This article type currently violates the recommended content structure' : ''}>
 				<div style={{display: 'flex', alignItems: 'center', flex: 1}}>
-					<ListItemText primary={RemixerFunctions.articleTypeToTitle(type)} style={badStructure ? {color: 'orange'} : {}}/>
+					<ListItemText primary={RemixerFunctions.articleTypeToTitle(type)}
+					              style={badStructure ? {color: 'orange'} : {}}/>
 					{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
 						<Warning/>
 					</ListItemIcon> : null}
