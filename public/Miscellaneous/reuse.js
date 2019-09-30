@@ -182,6 +182,7 @@ function LibreTextsReuse() {
 		let [subdomain, path] = parseURL(page.url);
 		// console.log(page.url);
 		let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain);
+		page.response = response;
 		if (response.ok) {
 			response = await response.json();
 			let {properties, tags} = response;
@@ -209,11 +210,12 @@ function LibreTextsReuse() {
 			page.content = response.content;
 		}
 		else {
-			let error = response = await response.json();
+			let error = await response.json();
 			// console.error(`Can't get ${page.url}`);
 			page.subdomain = subdomain;
 			page.path = path;
 			page.modified = 'restricted';
+			page.error = error;
 		}
 		return page;
 	}

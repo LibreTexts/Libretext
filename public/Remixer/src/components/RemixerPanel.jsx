@@ -62,6 +62,7 @@ class RemixerPanel extends React.Component {
 					this.edit();
 				}
 			},
+			expand: () => this.autonumber(true),
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -269,7 +270,7 @@ class RemixerPanel extends React.Component {
 				</Tooltip></div>
 				<Button variant="contained" onClick={this.new}><span>New Page</span>
 					<Add/></Button>
-				<Button variant="contained" onClick={this.edit}><span>Edit Page</span>
+				<Button variant="contained" onClick={this.edit}><span>Page Properties</span>
 					<Edit/></Button>
 				<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
 					<Remove/></Button>
@@ -361,8 +362,8 @@ class RemixerPanel extends React.Component {
 					<TextField
 						margin="dense"
 						label="Source URL (optional)"
-						value={this.state.edit.url || ''}
-						onChange={(event) => this.changeEdit('url', event.target.value)}
+						value={this.state.edit.sourceURL || ''}
+						onChange={(event) => this.changeEdit('sourceURL', event.target.value)}
 						fullWidth
 					/>
 					<div style={{display: 'flex'}}>
@@ -520,9 +521,9 @@ class RemixerPanel extends React.Component {
 		}
 	};
 	
-	save = (tree) => {
+	save = (tree, isMiniUpdate) => {
 		tree.expanded = true;
-		this.props.updateRemixer({RemixTree: tree});
+		this.props.updateRemixer({RemixTree: tree}, isMiniUpdate);
 	};
 	
 	new = async () => {
@@ -609,7 +610,7 @@ class RemixerPanel extends React.Component {
 		this.setState({editDialog: false});
 	};
 	
-	autonumber = async () => {
+	autonumber = async (isMiniUpdate) => {
 		let root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
 		if (!root.children) {
 			return false;
@@ -679,7 +680,7 @@ class RemixerPanel extends React.Component {
 		let sharedIndex = [1];
 		processNode(d, sharedIndex, 0);
 		
-		this.save(d);
+		this.save(d, isMiniUpdate);
 	};
 	
 	debug() {
@@ -754,6 +755,7 @@ class RemixerPanel extends React.Component {
 					let miniResult = {
 						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
 						url: url,
+						sourceURL: url,
 						children: children,
 						lazy: !full,
 					};
@@ -806,13 +808,13 @@ class RemixerPanel extends React.Component {
 		const color = RemixerFunctions.statusColor(status);
 		switch (status) {
 			case 'unchanged':
-				return <span style={{color: color}}>[ Unchanged ]</span>;
+				return <span style={{color: color}}>[Unchanged]</span>;
 			case 'new':
-				return <span style={{color: color}}>[ New ]</span>;
+				return <span style={{color: color}}>[New]</span>;
 			case 'modified':
-				return <span style={{color: color}}>[ Modified ]</span>;
+				return <span style={{color: color}}>[Modified]</span>;
 			case 'deleted':
-				return <span style={{color: color}}>[ Deleted ]</span>;
+				return <span style={{color: color}}>[Deleted]</span>;
 			default:
 				return null;
 		}

@@ -383,18 +383,18 @@ function PublishSubPanel(props) {
 			);
 			setResults(results => {
 				if (isFailed)
-					switch (isFailed.stat) {
+					switch (isFailed.status) {
 						case 403:
-							isFailed = '403 Forbidden - User does not have permission to modify' + path + '\n';
+							isFailed = '403 Forbidden - User does not have permission to modify' + page.path + '\n';
 							break;
 						case 500:
-							isFailed = '500 Server Error ' + path + '\n';
+							isFailed = '500 Server Error ' + page.path + '\n';
 							break;
 						case 409:
-							isFailed = '409 Conflict - Page already exists ' + path + '\n';
+							isFailed = '409 Conflict - Page already exists ' + page.path + '\n';
 							break;
 						default:
-							isFailed = 'Error ' + response.status + ' ' + path + '\n';
+							isFailed = 'Error ' + isFailed.status + ' ' + page.path + '\n';
 							break;
 					}
 				
@@ -412,8 +412,9 @@ function PublishSubPanel(props) {
 		async function processPage(page) {
 			let url = destRoot + (page.path);
 			page.url = url;
+			[, page.path] = LibreTexts.parseURL(url);
 			
-			if (page.status === 'new' || page.status === 'edited') {
+			if (page.status === 'new' || page.status === 'modified') {
 				let contents, response, source;
 				//TODO: Title and Move for ReRemix
 				
@@ -422,7 +423,7 @@ function PublishSubPanel(props) {
 					if (['topic-category', 'topic-guide'].includes(page.articleType))
 						contents = '<p>{{template.ShowOrg()}}</p>' + contents;
 					
-					response = await LibreTexts.authenticatedFetch(url, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+					response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 						method: 'POST',
 						body: contents,
 					});
@@ -431,19 +432,19 @@ function PublishSubPanel(props) {
 					}
 					else {
 						if (page.articleType === 'topic-guide') {
-							await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", url),
-								putProperty('mindtouch.page#welcomeHidden', true, url),
-								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", url)]
+							await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", page.path),
+								putProperty('mindtouch.page#welcomeHidden', true, page.path),
+								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", page.path)]
 							)
 						}
 						else if (page.articleType === 'topic-category')
-							await putProperty('mindtouch.idf#subpageListing', 'simple', url);
+							await putProperty('mindtouch.idf#subpageListing', 'simple', page.path);
 						
 						
-						await putProperty('mindtouch.page#welcomeHidden', true, url);
+						await putProperty('mindtouch.page#welcomeHidden', true, page.path);
 						let image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
 						image = await image.blob();
-						await LibreTexts.authenticatedFetch(url, 'files/=mindtouch.page%2523thumbnail', null, {
+						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
 							method: 'PUT',
 							body: image,
 						});
@@ -452,9 +453,22 @@ function PublishSubPanel(props) {
 					return;
 				} // end for new pages
 				const [currentSubdomain] = LibreTexts.parseURL();
-				source = LibreTexts.getAPI(url);
-				
-				source.push(`source-[${index}]-${source.subdomain}-${source.id}`);
+				source = await LibreTexts.getAPI(page.sourceURL);
+				if (source.error) {
+					completedPage(page, `Source Error`, 'new', source.response);
+					return;
+				}
+				let index = 1;
+				for (let tag of source.tags) {
+					if (tag.startsWith('source[')) {
+						let subindex = tag.match(/(?<=^source\[)[0-9]+(?=]-)/);
+						if (subindex)
+							subindex = subindex[0];
+						if (subindex > index)
+							index = subindex + 1;
+					}
+				}
+				source.tags.push(`source[${index}]-${source.subdomain}-${source.id}`);
 				
 				switch (page.copyMode) {
 					case 'transclude':
@@ -473,7 +487,7 @@ ${renderTags(source.tags)}
 </div>`;
 						}
 						else {
-							let [tempSubdomain, tempPath] = LibreTexts.parseURL(url);
+							let [tempSubdomain, tempPath] = LibreTexts.parseURL(page.path);
 							contents = `<div className="mt-contentreuse-widget" data-page="${tempPath}" data-section="" data-show="false">
 <pre className="script">
 wiki.page("${tempPath}", NULL)</pre>
@@ -481,12 +495,12 @@ wiki.page("${tempPath}", NULL)</pre>
 
 <div className="comment">
 <div className="mt-comment-content">
-<p><a href="${url}">Content Reuse Link: ${url}</a></p>
+<p><a href="${page.path}">Content Reuse Link: ${page.path}</a></p>
 </div>
 ${renderTags(source.tags)}
 </div>`;
 						}
-						response = await LibreTexts.authenticatedFetch(url, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+						response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 							method: 'POST',
 							body: contents,
 						});
@@ -515,7 +529,7 @@ ${renderTags(source.tags)}
 						content = LibreTexts.decodeHTML(content);
 						
 						if (page.copyMode === 'fork') {
-							content = content.replace(/\/@api\/deki/g, `https://${child.data.subdomain}.libretexts.org/@api/deki`);
+							content = content.replace(/\/@api\/deki/g, `https://${source.subdomain}.libretexts.org/@api/deki`);
 							content = content.replace(/ fileid=".*?"/g, '');
 						}
 						else if (page.copyMode === 'full') {
@@ -537,7 +551,7 @@ ${renderTags(source.tags)}
 								for (let i = 0; i < files.length; i++) {
 									let file = files[i];
 									if (file['@res-is-deleted'] === 'false')
-										promiseArray.push(processFile(file, child, path, file['@id']));
+										promiseArray.push(processFile(file, source, page.path, file['@id']));
 								}
 								promiseArray = await Promise.all(promiseArray);
 								for (let i = 0; i < promiseArray.length; i++) {
@@ -549,7 +563,7 @@ ${renderTags(source.tags)}
 							}
 							
 							// Handling of hotlinked images (not attached to the page)
-							response = await LibreTexts.authenticatedFetch(url, 'files?dream.out.format=json');
+							response = await LibreTexts.authenticatedFetch(page.path, 'files?dream.out.format=json');
 							if (response.ok) {
 								let files = await response.json();
 								if (files['@count'] !== '0') {
@@ -561,46 +575,45 @@ ${renderTags(source.tags)}
 											files = files.file;
 										}
 									}
-								}
-								files = files.map((file) => file['@id']);
-								
-								let promiseArray = [];
-								let images = content.match(/(<img.*?src="\/@api\/deki\/files\/)[\S\s]*?(")/g);
-								if (images) {
-									for (let i = 0; i < images.length; i++) {
-										images[i] = images[i].match(/src="\/@api\/deki\/files\/([\S\s]*?)["/]/)[1];
-										
-										if (!files.includes(images[i])) {
-											promiseArray.push(processFile(null, child, path, images[i]));
-										}
-									}
+									files = files.map((file) => file['@id']);
 									
-									promiseArray = await Promise.all(promiseArray);
-									for (let i = 0; i < promiseArray.length; i++) {
-										if (promiseArray[i]) {
-											content = content.replace(promiseArray[i].original, promiseArray[i].final);
-											content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+									let promiseArray = [];
+									let images = content.match(/(<img.*?src="\/@api\/deki\/files\/)[\S\s]*?(")/g);
+									if (images) {
+										for (let i = 0; i < images.length; i++) {
+											images[i] = images[i].match(/src="\/@api\/deki\/files\/([\S\s]*?)["/]/)[1];
+											
+											if (!files.includes(images[i])) {
+												promiseArray.push(processFile(null, source, path, images[i]));
+											}
+										}
+										
+										promiseArray = await Promise.all(promiseArray);
+										for (let i = 0; i < promiseArray.length; i++) {
+											if (promiseArray[i]) {
+												content = content.replace(promiseArray[i].original, promiseArray[i].final);
+												content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+											}
 										}
 									}
 								}
 							}
 						}
-						response = await LibreTexts.authenticatedFetch(url, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+						response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 							method: 'POST',
 							body: content,
 						});
 						if (!response.ok) {
-							if(page.copyMode ==='fork')
-							completedPage(page, 'Forked', 'new', response);
+							if (page.copyMode === 'fork')
+								completedPage(page, 'Forked', 'new', response);
 							else
-							completedPage(page, 'Full-Copied', 'modified', response);
+								completedPage(page, 'Full-Copied', 'modified', response);
 							return;
 						}
-						if(page.copyMode ==='fork')
+						if (page.copyMode === 'fork')
 							completedPage(page, 'Forked', 'new');
 						else
 							completedPage(page, 'Full-Copied', 'modified');
-						return;
 				}
 				//Handle properties
 				if (page.articleType === 'topic-guide')
@@ -620,19 +633,16 @@ ${renderTags(source.tags)}
 				//Thumbnail
 				let files = source.files, image;
 				if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail'))
-					image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', child.data.subdomain);
-				
+					image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
 				else if (tags.includes('article:topic-category') || tags.includes('article:topic-guide'))
 					image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
 				if (image) {
 					image = await image.blob();
-					await LibreTexts.authenticatedFetch(url, 'files/=mindtouch.page%2523thumbnail', null, {
+					await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
 						method: 'PUT',
 						body: image,
 					})
 				}
-				
-				completedPage(page, 'Modified', 'modified');
 			}
 			else if (page.status === 'deleted') {
 				await LibreTexts.authenticatedFetch(path, '', null, {
@@ -652,11 +662,11 @@ ${renderTags(source.tags)}
 		}
 		
 		
-		async function processFile(file, child, path, id) {
+		async function processFile(file, source, path, id) {
 			let image, filename;
 			if (!file) {
-				image = await LibreTexts.authenticatedFetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`);
-				filename = await LibreTexts.authenticatedFetch(`https://${child.data.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`);
+				image = await LibreTexts.authenticatedFetch(`https://${source.subdomain}.libretexts.org/@api/deki/files/${id}?dream.out.format=json`);
+				filename = await LibreTexts.authenticatedFetch(`https://${source.subdomain}.libretexts.org/@api/deki/files/${id}/info?dream.out.format=json`);
 				if (!image.ok || !filename.ok)
 					return false;
 				filename = await filename.json();
@@ -666,7 +676,7 @@ ${renderTags(source.tags)}
 			else if (!(file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail'))) {
 				//only files with extensions
 				filename = file['filename'];
-				image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+				image = await LibreTexts.authenticatedFetch(source.path, `files/${filename}`, source.subdomain);
 				if (!image.ok)
 					return false;
 			}
@@ -675,7 +685,7 @@ ${renderTags(source.tags)}
 			if (filename) {
 				image = await image.blob();
 				
-				let response = await LibreTexts.authenticatedFetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`,null, null, {
+				let response = await LibreTexts.authenticatedFetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, null, null, {
 					method: 'PUT',
 					body: image,
 				});
@@ -683,7 +693,7 @@ ${renderTags(source.tags)}
 					return false;
 				
 				response = await response.json();
-				let original = file ? file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '') : `/@api/deki/files/${id}`;
+				let original = file ? file.contents['@href'].replace(`https://${source.subdomain}.libretexts.org`, '') : `/@api/deki/files/${id}`;
 				return {
 					original: original,
 					oldID: id,

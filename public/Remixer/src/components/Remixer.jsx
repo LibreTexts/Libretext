@@ -27,18 +27,19 @@ export default class Remixer extends React.Component {
 		};
 		if (localStorage.getItem('RemixerState')) {
 			state = JSON.parse(localStorage.getItem('RemixerState'));
-			
-			this.state = state;
 		}
+		this.state = state;
 	}
 	
-	updateRemixer = (newState) => {
+	updateRemixer = (newState, isMiniUpdate) => {
 		this.setState(newState);
-		this.save({...this.state, ...newState});
+		this.save({...this.state, ...newState}, isMiniUpdate);
 	};
 	
-	save = (newState) => {
+	save = (newState, isMiniUpdate) => {
 		localStorage.setItem('RemixerState', JSON.stringify(newState));
+		//TODO isMiniUpdate will not affect undo/redo functionality
+		
 		this.props.save();
 	};
 	

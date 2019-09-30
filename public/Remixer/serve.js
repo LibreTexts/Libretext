@@ -6,8 +6,8 @@ const localServer = http.createServer(handler);
 const staticFileServer = new nodeStatic.Server('.', {headers: {'cache-control': 'no-cache'}});
 let port = 3001;
 server.listen(port);
-if (process.argv.length >= 3 && parseInt(process.argv[2])) {
-	port = parseInt(process.argv[2]);
+if (process.argv.length >= 3 && parseInt(process.argv[2], 10)) {
+	port = parseInt(process.argv[2], 10);
 	localServer.listen(port);
 }
 const now1 = new Date();
