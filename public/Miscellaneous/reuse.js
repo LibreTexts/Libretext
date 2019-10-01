@@ -185,7 +185,7 @@ function LibreTextsReuse() {
 		page.response = response;
 		if (response.ok) {
 			response = await response.json();
-			let {properties, tags} = response;
+			let {properties, tags, files} = response;
 			if (properties['@count'] !== '0' && properties.property) {
 				properties = properties.property.length ? properties.property : [properties.property]
 			}
@@ -198,13 +198,19 @@ function LibreTextsReuse() {
 			else {
 				tags = []
 			}
+			if (files.tag) {
+				files = files.file.length ? files.file : [files.file];
+			}
+			else {
+				files = []
+			}
 			tags = tags.map((elem) => elem.title);
 			page.id = response['@id'];
 			page.title = page.title || response.title;
 			page.tags = page.tags || tags;
 			page.properties = page.properties || properties;
 			page.subdomain = subdomain;
-			page.files = response.files;
+			page.files = page.files || files;
 			page.path = response.path['#text'];
 			page.modified = new Date(response['date.modified']);
 			page.content = response.content;

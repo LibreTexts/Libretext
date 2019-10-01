@@ -2,7 +2,7 @@ let RemixerFunctions = {
 	generateDefault: generateDefault,
 	userPermissions: userPermissions,
 	statusColor: statusColor,
-	articleTypeToTitle:articleTypeToTitle,
+	articleTypeToTitle: articleTypeToTitle,
 };
 
 function generateDefault(chapters, pages) {

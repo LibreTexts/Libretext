@@ -5,7 +5,7 @@ import ReRemixer from "../components/ReRemixer.jsx";
 
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import {SnackbarProvider, useSnackbar} from 'notistack';
+import {SnackbarProvider} from 'notistack';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes

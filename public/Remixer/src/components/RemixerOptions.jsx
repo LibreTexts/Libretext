@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import RemixerFunctions from '../reusableFunctions';
 
 import TextField from '@material-ui/core/TextField';

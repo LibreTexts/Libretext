@@ -19,6 +19,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import {Switch} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Warning from "@material-ui/icons/Warning";
 
 
 export default function PublishPanel(props) {
@@ -27,13 +28,12 @@ export default function PublishPanel(props) {
 	let [sorted, setSorted] = useState({});
 	const [panel, setPanel] = React.useState('summary');
 	let [initialized, setInitialized] = React.useState();
-	let [working, setWorking] = React.useState();
+	let [publishing, setPublishing] = React.useState();
+	let [override, setOverride] = React.useState(false);
 	
 	useEffect(() => {
 		let LTPreview = $('#LTPreviewForm');
-		if (!LTPreview)
-			return;
-		else if (panel === 'tree') {
+		if (LTPreview && panel === 'tree') {
 			if (!initialized) {
 				LTPreview.fancytree({
 					source: props.RemixTree,
@@ -67,6 +67,7 @@ export default function PublishPanel(props) {
 			if (props.type === 'Remix') {
 				let copyMode = page.copyMode || props.defaultCopyMode;
 				page.copyMode = copyMode;
+				page.status = page.status || 'new';
 				if (!page.url)
 					copyMode = 'blank'; //pages without a source are blank
 				
@@ -142,12 +143,6 @@ export default function PublishPanel(props) {
 	}
 	
 	return <div id='LTForm' className='publishPanel'>
-		<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
-			<div className='LTTitle'><Tooltip title={permission.description}>
-				<div style={{display: 'flex', alignItems: 'center'}}>{props.mode} Mode
-					<Info style={{marginLeft: 10}}/></div>
-			</Tooltip></div>
-		</div>
 		<div id='LTFormContainer'>
 			<Paper>
 				<AppBar position="static" style={{backgroundColor: '#F44336'}}>
@@ -161,6 +156,22 @@ export default function PublishPanel(props) {
 					</Tabs>
 				</AppBar>
 				{panel === 'summary' ? generateSummary() : null}
+				{props.type === 'Remix' ?
+					<Tooltip
+						title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
+						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+							<FormControlLabel
+								style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+								control={
+									<Switch
+										inputProps={{'aria-label': 'primary checkbox'}}
+										checked={override}
+										onChange={() => setOverride(!override)}
+									/>}
+								label="Overwrite existing pages"/>
+							<Warning style={{color: 'red'}}/>
+						</div>
+					</Tooltip> : null}
 				<div id='LTPreviewForm' className='treePanel'
 				     style={{display: panel === 'tree' ? 'flex' : 'none'}}></div>
 				<ButtonGroup
@@ -168,19 +179,15 @@ export default function PublishPanel(props) {
 					size="large"
 					style={{marginTop: 10}}
 					aria-label="large contained secondary button group">
-					<Tooltip title="This will save your work to a file that you can download to your computer.">
-						<Button onClick={() => props.updateRemixer({stage: 'Remixing'})}>
-							<ArrowBack/>Revise
-						</Button>
-					</Tooltip>
-					<Tooltip title="This will load a Remix from a file and replace your current workspace.">
-						<Button color='primary' onClick={() => setWorking(pageArray)}>
-							Publish<Publish/>
-						</Button>
-					</Tooltip>
+					<Button onClick={() => props.updateRemixer({stage: 'Remixing'})}>
+						<ArrowBack/>Revise
+					</Button>
+					<Button color='primary' onClick={() => setPublishing(Math.random())}>
+						Publish<Publish/>
+					</Button>
 				</ButtonGroup>
 			</Paper>
-			<PublishSubPanel {...props} working={working}/>
+			<PublishSubPanel {...props} working={pageArray} publishing={publishing} override={override}/>
 		</div>
 	</div>;
 }
@@ -196,11 +203,11 @@ function PublishSubPanel(props) {
 	
 	
 	useEffect(() => {
-		if (props.working) {
+		if (props.publishing && props.working) {
 			console.log('Publishing!!!');
 			publish().then();
 		}
-	}, [props.working]);
+	}, [props.publishing]);
 	
 	useEffect(() => {
 		let interval = null;
@@ -318,17 +325,6 @@ function PublishSubPanel(props) {
 			alert('No LibreText name provided!');
 			return false;
 		}
-		
-		setState('processing');
-		setCounter({
-			percentage: 0,
-			pages: 0,
-			eta: 'Calculating',
-		});
-		setSeconds(0);
-		setIsActive(true);
-		setResults([]);
-		console.log(props);
 		let destRoot = props.institution;
 		if (destRoot.includes('Remixer_University')) {
 			destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
@@ -339,10 +335,23 @@ function PublishSubPanel(props) {
 		}
 		destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
-		/*if (response.ok) { TODO: Reenable
-			alert(`The page ${destRoot} already exists!`);
+		if (response.ok && !props.override) {
+			alert(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`);
 			return false;
-		}*/
+		}
+		
+		//All set to start publish
+		setState('processing');
+		setCounter({
+			percentage: 0,
+			pages: 0,
+			eta: 'Calculating',
+		});
+		setSeconds(0);
+		setIsActive(true);
+		setResults([]);
+		console.log(props);
+		let writeMode = props.override ? 'edittime=now' : 'abort=exists';
 		
 		if (props.mode === 'Anonymous') {
 			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
@@ -352,7 +361,7 @@ function PublishSubPanel(props) {
 		let startedAt = new Date();
 		
 		//process cover
-		await LibreTexts.authenticatedFetch(destRoot, `contents?abort=exists`, null, {
+		await LibreTexts.authenticatedFetch(destRoot, `contents?${writeMode}`, null, {
 			method: 'POST',
 			body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
 		});
@@ -423,7 +432,7 @@ function PublishSubPanel(props) {
 					if (['topic-category', 'topic-guide'].includes(page.articleType))
 						contents = '<p>{{template.ShowOrg()}}</p>' + contents;
 					
-					response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+					response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 						method: 'POST',
 						body: contents,
 					});
@@ -469,10 +478,13 @@ function PublishSubPanel(props) {
 					}
 				}
 				source.tags.push(`source[${index}]-${source.subdomain}-${source.id}`);
+				if (!source.tags.includes('article:topic') && page.copyMode === 'transclude')
+					page.copyMode = 'fork';
 				
 				switch (page.copyMode) {
 					case 'transclude':
 						source.tags.push('transcluded:yes');
+						page.tags = page.tags.concat(source.tags);
 						if (currentSubdomain !== source.subdomain) {
 							contents = `<p className="mt-script-comment">Cross Library Transclusion</p>
 
@@ -483,24 +495,24 @@ template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${sourc
 <div className="mt-comment-content">
 <p><a href="${source.url}">Cross-Library Link: ${source.url}</a><br/>source-${source.subdomain}-${source.id}</p>
 </div>
-${renderTags(source.tags)}
-</div>`;
+</div>
+${renderTags(page.tags)}`;
 						}
 						else {
-							let [tempSubdomain, tempPath] = LibreTexts.parseURL(page.path);
-							contents = `<div className="mt-contentreuse-widget" data-page="${tempPath}" data-section="" data-show="false">
-<pre className="script">
+							let [tempSubdomain, tempPath] = LibreTexts.parseURL(source.url);
+							contents = `<div class="mt-contentreuse-widget" data-page="${tempPath}" data-section="" data-show="false">
+<pre class="script">
 wiki.page("${tempPath}", NULL)</pre>
 </div>
 
-<div className="comment">
-<div className="mt-comment-content">
-<p><a href="${page.path}">Content Reuse Link: ${page.path}</a></p>
+<div class="comment">
+<div class="mt-comment-content">
+<p><a href="${tempPath}">Content Reuse Link: ${tempPath}</a></p>
 </div>
-${renderTags(source.tags)}
-</div>`;
+</div>
+${renderTags(page.tags)}`;
 						}
-						response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+						response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 							method: 'POST',
 							body: contents,
 						});
@@ -512,11 +524,10 @@ ${renderTags(source.tags)}
 						break;
 					case 'fork':
 					case 'full':
-						let content = '';
 						if (source.subdomain === currentSubdomain && ['Admin', 'Prop'].includes(props.mode))
-							content = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain);
+							contents = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain);
 						else
-							content = await fetch('https://api.libretexts.org/endpoint/contents', {
+							contents = await fetch('https://api.libretexts.org/endpoint/contents', {
 								method: 'PUT',
 								body: JSON.stringify({
 									path: source.path,
@@ -524,13 +535,15 @@ ${renderTags(source.tags)}
 									subdomain: source.subdomain,
 								}),
 							});
-						content = await content.text();
-						content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace('<body>', '').replace('</body>', '');
-						content = LibreTexts.decodeHTML(content);
+						contents = await contents.text();
+						contents = contents.match(/<body>([\s\S]*?)<\/body>/)[1].replace('<body>', '').replace('</body>', '');
+						contents = LibreTexts.decodeHTML(contents);
+						page.tags = page.tags.concat(source.tags);
+						contents += renderTags(page.tags);
 						
 						if (page.copyMode === 'fork') {
-							content = content.replace(/\/@api\/deki/g, `https://${source.subdomain}.libretexts.org/@api/deki`);
-							content = content.replace(/ fileid=".*?"/g, '');
+							contents = contents.replace(/\/@api\/deki/g, `https://${source.subdomain}.libretexts.org/@api/deki`);
+							contents = contents.replace(/ fileid=".*?"/g, '');
 						}
 						else if (page.copyMode === 'full') {
 							//Fancy file transfer VERY SLOW BUT EFFECTIVE
@@ -556,8 +569,8 @@ ${renderTags(source.tags)}
 								promiseArray = await Promise.all(promiseArray);
 								for (let i = 0; i < promiseArray.length; i++) {
 									if (promiseArray[i]) {
-										content = content.replace(promiseArray[i].original, promiseArray[i].final);
-										content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+										contents = contents.replace(promiseArray[i].original, promiseArray[i].final);
+										contents = contents.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
 									}
 								}
 							}
@@ -578,7 +591,7 @@ ${renderTags(source.tags)}
 									files = files.map((file) => file['@id']);
 									
 									let promiseArray = [];
-									let images = content.match(/(<img.*?src="\/@api\/deki\/files\/)[\S\s]*?(")/g);
+									let images = contents.match(/(<img.*?src="\/@api\/deki\/files\/)[\S\s]*?(")/g);
 									if (images) {
 										for (let i = 0; i < images.length; i++) {
 											images[i] = images[i].match(/src="\/@api\/deki\/files\/([\S\s]*?)["/]/)[1];
@@ -591,17 +604,17 @@ ${renderTags(source.tags)}
 										promiseArray = await Promise.all(promiseArray);
 										for (let i = 0; i < promiseArray.length; i++) {
 											if (promiseArray[i]) {
-												content = content.replace(promiseArray[i].original, promiseArray[i].final);
-												content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+												contents = contents.replace(promiseArray[i].original, promiseArray[i].final);
+												contents = contents.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
 											}
 										}
 									}
 								}
 							}
 						}
-						response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+						response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 							method: 'POST',
-							body: content,
+							body: contents,
 						});
 						if (!response.ok) {
 							if (page.copyMode === 'fork')
@@ -631,10 +644,10 @@ ${renderTags(source.tags)}
 				await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value)));
 				
 				//Thumbnail
-				let files = source.files, image;
+				let files = source.files || [], image;
 				if (files.includes('mindtouch.page#thumbnail') || files.includes('mindtouch.page%23thumbnail'))
 					image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
-				else if (tags.includes('article:topic-category') || tags.includes('article:topic-guide'))
+				else if (page.articleType === 'topic-category' || page.articleType === 'topic-guide')
 					image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
 				if (image) {
 					image = await image.blob();
@@ -656,7 +669,7 @@ ${renderTags(source.tags)}
 			}
 			
 			function renderTags(tags) {
-				let tagsHTML = tags.map((tag) => <a href="#">${tag}</a>).join('');
+				let tagsHTML = tags.map((tag) => `<a href="#">${tag}</a>`).join('');
 				return `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em>${tagsHTML}</p>`
 			}
 		}
@@ -713,8 +726,7 @@ ${renderTags(source.tags)}
 				},
 			});
 		}
-	};
-	
+	}
 }
 
 function checkStructure(type, parentType) { //returns true when there is an error

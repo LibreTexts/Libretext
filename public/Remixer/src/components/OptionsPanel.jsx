@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import RemixerFunctions from '../reusableFunctions';
 
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
@@ -14,7 +13,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useSnackbar} from 'notistack';
-import Toolbar from "@material-ui/core";
 
 export default function OptionsPanel(props) {
 	let [autonumberOpen, setAutonumberOpen] = useState(false);
