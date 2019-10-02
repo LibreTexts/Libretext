@@ -20,6 +20,7 @@ import {Switch} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Warning from "@material-ui/icons/Warning";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 
 export default function PublishPanel(props) {
@@ -276,6 +277,7 @@ function PublishSubPanel(props) {
 				</div>
 				{finished ?
 					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6> : null}
+				<LinearProgress variant="determinate" value={counter.percentage} />
 			</Toolbar>
 		</AppBar>
 	</Paper>;

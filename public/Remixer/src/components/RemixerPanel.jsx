@@ -278,10 +278,10 @@ class RemixerPanel extends React.Component {
 				
 				
 				<Button variant="contained" onClick={this.props.undo}
-				        disabled={!this.props.undo.length}><span>Undo {this.props.undo.length}</span>
+				        disabled={!this.props.undoArray.length}><span>Undo {this.props.undoArray.length}</span>
 					<Undo/></Button>
 				<Button variant="contained" onClick={this.props.redo}
-				        disabled={!this.props.redo.length}><span>Redo {this.props.redo.length}</span>
+				        disabled={!this.props.redoArray.length}><span>Redo {this.props.redoArray.length}</span>
 					<Redo/></Button>
 				
 				
@@ -501,8 +501,8 @@ class RemixerPanel extends React.Component {
 			        id="editDialog">
 				<DialogTitle id="form-dialog-title">Loading Remixer
 				</DialogTitle>
-				<DialogContent>
-					<CircularProgress/>
+				<DialogContent style={{display:'flex', justifyContent:'center', padding: 20}}>
+					<CircularProgress size={100}/>
 				</DialogContent>
 			</Dialog>
 		</div>;
@@ -532,9 +532,9 @@ class RemixerPanel extends React.Component {
 		}
 	};
 	
-	save = (tree, isMiniUpdate) => {
+	save = (tree, updateUndo) => {
 		tree.expanded = true;
-		this.props.updateRemixer({RemixTree: tree}, isMiniUpdate);
+		this.props.updateRemixer({RemixTree: tree}, updateUndo);
 	};
 	
 	new = async () => {
@@ -600,7 +600,7 @@ class RemixerPanel extends React.Component {
 	
 	handleReset = (chapters, pages) => {
 		if (!(chapters === undefined || pages === undefined)) {
-			this.save(RemixerFunctions.generateDefault(chapters, pages));
+			this.save(RemixerFunctions.generateDefault(chapters, pages), true);
 		}
 		this.setState({resetDialog: false});
 	};

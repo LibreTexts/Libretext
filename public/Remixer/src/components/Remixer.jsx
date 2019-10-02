@@ -13,8 +13,8 @@ export default class Remixer extends React.Component {
 			stage: 'Remixing',
 			mode: RemixerFunctions.userPermissions(),
 			defaultCopyMode: 'transclude',
-			undo: [],
-			redo: [],
+			undoArray: [],
+			redoArray: [],
 			options: {
 				tutorial: false,
 				enableAutonumber: false,
@@ -34,47 +34,49 @@ export default class Remixer extends React.Component {
 	}
 	
 	updateRemixer = (newState, updateUndo) => {
-		this.setState(newState);
 		if (updateUndo) {
 			//add to undo list
-			let newUndo = {...this.state, ...newState}.RemixTree;
-			newUndo = this.state.undo.concat(newUndo);
+			let newUndo = this.state.RemixTree;
+			console.log(newUndo);
+			newUndo = this.state.undoArray.concat(JSON.parse(JSON.stringify(newUndo)));
 			if (newUndo.length > 50)
 				newUndo.splice(0, newUndo.length - 50);
-			this.setState({undo: newUndo});
-			
+			this.setState({undoArray: newUndo});
 			//reset redo
-			this.setState({redo: []});
+			this.setState({redoArray: []});
 		}
+		this.setState(newState);
 		this.save({...this.state, ...newState});
 	};
 	
 	save = (newState) => {
 		let toSave = {...newState};
-		delete toSave.undo;
-		delete toSave.redo;
+		delete toSave.undoArray;
+		delete toSave.redoArray;
 		localStorage.setItem('RemixerState', JSON.stringify(toSave));
 		this.props.save();
 	};
 	
 	undo = () => {
 		let result = {
-			redo: this.state.redo.concat(this.state.RemixTree),
-			RemixTree: this.state.undo.pop(),
-			undo: this.state.undo
+			redoArray: this.state.redoArray.concat(JSON.parse(JSON.stringify(this.state.RemixTree))),
+			RemixTree: this.state.undoArray.pop(),
+			undoArray: this.state.undoArray
 		};
 		
 		this.setState(result);
+		this.save({...this.state, ...result});
 	};
 	
 	redo = () => {
 		let result = {
-			undo: this.state.redo.concat(this.state.RemixTree),
-			RemixTree: this.state.redo.pop(),
-			redo: this.state.redo,
+			undoArray: this.state.undoArray.concat(JSON.parse(JSON.stringify(this.state.RemixTree))),
+			RemixTree: this.state.redoArray.pop(),
+			redoArray: this.state.redoArray,
 		};
 		
 		this.setState(result);
+		this.save({...this.state, ...result});
 	};
 	
 	render() {
