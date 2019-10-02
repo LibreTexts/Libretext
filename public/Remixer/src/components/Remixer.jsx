@@ -13,6 +13,8 @@ export default class Remixer extends React.Component {
 			stage: 'Remixing',
 			mode: RemixerFunctions.userPermissions(),
 			defaultCopyMode: 'transclude',
+			undo: [],
+			redo: [],
 			options: {
 				tutorial: false,
 				enableAutonumber: false,
@@ -26,21 +28,53 @@ export default class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 		};
 		if (localStorage.getItem('RemixerState')) {
-			state = JSON.parse(localStorage.getItem('RemixerState'));
+			state = {...state, ...JSON.parse(localStorage.getItem('RemixerState'))};
 		}
 		this.state = state;
 	}
 	
-	updateRemixer = (newState, isMiniUpdate) => {
+	updateRemixer = (newState, updateUndo) => {
 		this.setState(newState);
-		this.save({...this.state, ...newState}, isMiniUpdate);
+		if (updateUndo) {
+			//add to undo list
+			let newUndo = {...this.state, ...newState}.RemixTree;
+			newUndo = this.state.undo.concat(newUndo);
+			if (newUndo.length > 50)
+				newUndo.splice(0, newUndo.length - 50);
+			this.setState({undo: newUndo});
+			
+			//reset redo
+			this.setState({redo: []});
+		}
+		this.save({...this.state, ...newState});
 	};
 	
-	save = (newState, isMiniUpdate) => {
-		localStorage.setItem('RemixerState', JSON.stringify(newState));
-		//TODO isMiniUpdate will not affect undo/redo functionality
-		
+	save = (newState) => {
+		let toSave = {...newState};
+		delete toSave.undo;
+		delete toSave.redo;
+		localStorage.setItem('RemixerState', JSON.stringify(toSave));
 		this.props.save();
+	};
+	
+	undo = () => {
+		let result = {
+			redo: this.state.redo.concat(this.state.RemixTree),
+			RemixTree: this.state.undo.pop(),
+			undo: this.state.undo
+		};
+		
+		this.setState(result);
+	};
+	
+	redo = () => {
+		let result = {
+			undo: this.state.redo.concat(this.state.RemixTree),
+			RemixTree: this.state.redo.pop(),
+			redo: this.state.redo,
+		};
+		
+		this.setState(result);
 	};
 	
 	render() {
@@ -54,7 +88,7 @@ export default class Remixer extends React.Component {
 			case 'Remixing':
 				return <>
 					<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
-					<RemixerPanel {...this.state} updateRemixer={this.updateRemixer}/>
+					<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
 				</>;
 			case 'Publishing':
 				return <>

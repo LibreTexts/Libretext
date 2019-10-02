@@ -3,18 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Initial Publish panel for Blank Pages&#10;&#10;Only blank pages have been tested to work. Need to do Modified and Deleted next.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js.tmp-browserify-25479924858741598293" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Tutorial.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Tutorial.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/pages/404.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/pages/404.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +17,34 @@
   </component>
   <component name="FavoritesManager">
     <favorites_list name="Libretext" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="597">
+              <caret line="87" column="28" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="284" column="36" selection-start-line="284" selection-start-column="36" selection-end-line="284" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -38,6 +59,19 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>updateRemixer</find>
+      <find>updateremixer</find>
+      <find>autonumber</find>
+      <find>tooltip</find>
+      <find>Ltformheader</find>
+      <find>undo</find>
+      <find>this.autonumber</find>
+      <find>dialog</find>
+      <find>undo</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -50,15 +84,83 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/public/Remixer/Remixer.css" />
+        <option value="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" />
+        <option value="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" />
+      </list>
+    </option>
+  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-6" />
+    <option name="y" value="-6" />
+    <option name="width" value="1382" />
+    <option name="height" value="906" />
+  </component>
   <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -71,7 +173,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles/hdagnew@ucdavis.edu/commoncartridge" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
@@ -1061,6 +1163,8 @@
       <workItem from="1569544685320" duration="21933000" />
       <workItem from="1569811570532" duration="10533000" />
       <workItem from="1569892228018" duration="7835000" />
+      <workItem from="1569969223861" duration="14000" />
+      <workItem from="1569969275541" duration="7628000" />
     </task>
     <task id="LOCAL-00182" summary="Added percentage to Dashboard">
       <created>1556862419516</created>
@@ -1408,6 +1512,34 @@
     <option name="localTasksCounter" value="231" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="7642000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16625917" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="File Transfer" order="1" weight="0.3297619" />
+      <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.3297619" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.3297619" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="3" />
+      <window_info anchor="right" id="Run Dashboard" order="4" visible="true" weight="0.27689487" />
+    </layout>
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -1417,6 +1549,12 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -1493,14 +1631,61 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>1254</line>
+          <line>1244</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx</url>
+          <line>257</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
-        <breakpoint enabled="true" type="javascript-exception" />
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="26" column="31" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/Remixer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="98" column="18" selection-start-line="98" selection-start-column="18" selection-end-line="98" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="87" column="28" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="284" column="36" selection-start-line="284" selection-start-column="36" selection-end-line="284" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>

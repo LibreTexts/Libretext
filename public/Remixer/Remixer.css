@@ -99,6 +99,11 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0 2px;
 }
 
+.LTFormHeader > button.Mui-disabled {
+	color: #e0e0e0;
+	border: 1px solid #e0e0e0;
+}
+
 /*hide action button labels*/
 .LTFormHeader > button > span > span {
 	font-size: 0;

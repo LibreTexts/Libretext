@@ -29,6 +29,7 @@ import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class RemixerPanel extends React.Component {
 	constructor() {
@@ -62,7 +63,7 @@ class RemixerPanel extends React.Component {
 					this.edit();
 				}
 			},
-			expand: () => this.autonumber(true),
+			expand: () => this.autonumber(),
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -138,7 +139,7 @@ class RemixerPanel extends React.Component {
 							title: transfer.getData('text'),
 						}, data.hitMode);
 					}
-					await this.autonumber();
+					await this.autonumber(true);
 					
 					async function doTransfer() {
 						if (sameTree) {
@@ -276,9 +277,11 @@ class RemixerPanel extends React.Component {
 					<Remove/></Button>
 				
 				
-				<Button variant="contained"><span>Undo</span>
+				<Button variant="contained" onClick={this.props.undo}
+				        disabled={!this.props.undo.length}><span>Undo {this.props.undo.length}</span>
 					<Undo/></Button>
-				<Button variant="contained"><span>Redo</span>
+				<Button variant="contained" onClick={this.props.redo}
+				        disabled={!this.props.redo.length}><span>Redo {this.props.redo.length}</span>
 					<Redo/></Button>
 				
 				
@@ -494,6 +497,14 @@ class RemixerPanel extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
+			<Dialog open={!this.state.initialized} aria-labelledby="form-dialog-title"
+			        id="editDialog">
+				<DialogTitle id="form-dialog-title">Loading Remixer
+				</DialogTitle>
+				<DialogContent>
+					<CircularProgress/>
+				</DialogContent>
+			</Dialog>
 		</div>;
 	}
 	
@@ -569,7 +580,7 @@ class RemixerPanel extends React.Component {
 		let node = $('#LTRight').fancytree('getActiveNode');
 		if (node && node.key !== 'ROOT') {
 			node.remove();
-			this.autonumber();
+			this.autonumber(true);
 		}
 	};
 	
@@ -582,7 +593,7 @@ class RemixerPanel extends React.Component {
 					node.getFirstChild().moveTo(node.parent, 'child');
 				}
 				node.remove();
-				this.autonumber();
+				this.autonumber(true);
 			}
 		}
 	};
@@ -606,11 +617,11 @@ class RemixerPanel extends React.Component {
 		let node = $('#LTRight').fancytree('getTree').getNodeByKey(newEdit.node.key);
 		delete newEdit.node;
 		node.fromDict(newEdit);
-		await this.autonumber();
+		await this.autonumber(true);
 		this.setState({editDialog: false});
 	};
 	
-	autonumber = async (isMiniUpdate) => {
+	autonumber = async (updateUndo) => {
 		let root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
 		if (!root.children) {
 			return false;
@@ -680,7 +691,7 @@ class RemixerPanel extends React.Component {
 		let sharedIndex = [1];
 		processNode(d, sharedIndex, 0);
 		
-		this.save(d, isMiniUpdate);
+		this.save(d, updateUndo);
 	};
 	
 	debug() {
