@@ -54,15 +54,21 @@ class RemixerPanel extends React.Component {
 		const LTRight = $('#LTRight');
 		LTRight.fancytree({
 			source: this.props.RemixTree,
+			activate: (event, data) => {
+				const node = data.node;
+				if (node.key && node.key !== this.props.currentlyActive)
+					this.props.updateRemixer({currentlyActive: node.key})
+			},
 			debugLevel: 0,
 			autoScroll: true,
-			extensions: ['dnd5'],
+			extensions: ['dnd5', 'multi'],
 			generateIds: true, // Generate id attributes like <span id='fancytree-id-KEY'>
 			dblclick: (event, data) => {
 				if (data.targetType === 'title') {
 					this.edit();
 				}
 			},
+			collapse: () => this.autonumber(),
 			expand: () => this.autonumber(),
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
@@ -70,6 +76,10 @@ class RemixerPanel extends React.Component {
 				data.result = dfd.promise();
 				RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
 			},
+			multi: {
+				mode: "sameParent"  // Restrict range selection behavior
+			},
+			checkbox: true,
 			dnd5: {
 				// autoExpandMS: 400,
 				// preventForeignNodes: true,
@@ -255,6 +265,9 @@ class RemixerPanel extends React.Component {
 				leftTree.reload(this.state.LibraryTree);
 			
 			rightTree.reload([this.props.RemixTree]);
+			let active = rightTree.getActiveNode();
+			if (!active || this.props.currentlyActive !== active.key)
+				rightTree.activateKey(this.props.currentlyActive);
 		}
 	}
 	
@@ -501,7 +514,7 @@ class RemixerPanel extends React.Component {
 			        id="editDialog">
 				<DialogTitle id="form-dialog-title">Loading Remixer
 				</DialogTitle>
-				<DialogContent style={{display:'flex', justifyContent:'center', padding: 20}}>
+				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
 					<CircularProgress size={100}/>
 				</DialogContent>
 			</Dialog>
@@ -576,11 +589,16 @@ class RemixerPanel extends React.Component {
 		this.setState({edit: newOptions});
 	};
 	
-	delete = () => {
+	delete = async () => {
 		let node = $('#LTRight').fancytree('getActiveNode');
 		if (node && node.key !== 'ROOT') {
+			//preserve activenode
+			let otherNode = node.getNextSibling() || node.getParent();
+			
 			node.remove();
-			this.autonumber(true);
+			await this.autonumber(true);
+			/*if (otherNode)
+				this.props.updateRemixer({currentlyActive: otherNode.key});*/
 		}
 	};
 	

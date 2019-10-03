@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/jquery.fancytree.multi.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
@@ -81,19 +82,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -340,21 +341,26 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@498dc1a3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f6dc2d62" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@498dc1a3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@59ea551e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f6dc2d62" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e4f24e19" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@311cf3d6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f6dc2d62" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ee98561" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@311cf3d6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@8f822290" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b31a669f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b31a669f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@716960ea" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -1051,6 +1057,7 @@
       <workItem from="1569892228018" duration="7835000" />
       <workItem from="1569969223861" duration="14000" />
       <workItem from="1569969275541" duration="7628000" />
+      <workItem from="1570074746645" duration="9758000" />
     </task>
     <task id="LOCAL-00182" summary="Added percentage to Dashboard">
       <created>1556862419516</created>
@@ -1485,11 +1492,6 @@
           <url>file://$PROJECT_DIR$/API/import.js</url>
           <line>1244</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx</url>
-          <line>257</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

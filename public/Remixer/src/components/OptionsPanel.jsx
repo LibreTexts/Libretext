@@ -30,7 +30,7 @@ export default function OptionsPanel(props) {
 	}
 	
 	function saveJSON() {
-		let result = new Blob([JSON.stringify(props, 2)], {type: 'application/json;charset=utf-8'});
+		let result = new Blob([JSON.stringify(props, null, 2)], {type: 'application/json;charset=utf-8'});
 		const textToSaveAsURL = window.URL.createObjectURL(result);
 		const fileNameToSaveAs = `${props.name || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.libremap`;
 		

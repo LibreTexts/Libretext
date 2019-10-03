@@ -26,6 +26,7 @@ export default class Remixer extends React.Component {
 				overwriteSuffix: false,
 			},
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
+			currentlyActive: '',
 		};
 		if (localStorage.getItem('RemixerState')) {
 			state = {...state, ...JSON.parse(localStorage.getItem('RemixerState'))};

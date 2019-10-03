@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import RemixerFunctions from "../reusableFunctions";
 import Tooltip from "@material-ui/core/Tooltip";
-import Info from "@material-ui/core/SvgIcon/SvgIcon";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import Publish from "@material-ui/icons/Publish";
@@ -67,10 +66,10 @@ export default function PublishPanel(props) {
 		arrayResult.forEach((page) => {
 			if (props.type === 'Remix') {
 				let copyMode = page.copyMode || props.defaultCopyMode;
-				page.copyMode = copyMode;
 				page.status = page.status || 'new';
-				if (!page.url)
+				if (!page.sourceURL)
 					copyMode = 'blank'; //pages without a source are blank
+				page.copyMode = copyMode;
 				
 				if (objectResult[copyMode])
 					objectResult[copyMode].push(page);
@@ -277,7 +276,8 @@ function PublishSubPanel(props) {
 				</div>
 				{finished ?
 					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6> : null}
-				<LinearProgress variant="determinate" value={counter.percentage} />
+				<LinearProgress variant="determinate"
+				                value={Math.round(counter.pages / props.working.length * 1000) / 10}/>
 			</Toolbar>
 		</AppBar>
 	</Paper>;
@@ -368,6 +368,10 @@ function PublishSubPanel(props) {
 			body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
 		});
 		await putProperty('mindtouch.idf#subpageListing', 'simple', destRoot);
+		LibreTexts.authenticatedFetch(destRoot, `files/${encodeURIComponent(encodeURIComponent(destRoot + '.libremap'))}?dream.out.format=json`, null, {
+			method: 'PUT',
+			body: JSON.stringify(props, null, 2),
+		});
 		setFinished(destRoot);
 		for (const page of props.working) {
 			await processPage(page);
@@ -464,7 +468,7 @@ function PublishSubPanel(props) {
 					return;
 				} // end for new pages
 				const [currentSubdomain] = LibreTexts.parseURL();
-				source = await LibreTexts.getAPI(page.sourceURL);
+				source = await LibreTexts.getAPI(page.sourceURL || '');
 				if (source.error) {
 					completedPage(page, `Source Error`, 'new', source.response);
 					return;
