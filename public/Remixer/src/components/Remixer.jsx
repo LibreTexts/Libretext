@@ -38,7 +38,6 @@ export default class Remixer extends React.Component {
 		if (updateUndo) {
 			//add to undo list
 			let newUndo = this.state.RemixTree;
-			console.log(newUndo);
 			newUndo = this.state.undoArray.concat(JSON.parse(JSON.stringify(newUndo)));
 			if (newUndo.length > 50)
 				newUndo.splice(0, newUndo.length - 50);

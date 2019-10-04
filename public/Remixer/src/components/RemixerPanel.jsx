@@ -54,14 +54,9 @@ class RemixerPanel extends React.Component {
 		const LTRight = $('#LTRight');
 		LTRight.fancytree({
 			source: this.props.RemixTree,
-			activate: (event, data) => {
-				const node = data.node;
-				if (node.key && node.key !== this.props.currentlyActive)
-					this.props.updateRemixer({currentlyActive: node.key})
-			},
 			debugLevel: 0,
 			autoScroll: true,
-			extensions: ['dnd5', 'multi'],
+			extensions: ['dnd5'],
 			generateIds: true, // Generate id attributes like <span id='fancytree-id-KEY'>
 			dblclick: (event, data) => {
 				if (data.targetType === 'title') {
@@ -257,6 +252,11 @@ class RemixerPanel extends React.Component {
 		this.autonumber();
 	}
 	
+	getSnapshotBeforeUpdate() {
+		let rightTree = $('#LTRight').fancytree('getTree');
+		return {currentlyActive: rightTree.getActiveNode()};
+	}
+	
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.state.initialized) {
 			let leftTree = $('#LTLeft').fancytree('getTree');
@@ -264,10 +264,11 @@ class RemixerPanel extends React.Component {
 			if (prevState.LibraryTree !== this.state.LibraryTree)
 				leftTree.reload(this.state.LibraryTree);
 			
+			let currentlyActive = snapshot.currentlyActive;
 			rightTree.reload([this.props.RemixTree]);
-			let active = rightTree.getActiveNode();
-			if (!active || this.props.currentlyActive !== active.key)
-				rightTree.activateKey(this.props.currentlyActive);
+			console.log(currentlyActive);
+			if (currentlyActive)
+				rightTree.activateKey(currentlyActive);
 		}
 	}
 	
@@ -567,7 +568,7 @@ class RemixerPanel extends React.Component {
 	
 	edit = async () => {
 		let node = $('#LTRight').fancytree('getActiveNode');
-		if (!node || node.key === 'ROOT')
+		if (!node)
 			return;
 		let newEdit = {
 			...node.data,
@@ -597,21 +598,26 @@ class RemixerPanel extends React.Component {
 			
 			node.remove();
 			await this.autonumber(true);
-			/*if (otherNode)
-				this.props.updateRemixer({currentlyActive: otherNode.key});*/
+			if (otherNode)
+				otherNode.setActive();
 		}
 	};
 	
 	mergeUp = async () => {
 		let node = $('#LTRight').fancytree('getActiveNode');
-		if (node && node.key !== 'ROOT') {
-			await node.setExpanded(true);
-			if (node.hasChildren()) {
-				while (node.hasChildren()) {
-					node.getFirstChild().moveTo(node.parent, 'child');
+		if (node) {
+			if (node.key === 'ROOT') {
+				//nothing
+			}
+			else {
+				await node.setExpanded(true);
+				if (node.hasChildren()) {
+					while (node.hasChildren()) {
+						node.getFirstChild().moveTo(node.parent, 'child');
+					}
+					node.remove();
+					this.autonumber(true);
 				}
-				node.remove();
-				this.autonumber(true);
 			}
 		}
 	};

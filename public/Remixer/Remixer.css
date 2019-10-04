@@ -120,16 +120,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /*category*/
 #LTForm .article-topic-category span.fancytree-icon:before {
-	content: '\e635'
-}
-
-#LTForm .article-topic-category.fancytree-expanded span.fancytree-icon:before {
-	content: '\e636'
+	content: '\e62a'
 }
 
 /*guide*/
 #LTForm .article-topic-guide span.fancytree-icon:before {
-	content: '\e7ed'
+	content: '\e84a'
 }
 
 /*topic*/
