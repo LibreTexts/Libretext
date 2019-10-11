@@ -22,7 +22,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-//TODO: fs.emptyDir('ImportFiles');
+fs.emptyDir('ImportFiles');
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
 
@@ -1258,3 +1258,43 @@ async function uploadImages(contents, path, imageProcessor, data) {
 		}
 	}
 }
+/*
+async function processXHTML(text) {
+	let title = getProperty("title");
+	let copyright = getProperty("book-license");
+	let author = getProperty("authors");
+	let coverImage = getProperty("cover-image");
+	let splice = text.match(/<div .*?\n^<\/div>/gm);
+	let filtered = [];
+	for (let i = 0; i < splice.length; i++) {
+		if (splice[i].startsWith("<div class=\"chapter")) {
+			//front and back matter ignored
+			filtered.push(splice[i]);
+		}
+	}
+	let root = `https://${subdomain}.libretexts.org/Under_Construction/Users/Henry/${title}`;
+	let contentArray = await processPages(filtered, root);
+	reportMessage(contentArray);
+	function getProperty(property) {
+		let regex = new RegExp(`(?<=<meta name="pb-${property}" content=).*(?=" \\/>)`);
+		let result = text.match(regex);
+		return result ? result[0] : null;
+	}
+	async function processPages(splice, root) {
+		async function processPage(page) {
+			let title = page.match(/(?<=<div class=".*?-title-wrap">.*?-title">).*?(?=<.*?<\/div>)/)[0];
+			let content = page.match(/(?<=<div class=".*?-title-wrap">.*?<\/div><.*?>).*(?=<\/div)/)[0];
+			let sourceImages = page.match(/(?<=<img .*src=").*?(?=")/g);
+			let filenames = sourceImages.map((image) => {
+				return image.match(/[^/]+(?=\/$|$)/)[0];
+			});
+			let path = "";
+			for (let i = 0; i < content.length; i++) {
+				let regex = new RegExp(`(?<=<img .*src=")${sourceImages[i]}(?=")`);
+				content = content.replace(regex, `${root}${path}/${filenames[i]}`)
+			}
+			return {title: title, content: content, sourceImages: sourceImages, filenames};
+		}
+		return await mapLimit(splice, 10, processPage);
+	}
+}*/

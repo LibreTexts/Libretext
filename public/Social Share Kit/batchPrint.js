@@ -55,7 +55,7 @@ if (!window["batchPrint.js"]) {
 				
 				let id = document.getElementById('pageIDHolder').innerText;
 				downloads = downloads.concat(one, two);
-				downloadEntry = downloads.find((entry) => entry.id === id);
+				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
 				if (!isPro && downloadEntry.tags.includes('luluPro'))
 					downloadEntry = false;
 			}
