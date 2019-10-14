@@ -17,8 +17,9 @@ export default class Remixer extends React.Component {
 			redoArray: [],
 			options: {
 				tutorial: false,
-				enableAutonumber: false,
+				enableAutonumber: true,
 				autonumber: {
+					guideDepth: 1,
 					offset: 1,
 					chapterPrefix: '',
 					pagePrefix: '',

@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Catalina Pera/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Henry Agnew/JSON.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Henry Agnew/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Leo Jayachandran/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Nicholas Lundgren/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/jquery.fancytree.multi.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +75,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles/hdagnew@ucdavis.edu/commoncartridge" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Aryan Suri" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -76,23 +87,23 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
-    <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6817.13\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Aryan Suri" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Catalina Pera" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Nicholas Lundgren" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -334,26 +345,26 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
-        <option name="contentProportion" value="0.38666666" />
+        <option name="contentProportion" value="0.3593315" />
         <treeState>
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cb53d5b2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b9f70f7c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cb53d5b2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@a666a67" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@b9f70f7c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@9135f1bb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@91800fd5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@84a90bbb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@91800fd5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7068ff35" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@84a90bbb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@869e1b42" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -1051,14 +1062,12 @@
       <workItem from="1569969223861" duration="14000" />
       <workItem from="1569969275541" duration="7628000" />
       <workItem from="1570074746645" duration="10211000" />
-      <workItem from="1570163263868" duration="9449000" />
-    </task>
-    <task id="LOCAL-00184" summary="Added statsFull">
-      <created>1556954946161</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1556954946161</updated>
+      <workItem from="1570163263868" duration="9670000" />
+      <workItem from="1570246246573" duration="4089000" />
+      <workItem from="1570848583235" duration="1449000" />
+      <workItem from="1570855072404" duration="5592000" />
+      <workItem from="1570862097318" duration="2619000" />
+      <workItem from="1571015301260" duration="7758000" />
     </task>
     <task id="LOCAL-00185" summary="Bugfix encodeHTML">
       <created>1557210187563</created>
@@ -1396,7 +1405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570087191085</updated>
     </task>
-    <option name="localTasksCounter" value="233" />
+    <task id="LOCAL-00233" summary="currentlyActive is not functional due to many re-renders">
+      <created>1570173145667</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1570173145667</updated>
+    </task>
+    <option name="localTasksCounter" value="234" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1452,7 +1468,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix async" />
     <MESSAGE value="nodePrint A4 and new Covers" />
     <MESSAGE value="Fixing Travis.ci" />
     <MESSAGE value="Updated README.md" />
@@ -1477,7 +1492,8 @@
     <MESSAGE value="Initial Publish panel for Blank Pages&#10;&#10;Only blank pages have been tested to work. Need to do Modified and Deleted next." />
     <MESSAGE value="Added currentlyActive for persistent add/removal" />
     <MESSAGE value="Added currentlyActive for persistent add/removal&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added currentlyActive for persistent add/removal&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;" />
+    <MESSAGE value="currentlyActive is not functional due to many re-renders" />
+    <option name="LAST_COMMIT_MESSAGE" value="currentlyActive is not functional due to many re-renders" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -18,7 +18,6 @@ function generateDefault(chapters, pages) {
 				"key": `_${key++}`,
 				"lazy": false,
 				"title": `${i}.${j}: New Page`,
-				"tooltip": "Newly Created Page",
 				"status": 'new',
 				"data": {"padded": `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`}
 			})
@@ -28,7 +27,7 @@ function generateDefault(chapters, pages) {
 			expanded: true,
 			key: `_${chapterKey}`,
 			lazy: false,
-			title: `${i}: Chapter ${i}`,
+			title: `${i}: Untitled Chapter ${i}`,
 			tooltip: "Newly Created Page",
 			status: 'new',
 			data: {"padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},

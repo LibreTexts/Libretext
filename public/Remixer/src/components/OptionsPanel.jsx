@@ -139,10 +139,6 @@ export default function OptionsPanel(props) {
 				<Switch
 					checked={props.options.enableAutonumber}
 					onChange={(e, value) => {
-						if (value && !props.options.autonumber.guideDepth) {
-							changeOption('autonumber.guideDepth', 1);
-							setAutonumberOpen(true);
-						}
 						changeOption('enableAutonumber', value)
 					}}
 					color="primary"

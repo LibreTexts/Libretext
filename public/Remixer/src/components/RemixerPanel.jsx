@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/Delete';
+import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import MergeType from '@material-ui/icons/MergeType';
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
@@ -63,6 +64,10 @@ class RemixerPanel extends React.Component {
 					this.edit();
 				}
 			},
+			activate: (event, data) => {
+				if (event.currentTarget && this.props.currentlyActive !== data.node.key)
+					this.props.updateRemixer({currentlyActive: data.node.key});
+			},
 			collapse: () => this.autonumber(),
 			expand: () => this.autonumber(),
 			lazyLoad: function (event, data) {
@@ -70,9 +75,6 @@ class RemixerPanel extends React.Component {
 				let node = data.node;
 				data.result = dfd.promise();
 				RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
-			},
-			multi: {
-				mode: "sameParent"  // Restrict range selection behavior
 			},
 			checkbox: true,
 			dnd5: {
@@ -242,6 +244,7 @@ class RemixerPanel extends React.Component {
 				if (data.node.getLevel() === 1)
 					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
 			},
+			tooltip: (event, data) => `${(data.node.data.status || 'new').toUpperCase()} page`
 		});
 		
 		
@@ -252,30 +255,27 @@ class RemixerPanel extends React.Component {
 		this.autonumber();
 	}
 	
-	getSnapshotBeforeUpdate() {
-		let rightTree = $('#LTRight').fancytree('getTree');
-		return {currentlyActive: rightTree.getActiveNode()};
-	}
-	
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.state.initialized) {
-			let leftTree = $('#LTLeft').fancytree('getTree');
-			let rightTree = $('#LTRight').fancytree('getTree');
-			if (prevState.LibraryTree !== this.state.LibraryTree)
-				leftTree.reload(this.state.LibraryTree);
-			
-			let currentlyActive = snapshot.currentlyActive;
-			rightTree.reload([this.props.RemixTree]);
-			console.log(currentlyActive);
-			if (currentlyActive)
-				rightTree.activateKey(currentlyActive);
-		}
-	}
 	
 	render() {
 		let target = document.createElement('div');
 		target.id = 'LTRemixer';
 		
+		let currentlyActive;
+		if (this.state.initialized) {
+			let leftTree = $('#LTLeft').fancytree('getTree');
+			let rightTree = $('#LTRight').fancytree('getTree');
+			leftTree.reload(this.state.LibraryTree);
+			
+			currentlyActive = rightTree.getActiveNode();
+			currentlyActive = currentlyActive ? currentlyActive.key : this.props.currentlyActive;
+			rightTree.reload([this.props.RemixTree]);
+			if (currentlyActive) {
+				rightTree.activateKey(currentlyActive, {noFocus: true});
+			}
+			currentlyActive = rightTree.getNodeByKey(this.props.currentlyActive);
+		}
+		
+		let deleted = currentlyActive && currentlyActive.data.status === 'deleted';
 		let permission = RemixerFunctions.userPermissions(true);
 		return <div id='LTForm'>
 			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
@@ -283,12 +283,20 @@ class RemixerPanel extends React.Component {
 					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
 						<Info style={{marginLeft: 10}}/></div>
 				</Tooltip></div>
-				<Button variant="contained" onClick={this.new}><span>New Page</span>
-					<Add/></Button>
-				<Button variant="contained" onClick={this.edit}><span>Page Properties</span>
-					<Edit/></Button>
-				<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
-					<Remove/></Button>
+				
+				
+				{!deleted ? <>
+					<Button variant="contained" onClick={this.new}><span>New Page</span>
+						<Add/></Button>
+					<Button variant="contained" onClick={this.edit}><span>Page Properties</span>
+						<Edit/></Button>
+					<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
+						<Remove/></Button>
+				</> : <>
+					<Button variant="contained" onClick={this.delete}
+					        style={{fontSize: 'unset'}}><span>Restore Page</span>
+						<RestoreFromTrashIcon/></Button>
+				</>}
 				
 				
 				<Button variant="contained" onClick={this.props.undo}
@@ -299,12 +307,13 @@ class RemixerPanel extends React.Component {
 					<Redo/></Button>
 				
 				
-				<Tooltip title="Merges the contents of the selected folder with its parent's contents.">
+				<Tooltip title="Merges the contents of the selected folder with its parent's contents."
+				         disabled={deleted}>
 					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
 				</Tooltip>
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
-				<Button variant="contained" color='secondary'
+				<Button variant="contained"
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({stage: 'Publishing'})
@@ -591,23 +600,73 @@ class RemixerPanel extends React.Component {
 	};
 	
 	delete = async () => {
+		const deleteNode = (node) => {
+			if (node && node.key !== 'ROOT') {
+				//preserve activenode
+				let otherNode = node.getNextSibling() || node.getParent();
+				
+				switch (node.data.status) {
+					case 'deleted':
+						this.props.enqueueSnackbar(node.title, {
+							variant: 'error',
+							anchorOrigin: {
+								vertical: 'bottom',
+								horizontal: 'right',
+							},
+						});
+						node.data.status = node.data.originalStatus;
+						break;
+					case 'new':
+						node.remove();
+						
+						if (otherNode)
+							otherNode.setActive();
+						break;
+					default:
+						node.data.originalStatus = node.data.status;
+						node.data.status = 'deleted';
+				}
+				if (node.children && node.children.length) {
+					let tempChildren = [...node.children];
+					for (let i = 0; i < tempChildren.length; i++) {
+						const child = tempChildren[i];
+						deleteNode(child);
+					}
+				}
+				
+				return true;
+			}
+		};
+		
 		let node = $('#LTRight').fancytree('getActiveNode');
-		if (node && node.key !== 'ROOT') {
-			//preserve activenode
-			let otherNode = node.getNextSibling() || node.getParent();
-			
-			node.remove();
+		if (deleteNode(node, this))
 			await this.autonumber(true);
-			if (otherNode)
-				otherNode.setActive();
-		}
 	};
 	
 	mergeUp = async () => {
 		let node = $('#LTRight').fancytree('getActiveNode');
 		if (node) {
-			if (node.key === 'ROOT') {
-				//nothing
+			if (node.key === 'ROOT' && node.hasChildren()) {
+				if (node.children.length === 1) {
+					const child = node.getFirstChild();
+					this.props.enqueueSnackbar(`${node.title} ${child.title}`, {
+						variant: 'success',
+						anchorOrigin: {
+							vertical: 'bottom',
+							horizontal: 'right',
+						},
+					});
+					//TODO Co[y logic
+				}
+				else {
+					this.props.enqueueSnackbar('You must have only one child to merge up the root page.', {
+						variant: 'warning',
+						anchorOrigin: {
+							vertical: 'bottom',
+							horizontal: 'right',
+						},
+					})
+				}
 			}
 			else {
 				await node.setExpanded(true);
@@ -624,7 +683,9 @@ class RemixerPanel extends React.Component {
 	
 	handleReset = (chapters, pages) => {
 		if (!(chapters === undefined || pages === undefined)) {
+			this.props.updateRemixer({currentlyActive: ''});
 			this.save(RemixerFunctions.generateDefault(chapters, pages), true);
+			this.autonumber();
 		}
 		this.setState({resetDialog: false});
 	};
@@ -636,8 +697,8 @@ class RemixerPanel extends React.Component {
 			return;
 		}
 		
-		
-		newEdit.status = 'modified';
+		if (newEdit.status !== 'new')
+			newEdit.status = 'modified';
 		let node = $('#LTRight').fancytree('getTree').getNodeByKey(newEdit.node.key);
 		delete newEdit.node;
 		node.fromDict(newEdit);
@@ -690,10 +751,11 @@ class RemixerPanel extends React.Component {
 			}
 			
 			//ensure structure matches tags
+			node.extraClasses = [`status-${node.data.status}`];
 			if (node.data.articleType)
-				node.extraClasses = [`article-${node.data.articleType}`];
+				node.extraClasses.push(`article-${node.data.articleType}`);
 			
-			
+			node.extraClasses = node.extraClasses.join(' ');
 			node.lazy = false;
 			if (node.children) { //recurse down to children
 				let sharedIndex = [1];

@@ -31,7 +31,7 @@ function Dashboard() {
 		setLastSave(`Autosaved @ ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}:${today.getSeconds().toString().padStart(2, '0')}`);
 	}
 	
-	return <div className={'CenterContainer'}>
+	return <div id='Remixer' className={'CenterContainer'}>
 		<SnackbarProvider maxSnack={3}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
