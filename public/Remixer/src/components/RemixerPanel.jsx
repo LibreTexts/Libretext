@@ -262,8 +262,8 @@ class RemixerPanel extends React.Component {
 		
 		let currentlyActive;
 		if (this.state.initialized) {
-			let leftTree = $('#LTLeft').fancytree('getTree');
-			let rightTree = $('#LTRight').fancytree('getTree');
+			const leftTree = $('#LTLeft').fancytree('getTree');
+			const rightTree = $('#LTRight').fancytree('getTree');
 			leftTree.reload(this.state.LibraryTree);
 			
 			currentlyActive = rightTree.getActiveNode();
@@ -681,11 +681,12 @@ class RemixerPanel extends React.Component {
 		}
 	};
 	
-	handleReset = (chapters, pages) => {
+	handleReset = async (chapters, pages) => {
 		if (!(chapters === undefined || pages === undefined)) {
 			this.props.updateRemixer({currentlyActive: ''});
-			this.save(RemixerFunctions.generateDefault(chapters, pages), true);
-			this.autonumber();
+			const rightTree = $('#LTRight').fancytree('getTree');
+			await rightTree.reload([RemixerFunctions.generateDefault(chapters, pages)]);
+			// TODO fix this.autonumber(true);
 		}
 		this.setState({resetDialog: false});
 	};
