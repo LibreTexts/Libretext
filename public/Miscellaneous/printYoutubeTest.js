@@ -4,7 +4,7 @@ if (!window["youtubeIFrame"]) {
 	window.addEventListener("load", () => {
 
 		let candidates = $("iframe");
-
+			for (let i = 0; i < candidates.length; i++) {
 			let iframe = candidates[i];
 			if (iframe && iframe.src && !iframe.classList.contains("youtubeIFrame")) {
 				let videoID = iframe.src.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
@@ -27,9 +27,20 @@ if (!window["youtubeIFrame"]) {
 					// $(extraDiv).insertAfter(youtubeImgContainer);
 					youtubeImgContainer.appendChild(extraDiv);
 				}
-
-
 			}
 		}
 	});
 }
+
+
+console.log()
+
+class QRCODE {
+	constructor(code){
+	this.qrcode = code;
+	}
+}
+
+				 QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
+
+					QRCode.toDataURL("stuff2")
