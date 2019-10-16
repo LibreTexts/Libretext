@@ -1234,11 +1234,11 @@ puppeteer.launch({
 					const cssb = [];
 					cssb.push('<style>');
 					cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-					cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
+					cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px; position:relative; top: -15px;}`);
 					cssb.push('#main {border: 1px solid blue;}');
 					cssb.push('#mainF > a {display:block}');
 					cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-					cssb.push('* { -webkit-print-color-adjust: exact}');
+					cssb.push('* { -webkit-print-color-adjust: exact;}');
 					cssb.push('.date, .pageNumber {display: inline-block}');
 					cssb.push('.added {padding: 0px 4px}');
 					cssb.push('a {text-decoration:none; color: white}');
@@ -1259,8 +1259,9 @@ puppeteer.launch({
 					await getInformation(current);
 					
 					const style2 = `<div id="mainF">` +
-						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-						`${current.name ? `<div>${current.name}</div>` : ''}<div><div class="date"></div></div>` +
+						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5; position: relative" class='added'>` +
+						`${current.name ? `<div>${current.name}${current.attribution ? `<br/><a href="${current.attributionurl}" style="font-size: 90%; position:absolute; top: 15px; color: grey">${current.attribution}</a>` : ''}</div>` : ''}` +
+						`<div><div class="date"></div></div>` +
 						`</div>` +
 						
 						`<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
