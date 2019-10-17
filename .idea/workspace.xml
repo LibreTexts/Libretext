@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,6 +13,39 @@
   </component>
   <component name="FavoritesManager">
     <favorites_list name="Libretext" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/API/import.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="1305" column="39" selection-start-line="1305" selection-start-column="39" selection-end-line="1305" selection-end-column="39" />
+              <folding>
+                <element signature="n#!!block;n#downloadFile#0" />
+                <element signature="n#!!block;n#sendFile#0" />
+                <element signature="n#!!block;n#listFiles#0" />
+                <element signature="n#!!block;n#processEPUB#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/secure.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/API/reuse.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -27,17 +60,34 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Import</find>
+      <find>libremap</find>
+      <find>secure</find>
+      <find>filename</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/public/Miscellaneous/copyTransclude.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/public/Importer/src/pages/index.js" />
+        <option value="$PROJECT_DIR$/API/secure.json" />
+        <option value="$PROJECT_DIR$/API/import.js" />
+      </list>
+    </option>
   </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
@@ -45,9 +95,102 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1386" />
+    <option name="height" value="910" />
+  </component>
   <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="API" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Importer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Importer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Importer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Importer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Libretext" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Libretext" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="Remixer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -60,7 +203,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
@@ -193,7 +336,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Importer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -320,7 +463,7 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
-        <option name="contentProportion" value="0.3593315" />
+        <option name="contentProportion" value="0.38666666" />
         <treeState>
           <expand />
           <select />
@@ -1022,13 +1165,12 @@
       <workItem from="1568765290463" duration="853000" />
       <workItem from="1570682036356" duration="737000" />
       <workItem from="1570762176267" duration="1469000" />
-    </task>
-    <task id="LOCAL-00179" summary="Added streaming JSON output">
-      <created>1556342395179</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1556342395179</updated>
+      <workItem from="1570903016371" duration="267000" />
+      <workItem from="1571088424416" duration="4882000" />
+      <workItem from="1571247137586" duration="7845000" />
+      <workItem from="1571260435173" duration="892000" />
+      <workItem from="1571272774247" duration="388000" />
+      <workItem from="1571273327267" duration="3879000" />
     </task>
     <task id="LOCAL-00180" summary="Added log export">
       <created>1556494801783</created>
@@ -1366,8 +1508,44 @@
       <option name="project" value="LOCAL" />
       <updated>1568688088049</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="Added Excel to LibreMap into Importer">
+      <created>1571288166416</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1571288166418</updated>
+    </task>
+    <option name="localTasksCounter" value="229" />
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="18964000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27836612" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32924962" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32924962" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Run Dashboard" order="9" weight="0.32465544" />
+      <window_info anchor="bottom" id="File Transfer" order="10" weight="0.32763532" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32763532" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="3" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1378,6 +1556,12 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -1422,7 +1606,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix newlines" />
     <MESSAGE value="FindReplace summaries" />
     <MESSAGE value="Security Fix MoleculeGenerator" />
     <MESSAGE value="Bugfix Remixer cross-origin" />
@@ -1447,14 +1630,79 @@
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
     <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
     <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
+    <MESSAGE value="Added Excel to LibreMap into Importer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Excel to LibreMap into Importer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <default-breakpoints>
-        <breakpoint enabled="true" type="javascript-exception" />
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/Importer/src/pages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Importer/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Importer/src/components/Importer.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="619">
+          <caret line="121" column="44" selection-start-line="121" selection-start-column="44" selection-end-line="121" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/endpoint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/import.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="1305" column="39" selection-start-line="1305" selection-start-column="39" selection-end-line="1305" selection-end-column="39" />
+          <folding>
+            <element signature="n#!!block;n#downloadFile#0" />
+            <element signature="n#!!block;n#sendFile#0" />
+            <element signature="n#!!block;n#listFiles#0" />
+            <element signature="n#!!block;n#processEPUB#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/secure.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/reuse.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
