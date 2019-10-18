@@ -74,7 +74,7 @@ class RemixerPanel extends React.Component {
 				const dfd = new $.Deferred();
 				let node = data.node;
 				data.result = dfd.promise();
-				RemixerPanel.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
+				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain).then((result) => dfd.resolve(result));
 			},
 			checkbox: true,
 			dnd5: {
@@ -183,7 +183,7 @@ class RemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		this.setState({LibraryTree: await RemixerPanel.getSubpages('home', this.state.subdomain, false, true)});
+		this.setState({LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, false, true)});
 		LeftAlert.slideUp();
 		LTLeft.fancytree({
 			source: this.state.LibraryTree,
@@ -194,7 +194,7 @@ class RemixerPanel extends React.Component {
 				const dfd = new $.Deferred();
 				let node = data.node;
 				data.result = dfd.promise();
-				RemixerPanel.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
 			},
 			dnd5: {
 				// autoExpandMS: 400,
@@ -293,8 +293,8 @@ class RemixerPanel extends React.Component {
 					<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
 						<Remove/></Button>
 				</> : <>
-					<Button variant="contained" onClick={this.delete}
-					        style={{fontSize: 'unset'}}><span>Restore Page</span>
+					<Button variant="contained" onClick={this.delete} className={'expandedLabel'}>
+						<span>Restore Page</span>
 						<RestoreFromTrashIcon/></Button>
 				</>}
 				
@@ -313,7 +313,7 @@ class RemixerPanel extends React.Component {
 				</Tooltip>
 				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
 					<Refresh/></Button>
-				<Button variant="contained"
+				<Button variant="contained" color="secondary"
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({stage: 'Publishing'})
@@ -684,9 +684,8 @@ class RemixerPanel extends React.Component {
 	handleReset = async (chapters, pages) => {
 		if (!(chapters === undefined || pages === undefined)) {
 			this.props.updateRemixer({currentlyActive: ''});
-			const rightTree = $('#LTRight').fancytree('getTree');
-			await rightTree.reload([RemixerFunctions.generateDefault(chapters, pages)]);
-			// TODO fix this.autonumber(true);
+			let result = RemixerFunctions.generateDefault(chapters, pages);
+			this.autonumber(true, result);
 		}
 		this.setState({resetDialog: false});
 	};
@@ -707,10 +706,13 @@ class RemixerPanel extends React.Component {
 		this.setState({editDialog: false});
 	};
 	
-	autonumber = async (updateUndo) => {
-		let root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
-		if (!root.children) {
-			return false;
+	autonumber = async (updateUndo, customRoot) => {
+		let root;
+		if (!customRoot) {
+			root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
+			if (!root.children) {
+				return false;
+			}
 		}
 		//TODO: status => modified on renumber
 		
@@ -767,12 +769,14 @@ class RemixerPanel extends React.Component {
 			return node;
 		};
 		
-		for (let i = 0; i < root.children.length; i++) {
-			if (root.children[i].lazy) {
-				await root.children[i].visitAndLoad();
+		if (!customRoot) {
+			for (let i = 0; i < root.children.length; i++) {
+				if (root.children[i].lazy) {
+					await root.children[i].visitAndLoad();
+				}
 			}
 		}
-		let d = root.toDict(true);
+		let d = customRoot || root.toDict(true);
 		let depth = this.getDepth(d);
 		let chapter = 1;
 		let sharedIndex = [1];
@@ -796,7 +800,7 @@ class RemixerPanel extends React.Component {
 		LTLeft.enable(false);
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		let content = await RemixerPanel.getSubpages('home', subdomain, false, true);
+		let content = await RemixerFunctions.getSubpages('home', subdomain, false, true);
 		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);

@@ -3,6 +3,7 @@ import RemixerPanel from './RemixerPanel.jsx';
 import PublishPanel from './PublishPanel.jsx';
 import RemixerFunctions from '../reusableFunctions';
 import RemixerOptions from "./RemixerOptions.jsx";
+import ReRemixerPanel from "./ReRemixerPanel.jsx";
 
 
 export default class Remixer extends React.Component {
@@ -81,13 +82,16 @@ export default class Remixer extends React.Component {
 	};
 	
 	render() {
-		window['developmentRemixer'] = this.state;
 		// console.log(this.state, 'Rerender');
 		return <>{this.renderState()}</>;
 	}
 	
 	renderState() {
 		switch (this.state.stage) {
+			case 'ReRemixing':
+				return <>
+					<ReRemixerPanel {...this.state} updateRemixer={this.updateRemixer}/>
+				</>;
 			case 'Remixing':
 				return <>
 					<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>

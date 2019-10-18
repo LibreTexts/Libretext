@@ -3,6 +3,7 @@ let RemixerFunctions = {
 	userPermissions: userPermissions,
 	statusColor: statusColor,
 	articleTypeToTitle: articleTypeToTitle,
+	getSubpages: getSubpages,
 };
 
 function generateDefault(chapters, pages) {
@@ -18,8 +19,7 @@ function generateDefault(chapters, pages) {
 				"key": `_${key++}`,
 				"lazy": false,
 				"title": `${i}.${j}: New Page`,
-				"status": 'new',
-				"data": {"padded": `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`}
+				"data": {"status": 'new', "padded": `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`}
 			})
 		}
 		
@@ -28,9 +28,7 @@ function generateDefault(chapters, pages) {
 			key: `_${chapterKey}`,
 			lazy: false,
 			title: `${i}: Untitled Chapter ${i}`,
-			tooltip: "Newly Created Page",
-			status: 'new',
-			data: {"padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},
+			data: {status: 'new', "padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},
 			children: childPages
 		})
 	}
@@ -39,11 +37,14 @@ function generateDefault(chapters, pages) {
 		title: "New LibreText. Drag onto me to get started",
 		key: "ROOT",
 		url: "",
-		padded: "",
+		data: {
+			padded: "",
+			status: 'new',
+			articleType: 'topic-category',
+		},
 		unselectable: true,
 		expanded: true,
 		children: children,
-		articleType: 'topic-category'
 	}
 }
 
@@ -105,6 +106,66 @@ function articleTypeToTitle(type) {
 			return 'Chapter';
 		case 'topic':
 			return 'Topic';
+	}
+}
+
+async function getSubpages(path, subdomain, full, linkTitle) {
+	path = path.replace(`https://${subdomain}.libretexts.org/`, '');
+	let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+	response = await response.json();
+	return await subpageCallback(response);
+	
+	async function subpageCallback(info) {
+		let subpageArray = info['page.subpage'];
+		if (subpageArray) {
+			subpageArray = subpageArray.length ? info['page.subpage'] : [info['page.subpage']];
+		}
+		const result = [];
+		const promiseArray = [];
+		
+		async function subpage(subpage, index) {
+			let url = subpage['uri.ui'];
+			let path = subpage.path['#text'];
+			url = url.replace('?title=', '');
+			path = path.replace('?title=', '');
+			const hasChildren = subpage['@subpages'] === 'true';
+			let children = hasChildren ? undefined : [];
+			if (hasChildren && full) { //recurse down
+				children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				children = await children.json();
+				children = await subpageCallback(children);
+			}
+			if (!url.endsWith('/link') && subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter') {
+				let miniResult = {
+					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+					url: url,
+					sourceURL: url,
+					children: children,
+					lazy: !full,
+				};
+				miniResult = await LibreTexts.getAPI(miniResult);
+				
+				let type = miniResult.tags.find(elem => elem.startsWith('article:'));
+				if (type) {
+					miniResult.articleType = type.split('article:')[1];
+					miniResult.extraClasses = `article-${miniResult.articleType}`;
+				}
+				miniResult.tags = miniResult.tags.filter(elem => !elem.startsWith('article:'));
+				result[index] = miniResult;
+			}
+		}
+		
+		if (subpageArray && subpageArray.length) {
+			for (let i = 0; i < subpageArray.length; i++) {
+				promiseArray[i] = subpage(subpageArray[i], i);
+			}
+			
+			await Promise.all(promiseArray);
+			return result.filter(elem => elem);
+		}
+		else {
+			return [];
+		}
 	}
 }
 
