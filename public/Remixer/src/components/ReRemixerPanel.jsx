@@ -131,8 +131,8 @@ class ReRemixerPanel extends React.Component {
 					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
 						<Info style={{marginLeft: 10}}/></div>
 				</Tooltip></div>
-				<Button disabled={!currentlyActive} className={'expandedLabel'}>
-				<DoubleArrowIcon/>
+				<Button variant="contained" disabled={!currentlyActive} className={'expandedLabel'}>
+					<span>ReRemix selection</span><DoubleArrowIcon/>
 				</Button>
 			</div>
 			<div id='LTFormContainer'>
