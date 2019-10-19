@@ -2,9 +2,9 @@
  * js-cookie v2.2.0 to use with Beeline Reader (to keep reader enabled while browsing site)
  */
 !function (e) {
-	var n = !1;
+	let n = !1;
 	if ("function" == typeof define && define.amd && (define(e), n = !0), "object" == typeof exports && (module.exports = e(), n = !0), !n) {
-		var o = window.Cookies, t = window.Cookies = e();
+		const o = window.Cookies, t = window.Cookies = e();
 		t.noConflict = function () {
 			return window.Cookies = o, t
 		}
@@ -12,19 +12,19 @@
 }(function () {
 	function e() {
 		for (var e = 0, n = {}; e < arguments.length; e++) {
-			var o = arguments[e];
-			for (var t in o) n[t] = o[t]
+			const o = arguments[e];
+			for (let t in o) n[t] = o[t]
 		}
 		return n
 	}
 	
 	function n(o) {
 		function t(n, r, i) {
-			var c;
+			let c;
 			if ("undefined" != typeof document) {
 				if (arguments.length > 1) {
 					if ("number" == typeof (i = e({path: "/"}, t.defaults, i)).expires) {
-						var a = new Date;
+						const a = new Date;
 						a.setMilliseconds(a.getMilliseconds() + 864e5 * i.expires), i.expires = a
 					}
 					i.expires = i.expires ? i.expires.toUTCString() : "";
@@ -33,16 +33,19 @@
 					} catch (e) {
 					}
 					r = o.write ? o.write(r, n) : encodeURIComponent(String(r)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent), n = (n = (n = encodeURIComponent(String(n))).replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)).replace(/[\(\)]/g, escape);
-					var s = "";
-					for (var f in i) i[f] && (s += "; " + f, !0 !== i[f] && (s += "=" + i[f]));
+					let s = "";
+					for (let f in i) i[f] && (s += "; " + f, !0 !== i[f] && (s += "=" + i[f]));
 					return document.cookie = n + "=" + r + s
 				}
 				n || (c = {});
-				for (var p = document.cookie ? document.cookie.split("; ") : [], d = /(%[0-9A-Z]{2})+/g, u = 0; u < p.length; u++) {
-					var l = p[u].split("="), C = l.slice(1).join("=");
+				const p = document.cookie ? document.cookie.split("; ") : [], d = /(%[0-9A-Z]{2})+/g;
+				let u = 0;
+				for (; u < p.length; u++) {
+					const l = p[u].split("=");
+					let C = l.slice(1).join("=");
 					this.json || '"' !== C.charAt(0) || (C = C.slice(1, -1));
 					try {
-						var g = l[0].replace(d, decodeURIComponent);
+						const g = l[0].replace(d, decodeURIComponent);
 						if (C = o.read ? o.read(C, g) : o(C, g) || C.replace(d, decodeURIComponent), this.json) try {
 							C = JSON.parse(C)
 						} catch (e) {
@@ -79,11 +82,11 @@
  * Custom integration code for Beeline Reader
  */
 function activateBeeLine() {
-	var beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
+	const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
 	
-	var doBeeline = function (theme, action) {
-		for (var i = 0; i < beelineELements.length; i++) {
-			var beeline = new BeeLineReader(beelineELements[i], {
+	const doBeeline = function (theme, action) {
+		for (let i = 0; i < beelineELements.length; i++) {
+			const beeline = new BeeLineReader(beelineELements[i], {
 				theme: theme,
 				skipBackgroundColor: true,
 				handleResize: true,
@@ -112,7 +115,7 @@ function activateBeeLine() {
 	});
 	
 	$(".beeline-header").one("click", function () {
-		var defaultTheme = "bright";
+		let defaultTheme = "bright";
 		if (typeof (Cookies.get("beeline")) != "undefined") {
 			defaultTheme = Cookies.get("beeline");
 		}
@@ -132,7 +135,7 @@ function activateBeeLine() {
 	});
 	
 	$(".beeline-toggle").on("click", function (event) {
-		var theme = $(this).data("beeline-theme");
+		const theme = $(this).data("beeline-theme");
 		
 		event.preventDefault();
 		
@@ -141,8 +144,11 @@ function activateBeeLine() {
 		doBeeline(theme, "theme change");
 	});
 	
-	if (typeof (Cookies.get("beeline")) != "undefined") {
+	let tags = document.getElementById('pageTagsHolder').innerText;
+	if (navigator.webdriver && tags.includes('beeline:print')) {
+		doBeeline('bright', "enabled via tag");
+	}
+	else if (typeof (Cookies.get("beeline")) != "undefined") {
 		doBeeline(Cookies.get("beeline"), "enabled via cookie");
 	}
-	
-};
+}
