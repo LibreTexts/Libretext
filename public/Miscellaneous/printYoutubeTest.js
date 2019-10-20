@@ -32,15 +32,24 @@ if (!window["youtubeIFrame"]) {
 	});
 }
 
-
-console.log()
-
-class QRCODE {
-	constructor(code){
-	this.qrcode = code;
+class autoqr {
+	constructor(qr){
+	this.qrcode = qr;
 	}
 }
 
-				 QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
+console.log()
 
-					QRCode.toDataURL("stuff2")
+$.getScript('https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js', function(
+		{newQR = new autoqr(QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i));
+		document.getElementByID("QRGen").innerHTML = autoqr
+	}));
+
+
+
+
+
+
+				 // QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
+				 //
+					// QRCode.toDataURL("stuff2")
