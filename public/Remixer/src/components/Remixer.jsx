@@ -122,7 +122,7 @@ export default class Remixer extends React.Component {
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.type}>
 					<MenuItem value={'Remix'}>Remixer</MenuItem>
-					<MenuItem value={'ReRemix'}>ReRemixer</MenuItem>
+					{this.state.mode === 'Admin' || this.state.mode === 'Pro' ?<MenuItem value={'ReRemix'}>ReRemixer</MenuItem>:null}
 				</Select>
 				<span>{this.state.lastSave}</span>
 			</div>

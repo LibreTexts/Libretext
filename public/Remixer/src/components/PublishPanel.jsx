@@ -341,6 +341,11 @@ function PublishSubPanel(props) {
 			alert(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`);
 			return false;
 		}
+		if (props.mode === 'Anonymous') {
+			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
+				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
+			return false;
+		}
 		
 		//All set to start publish
 		setState('processing');
@@ -354,12 +359,6 @@ function PublishSubPanel(props) {
 		setResults([]);
 		console.log(props);
 		let writeMode = props.override ? 'edittime=now' : 'abort=exists';
-		
-		if (props.mode === 'Anonymous') {
-			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
-				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
-			return false;
-		}
 		let startedAt = new Date();
 		
 		//process cover
