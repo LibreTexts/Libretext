@@ -341,7 +341,7 @@ function PublishSubPanel(props) {
 			alert(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`);
 			return false;
 		}
-		if (props.mode === 'Anonymous') {
+		if (props.mode === 'Demonstration') {
 			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
 			return false;
@@ -493,11 +493,11 @@ function PublishSubPanel(props) {
 						if (currentSubdomain !== source.subdomain) {
 							contents = `<p className="mt-script-comment">Cross Library Transclusion</p>
 
-<pre className="script">
+<pre class="script">
 template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${source.id}});</pre>
 
-<div className="comment">
-<div className="mt-comment-content">
+<div class="comment">
+<div class="mt-comment-content">
 <p><a href="${source.url}">Cross-Library Link: ${source.url}</a><br/>source-${source.subdomain}-${source.id}</p>
 </div>
 </div>
@@ -634,6 +634,10 @@ ${renderTags(page.tags)}`;
 							completedPage(page, 'Full-Copied', 'modified');
 				}
 				//Handle properties
+				source.properties = source.properties.map((prop) => {
+					if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+					else return prop
+				});
 				if (page.articleType === 'topic-guide')
 					source.properties = source.properties.concat([{
 						name: "mindtouch.idf#guideDisplay",
@@ -645,8 +649,8 @@ ${renderTags(page.tags)}`;
 				else if (page.articleType === 'topic-category')
 					source.properties.push({name: 'mindtouch.idf#subpageListing', value: 'simple'});
 				source.properties.push({name: 'mindtouch.page#welcomeHidden', value: true});
-				source.properties = [...new Set(source.properties)]; //deduplicate
-				await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value)));
+				source.properties = [...new Set(source.properties.reverse())]; //deduplicate
+				await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value, page.path)));
 				
 				//Thumbnail
 				let files = source.files || [], image;

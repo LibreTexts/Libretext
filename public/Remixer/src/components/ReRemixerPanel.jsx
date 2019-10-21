@@ -19,6 +19,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ReRemixerPanel extends React.Component {
+	updateLeft = ()=>{
+		let root = $('#LTLeft').fancytree('getTree').getRootNode();
+		root = root.toDict(true);
+		console.log(root.children);
+		this.setState({LibraryTree: root.children})
+	};
 	constructor() {
 		super();
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
@@ -42,6 +48,12 @@ class ReRemixerPanel extends React.Component {
 			source: this.state.LibraryTree,
 			debugLevel: 0,
 			autoScroll: true,
+			activate: (event, data) => {
+				if (event.currentTarget && this.props.currentlyActive !== data.node.key)
+					this.props.updateRemixer({currentlyActive: data.node.key});
+			},
+			collapse: ()=>{this.updateLeft(); this.props.updateRemixer({currentlyActive: ''})},
+			expand: this.updateLeft,
 			extensions: ['dnd5'],
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
@@ -106,8 +118,8 @@ class ReRemixerPanel extends React.Component {
 		this.setState({initialized: true});
 	}
 	
-	
 	render() {
+		console.log('render', this.props.currentlyActive);
 		let target = document.createElement('div');
 		target.id = 'LTRemixer';
 		
@@ -117,7 +129,7 @@ class ReRemixerPanel extends React.Component {
 			
 			currentlyActive = leftTree.getActiveNode();
 			currentlyActive = currentlyActive ? currentlyActive.key : this.props.currentlyActive;
-			leftTree.reload([this.props.RemixTree]);
+			leftTree.reload(this.state.LibraryTree);
 			if (currentlyActive) {
 				leftTree.activateKey(currentlyActive, {noFocus: true});
 			}
@@ -153,14 +165,6 @@ class ReRemixerPanel extends React.Component {
 		</div>;
 	}
 	
-		
-	
-	
-	save = (tree, updateUndo) => {
-		tree.expanded = true;
-		this.props.updateRemixer({RemixTree: tree}, updateUndo);
-	};
-	
 	debug() {
 		let root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
 		return root.toDict(true);
@@ -183,16 +187,6 @@ class ReRemixerPanel extends React.Component {
 		this.setState({subdomain: subdomain, LibraryTree: content});
 	};
 	
-	
-	getDepth(tree) {
-		let depth = 0;
-		while (tree && tree.children) {
-			depth++;
-			tree = tree.children[0];
-		}
-		return depth;
-	}
-	
 	getSelectOptions() {
 		let current = window.location.origin.split('/')[2].split('.')[0];
 		let libraries = LibreTexts.libraries;
@@ -202,40 +196,6 @@ class ReRemixerPanel extends React.Component {
 		});
 		return result;
 	}
-	
-	ArticleType = (type) => {
-		let badStructure = this.checkStructure(type);
-		return <MenuItem
-			value={type}>
-			<Tooltip
-				title={badStructure ? 'Warning: This article type currently violates the recommended content structure' : ''}>
-				<div style={{display: 'flex', alignItems: 'center', flex: 1}}>
-					<ListItemText primary={RemixerFunctions.articleTypeToTitle(type)}
-					              style={badStructure ? {color: 'orange'} : {}}/>
-					{badStructure ? <ListItemIcon style={badStructure ? {color: 'orange'} : {}}>
-						<Warning/>
-					</ListItemIcon> : null}
-				</div>
-			</Tooltip>
-		</MenuItem>;
-	};
-	
-	PageStatus = () => {
-		const status = this.state.edit.status;
-		const color = RemixerFunctions.statusColor(status);
-		switch (status) {
-			case 'unchanged':
-				return <span style={{color: color}}>[Unchanged]</span>;
-			case 'new':
-				return <span style={{color: color}}>[New]</span>;
-			case 'modified':
-				return <span style={{color: color}}>[Modified]</span>;
-			case 'deleted':
-				return <span style={{color: color}}>[Deleted]</span>;
-			default:
-				return null;
-		}
-	};
 }
 
 export default withSnackbar(ReRemixerPanel); //Allows snackbars

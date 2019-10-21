@@ -60,8 +60,8 @@ function LibreTextsReuse() {
 		let token = keys[subdomain];
 		if (current === subdomain)
 			headers['X-Requested-With'] = 'XMLHttpRequest';
-		else
-			headers['x-deki-token'] = token;
+		
+		headers['x-deki-token'] = token;
 		
 		options.headers = headers;
 		if (arbitraryPage)

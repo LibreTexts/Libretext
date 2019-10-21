@@ -68,8 +68,11 @@ class RemixerPanel extends React.Component {
 				if (event.currentTarget && this.props.currentlyActive !== data.node.key)
 					this.props.updateRemixer({currentlyActive: data.node.key});
 			},
-			collapse: () => this.autonumber(),
-			expand: () => this.autonumber(),
+			collapse: () => {
+				this.autonumber();
+				this.props.updateRemixer({currentlyActive: ''});
+			},
+			expand: this.autonumber,
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -190,6 +193,8 @@ class RemixerPanel extends React.Component {
 			debugLevel: 0,
 			autoScroll: true,
 			extensions: ['dnd5'],
+			collapse: this.updateLeft,
+			expand: this.updateLeft,
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -547,6 +552,12 @@ class RemixerPanel extends React.Component {
 		}
 	}
 	
+	updateLeft = () =>{
+		let root = $('#LTLeft').fancytree('getTree').getRootNode();
+		root = root.toDict(true);
+		this.setState({LibraryTree: root.children})
+	};
+	
 	handleChange = name => event => {
 		let input = event.target.value;
 		if (input && input >= 0 && input <= 100) {
@@ -601,30 +612,32 @@ class RemixerPanel extends React.Component {
 	
 	delete = async () => {
 		const deleteNode = (node) => {
-			if (node && node.key !== 'ROOT') {
-				//preserve activenode
-				let otherNode = node.getNextSibling() || node.getParent();
-				
-				switch (node.data.status) {
-					case 'deleted':
-						this.props.enqueueSnackbar(node.title, {
-							variant: 'error',
-							anchorOrigin: {
-								vertical: 'bottom',
-								horizontal: 'right',
-							},
-						});
-						node.data.status = node.data.originalStatus;
-						break;
-					case 'new':
-						node.remove();
-						
-						if (otherNode)
-							otherNode.setActive();
-						break;
-					default:
-						node.data.originalStatus = node.data.status;
-						node.data.status = 'deleted';
+			if (node) {
+				if (node.key !== 'ROOT') {
+					//preserve activenode
+					let otherNode = node.getNextSibling() || node.getParent();
+					
+					switch (node.data.status) {
+						case 'deleted':
+							this.props.enqueueSnackbar(node.title, {
+								variant: 'error',
+								anchorOrigin: {
+									vertical: 'bottom',
+									horizontal: 'right',
+								},
+							});
+							node.data.status = node.data.originalStatus;
+							break;
+						case 'new':
+							node.remove();
+							
+							if (otherNode)
+								otherNode.setActive();
+							break;
+						default:
+							node.data.originalStatus = node.data.status;
+							node.data.status = 'deleted';
+					}
 				}
 				if (node.children && node.children.length) {
 					let tempChildren = [...node.children];

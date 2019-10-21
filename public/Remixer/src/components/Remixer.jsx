@@ -17,7 +17,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 export default class Remixer extends React.Component {
 	constructor() {
 		super();
-		let state = {
+		const defaultState = {
 			type: 'ReRemix',
 			stage: 'ReRemixing',
 			mode: RemixerFunctions.userPermissions(),
@@ -39,8 +39,16 @@ export default class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 		};
+		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
-			state = {...state, ...JSON.parse(localStorage.getItem('RemixerState'))};
+			state = {
+				...state, ...JSON.parse(localStorage.getItem('RemixerState')),
+				mode: RemixerFunctions.userPermissions()
+			};
+		}
+		if (state.mode !== 'Admin' && state.mode !== 'Pro' && state.type === 'ReRemix') { //prevent insecure access
+			state = defaultState;
+			alert('You do not currently have permission to access the ReRemixer.');
 		}
 		this.state = state;
 	}
@@ -92,7 +100,7 @@ export default class Remixer extends React.Component {
 	};
 	
 	
-	handleSwap(doSwap) {
+	handleSwap = (doSwap) => {
 		let result = {swapDialog: false};
 		if (doSwap) {
 			result = {
@@ -122,7 +130,8 @@ export default class Remixer extends React.Component {
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.type}>
 					<MenuItem value={'Remix'}>Remixer</MenuItem>
-					{this.state.mode === 'Admin' || this.state.mode === 'Pro' ?<MenuItem value={'ReRemix'}>ReRemixer</MenuItem>:null}
+					{this.state.mode === 'Admin' || this.state.mode === 'Pro' ?
+						<MenuItem value={'ReRemix'}>ReRemixer</MenuItem> : null}
 				</Select>
 				<span>{this.state.lastSave}</span>
 			</div>

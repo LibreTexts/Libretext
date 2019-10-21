@@ -20,11 +20,11 @@ export default function RemixerOptions(props) {
 		const isDemonstration = RemixerFunctions.userPermissions() === 'Workshop';
 		if (isDemonstration) {
 			result.push({
-				url: `https://${subdomain}.libretexts.org/Workshops/Workshop_University`,
-				title: 'Workshop University'
+				url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
+				title: 'Remixer University'
 			});
 			setInstitutions(result);
-			props.updateRemixer({institution: `https://${subdomain}.libretexts.org/Workshops/Workshop_University`});
+			props.updateRemixer({institution: `https://${subdomain}.libretexts.org/Courses/Remixer_University`});
 			return result;
 		}
 		
