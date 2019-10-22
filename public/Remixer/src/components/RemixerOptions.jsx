@@ -56,7 +56,7 @@ export default function RemixerOptions(props) {
 				props.updateRemixer({name: event.target.value});
 			}}
 		/>
-			{props.mode === 'Remix' ? <TextField
+			{props.type === 'Remix' ? <TextField
 				select
 				label="Institution"
 				value={props.institution || ""}
