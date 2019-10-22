@@ -720,7 +720,7 @@ class RemixerPanel extends React.Component {
 		let root;
 		if (!customRoot) {
 			root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
-			if (!root.children) {
+			if (!root || !root.children) {
 				return false;
 			}
 		}
