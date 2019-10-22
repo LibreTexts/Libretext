@@ -18,8 +18,8 @@ export default class Remixer extends React.Component {
 	constructor() {
 		super();
 		const defaultState = {
-			type: 'ReRemix',
-			stage: 'ReRemixing',
+			type: 'Remix',
+			stage: 'Remixing',
 			mode: RemixerFunctions.userPermissions(),
 			defaultCopyMode: 'transclude',
 			undoArray: [],
@@ -46,11 +46,21 @@ export default class Remixer extends React.Component {
 				mode: RemixerFunctions.userPermissions()
 			};
 		}
-		if (state.mode !== 'Admin' && state.mode !== 'Pro' && state.type === 'ReRemix') { //prevent insecure access
+		if (!this.allowedReRemixer(state.mode) && state.type === 'ReRemix') { //prevent insecure access
 			state = defaultState;
-			alert('You do not currently have permission to access the ReRemixer.');
+			this.props.enqueueSnackbar('You do not currently have permission to access the ReRemixer.', {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
 		}
 		this.state = state;
+	}
+	
+	allowedReRemixer(mode = this.state.mode) {
+		return mode === 'Admin';
 	}
 	
 	updateRemixer = (newState, updateUndo) => {
@@ -102,7 +112,7 @@ export default class Remixer extends React.Component {
 	
 	handleSwap = (doSwap) => {
 		let result = {swapDialog: false};
-		if (doSwap) {
+		if (doSwap === true) {
 			result = {
 				...result, ...{
 					type: this.state.swapDialog,
@@ -130,7 +140,7 @@ export default class Remixer extends React.Component {
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.type}>
 					<MenuItem value={'Remix'}>Remixer</MenuItem>
-					{this.state.mode === 'Admin' || this.state.mode === 'Pro' ?
+					{this.allowedReRemixer() ?
 						<MenuItem value={'ReRemix'}>ReRemixer</MenuItem> : null}
 				</Select>
 				<span>{this.state.lastSave}</span>
@@ -138,7 +148,8 @@ export default class Remixer extends React.Component {
 			
 			{this.renderState()}
 			
-			<Dialog open={!!this.state.swapDialog} onClose={this.handleSwap} aria-labelledby="form-dialog-title">
+			<Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.type} onClose={this.handleSwap}
+			        aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Want to swap Remixer modes?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>

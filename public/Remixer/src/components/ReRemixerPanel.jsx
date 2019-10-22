@@ -1,36 +1,31 @@
 import React from 'react';
 import RemixerFunctions from '../reusableFunctions';
-
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Warning from "@material-ui/icons/Warning";
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import Info from "@material-ui/icons/Info";
-import Publish from "@material-ui/icons/Publish";
 import {withSnackbar} from 'notistack';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Tooltip from "@material-ui/core/Tooltip";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ReRemixerPanel extends React.Component {
-	updateLeft = ()=>{
+	updateLeft = (active) => {
 		let root = $('#LTLeft').fancytree('getTree').getRootNode();
 		root = root.toDict(true);
-		console.log(root.children);
-		this.setState({LibraryTree: root.children})
+		this.setState({LibraryTree: root.children});
+		this.props.updateRemixer({currentlyActive: active});
 	};
+	
 	constructor() {
 		super();
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		
 		this.state = {
 			initialized: false,
+			transferring: false,
 			LibraryTree: {},
 			subdomain: subdomain,
 		};
@@ -52,8 +47,12 @@ class ReRemixerPanel extends React.Component {
 				if (event.currentTarget && this.props.currentlyActive !== data.node.key)
 					this.props.updateRemixer({currentlyActive: data.node.key});
 			},
-			collapse: ()=>{this.updateLeft(); this.props.updateRemixer({currentlyActive: ''})},
-			expand: this.updateLeft,
+			collapse: () => {
+				this.updateLeft('');
+			},
+			expand: (event, data) => {
+				this.updateLeft(data.node.key);
+			},
 			extensions: ['dnd5'],
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
@@ -119,7 +118,6 @@ class ReRemixerPanel extends React.Component {
 	}
 	
 	render() {
-		console.log('render', this.props.currentlyActive);
 		let target = document.createElement('div');
 		target.id = 'LTRemixer';
 		
@@ -128,7 +126,7 @@ class ReRemixerPanel extends React.Component {
 			const leftTree = $('#LTLeft').fancytree('getTree');
 			
 			currentlyActive = leftTree.getActiveNode();
-			currentlyActive = currentlyActive ? currentlyActive.key : this.props.currentlyActive;
+			currentlyActive = this.props.currentlyActive || (currentlyActive ? currentlyActive.key : '');
 			leftTree.reload(this.state.LibraryTree);
 			if (currentlyActive) {
 				leftTree.activateKey(currentlyActive, {noFocus: true});
@@ -143,7 +141,8 @@ class ReRemixerPanel extends React.Component {
 					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
 						<Info style={{marginLeft: 10}}/></div>
 				</Tooltip></div>
-				<Button variant="contained" disabled={!currentlyActive} className={'expandedLabel'}>
+				<Button variant="contained" onClick={this.handleReRemix} disabled={!currentlyActive}
+				        className={'expandedLabel'}>
 					<span>ReRemix selection</span><DoubleArrowIcon/>
 				</Button>
 			</div>
@@ -157,6 +156,14 @@ class ReRemixerPanel extends React.Component {
 			<Dialog open={!this.state.initialized} aria-labelledby="form-dialog-title"
 			        id="editDialog">
 				<DialogTitle id="form-dialog-title">Loading ReRemixer
+				</DialogTitle>
+				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
+					<CircularProgress size={100}/>
+				</DialogContent>
+			</Dialog>
+			<Dialog open={this.state.transferring} aria-labelledby="form-dialog-title"
+			        id="editDialog">
+				<DialogTitle id="form-dialog-title">Loading Content for ReRemix
 				</DialogTitle>
 				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
 					<CircularProgress size={100}/>
@@ -195,6 +202,52 @@ class ReRemixerPanel extends React.Component {
 			result.push(<option value={libraries[key]} key={key}>{key}</option>);
 		});
 		return result;
+	}
+	
+	handleReRemix = async () => {
+		if (!this.props.currentlyActive) {
+			return;
+		}
+		const LTLeft = $('#LTLeft').fancytree('getTree');
+		let currentlyActive = LTLeft.getNodeByKey(this.props.currentlyActive);
+		if (!currentlyActive) {
+			this.props.enqueueSnackbar('Invalid node! Please try selecting the node again', {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
+			return;
+		}
+		this.setState({transferring: true});
+		await currentlyActive.visitAndLoad();
+		this.setState({transferring: false});
+		
+		currentlyActive = currentlyActive.toDict(true);
+		currentlyActive.key = 'ROOT';
+		tree(currentlyActive);
+		
+		function tree(current) {
+			if (current) {
+				current.title = current.title.replace(/<a.*?<\/a>/, '');
+				current.original = {title: current.title, data: JSON.parse(JSON.stringify(current.data))};
+				current.status = 'unchanged';
+				if (current.children && current.children.length) {
+					current.children.forEach((child) => {
+						tree(child);
+					});
+				}
+			}
+		}
+		this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {
+			variant: 'success',
+			anchorOrigin: {
+				vertical: 'bottom',
+				horizontal: 'right',
+			},
+		});
+		this.props.updateRemixer({stage: 'Remixing', RemixTree: currentlyActive, currentlyActive: ''});
 	}
 }
 

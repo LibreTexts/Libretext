@@ -20,6 +20,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Warning from "@material-ui/icons/Warning";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import {useSnackbar} from 'notistack';
 
 
 export default function PublishPanel(props) {
@@ -30,6 +31,7 @@ export default function PublishPanel(props) {
 	let [initialized, setInitialized] = React.useState();
 	let [publishing, setPublishing] = React.useState();
 	let [override, setOverride] = React.useState(false);
+	const {enqueueSnackbar} = useSnackbar();
 	
 	useEffect(() => {
 		let LTPreview = $('#LTPreviewForm');
@@ -47,7 +49,7 @@ export default function PublishPanel(props) {
 	
 	function sortPages() {
 		let tree = props.RemixTree;
-		let arrayResult = addLinks(tree, '', 'topic - category');
+		let arrayResult = addLinks(tree, '', 'topic-category');
 		let objectResult = {};
 		
 		function addLinks(current, parentPath, parentType) {
@@ -200,6 +202,7 @@ function PublishSubPanel(props) {
 	const [finished, setFinished] = useState('');
 	let [show, setShow] = React.useState({success: true, failed: true});
 	const [isActive, setIsActive] = useState(false);
+	const {enqueueSnackbar} = useSnackbar();
 	
 	
 	useEffect(() => {
@@ -324,7 +327,13 @@ function PublishSubPanel(props) {
 			return false;
 		}
 		if (!props.name) {
-			alert('No LibreText name provided!');
+			enqueueSnackbar(`No LibreText name provided!`, {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
 			return false;
 		}
 		let destRoot = props.institution;
@@ -338,7 +347,13 @@ function PublishSubPanel(props) {
 		destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
 		if (response.ok && !props.override) {
-			alert(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`);
+			enqueueSnackbar(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`, {
+				variant: 'warning',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
 			return false;
 		}
 		if (props.mode === 'Demonstration') {

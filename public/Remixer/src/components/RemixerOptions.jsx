@@ -56,7 +56,7 @@ export default function RemixerOptions(props) {
 				props.updateRemixer({name: event.target.value});
 			}}
 		/>
-			<TextField
+			{props.mode === 'Remix' ? <TextField
 				select
 				label="Institution"
 				value={props.institution || ""}
@@ -68,7 +68,7 @@ export default function RemixerOptions(props) {
 				variant="outlined"
 			>{institutions.map(elem => <MenuItem key={elem.url}
 			                                     value={elem.url}>{elem.title}</MenuItem>)}
-			</TextField>
+			</TextField> : null}
 			<TextField
 				select
 				id='defaultCopyMode'

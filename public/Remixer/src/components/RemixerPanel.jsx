@@ -72,7 +72,7 @@ class RemixerPanel extends React.Component {
 				this.autonumber();
 				this.props.updateRemixer({currentlyActive: ''});
 			},
-			expand: this.autonumber,
+			expand: () => this.autonumber(),
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -256,8 +256,8 @@ class RemixerPanel extends React.Component {
 		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 		LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 		$('#LTRightAlert,#LTLeftAlert').hide();
+		await this.autonumber();
 		this.setState({initialized: true});
-		this.autonumber();
 	}
 	
 	
@@ -316,7 +316,13 @@ class RemixerPanel extends React.Component {
 				         disabled={deleted}>
 					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
 				</Tooltip>
-				<Button variant="contained" onClick={() => this.setState({resetDialog: true})}><span>Start Over</span>
+				<Button variant="contained"
+				        onClick={() => {
+					        this.props.mode === 'Remixer'
+						        ? this.setState({resetDialog: true})
+						        : this.props.updateRemixer({stage: 'ReRemixing'})
+				        }}>
+					<span>Start Over</span>
 					<Refresh/></Button>
 				<Button variant="contained" color="secondary"
 				        onClick={() => {
@@ -552,7 +558,7 @@ class RemixerPanel extends React.Component {
 		}
 	}
 	
-	updateLeft = () =>{
+	updateLeft = () => {
 		let root = $('#LTLeft').fancytree('getTree').getRootNode();
 		root = root.toDict(true);
 		this.setState({LibraryTree: root.children})
@@ -567,7 +573,7 @@ class RemixerPanel extends React.Component {
 	};
 	
 	save = (tree, updateUndo) => {
-		tree.expanded = true;
+		// tree.expanded = true;
 		this.props.updateRemixer({RemixTree: tree}, updateUndo);
 	};
 	
@@ -619,13 +625,6 @@ class RemixerPanel extends React.Component {
 					
 					switch (node.data.status) {
 						case 'deleted':
-							this.props.enqueueSnackbar(node.title, {
-								variant: 'error',
-								anchorOrigin: {
-									vertical: 'bottom',
-									horizontal: 'right',
-								},
-							});
 							node.data.status = node.data.originalStatus;
 							break;
 						case 'new':
@@ -669,7 +668,7 @@ class RemixerPanel extends React.Component {
 							horizontal: 'right',
 						},
 					});
-					//TODO Co[y logic
+					//TODO Copy logic
 				}
 				else {
 					this.props.enqueueSnackbar('You must have only one child to merge up the root page.', {
@@ -710,8 +709,6 @@ class RemixerPanel extends React.Component {
 			return;
 		}
 		
-		if (newEdit.status !== 'new')
-			newEdit.status = 'modified';
 		let node = $('#LTRight').fancytree('getTree').getNodeByKey(newEdit.node.key);
 		delete newEdit.node;
 		node.fromDict(newEdit);
@@ -727,13 +724,12 @@ class RemixerPanel extends React.Component {
 				return false;
 			}
 		}
-		//TODO: status => modified on renumber
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
 			
 			
-			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth) {
+			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
 				
 				//TODO: suffix
 				if (node.title.includes(': '))
@@ -764,6 +760,31 @@ class RemixerPanel extends React.Component {
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
 				}
+				node.title = node.title.trim();
+			}
+			
+			//check status
+			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
+				const original = node.data.original;
+				const data = JSON.parse(JSON.stringify(node.data));
+				delete data.original; //skip these fields
+				delete data.status;
+				delete data.padded;
+				delete data.response;
+				let unchanged = true;
+				for (let key in original) {
+					if (original.hasOwnProperty(key)) {
+						if (JSON.stringify(data[key]) !== JSON.stringify(original.data[key])) {
+							console.log(key, data[key], original.data[key]);
+							unchanged = false;
+						}
+					}
+				}
+				
+				if (node.title === original.title && unchanged)
+					node.data.status = 'unchanged';
+				else
+					node.data.status = 'modified';
 			}
 			
 			//ensure structure matches tags
