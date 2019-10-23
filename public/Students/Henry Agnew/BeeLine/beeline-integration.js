@@ -131,8 +131,7 @@ function activateBeeLine() {
 				if (!theme)
 					return;
 				btns.removeClass('active');
-				btns.parent().removeClass('active');
-				btns.filter('a[data-color="' + theme + '"]').parent().addClass('active');
+				btns.filter('a[data-color="' + theme + '"]').addClass('active');
 				btns.filter('button[data-color="' + theme + '"]').addClass('active');
 				
 				doBeeline(theme, theme);

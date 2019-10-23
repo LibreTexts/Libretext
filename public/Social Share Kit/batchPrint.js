@@ -36,7 +36,7 @@ if (!window["batchPrint.js"]) {
 		
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
 			localStorage.setItem('darkMode', true);
-		if (localStorage.getItem('darkMode'))
+		if (localStorage.getItem('darkMode') === 'true')
 			$('.elm-skin-container').addClass('darkMode');
 		
 		handleInner().then();
@@ -107,7 +107,7 @@ if (!window["batchPrint.js"]) {
 			innerHTML += `<a class="btn btn-large" data-color="gray">Gray</a>`;
 			innerHTML += `<a class="btn btn-large" data-color="night_blues">Inverted</a>`;
 			innerHTML += `<a class="btn btn-large active" data-color="off">Off</a>`;
-			innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode',localStorage.getItem('darkMode'))">Dark Mode Toggle</a>`;
+			innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
 			innerHTML += `</div></div>`;
 			
 			if (isPro) {
