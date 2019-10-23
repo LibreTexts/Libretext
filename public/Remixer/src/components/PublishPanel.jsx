@@ -66,7 +66,7 @@ export default function PublishPanel(props) {
 		}
 		
 		arrayResult.forEach((page) => {
-			if (props.type === 'Remix') {
+			if (props.mode === 'Remix') {
 				let copyMode = page.copyMode || props.defaultCopyMode;
 				page.status = page.status || 'new';
 				if (!page.sourceURL)
@@ -78,7 +78,7 @@ export default function PublishPanel(props) {
 				else
 					objectResult[copyMode] = [page];
 			}
-			else if (props.type === 'ReRemix') {
+			else if (props.mode === 'ReRemix') {
 				if (objectResult[page.status])
 					objectResult[page.status].push(page);
 				else
@@ -111,16 +111,16 @@ export default function PublishPanel(props) {
 			justifyContent: 'space-evenly',
 			fontSize: 'larger'
 		};
-		if (props.type === 'Remix') {
+		if (props.mode === 'Remix') {
 			return <List style={listStyle}>
 				{listItem(sorted.blank, 'unchanged', 'be blank pages')}
 				{listItem(sorted.transclude, 'new', 'be transcluded')}
 				{listItem(sorted.fork, 'new', 'be forked')}
-				{props.mode === 'Admin' ? listItem(sorted.full, 'modified', 'be full-copied'):null}
+				{props.permission === 'Admin' ? listItem(sorted.full, 'modified', 'be full-copied'):null}
 				{listItem(sorted.badStructure, 'deleted', 'have non-recommended structure!')}
 			</List>;
 		}
-		else if (props.type === 'ReRemix') {
+		else if (props.mode === 'ReRemix') {
 			return <List style={listStyle}>
 				{listItem(sorted.new, 'new', 'be added')}
 				{listItem(sorted.modified, 'modified', 'be modified')}
@@ -158,7 +158,7 @@ export default function PublishPanel(props) {
 					</Tabs>
 				</AppBar>
 				{panel === 'summary' ? generateSummary() : null}
-				{props.type === 'Remix' ?
+				{props.mode === 'Remix' ?
 					<Tooltip
 						title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
 						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
@@ -356,7 +356,7 @@ function PublishSubPanel(props) {
 			});
 			return false;
 		}
-		if (props.mode === 'Demonstration') {
+		if (props.permission === 'Demonstration') {
 			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
 			return false;
@@ -544,7 +544,7 @@ ${renderTags(page.tags)}`;
 						break;
 					case 'fork':
 					case 'full':
-						if (source.subdomain === currentSubdomain && ['Admin', 'Prop'].includes(props.mode))
+						if (source.subdomain === currentSubdomain && ['Admin', 'Pro'].includes(props.permission))
 							contents = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain);
 						else
 							contents = await fetch('https://api.libretexts.org/endpoint/contents', {

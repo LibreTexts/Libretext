@@ -68,7 +68,7 @@ export default function OptionsPanel(props) {
 					textFromFileLoaded = JSON.parse(textFromFileLoaded);
 					if (!optionsOverwrite)
 						delete textFromFileLoaded.options;
-					textFromFileLoaded.mode = props.mode;
+					textFromFileLoaded.permission = props.permission;
 					props.updateRemixer(textFromFileLoaded);
 					enqueueSnackbar(`Loaded ${file.name} successfully!`, {
 						variant: 'success',

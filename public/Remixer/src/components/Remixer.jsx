@@ -18,9 +18,9 @@ export default class Remixer extends React.Component {
 	constructor(props) {
 		super(props);
 		const defaultState = {
-			type: 'Remix',
+			mode: 'Remix',
 			stage: 'Remixing',
-			mode: RemixerFunctions.userPermissions(),
+			permission: RemixerFunctions.userPermissions(),
 			defaultCopyMode: 'transclude',
 			undoArray: [],
 			redoArray: [],
@@ -43,18 +43,23 @@ export default class Remixer extends React.Component {
 		if (localStorage.getItem('RemixerState')) {
 			state = {
 				...state, ...JSON.parse(localStorage.getItem('RemixerState')),
-				mode: RemixerFunctions.userPermissions()
+				permission: RemixerFunctions.userPermissions()
 			};
 		}
-		if (!this.allowedReRemixer(state.mode) && state.type === 'ReRemix') { //prevent insecure access
+		if (!this.allowedReRemixer(state.permission) && state.mode === 'ReRemix') { //prevent insecure access
 			state = defaultState;
 			alert('You do not currently have permission to access the ReRemixer.');
+		}
+		if (state.type) {
+			state.permission = state.mode;
+			state.mode = state.type;
+			delete state.type;
 		}
 		this.state = state;
 	}
 	
-	allowedReRemixer(mode = this.state.mode) {
-		return mode === 'Admin';
+	allowedReRemixer(permission = this.state.permission) {
+		return permission === 'Admin';
 	}
 	
 	updateRemixer = (newState, updateUndo) => {
@@ -109,7 +114,7 @@ export default class Remixer extends React.Component {
 		if (doSwap === true) {
 			result = {
 				...result, ...{
-					type: this.state.swapDialog,
+					mode: this.state.swapDialog,
 					undoArray: [],
 					redoArray: [],
 					currentlyActive: ''
@@ -132,7 +137,7 @@ export default class Remixer extends React.Component {
 		return <>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
-				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.type}>
+				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.mode}>
 					<MenuItem value={'Remix'}>Remixer</MenuItem>
 					{this.allowedReRemixer() ?
 						<MenuItem value={'ReRemix'}>ReRemixer</MenuItem> : null}
@@ -142,12 +147,12 @@ export default class Remixer extends React.Component {
 			
 			{this.renderState()}
 			
-			<Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.type} onClose={this.handleSwap}
+			<Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.mode} onClose={this.handleSwap}
 			        aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Want to swap Remixer modes?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						This action will clear your work in the {this.state.panel} Panel and your undo history. Consider
+						This action will clear your work in the {this.state.mode} Panel and your undo history. Consider
 						saving your
 						current workspace to a file with the "Save File" button.
 					</DialogContentText>
@@ -157,7 +162,7 @@ export default class Remixer extends React.Component {
 						Cancel
 					</Button>
 					<Button onClick={() => this.handleSwap(true)} color="primary">
-						Swap to {this.state.panel === 'Remixer' ? 'ReRemixer' : 'Remixer'} mode
+						Swap to {this.state.swapDialog} mode
 					</Button>
 				</DialogActions>
 			</Dialog>

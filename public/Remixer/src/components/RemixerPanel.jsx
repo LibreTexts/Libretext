@@ -291,7 +291,7 @@ class RemixerPanel extends React.Component {
 		return <div id='LTForm'>
 			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
 				<div className='LTTitle'><Tooltip title={permission.description}>
-					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
+					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.permission} Mode
 						<Info style={{marginLeft: 10}}/></div>
 				</Tooltip></div>
 				
@@ -324,7 +324,7 @@ class RemixerPanel extends React.Component {
 				</Tooltip>
 				<Button variant="contained"
 				        onClick={() => {
-					        this.props.type === 'Remixer'
+					        this.props.mode === 'Remix'
 						        ? this.setState({resetDialog: true})
 						        : this.props.updateRemixer({stage: 'ReRemixing'})
 				        }}>
@@ -470,7 +470,7 @@ class RemixerPanel extends React.Component {
 									<ListItemText>Fork</ListItemText>
 								</Tooltip>
 							</MenuItem>
-							{this.props.mode === 'Admin' ?
+							{this.props.permission === 'Admin' ?
 								<MenuItem value='full'>
 									<Tooltip
 										title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">

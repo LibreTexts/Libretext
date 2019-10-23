@@ -11,7 +11,7 @@ export default function RemixerOptions(props) {
 	
 	useEffect(() => {
 		getInstitutions().then();
-	}, [props.mode]);
+	}, [props.permission]);
 	
 	async function getInstitutions() {
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
@@ -56,7 +56,7 @@ export default function RemixerOptions(props) {
 				props.updateRemixer({name: event.target.value});
 			}}
 		/>
-			{props.type === 'Remix' ? <TextField
+			{props.mode === 'Remix' ? <TextField
 				select
 				label="Institution"
 				value={props.institution || ""}
@@ -93,7 +93,7 @@ export default function RemixerOptions(props) {
 						<div>Fork</div>
 					</Tooltip>
 				</MenuItem>
-				{props.mode === 'Admin' ?
+				{props.permission === 'Admin' ?
 					<MenuItem value='full'>
 						<Tooltip
 							title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">

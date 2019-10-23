@@ -138,7 +138,7 @@ class ReRemixerPanel extends React.Component {
 		return <div id='LTForm'>
 			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
 				<div className='LTTitle'><Tooltip title={permission.description}>
-					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.mode} Mode
+					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.permission} Mode
 						<Info style={{marginLeft: 10}}/></div>
 				</Tooltip></div>
 				<Button variant="contained" onClick={this.handleReRemix} disabled={!currentlyActive}
