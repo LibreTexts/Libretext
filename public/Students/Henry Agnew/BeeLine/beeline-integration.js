@@ -107,10 +107,40 @@ function activateBeeLine() {
 					ga('send', 'event', 'Beeline', action, theme);
 				}
 			}
+			
+			
+			const contentContainer = $('.elm-skin-container');
+			if (theme === 'night_blues')
+				contentContainer.addClass('darkMode');
+			else
+				contentContainer.removeClass('darkMode');
 		}
 	};
 	
-	$(".beeline-header").on("click", function () {
+	setBeelineToggles();
+	
+	function setBeelineToggles() {
+		const toggles = $('.beeline-toggles');
+		
+		if (toggles[0]) {
+			const btns = toggles.find('button, a');
+			
+			btns.click(function (e) {
+				e.preventDefault();
+				const theme = $(this).attr("data-color");
+				if (!theme)
+					return;
+				btns.removeClass('active');
+				btns.parent().removeClass('active');
+				btns.filter('a[data-color="' + theme + '"]').parent().addClass('active');
+				btns.filter('button[data-color="' + theme + '"]').addClass('active');
+				
+				doBeeline(theme, theme);
+			});
+		}
+	}
+	
+	/*$(".beeline-header").on("click", function () {
 		$(this).closest(".beeline").toggleClass("active");
 	});
 	
@@ -122,19 +152,19 @@ function activateBeeLine() {
 		$(this).closest(".beeline").find(".beeline-toggle.off").removeClass("active");
 		$(this).closest(".beeline").find(".beeline-toggle." + defaultTheme).addClass("active");
 		doBeeline(defaultTheme, "enabled");
-	});
+	});*/
 	
 	$("#doBeeLine").on("click", function () {
-	    if(!activateBeeLine.theme && typeof (Cookies.get("beeline")) != "undefined")
-            activateBeeLine.theme = Cookies.get("beeline");
-	    
+		if (!activateBeeLine.theme && typeof (Cookies.get("beeline")) != "undefined")
+			activateBeeLine.theme = Cookies.get("beeline");
+		
 		const theme = activateBeeLine.theme !== 'bright' ? 'bright' : 'off';
 		activateBeeLine.theme = theme;
 		event.preventDefault();
 		doBeeline(theme, theme);
 	});
 	
-	$(".beeline-toggle").on("click", function (event) {
+	/*$(".beeline-toggle").on("click", function (event) {
 		const theme = $(this).data("beeline-theme");
 		
 		event.preventDefault();
@@ -142,7 +172,7 @@ function activateBeeLine() {
 		$(".beeline-toggle").closest(".beeline-toggles").find(".active").removeClass("active");
 		$(this).addClass("active");
 		doBeeline(theme, "theme change");
-	});
+	});*/
 	
 	let tags = document.getElementById('pageTagsHolder').innerText;
 	if (navigator.webdriver && tags.includes('beeline:print')) {
