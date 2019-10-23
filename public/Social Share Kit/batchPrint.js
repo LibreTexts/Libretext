@@ -99,8 +99,8 @@ if (!window["batchPrint.js"]) {
 			}
 			
 			//Beeline
-			innerHTML += `<div class="LTdropdown beeline-toggles"  style="float:left; background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-binoculars" title="Customization Menu"><span>Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
-			innerHTML += `<a class="btn btn-large btnow-rif" href="http://www.beelinereader.com/education/?utm_source=lt"><img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"> About BeeLine</a>`;
+			innerHTML += `<div class="LTdropdown beeline-toggles"  style="float:left; background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
+			innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"><img style="margin-right: 5px; width:25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;
 			innerHTML += `<a class="btn btn-large" data-color="bright">Bright</a>`;
 			innerHTML += `<a class="btn btn-large" data-color="dark">Dark</a>`;
 			innerHTML += `<a class="btn btn-large" data-color="blues">Blues</a>`;

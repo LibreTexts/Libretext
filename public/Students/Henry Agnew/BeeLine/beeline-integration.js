@@ -126,7 +126,8 @@ function activateBeeLine() {
 			const btns = toggles.find('button, a');
 			
 			btns.click(function (e) {
-				e.preventDefault();
+				if (!e.target.href)
+					e.preventDefault();
 				const theme = $(this).attr("data-color");
 				if (!theme)
 					return;
