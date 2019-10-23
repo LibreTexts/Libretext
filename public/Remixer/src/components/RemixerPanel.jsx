@@ -256,10 +256,16 @@ class RemixerPanel extends React.Component {
 		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 		LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 		$('#LTRightAlert,#LTLeftAlert').hide();
-		await this.autonumber();
 		this.setState({initialized: true});
 	}
 	
+	async componentDidUpdate(){
+		if (this.state.initialized && !this.initialAutonumber) {
+			this.initialAutonumber = true;
+			console.log('Initial autonumber');
+			this.autonumber(true);
+		}
+	}
 	
 	render() {
 		let target = document.createElement('div');
@@ -318,7 +324,7 @@ class RemixerPanel extends React.Component {
 				</Tooltip>
 				<Button variant="contained"
 				        onClick={() => {
-					        this.props.mode === 'Remixer'
+					        this.props.type === 'Remixer'
 						        ? this.setState({resetDialog: true})
 						        : this.props.updateRemixer({stage: 'ReRemixing'})
 				        }}>

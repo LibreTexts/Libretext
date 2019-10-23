@@ -15,8 +15,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 
 export default class Remixer extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		const defaultState = {
 			type: 'Remix',
 			stage: 'Remixing',
@@ -48,13 +48,7 @@ export default class Remixer extends React.Component {
 		}
 		if (!this.allowedReRemixer(state.mode) && state.type === 'ReRemix') { //prevent insecure access
 			state = defaultState;
-			this.props.enqueueSnackbar('You do not currently have permission to access the ReRemixer.', {
-				variant: 'error',
-				anchorOrigin: {
-					vertical: 'bottom',
-					horizontal: 'right',
-				},
-			});
+			alert('You do not currently have permission to access the ReRemixer.');
 		}
 		this.state = state;
 	}

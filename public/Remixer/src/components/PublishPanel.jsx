@@ -116,7 +116,7 @@ export default function PublishPanel(props) {
 				{listItem(sorted.blank, 'unchanged', 'be blank pages')}
 				{listItem(sorted.transclude, 'new', 'be transcluded')}
 				{listItem(sorted.fork, 'new', 'be forked')}
-				{listItem(sorted.full, 'modified', 'be full-copied')}
+				{props.mode === 'Admin' ? listItem(sorted.full, 'modified', 'be full-copied'):null}
 				{listItem(sorted.badStructure, 'deleted', 'have non-recommended structure!')}
 			</List>;
 		}
