@@ -102,7 +102,7 @@ function activateBeeLine() {
 			}
 			else {
 				beeline.color();
-				Cookies.set("beeline", theme, {expires: 7});
+				Cookies.set("beeline", theme, {domain: 'libretexts.org'});
 				if (typeof ga === 'function') {
 					ga('send', 'event', 'Beeline', action, theme);
 				}
@@ -110,10 +110,14 @@ function activateBeeLine() {
 			
 			
 			const contentContainer = $('.elm-skin-container');
-			if (theme === 'night_blues')
+			if (theme === 'night_blues') {
 				contentContainer.addClass('darkMode');
-			else
+				localStorage.setItem('darkMode', true);
+			}
+			else {
 				contentContainer.removeClass('darkMode');
+				localStorage.setItem('darkMode', false);
+			}
 		}
 	};
 	
@@ -159,6 +163,15 @@ function activateBeeLine() {
 			activateBeeLine.theme = Cookies.get("beeline");
 		
 		const theme = activateBeeLine.theme !== 'bright' ? 'bright' : 'off';
+		
+		const toggles = $('.beeline-toggles');
+		
+		if (toggles[0]) {
+			const btns = toggles.find('button, a');
+			btns.removeClass('active');
+			btns.filter('a[data-color="' + theme + '"]').addClass('active');
+			btns.filter('button[data-color="' + theme + '"]').addClass('active');
+		}
 		activateBeeLine.theme = theme;
 		event.preventDefault();
 		doBeeline(theme, theme);
