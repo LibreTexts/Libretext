@@ -29,7 +29,7 @@ export default function Tutorial() {
 	function getPanel() {
 		switch (panel) {
 			case 0:
-				return <p className="">This tutorial will walk you though making a customized text using the LibreTexts
+				return <span>This tutorial will walk you though making a customized text using the LibreTexts
 				                       remixing tool. Before creating a remix you will need to know what you want to
 				                       create.
 				                       The remixing tool can be used for simple tasks like creating a book that consists
@@ -44,7 +44,7 @@ export default function Tutorial() {
 				                       you can
 				                       check out the page&nbsp;<a title="5.1: Building Remixing Maps"
 				                                                  href="https://chem.libretexts.org/Courses/Remixer_University/Construction_Guide/6%3A_Remixing_Existing_Content/5.1%3A_Building_Remixing_Maps"
-				                                                  rel="internal">Building Remixing Maps</a>.</p>;
+				                                                  rel="internal">Building Remixing Maps</a>.</span>;
 			case 1:
 				return <>
 					<h2>Getting started</h2>
@@ -65,29 +65,20 @@ export default function Tutorial() {
 					</p>
 					
 					<ol start="2">
-						<li>The Remixer has two panels: The library panel and the Remix&nbsp;panel. The library panel on
+						<li>The Remixer has two panels: The library panel and the Remix&nbsp;panel
+						    (three if the tutorial panel is open). The library panel on
 						    the left side contains the existing content on the LibreTexts site, the Remixer Panel on the
 						    right side is where you will create your new Remix. At the top of the Library Panel you will
 						    find the library selector, you can select material from any of our 13 libraries. In the
 						    Remixer panel notice that the symbol&nbsp;<img alt="Symbol of three books on shelf"
 						                                                   src="https://chem.libretexts.org/@api/deki/files/244951/book.png?revision=1"/>&nbsp;indicates
-						    the
-						    top
-						    (book)
-						    level,
-						    the
-						    symbol&nbsp;
+						    the top (book) level, the symbol&nbsp;
 							<img alt="Symbol single book"
 							     src="https://chem.libretexts.org/@api/deki/files/244952/chapter.png?revision=1"/>&nbsp;indicates
-						    a
-						    chapter,
-						    and&nbsp;
+						    a chapter, and&nbsp;
 							<img alt="Symbol single sheet of paper"
 							     src="https://chem.libretexts.org/@api/deki/files/244953/section.png?revision=1"/>&nbsp;indicates
-						    a
-						    section
-						    (or
-						    subsection).&nbsp;
+						    a section (or subsection).&nbsp;
 						</li>
 					</ol>
 					
@@ -146,7 +137,7 @@ export default function Tutorial() {
 		<select className='LTFormSubdomain' value={panel} onChange={(e) => setPanel(Number(e.target.value))}>
 			{getSelect()}
 		</select>
-		<div id='LTTutorial' style={{padding: 20, width:'auto', overflow:'auto'}}>
+		<div id='LTTutorial' style={{padding: 20, width:'auto', overflow:'auto', color:'black'}}>
 			{getPanel()}
 		</div>
 	</>

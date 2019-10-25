@@ -337,7 +337,7 @@ class RemixerPanel extends React.Component {
 				        }}><span>Publish</span>
 					<Publish/></Button>
 			</div>
-			<div id='LTFormContainer' className='beelineSkip'>
+			<div id='LTFormContainer' data-beeline-skip>
 				<Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
 					<div>Tutorial Panel
 						<Tutorial/>
