@@ -93,16 +93,15 @@ function activateBeeLine() {
 				skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote'],
 			});
 			
+			Cookies.set("beeline", theme, {domain: 'libretexts.org'});
 			if (theme === "off") {
 				beeline.uncolor();
-				Cookies.remove("beeline");
 				if (typeof ga === 'function') {
 					ga('send', 'event', 'Beeline', 'disabled');
 				}
 			}
 			else {
 				beeline.color();
-				Cookies.set("beeline", theme, {domain: 'libretexts.org'});
 				if (typeof ga === 'function') {
 					ga('send', 'event', 'Beeline', action, theme);
 				}
