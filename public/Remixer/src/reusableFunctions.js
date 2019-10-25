@@ -142,6 +142,7 @@ async function getSubpages(path, subdomain, full, linkTitle) {
 					sourceURL: url,
 					children: children,
 					lazy: !full,
+					status: 'new',
 				};
 				miniResult = await LibreTexts.getAPI(miniResult);
 				

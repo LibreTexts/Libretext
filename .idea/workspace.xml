@@ -4,12 +4,9 @@
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Tutorial.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Tutorial.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -207,7 +204,7 @@
     </option>
     <option name="contentProportion" value="0.18518518" />
   </component>
-  <component name="RunManager" selected="npm.Remixer">
+  <component name="RunManager" selected="Node.js.serve.js">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -325,9 +322,9 @@
       <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="Node.js.serve.js" />
       <item itemvalue="npm.API Dashboard" />
+      <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
-      <item itemvalue="npm.Downloads Center" />
     </list>
     <recent_temporary>
       <list>
@@ -346,12 +343,21 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ef53b0f0" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1fb9c0aa" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ef53b0f0" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f0d7d32d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1fb9c0aa" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c987df7b" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e3ec6da6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e3ec6da6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@86a9f0c7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -1063,6 +1069,7 @@
       <workItem from="1571681048710" duration="4226000" />
       <workItem from="1571696347208" duration="4136000" />
       <workItem from="1571785239008" duration="840000" />
+      <workItem from="1571974680804" duration="5597000" />
     </task>
     <task id="LOCAL-00187" summary="Added regular expressions to Dashboard">
       <created>1558154711179</created>

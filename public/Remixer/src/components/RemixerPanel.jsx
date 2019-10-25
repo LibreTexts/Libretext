@@ -259,7 +259,7 @@ class RemixerPanel extends React.Component {
 		this.setState({initialized: true});
 	}
 	
-	async componentDidUpdate(){
+	async componentDidUpdate() {
 		if (this.state.initialized && !this.initialAutonumber) {
 			this.initialAutonumber = true;
 			console.log('Initial autonumber');
@@ -337,14 +337,13 @@ class RemixerPanel extends React.Component {
 				        }}><span>Publish</span>
 					<Publish/></Button>
 			</div>
-			<div id='LTFormContainer'>
+			<div id='LTFormContainer' className='beelineSkip'>
 				<Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
-					<div><h3>Tutorial Panel</h3>
-						What do you need help with {document.getElementById('displaynameHolder').innerText}?
+					<div>Tutorial Panel
 						<Tutorial/>
 					</div>
 				</Slide>
-				<div>Library Panel<select id='LTFormSubdomain'
+				<div>Library Panel<select className='LTFormSubdomain'
 				                          onChange={this.setSubdomain}
 				                          value={this.state.subdomain}>{this.getSelectOptions()}</select>
 					<div id='LTLeft' className='treePanel'></div>
