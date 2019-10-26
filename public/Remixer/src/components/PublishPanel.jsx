@@ -50,7 +50,7 @@ export default function PublishPanel(props) {
 	function sortPages() {
 		let tree = props.RemixTree;
 		let arrayResult = addLinks(tree, '', 'topic-category');
-		let objectResult = {};
+		let objectResult = {moved: []};
 		
 		function addLinks(current, parentPath, parentType) {
 			current = {...current, ...current.data};
@@ -59,6 +59,7 @@ export default function PublishPanel(props) {
 			let array = current.key === "ROOT" ? [] : [current];
 			if (current && current.children && current.children.length) {
 				current.children.forEach((child) => {
+					child.parentDeleted = current.data.status === 'deleted';
 					array = array.concat(addLinks(child, current.path, current.articleType));
 				});
 			}
@@ -79,6 +80,10 @@ export default function PublishPanel(props) {
 					objectResult[copyMode] = [page];
 			}
 			else if (props.mode === 'ReRemix') {
+				if (page.title !== page.data.original.title) //page moved
+					objectResult['moved'].push(page);
+				
+				
 				if (objectResult[page.status])
 					objectResult[page.status].push(page);
 				else
@@ -113,19 +118,20 @@ export default function PublishPanel(props) {
 		};
 		if (props.mode === 'Remix') {
 			return <List style={listStyle}>
-				{listItem(sorted.blank, 'unchanged', 'be blank pages')}
-				{listItem(sorted.transclude, 'new', 'be transcluded')}
-				{listItem(sorted.fork, 'new', 'be forked')}
-				{props.permission === 'Admin' ? listItem(sorted.full, 'modified', 'be full-copied'):null}
-				{listItem(sorted.badStructure, 'deleted', 'have non-recommended structure!')}
+				{listItem(sorted.blank, 'unchanged', 'will be blank pages')}
+				{listItem(sorted.transclude, 'new', 'will be transcluded')}
+				{listItem(sorted.fork, 'new', 'will be forked')}
+				{props.permission === 'Admin' ? listItem(sorted.full, 'modified', 'will be full-copied') : null}
+				{listItem(sorted.badStructure, 'deleted', 'will have non-recommended structure!')}
 			</List>;
 		}
 		else if (props.mode === 'ReRemix') {
 			return <List style={listStyle}>
-				{listItem(sorted.new, 'new', 'be added')}
-				{listItem(sorted.modified, 'modified', 'be modified')}
-				{listItem(sorted.deleted, 'deleted', 'be deleted')}
-				{listItem(sorted.unchanged, 'unchanged', 'be unchanged')}
+				{listItem(sorted.new, 'new', 'will be added')}
+				{listItem(sorted.modified, 'modified', 'will be modified')}
+				{listItem(sorted.moved, 'modified', 'of modified will be moved')}
+				{listItem(sorted.deleted, 'deleted', 'will be deleted')}
+				{listItem(sorted.unchanged, 'unchanged', 'will be unchanged')}
 			</List>;
 		}
 		else
@@ -139,7 +145,7 @@ export default function PublishPanel(props) {
 			return <ListItem style={{color: statusColor}}><ListItemIcon>
 				<Description style={{color: statusColor}}/>
 			</ListItemIcon>
-				{length} pages will {text}
+				{length} pages {text}
 			</ListItem>;
 		}
 	}
@@ -158,22 +164,21 @@ export default function PublishPanel(props) {
 					</Tabs>
 				</AppBar>
 				{panel === 'summary' ? generateSummary() : null}
-				{props.mode === 'Remix' ?
-					<Tooltip
-						title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
-						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-							<FormControlLabel
-								style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
-								control={
-									<Switch
-										inputProps={{'aria-label': 'primary checkbox'}}
-										checked={override}
-										onChange={() => setOverride(!override)}
-									/>}
-								label="Overwrite existing pages"/>
-							<Warning style={{color: 'red'}}/>
-						</div>
-					</Tooltip> : null}
+				<Tooltip
+					title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
+					<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+						<FormControlLabel
+							style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+							control={
+								<Switch
+									inputProps={{'aria-label': 'primary checkbox'}}
+									checked={override}
+									onChange={() => setOverride(!override)}
+								/>}
+							label="Overwrite existing pages"/>
+						<Warning style={{color: 'red'}}/>
+					</div>
+				</Tooltip>
 				<div id='LTPreviewForm' className='treePanel'
 				     style={{display: panel === 'tree' ? 'flex' : 'none'}}></div>
 				<ButtonGroup
@@ -189,7 +194,8 @@ export default function PublishPanel(props) {
 					</Button>
 				</ButtonGroup>
 			</Paper>
-			<PublishSubPanel {...props} working={pageArray} publishing={publishing} override={override}/>
+			<PublishSubPanel {...props} working={pageArray} sorted={sorted} publishing={publishing}
+			                 override={override}/>
 		</div>
 	</div>;
 }
@@ -321,7 +327,7 @@ function PublishSubPanel(props) {
 	}
 	
 	async function publish() {
-		if (props.institution === '') {
+		if (props.mode === 'Remix' && props.institution === '') {
 			if (confirm('Would you like to send an email to info@libretexts.com to request your institution?'))
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
 			return false;
@@ -336,15 +342,42 @@ function PublishSubPanel(props) {
 			});
 			return false;
 		}
-		let destRoot = props.institution;
-		if (destRoot.includes('Remixer_University')) {
-			destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
-			await LibreTexts.authenticatedFetch(destRoot, 'contents?edittime=now', null, {
-				method: 'POST',
-				body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
+		if (props.mode === 'ReRemix' && !props.override && props.sorted.modified.length) {
+			enqueueSnackbar(`The ReRemixer requires "Overwrite Existing Pages" to be turned on when modifying pages.
+			Remember to double check the changes that you are about to make since it may not be easy to undo them later!`, {
+				variant: 'warning',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
 			});
+			return false;
 		}
-		destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
+		if (props.mode === 'ReRemix') {
+			enqueueSnackbar(`This isn't ready yet. I'm still ironing out some significant bugs.`, {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
+			return false;
+		}
+		let destRoot;
+		if (props.mode === 'Remix') {
+			destRoot = props.institution;
+			if (destRoot.includes('Remixer_University')) {
+				destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
+				await LibreTexts.authenticatedFetch(destRoot, 'contents?edittime=now', null, {
+					method: 'POST',
+					body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
+				});
+			}
+			destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
+		}
+		else
+			destRoot = props.RemixTree.data.url;
+		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
 		if (response.ok && !props.override) {
 			enqueueSnackbar(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`, {
@@ -353,6 +386,7 @@ function PublishSubPanel(props) {
 					vertical: 'bottom',
 					horizontal: 'right',
 				},
+				autoHideDuration: 10000,
 			});
 			return false;
 		}
@@ -362,6 +396,7 @@ function PublishSubPanel(props) {
 			return false;
 		}
 		
+		//TODO REREMIXER publish
 		//All set to start publish
 		setState('processing');
 		setCounter({
@@ -377,19 +412,26 @@ function PublishSubPanel(props) {
 		let startedAt = new Date();
 		
 		//process cover
-		await LibreTexts.authenticatedFetch(destRoot, `contents?${writeMode}`, null, {
-			method: 'POST',
-			body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
-		});
-		await putProperty('mindtouch.idf#subpageListing', 'simple', destRoot);
-		LibreTexts.authenticatedFetch(destRoot, `files/${encodeURIComponent(encodeURIComponent(destRoot + '.libremap'))}?dream.out.format=json`, null, {
-			method: 'PUT',
-			body: JSON.stringify(props, null, 2),
-		});
+		if (props.mode === 'Remix') {
+			await LibreTexts.authenticatedFetch(destRoot, `contents?${writeMode}`, null, {
+				method: 'POST',
+				body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
+			});
+			await putProperty('mindtouch.idf#subpageListing', 'simple', destRoot);
+			LibreTexts.authenticatedFetch(destRoot, `files/${encodeURIComponent(encodeURIComponent(destRoot + '.libremap'))}?dream.out.format=json`, null, {
+				method: 'PUT',
+				body: JSON.stringify(props, null, 2),
+			});
+		}
+		
 		setFinished(destRoot);
 		for (const page of props.working) {
 			await processPage(page);
 		}
+		if (props.mode === 'ReRemix')
+			for (const page of props.sorted.moved) {
+				await movePage(page);
+			}
 		setState('done');
 		setIsActive(false);
 		
@@ -506,7 +548,7 @@ function PublishSubPanel(props) {
 						source.tags.push('transcluded:yes');
 						page.tags = page.tags.concat(source.tags);
 						if (currentSubdomain !== source.subdomain) {
-							contents = `<p className="mt-script-comment">Cross Library Transclusion</p>
+							contents = `<p class="mt-script-comment">Cross Library Transclusion</p>
 
 <pre class="script">
 template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${source.id}});</pre>
@@ -682,10 +724,10 @@ ${renderTags(page.tags)}`;
 				}
 			}
 			else if (page.status === 'deleted') {
-				await LibreTexts.authenticatedFetch(path, '', null, {
-					method: 'DELETE',
-					body: image,
-				});
+				if (!child.parentDeleted)
+					await LibreTexts.authenticatedFetch(path, '?recursive=true', null, {
+						method: 'DELETE'
+					});
 				completedPage(page, 'Deleted', 'deleted');
 			}
 			else if (page.status === 'unchanged') {
@@ -696,6 +738,19 @@ ${renderTags(page.tags)}`;
 				let tagsHTML = tags.map((tag) => `<a href="#">${tag}</a>`).join('');
 				return `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em>${tagsHTML}</p>`
 			}
+		}
+		
+		async function movePage(page) {
+			let url = destRoot + (page.path);
+			page.url = url;
+			[, page.path] = LibreTexts.parseURL(url);
+			
+			await LibreTexts.authenticatedFetch(path, '?recursive=true', null, {
+				method: 'DELETE'
+			});
+			//title=${encodeURIComponent(page.title)}
+			
+			completedPage(page, 'Moved', 'modified');
 		}
 		
 		

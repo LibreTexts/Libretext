@@ -180,6 +180,35 @@ export default function OptionsPanel(props) {
 					These options affect how the Autonumber operates. When enabled, the Autonumberer
 					automatically updates the Chapter and Page numbers based on any changes you make.
 				</DialogContentText>
+				<TextField
+					select
+					label="Chapter prefix"
+					value={props.options.autonumber.chapterPrefix}
+					onChange={(e) => {
+						changeOption('autonumber.chapterPrefix', e.target.value);
+					}}
+					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
+					margin="normal"
+					variant="filled">
+					<MenuItem value=''>No Prefix</MenuItem>
+					<MenuItem value='Chapter'>Chapter</MenuItem>
+					<MenuItem value='Section'>Section</MenuItem>
+				</TextField>
+				<TextField
+					select
+					label="Page Prefix"
+					value={props.options.autonumber.pagePrefix}
+					onChange={(e) => {
+						changeOption('autonumber.pagePrefix', e.target.value);
+					}}
+					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
+					margin="normal"
+					variant="filled">
+					<MenuItem value=''>No Prefix</MenuItem>
+					<MenuItem value='Page'>Page</MenuItem>
+					<MenuItem value='Topic'>Topic</MenuItem>
+					<MenuItem value='Section'>Section</MenuItem>
+				</TextField>
 				<Tooltip
 					title={`All pages shallower than ${props.options.autonumber.guideDepth || 1} will be categories, all pages at this depth will be guides, and all deeper will be topics.`}>
 					<TextField
@@ -225,35 +254,6 @@ export default function OptionsPanel(props) {
 						</Tooltip>
 					</div>
 				</div>
-				<TextField
-					select
-					label="Chapter prefix"
-					value={props.options.autonumber.chapterPrefix}
-					onChange={(e) => {
-						changeOption('autonumber.chapterPrefix', e.target.value);
-					}}
-					helperText={`Pick an optional title prefix for your chapters (${props.options.autonumber.chapterPrefix} 1:)`}
-					margin="normal"
-					variant="filled">
-					<MenuItem value=''>No Prefix</MenuItem>
-					<MenuItem value='Chapter'>Chapter</MenuItem>
-					<MenuItem value='Section'>Section</MenuItem>
-				</TextField>
-				<TextField
-					select
-					label="Page Prefix"
-					value={props.options.autonumber.pagePrefix}
-					onChange={(e) => {
-						changeOption('autonumber.pagePrefix', e.target.value);
-					}}
-					helperText={`Pick an optional title prefix for your pages (${props.options.autonumber.pagePrefix} 1.1:)`}
-					margin="normal"
-					variant="filled">
-					<MenuItem value=''>No Prefix</MenuItem>
-					<MenuItem value='Page'>Page</MenuItem>
-					<MenuItem value='Topic'>Topic</MenuItem>
-					<MenuItem value='Section'>Section</MenuItem>
-				</TextField>
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={handleAutonumberClose} color="primary">

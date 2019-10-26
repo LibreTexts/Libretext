@@ -135,11 +135,12 @@ class RemixerPanel extends React.Component {
 						if (data.hitMode === 'over') {
 							node.setExpanded(true);
 						}
-						await doTransfer();
+						let newNode = await doTransfer();
 						
-						if (node.key === 'ROOT' && node.hasChildren() && node.children.length === 1) {
+						if (this.props.mode === 'Remix' && node.key === 'ROOT'
+							&& node.hasChildren() && newNode.data.articleType === 'topic-category') {
 							this.save(node.toDict(true), true);
-							this.setState({mergeDialog: true});
+							this.setState({mergeDialog: newNode.key});
 							return;
 						}
 					}
@@ -174,6 +175,7 @@ class RemixerPanel extends React.Component {
 							await newNode.visitAndLoad();
 							RightAlert.slideUp();
 							LTRight.enable(true);
+							return newNode;
 						}
 					}
 				},
@@ -562,26 +564,24 @@ class RemixerPanel extends React.Component {
 				<DialogTitle id="form-dialog-title">Merge with Root?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Since this is the first piece of content which you are bringing over to the Remix Panel, you
-						have the choice of using the content as the root. Otherwise, you can just have the content added
-						normally below the root.
+						Since you are bringing over a Book/Unit, you can choose to use it as the LibreText root. [///]
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
+					<Button onClick={async () => {
+						let key = this.state.mergeDialog;
+						this.setState({mergeDialog: false, importDialog: true});
+						await this.mergeUp(key);
+						this.setState({importDialog: false});
+					}} color="primary">
+						Merge with Root
+					</Button>
 					<Button onClick={async () => {
 						this.setState({mergeDialog: false, importDialog: true});
 						await this.autonumber();
 						this.setState({importDialog: false});
 					}} color="primary">
 						Add normally
-					</Button>
-					<Button onClick={async () => {
-						this.setState({mergeDialog: false, importDialog: true});
-						await this.mergeUp();
-						this.setState({importDialog: false});
-						
-					}} color="primary">
-						Merge with Root
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -701,11 +701,24 @@ class RemixerPanel extends React.Component {
 			await this.autonumber(true);
 	};
 	
-	mergeUp = async () => {
-		let node = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
+	mergeUp = async (key) => {
+		const rightTree = $('#LTRight').fancytree('getTree');
+		let root = rightTree.getNodeByKey('ROOT');
 		
-		if (node && node.hasChildren() && node.children.length === 1) {
-			const child = node.getFirstChild();
+		if (root && root.hasChildren()) {
+			let child = rightTree.getNodeByKey(key);
+			if (!child)
+				return;
+			
+			const dict = root.toDict(true);
+			let replace = child.toDict(true);
+			replace.children = dict.children.filter(item => item.key !== key);
+			replace.children = replace.children.concat(child.toDict(true).children);
+			replace.key = 'ROOT';
+			
+			root.fromDict(replace);
+			root.setExpanded(true);
+			
 			this.props.enqueueSnackbar(`${child.title} set as the new root`, {
 				variant: 'success',
 				anchorOrigin: {
@@ -714,13 +727,6 @@ class RemixerPanel extends React.Component {
 				},
 				autoHideDuration: 10000,
 			});
-			
-			let root = node.toDict(true);
-			let replace = root.children[0];
-			replace.key = 'ROOT';
-			
-			node.fromDict(replace);
-			node.setExpanded(true);
 			await this.autonumber();
 			/*			else {
 							await node.setExpanded(true);
@@ -766,6 +772,7 @@ class RemixerPanel extends React.Component {
 				return false;
 			}
 		}
+		let changes = 0;
 		
 		let processNode = (node, sharedIndex, level) => {
 			node.title = node.title.replace('&amp;', 'and');
@@ -807,26 +814,28 @@ class RemixerPanel extends React.Component {
 			
 			//check status
 			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
-				const original = node.data.original;
+				const originalData = node.data.original.data;
 				const data = JSON.parse(JSON.stringify(node.data));
-				delete data.original; //skip these fields
-				delete data.status;
-				delete data.padded;
-				delete data.response;
+				delete originalData.original; //skip these fields
+				delete originalData.status;
+				delete originalData.padded;
+				delete originalData.response;
 				let unchanged = true;
-				for (let key in original) {
-					if (original.hasOwnProperty(key)) {
-						if (JSON.stringify(data[key]) !== JSON.stringify(original.data[key])) {
-							console.log(key, data[key], original.data[key]);
+				for (let key in originalData) {
+					if (originalData.hasOwnProperty(key)) {
+						if (JSON.stringify(data[key]) !== JSON.stringify(originalData[key])) {
+							console.log(key, data[key], originalData[key]);
 							unchanged = false;
 						}
 					}
 				}
 				
-				if (node.title === original.title && unchanged)
+				if (node.title === node.data.original.title && unchanged)
 					node.data.status = 'unchanged';
-				else
+				else if (node.data.status !== 'modified') {
 					node.data.status = 'modified';
+					changes++;
+				}
 			}
 			
 			//ensure structure matches tags
@@ -853,10 +862,19 @@ class RemixerPanel extends React.Component {
 			}
 		}
 		let d = customRoot || root.toDict(true);
-		let depth = this.getDepth(d);
+		// let depth = this.getDepth(d);
 		let chapter = 1;
 		let sharedIndex = [1];
 		processNode(d, sharedIndex, 0);
+		
+		if (changes)
+			this.props.enqueueSnackbar(`The autonumberer modified ${changes} pages.`, {
+				variant: 'warning',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
 		
 		this.save(d, updateUndo);
 	};
@@ -866,15 +884,13 @@ class RemixerPanel extends React.Component {
 		return root.toDict(true);
 	}
 	
-	setSubdomain = async () => {
-		let select = document.getElementById('LTFormSubdomain');
-		let subdomain = select.value;
-		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
+	setSubdomain = async (e) => {
+		let subdomain = e.target.value;
 		let LTLeft = $('#LTLeft').fancytree('getTree');
 		let LeftAlert = $('#LTLeftAlert');
 		
 		LTLeft.enable(false);
-		LeftAlert.text(`Loading ${name}`);
+		LeftAlert.text(`Loading ${subdomain}`);
 		LeftAlert.slideDown();
 		let content = await RemixerFunctions.getSubpages('home', subdomain, false, true);
 		

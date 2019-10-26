@@ -117,7 +117,8 @@ export default class Remixer extends React.Component {
 					mode: this.state.swapDialog,
 					undoArray: [],
 					redoArray: [],
-					currentlyActive: ''
+					currentlyActive: '',
+					RemixTree: RemixerFunctions.generateDefault(0,0)
 				}
 			};
 			switch (this.state.swapDialog) {

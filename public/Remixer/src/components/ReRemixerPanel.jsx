@@ -177,15 +177,13 @@ class ReRemixerPanel extends React.Component {
 		return root.toDict(true);
 	}
 	
-	setSubdomain = async () => {
-		let select = document.getElementById('LTFormSubdomain');
-		let subdomain = select.value;
-		let name = $(`#LTFormSubdomain option[value="${subdomain}"]`).text();
+	setSubdomain = async (e) => {
+		let subdomain = e.target.value;
 		let LTLeft = $('#LTLeft').fancytree('getTree');
 		let LeftAlert = $('#LTLeftAlert');
 		
 		LTLeft.enable(false);
-		LeftAlert.text(`Loading ${name}`);
+		LeftAlert.text(`Loading ${subdomain}`);
 		LeftAlert.slideDown();
 		let content = await RemixerFunctions.getSubpages('home', subdomain, false, true);
 		
@@ -226,6 +224,7 @@ class ReRemixerPanel extends React.Component {
 		
 		currentlyActive = currentlyActive.toDict(true);
 		currentlyActive.key = 'ROOT';
+		currentlyActive.expanded = true;
 		tree(currentlyActive);
 		
 		function tree(current) {

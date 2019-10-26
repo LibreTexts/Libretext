@@ -22,7 +22,7 @@ export default function Tutorial() {
 	const [panel, setPanel] = React.useState(0);
 	
 	function getSelect() {
-		let steps = ['About this tutorial', 'Getting Started', 'Creating your Remix'];
+		let steps = ['About this tutorial', 'Getting Started', 'Creating your Remix', 'Creating a ReRemix'];
 		return steps.map((step, index) => <option value={index} key={index}>{index}: {step}</option>);
 	}
 	
@@ -130,6 +130,38 @@ export default function Tutorial() {
 						    panel.&nbsp;&nbsp;&nbsp;</li>
 					</ol>
 				</>;
+			case 3:
+				return <>
+					<h2>Creating a ReRemix</h2>
+					<p>If you have created a Remix, you may be wondering how you can modify it once you've already
+					   published it. With the ReRemixer, you can select your prior Remixes and import them such
+					   that you can modify the structure, add new content, and even delete pages you no longer
+					   need. Please note that ReRemixes are not automatically revertible, so make sure that you are
+					   comfortable with all the changes your are making!</p>
+					<ol>
+						<li>First, notice how the colors of the pages in the Remix Panel change as you work with your
+						    structure:
+							<ul>
+								<li style={{color: '#999'}}>Gray means that the page is unmodified</li>
+								<li style={{color: 'green'}}>Green means that the page is newly added</li>
+								<li style={{color: 'orange'}}>Orange means that the page is either been moved around or
+								                              the contents have been edited. The most common reason is
+								                              that pages have been moved around and thus forces the
+								                              neighboring pages to be renumbered to compensate.
+								</li>
+								<li style={{color: 'red'}}>Red means that the page marked to be deleted</li>
+							</ul>
+						</li>
+						<li>Almost everything is the same between the ReRemixer and regular Remixing. One of the few
+						    differences is that pages can be restored from being marked for deletion by selecting the
+						    page.
+						</li>
+						<li>Once you've made all the changes you want, go to the publish panel in order to activate your
+						    proposed changes! You can always return to the ReRemixer if you want to further modify your
+						    LibreText.
+						</li>
+					</ol>
+				</>;
 		}
 	}
 	
@@ -137,7 +169,7 @@ export default function Tutorial() {
 		<select className='LTFormSubdomain' value={panel} onChange={(e) => setPanel(Number(e.target.value))}>
 			{getSelect()}
 		</select>
-		<div id='LTTutorial' style={{padding: 20, width:'auto', overflow:'auto', color:'black'}}>
+		<div id='LTTutorial' style={{padding: 20, width: 'auto', overflow: 'auto', color: 'black'}}>
 			{getPanel()}
 		</div>
 	</>
