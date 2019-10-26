@@ -9,7 +9,6 @@ import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/Delete';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
-import MergeType from '@material-ui/icons/MergeType';
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
 import Refresh from '@material-ui/icons/Refresh';
@@ -137,6 +136,12 @@ class RemixerPanel extends React.Component {
 							node.setExpanded(true);
 						}
 						await doTransfer();
+						
+						if (node.key === 'ROOT' && node.hasChildren() && node.children.length === 1) {
+							this.save(node.toDict(true), true);
+							this.setState({mergeDialog: true});
+							return;
+						}
 					}
 					else if (data.otherNodeData) {
 						// Drop Fancytree node from different frame or window, so we only have
@@ -318,10 +323,10 @@ class RemixerPanel extends React.Component {
 					<Redo/></Button>
 				
 				
-				<Tooltip title="Merges the contents of the selected folder with its parent's contents."
+				{/*<Tooltip title="Merges the contents of the selected folder with its parent's contents."
 				         disabled={deleted}>
 					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
-				</Tooltip>
+				</Tooltip>*/}
 				<Button variant="contained"
 				        onClick={() => {
 					        this.props.mode === 'Remix'
@@ -333,7 +338,7 @@ class RemixerPanel extends React.Component {
 				<Button variant="contained" color="secondary"
 				        onClick={() => {
 					        this.autonumber();
-					        this.props.updateRemixer({stage: 'Publishing'})
+					        this.props.updateRemixer({name: this.props.RemixTree.title, stage: 'Publishing'})
 				        }}><span>Publish</span>
 					<Publish/></Button>
 			</div>
@@ -544,6 +549,42 @@ class RemixerPanel extends React.Component {
 					<CircularProgress size={100}/>
 				</DialogContent>
 			</Dialog>
+			<Dialog open={!!this.state.importDialog} aria-labelledby="form-dialog-title"
+			        id="editDialog">
+				<DialogTitle id="form-dialog-title">Finishing content import
+				</DialogTitle>
+				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
+					<CircularProgress size={100}/>
+				</DialogContent>
+			</Dialog>
+			<Dialog open={!!this.state.mergeDialog} onClose={() => this.setState({mergeDialog: false})}
+			        aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Merge with Root?</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Since this is the first piece of content which you are bringing over to the Remix Panel, you
+						have the choice of using the content as the root. Otherwise, you can just have the content added
+						normally below the root.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={async () => {
+						this.setState({mergeDialog: false, importDialog: true});
+						await this.autonumber();
+						this.setState({importDialog: false});
+					}} color="primary">
+						Add normally
+					</Button>
+					<Button onClick={async () => {
+						this.setState({mergeDialog: false, importDialog: true});
+						await this.mergeUp();
+						this.setState({importDialog: false});
+						
+					}} color="primary">
+						Merge with Root
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>;
 	}
 	
@@ -661,40 +702,36 @@ class RemixerPanel extends React.Component {
 	};
 	
 	mergeUp = async () => {
-		let node = $('#LTRight').fancytree('getActiveNode');
-		if (node) {
-			if (node.key === 'ROOT' && node.hasChildren()) {
-				if (node.children.length === 1) {
-					const child = node.getFirstChild();
-					this.props.enqueueSnackbar(`${node.title} ${child.title}`, {
-						variant: 'success',
-						anchorOrigin: {
-							vertical: 'bottom',
-							horizontal: 'right',
-						},
-					});
-					//TODO Copy logic
-				}
-				else {
-					this.props.enqueueSnackbar('You must have only one child to merge up the root page.', {
-						variant: 'warning',
-						anchorOrigin: {
-							vertical: 'bottom',
-							horizontal: 'right',
-						},
-					})
-				}
-			}
-			else {
-				await node.setExpanded(true);
-				if (node.hasChildren()) {
-					while (node.hasChildren()) {
-						node.getFirstChild().moveTo(node.parent, 'child');
-					}
-					node.remove();
-					this.autonumber(true);
-				}
-			}
+		let node = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
+		
+		if (node && node.hasChildren() && node.children.length === 1) {
+			const child = node.getFirstChild();
+			this.props.enqueueSnackbar(`${child.title} set as the new root`, {
+				variant: 'success',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+				autoHideDuration: 10000,
+			});
+			
+			let root = node.toDict(true);
+			let replace = root.children[0];
+			replace.key = 'ROOT';
+			
+			node.fromDict(replace);
+			node.setExpanded(true);
+			await this.autonumber();
+			/*			else {
+							await node.setExpanded(true);
+							if (node.hasChildren()) {
+								while (node.hasChildren()) {
+									node.getFirstChild().moveTo(node.parent, 'child');
+								}
+								node.remove();
+								this.autonumber(true);
+							}
+						}*/
 		}
 	};
 	

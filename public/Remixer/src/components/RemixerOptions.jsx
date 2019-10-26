@@ -41,6 +41,9 @@ export default function RemixerOptions(props) {
 		props.updateRemixer({institution: result[0].url});
 	}
 	
+	let title = props.RemixTree.title;
+	title = title && title !== "New LibreText. Drag onto me to get started" ? title : '';
+	
 	return <div style={{display: 'flex', margin: 10, alignItems: 'center'}}>
 		<div style={{
 			display: 'flex',
@@ -51,9 +54,11 @@ export default function RemixerOptions(props) {
 			label="LibreText name"
 			margin="normal"
 			variant="outlined"
-			value={props.name || ""}
+			value={title}
 			onChange={(event) => {
-				props.updateRemixer({name: event.target.value});
+				const tempTree = props.RemixTree;
+				tempTree.title = event.target.value;
+				props.updateRemixer({RemixTree: tempTree});
 			}}
 		/>
 			{props.mode === 'Remix' ? <TextField

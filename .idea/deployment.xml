@@ -36,6 +36,16 @@
           </excludedPaths>
         </serverdata>
       </paths>
+      <paths name="Test">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
     </serverData>
     <option name="myUploadOnCheckinName" value="Front" />
     <option name="myAutoUpload" value="ALWAYS" />
