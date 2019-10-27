@@ -1029,7 +1029,7 @@ wiki.page("${child.path}", NULL)</pre>
 							
 							// Title cleanup
 							if (child.data.padded) {
-								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
+								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&to=" + child.data.padded, {
 									method: "POST",
 									headers: {
 										'x-deki-token': LTForm.keys[subdomain],

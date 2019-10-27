@@ -159,7 +159,8 @@ class RemixerPanel extends React.Component {
 					
 					async function doTransfer() {
 						if (sameTree) {
-							data.otherNode.moveTo(node, data.hitMode);
+							if (data.hitMode)
+								data.otherNode.moveTo(node, data.hitMode);
 						}
 						else {
 							let newNode = data.otherNode.copyTo(node, data.hitMode, function (n) {
@@ -333,7 +334,7 @@ class RemixerPanel extends React.Component {
 				        onClick={() => {
 					        this.props.mode === 'Remix'
 						        ? this.setState({resetDialog: true})
-						        : this.props.updateRemixer({stage: 'ReRemixing'})
+						        : this.setState({reRemixDialog: true});
 				        }}>
 					<span>Start Over</span>
 					<Refresh/></Button>
@@ -585,6 +586,36 @@ class RemixerPanel extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
+			<Dialog open={!!this.state.importDialog} aria-labelledby="form-dialog-title"
+			        id="editDialog">
+				<DialogTitle id="form-dialog-title">Finishing content import
+				</DialogTitle>
+				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
+					<CircularProgress size={100}/>
+				</DialogContent>
+			</Dialog>
+			<Dialog open={!!this.state.reRemixDialog} onClose={() => this.setState({reRemixDialog: false})}
+			        aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Start ReRemix over?</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						This action will clear your work in the Remix Panel and your undo history. Consider saving your
+						current workspace to a file with the "Save File" button. You will be taken to the ReRemix panel
+						to choose another LibreText to start from.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => this.setState({reRemixDialog: false})} color="primary">
+						Cancel
+					</Button>
+					<Button onClick={() => {
+						this.setState({reRemixDialog: false});
+						this.props.updateRemixer({stage: 'ReRemixing'})
+					}} color="primary">
+						Start Over
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>;
 	}
 	
@@ -774,13 +805,14 @@ class RemixerPanel extends React.Component {
 		}
 		let changes = 0;
 		
-		let processNode = (node, sharedIndex, level) => {
+		let processNode = (node, sharedIndex, level, parentPath = '') => {
 			node.title = node.title.replace('&amp;', 'and');
 			
 			
-			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
-				
-				//TODO: suffix
+			if (node.title.match(/[0-9]+\.[A-Za-z]+:/) && !this.props.options.overwriteSuffix) {
+				//skip unless overwriteSuffix is enabled
+			}
+			else if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
 				if (node.title.includes(': '))
 					node.title = node.title.replace(/^[^:]*: /, '');
 				
@@ -811,9 +843,14 @@ class RemixerPanel extends React.Component {
 				}
 				node.title = node.title.trim();
 			}
+			else
+				node.data['padded'] = false;
+			
+			
+			node.data.relativePath = node.key === "ROOT" ? '' : (`${parentPath}/${node.data.padded || node.title}`).replace(/ /g, '_');
 			
 			//check status
-			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
+			if (this.props.options.enableAutonumber && (node.data.status === 'unchanged' || node.data.status === 'modified')) {
 				const originalData = node.data.original.data;
 				const data = JSON.parse(JSON.stringify(node.data));
 				delete originalData.original; //skip these fields
@@ -824,7 +861,7 @@ class RemixerPanel extends React.Component {
 				for (let key in originalData) {
 					if (originalData.hasOwnProperty(key)) {
 						if (JSON.stringify(data[key]) !== JSON.stringify(originalData[key])) {
-							console.log(key, data[key], originalData[key]);
+							// console.log(key, data[key], originalData[key]);
 							unchanged = false;
 						}
 					}
@@ -848,7 +885,7 @@ class RemixerPanel extends React.Component {
 			if (node.children) { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
-					node.children[i] = processNode(node.children[i], sharedIndex, level + 1);
+					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node.path);
 				}
 			}
 			return node;
@@ -917,66 +954,6 @@ class RemixerPanel extends React.Component {
 			result.push(<option value={libraries[key]} key={key}>{key}</option>);
 		});
 		return result;
-	}
-	
-	static async getSubpages(path, subdomain, full, linkTitle) {
-		path = path.replace(`https://${subdomain}.libretexts.org/`, '');
-		let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
-		response = await response.json();
-		return await subpageCallback(response);
-		
-		async function subpageCallback(info) {
-			let subpageArray = info['page.subpage'];
-			if (subpageArray) {
-				subpageArray = subpageArray.length ? info['page.subpage'] : [info['page.subpage']];
-			}
-			const result = [];
-			const promiseArray = [];
-			
-			async function subpage(subpage, index) {
-				let url = subpage['uri.ui'];
-				let path = subpage.path['#text'];
-				url = url.replace('?title=', '');
-				path = path.replace('?title=', '');
-				const hasChildren = subpage['@subpages'] === 'true';
-				let children = hasChildren ? undefined : [];
-				if (hasChildren && full) { //recurse down
-					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
-					children = await children.json();
-					children = await subpageCallback(children);
-				}
-				if (!url.endsWith('/link') && subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter') {
-					let miniResult = {
-						title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
-						url: url,
-						sourceURL: url,
-						children: children,
-						lazy: !full,
-					};
-					miniResult = await LibreTexts.getAPI(miniResult);
-					
-					let type = miniResult.tags.find(elem => elem.startsWith('article:'));
-					if (type) {
-						miniResult.articleType = type.split('article:')[1];
-						miniResult.extraClasses = `article-${miniResult.articleType}`;
-					}
-					miniResult.tags = miniResult.tags.filter(elem => !elem.startsWith('article:'));
-					result[index] = miniResult;
-				}
-			}
-			
-			if (subpageArray && subpageArray.length) {
-				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
-				}
-				
-				await Promise.all(promiseArray);
-				return result.filter(elem => elem);
-			}
-			else {
-				return [];
-			}
-		}
 	}
 	
 	

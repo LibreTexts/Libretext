@@ -198,7 +198,7 @@ function LibreTextsReuse() {
 			else {
 				tags = []
 			}
-			if (files.tag) {
+			if (files.file) {
 				files = files.file.length ? files.file : [files.file];
 			}
 			else {
