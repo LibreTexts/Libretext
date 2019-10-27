@@ -41,6 +41,7 @@ function generateDefault(chapters, pages) {
 			padded: "",
 			status: 'new',
 			articleType: 'topic-category',
+			tags:['coverpage:yes']
 		},
 		unselectable: true,
 		expanded: true,

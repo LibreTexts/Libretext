@@ -55,7 +55,7 @@ export default function PublishPanel(props) {
 		function addLinks(current, parentType) {
 			current = {...current, ...current.data};
 			current.parentType = parentType;
-			let array = current.key === "ROOT" ? [] : [current];
+			let array = [current];
 			if (current && current.children && current.children.length) {
 				current.children.forEach((child) => {
 					child.parentDeleted = current.data.status === 'deleted';
@@ -163,21 +163,22 @@ export default function PublishPanel(props) {
 					</Tabs>
 				</AppBar>
 				{panel === 'summary' ? generateSummary() : null}
-				<Tooltip
-					title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
-					<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-						<FormControlLabel
-							style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
-							control={
-								<Switch
-									inputProps={{'aria-label': 'primary checkbox'}}
-									checked={override}
-									onChange={() => setOverride(!override)}
-								/>}
-							label="Overwrite existing pages"/>
-						<Warning style={{color: 'red'}}/>
-					</div>
-				</Tooltip>
+				{panel === 'summary' ?
+					<Tooltip
+						title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
+						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+							<FormControlLabel
+								style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
+								control={
+									<Switch
+										inputProps={{'aria-label': 'primary checkbox'}}
+										checked={override}
+										onChange={() => setOverride(!override)}
+									/>}
+								label="Overwrite existing pages"/>
+							<Warning style={{color: 'red'}}/>
+						</div>
+					</Tooltip> : null}
 				<div id='LTPreviewForm' className='treePanel'
 				     style={{display: panel === 'tree' ? 'flex' : 'none'}}></div>
 				<ButtonGroup
@@ -331,7 +332,7 @@ function PublishSubPanel(props) {
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
 			return false;
 		}
-		if (!props.name) {
+		if (!props.name || props.name === "New LibreText. Drag onto me to get started") {
 			enqueueSnackbar(`No LibreText name provided!`, {
 				variant: 'error',
 				anchorOrigin: {
@@ -385,7 +386,6 @@ function PublishSubPanel(props) {
 			return false;
 		}
 		
-		//TODO REREMIXER publish
 		//All set to start publish
 		setState('processing');
 		setCounter({
@@ -401,21 +401,23 @@ function PublishSubPanel(props) {
 		let startedAt = new Date();
 		
 		//process cover
-		if (props.mode === 'Remix') {
-			await LibreTexts.authenticatedFetch(destRoot, `contents?${writeMode}`, null, {
-				method: 'POST',
-				body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>',
-			});
-			await putProperty('mindtouch.idf#subpageListing', 'simple', destRoot);
+		/*if (props.mode === 'Remix') {
 			LibreTexts.authenticatedFetch(destRoot, `files/${encodeURIComponent(encodeURIComponent(destRoot + '.libremap'))}?dream.out.format=json`, null, {
 				method: 'PUT',
 				body: JSON.stringify(props, null, 2),
 			});
-		}
+		}*/
 		
 		setFinished(destRoot);
 		for (const page of props.working) {
 			await processPage(page);
+		}
+		for (const page of props.sorted.deleted) {
+			if (!page.parentDeleted)
+				await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
+					method: 'DELETE'
+				});
+			completedPage(page, 'Deleted', 'deleted');
 		}
 		setState('done');
 		setIsActive(false);
@@ -438,7 +440,7 @@ function PublishSubPanel(props) {
 				}
 			);
 			setResults(results => {
-				if (isFailed)
+				if (isFailed && !isFailed.ok)
 					switch (isFailed.status) {
 						case 403:
 							isFailed = '403 Forbidden - User does not have permission to modify' + page.path + '\n';
@@ -472,7 +474,7 @@ function PublishSubPanel(props) {
 				let contents, response, source;
 				
 				if (page.copyMode === 'blank') { //process new blank pages
-					contents = `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:${page.articleType}</a></p>`;
+					contents = `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:${page.articleType}</a>${page.key === 'ROOT' ? '<a href=\"#\">coverpage:yes</a>' : ''}</p>`;
 					if (['topic-category', 'topic-guide'].includes(page.articleType))
 						contents = '<p>{{template.ShowOrg()}}</p>' + contents;
 					
@@ -542,11 +544,10 @@ function PublishSubPanel(props) {
 					}
 					
 					if (page.data.relativePath !== page.data.original.data.relativePath) { //move page
-						await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}`, null, {
+						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}`, null, {
 							method: 'POST'
 						});
-						
-						completedPage(page, 'Moved', 'modified');
+						completedPage(page, 'Moved', 'modified', response);
 					}
 					
 					return;
@@ -738,11 +739,7 @@ ${renderTags(page.tags)}`;
 				
 			}
 			else if (page.status === 'deleted') {
-				if (!page.parentDeleted)
-					await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
-						method: 'DELETE'
-					});
-				completedPage(page, 'Deleted', 'deleted');
+				//skip because this is handled later
 			}
 			else if (page.status === 'unchanged') {
 				// completedPage(page, 'Skipped', 'unchanged');
@@ -763,8 +760,9 @@ ${renderTags(page.tags)}`;
 				[, page.newPath] = LibreTexts.parseURL(`${destRoot}${page.relativePath}`);
 				
 			}
-			else
-				url = destRoot + (page.path);
+			else {
+				url = `${destRoot}${page.relativePath}`;
+			}
 			
 			page.url = url;
 			[, page.path] = LibreTexts.parseURL(url);

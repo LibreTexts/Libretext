@@ -746,6 +746,7 @@ class RemixerPanel extends React.Component {
 			replace.children = dict.children.filter(item => item.key !== key);
 			replace.children = replace.children.concat(child.toDict(true).children);
 			replace.key = 'ROOT';
+			replace.tags.push('coverpage:yes');
 			
 			root.fromDict(replace);
 			root.setExpanded(true);
@@ -847,7 +848,7 @@ class RemixerPanel extends React.Component {
 				node.data['padded'] = false;
 			
 			
-			node.data.relativePath = node.key === "ROOT" ? '' : (`${parentPath}/${node.data.padded || node.title}`).replace(/ /g, '_');
+			node.data.relativePath = node.key === "ROOT" ? '' : (`${parentPath}/${(node.data.padded || node.title).replace(/\//g, '\/')}`).replace(/ /g, '_');
 			
 			//check status
 			if (this.props.options.enableAutonumber && (node.data.status === 'unchanged' || node.data.status === 'modified')) {
@@ -885,7 +886,7 @@ class RemixerPanel extends React.Component {
 			if (node.children) { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
-					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node.path);
+					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node.data.relativePath);
 				}
 			}
 			return node;
