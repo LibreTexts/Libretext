@@ -182,7 +182,7 @@ function LibreTextsReuse() {
 		let [subdomain, path] = parseURL(page.url);
 		// console.log(page.url);
 		let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain);
-		page.response = response;
+		// page.response = response;
 		if (response.ok) {
 			response = await response.json();
 			let {properties, tags, files} = response;
@@ -205,7 +205,7 @@ function LibreTextsReuse() {
 				files = []
 			}
 			tags = tags.map((elem) => elem.title);
-			page.id = response['@id'];
+			page.id = parseInt(response['@id']);
 			page.title = page.title || response.title;
 			page.tags = page.tags || tags;
 			page.properties = page.properties || properties;
@@ -214,6 +214,8 @@ function LibreTextsReuse() {
 			page.path = response.path['#text'];
 			page.modified = new Date(response['date.modified']);
 			page.content = response.content;
+			if(response['page.parent'])
+				page.parentID = parseInt(response['page.parent']['@id']);
 		}
 		else {
 			let error = await response.json();

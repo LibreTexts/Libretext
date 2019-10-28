@@ -69,6 +69,8 @@ class RemixerPanel extends React.Component {
 			},
 			collapse: () => {
 				this.autonumber();
+				const rightTree = $('#LTRight').fancytree('getTree');
+				rightTree.activateKey('', {noFocus: true});
 				this.props.updateRemixer({currentlyActive: ''});
 			},
 			expand: () => this.autonumber(),
@@ -164,7 +166,7 @@ class RemixerPanel extends React.Component {
 						}
 						else {
 							let newNode = data.otherNode.copyTo(node, data.hitMode, function (n) {
-								n.title = n.title.replace(/<a.* ><\/a>/, '');
+								n.title = n.title.replace(/<a.*<\/a>/, '');
 								n.key = null; // make sure, a new key is generated
 								n.status = 'new'; // make sure, a new key is generated
 							});
@@ -203,6 +205,9 @@ class RemixerPanel extends React.Component {
 			extensions: ['dnd5'],
 			collapse: this.updateLeft,
 			expand: this.updateLeft,
+			dblclick: (event, data) => {
+				window.open(data.node.data.url);
+			},
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
@@ -416,6 +421,13 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('sourceURL', event.target.value)}
 						fullWidth
 					/>
+					<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
+					   style={{
+						   display: 'block',
+						   overflow: 'hidden',
+						   textOverflow: 'ellipsis',
+						   whiteSpace: 'nowrap'
+					   }}> Visit {this.state.edit.sourceURL || ''}</a>
 					<div style={{display: 'flex'}}>
 						<Tooltip
 							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
@@ -467,21 +479,21 @@ class RemixerPanel extends React.Component {
 							</MenuItem>
 							<MenuItem value='transclude'>
 								<Tooltip
-									title="In transclude mode, pages will be automatically updated from the source">
-									<ListItemText>Transclude</ListItemText>
+									title="In copy-transclude mode, pages will be automatically updated from the source">
+									<ListItemText>Copy-Transclude</ListItemText>
 								</Tooltip>
 							</MenuItem>
 							<MenuItem value='fork'>
 								<Tooltip
-									title="In fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
-									<ListItemText>Fork</ListItemText>
+									title="In copy-fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
+									<ListItemText>Copy-Fork</ListItemText>
 								</Tooltip>
 							</MenuItem>
 							{this.props.permission === 'Admin' ?
 								<MenuItem value='full'>
 									<Tooltip
-										title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
-										<ListItemText>Full-Copy</ListItemText>
+										title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
+										<ListItemText>Copy-Full</ListItemText>
 									</Tooltip>
 								</MenuItem>
 								: null}
@@ -503,8 +515,8 @@ class RemixerPanel extends React.Component {
 							flexWrap: 'wrap',
 						}}>
 							{(this.state.edit.tags || []).map((item, index) =>
-								<Tooltip title={item}>
-									<Chip key={item} label={item}
+								<Tooltip title={item} key={item}>
+									<Chip label={item}
 									      style={{margin: 10}}
 									      onClick={() => {
 										      let edit = prompt('New name for this tag', item);
@@ -544,8 +556,7 @@ class RemixerPanel extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			<Dialog open={!this.state.initialized} aria-labelledby="form-dialog-title"
-			        id="editDialog">
+			<Dialog open={!this.state.initialized} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Loading Remixer
 				</DialogTitle>
 				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
@@ -553,7 +564,7 @@ class RemixerPanel extends React.Component {
 				</DialogContent>
 			</Dialog>
 			<Dialog open={!!this.state.importDialog} aria-labelledby="form-dialog-title"
-			        id="editDialog">
+			        id="importDialog">
 				<DialogTitle id="form-dialog-title">Finishing content import
 				</DialogTitle>
 				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
@@ -562,10 +573,10 @@ class RemixerPanel extends React.Component {
 			</Dialog>
 			<Dialog open={!!this.state.mergeDialog} onClose={() => this.setState({mergeDialog: false})}
 			        aria-labelledby="form-dialog-title">
-				<DialogTitle id="form-dialog-title">Merge with Root?</DialogTitle>
+				<DialogTitle id="form-dialog-title">Merge with Coverpage?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Since you are bringing over a Book/Unit, you can choose to use it as the LibreText root. [///]
+						Since you are bringing over a Book/Unit, you can choose to use it as the LibreText coverpage.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -575,7 +586,7 @@ class RemixerPanel extends React.Component {
 						await this.mergeUp(key);
 						this.setState({importDialog: false});
 					}} color="primary">
-						Merge with Root
+						Merge with Coverpage
 					</Button>
 					<Button onClick={async () => {
 						this.setState({mergeDialog: false, importDialog: true});
@@ -660,6 +671,7 @@ class RemixerPanel extends React.Component {
 			node.addChildren({
 				title: 'New Page',
 				padded: '',
+				id: -1,
 				lazy: false,
 				expanded: true,
 				status: 'new',
@@ -695,16 +707,35 @@ class RemixerPanel extends React.Component {
 	
 	delete = async () => {
 		const deleteNode = (node) => {
-			if (node) {
+			if (node && node.parent) {
 				if (node.key !== 'ROOT') {
 					//preserve activenode
 					let otherNode = node.getNextSibling() || node.getParent();
 					
 					switch (node.data.status) {
-						case 'deleted':
-							node.data.status = node.data.originalStatus;
+						case 'deleted': //restore page
+							let ancestorDeleted = false;
+							let temp = node;
+							while (temp.parent) {
+								if (temp.parent.data.status === 'deleted')
+									ancestorDeleted = temp.parent.title;
+								temp = temp.parent;
+							}
+							
+							if (ancestorDeleted)
+								this.props.enqueueSnackbar(`Ancestor of this page (${ancestorDeleted}) is still marked for deletion.\nRestore that page instead.`, {
+									variant: 'error',
+									anchorOrigin: {
+										vertical: 'bottom',
+										horizontal: 'right',
+									},
+								});
+							else
+								node.data.status = node.data.originalStatus;
+							
 							break;
-						case 'new':
+						case 'new': //completely remove a new page
+							node.removeChildren();
 							node.remove();
 							
 							if (otherNode)
@@ -746,7 +777,8 @@ class RemixerPanel extends React.Component {
 			replace.children = dict.children.filter(item => item.key !== key);
 			replace.children = replace.children.concat(child.toDict(true).children);
 			replace.key = 'ROOT';
-			replace.tags.push('coverpage:yes');
+			if (!replace.data.tags.includes('coverpage:yes'))
+				replace.data.tags.push('coverpage:yes');
 			
 			root.fromDict(replace);
 			root.setExpanded(true);
@@ -806,7 +838,7 @@ class RemixerPanel extends React.Component {
 		}
 		let changes = 0;
 		
-		let processNode = (node, sharedIndex, level, parentPath = '') => {
+		let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
 			node.title = node.title.replace('&amp;', 'and');
 			
 			
@@ -847,8 +879,8 @@ class RemixerPanel extends React.Component {
 			else
 				node.data['padded'] = false;
 			
-			
-			node.data.relativePath = node.key === "ROOT" ? '' : (`${parentPath}/${(node.data.padded || node.title).replace(/\//g, '\/')}`).replace(/ /g, '_');
+			node.data.parentID = parent.data.id || node.data.parentID;
+			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded || node.title).replace(/\//g, '\/')}`).replace(/ /g, '_');
 			
 			//check status
 			if (this.props.options.enableAutonumber && (node.data.status === 'unchanged' || node.data.status === 'modified')) {
@@ -886,7 +918,7 @@ class RemixerPanel extends React.Component {
 			if (node.children) { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
-					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node.data.relativePath);
+					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node);
 				}
 			}
 			return node;

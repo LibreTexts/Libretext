@@ -79,7 +79,7 @@ export default function PublishPanel(props) {
 					objectResult[copyMode] = [page];
 			}
 			else if (props.mode === 'ReRemix') {
-				if (page.status === 'modified' && page.data.relativePath !== page.data.original.data.relativePath) //page moved
+				if (page.status === 'modified' && page.data.parentID !== page.data.original.data.parentID) //page moved
 					objectResult['moved'].push(page);
 				
 				
@@ -128,7 +128,7 @@ export default function PublishPanel(props) {
 			return <List style={listStyle}>
 				{listItem(sorted.new, 'new', 'will be added')}
 				{listItem(sorted.modified, 'modified', 'will be modified')}
-				{listItem(sorted.moved, 'modified', 'of modified will be moved')}
+				{listItem(sorted.moved, 'modified', 'will be moved')}
 				{listItem(sorted.deleted, 'deleted', 'will be deleted')}
 				{listItem(sorted.unchanged, 'unchanged', 'will be unchanged')}
 			</List>;
@@ -412,13 +412,14 @@ function PublishSubPanel(props) {
 		for (const page of props.working) {
 			await processPage(page);
 		}
-		for (const page of props.sorted.deleted) {
-			if (!page.parentDeleted)
-				await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
-					method: 'DELETE'
-				});
-			completedPage(page, 'Deleted', 'deleted');
-		}
+		if (props.sorted.deleted)
+			for (const page of props.sorted.deleted) {
+				if (!page.parentDeleted)
+					await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
+						method: 'DELETE'
+					});
+				completedPage(page, 'Deleted', 'deleted');
+			}
 		setState('done');
 		setIsActive(false);
 		
@@ -468,7 +469,7 @@ function PublishSubPanel(props) {
 		}
 		
 		async function processPage(page) {
-			getURL(page);
+			await getURL(page);
 			
 			if (page.status === 'new' || page.status === 'modified') {
 				let contents, response, source;
@@ -542,47 +543,38 @@ function PublishSubPanel(props) {
 						});
 						completedPage(page, 'Modified Tags', 'modified', response);
 					}
-					
-					if (page.data.relativePath !== page.data.original.data.relativePath) { //move page
-						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}`, null, {
-							method: 'POST'
-						});
-						completedPage(page, 'Moved', 'modified', response);
-					}
-					
-					return;
 				}
-				else
+				else { //change page contents
 					switch (page.copyMode) {
 						case 'transclude':
 							source.tags.push('transcluded:yes');
 							page.tags = page.tags.concat(source.tags);
 							if (currentSubdomain !== source.subdomain) {
 								contents = `<p class="mt-script-comment">Cross Library Transclusion</p>
-
-<pre class="script">
-template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${source.id}});</pre>
-
-<div class="comment">
-<div class="mt-comment-content">
-<p><a href="${source.url}">Cross-Library Link: ${source.url}</a><br/>source-${source.subdomain}-${source.id}</p>
-</div>
-</div>
-${renderTags(page.tags)}`;
+				
+				<pre class="script">
+				template('CrossTransclude/Web',{'Library':'${source.subdomain}','PageID':${source.id}});</pre>
+				
+				<div class="comment">
+				<div class="mt-comment-content">
+				<p><a href="${source.url}">Cross-Library Link: ${source.url}</a><br/>source-${source.subdomain}-${source.id}</p>
+				</div>
+				</div>
+				${renderTags(page.tags)}`;
 							}
 							else {
 								let [tempSubdomain, tempPath] = LibreTexts.parseURL(source.url);
 								contents = `<div class="mt-contentreuse-widget" data-page="${tempPath}" data-section="" data-show="false">
-<pre class="script">
-wiki.page("${tempPath}", NULL)</pre>
-</div>
-
-<div class="comment">
-<div class="mt-comment-content">
-<p><a href="${tempPath}">Content Reuse Link: ${tempPath}</a></p>
-</div>
-</div>
-${renderTags(page.tags)}`;
+				<pre class="script">
+				wiki.page("${tempPath}", NULL)</pre>
+				</div>
+				
+				<div class="comment">
+				<div class="mt-comment-content">
+				<p><a href="${tempPath}">Content Reuse Link: ${tempPath}</a></p>
+				</div>
+				</div>
+				${renderTags(page.tags)}`;
 							}
 							response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 								method: 'POST',
@@ -700,41 +692,62 @@ ${renderTags(page.tags)}`;
 							else
 								completedPage(page, 'Full-Copied', 'modified');
 					}
-				
-				//Handle properties
-				source.properties = source.properties.map((prop) => {
-					if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
-					else return prop
-				});
-				if (page.articleType === 'topic-guide')
-					source.properties = source.properties.concat([{
-						name: "mindtouch.idf#guideDisplay",
-						value: "single"
-					}, {
-						name: "mindtouch#idf.guideTabs",
-						value: "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]"
-					}]);
-				else if (page.articleType === 'topic-category')
-					source.properties.push({name: 'mindtouch.idf#subpageListing', value: 'simple'});
-				source.properties.push({name: 'mindtouch.page#welcomeHidden', value: true});
-				source.properties = [...new Set(source.properties.reverse())]; //deduplicate
-				await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value, page.path)));
-				
-				//Thumbnail
-				let files = source.files || [], image;
-				if (page.files.find(file => file.filename === 'mindtouch.page#thumbnail')) {
-					//skip if already has thumbnail
+					
+					//Handle properties
+					source.properties = source.properties.map((prop) => {
+						if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+						else return prop
+					});
+					if (page.articleType === 'topic-guide')
+						source.properties = source.properties.concat([{
+							name: "mindtouch.idf#guideDisplay",
+							value: "single"
+						}, {
+							name: "mindtouch#idf.guideTabs",
+							value: "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]"
+						}]);
+					else if (page.articleType === 'topic-category')
+						source.properties.push({name: 'mindtouch.idf#subpageListing', value: 'simple'});
+					source.properties.push({name: 'mindtouch.page#welcomeHidden', value: true});
+					source.properties = [...new Set(source.properties.map(item=>JSON.stringify(item)).reverse())]; //deduplicate
+					source.properties = source.properties.map(item=>JSON.parse(item)); //deduplicate
+					await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value, page.path)));
+					
+					//Thumbnail
+					let files = source.files || [], image;
+					if (page.files.find(file => file.filename === 'mindtouch.page#thumbnail')) {
+						//skip if already has thumbnail
+					}
+					if ((files.find(file => file.filename === 'mindtouch.page#thumbnail' || file.filename === 'mindtouch.page%23thumbnail')))
+						image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
+					else if (page.articleType === 'topic-category' || page.articleType === 'topic-guide')
+						image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+					if (image) {
+						image = await image.blob();
+						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
+							method: 'PUT',
+							body: image,
+						})
+					}
 				}
-				if ((files.find(file => file.filename === 'mindtouch.page#thumbnail' || file.filename === 'mindtouch.page%23thumbnail')))
-					image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
-				else if (page.articleType === 'topic-category' || page.articleType === 'topic-guide')
-					image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
-				if (image) {
-					image = await image.blob();
-					await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
-						method: 'PUT',
-						body: image,
-					})
+				
+				//page moved or renamed
+				if (page.status === 'modified' && page.data.relativePath !== page.data.original.data.relativePath) {
+					const differentParent = page.data.parentID !== page.data.original.data.parentID;
+					if (differentParent) { //move
+						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects`,
+							null, {
+								method: 'POST'
+							});
+						completedPage(page, 'Moved', 'modified', response);
+					}
+					else { //just title change
+						await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects`,
+							null, {
+								method: 'POST'
+							});
+						completedPage(page, 'Renamed', 'modified', response);
+					}
 				}
 				
 			}

@@ -88,21 +88,21 @@ export default function RemixerOptions(props) {
 			>
 				<MenuItem value='transclude'>
 					<Tooltip
-						title="In transclude mode, pages will be automatically updated from the source (Recommended)">
-						<div>Transclude</div>
+						title="In copy-transclude mode, pages will be automatically updated from the source (Recommended)">
+						<div>Copy-Transclude</div>
 					</Tooltip>
 				</MenuItem>
 				<MenuItem value='fork'>
 					<Tooltip
-						title="In fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
-						<div>Fork</div>
+						title="In copy-fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
+						<div>Copy-Fork</div>
 					</Tooltip>
 				</MenuItem>
 				{props.permission === 'Admin' ?
 					<MenuItem value='full'>
 						<Tooltip
-							title="[Only for Admins] This mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
-							<div>Full-Copy</div>
+							title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
+							<div>Copy-Full</div>
 						</Tooltip>
 					</MenuItem>
 					: null}

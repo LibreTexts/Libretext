@@ -15,11 +15,15 @@ function generateDefault(chapters, pages) {
 		
 		for (let j = 1; j <= pages; j++) {
 			childPages.push({
-				"expanded": true,
-				"key": `_${key++}`,
-				"lazy": false,
-				"title": `${i}.${j}: New Page`,
-				"data": {"status": 'new', "padded": `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`}
+				expanded: true,
+				key: `_${key++}`,
+				lazy: false,
+				title: `${i}.${j}: New Page`,
+				data: {
+					id: -1,
+					status: 'new',
+					padded: `${i.toString().padStart(2, '0')}.${j.toString().padStart(2, '0')}: New Page`
+				}
 			})
 		}
 		
@@ -28,7 +32,7 @@ function generateDefault(chapters, pages) {
 			key: `_${chapterKey}`,
 			lazy: false,
 			title: `${i}: Untitled Chapter ${i}`,
-			data: {status: 'new', "padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},
+			data: {id: -1, status: 'new', "padded": `${i.toString().padStart(2, '0')}: Chapter ${i}`},
 			children: childPages
 		})
 	}
@@ -41,7 +45,7 @@ function generateDefault(chapters, pages) {
 			padded: "",
 			status: 'new',
 			articleType: 'topic-category',
-			tags:['coverpage:yes']
+			tags: ['coverpage:yes']
 		},
 		unselectable: true,
 		expanded: true,
@@ -138,11 +142,11 @@ async function getSubpages(path, subdomain, full, linkTitle) {
 			}
 			if (!url.endsWith('/link') && subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter') {
 				let miniResult = {
-					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"> ></a>` : subpage.title,
+					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>` : subpage.title,
 					url: url,
 					sourceURL: url,
 					children: children,
-					lazy: !full,
+					lazy: !full && hasChildren,
 					status: 'new',
 				};
 				miniResult = await LibreTexts.getAPI(miniResult);

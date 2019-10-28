@@ -43,6 +43,7 @@ class ReRemixerPanel extends React.Component {
 			source: this.state.LibraryTree,
 			debugLevel: 0,
 			autoScroll: true,
+			extensions: ['dnd5'],
 			activate: (event, data) => {
 				if (event.currentTarget && this.props.currentlyActive !== data.node.key)
 					this.props.updateRemixer({currentlyActive: data.node.key});
@@ -53,7 +54,9 @@ class ReRemixerPanel extends React.Component {
 			expand: () => {
 				this.updateLeft('');
 			},
-			extensions: ['dnd5'],
+			dblclick: (event, data) => {
+				window.open(data.node.data.url);
+			},
 			lazyLoad: function (event, data) {
 				const dfd = new $.Deferred();
 				let node = data.node;
