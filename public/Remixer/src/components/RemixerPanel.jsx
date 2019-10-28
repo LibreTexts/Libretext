@@ -421,13 +421,14 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('sourceURL', event.target.value)}
 						fullWidth
 					/>
-					<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
-					   style={{
-						   display: 'block',
-						   overflow: 'hidden',
-						   textOverflow: 'ellipsis',
-						   whiteSpace: 'nowrap'
-					   }}> Visit {this.state.edit.sourceURL || ''}</a>
+					{this.state.edit.sourceURL ?
+						<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
+						   style={{
+							   display: 'block',
+							   overflow: 'hidden',
+							   textOverflow: 'ellipsis',
+							   whiteSpace: 'nowrap'
+						   }}> Visit {this.state.edit.sourceURL || ''}</a> : null}
 					<div style={{display: 'flex'}}>
 						<Tooltip
 							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
@@ -689,8 +690,8 @@ class RemixerPanel extends React.Component {
 			...node.data,
 			title: node.title,
 			parentType: node.getParent().data.articleType,
-			copyMode: '',
 		};
+		newEdit.copyMode = newEdit.copyMode || '';
 		if (!newEdit.original)
 			newEdit.original = JSON.parse(JSON.stringify(newEdit));
 		newEdit.node = node;

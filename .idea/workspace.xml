@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Moving on to Publish Panel ReRemix">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1078,13 +1073,6 @@
       <workItem from="1572109812873" duration="19540000" />
       <workItem from="1572143565866" duration="11778000" />
     </task>
-    <task id="LOCAL-00190" summary="Initial Portals">
-      <created>1558591772323</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1558591772324</updated>
-    </task>
     <task id="LOCAL-00191" summary="Updated README.md">
       <created>1558592268022</created>
       <option name="number" value="00191" />
@@ -1421,7 +1409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572073625664</updated>
     </task>
-    <option name="localTasksCounter" value="239" />
+    <task id="LOCAL-00239" summary="Finished moving failing due to redirects.">
+      <created>1572304895339</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1572304895339</updated>
+    </task>
+    <option name="localTasksCounter" value="240" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1477,7 +1472,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Importer Beta" />
     <MESSAGE value="Initial getSubpagesFull" />
     <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
     <MESSAGE value="Updated Cover Spine logo" />
@@ -1502,7 +1496,8 @@
     <MESSAGE value="Tutorial CSS change p =&gt; span" />
     <MESSAGE value="Automatic merge-up" />
     <MESSAGE value="Moving on to Publish Panel ReRemix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving on to Publish Panel ReRemix" />
+    <MESSAGE value="Finished moving failing due to redirects." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished moving failing due to redirects." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
