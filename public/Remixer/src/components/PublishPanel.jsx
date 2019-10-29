@@ -661,7 +661,7 @@ function PublishSubPanel(props) {
 												images[i] = images[i].match(/src="\/@api\/deki\/files\/([\S\s]*?)["/]/)[1];
 												
 												if (!files.includes(images[i])) {
-													promiseArray.push(processFile(null, source, path, images[i]));
+													promiseArray.push(processFile(null, source, page.path, images[i]));
 												}
 											}
 											
@@ -676,7 +676,7 @@ function PublishSubPanel(props) {
 									}
 								}
 							}
-							response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+							response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 								method: 'POST',
 								body: contents,
 							});
@@ -709,8 +709,13 @@ function PublishSubPanel(props) {
 					else if (page.articleType === 'topic-category')
 						source.properties.push({name: 'mindtouch.idf#subpageListing', value: 'simple'});
 					source.properties.push({name: 'mindtouch.page#welcomeHidden', value: true});
-					source.properties = [...new Set(source.properties.map(item=>JSON.stringify(item)).reverse())]; //deduplicate
-					source.properties = source.properties.map(item=>JSON.parse(item)); //deduplicate
+					
+					let tempProp = {}; //deduplicate
+					source.properties.forEach(item => tempProp[item.name] = item.value);
+					source.properties = Object.keys(tempProp).map(key => {
+						return {name: key, value: tempProp[key]}
+					});
+					
 					await Promise.all(source.properties.map(async prop => putProperty(prop.name, prop.value, page.path)));
 					
 					//Thumbnail
@@ -804,7 +809,7 @@ function PublishSubPanel(props) {
 			if (filename) {
 				image = await image.blob();
 				
-				let response = await LibreTexts.authenticatedFetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, null, null, {
+				let response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, null, {
 					method: 'PUT',
 					body: image,
 				});
