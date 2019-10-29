@@ -98,14 +98,14 @@ export default function RemixerOptions(props) {
 						<div>Copy-Fork</div>
 					</Tooltip>
 				</MenuItem>
-				{props.permission === 'Admin' ?
+				{/*{props.permission === 'Admin' ? //TODO Reeenable
 					<MenuItem value='full'>
 						<Tooltip
 							title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
 							<div>Copy-Full</div>
 						</Tooltip>
 					</MenuItem>
-					: null}
+					: null}*/}
 			</TextField>
 		</div>
 		<OptionsPanel {...props}/>

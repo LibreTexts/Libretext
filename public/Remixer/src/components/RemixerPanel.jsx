@@ -490,14 +490,14 @@ class RemixerPanel extends React.Component {
 									<ListItemText>Copy-Fork</ListItemText>
 								</Tooltip>
 							</MenuItem>
-							{this.props.permission === 'Admin' ?
+							{/*{this.props.permission === 'Admin' ? //TODO Reeenable
 								<MenuItem value='full'>
 									<Tooltip
 										title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
 										<ListItemText>Copy-Full</ListItemText>
 									</Tooltip>
 								</MenuItem>
-								: null}
+								: null}*/}
 						</TextField>
 					</div>
 					<div style={{
