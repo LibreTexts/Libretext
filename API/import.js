@@ -14,6 +14,8 @@ const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
 const convert = require('xml-js');
+const secret = require('./secure.json');
+const excelToJson = require('convert-excel-to-json');
 
 const LibreTexts = require("./reuse.js");
 let port = 3003;
@@ -22,7 +24,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-//TODO: fs.emptyDir('ImportFiles');
+// fs.emptyDir('ImportFiles');
 console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
 
 
@@ -521,6 +523,8 @@ async function jobHandler(data, socket) {
 			return processEPUB(data, socket);
 		case 'commoncartridge':
 			return processCommonCartridge(data, socket);
+		case 'libremap':
+			return processLibreMap(data, socket);
 		case "pdf":
 			return null;
 		case "pretext":
@@ -1192,6 +1196,140 @@ async function processEPUB(data, socket) {
 	}
 }
 
+async function processLibreMap(data, socket) {
+	//ensure file exists
+	console.log(`Processing ${data.filename}`);
+	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	data.socket = socket;
+	if (!await fs.exists(data.path)) {
+		socket.emit('errorMessage', 'File does not exist!');
+		return;
+	}
+	const rootURL = `https://libremaps.libretexts.org/`;
+	const rootAPI = `${rootURL}/api/v1`;
+	
+	async function login(user) {
+		const body = secret.libremaps[user];
+		let token = await fetch(`${rootAPI}/oauth.json`);
+		if (!token.ok) {
+			console.error(await token.text());
+			return null;
+		}
+		token = await token.json();
+		token = token['access_token'];
+		token = await fetch(`${rootAPI}/users/login.json?token=${token}`, {
+			method: "POST",
+			body: JSON.stringify(body)
+		});
+		if (!token.ok) {
+			console.error(await token.text());
+			return null;
+		}
+		token = await token.json();
+		token = token['access_token'];
+		
+		return token;
+	}
+	
+	try {
+		const result = excelToJson({sourceFile: data.path});
+		//begin page uploads
+		let firstEntry = {
+			title: data.filename,
+			type: 'Board',
+			url: `https://libremap.libretexts.org/`,
+		};
+		let log = [];
+		let backlog = [];
+		let backlogClearer = setInterval(clearBacklog, 1000);
+		
+		let keys = Object.keys(result);
+		let token = await login('admin');
+		
+		let board = await fetch(`${rootAPI}/boards.json?token=${token}`, {
+			method: "POST",
+			body: JSON.stringify({
+				"board_visibility": 0,
+				"name": data.filename,
+				"group_id": 0
+			})
+		});
+		board = (await board.json()).id;
+		console.log(`Board: ${board}`);
+		
+		//creating lists
+		for (let i = 0; i < keys.length; i++) {
+			const key = keys[i];
+			let sheet = result[key];
+			
+			let list = await fetch(`${rootAPI}/boards/${board}/lists.json?token=${token}`, {
+				method: "POST",
+				body: JSON.stringify({
+					"board_id": board,
+					"name": key,
+					"position": i
+				})
+			});
+			list = (await list.json()).id;
+			
+			//creating cards
+			let rows = Object.keys(sheet);
+			let headers = sheet[rows[0]];
+			for (let i = 1; i < rows.length; i++) {
+				const row = rows[i];
+				let result = '';
+				for (let j = 0; j < Object.keys(sheet[row]).length; j++) {
+					const cardKey = Object.keys(sheet[row])[j];
+					result += `${headers[cardKey] || 'Blank'}: ${sheet[row][cardKey]}\n`;
+				}
+				
+				let card = await fetch(`${rootAPI}/boards/${board}/lists/${list}/cards.json?token=${token}`, {
+					method: "POST",
+					body: JSON.stringify({
+						"board_id": board,
+						"list_id": list,
+						"name": sheet[row].B || sheet[row].A || 'Untitled Card',
+						"description": result,
+						"position": i,
+					})
+				});
+				card = (await card.json()).id;
+			}
+		}
+		let newUser = await fetch(`${rootAPI}/boards/${board}/users.json?token=${token}`, {
+			method: "POST",
+			body: JSON.stringify({
+				"board_user_role_id": 1,
+				"user_id": 6,
+			})
+		});
+		newUser = await newUser.json();
+		await fetch(`${rootAPI}/boards/${board}/boards_users/${newUser.id - 1}.json?token=${token}`, {
+			method: "DELETE",
+		});
+		
+		//finishing up
+		socket.emit('setState', {
+			state: 'done',
+			log: log,
+			url: `https://libremaps.libretexts.org/#/board/${board}`
+		});
+		clearInterval(backlogClearer);
+		await clearBacklog();
+		
+		async function clearBacklog() {
+			if (backlog.length) {
+				socket.emit('pages', backlog);
+				backlog = [];
+			}
+		}
+		
+	} catch (e) {
+		console.error(e);
+		socket.emit('errorMessage', JSON.stringify(e));
+	}
+}
+
 async function putProperty(name, value, path, subdomain, username) {
 	await LibreTexts.authenticatedFetch(path, "properties", subdomain, username, {
 		method: "POST",
@@ -1258,3 +1396,44 @@ async function uploadImages(contents, path, imageProcessor, data) {
 		}
 	}
 }
+
+/*
+async function processXHTML(text) {
+	let title = getProperty("title");
+	let copyright = getProperty("book-license");
+	let author = getProperty("authors");
+	let coverImage = getProperty("cover-image");
+	let splice = text.match(/<div .*?\n^<\/div>/gm);
+	let filtered = [];
+	for (let i = 0; i < splice.length; i++) {
+		if (splice[i].startsWith("<div class=\"chapter")) {
+			//front and back matter ignored
+			filtered.push(splice[i]);
+		}
+	}
+	let root = `https://${subdomain}.libretexts.org/Under_Construction/Users/Henry/${title}`;
+	let contentArray = await processPages(filtered, root);
+	reportMessage(contentArray);
+	function getProperty(property) {
+		let regex = new RegExp(`(?<=<meta name="pb-${property}" content=).*(?=" \\/>)`);
+		let result = text.match(regex);
+		return result ? result[0] : null;
+	}
+	async function processPages(splice, root) {
+		async function processPage(page) {
+			let title = page.match(/(?<=<div class=".*?-title-wrap">.*?-title">).*?(?=<.*?<\/div>)/)[0];
+			let content = page.match(/(?<=<div class=".*?-title-wrap">.*?<\/div><.*?>).*(?=<\/div)/)[0];
+			let sourceImages = page.match(/(?<=<img .*src=").*?(?=")/g);
+			let filenames = sourceImages.map((image) => {
+				return image.match(/[^/]+(?=\/$|$)/)[0];
+			});
+			let path = "";
+			for (let i = 0; i < content.length; i++) {
+				let regex = new RegExp(`(?<=<img .*src=")${sourceImages[i]}(?=")`);
+				content = content.replace(regex, `${root}${path}/${filenames[i]}`)
+			}
+			return {title: title, content: content, sourceImages: sourceImages, filenames};
+		}
+		return await mapLimit(splice, 10, processPage);
+	}
+}*/

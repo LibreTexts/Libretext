@@ -289,6 +289,8 @@ export default function Importer(props) {
 				return 'EPUB';
 			case "commoncartridge":
 				return 'Common Cartridge';
+			case 'libremap':
+				return 'Excel to LibreMap';
 			case "pdf":
 				return 'PDF';
 			case "pretext":
@@ -304,6 +306,8 @@ export default function Importer(props) {
 				return [".epub"];
 			case 'commoncartridge':
 				return [".imscc", ".zip"];
+			case 'libremap':
+				return [".xlsx"];
 			default:
 				return [];
 		}
