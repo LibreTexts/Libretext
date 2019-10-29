@@ -177,9 +177,9 @@ export default class App extends Component {
 			case "3Dmol":
 				return "//Make sure to tag the \"Embed 3Dmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
 			case "GLmol":
-				return "//Make sure to tag the \"Embed GLmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://awesomefiles.libretexts.org/GLmol/js/GLWrapper.js\" " + generateOptions(this.state.options, GLoptions) + "></script>";
+				return "//Make sure to tag the \"Embed GLmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=(GLmolPath) " + generateOptions(this.state.options, GLoptions) + "></script>";
 			case "JSmol":
-				return "//Make sure to tag the \"Embed JSmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=\"https://awesomefiles.libretexts.org/JSmol/JSmolWrapper.js\" ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
+				return "//Make sure to tag the \"Embed JSmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=(JSmolPath) ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
 		}
 	}
 
