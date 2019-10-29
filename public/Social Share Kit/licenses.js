@@ -1,7 +1,8 @@
 (function () {
 	function fn() {
 		const cc = getCC();
-		if (cc) {
+		//TODO: Find out WHY this is not needed.
+		/*if (cc) {
 			const thing = document.createElement("li");
 			thing.classList.add("pageInfo");
 			if (cc.label === "gnu") {
@@ -25,11 +26,11 @@
 				$("li.elm-last-modified")[0].before(thing);
 			else
 				thing.style.display = "none";
-		}
-		
+		}*/
+
 		socialShareConfig();
 	}
-	
+
 	function getCC() {
 		let tags = document.getElementById("pageTagsHolder");
 		if (tags) {
@@ -41,28 +42,28 @@
 					let tag = tags[i].split(":")[1];
 					switch (tag) {
 						case "publicdomain":
-							return {label: "cc-publicdomain", link: "#"};
+							return { label: "cc-publicdomain", title: "Public Domain", link: "#" };
 						case "ccby":
-							return {label: "cc-BY", link: "https://creativecommons.org/licenses/by/4.0/"};
+							return { label: "cc-BY", title: "CC BY",  link: "https://creativecommons.org/licenses/by/4.0/" };
 						case "ccbysa":
-							return {label: "cc-by-sa", link: "https://creativecommons.org/licenses/by-sa/4.0/"};
+							return { label: "cc-by-sa", title: "CC BY-SA",  link: "https://creativecommons.org/licenses/by-sa/4.0/" };
 						case "ccbyncsa":
-							return {label: "cc-by-nc-sa", link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"};
+							return { label: "cc-by-nc-sa", title: "CC BY-NC-SA",  link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
 						case "ccbync":
-							return {label: "cc-by-nc", link: "https://creativecommons.org/licenses/by-nc/4.0/"};
+							return { label: "cc-by-nc", title: "CC BY-NC",  link: "https://creativecommons.org/licenses/by-nc/4.0/" };
 						case "ccbynd":
-							return {label: "cc-by-nd", link: "https://creativecommons.org/licenses/by-nd/4.0/"};
+							return { label: "cc-by-nd", title: "CC BY-ND",  link: "https://creativecommons.org/licenses/by-nd/4.0/" };
 						case "ccbyncnd":
-							return {label: "cc-by-nc-nd", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"};
+							return { label: "cc-by-nc-nd", title: "CC BY-NC-ND",  link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
 						case "gnu":
-							return {label: "gnu", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
+							return { label: "gnu", title: "GNU GPL",  link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
 						case "gnudsl":
-							return {label: "gnudsl", link: "https://www.gnu.org/licenses/dsl.html"};
+							return { label: "gnudsl", title: "GNU DSL",  link: "https://www.gnu.org/licenses/dsl.html" };
 						case "gnufdl":
-							return {label: "gnufdl", link: "https://www.gnu.org/licenses/fdl-1.3.en.html"};
+							return { label: "gnufdl", title: "GNU FDL",  link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
 						case "arr":
-							return {label: "arr"};
-						
+							return { label: "arr", title: "All Rights Reserved ©",  };
+
 					}
 				}
 			}
@@ -74,72 +75,108 @@
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		if ($(".elm-social-share").length) {
 			let html = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><div id="batchPrint"></div>';
-			if(!isAdmin)
+			if (!isAdmin)
 				html += '<a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
 			$(".elm-social-share")[0].innerHTML = html;
 			SocialShareKit.init();
-			window.DonorBox = {widgetLinkClassName: 'custom-dbox-popup'};
+			window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' };
 		}
-		
-		
-		if(!isAdmin) {
+
+
+		if (!isAdmin) {
 			const donor = document.createElement("script");
 			donor.type = "text/javascript";
 			donor.src = "https://donorbox.org/install-popup-button.js";
 			if (document.getElementById("donate"))
 				document.getElementById("donate").appendChild(donor);
 		}
-		
+
 		const thing = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)
 			$("li.elm-page-restriction")[0].after(thing);
 		else
 			thing.style.display = "none";
 	}
-	function ccDetector(){
-		const cc = getCC();
-		var selectedText = window.getSelection().toString();
 
-		if(cc){
-			if(cc.label === "cc-BY"){
-				alert("This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. ");
+	document.getElementById("main_div").innerHTML =
+		`
+            <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+                <div class="modal" id="myModal">
+					<div class="modal-content">
+						<span class="close">×</span> 
+						<span id="myModal_Child">&nbsp;</span>
+                    </div>
+                </div>				
+		`;
+
+	function ccDetector() {
+		const cc = getCC();
+		if (cc) {
+
+			switch (cc.label) {
+				case "cc-BY":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "cc-by-sa":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "cc-by-nc-sa":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "cc-by-nc":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "cc-by-nd":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "cc-by-nc-nd":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this liscense <a href=${cc.link}>here</a> `;
+					break;
+				case "gnu":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run, study, share and modify the software. Learn more about this liscense <a href=${cc.link}>here</a>`;
+					break;
+				case "gnudsl":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "gnufdl":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> `;
+					break;
+				case "arr":
+					modal.style.display = "block";
+					thing.innerHTML = `The content you just copied is a ${cc.title} license: You are NOT allowed to distribute or remix the content at all.`;
+					break;
+				case "cc-publicdomain":
+					return null;
+					break;
 			}
-			
-			else if (cc.label === "cc-by-sa"){
-				alert("This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. ");
-			}
-			else if (cc.label === "cc-by-nd"){
-				alert("This license lets others reuse the work for any purpose, including commercially;");
-			}
-			else if (cc.label === "cc-by-nc"){
-				alert("This license lets others remix, tweak, and build upon your work non-commercially.");
-			}
-			else if (cc.label === "cc-by-nc-sa"){
-				alert("This license lets others remix, tweak, and build upon your work non-commercially.");
-			}
-			else if (cc.label === "cc-by-nc-nd"){
-				alert("This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you.");
-			}
-			else if (cc.label ==="gnu"){
-				alert("This content copied is free to use, run, share, and modify");
-			}
-			else if (cc.label ==="gnudsl"){
-				alert("This copied content gives certain exclusive rights to the author of a work, including the rights to copy, modify and distribute the work .");
-			}
-			else if (cc.label === "gnufdl"){
-				alert("This copied content is to assure everyone the effective freedom to copy and redistribute it, with or without modifying it, either commercially or noncommercially")
-			}
-			else if (cc.label === "arr"){
-				return null;
-			}
-			else{
-				return null;
-			}		
+
 		}
 	}
-	
-	
-	
+	window.onload = function () {
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+	}
+	/*  window.onclick = function(event) {
+	  if (event.target == modal) {
+		modal.style.display = "none";
+	  }
+	} */
+
+
+
+	var modal = document.getElementById("myModal");
+	var thing = document.getElementById("myModal_Child");
+	var span = document.getElementsByClassName("close")[0];
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
 })();
