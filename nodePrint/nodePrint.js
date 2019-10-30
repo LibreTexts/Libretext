@@ -1106,6 +1106,9 @@ puppeteer.launch({
 				delete working[escapedURL];	//2 min timeout for DUPE
 			}
 			
+			if(current.title === 'InfoPage')
+				isNoCache = true;
+			
 			const daysCache = 35;
 			const updateTime = current.modified;
 			let allExist = [fs.exists(`./PDF/Letter/${escapedURL}.pdf`),

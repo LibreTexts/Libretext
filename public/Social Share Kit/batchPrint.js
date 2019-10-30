@@ -16,7 +16,7 @@ if (!window["batchPrint.js"]) {
 	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 	const isPro = document.getElementById("proHolder").innerText === 'true';
 	const groups = document.getElementById("groupHolder").innerText;
-	const tags = JSON.parse(document.getElementById("tagsHolder").innerText);
+	const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g,'\''));
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	const targetComputer = 'batch.libretexts.org';
 	let request;
