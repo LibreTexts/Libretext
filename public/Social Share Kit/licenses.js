@@ -103,7 +103,6 @@
             <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
                 <div class="modal" id="myModal">
 					<div class="modal-content">
-						<span class="close">×</span> 
 						<span id="myModal_Child">&nbsp;</span>
                     </div>
                 </div>				
@@ -161,22 +160,17 @@
 
 		}
 	}
-	window.onload = function () {
-		span.onclick = function () {
-			modal.style.display = "none";
-		}
-	}
-	/*  window.onclick = function(event) {
+	
+ 	window.onclick = function(event) {
 	  if (event.target == modal) {
 		modal.style.display = "none";
 	  }
-	} */
+	} 
 
 
 
 	var modal = document.getElementById("myModal");
 	var thing = document.getElementById("myModal_Child");
-	var span = document.getElementsByClassName("close")[0];
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
 })();
