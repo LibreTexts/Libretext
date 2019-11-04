@@ -14,7 +14,17 @@ if (!window["youtubeIFrame"]) {
 					iframe.src = iframe.src.replace('www.youtube.com','www.youtube-nocookie.com');
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");
-					youtubeImgContainer.href = "https://www.youtube.com/watch?v="+videoID;
+					youtubeImgContainer.innerHTML = `<img class="youtubeImage" src="https://img.youtube.com/vi/${videoID}/0.jpg`
+					let link = "https://www.youtube.com/watch?v="+videoID;
+					youtubeImgContainer.href = link;
+
+					let qr_img = document.getElementById("qrcode");
+
+
+					QRCode.toDataURL(link).then(url => {
+						console.log(link);
+						qr_img.src = url;
+					});
 
 					youtubeImgContainer.classList.add("youtubeImageContainer");
 					$(youtubeImgContainer).insertAfter(iframe);
