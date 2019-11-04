@@ -1,3 +1,4 @@
+
 if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 
@@ -5,18 +6,14 @@ if (!window["youtubeIFrame"]) {
 
 		let candidates = $("iframe");
 			for (let i = 0; i < candidates.length; i++) {
-			let iframe = candidates[i];
 			if (iframe && iframe.src && !iframe.classList.contains("youtubeIFrame")) {
 				let videoID = iframe.src.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
-				if(videoID) {
-					console.log(videoID);
-				}
+				if(videoID)
 				if (iframe.src.includes("www.youtube.com") || iframe.src.includes("www.youtube-nocookie.com")) {
 					videoID = videoID[2];
 					iframe.src = iframe.src.replace('www.youtube.com','www.youtube-nocookie.com');
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");
-					youtubeImgContainer.innerHTML = `<img class="youtubeImage" src="https://img.youtube.com/vi/${videoID}/0.jpg\"/>`;
 					youtubeImgContainer.href = "https://www.youtube.com/watch?v="+videoID;
 
 					youtubeImgContainer.classList.add("youtubeImageContainer");
@@ -32,20 +29,37 @@ if (!window["youtubeIFrame"]) {
 	});
 }
 
+/*
+let link = "https://www.youtube.com/watch?v="+videoID;
+
+let qr_img = document.getElementById("qrcode");
+
+console.log("yes");
+
+QRCode.toDataURL(link).then(url => {
+	console.log(link);
+	qr_img.src = url;
+});*/
+
+
+
+/*
 class autoqr {
 	constructor(qr){
 	this.qrcode = qr;
 	}
 }
 
-console.log()
-
-$.getScript('https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js', function(
+					let qrImage = document.createElement("img");
+					qrImage.innerHTML = <img class = "qrimage" src = "$.getScript('https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js', function(
 		{newQR = new autoqr(QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i));
 		document.getElementByID("QRGen").innerHTML = autoqr
-	}));
+	})
+);>
+*/
 
-
+//
+// let qrImage = document.createElement("img");
 
 
 
