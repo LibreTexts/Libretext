@@ -4,6 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import Publish from "@material-ui/icons/Publish";
+import Archive from "@material-ui/icons/Archive";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -21,6 +22,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Warning from "@material-ui/icons/Warning";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {useSnackbar} from 'notistack';
+import IconButton from "@material-ui/core/IconButton";
 
 
 export default function PublishPanel(props) {
@@ -118,9 +120,9 @@ export default function PublishPanel(props) {
 		if (props.mode === 'Remix') {
 			return <List style={listStyle}>
 				{listItem(sorted.blank, 'unchanged', 'will be blank pages')}
-				{listItem(sorted.transclude, 'new', 'will be transcluded')}
-				{listItem(sorted.fork, 'new', 'will be forked')}
-				{props.permission === 'Admin' ? listItem(sorted.full, 'modified', 'will be full-copied') : null}
+				{listItem(sorted.transclude, 'new', 'will be copy-transcluded')}
+				{listItem(sorted.fork, 'new', 'will be copy-forked')}
+				{props.permission === 'Admin' ? listItem(sorted.full, 'modified', 'will be copy-full') : null}
 				{listItem(sorted.badStructure, 'deleted', 'will have non-recommended structure!')}
 			</List>;
 		}
@@ -189,7 +191,7 @@ export default function PublishPanel(props) {
 					<Button onClick={() => props.updateRemixer({stage: 'Remixing'})}>
 						<ArrowBack/>Revise
 					</Button>
-					<Button color='primary' onClick={() => setPublishing(Math.random())}>
+					<Button color='secondary' onClick={() => setPublishing(Math.random())}>
 						Publish<Publish/>
 					</Button>
 				</ButtonGroup>
@@ -263,8 +265,8 @@ function PublishSubPanel(props) {
 		</div>
 		<AppBar position="static" style={{backgroundColor: RemixerFunctions.userPermissions(true).color}}>
 			<Toolbar style={{display: 'flex', flexDirection: 'column'}}>
-				<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-					<FormControlLabel
+				{finished ? <div style={{display: 'flex'}}>
+					{/*<FormControlLabel
 						style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
 						control={
 							<Switch
@@ -281,11 +283,13 @@ function PublishSubPanel(props) {
 								checked={show.failed}
 								onChange={() => setShow({...show, ...{failed: !show.failed}})}
 							/>}
-						label="Show Failed"/>
-				</div>
-				{finished ?
-					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6> : null}
-				<LinearProgress variant="determinate"
+						label="Show Failed"/>*/}
+					
+					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6>
+					<Tooltip title='Download Progress Log'
+					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip>
+				</div> : null}
+				<LinearProgress variant="determinate" style={{width: '100%'}}
 				                value={Math.round(counter.pages / props.working.length * 1000) / 10}/>
 			</Toolbar>
 		</AppBar>
@@ -326,6 +330,26 @@ function PublishSubPanel(props) {
 		}
 	}
 	
+	function saveLog() {
+		let result = new Blob([JSON.stringify({results: results, ...props}, null, 2)], {type: 'application/json;charset=utf-8'});
+		const textToSaveAsURL = window.URL.createObjectURL(result);
+		const fileNameToSaveAs = `${props.name}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.librelog`;
+		
+		const downloadLink = document.createElement("a");
+		downloadLink.download = fileNameToSaveAs;
+		downloadLink.innerHTML = "Download Log File";
+		downloadLink.href = textToSaveAsURL;
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+		
+		downloadLink.click();
+		
+		function destroyClickedElement(event) {
+			document.body.removeChild(event.target);
+		}
+	}
+	
 	async function publish() {
 		if (props.mode === 'Remix' && props.institution === '') {
 			if (confirm('Would you like to send an email to info@libretexts.com to request your institution?'))
@@ -358,7 +382,7 @@ function PublishSubPanel(props) {
 			destRoot = props.institution;
 			if (destRoot.includes('Remixer_University')) {
 				destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
-				await LibreTexts.authenticatedFetch(destRoot, 'contents?edittime=now', null, {
+				await LibreTexts.authenticatedFetch(destRoot, 'contents?abort=exists', null, {
 					method: 'POST',
 					body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
 				});
@@ -418,12 +442,12 @@ function PublishSubPanel(props) {
 					await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
 						method: 'DELETE'
 					});
-				completedPage(page, 'Deleted', 'deleted');
+				await completedPage(page, 'Deleted', 'deleted');
 			}
 		setState('done');
 		setIsActive(false);
 		
-		function completedPage(page, text, color, isFailed = false) {
+		async function completedPage(page, text, color, isFailed = false) {
 			setCounter(
 				(counter) => {
 					const total = props.working.length;
@@ -440,29 +464,39 @@ function PublishSubPanel(props) {
 					}
 				}
 			);
-			setResults(results => {
-				if (isFailed && !isFailed.ok)
+			let message = '';
+			if (isFailed && typeof isFailed !== 'string') {
+				try {
+					message = await isFailed.json();
+				} catch (e) {
+					message = await isFailed.text();
+				}
+				if (!isFailed.ok)
 					switch (isFailed.status) {
 						case 403:
-							isFailed = '403 Forbidden - User does not have permission to modify' + page.path + '\n';
+							isFailed = '403 Forbidden - User does not have permission to modify\n';
 							break;
 						case 500:
-							isFailed = '500 Server Error ' + page.path + '\n';
+							isFailed = '500 Server Error\n';
 							break;
 						case 409:
-							isFailed = '409 Conflict - Page already exists ' + page.path + '\n';
+							isFailed = '409 Conflict - Page already exists\n';
 							break;
 						default:
-							isFailed = 'Error ' + isFailed.status + ' ' + page.path + '\n';
+							isFailed = 'Error ' + isFailed.status + '\n';
 							break;
 					}
-				
+				else
+					isFailed = false;
+			}
+			setResults(results => {
 				results.unshift({
 					title: page.title,
 					text: text,
 					url: page.url,
 					color: RemixerFunctions.statusColor(color),
 					isFailed: isFailed,
+					message: message,
 				});
 				return results
 			});
@@ -484,7 +518,7 @@ function PublishSubPanel(props) {
 						body: contents,
 					});
 					if (!response.ok) {
-						completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new', response);
+						await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new', response);
 					}
 					else {
 						if (page.articleType === 'topic-guide') {
@@ -504,14 +538,14 @@ function PublishSubPanel(props) {
 							method: 'PUT',
 							body: image,
 						});
-						completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new');
+						await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new');
 					}
 					return;
 				} // end for new pages
 				const [currentSubdomain] = LibreTexts.parseURL();
 				source = await LibreTexts.getAPI(page.sourceURL || '');
 				if (source.error) {
-					completedPage(page, `Source Error`, 'new', source.response);
+					await completedPage(page, `Source Error`, 'new', source.response);
 					return;
 				}
 				let index = 1;
@@ -534,14 +568,14 @@ function PublishSubPanel(props) {
 					if (JSON.stringify(oldTags) !== JSON.stringify(newTags)) { //modify tags
 						console.log(oldTags, newTags);
 						const result = `<tags>${newTags.map(elem => `<tag value="${elem}"/>`).join("")}</tags>`;
-						await LibreTexts.authenticatedFetch(page.path, 'tags', null, {
+						response = await LibreTexts.authenticatedFetch(page.path, 'tags?dream.out.format=json', null, {
 							method: "PUT",
 							body: result,
 							headers: {
 								"Content-Type": "text/xml; charset=utf-8",
 							}
 						});
-						completedPage(page, 'Modified Tags', 'modified', response);
+						await completedPage(page, 'Modified Tags', 'modified', response);
 					}
 				}
 				else { //change page contents
@@ -581,10 +615,10 @@ function PublishSubPanel(props) {
 								body: contents,
 							});
 							if (!response.ok) {
-								completedPage(page, 'Transcluded', 'new', response);
+								await completedPage(page, 'Transcluded', 'new', response);
 								return;
 							}
-							completedPage(page, 'Transcluded', 'new');
+							await completedPage(page, 'Transcluded', 'new');
 							break;
 						case 'fork':
 						case 'full':
@@ -676,21 +710,21 @@ function PublishSubPanel(props) {
 									}
 								}
 							}
-							response = await LibreTexts.authenticatedFetch(page.path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+							response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
 								method: 'POST',
 								body: contents,
 							});
 							if (!response.ok) {
 								if (page.copyMode === 'fork')
-									completedPage(page, 'Forked', 'new', response);
+									await completedPage(page, 'Forked', 'new', response);
 								else
-									completedPage(page, 'Full-Copied', 'modified', response);
+									await completedPage(page, 'Full-Copied', 'modified', response);
 								return;
 							}
 							if (page.copyMode === 'fork')
-								completedPage(page, 'Forked', 'new');
+								await completedPage(page, 'Forked', 'new');
 							else
-								completedPage(page, 'Full-Copied', 'modified');
+								await completedPage(page, 'Full-Copied', 'modified');
 					}
 					
 					//Handle properties
@@ -740,18 +774,18 @@ function PublishSubPanel(props) {
 				if (page.status === 'modified' && page.data.relativePath !== page.data.original.data.relativePath) {
 					const differentParent = page.data.parentID !== page.data.original.data.parentID;
 					if (differentParent) { //move
-						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects`,
+						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects&dream.out.format=json`,
 							null, {
 								method: 'POST'
 							});
-						completedPage(page, 'Moved', 'modified', response);
+						await completedPage(page, 'Moved', 'modified', response);
 					}
 					else { //just title change
-						await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects`,
+						await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
 							null, {
 								method: 'POST'
 							});
-						completedPage(page, 'Renamed', 'modified', response);
+						await completedPage(page, 'Renamed', 'modified', response);
 					}
 				}
 				

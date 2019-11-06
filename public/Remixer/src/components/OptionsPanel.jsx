@@ -64,7 +64,10 @@ export default function OptionsPanel(props) {
 		fileReader.onload = function (fileLoadedEvent) {
 			let textFromFileLoaded = fileLoadedEvent.target.result;
 			try {
-				if (file.name.endsWith('.libremap', '.remix','reremix')) {
+				if (file.name.endsWith('.libremap')
+					|| file.name.endsWith('.remix')
+					|| file.name.endsWith('reremix')
+					|| file.name.endsWith('.librelog')) {
 					textFromFileLoaded = JSON.parse(textFromFileLoaded);
 					if (!optionsOverwrite)
 						delete textFromFileLoaded.options;
@@ -165,7 +168,7 @@ export default function OptionsPanel(props) {
 				</Button>
 			</Tooltip>
 		</ButtonGroup>
-		<input type="file" id="fileToLoad" accept=".libremap,.csv" onChange={loadJSON}
+		<input type="file" id="fileToLoad" accept=".libremap,.csv, .remix, .reremix, .librelog" onChange={loadJSON}
 		       style={{position: "absolute", display: "none", width: 0, height: 0}}/>
 		<Dialog // Dialog for Autonumber Options
 			onClose={handleAutonumberClose}

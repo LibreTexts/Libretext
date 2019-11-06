@@ -21,6 +21,7 @@ export default class Remixer extends React.Component {
 			mode: 'Remix',
 			stage: 'Remixing',
 			permission: RemixerFunctions.userPermissions(),
+			user: document.getElementById('usernameHolder').innerText,
 			defaultCopyMode: 'transclude',
 			undoArray: [],
 			redoArray: [],
@@ -139,9 +140,9 @@ export default class Remixer extends React.Component {
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.mode}>
-					<MenuItem value={'Remix'}>Remixer</MenuItem>
+					<MenuItem value={'Remix'}>New Remix</MenuItem>
 					{this.allowedReRemixer() ?
-						<MenuItem value={'ReRemix'}>ReRemixer</MenuItem> : null}
+						<MenuItem value={'ReRemix'}>Edit Remix</MenuItem> : null}
 				</Select>
 				<span>{this.state.lastSave}</span>
 			</div>
