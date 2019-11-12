@@ -20,8 +20,9 @@ export default class Remixer extends React.Component {
 		const defaultState = {
 			mode: 'Remix',
 			stage: 'Remixing',
-			permission: RemixerFunctions.userPermissions(),
-			user: document.getElementById('usernameHolder').innerText,
+			permission: RemixerFunctions.userPermissions(), //nonpermanent
+			user: document.getElementById('usernameHolder').innerText, //nonpermanent
+			href: window.location.href, //nonpermanent
 			defaultCopyMode: 'transclude',
 			undoArray: [],
 			redoArray: [],
@@ -44,7 +45,9 @@ export default class Remixer extends React.Component {
 		if (localStorage.getItem('RemixerState')) {
 			state = {
 				...state, ...JSON.parse(localStorage.getItem('RemixerState')),
-				permission: RemixerFunctions.userPermissions()
+				permission: RemixerFunctions.userPermissions(), //nonpermanent
+				user: document.getElementById('usernameHolder').innerText, //nonpermanent
+				href: window.location.href, //nonpermanent
 			};
 		}
 		if (!this.allowedReRemixer(state.permission) && state.mode === 'ReRemix') { //prevent insecure access

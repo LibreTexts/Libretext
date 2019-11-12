@@ -182,7 +182,13 @@ class ReRemixerPanel extends React.Component {
 	
 	setSubdomain = async (e) => {
 		let subdomain = e.target.value;
-		let LTLeft = $('#LTLeft').fancytree('getTree');
+		let [, destination] = LibreTexts.parseURL();
+		destination = `https://${subdomain}.libretexts.org/${destination}`;
+		
+		if (confirm(`The ReRemixer requires you to be on the same library as your content. Would you like to be navigated to ${destination}?`))
+			window.location.href = destination;
+		
+		/*let LTLeft = $('#LTLeft').fancytree('getTree');
 		let LeftAlert = $('#LTLeftAlert');
 		
 		LTLeft.enable(false);
@@ -192,7 +198,7 @@ class ReRemixerPanel extends React.Component {
 		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
-		this.setState({subdomain: subdomain, LibraryTree: content});
+		this.setState({subdomain: subdomain, LibraryTree: content});*/
 	};
 	
 	getSelectOptions() {
@@ -213,6 +219,16 @@ class ReRemixerPanel extends React.Component {
 		let currentlyActive = LTLeft.getNodeByKey(this.props.currentlyActive);
 		if (!currentlyActive) {
 			this.props.enqueueSnackbar('Invalid node! Please try selecting the node again', {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
+			return;
+		}
+		else if (!currentlyActive.hasChildren()) {
+			this.props.enqueueSnackbar('Node must have children to ReRemix!', {
 				variant: 'error',
 				anchorOrigin: {
 					vertical: 'bottom',

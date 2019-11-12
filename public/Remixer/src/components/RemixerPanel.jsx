@@ -490,14 +490,14 @@ class RemixerPanel extends React.Component {
 									<ListItemText>Copy-Fork</ListItemText>
 								</Tooltip>
 							</MenuItem>
-							{/*{this.props.permission === 'Admin' ? //TODO Reeenable
+							{this.props.permission === 'Admin' ?
 								<MenuItem value='full'>
 									<Tooltip
 										title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
 										<ListItemText>Copy-Full</ListItemText>
 									</Tooltip>
 								</MenuItem>
-								: null}*/}
+								: null}
 						</TextField>
 					</div>
 					<div style={{
@@ -841,10 +841,18 @@ class RemixerPanel extends React.Component {
 		
 		let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
 			node.title = node.title.replace('&amp;', 'and');
+			let chapter = parent.chapter || 1;
 			
-			
-			if (node.title.match(/[0-9]+\.[A-Za-z]+:/) && !this.props.options.overwriteSuffix) {
+			if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/) && !this.props.options.overwriteSuffix) {
 				//skip unless overwriteSuffix is enabled
+				if (level > this.props.options.autonumber.guideDepth) { //Topic
+					let index = node.title.match(/(?<=[0-9]+\.)[0-9]*?[A-Za-z]+?(?=:)/)[0];
+					node.data.articleType = 'topic';
+					node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+					
+					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
+					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+				}
 			}
 			else if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
 				if (node.title.includes(': '))
@@ -866,7 +874,7 @@ class RemixerPanel extends React.Component {
 					
 					let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
 					node.title = `${prefix}${index}: ${node.title}`;
-					chapter = index;
+					node.chapter = index;
 				}
 				else if (level > this.props.options.autonumber.guideDepth) { //Topic
 					node.data.articleType = 'topic';
@@ -874,6 +882,7 @@ class RemixerPanel extends React.Component {
 					
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+					node.chapter = index;
 				}
 				node.title = node.title.trim();
 			}
@@ -934,7 +943,6 @@ class RemixerPanel extends React.Component {
 		}
 		let d = customRoot || root.toDict(true);
 		// let depth = this.getDepth(d);
-		let chapter = 1;
 		let sharedIndex = [1];
 		processNode(d, sharedIndex, 0);
 		

@@ -40,7 +40,10 @@ function LibreTextsReuse() {
 		let [current, currentPath] = parseURL();
 		path = path || currentPath;
 		let arbitraryPage = !api && !subdomain && path.startsWith('https://');
-		if (!arbitraryPage) {
+		if (arbitraryPage) {
+			[subdomain] = parseURL(path);
+		}
+		else {
 			if (path.startsWith('https://')) { //gets path from a url
 				[, path] = parseURL(path);
 			}
@@ -214,7 +217,7 @@ function LibreTextsReuse() {
 			page.path = response.path['#text'];
 			page.modified = new Date(response['date.modified']);
 			page.content = response.content;
-			if(response['page.parent'])
+			if (response['page.parent'])
 				page.parentID = parseInt(response['page.parent']['@id']);
 		}
 		else {

@@ -71,7 +71,28 @@ export default function OptionsPanel(props) {
 					textFromFileLoaded = JSON.parse(textFromFileLoaded);
 					if (!optionsOverwrite)
 						delete textFromFileLoaded.options;
-					textFromFileLoaded.permission = props.permission;
+					delete textFromFileLoaded.permission;
+					delete textFromFileLoaded.user;
+					let [current] = LibreTexts.parseURL();
+					if (textFromFileLoaded && textFromFileLoaded.href && textFromFileLoaded.mode === 'ReRemix' && !textFromFileLoaded.href.startsWith(`https://${current}.libretexts.org`)) {
+						//ReRemixes must be on their original library
+						const destination = textFromFileLoaded.href;
+						if (confirm(`The ReRemixer requires you to use the library originally used to create this file. Would you like to navigate to ${destination}?`))
+							window.location.href = destination;
+						else {
+							enqueueSnackbar(`ReRemix originally created at ${destination}. Please use that library instead!`, {
+								variant: 'error',
+								anchorOrigin: {
+									vertical: 'bottom',
+									horizontal: 'right',
+								},
+							});
+						}
+						setFile();
+						setFileOpen(false);
+						return;
+					}
+					
 					props.updateRemixer(textFromFileLoaded);
 					enqueueSnackbar(`Loaded ${file.name} successfully!`, {
 						variant: 'success',

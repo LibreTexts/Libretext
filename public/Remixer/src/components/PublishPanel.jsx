@@ -285,7 +285,7 @@ function PublishSubPanel(props) {
 							/>}
 						label="Show Failed"/>*/}
 					
-					<h6><a href={finished} target='_blank'>Your new LibreText will be available here</a></h6>
+					<h6><a href={finished} target='_blank'>Your new LibreText is available here</a></h6>
 					<Tooltip title='Download Progress Log'
 					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip>
 				</div> : null}
@@ -321,8 +321,8 @@ function PublishSubPanel(props) {
 					            display: 'flex',
 					            flexDirection: 'column',
 					            wordBreak: 'break-all'
-				            }}>Import Complete! View your results here <a target='_blank' href={finished}>{finished}</a>
-				</div>;
+				            }}>Import Complete!
+				</div>; //  View your results here <a target='_blank' href={finished}>{finished}</a>
 			default:
 				return <div className="status"
 				            style={{backgroundColor: 'grey', display: 'flex', flexDirection: 'column'}}>Results
@@ -366,7 +366,7 @@ function PublishSubPanel(props) {
 			});
 			return false;
 		}
-		if (props.mode === 'ReRemix' && !props.override && props.sorted.modified.length) {
+		if (props.mode === 'ReRemix' && !props.override && props.sorted.modified && props.sorted.modified.length) {
 			enqueueSnackbar(`The ReRemixer requires "Overwrite Existing Pages" to be turned on when modifying pages.
 			Remember to double check the changes that you are about to make since it may not be easy to undo them later!`, {
 				variant: 'warning',
@@ -393,7 +393,7 @@ function PublishSubPanel(props) {
 			destRoot = props.RemixTree.data.url;
 		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
-		if (response.ok && !props.override) {
+		if (response.ok && !props.override && props.mode !== 'ReRemix') {
 			enqueueSnackbar(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`, {
 				variant: 'warning',
 				anchorOrigin: {
@@ -448,30 +448,33 @@ function PublishSubPanel(props) {
 		setIsActive(false);
 		
 		async function completedPage(page, text, color, isFailed = false) {
-			setCounter(
-				(counter) => {
-					const total = props.working.length;
-					let current = counter.pages + 1;
-					const elapsed = (new Date() - startedAt) / 1000;
-					const rate = current / elapsed;
-					const estimated = total / rate;
-					const eta = estimated - elapsed;
-					
-					return {
-						percentage: `${Math.round(current / total * 1000) / 10}%`,
-						pages: current,
-						eta: secondsToStr(eta),
+			if (text !== 'Deleted')
+				setCounter(
+					(counter) => {
+						const total = props.working.length;
+						let current = counter.pages + 1;
+						const elapsed = (new Date() - startedAt) / 1000;
+						const rate = current / elapsed;
+						const estimated = total / rate;
+						const eta = estimated - elapsed;
+						
+						return {
+							percentage: `${Math.round(current / total * 1000) / 10}%`,
+							pages: current,
+							eta: secondsToStr(eta),
+						}
 					}
-				}
-			);
+				);
 			let message = '';
 			if (isFailed && typeof isFailed !== 'string') {
-				try {
-					message = await isFailed.json();
-				} catch (e) {
-					message = await isFailed.text();
-				}
-				if (!isFailed.ok)
+				if (!isFailed.ok) {
+					try {
+						if (!isFailed.bodyUsed)
+							message = await isFailed.json();
+					} catch (e) {
+						if (!isFailed.bodyUsed)
+							message = await isFailed.text();
+					}
 					switch (isFailed.status) {
 						case 403:
 							isFailed = '403 Forbidden - User does not have permission to modify\n';
@@ -486,20 +489,22 @@ function PublishSubPanel(props) {
 							isFailed = 'Error ' + isFailed.status + '\n';
 							break;
 					}
+				}
 				else
 					isFailed = false;
 			}
-			setResults(results => {
-				results.unshift({
-					title: page.title,
-					text: text,
-					url: page.url,
-					color: RemixerFunctions.statusColor(color),
-					isFailed: isFailed,
-					message: message,
+			if (text !== 'Skipped')
+				setResults(results => {
+					results.unshift({
+						title: page.title,
+						text: text,
+						url: page.url,
+						color: RemixerFunctions.statusColor(color),
+						isFailed: isFailed,
+						message: message,
+					});
+					return results
 				});
-				return results
-			});
 		}
 		
 		async function processPage(page) {
@@ -781,7 +786,7 @@ function PublishSubPanel(props) {
 						await completedPage(page, 'Moved', 'modified', response);
 					}
 					else { //just title change
-						await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
+						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
 							null, {
 								method: 'POST'
 							});
@@ -794,7 +799,7 @@ function PublishSubPanel(props) {
 				//skip because this is handled later
 			}
 			else if (page.status === 'unchanged') {
-				// completedPage(page, 'Skipped', 'unchanged');
+				completedPage(page, 'Skipped', 'unchanged');
 			}
 			
 			function renderTags(tags) {
