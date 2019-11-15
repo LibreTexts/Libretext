@@ -20,12 +20,6 @@ if (!window["youtubeIFrame"]) {
 
 					let qr_img = document.getElementById("qrcode");
 
-
-					QRCode.toDataURL(link).then(url => {
-						console.log(link);
-						qr_img.src = url;
-					});
-
 					youtubeImgContainer.classList.add("youtubeImageContainer");
 					$(youtubeImgContainer).insertAfter(iframe);
 
