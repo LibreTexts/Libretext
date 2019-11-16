@@ -39,13 +39,8 @@
       <paths name="Test">
         <serverdata>
           <mappings>
-            <mapping deploy="/development" local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/PDF" />
-            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/ZIP" />
-            <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/public/FullPDF" />
-          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

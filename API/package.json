@@ -6,6 +6,7 @@
     "async": "^3.1.0",
     "btoa": "^1.2.1",
     "console-timestamp": "^0.3.0",
+    "convert-excel-to-json": "^1.6.1",
     "deepcopy": "^1.0.1",
     "diff": "^4.0.1",
     "download": "^7.1.0",

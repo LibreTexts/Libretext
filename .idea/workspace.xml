@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,12 +29,12 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -59,8 +61,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.15.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Henry Agnew/BeeLine" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -76,19 +78,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -284,6 +286,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -306,12 +318,16 @@
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="npm.API Dashboard" />
+      <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
-      <item itemvalue="npm.Downloads Center" />
+      <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="Node.js.schedule.js" />
+        <item itemvalue="npm.build" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
     </recent_temporary>
@@ -319,18 +335,9 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
+        <option name="contentProportion" value="0.40227273" />
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@48526853" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@48526853" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@89ff1e72" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -1024,20 +1031,21 @@
       <workItem from="1568614004401" duration="1048000" />
       <workItem from="1568678286658" duration="3656000" />
       <workItem from="1568684821034" duration="9189000" />
-    </task>
-    <task id="LOCAL-00179" summary="Added streaming JSON output">
-      <created>1556342395179</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1556342395179</updated>
-    </task>
-    <task id="LOCAL-00180" summary="Added log export">
-      <created>1556494801783</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1556494801783</updated>
+      <workItem from="1568696487222" duration="417000" />
+      <workItem from="1568741511414" duration="106000" />
+      <workItem from="1568757728326" duration="2926000" />
+      <workItem from="1568765290463" duration="853000" />
+      <workItem from="1570682036356" duration="737000" />
+      <workItem from="1570762176267" duration="1469000" />
+      <workItem from="1570903016371" duration="267000" />
+      <workItem from="1571088424416" duration="4882000" />
+      <workItem from="1571247137586" duration="7845000" />
+      <workItem from="1571260435173" duration="892000" />
+      <workItem from="1571272774247" duration="388000" />
+      <workItem from="1571273327267" duration="3879000" />
+      <workItem from="1571435096154" duration="2713000" />
+      <workItem from="1571443667617" duration="3066000" />
+      <workItem from="1571867619858" duration="1426000" />
     </task>
     <task id="LOCAL-00181" summary="Added encodeHTML">
       <created>1556508210666</created>
@@ -1368,7 +1376,21 @@
       <option name="project" value="LOCAL" />
       <updated>1568688088049</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="Added Excel to LibreMap into Importer">
+      <created>1571288166416</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1571288166418</updated>
+    </task>
+    <task id="LOCAL-00229" summary="Beeline Complex integration">
+      <created>1571854546911</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1571854546919</updated>
+    </task>
+    <option name="localTasksCounter" value="230" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1424,8 +1446,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix newlines" />
-    <MESSAGE value="FindReplace summaries" />
     <MESSAGE value="Security Fix MoleculeGenerator" />
     <MESSAGE value="Bugfix Remixer cross-origin" />
     <MESSAGE value="Spacing fix" />
@@ -1449,18 +1469,9 @@
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
     <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
     <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>1254</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added Excel to LibreMap into Importer" />
+    <MESSAGE value="Beeline Complex integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Beeline Complex integration" />
   </component>
   <component name="masterDetails">
     <states>

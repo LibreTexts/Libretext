@@ -130,11 +130,11 @@ puppeteer.launch({
 							response.write(JSON.stringify(result));
 							response.end();
 						}
-						else if (withMargin)
-							staticFileServer.serveFile(`../PDF/${size}/Margin/${result.filename}`, 200, {'cache-control': 'no-cache'}, request, response);
 						else if (result.filename === 'restricted') {
 							responseError('This page is not publicly accessible.', 403)
 						}
+						else if (withMargin)
+							staticFileServer.serveFile(`../PDF/${size}/Margin/${result.filename}`, 200, {'cache-control': 'no-cache'}, request, response);
 						else
 							staticFileServer.serveFile(`../PDF/${size}/${result.filename}`, 200, {'cache-control': 'no-cache'}, request, response);
 					}
@@ -560,6 +560,8 @@ puppeteer.launch({
 				overview = overview.contents['#text'];
 			if (logo)
 				logo = logo.split('luluCover@')[1];
+			else
+				logo = 'https://chem.libretexts.org/@api/deki/files/242117/default.png';
 			
 			let style = `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/cover.css"/><script src="http://localhost:${port}/print/qrcode.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i" rel="stylesheet"><style>#frontContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluFront' : 'NormalFront'}/${current.subdomain}.png")}#backContainer{background-image: url("http://localhost:${port}/print/${options.hasExtraPadding ? 'LuluBack' : 'NormalBack'}/${current.subdomain}.png")</style>`;
@@ -1104,6 +1106,9 @@ puppeteer.launch({
 				delete working[escapedURL];	//2 min timeout for DUPE
 			}
 			
+			if(current.title === 'InfoPage')
+				isNoCache = true;
+			
 			const daysCache = 35;
 			const updateTime = current.modified;
 			let allExist = [fs.exists(`./PDF/Letter/${escapedURL}.pdf`),
@@ -1144,6 +1149,7 @@ puppeteer.launch({
 			console.log(`NEW    ${ip} ${url}`);
 			
 			const page = await browser.newPage();
+			page.setViewport({width:975, height: 1000});
 			let timeout;
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
@@ -1393,7 +1399,7 @@ puppeteer.launch({
 			let refreshOnly = options.refreshOnly;
 			let isNoCache = options['no-cache'] || options.nocache;
 			
-			let heartbeat;
+			let heartbeat, altID;
 			if (typeof current === 'string') {
 				let count = 0;
 				heartbeat = setInterval(() => {
@@ -1433,7 +1439,10 @@ puppeteer.launch({
 				content.title = current.title;
 				content.tags = current.tags.concat(content.tags);
 				content.properties = current.properties.concat(content.properties);
+				altID = current.id; //save current.id and keep as id
 				current = content;
+				current.id = altID;
+				altID = content.id; //save content.id as altID
 			}
 			await getInformation(current);
 			const topPage = current;
@@ -1530,12 +1539,12 @@ puppeteer.launch({
 						let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2};
 						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
 							method: "POST",
-							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative;">
+							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative; align-items: center">
 <div style=" display:flex; flex:1; flex-direction: column; justify-content: center">
 <p class="mt-align-center"><span class="mt-font-size-36">${current.companyname || ''}</span></p>
 <p class="mt-align-center"><span class="mt-font-size-36">${current.title || ''}</span></p></div>
 <p style="position: absolute; bottom: 0; right: 0"><canvas id="canvas"></canvas></p>
-<p class="mt-align-center"><span class="mt-font-size-24">${current.name || ''}</span></p>
+<p class="mt-align-center" style="max-width: 70%"><span class="mt-font-size-24">${current.name || ''}</span></p>
 <script>QRCode.toCanvas(document.getElementById('canvas'), '${topPage.url}', ${JSON.stringify(QRoptions)})</script>
 <p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">printoptions:no-header-title</a></p></div>`
 						});
@@ -1570,10 +1579,6 @@ puppeteer.launch({
 						method: "PUT",
 						body: image,
 					}).then();
-				}
-				
-				function spacer(num) {
-					return '<p className="Matter">&nbsp;</p>'.repeat(num);
 				}
 			}
 			
@@ -1850,6 +1855,7 @@ puppeteer.launch({
 				zipFilename: zipFilename,
 				title: current.title,
 				id: current.id,
+				altID: altID,
 				author: current.name,
 				institution: current.companyname,
 				link: current.url,
@@ -2176,7 +2182,7 @@ async function getAPI(page, getContents) {
 		}
 		tags = tags.map((elem) => elem.title);
 		page.id = response['@id'];
-		page.title = response.title;
+		page.title = page.title || response.title;
 		page.tags = tags;
 		page.properties = properties;
 		page.subdomain = subdomain;
