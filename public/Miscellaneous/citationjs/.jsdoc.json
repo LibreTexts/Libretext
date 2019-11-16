@@ -1,0 +1,29 @@
+{
+  "plugins": ["plugins/markdown"],
+  "markdown": {
+    "idInHeadings": true
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "source": {
+    "include": ["src"]
+  },
+  "opts": {
+    "template": "node_modules/minami",
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "recurse": true,
+    "destination": "./jsdoc/",
+    "tutorials": "./docs/"
+  },
+  "templates": {
+    "default": {
+      "layoutFile": ".jsdoc.tmpl",
+      "includeDate": false
+    },
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+} 

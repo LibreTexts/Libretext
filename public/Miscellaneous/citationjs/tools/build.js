@@ -1,0 +1,12 @@
+var fs = require('fs')
+var path = require('path')
+var browserify = require('browserify')
+var babelify = require('babelify')
+
+browserify()
+  .add(require.resolve('core-js/stable'))
+  .add(require.resolve('regenerator-runtime/runtime'))
+  .require('.', { expose: 'citation-js' })
+  .transform(babelify, { global: true })
+  .bundle()
+  .pipe(fs.createWriteStream(path.join(__dirname, '../build/citation.js')))

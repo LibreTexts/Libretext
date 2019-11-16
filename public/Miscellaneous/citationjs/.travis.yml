@@ -1,0 +1,14 @@
+branches:
+  only:
+    - master
+    - /^(fix|feat|feature|dev|tmp)\//
+language: node_js
+node_js:
+  - "node"
+  - "8"
+  - "6"
+sudo: false
+install:
+  - npm install
+script:
+  - npm test
