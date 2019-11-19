@@ -89,7 +89,7 @@ export default function RemixerOptions(props) {
 				<MenuItem value='transclude'>
 					<Tooltip
 						title="In copy-transclude mode, pages will be automatically updated from the source (Recommended)">
-						<div>Copy-Transclude</div>
+						<div>Copy-Transclude (Recommended)</div>
 					</Tooltip>
 				</MenuItem>
 				<MenuItem value='fork'>

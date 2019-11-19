@@ -11,9 +11,12 @@ import Tabs from "@material-ui/core/Tabs";
 import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+import {withStyles} from '@material-ui/core/styles';
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Description from "@material-ui/icons/Description";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {Switch} from "@material-ui/core";
@@ -114,8 +117,9 @@ export default function PublishPanel(props) {
 			flex: 1,
 			display: 'flex',
 			flexDirection: 'column',
-			justifyContent: 'space-evenly',
-			fontSize: 'larger'
+			fontSize: 'larger',
+			overflow: 'auto',
+			width: '100%',
 		};
 		if (props.mode === 'Remix') {
 			return <List style={listStyle}>
@@ -138,16 +142,21 @@ export default function PublishPanel(props) {
 		else
 			return <div style={{flex: 1}}>Invalid Mode</div>;
 		
-		function listItem(array, statusColor, text) {
-			let length = 0;
+		function listItem(array = [], statusColor, text) {
+			let length = array.length;
 			statusColor = RemixerFunctions.statusColor(statusColor);
-			if (array && array.length)
-				length = array.length;
-			return <ListItem style={{color: statusColor}}><ListItemIcon>
-				<Description style={{color: statusColor}}/>
-			</ListItemIcon>
-				{length} pages {text}
-			</ListItem>;
+			return <ExpansionPanel style={{color: statusColor}}>
+				<ExpansionPanelSummary
+					expandIcon={<ExpandMoreIcon/>}>
+					<Description style={{color: statusColor}}/>
+					{length} pages {text}
+				</ExpansionPanelSummary>
+				<ExpansionPanelDetails>
+					<ul style={{width: '100%', fontSize: '80%'}}>
+						{array.map((elem, index) => <li key={index}>{elem.title}</li>)}
+					</ul>
+				</ExpansionPanelDetails>
+			</ExpansionPanel>;
 		}
 	}
 	
@@ -445,6 +454,11 @@ function PublishSubPanel(props) {
 				await completedPage(page, 'Deleted', 'deleted');
 			}
 		setState('done');
+		setCounter({
+			percentage: 100,
+			pages: props.working.length,
+			eta: 'Done!',
+		});
 		setIsActive(false);
 		
 		async function completedPage(page, text, color, isFailed = false) {
@@ -935,3 +949,43 @@ function secondsToStr(seconds) {
 function formatNumber(it) {
 	return it.toPrecision(4);
 }
+
+const ExpansionPanel = withStyles({
+	root: {
+		border: '1px solid rgba(0, 0, 0, .125)',
+		boxShadow: 'none',
+		'&:not(:last-child)': {
+			borderBottom: 0,
+		},
+		'&:before': {
+			display: 'none',
+		},
+		'&$expanded': {
+			margin: '0',
+		},
+	},
+	expanded: {},
+})(MuiExpansionPanel);
+
+const ExpansionPanelSummary = withStyles({
+	root: {
+		borderBottom: '1px solid rgba(0, 0, 0, .125)',
+		marginBottom: -1,
+		minHeight: 56,
+		'&$expanded': {
+			minHeight: 56,
+		},
+	},
+	content: {
+		'&$expanded': {
+			margin: '12px 0',
+		},
+	},
+	expanded: {},
+})(MuiExpansionPanelSummary);
+
+const ExpansionPanelDetails = withStyles(theme => ({
+	root: {
+		padding: theme.spacing(2),
+	},
+}))(MuiExpansionPanelDetails);

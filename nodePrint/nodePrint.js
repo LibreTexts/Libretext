@@ -1623,6 +1623,14 @@ puppeteer.launch({
 					number /= 2;
 					number = Math.floor(number); //integer check
 				}
+				let heartbeat = setInterval(()=>
+					response.write(JSON.stringify({
+						message: "progress",
+						percent: (Math.round(count / urlArray.length * 1000) / 10),
+						eta: 'heartbeat',
+						// count: count,
+					}) + "\r\n"), 30000);
+				
 				await async.mapLimit(urlArray, number, async (page) => {
 					page = await getAPI(page);
 					let filename, title = page.title;
@@ -1641,7 +1649,7 @@ puppeteer.launch({
 						}
 						
 					}
-					else if (page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
+					else if (page.subpages && page.subpages.length && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
 						filename = `TOC/${await getTOC(page)}.pdf`;
 						
 						if (page.tags.includes('coverpage:yes')) {//no Front Matter TOC
@@ -1689,6 +1697,8 @@ puppeteer.launch({
 							// count: count,
 						}) + "\r\n");
 				});
+				
+				clearInterval(heartbeat);
 			} catch (err) {
 				throw err;
 			}

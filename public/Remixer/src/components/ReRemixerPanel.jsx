@@ -128,8 +128,8 @@ class ReRemixerPanel extends React.Component {
 		if (this.state.initialized) {
 			const leftTree = $('#LTLeft').fancytree('getTree');
 			
-			currentlyActive = leftTree.getActiveNode();
-			currentlyActive = this.props.currentlyActive || (currentlyActive ? currentlyActive.key : '');
+			// currentlyActive = leftTree.getActiveNode();
+			currentlyActive = this.props.currentlyActive; //|| (currentlyActive ? currentlyActive.key : '');
 			leftTree.reload(this.state.LibraryTree);
 			if (currentlyActive) {
 				leftTree.activateKey(currentlyActive, {noFocus: true});
@@ -227,7 +227,7 @@ class ReRemixerPanel extends React.Component {
 			});
 			return;
 		}
-		else if (!currentlyActive.hasChildren()) {
+		if (!currentlyActive.isLazy()) {
 			this.props.enqueueSnackbar('Node must have children to ReRemix!', {
 				variant: 'error',
 				anchorOrigin: {

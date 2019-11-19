@@ -310,44 +310,50 @@ class RemixerPanel extends React.Component {
 				
 				
 				{!deleted ? <>
-					<Button variant="contained" onClick={this.new}><span>New Page</span>
-						<Add/></Button>
-					<Button variant="contained" onClick={this.edit}><span>Page Properties</span>
-						<Edit/></Button>
-					<Button variant="contained" onClick={this.delete}><span>Delete Page</span>
-						<Remove/></Button>
+					<Tooltip title={`New Page`}>
+						<Button variant="contained" onClick={this.new}><Add/></Button>
+					</Tooltip>
+					<Tooltip title={`Page Properties`}>
+						<Button variant="contained" onClick={this.edit}><Edit/></Button>
+					</Tooltip>
+					<Tooltip title={`Delete Page`}>
+						<Button variant="contained" onClick={this.delete}><Remove/></Button>
+					</Tooltip>
 				</> : <>
-					<Button variant="contained" onClick={this.delete} className={'expandedLabel'}>
-						<span>Restore Page</span>
+					<Button variant="contained" onClick={this.delete}>
+						Restore Page
 						<RestoreFromTrashIcon/></Button>
 				</>}
 				
-				
-				<Button variant="contained" onClick={this.props.undo}
-				        disabled={!this.props.undoArray.length}><span>Undo {this.props.undoArray.length}</span>
-					<Undo/></Button>
-				<Button variant="contained" onClick={this.props.redo}
-				        disabled={!this.props.redoArray.length}><span>Redo {this.props.redoArray.length}</span>
-					<Redo/></Button>
+				<Tooltip title={`Undo ${this.props.undoArray.length}`}>
+					<div style={{display: 'flex'}}><Button variant="contained" onClick={this.props.undo}
+					                                       disabled={!this.props.undoArray.length}><Undo/></Button>
+					</div>
+				</Tooltip>
+				<Tooltip title={`Redo ${this.props.redoArray.length}`}>
+					<div style={{display: 'flex'}}><Button variant="contained" onClick={this.props.redo}
+					                                       disabled={!this.props.redoArray.length}><Redo/></Button>
+					</div>
+				</Tooltip>
 				
 				
 				{/*<Tooltip title="Merges the contents of the selected folder with its parent's contents."
 				         disabled={deleted}>
 					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
 				</Tooltip>*/}
-				<Button variant="contained"
-				        onClick={() => {
-					        this.props.mode === 'Remix'
-						        ? this.setState({resetDialog: true})
-						        : this.setState({reRemixDialog: true});
-				        }}>
-					<span>Start Over</span>
-					<Refresh/></Button>
+				<Tooltip title={`Start Over`}>
+					<Button variant="contained"
+					        onClick={() => {
+						        this.props.mode === 'Remix'
+							        ? this.setState({resetDialog: true})
+							        : this.setState({reRemixDialog: true});
+					        }}><Refresh/></Button>
+				</Tooltip>
 				<Button variant="contained" color="secondary"
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({name: this.props.RemixTree.title, stage: 'Publishing'})
-				        }}><span>Publish</span>
+				        }}>Publish
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer' data-beeline-skip>
@@ -843,48 +849,55 @@ class RemixerPanel extends React.Component {
 			node.title = node.title.replace('&amp;', 'and');
 			let chapter = parent.chapter || 1;
 			
-			if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/) && !this.props.options.overwriteSuffix) {
-				//skip unless overwriteSuffix is enabled
-				if (level > this.props.options.autonumber.guideDepth) { //Topic
+			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
+				if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/)
+					&& !this.props.options.overwriteSuffix
+					&& level > this.props.options.autonumber.guideDepth) {
+					//skip unless overwriteSuffix is enabled
 					let index = node.title.match(/(?<=[0-9]+\.)[0-9]*?[A-Za-z]+?(?=:)/)[0];
 					node.data.articleType = 'topic';
 					node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
 					
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
-					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
-				}
-			}
-			else if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
-				if (node.title.includes(': '))
 					node.title = node.title.replace(/^[^:]*: /, '');
-				
-				
-				let index = sharedIndex[0]++;
-				if (level < this.props.options.autonumber.guideDepth) { //Unit
-					node.data.articleType = 'topic-category';
-					node.data['padded'] = false;
-				}
-				else if (level === this.props.options.autonumber.guideDepth) { //Guide
-					if (Number(this.props.options.autonumber.offset) > sharedIndex[0]) { //apply offset
-						sharedIndex[0] = Number(this.props.options.autonumber.offset);
-						index = sharedIndex[0]++;
-					}
-					node.data.articleType = 'topic-guide';
-					node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
-					
-					let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
-					node.title = `${prefix}${index}: ${node.title}`;
-					node.chapter = index;
-				}
-				else if (level > this.props.options.autonumber.guideDepth) { //Topic
-					node.data.articleType = 'topic';
-					node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
-					
-					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
+					node.title = node.title.replace(':', '-');
 					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
-					node.chapter = index;
+				}
+				else {
+					
+					if (node.title.includes(': '))
+						node.title = node.title.replace(/^[^:]*: /, '');
+					node.title = node.title.replace(':', '-');
+					
+					
+					let index = sharedIndex[0]++;
+					if (level < this.props.options.autonumber.guideDepth) { //Unit
+						node.data.articleType = 'topic-category';
+						node.data['padded'] = false;
+					}
+					else if (level === this.props.options.autonumber.guideDepth) { //Guide
+						if (Number(this.props.options.autonumber.offset) > sharedIndex[0]) { //apply offset
+							sharedIndex[0] = Number(this.props.options.autonumber.offset);
+							index = sharedIndex[0]++;
+						}
+						node.data.articleType = 'topic-guide';
+						node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
+						
+						let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
+						node.title = `${prefix}${index}: ${node.title}`;
+						node.chapter = index;
+					}
+					else if (level > this.props.options.autonumber.guideDepth) { //Topic
+						node.data.articleType = 'topic';
+						node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+						
+						let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
+						node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+						node.chapter = `${chapter}.${index}`;
+					}
 				}
 				node.title = node.title.trim();
+				
 			}
 			else
 				node.data['padded'] = false;

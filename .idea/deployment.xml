@@ -16,7 +16,7 @@
       <paths name="Batch">
         <serverdata>
           <mappings>
-            <mapping deploy="/nodePrint" local="$PROJECT_DIR$/nodePrint" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/nodePrint" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/PDF" />
