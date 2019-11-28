@@ -551,7 +551,7 @@ function PublishSubPanel(props) {
 						
 						
 						await putProperty('mindtouch.page#welcomeHidden', true, page.path);
-						let image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+						let image = await LibreTexts.authenticatedFetch('https://files.libretexts.org/DefaultImages/default.png');
 						image = await image.blob();
 						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
 							method: 'PUT',
@@ -779,7 +779,7 @@ function PublishSubPanel(props) {
 					if ((files.find(file => file.filename === 'mindtouch.page#thumbnail' || file.filename === 'mindtouch.page%23thumbnail')))
 						image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
 					else if (page.articleType === 'topic-category' || page.articleType === 'topic-guide')
-						image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+						image = await LibreTexts.authenticatedFetch('https://files.libretexts.org/DefaultImages/default.png');
 					if (image) {
 						image = await image.blob();
 						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
