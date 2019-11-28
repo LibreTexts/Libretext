@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Moved default.png to librefiles due to CORS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
     </list>
@@ -49,6 +48,11 @@
   <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
@@ -1065,6 +1069,7 @@
       <workItem from="1573515402305" duration="4387000" />
       <workItem from="1574036282727" duration="713000" />
       <workItem from="1574141064677" duration="4169000" />
+      <workItem from="1574978494371" duration="427000" />
     </task>
     <task id="LOCAL-00182" summary="Added percentage to Dashboard">
       <created>1556862419516</created>
@@ -1493,26 +1498,30 @@
     <option name="LAST_COMMIT_MESSAGE" value="Full-copy partial fix&#10;&#10;STILL NOT WORKING Cross-library" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="191" height="671" key="GridCell.Tab.0.bottom" timestamp="1574972603902">
-      <screen x="-1440" y="0" width="1440" height="860" />
+    <state width="180" height="489" key="GridCell.Tab.0.bottom" timestamp="1574978572840">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="191" height="671" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
     <state width="191" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468286" />
-    <state width="191" height="671" key="GridCell.Tab.0.center" timestamp="1574972603902">
-      <screen x="-1440" y="0" width="1440" height="860" />
+    <state width="180" height="489" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1574978572840" />
+    <state width="180" height="489" key="GridCell.Tab.0.center" timestamp="1574978572839">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="191" height="671" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
     <state width="191" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
-    <state width="191" height="671" key="GridCell.Tab.0.left" timestamp="1574972603902">
-      <screen x="-1440" y="0" width="1440" height="860" />
+    <state width="180" height="489" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1574978572839" />
+    <state width="180" height="489" key="GridCell.Tab.0.left" timestamp="1574978572839">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="191" height="671" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
     <state width="191" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
-    <state width="191" height="671" key="GridCell.Tab.0.right" timestamp="1574972603902">
-      <screen x="-1440" y="0" width="1440" height="860" />
+    <state width="180" height="489" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1574978572839" />
+    <state width="180" height="489" key="GridCell.Tab.0.right" timestamp="1574978572840">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="191" height="671" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
     <state width="191" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
+    <state width="180" height="489" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1574978572840" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
