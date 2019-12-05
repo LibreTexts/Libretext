@@ -114,7 +114,7 @@ function articleTypeToTitle(type) {
 	}
 }
 
-async function getSubpages(path, subdomain, full, linkTitle) {
+async function getSubpages(path, subdomain, options = {}) {
 	path = path.replace(`https://${subdomain}.libretexts.org/`, '');
 	let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 	response = await response.json();
@@ -135,18 +135,18 @@ async function getSubpages(path, subdomain, full, linkTitle) {
 			path = path.replace('?title=', '');
 			const hasChildren = subpage['@subpages'] === 'true';
 			let children = hasChildren ? undefined : [];
-			if (hasChildren && full) { //recurse down
+			if (hasChildren && options.full) { //recurse down
 				children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 				children = await children.json();
 				children = await subpageCallback(children);
 			}
-			if (!url.endsWith('/link') && subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter') {
+			if (!url.endsWith('/link') && (options.includeMatter || (subpage.title !== 'Front Matter' && subpage.title !== 'Back Matter'))) {
 				let miniResult = {
-					title: linkTitle ? `${subpage.title}<a href="${url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>` : subpage.title,
+					title: options.linkTitle ? `${subpage.title}<a href="${url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>` : subpage.title,
 					url: url,
 					sourceURL: url,
 					children: children,
-					lazy: !full && hasChildren,
+					lazy: !options.full && hasChildren,
 					status: 'new',
 				};
 				miniResult = await LibreTexts.getAPI(miniResult);

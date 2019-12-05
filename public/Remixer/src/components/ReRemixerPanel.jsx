@@ -37,7 +37,12 @@ class ReRemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		this.setState({LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, false, true)});
+		this.setState({
+			LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, {
+				linkTitle: true,
+				includeMatter: true
+			})
+		});
 		LeftAlert.slideUp();
 		LTLeft.fancytree({
 			source: this.state.LibraryTree,
@@ -61,7 +66,10 @@ class ReRemixerPanel extends React.Component {
 				const dfd = new $.Deferred();
 				let node = data.node;
 				data.result = dfd.promise();
-				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain, {
+					linkTitle: true,
+					includeMatter: true
+				}).then((result) => dfd.resolve(result), node.data.subdomain);
 			},
 			dnd5: {
 				// autoExpandMS: 400,
@@ -187,18 +195,6 @@ class ReRemixerPanel extends React.Component {
 		
 		if (confirm(`The ReRemixer requires you to be on the same library as your content. Would you like to be navigated to ${destination}?`))
 			window.location.href = destination;
-		
-		/*let LTLeft = $('#LTLeft').fancytree('getTree');
-		let LeftAlert = $('#LTLeftAlert');
-		
-		LTLeft.enable(false);
-		LeftAlert.text(`Loading ${subdomain}`);
-		LeftAlert.slideDown();
-		let content = await RemixerFunctions.getSubpages('home', subdomain, false, true);
-		
-		LeftAlert.slideUp();
-		LTLeft.enable(true);
-		this.setState({subdomain: subdomain, LibraryTree: content});*/
 	};
 	
 	getSelectOptions() {

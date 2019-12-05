@@ -133,8 +133,8 @@ export default function PublishPanel(props) {
 		else if (props.mode === 'ReRemix') {
 			return <List style={listStyle}>
 				{listItem(sorted.new, 'new', 'will be added')}
-				{listItem(sorted.modified, 'modified', 'will be modified')}
 				{listItem(sorted.moved, 'modified', 'will be moved')}
+				{listItem(sorted.modified, 'modified', 'will have tags modified')}
 				{listItem(sorted.deleted, 'deleted', 'will be deleted')}
 				{listItem(sorted.unchanged, 'unchanged', 'will be unchanged')}
 			</List>;
@@ -447,11 +447,12 @@ function PublishSubPanel(props) {
 		}
 		if (props.sorted.deleted)
 			for (const page of props.sorted.deleted) {
+				let response;
 				if (!page.parentDeleted)
-					await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
+					response = await LibreTexts.authenticatedFetch(page.path, '?recursive=true', null, {
 						method: 'DELETE'
 					});
-				await completedPage(page, 'Deleted', 'deleted');
+				await completedPage(page, 'Deleted', 'deleted', response);
 			}
 		setState('done');
 		setCounter({
@@ -524,80 +525,66 @@ function PublishSubPanel(props) {
 		async function processPage(page) {
 			await getURL(page);
 			
-			if (page.status === 'new' || page.status === 'modified') {
-				let contents, response, source;
-				
-				if (page.copyMode === 'blank') { //process new blank pages
-					contents = `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:${page.articleType}</a>${page.key === 'ROOT' ? '<a href=\"#\">coverpage:yes</a>' : ''}</p>`;
-					if (['topic-category', 'topic-guide'].includes(page.articleType))
-						contents = '<p>{{template.ShowOrg()}}</p>' + contents;
+			switch (page.status) {
+				case'new':
+					let contents, response, source;
 					
-					response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
-						method: 'POST',
-						body: contents,
-					});
-					if (!response.ok) {
-						await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new', response);
-					}
-					else {
-						if (page.articleType === 'topic-guide') {
-							await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", page.path),
-								putProperty('mindtouch.page#welcomeHidden', true, page.path),
-								putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", page.path)]
-							)
+					if (page.copyMode === 'blank') { //process new blank pages
+						contents = `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:${page.articleType}</a>${page.key === 'ROOT' ? '<a href=\"#\">coverpage:yes</a>' : ''}</p>`;
+						if (['topic-category', 'topic-guide'].includes(page.articleType))
+							contents = '<p>{{template.ShowOrg()}}</p>' + contents;
+						
+						response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
+							method: 'POST',
+							body: contents,
+						});
+						if (!response.ok) {
+							await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new', response);
 						}
-						else if (page.articleType === 'topic-category')
-							await putProperty('mindtouch.idf#subpageListing', 'simple', page.path);
-						
-						
-						await putProperty('mindtouch.page#welcomeHidden', true, page.path);
-						let image = await fetch('https://files.libretexts.org/DefaultImages/default.png');
-						image = await image.blob();
-						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
-							method: 'PUT',
-							body: image,
-						});
-						await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new');
-					}
-					return;
-				} // end for new pages
-				const [currentSubdomain] = LibreTexts.parseURL();
-				source = await LibreTexts.getAPI(page.sourceURL || '');
-				if (source.error) {
-					await completedPage(page, `Source Error`, 'new', source.response);
-					return;
-				}
-				let index = 1;
-				for (let tag of source.tags) {
-					if (tag.startsWith('source[')) {
-						let subindex = tag.match(/(?<=^source\[)[0-9]+(?=]-)/);
-						if (subindex)
-							subindex = subindex[0];
-						if (subindex > index)
-							index = subindex + 1;
-					}
-				}
-				source.tags.push(`source[${index}]-${source.subdomain}-${source.id}`);
-				if (!source.tags.includes('article:topic') && page.copyMode === 'transclude')
-					page.copyMode = 'fork';
-				
-				if (page.status === 'modified' && page.sourceURL === page.data.original.data.sourceURL) { //handling changes for ReRemixes
-					let oldTags = [...page.data.original.data.tags, `article:${page.data.original.data.articleType}`].sort();
-					let newTags = [...page.tags, `article:${page.articleType}`].sort();
-					if (JSON.stringify(oldTags) !== JSON.stringify(newTags)) { //modify tags
-						console.log(oldTags, newTags);
-						const result = `<tags>${newTags.map(elem => `<tag value="${elem}"/>`).join("")}</tags>`;
-						response = await LibreTexts.authenticatedFetch(page.path, 'tags?dream.out.format=json', null, {
-							method: "PUT",
-							body: result,
-							headers: {
-								"Content-Type": "text/xml; charset=utf-8",
+						else {
+							if (page.articleType === 'topic-guide') {
+								await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", page.path),
+									putProperty('mindtouch.page#welcomeHidden', true, page.path),
+									putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", page.path)]
+								)
 							}
-						});
-						await completedPage(page, 'Modified Tags', 'modified', response);
+							else if (page.articleType === 'topic-category')
+								await putProperty('mindtouch.idf#subpageListing', 'simple', page.path);
+							
+							
+							await putProperty('mindtouch.page#welcomeHidden', true, page.path);
+							let image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
+							image = await image.blob();
+							await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
+								method: 'PUT',
+								body: image,
+							});
+							await completedPage(page, `New blank ${RemixerFunctions.articleTypeToTitle(page.articleType)}`, 'new');
+						}
+						return;
+					} // end for new pages
+					const [currentSubdomain] = LibreTexts.parseURL();
+					source = await LibreTexts.getAPI(page.sourceURL || '');
+					if (source.error) {
+						await completedPage(page, `Source Error`, 'new', source.response);
+						return;
 					}
-				}
-				else { //change page contents
+					let index = 1;
+					for (let tag of source.tags) {
+						if (tag.startsWith('source[')) {
+							let subindex = tag.match(/(?<=^source\[)[0-9]+(?=]-)/);
+							if (subindex)
+								subindex = subindex[0];
+							if (subindex > index)
+								index = subindex + 1;
+						}
+					}
+					source.tags.push(`source[${index}]-${source.subdomain}-${source.id}`);
+					if (!source.tags.includes('article:topic') && page.copyMode === 'transclude')
+						page.copyMode = 'fork';
+					
+					
+					//change page contents
 					switch (page.copyMode) {
 						case 'transclude':
 							source.tags.push('transcluded:yes');
@@ -779,7 +766,7 @@ function PublishSubPanel(props) {
 					if ((files.find(file => file.filename === 'mindtouch.page#thumbnail' || file.filename === 'mindtouch.page%23thumbnail')))
 						image = await LibreTexts.authenticatedFetch(source.url, 'thumbnail', source.subdomain);
 					else if (page.articleType === 'topic-category' || page.articleType === 'topic-guide')
-						image = await fetch('https://files.libretexts.org/DefaultImages/default.png');
+						image = await LibreTexts.authenticatedFetch('https://chem.libretexts.org/@api/deki/files/239314/default.png?origin=mt-web');
 					if (image) {
 						image = await image.blob();
 						await LibreTexts.authenticatedFetch(page.path, 'files/=mindtouch.page%2523thumbnail', null, {
@@ -787,33 +774,50 @@ function PublishSubPanel(props) {
 							body: image,
 						})
 					}
-				}
-				
-				//page moved or renamed
-				if (page.status === 'modified' && page.data.relativePath !== page.data.original.data.relativePath) {
-					const differentParent = page.data.parentID !== page.data.original.data.parentID;
-					if (differentParent) { //move
-						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects&dream.out.format=json`,
-							null, {
-								method: 'POST'
-							});
-						await completedPage(page, 'Moved', 'modified', response);
+					break;
+				case 'modified':
+					let oldTags = [...page.data.original.data.tags, `article:${page.data.original.data.articleType}`].sort();
+					let newTags = [...page.tags, `article:${page.articleType}`].sort();
+					if (JSON.stringify(oldTags) !== JSON.stringify(newTags)) { //modify tags
+						console.log(oldTags, newTags);
+						const result = `<tags>${newTags.map(elem => `<tag value="${elem}"/>`).join("")}</tags>`;
+						response = await LibreTexts.authenticatedFetch(page.path, 'tags?dream.out.format=json', null, {
+							method: "PUT",
+							body: result,
+							headers: {
+								"Content-Type": "text/xml; charset=utf-8",
+							}
+						});
+						//TODO maybe modify properties?
 					}
-					else { //just title change
-						let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
-							null, {
-								method: 'POST'
-							});
-						await completedPage(page, 'Renamed', 'modified', response);
+					
+					//page moved or renamed
+					if (page.data.relativePath !== page.data.original.data.relativePath) {
+						const differentParent = page.data.parentID !== page.data.original.data.parentID;
+						if (differentParent) { //move
+							let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects&dream.out.format=json`,
+								null, {
+									method: 'POST'
+								});
+							await completedPage(page, 'Moved', 'modified', response);
+						}
+						else { //just title change
+							let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
+								null, {
+									method: 'POST'
+								});
+							await completedPage(page, 'Renamed', 'modified', response);
+						}
 					}
-				}
-				
-			}
-			else if (page.status === 'deleted') {
-				//skip because this is handled later
-			}
-			else if (page.status === 'unchanged') {
-				completedPage(page, 'Skipped', 'unchanged');
+					else {
+						await completedPage(page, 'Modified Tags', 'modified', response);
+					}
+					break;
+				case 'deleted': //skip because this is handled later
+					break;
+				case 'unchanged':
+					await completedPage(page, 'Skipped', 'unchanged');
+					break;
 			}
 			
 			function renderTags(tags) {

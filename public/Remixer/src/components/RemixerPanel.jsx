@@ -30,6 +30,7 @@ import Chip from "@material-ui/core/Chip";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ReactDiffViewer from './Diff.jsx';
 
 class RemixerPanel extends React.Component {
 	constructor() {
@@ -196,7 +197,7 @@ class RemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		this.setState({LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, false, true)});
+		this.setState({LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, {linkTitle: true})});
 		LeftAlert.slideUp();
 		LTLeft.fancytree({
 			source: this.state.LibraryTree,
@@ -212,7 +213,7 @@ class RemixerPanel extends React.Component {
 				const dfd = new $.Deferred();
 				let node = data.node;
 				data.result = dfd.promise();
-				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain, false, true).then((result) => dfd.resolve(result), node.data.subdomain);
+				RemixerFunctions.getSubpages(node.data.url, node.data.subdomain, {linkTitle: true}).then((result) => dfd.resolve(result), node.data.subdomain);
 			},
 			dnd5: {
 				// autoExpandMS: 400,
@@ -420,25 +421,48 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('title', event.target.value)}
 						fullWidth
 					/>
-					<TextField
-						margin="dense"
-						label="Source URL (optional)"
-						value={this.state.edit.sourceURL || ''}
-						onChange={(event) => this.changeEdit('sourceURL', event.target.value)}
-						fullWidth
-					/>
-					{this.state.edit.sourceURL ?
-						<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
-						   style={{
-							   display: 'block',
-							   overflow: 'hidden',
-							   textOverflow: 'ellipsis',
-							   whiteSpace: 'nowrap'
-						   }}> Visit {this.state.edit.sourceURL || ''}</a> : null}
-					<div style={{display: 'flex'}}>
+					{this.state.edit.status === 'new' ? <> //only for new
+							<TextField
+								margin="dense"
+								label="Source URL (optional)"
+								value={this.state.edit.sourceURL || ''}
+								onChange={(event) => this.changeEdit('sourceURL', event.target.value)}
+								fullWidth
+							/>
+							{this.state.edit.sourceURL ?
+								<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
+								   style={{
+									   display: 'block',
+									   overflow: 'hidden',
+									   textOverflow: 'ellipsis',
+									   whiteSpace: 'nowrap'
+								   }}> Visit {this.state.edit.sourceURL || ''}</a> : null}</>
+						: <>
+							<Tooltip
+								title={this.props.options.enableAutonumber && this.state.edit.padded ? 'Disable the autonumberer to change the auto url title' : ''}>
+								<TextField
+									autoFocus
+									margin="dense"
+									disabled={this.state.edit.padded && this.props.options.enableAutonumber}
+									label="URL name"
+									value={this.state.edit.padded || ''}
+									onChange={(event) => this.changeEdit('padded', event.target.value)}
+									fullWidth
+								/>
+							</Tooltip>
+							<a href={this.state.edit.sourceURL} target='_blank' className='mt-icon-link'
+							   style={{
+								   display: 'block',
+								   overflow: 'hidden',
+								   textOverflow: 'ellipsis',
+								   whiteSpace: 'nowrap'
+							   }}> Visit {this.state.edit.sourceURL || ''}</a>
+						</>}
+					<div style={{display: 'flex', flex: 1}}>
 						<Tooltip
 							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
 							<TextField
+								style={{flex: 1}}
 								select
 								label="Article type"
 								disabled={this.props.options.enableAutonumber}
@@ -466,8 +490,9 @@ class RemixerPanel extends React.Component {
 								{this.ArticleType("topic")}
 							</TextField>
 						</Tooltip>
-						<TextField
+						{this.state.edit.status === 'new' ? <TextField //only for new
 							select
+							style={{flex: 1}}
 							id='copyMode'
 							label="Override Copy Mode"
 							value={this.state.edit.copyMode}
@@ -504,7 +529,7 @@ class RemixerPanel extends React.Component {
 									</Tooltip>
 								</MenuItem>
 								: null}
-						</TextField>
+						</TextField> : null}
 					</div>
 					<div style={{
 						padding: '16px 10px 8px 10px',
@@ -552,6 +577,7 @@ class RemixerPanel extends React.Component {
 								      }
 							      }}/>
 						</Paper>
+						{this.renderChanged()}
 					</div>
 				</DialogContent>
 				<DialogActions>
@@ -854,9 +880,10 @@ class RemixerPanel extends React.Component {
 					&& !this.props.options.overwriteSuffix
 					&& level > this.props.options.autonumber.guideDepth) {
 					//skip unless overwriteSuffix is enabled
+					
 					let index = node.title.match(/(?<=[0-9]+\.)[0-9]*?[A-Za-z]+?(?=:)/)[0];
 					node.data.articleType = 'topic';
-					node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+					node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
 					
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 					node.title = node.title.replace(/^[^:]*: /, '');
@@ -873,7 +900,7 @@ class RemixerPanel extends React.Component {
 					let index = sharedIndex[0]++;
 					if (level < this.props.options.autonumber.guideDepth) { //Unit
 						node.data.articleType = 'topic-category';
-						node.data['padded'] = false;
+						node.data.padded = false;
 					}
 					else if (level === this.props.options.autonumber.guideDepth) { //Guide
 						if (Number(this.props.options.autonumber.offset) > sharedIndex[0]) { //apply offset
@@ -881,7 +908,7 @@ class RemixerPanel extends React.Component {
 							index = sharedIndex[0]++;
 						}
 						node.data.articleType = 'topic-guide';
-						node.data['padded'] = `${('' + index).padStart(2, '0')}: ${node.title}`;
+						node.data.padded = `${('' + index).padStart(2, '0')}: ${node.title}`;
 						
 						let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
 						node.title = `${prefix}${index}: ${node.title}`;
@@ -889,7 +916,7 @@ class RemixerPanel extends React.Component {
 					}
 					else if (level > this.props.options.autonumber.guideDepth) { //Topic
 						node.data.articleType = 'topic';
-						node.data['padded'] = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+						node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
 						
 						let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 						node.title = `${prefix}${chapter}.${index}: ${node.title}`;
@@ -899,31 +926,47 @@ class RemixerPanel extends React.Component {
 				node.title = node.title.trim();
 				
 			}
+			else if (node.data.padded && node.data.original.data.padded) {
+				//autonumberer disabled but already has padded
+			}
+			else if (node.data.status !== 'new' && node.data.original.data.relativePath) {
+				try {
+					let match = node.data.original.data.relativePath.match(/(?<=\/)[^/]*?$/);
+					node.data.padded = match ? match[0] : false;
+					node.data.original.data.padded = node.data.padded;
+				} catch (e) {
+					console.error(e);
+					node.data.padded = false;
+				}
+			}
 			else
-				node.data['padded'] = false;
+				node.data.padded = false;
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
 			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded || node.title).replace(/\//g, '\/')}`).replace(/ /g, '_');
 			
-			//check status
-			if (this.props.options.enableAutonumber && (node.data.status === 'unchanged' || node.data.status === 'modified')) {
-				const originalData = node.data.original.data;
-				const data = JSON.parse(JSON.stringify(node.data));
+			//check status on whether pages are modified
+			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
+				const originalData = JSON.parse(JSON.stringify(node.data.original.data));
+				const data = node.data;
 				delete originalData.original; //skip these fields
 				delete originalData.status;
-				delete originalData.padded;
 				delete originalData.response;
-				let unchanged = true;
+				delete originalData.relativePath;
+				let changed = [];
 				for (let key in originalData) {
 					if (originalData.hasOwnProperty(key)) {
 						if (JSON.stringify(data[key]) !== JSON.stringify(originalData[key])) {
-							// console.log(key, data[key], originalData[key]);
-							unchanged = false;
+							console.log(key, data[key], originalData[key]);
+							changed.push({key: key, original: originalData[key], change: data[key]});
 						}
 					}
 				}
+				if (node.title !== node.data.original.title)
+					changed.push({key: 'title', original: node.data.original.title, change: node.title});
 				
-				if (node.title === node.data.original.title && unchanged)
+				node.data.changed = changed;
+				if (!changed.length)
 					node.data.status = 'unchanged';
 				else if (node.data.status !== 'modified') {
 					node.data.status = 'modified';
@@ -984,7 +1027,7 @@ class RemixerPanel extends React.Component {
 		LTLeft.enable(false);
 		LeftAlert.text(`Loading ${subdomain}`);
 		LeftAlert.slideDown();
-		let content = await RemixerFunctions.getSubpages('home', subdomain, false, true);
+		let content = await RemixerFunctions.getSubpages('home', subdomain, {linkTitle: true});
 		
 		LeftAlert.slideUp();
 		LTLeft.enable(true);
@@ -1045,6 +1088,25 @@ class RemixerPanel extends React.Component {
 				return null;
 		}
 	};
+	
+	renderChanged = () => {
+		if (this.state.edit.status === 'modified' && this.state.edit.changed.length) {
+			let oldCode = '', newCode = '';
+			this.state.edit.changed.forEach((elem) => {
+				oldCode += `${elem.key}: ${elem.original}\n`;
+				newCode += `${elem.key}: ${elem.change}\n`;
+			});
+			
+			return <>
+				<h4>Items Modified: (Updates on Save Edit)</h4>
+				<ReactDiffViewer
+				inputA={oldCode}
+				inputB={newCode}
+				type="chars"
+			/></>
+		}
+		else return null;
+	}
 }
 
 export default withSnackbar(RemixerPanel); //Allows snackbars

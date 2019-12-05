@@ -166,8 +166,7 @@ function LibreTextsReuse() {
 	
 	function parseURL(url = window.location.href) {
 		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
-			url = new URL(url);
-			return [url.host.split('.libretexts.org')[0], url.pathname.replace('/','')]
+			return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
 		}
 		else {
 			return [];

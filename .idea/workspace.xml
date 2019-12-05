@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Moved default.png to librefiles due to CORS">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Remixer/src/components/Diff.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +85,7 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6817.13\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
@@ -199,6 +206,16 @@
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
+    <configuration name="Remixer serve" type="CompoundRunConfigurationType">
+      <toRun name="Remixer" type="js.build_tools.npm" />
+      <toRun name="serve.js" type="NodeJSConfigurationType" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="CompoundRunConfigurationType">
+      <toRun name="Remixer" type="js.build_tools.npm" />
+      <toRun name="serve.js" type="NodeJSConfigurationType" />
+      <method v="2" />
+    </configuration>
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
@@ -211,10 +228,10 @@
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
-    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
+    <configuration name="schedule.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
-    <configuration name="serve.js" type="NodeJSConfigurationType" temporary="true" application-parameters="80" nameIsGenerated="true" path-to-js-file="serve.js" working-dir="$PROJECT_DIR$/public/Remixer">
+    <configuration name="serve.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="serve.js" working-dir="$PROJECT_DIR$/public/Remixer">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -314,6 +331,7 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
+      <item itemvalue="Compound.Remixer serve" />
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
@@ -330,8 +348,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.serve.js" />
-        <item itemvalue="Node.js.schedule.js" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.build" />
         <item itemvalue="Node.js.schedule.js" />
@@ -344,6 +360,15 @@
         <serviceView>
           <treeState>
             <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Node.js" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Node.js" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="npm" type="7427dc5b:ServiceModel$ServiceGroupNode" />
@@ -1068,15 +1093,11 @@
       <workItem from="1573452700337" duration="1303000" />
       <workItem from="1573515402305" duration="4387000" />
       <workItem from="1574036282727" duration="713000" />
-      <workItem from="1574141064677" duration="4169000" />
-      <workItem from="1574978494371" duration="427000" />
-    </task>
-    <task id="LOCAL-00182" summary="Added percentage to Dashboard">
-      <created>1556862419516</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1556862419516</updated>
+      <workItem from="1574141064677" duration="4212000" />
+      <workItem from="1574308244699" duration="3935000" />
+      <workItem from="1575443329827" duration="199000" />
+      <workItem from="1575443552290" duration="3061000" />
+      <workItem from="1575521929220" duration="9585000" />
     </task>
     <task id="LOCAL-00183" summary="Pages API for root requests">
       <created>1556953782927</created>
@@ -1414,7 +1435,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572309286946</updated>
     </task>
-    <option name="localTasksCounter" value="231" />
+    <task id="LOCAL-00231" summary="ReRemixer Expansion Panel summary">
+      <created>1574151226437</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1574151226438</updated>
+    </task>
+    <option name="localTasksCounter" value="232" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1470,7 +1498,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix Remixer cross-origin" />
     <MESSAGE value="Spacing fix" />
     <MESSAGE value="Bugfix async" />
     <MESSAGE value="nodePrint A4 and new Covers" />
@@ -1495,33 +1522,38 @@
     <MESSAGE value="Added Excel to LibreMap into Importer" />
     <MESSAGE value="Beeline Complex integration" />
     <MESSAGE value="Full-copy partial fix&#10;&#10;STILL NOT WORKING Cross-library" />
-    <option name="LAST_COMMIT_MESSAGE" value="Full-copy partial fix&#10;&#10;STILL NOT WORKING Cross-library" />
+    <MESSAGE value="ReRemixer Expansion Panel summary" />
+    <option name="LAST_COMMIT_MESSAGE" value="ReRemixer Expansion Panel summary" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="180" height="489" key="GridCell.Tab.0.bottom" timestamp="1574978572840">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575522113393">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="191" height="671" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
-    <state width="191" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468286" />
-    <state width="180" height="489" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1574978572840" />
-    <state width="180" height="489" key="GridCell.Tab.0.center" timestamp="1574978572839">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.920@0.0.1707.920" timestamp="1575522113393" />
+    <state x="534" y="187" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575443509201">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="191" height="671" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
-    <state width="191" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
-    <state width="180" height="489" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1574978572839" />
-    <state width="180" height="489" key="GridCell.Tab.0.left" timestamp="1574978572839">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state x="534" y="187" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1707.920@0.0.1707.920" timestamp="1575443509201" />
+    <state width="1142" height="213" key="GridCell.Tab.0.bottom" timestamp="1575533457560">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="191" height="671" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
-    <state width="191" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
-    <state width="180" height="489" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1574978572839" />
-    <state width="180" height="489" key="GridCell.Tab.0.right" timestamp="1574978572840">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state width="1142" height="213" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1575533457560" />
+    <state width="1142" height="213" key="GridCell.Tab.0.center" timestamp="1575533457559">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="191" height="671" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@-1440.0.1440.860" timestamp="1574972603902" />
-    <state width="191" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1574972468285" />
-    <state width="180" height="489" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1574978572840" />
+    <state width="1142" height="213" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1575533457559" />
+    <state width="1142" height="213" key="GridCell.Tab.0.left" timestamp="1575533457559">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1142" height="213" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1575533457559" />
+    <state width="1142" height="213" key="GridCell.Tab.0.right" timestamp="1575533457560">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1142" height="213" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1575533457560" />
+    <state x="355" y="102" key="SettingsEditor" timestamp="1575443627381">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="355" y="102" key="SettingsEditor/0.0.1707.920@0.0.1707.920" timestamp="1575443627381" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
