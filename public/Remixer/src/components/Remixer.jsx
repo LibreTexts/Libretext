@@ -66,7 +66,7 @@ export default class Remixer extends React.Component {
 	}
 	
 	allowedReRemixer(permission = this.state.permission) {
-		return permission === 'Admin';
+		return permission === 'Admin' || permission === 'Pro';
 	}
 	
 	updateRemixer = (newState, updateUndo) => {

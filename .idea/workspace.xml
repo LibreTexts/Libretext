@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="ReRemixer Expansion Panel summary">
-      <change afterPath="$PROJECT_DIR$/public/Remixer/bundle.js.tmp-browserify-73941030847692545969" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerOptions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1532,32 +1526,32 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="391" y="0" key="CommitChangelistDialog2/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575574947021" />
-    <state width="237" height="684" key="GridCell.Tab.0.bottom" timestamp="1575679600742">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state width="310" height="730" key="GridCell.Tab.0.bottom" timestamp="1575750060441">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
-    <state width="1142" height="213" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1575533457560" />
+    <state width="310" height="730" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1575750060441" />
     <state width="235" height="454" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.bottom/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="237" height="684" key="GridCell.Tab.0.center" timestamp="1575679600742">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state width="310" height="730" key="GridCell.Tab.0.center" timestamp="1575750060440">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
-    <state width="1142" height="213" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1575533457559" />
+    <state width="310" height="730" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1575750060440" />
     <state width="235" height="454" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.center/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="237" height="684" key="GridCell.Tab.0.left" timestamp="1575679600741">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state width="310" height="730" key="GridCell.Tab.0.left" timestamp="1575750060440">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1575679600741" />
-    <state width="1142" height="213" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1575533457559" />
+    <state width="310" height="730" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1575750060440" />
     <state width="235" height="454" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580702" />
     <state width="271" height="635" key="GridCell.Tab.0.left/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="237" height="684" key="GridCell.Tab.0.right" timestamp="1575679600742">
-      <screen x="0" y="0" width="1368" height="872" />
+    <state width="310" height="730" key="GridCell.Tab.0.right" timestamp="1575750060440">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
-    <state width="1142" height="213" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1575533457560" />
+    <state width="310" height="730" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1575750060440" />
     <state width="235" height="454" key="GridCell.Tab.0.right/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.right/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
     <state x="355" y="102" key="SettingsEditor" timestamp="1575443627381">
