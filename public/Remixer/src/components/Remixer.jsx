@@ -12,6 +12,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {createMuiTheme} from '@material-ui/core/styles';
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import {blue} from "@material-ui/core/colors";
 
 
 export default class Remixer extends React.Component {
@@ -122,7 +125,7 @@ export default class Remixer extends React.Component {
 					undoArray: [],
 					redoArray: [],
 					currentlyActive: '',
-					RemixTree: RemixerFunctions.generateDefault(0,0)
+					RemixTree: RemixerFunctions.generateDefault(0, 0)
 				}
 			};
 			switch (this.state.swapDialog) {
@@ -139,7 +142,15 @@ export default class Remixer extends React.Component {
 	
 	render() {
 		// console.log(this.state, 'Rerender');
-		return <>
+		const dark = localStorage.getItem('darkMode') === 'true';
+		const theme = createMuiTheme({
+			palette: {
+				type: dark ? 'dark' : 'light',
+				primary: blue,
+				secondary: {main: '#008000'}
+			},
+		});
+		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.mode}>
@@ -171,7 +182,7 @@ export default class Remixer extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</>;
+		</ThemeProvider>;
 	}
 	
 	renderState() {

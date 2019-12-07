@@ -13,6 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useSnackbar} from 'notistack';
+import Paper from "@material-ui/core/Paper";
 
 export default function OptionsPanel(props) {
 	let [autonumberOpen, setAutonumberOpen] = useState(false);
@@ -141,12 +142,10 @@ export default function OptionsPanel(props) {
 		props.updateRemixer({options: newOptions});
 	};
 	
-	return <div style={{
+	return <Paper style={{
 		display: 'flex',
 		flexDirection: 'column',
-		background: '#f3f3f3',
 		padding: 20,
-		borderRadius: 10
 	}}>
 		Remixer Options
 		<FormControlLabel
@@ -315,5 +314,5 @@ export default function OptionsPanel(props) {
 				</Button>
 			</DialogActions>
 		</Dialog>
-	</div>
+	</Paper>
 }

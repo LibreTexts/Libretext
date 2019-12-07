@@ -12,6 +12,7 @@
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "@material-ui/icons": "^4.5.1",
+    "@material-ui/styles": "^4.7.1",
     "babelify": "^10.0.0",
     "create-react-class": "^15.6.3",
     "diff": "^4.0.1",

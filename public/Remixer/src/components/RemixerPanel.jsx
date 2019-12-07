@@ -872,10 +872,15 @@ class RemixerPanel extends React.Component {
 		let changes = 0;
 		
 		let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
-			node.title = node.title.replace('&amp;', 'and');
+			node.title = node.title.replace(/&amp;|&/g, 'and');
 			let chapter = parent.chapter || 1;
 			
-			if (level && this.props.options.enableAutonumber && this.props.options.autonumber.guideDepth && node.data.status !== 'deleted') {
+			if (level
+				&& this.props.options.enableAutonumber
+				&& this.props.options.autonumber.guideDepth
+				&& node.data.status !== 'deleted'
+				&& node.title !== 'Front Matter'
+				&& node.title !== 'Back Matter') {
 				if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/)
 					&& !this.props.options.overwriteSuffix
 					&& level > this.props.options.autonumber.guideDepth) {
@@ -981,7 +986,7 @@ class RemixerPanel extends React.Component {
 			
 			node.extraClasses = node.extraClasses.join(' ');
 			node.lazy = false;
-			if (node.children) { //recurse down to children
+			if (node.children && node.title !== 'Front Matter' && node.title !== 'Back Matter') { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
 					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node);

@@ -44,70 +44,70 @@ export default function RemixerOptions(props) {
 	let title = props.RemixTree.title;
 	title = title && title !== "New LibreText. Drag onto me to get started" ? title : '';
 	
-	return <div style={{display: 'flex', margin: 10, alignItems: 'center'}}>
-		<div style={{
-			display: 'flex',
-			flexDirection: 'column',
-			marginRight: 10,
-			flex: 1
-		}}><TextField
-			label="LibreText name"
-			margin="normal"
-			variant="outlined"
-			value={title}
-			onChange={(event) => {
-				const tempTree = props.RemixTree;
-				tempTree.title = event.target.value;
-				props.updateRemixer({RemixTree: tempTree});
-			}}
-		/>
-			{props.mode === 'Remix' ? <TextField
-				select
-				label="Institution"
-				value={props.institution || ""}
-				onChange={(event) => {
-					props.updateRemixer({institution: event.target.value});
-				}}
-				helperText="Please select your institution"
+	return <div style={{display: 'flex', margin: 10, alignItems: 'center', color: 'black'}}>
+			<div style={{
+				display: 'flex',
+				flexDirection: 'column',
+				marginRight: 10,
+				flex: 1
+			}}><TextField
+				label="LibreText name"
 				margin="normal"
 				variant="outlined"
-			>{institutions.map(elem => <MenuItem key={elem.url}
-			                                     value={elem.url}>{elem.title}</MenuItem>)}
-			</TextField> : null}
-			<TextField
-				select
-				id='defaultCopyMode'
-				label="Default Copy Mode"
-				value={props.defaultCopyMode}
+				value={title}
 				onChange={(event) => {
-					props.updateRemixer({defaultCopyMode: event.target.value});
+					const tempTree = props.RemixTree;
+					tempTree.title = event.target.value;
+					props.updateRemixer({RemixTree: tempTree});
 				}}
-				helperText="Choose the default copy mode. This can be overridden when editing an individual page."
-				margin="normal"
-				variant="outlined"
-			>
-				<MenuItem value='transclude'>
-					<Tooltip
-						title="In copy-transclude mode, pages will be automatically updated from the source (Recommended)">
-						<div>Copy-Transclude (Recommended)</div>
-					</Tooltip>
-				</MenuItem>
-				<MenuItem value='fork'>
-					<Tooltip
-						title="In copy-fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
-						<div>Copy-Fork</div>
-					</Tooltip>
-				</MenuItem>
-				{props.permission === 'Admin' ?
-					<MenuItem value='full'>
+			/>
+				{props.mode === 'Remix' ? <TextField
+					select
+					label="Institution"
+					value={props.institution || ""}
+					onChange={(event) => {
+						props.updateRemixer({institution: event.target.value});
+					}}
+					helperText="Please select your institution"
+					margin="normal"
+					variant="outlined"
+				>{institutions.map(elem => <MenuItem key={elem.url}
+				                                     value={elem.url}>{elem.title}</MenuItem>)}
+				</TextField> : null}
+				<TextField
+					select
+					id='defaultCopyMode'
+					label="Default Copy Mode"
+					value={props.defaultCopyMode}
+					onChange={(event) => {
+						props.updateRemixer({defaultCopyMode: event.target.value});
+					}}
+					helperText="Choose the default copy mode. This can be overridden when editing an individual page."
+					margin="normal"
+					variant="outlined"
+				>
+					<MenuItem value='transclude'>
 						<Tooltip
-							title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
-							<div>Copy-Full</div>
+							title="In copy-transclude mode, pages will be automatically updated from the source (Recommended)">
+							<div>Copy-Transclude (Recommended)</div>
 						</Tooltip>
 					</MenuItem>
-					: null}
-			</TextField>
-		</div>
+					<MenuItem value='fork'>
+						<Tooltip
+							title="In copy-fork mode, pages will be duplicated from the source. This allows for customization but means that the page won't automatically update from the source">
+							<div>Copy-Fork</div>
+						</Tooltip>
+					</MenuItem>
+					{props.permission === 'Admin' ?
+						<MenuItem value='full'>
+							<Tooltip
+								title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
+								<div>Copy-Full</div>
+							</Tooltip>
+						</MenuItem>
+						: null}
+				</TextField>
+			</div>
 		<OptionsPanel {...props}/>
 	</div>;
 	

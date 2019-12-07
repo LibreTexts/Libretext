@@ -84,8 +84,9 @@ export default function PublishPanel(props) {
 					objectResult[copyMode] = [page];
 			}
 			else if (props.mode === 'ReRemix') {
-				if (page.status === 'modified' && page.data.parentID !== page.data.original.data.parentID) //page moved
-					objectResult['moved'].push(page);
+				if (page.status === 'modified') {
+					if (page.data.parentID !== page.data.original.data.parentID) objectResult['moved'].push(page);
+				}
 				
 				
 				if (objectResult[page.status])
