@@ -72,11 +72,6 @@ puppeteer.launch({
 		Gserver = server;
 		
 		async function handler(request, response) {
-			response.writeOld = response.write;
-			response.write = (...arguments) => {
-				if (response && !response.finished)
-					response.writeOld(...arguments)
-			};
 			let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 			ip = ip.padEnd(15);
 			request.url = request.url.replace("print/", "");
@@ -283,7 +278,8 @@ puppeteer.launch({
 				console.log(`Cleaning...`);
 				let count = 0;
 				let heartbeat = setInterval(() => {
-					response.write(`${(++count)}s\r\n`.padStart(5, ' '))
+					if (response && !response.finished)
+						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 				}, 1000);
 				findRemoveSync('./PDF', {
 					age: {seconds: 40 * 8.64e+4},
@@ -296,8 +292,9 @@ puppeteer.launch({
 				
 				url = url.split('/Refresh=')[1];
 				let isNoCache = false;
-				if (url.endsWith('?no-cache')) {
+				if (url.endsWith('?no-cache')|| url.endsWith('?nocache')) {
 					url = url.replace('?no-cache', '');
+					url = url.replace('?nocache', '');
 					isNoCache = true;
 				}
 				
@@ -361,7 +358,8 @@ puppeteer.launch({
 						}
 						
 						clearInterval(heartbeat);
-						response.write(`Processing ${texts.length} LibreTexts`); // and ${standalone.length} standalone pages
+						if (!response.finished)
+							response.write(`Processing ${texts.length} LibreTexts`); // and ${standalone.length} standalone pages
 						response.end();
 						
 						//process Texts
@@ -1109,7 +1107,7 @@ puppeteer.launch({
 				delete working[escapedURL];	//2 min timeout for DUPE
 			}
 			
-			if (current.title === 'InfoPage')
+			if(current.title === 'InfoPage')
 				isNoCache = true;
 			
 			const daysCache = 35;
@@ -1152,7 +1150,7 @@ puppeteer.launch({
 			console.log(`NEW    ${ip} ${url}`);
 			
 			const page = await browser.newPage();
-			page.setViewport({width: 975, height: 1000});
+			page.setViewport({width:975, height: 1000});
 			let timeout;
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
@@ -1406,22 +1404,24 @@ puppeteer.launch({
 			if (typeof current === 'string') {
 				let count = 0;
 				heartbeat = setInterval(() => {
-					response.write(JSON.stringify({
-						message: "subpages",
-						percent: 0,
-						eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
-					}) + "\r\n")
+					if (response && !response.finished)
+						response.write(JSON.stringify({
+							message: "subpages",
+							percent: 0,
+							eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
+						}) + "\r\n")
 				}, 1000);
 				current = await getSubpages(current);
 			}
 			current = await getAPI(current);
 			if (current.modified === 'restricted') {
-				response.write(JSON.stringify({
-					message: "error",
-					text: `LibreText is not Public!`,
-					percent: -1,
-					eta: "LibreText is not Public!",
-				}));
+				if (response && !response.finished)
+					response.write(JSON.stringify({
+						message: "error",
+						text: `LibreText is not Public!`,
+						percent: -1,
+						eta: "LibreText is not Public!",
+					}));
 				return false;
 			}
 			
@@ -1449,12 +1449,13 @@ puppeteer.launch({
 			const topPage = current;
 			
 			if (!current.subpages || !current.subpages.length) {
-				response.write(JSON.stringify({
-					message: "error",
-					text: `Error: No subpages found!`,
-					percent: -1,
-					eta: "Error: No subpages found!",
-				}));
+				if (response && !response.finished)
+					response.write(JSON.stringify({
+						message: "error",
+						text: `Error: No subpages found!`,
+						percent: -1,
+						eta: "Error: No subpages found!",
+					}));
 				return false;
 			}
 			console.log(`Getting LibreText ${options.index ? `[${options.index}] ` : ''}${current.title}`);
@@ -1607,11 +1608,12 @@ puppeteer.launch({
 			
 			if (heartbeat)
 				clearInterval(heartbeat);
-			response.write(JSON.stringify({
-				message: "start",
-				percent: 0,
-				eta: "Loading...",
-			}) + "\r\n");
+			if (response && !response.finished)
+				response.write(JSON.stringify({
+					message: "start",
+					percent: 0,
+					eta: "Loading...",
+				}) + "\r\n");
 			
 			let count = 0;
 			const start = performance.now();
@@ -1683,7 +1685,7 @@ puppeteer.launch({
 					}
 					else
 						privatePages.push(page.url);
-					if (response)
+					if (response && !response.finished)
 						response.write(JSON.stringify({
 							message: "progress",
 							percent: (Math.round(count / urlArray.length * 1000) / 10),
@@ -1712,10 +1714,10 @@ puppeteer.launch({
 				let files = (await fs.readdir(`./PDF/Letter/order/${thinName}`)).map((file) => `./PDF/Letter/order/${thinName}/${file}`);
 				let filesA4 = (await fs.readdir(`./PDF/A4/order/${thinName}`)).map((file) => `./PDF/A4/order/${thinName}/${file}`);
 				console.log(`Merging${options.index ? ` [${options.index}]` : ''}`);
-				if (response) {
+				if (response && !response.finished) {
 					let count = 0;
 					heartbeat = setInterval(() => {
-						if (response)
+						if (response && !response.finished)
 							response.write(JSON.stringify({
 								message: "progress",
 								percent: 100,
@@ -1838,11 +1840,12 @@ puppeteer.launch({
 			console.log(zipFilename, time);
 			if (response && heartbeat)
 				clearInterval(heartbeat);
-			response.write(JSON.stringify({
-				message: "complete",
-				filename: zipFilename,
-				timeTaken: time
-			}));
+			if (response && !response.finished)
+				response.write(JSON.stringify({
+					message: "complete",
+					filename: zipFilename,
+					timeTaken: time
+				}));
 			// cleanup
 			await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
 			await fs.emptyDir(`./PDF/A4/libretexts/${zipFilename}`);

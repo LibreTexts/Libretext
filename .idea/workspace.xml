@@ -4,6 +4,7 @@
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="ReRemixer Expansion Panel summary">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,19 +82,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1040,6 +1041,8 @@
       <workItem from="1571443667617" duration="3066000" />
       <workItem from="1571867619858" duration="1426000" />
       <workItem from="1575672106668" duration="1700000" />
+      <workItem from="1575851993914" duration="632000" />
+      <workItem from="1575869126954" duration="357000" />
     </task>
     <task id="LOCAL-00181" summary="Added encodeHTML">
       <created>1556508210666</created>
@@ -1468,22 +1471,34 @@
     <option name="LAST_COMMIT_MESSAGE" value="Beeline Complex integration" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="271" height="635" key="GridCell.Tab.0.bottom" timestamp="1575670503898">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="164" y="74" key="DiffContextDialog" timestamp="1576043249091">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="164" y="74" key="DiffContextDialog/0.0.1707.920@0.0.1707.920" timestamp="1576043249091" />
+    <state width="310" height="730" key="GridCell.Tab.0.bottom" timestamp="1575757316916">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="310" height="730" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1575757316916" />
     <state width="271" height="635" key="GridCell.Tab.0.bottom/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503898" />
-    <state width="271" height="635" key="GridCell.Tab.0.center" timestamp="1575670503897">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="310" height="730" key="GridCell.Tab.0.center" timestamp="1575757316916">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="310" height="730" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1575757316916" />
     <state width="271" height="635" key="GridCell.Tab.0.center/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503897" />
-    <state width="271" height="635" key="GridCell.Tab.0.left" timestamp="1575670503896">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="310" height="730" key="GridCell.Tab.0.left" timestamp="1575757316915">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="310" height="730" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1575757316915" />
     <state width="271" height="635" key="GridCell.Tab.0.left/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503896" />
-    <state width="271" height="635" key="GridCell.Tab.0.right" timestamp="1575670503898">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="310" height="730" key="GridCell.Tab.0.right" timestamp="1575757316916">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="310" height="730" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1575757316916" />
     <state width="271" height="635" key="GridCell.Tab.0.right/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503898" />
+    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog" timestamp="1576043253797">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/0.0.1707.920@0.0.1707.920" timestamp="1576043253797" />
   </component>
   <component name="masterDetails">
     <states>

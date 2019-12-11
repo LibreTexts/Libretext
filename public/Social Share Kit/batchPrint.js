@@ -117,6 +117,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 				innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
 				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
 				innerHTML += `<a onclick = "event.preventDefault(); nikGetCitation()" href='#' class='mt-icon-quote'>Get Citation</a>`;
+				innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
 				innerHTML += `</div></div>`;
 			}
 			else {
