@@ -26,6 +26,11 @@ import Warning from "@material-ui/icons/Warning";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {useSnackbar} from 'notistack';
 import IconButton from "@material-ui/core/IconButton";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
 
 
 export default function PublishPanel(props) {
@@ -36,6 +41,7 @@ export default function PublishPanel(props) {
 	let [initialized, setInitialized] = React.useState();
 	let [publishing, setPublishing] = React.useState();
 	let [override, setOverride] = React.useState(false);
+	let [reviseDialog, setReviseDialog] = React.useState(false);
 	const {enqueueSnackbar} = useSnackbar();
 	
 	useEffect(() => {
@@ -55,7 +61,7 @@ export default function PublishPanel(props) {
 	function sortPages() {
 		let tree = props.RemixTree;
 		let arrayResult = addLinks(tree, '', 'topic-category');
-		let objectResult = {moved: []};
+		let objectResult = {moved: [], renamed: [], tagsModified: []};
 		
 		function addLinks(current, parentType) {
 			current = {...current, ...current.data};
@@ -85,7 +91,19 @@ export default function PublishPanel(props) {
 			}
 			else if (props.mode === 'ReRemix') {
 				if (page.status === 'modified') {
-					if (page.data.parentID !== page.data.original.data.parentID) objectResult['moved'].push(page);
+					if (page.data.parentID !== page.data.original.data.parentID) { //moved
+						page.data.modifiedType = 'Moved';
+						objectResult['moved'].push(page);
+					}
+					else if (page.data.padded !== page.data.original.data.padded
+						|| page.title !== page.data.original.title) { //renamed
+						page.data.modifiedType = 'Renamed';
+						objectResult['moved'].push(page);
+					}
+					else {
+						page.data.modifiedType = 'Tags Modified';
+						objectResult['tagsModified'].push(page);
+					}
 				}
 				
 				
@@ -135,7 +153,8 @@ export default function PublishPanel(props) {
 			return <List style={listStyle}>
 				{listItem(sorted.new, 'new', 'will be added')}
 				{listItem(sorted.moved, 'modified', 'will be moved')}
-				{listItem(sorted.modified, 'modified', 'will have tags modified')}
+				{listItem(sorted.renamed, 'modified', 'will be renamed')}
+				{listItem(sorted.tagsModified, 'modified', 'will have tags modified')}
 				{listItem(sorted.deleted, 'deleted', 'will be deleted')}
 				{listItem(sorted.unchanged, 'unchanged', 'will be unchanged')}
 			</List>;
@@ -160,6 +179,24 @@ export default function PublishPanel(props) {
 			</ExpansionPanel>;
 		}
 	}
+	
+	const reloadReRemix = async () => {
+		const current = props.RemixTree;
+		current.children = await RemixerFunctions.getSubpages(props.RemixTree.data.url, props.RemixTree.data.subdomain, {
+			includeMatter: true,
+			full: true,
+			defaultStatus: 'unchanged'
+		});
+		RemixerFunctions.ReRemixTree(current, current.data.path);
+		props.updateRemixer({stage: 'Remixing', RemixTree: current, currentlyActive: ''});
+		enqueueSnackbar(`${current.title} is ready for ReRemixing!`, {
+			variant: 'success',
+			anchorOrigin: {
+				vertical: 'bottom',
+				horizontal: 'right',
+			},
+		});
+	};
 	
 	return <div id='LTForm' className='publishPanel'>
 		<div id='LTFormContainer'>
@@ -198,7 +235,8 @@ export default function PublishPanel(props) {
 					size="large"
 					style={{marginTop: 10}}
 					aria-label="large contained secondary button group">
-					<Button onClick={() => props.updateRemixer({stage: 'Remixing'})}>
+					<Button
+						onClick={() => publishing ? setReviseDialog(true) : props.updateRemixer({stage: 'Remixing'})}>
 						<ArrowBack/>Revise
 					</Button>
 					<Button color='secondary' onClick={() => setPublishing(Math.random())}>
@@ -208,6 +246,30 @@ export default function PublishPanel(props) {
 			</Paper>
 			<PublishSubPanel {...props} working={pageArray} sorted={sorted} publishing={publishing}
 			                 override={override}/>
+			<Dialog open={reviseDialog} onClose={() => setReviseDialog(false)}
+			        aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Revise or Select Another LibreText?</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Since you have published, your Remix map is likely out of date. It is highly recommended to
+						reload the LibreText in order to incorporate your new changes. Alternatively, you can select
+						a different LibreText to Remix.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => props.updateRemixer({stage: 'Remixing'})} color="primary">
+						Cancel
+					</Button>
+					<Button onClick={reloadReRemix} color="primary">
+						Revise current LibreText
+					</Button>
+					<Button onClick={() => {
+						props.updateRemixer({stage: 'ReRemixing'})
+					}} color="primary">
+						Select another LibreText
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	</div>;
 }
@@ -791,28 +853,25 @@ function PublishSubPanel(props) {
 						});
 						//TODO maybe modify properties?
 					}
-					
 					//page moved or renamed
-					if (page.data.relativePath !== page.data.original.data.relativePath) {
-						const differentParent = page.data.parentID !== page.data.original.data.parentID;
-						if (differentParent) { //move
-							let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects&dream.out.format=json`,
+					switch (page.data.modifiedType) {
+						case 'Moved':
+							response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&to=${page.newPath}&allow=deleteredirects&dream.out.format=json`,
 								null, {
 									method: 'POST'
 								});
-							await completedPage(page, 'Moved', 'modified', response);
-						}
-						else { //just title change
-							let response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
+							break;
+						case 'Renamed':
+							response = await LibreTexts.authenticatedFetch(page.path, `move?title=${encodeURIComponent(page.title)}&name=${encodeURIComponent(page.padded)}&allow=deleteredirects&dream.out.format=json`,
 								null, {
 									method: 'POST'
 								});
-							await completedPage(page, 'Renamed', 'modified', response);
-						}
+							break;
+						case 'Modified Tags':
+							break;
+						
 					}
-					else {
-						await completedPage(page, 'Modified Tags', 'modified', response);
-					}
+					await completedPage(page, page.data.modifiedType, 'modified', response);
 					break;
 				case 'deleted': //skip because this is handled later
 					break;

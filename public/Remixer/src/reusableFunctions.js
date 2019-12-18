@@ -4,6 +4,7 @@ let RemixerFunctions = {
 	statusColor: statusColor,
 	articleTypeToTitle: articleTypeToTitle,
 	getSubpages: getSubpages,
+	ReRemixTree: ReRemixTree,
 };
 
 function generateDefault(chapters, pages) {
@@ -118,7 +119,28 @@ function articleTypeToTitle(type) {
 	}
 }
 
-async function getSubpages(path, subdomain, options = {}) {
+function ReRemixTree(current, rootPath) {
+	if (current) {
+		current.title = current.title.replace(/<a.*?<\/a>/, '');
+		if (!current.data)
+			current.data = {path: current.path};
+		current.data.relativePath = current.data.path.replace(rootPath, '');
+		current.original = {title: current.title, data: JSON.parse(JSON.stringify(current.data))};
+		current.status = 'unchanged';
+		delete current.lazy;
+		if (current.children && current.children.length) {
+			current.children.forEach((child) => {
+				ReRemixTree(child, current.data.path);
+			});
+		}
+	}
+}
+
+async function getSubpages(path, subdomain, options = {
+	includeMatter: false,
+	linkTitle: false,
+	full: false
+}) {
 	path = path.replace(`https://${subdomain}.libretexts.org/`, '');
 	let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 	response = await response.json();
@@ -149,6 +171,7 @@ async function getSubpages(path, subdomain, options = {}) {
 					title: options.linkTitle ? `${subpage.title}<a href="${url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>` : subpage.title,
 					url: url,
 					sourceURL: url,
+					path: path,
 					children: children,
 					lazy: !options.full && hasChildren,
 					status: 'new',

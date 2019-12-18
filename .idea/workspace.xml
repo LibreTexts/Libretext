@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added Revise Current LibreText">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1086,13 +1085,6 @@
       <workItem from="1575665280621" duration="633000" />
       <workItem from="1576043620910" duration="236000" />
     </task>
-    <task id="LOCAL-00183" summary="Pages API for root requests">
-      <created>1556953782927</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1556953782929</updated>
-    </task>
     <task id="LOCAL-00184" summary="Added statsFull">
       <created>1556954946161</created>
       <option name="number" value="00184" />
@@ -1429,7 +1421,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574151226438</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="Added Revise Current LibreText">
+      <created>1576653691588</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1576653691588</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1485,7 +1484,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Spacing fix" />
     <MESSAGE value="Bugfix async" />
     <MESSAGE value="nodePrint A4 and new Covers" />
     <MESSAGE value="Fixing Travis.ci" />
@@ -1510,9 +1508,14 @@
     <MESSAGE value="Beeline Complex integration" />
     <MESSAGE value="Full-copy partial fix&#10;&#10;STILL NOT WORKING Cross-library" />
     <MESSAGE value="ReRemixer Expansion Panel summary" />
-    <option name="LAST_COMMIT_MESSAGE" value="ReRemixer Expansion Panel summary" />
+    <MESSAGE value="Added Revise Current LibreText" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Revise Current LibreText" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="446" y="118" key="#Deployment" timestamp="1576641068015">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="446" y="118" key="#Deployment/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576641068015" />
     <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575522113393">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1521,35 +1524,40 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="534" y="187" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1707.920@0.0.1707.920" timestamp="1575443509201" />
-    <state x="391" y="0" key="CommitChangelistDialog2" timestamp="1575574947021">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="435" y="0" key="CommitChangelistDialog2" timestamp="1576653745713">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="435" y="0" key="CommitChangelistDialog2/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653745713" />
     <state x="391" y="0" key="CommitChangelistDialog2/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575574947021" />
-    <state width="415" height="523" key="GridCell.Tab.0.bottom" timestamp="1576043842580">
+    <state width="255" height="732" key="GridCell.Tab.0.bottom" timestamp="1576653748225">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
+    <state width="255" height="732" key="GridCell.Tab.0.bottom/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653748225" />
     <state width="415" height="523" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.bottom/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="415" height="523" key="GridCell.Tab.0.center" timestamp="1576043842580">
+    <state width="255" height="732" key="GridCell.Tab.0.center" timestamp="1576653748224">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
+    <state width="255" height="732" key="GridCell.Tab.0.center/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653748224" />
     <state width="415" height="523" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.center/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="415" height="523" key="GridCell.Tab.0.left" timestamp="1576043842580">
+    <state width="255" height="732" key="GridCell.Tab.0.left" timestamp="1576653748224">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1575679600741" />
+    <state width="255" height="732" key="GridCell.Tab.0.left/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653748224" />
     <state width="415" height="523" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580702" />
     <state width="271" height="635" key="GridCell.Tab.0.left/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="415" height="523" key="GridCell.Tab.0.right" timestamp="1576043842580">
+    <state width="255" height="732" key="GridCell.Tab.0.right" timestamp="1576653748225">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="237" height="684" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
+    <state width="255" height="732" key="GridCell.Tab.0.right/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653748225" />
     <state width="415" height="523" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.right/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.right/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
@@ -1557,6 +1565,14 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="355" y="102" key="SettingsEditor/0.0.1707.920@0.0.1707.920" timestamp="1575443627381" />
+    <state x="446" y="174" key="Vcs.Push.Dialog.v2" timestamp="1576653694965">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="446" y="174" key="Vcs.Push.Dialog.v2/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576653694965" />
+    <state x="1026" y="105" width="433" height="698" key="ftp.server.browser" timestamp="1576641065502">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="1026" y="105" width="433" height="698" key="ftp.server.browser/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576641065502" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -644,19 +644,19 @@ class RemixerPanel extends React.Component {
 				<DialogContent>
 					<DialogContentText>
 						This action will clear your work in the Remix Panel and your undo history. Consider saving your
-						current workspace to a file with the "Save File" button. You will be taken to the ReRemix panel
-						to choose another LibreText to start from.
+						current workspace to a file with the "Save File" button. You can either reload the LibreText you
+						are currently working on or select another LibreText.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => this.setState({reRemixDialog: false})} color="primary">
 						Cancel
 					</Button>
-					<Button onClick={() => {
-						this.setState({reRemixDialog: false});
-						this.props.updateRemixer({stage: 'ReRemixing'})
-					}} color="primary">
-						Start Over
+					<Button onClick={this.reloadReRemix} color="primary">
+						Reload current LibreText
+					</Button>
+					<Button onClick={() => {this.props.updateRemixer({stage: 'ReRemixing'})}} color="primary">
+						Select another LibreText
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -847,7 +847,6 @@ class RemixerPanel extends React.Component {
 		this.setState({resetDialog: false});
 	};
 	
-	
 	handleEdit = async (newEdit) => {
 		if (!newEdit || !newEdit.original) {
 			this.setState({editDialog: false});
@@ -941,14 +940,14 @@ class RemixerPanel extends React.Component {
 					node.data.original.data.padded = node.data.padded;
 				} catch (e) {
 					console.error(e);
-					node.data.padded = false;
+					node.data.padded = node.title;
 				}
 			}
 			else
-				node.data.padded = false;
+				node.data.padded = node.title;
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
-			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded || node.title).replace(/\//g, '\/')}`).replace(/ /g, '_');
+			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`).replace(/ /g, '_');
 			
 			//check status on whether pages are modified
 			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
@@ -1039,7 +1038,6 @@ class RemixerPanel extends React.Component {
 		this.setState({subdomain: subdomain, LibraryTree: content});
 	};
 	
-	
 	getDepth(tree) {
 		let depth = 0;
 		while (tree && tree.children) {
@@ -1059,6 +1057,28 @@ class RemixerPanel extends React.Component {
 		return result;
 	}
 	
+	reloadReRemix = async () => {
+		this.setState({reRemixDialog: false, initialized: false});
+		this.initialAutonumber = false;
+		
+		const current = this.props.RemixTree;
+		current.children = await RemixerFunctions.getSubpages(this.props.RemixTree.data.url, this.props.RemixTree.data.subdomain, {
+			includeMatter: true,
+			full: true,
+			defaultStatus: 'unchanged'
+		});
+		RemixerFunctions.ReRemixTree(current, current.data.path);
+		
+		this.props.updateRemixer({stage: 'Remixing', RemixTree: current, currentlyActive: ''});
+		this.props.enqueueSnackbar(`${current.title} is ready for ReRemixing!`, {
+			variant: 'success',
+			anchorOrigin: {
+				vertical: 'bottom',
+				horizontal: 'right',
+			},
+		});
+		this.setState({initialized: true});
+	};
 	
 	ArticleType = (type) => {
 		let badStructure = this.checkStructure(type);
@@ -1105,10 +1125,10 @@ class RemixerPanel extends React.Component {
 			return <>
 				<h4>Items Modified: (Updates on Save Edit)</h4>
 				<ReactDiffViewer
-				inputA={oldCode}
-				inputB={newCode}
-				type="chars"
-			/></>
+					inputA={oldCode}
+					inputB={newCode}
+					type="chars"
+				/></>
 		}
 		else return null;
 	}

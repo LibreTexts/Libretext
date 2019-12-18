@@ -241,22 +241,9 @@ class ReRemixerPanel extends React.Component {
 		currentlyActive.key = 'ROOT';
 		currentlyActive.expanded = true;
 		let rootPath = currentlyActive.data.path;
-		tree(currentlyActive);
+		RemixerFunctions.ReRemixTree(currentlyActive, rootPath);
 		
-		function tree(current) {
-			if (current) {
-				current.title = current.title.replace(/<a.*?<\/a>/, '');
-				current.data.relativePath = current.data.path.replace(rootPath, '');
-				current.original = {title: current.title, data: JSON.parse(JSON.stringify(current.data))};
-				current.status = 'unchanged';
-				delete current.lazy;
-				if (current.children && current.children.length) {
-					current.children.forEach((child) => {
-						tree(child, current.path);
-					});
-				}
-			}
-		}
+		
 		
 		this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {
 			variant: 'success',
