@@ -141,7 +141,7 @@ puppeteer.launch({
 				}, (err) => responseError("Server \n" + err, 500));
 				
 			}
-			else if (url.startsWith("/Libretext=") || url.startsWith("/LibreText=")) {
+			else if (url.startsWith("/Libretext=")) { //|| url.startsWith("/LibreText=")
 				if ((request.headers.origin && request.headers.origin.endsWith("libretexts.org")) || request.headers.host === 'localhost') {
 					if (request.method === "GET") {
 						response.writeHead(200, {"Content-Type": " application/json"});
@@ -292,7 +292,7 @@ puppeteer.launch({
 				
 				url = url.split('/Refresh=')[1];
 				let isNoCache = false;
-				if (url.endsWith('?no-cache')|| url.endsWith('?nocache')) {
+				if (url.endsWith('?no-cache') || url.endsWith('?nocache')) {
 					url = url.replace('?no-cache', '');
 					url = url.replace('?nocache', '');
 					isNoCache = true;
@@ -763,11 +763,12 @@ puppeteer.launch({
 					summary = body;
 			}
 			
-			let content = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${await getLevel(current)}`;
+			let content = `<div style="padding: 0 0 10px 0" class="summary"><img class="summaryImage" src="https://chem.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
+				let uploadContent = content.replace(/style="column-count: 2"/g, '');
 				await authenticatedFetch(`${path}/Front_Matter/10: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
 					method: 'POST',
-					body: content + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
+					body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
 			}
 			content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h2>${current.title}</h2></a>`}` + content;
@@ -783,7 +784,8 @@ puppeteer.launch({
 				'li:first-child > div > h2 {margin: 0;}' +
 				'h1, h2, h3, h4, h5, h {text-transform: uppercase; font-family:"Tahoma", Arial, serif}' +
 				'.nobreak {page-break-inside: avoid;}' +
-				'.summary {text-align: justify; text-justify: inter-word;}' +
+				'.summary {text-align: justify; text-justify: inter-word; display: flex}' +
+				'.summaryImage {height: 150px; width: 150px; margin: 0 10px; object-fit: contain;}' +
 				'body {font-size: 12px; font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif}</style>' +
 				'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:r,b,i%7CSource+Code+Pro:r,b" media="all">';
 			if (isHTML) {
@@ -806,37 +808,39 @@ puppeteer.launch({
 			async function getLevel(current, level = 2, isSubTOC) {
 				let result = '';
 				if (current.subpages && current.subpages.length) {
-					// current.subpages = current.subpages.filter(child=>child.title!=='Front Matter' && child.title!=='Back Matter');
-					let twoColumn = tags.includes('columns:two') && tags.includes('coverpage:yes');
+					let pages = [];
+					for (let i = 0; i < current.subpages.length; i++) {
+						let child = current.subpages[i];
+						if ((child.title === 'Front Matter' || child.title === 'Back Matter') && (!child.subpages || !child.subpages.length)) {
+							//skip since empty
+						}
+						else if (child.title === 'Front Matter') {
+							let tempChildren = child.subpages;
+							tempChildren = tempChildren.filter(subpage => subpage.title !== 'TitlePage' && subpage.title !== 'InfoPage'&& subpage.title !== 'Table of Contents');
+							pages = pages.concat(tempChildren)
+						}
+						else {
+							pages.push(child);
+						}
+					}
 					
 					if (level === 2 && tags.includes('article:topic-guide')) {
 						isSubTOC = 'yes';
 						level = 3;
 					}
 					
-					let prefix = `h${level}`;
+					let twoColumn = tags.includes('columns:two') && tags.includes('coverpage:yes') && level === 2;
 					
-					let hasLower = false;
-					let temp = [];
-					for (let i = 0; i < current.subpages.length; i++) {
-						hasLower = hasLower || current.subpages[i].subpages.length;
-						temp.push(current.subpages[i]);
-					}
-					current.subpages = temp;
-					if (!hasLower) { //at lowest level
-						prefix = isSubTOC === 'yes' ? 'h' : 'l';
-					}
+					let prefix = level === 2 ? 'h2' : 'h';
 					
 					//Summary Handling
-					let inner = await async.map(current.subpages, async (elem, callback) => {
+					let inner = await async.map(pages, async (elem, callback) => {
 						elem = await getAPI(elem);
 						if (elem.modified === 'restricted') //private page
 							return '';
 						let summary = '';
-						let isSubtopic = elem.title.match(/^[0-9.]+\.[0-9]+\.[A-Z]: /) && elem.tags.includes('article:topic') ? 'indent' : null;
-						if (prefix !== 'l' && !isSubtopic) {
-							let path = elem.url.split('/').splice(3).join('/');
-							
+						let isSubtopic = level > 2 ? 'indent' : null;
+						if (level === 2 || isSubTOC) {
 							properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
 							let good = properties && properties.contents && properties.contents['#text'];
 							if (good && (!elem.tags.includes('article:topic') || isSubTOC)) {
@@ -844,7 +848,7 @@ puppeteer.launch({
 							}
 						}
 						
-						return `<li><div class="nobreak"><${prefix} class="${isSubtopic}"><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}${twoColumn ? '' : '</div>'}${await getLevel(elem, level + 1, isSubTOC)}${twoColumn ? '</div>' : ''}</li>`
+						return `<li><div class="nobreak ${isSubtopic}"><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
 					});
 					inner = inner.join('');
 					
@@ -872,7 +876,7 @@ puppeteer.launch({
 			cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
 			cssb.push('</style>');
 			const css = cssb.join('');
-			const prefix = 'TOC.';
+			const prefix = '';
 			
 			const style1 = '<div id="mainH">' +
 				'<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/jpeg;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; margin-right: 10px"/></a>' +
@@ -1107,7 +1111,7 @@ puppeteer.launch({
 				delete working[escapedURL];	//2 min timeout for DUPE
 			}
 			
-			if(current.title === 'InfoPage')
+			if (current.title === 'InfoPage')
 				isNoCache = true;
 			
 			const daysCache = 35;
@@ -1150,7 +1154,7 @@ puppeteer.launch({
 			console.log(`NEW    ${ip} ${url}`);
 			
 			const page = await browser.newPage();
-			page.setViewport({width:975, height: 1000});
+			page.setViewport({width: 975, height: 1000});
 			let timeout;
 			// page.on('console', msg => console.log('PAGE LOG:', msg.text()));
 			let failed = false;
@@ -1645,7 +1649,7 @@ puppeteer.launch({
 						}
 						
 					}
-					else if (page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
+					else if (page.subpages && page.subpages.length > 1 && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
 						filename = `TOC/${await getTOC(page)}.pdf`;
 						
 						if (page.tags.includes('coverpage:yes')) {//no Front Matter TOC
