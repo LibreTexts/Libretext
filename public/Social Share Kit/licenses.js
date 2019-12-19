@@ -171,6 +171,7 @@
 
 	var modal = document.getElementById("myModal");
 	var thing = document.getElementById("myModal_Child");
+	document.body.appendChild(modal);
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
 })();
