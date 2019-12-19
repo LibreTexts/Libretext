@@ -236,7 +236,7 @@ export default function PublishPanel(props) {
 					style={{marginTop: 10}}
 					aria-label="large contained secondary button group">
 					<Button
-						onClick={() => publishing ? setReviseDialog(true) : props.updateRemixer({stage: 'Remixing'})}>
+						onClick={() => publishing && props.mode === 'ReRemix' ? setReviseDialog(true) : props.updateRemixer({stage: 'Remixing'})}>
 						<ArrowBack/>Revise
 					</Button>
 					<Button color='secondary' onClick={() => setPublishing(Math.random())}>
@@ -248,12 +248,12 @@ export default function PublishPanel(props) {
 			                 override={override}/>
 			<Dialog open={reviseDialog} onClose={() => setReviseDialog(false)}
 			        aria-labelledby="form-dialog-title">
-				<DialogTitle id="form-dialog-title">Revise or Select Another LibreText?</DialogTitle>
+				<DialogTitle id="form-dialog-title">Revise or Select Another Text?</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
 						Since you have published, your Remix map is likely out of date. It is highly recommended to
-						reload the LibreText in order to incorporate your new changes. Alternatively, you can select
-						a different LibreText to Remix.
+						reload the Text in order to incorporate your new changes. Alternatively, you can select
+						a different Text to Remix.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -261,12 +261,12 @@ export default function PublishPanel(props) {
 						Cancel
 					</Button>
 					<Button onClick={reloadReRemix} color="primary">
-						Revise current LibreText
+						Revise current Text
 					</Button>
 					<Button onClick={() => {
 						props.updateRemixer({stage: 'ReRemixing'})
 					}} color="primary">
-						Select another LibreText
+						Select another Text
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -357,7 +357,7 @@ function PublishSubPanel(props) {
 							/>}
 						label="Show Failed"/>*/}
 					
-					<h6><a href={finished} target='_blank'>Your new LibreText is available here</a></h6>
+					<h6><a href={finished} target='_blank'>Your new Text is available here</a></h6>
 					<Tooltip title='Download Progress Log'
 					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip>
 				</div> : null}
@@ -428,8 +428,8 @@ function PublishSubPanel(props) {
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
 			return false;
 		}
-		if (!props.name || props.name === "New LibreText. Drag onto me to get started") {
-			enqueueSnackbar(`No LibreText name provided!`, {
+		if (!props.name || props.name === "New Text. Drag onto me to get started") {
+			enqueueSnackbar(`No Title provided!`, {
 				variant: 'error',
 				anchorOrigin: {
 					vertical: 'bottom',
@@ -466,7 +466,7 @@ function PublishSubPanel(props) {
 		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
 		if (response.ok && !props.override && props.mode !== 'ReRemix') {
-			enqueueSnackbar(`The page ${destRoot} already exists! Either change the LibreText name or bypass this safety check by enabling "Overwrite Existing Pages".`, {
+			enqueueSnackbar(`The page ${destRoot} already exists! Either change the Title or bypass this safety check by enabling "Overwrite Existing Pages".`, {
 				variant: 'warning',
 				anchorOrigin: {
 					vertical: 'bottom',

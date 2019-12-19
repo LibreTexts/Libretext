@@ -644,8 +644,8 @@ class RemixerPanel extends React.Component {
 				<DialogContent>
 					<DialogContentText>
 						This action will clear your work in the Remix Panel and your undo history. Consider saving your
-						current workspace to a file with the "Save File" button. You can either reload the LibreText you
-						are currently working on or select another LibreText.
+						current workspace to a file with the "Save File" button. You can either reload the Text you
+						are currently working on or select another Text.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -653,10 +653,10 @@ class RemixerPanel extends React.Component {
 						Cancel
 					</Button>
 					<Button onClick={this.reloadReRemix} color="primary">
-						Reload current LibreText
+						Reload current Text
 					</Button>
 					<Button onClick={() => {this.props.updateRemixer({stage: 'ReRemixing'})}} color="primary">
-						Select another LibreText
+						Select another Text
 					</Button>
 				</DialogActions>
 			</Dialog>

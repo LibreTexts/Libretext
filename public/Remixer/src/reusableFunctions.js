@@ -121,9 +121,19 @@ function articleTypeToTitle(type) {
 
 function ReRemixTree(current, rootPath) {
 	if (current) {
+		if (!current.data) {
+			current.data = {};
+			for (let key in current) {
+				if (!current.hasOwnProperty(key))
+					continue;
+				//keys that are handled by fancytree
+				if (!['key', 'extraClasses', 'expanded', 'lazy', 'title', 'data', 'children'].includes(key)) {
+					current.data[key] = current[key];
+					delete current[key];
+				}
+			}
+		}
 		current.title = current.title.replace(/<a.*?<\/a>/, '');
-		if (!current.data)
-			current.data = {path: current.path};
 		current.data.relativePath = current.data.path.replace(rootPath, '');
 		current.original = {title: current.title, data: JSON.parse(JSON.stringify(current.data))};
 		current.status = 'unchanged';
