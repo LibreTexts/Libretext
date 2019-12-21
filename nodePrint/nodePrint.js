@@ -763,7 +763,7 @@ puppeteer.launch({
 					summary = body;
 			}
 			
-			let content = `<div style="padding: 0 0 10px 0" class="summary"><img class="summaryImage" src="https://chem.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>${summary || ''}</div></div>${await getLevel(current)}`;
+			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes')?`<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>`:null}${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
 				let uploadContent = content.replace(/style="column-count: 2"/g, '');
 				await authenticatedFetch(`${path}/Front_Matter/10: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
@@ -784,8 +784,8 @@ puppeteer.launch({
 				'li:first-child > div > h2 {margin: 0;}' +
 				'h1, h2, h3, h4, h5, h {text-transform: uppercase; font-family:"Tahoma", Arial, serif}' +
 				'.nobreak {page-break-inside: avoid;}' +
-				'.summary {text-align: justify; text-justify: inter-word; display: flex}' +
-				'.summaryImage {height: 150px; width: 150px; margin: 0 10px; object-fit: contain;}' +
+				'.summary {text-align: justify; text-justify: inter-word;}' +
+				'.summaryImage {height: 150px; width: 150px; margin: 0 10px; object-fit: contain; float:right}' +
 				'body {font-size: 12px; font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif}</style>' +
 				'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:r,b,i%7CSource+Code+Pro:r,b" media="all">';
 			if (isHTML) {
@@ -814,9 +814,9 @@ puppeteer.launch({
 						if ((child.title === 'Front Matter' || child.title === 'Back Matter') && (!child.subpages || !child.subpages.length)) {
 							//skip since empty
 						}
-						else if (child.title === 'Front Matter') {
+						else if (child.title === 'Front Matter' || child.title === 'Front Matter') {
 							let tempChildren = child.subpages;
-							tempChildren = tempChildren.filter(subpage => subpage.title !== 'TitlePage' && subpage.title !== 'InfoPage'&& subpage.title !== 'Table of Contents');
+							tempChildren = tempChildren.filter(subpage => !['TitlePage', 'InfoPage', 'Table of Contents'].includes(subpage.title));
 							pages = pages.concat(tempChildren)
 						}
 						else {
