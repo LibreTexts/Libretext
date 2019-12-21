@@ -439,11 +439,11 @@ class RemixerPanel extends React.Component {
 								   }}> Visit {this.state.edit.sourceURL || ''}</a> : null}</>
 						: <>
 							<Tooltip
-								title={this.props.options.enableAutonumber && this.state.edit.padded ? 'Disable the autonumberer to change the auto url title' : ''}>
+								title={this.state.edit.autonumbered && this.state.edit.padded ? 'Disable the autonumberer to change the auto url title' : ''}>
 								<TextField
 									autoFocus
 									margin="dense"
-									disabled={this.state.edit.padded && this.props.options.enableAutonumber}
+									disabled={this.state.edit.padded && this.state.edit.autonumbered}
 									label="URL name"
 									value={this.state.edit.padded || ''}
 									onChange={(event) => this.changeEdit('padded', event.target.value)}
@@ -460,12 +460,12 @@ class RemixerPanel extends React.Component {
 						</>}
 					<div style={{display: 'flex', flex: 1}}>
 						<Tooltip
-							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
+							title={this.state.edit.autonumbered ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
 							<TextField
 								style={{flex: 1}}
 								select
 								label="Article type"
-								disabled={this.props.options.enableAutonumber}
+								disabled={this.state.edit.autonumbered}
 								value={this.state.edit.articleType || ''}
 								onChange={(event) => {
 									this.changeEdit('articleType', event.target.value);
@@ -655,7 +655,9 @@ class RemixerPanel extends React.Component {
 					<Button onClick={this.reloadReRemix} color="primary">
 						Reload current Text
 					</Button>
-					<Button onClick={() => {this.props.updateRemixer({stage: 'ReRemixing'})}} color="primary">
+					<Button onClick={() => {
+						this.props.updateRemixer({stage: 'ReRemixing'})
+					}} color="primary">
 						Select another Text
 					</Button>
 				</DialogActions>
@@ -727,6 +729,10 @@ class RemixerPanel extends React.Component {
 		if (!newEdit.original)
 			newEdit.original = JSON.parse(JSON.stringify(newEdit));
 		newEdit.node = node;
+		
+		newEdit.autonumbered = this.props.options.enableAutonumber &&
+			(newEdit.relativePath.endsWith('Front_Matter') || newEdit.relativePath.endsWith('Back_Matter') || newEdit.depth >= this.props.options.guideDepth);
+		
 		console.log(node, newEdit);
 		this.setState({edit: newEdit, editDialog: true});
 	};
@@ -869,21 +875,32 @@ class RemixerPanel extends React.Component {
 			}
 		}
 		let changes = 0;
+		let chapterIndex = 1;
 		
 		let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
-			node.title = node.title.replace(/&amp;|&/g, 'and');
+			node.title = node.title.replace(/&amp;|&/g, 'and').trim();
 			let chapter = parent.chapter || 1;
+			node.depth = level;
 			
-			if (level
+			//handling Front/Back matter organization
+			if (node.title === 'Front Matter' || node.title === 'Back Matter') {
+				let index = node.title === 'Front Matter' ? 0 : 99;
+				if (!node.data.padded)
+					node.data.padded = `${('' + index).padStart(2, '0')}: ${node.title}`;
+				node.matterIndex = 0;
+			}
+			else if (parent.title === 'Front Matter' || parent.title === 'Back Matter') {
+				let index = ++parent.matterIndex;
+				node.data.padded = `${('' + index).padStart(2, '0')}: ${node.title}`;
+			}
+			else if (level
 				&& this.props.options.enableAutonumber
 				&& this.props.options.autonumber.guideDepth
-				&& node.data.status !== 'deleted'
-				&& node.title !== 'Front Matter'
-				&& node.title !== 'Back Matter') {
+				&& node.data.status !== 'deleted') { //autonumberer enabled
 				if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/)
 					&& !this.props.options.overwriteSuffix
 					&& level > this.props.options.autonumber.guideDepth) {
-					//skip unless overwriteSuffix is enabled
+					//skip for lettered subpages unless overwriteSuffix is enabled
 					
 					let index = node.title.match(/(?<=[0-9]+\.)[0-9]*?[A-Za-z]+?(?=:)/)[0];
 					node.data.articleType = 'topic';
@@ -895,30 +912,29 @@ class RemixerPanel extends React.Component {
 					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
 				}
 				else {
-					
-					if (node.title.includes(': '))
-						node.title = node.title.replace(/^[^:]*: /, '');
-					node.title = node.title.replace(':', '-');
-					
-					
-					let index = sharedIndex[0]++;
 					if (level < this.props.options.autonumber.guideDepth) { //Unit
 						node.data.articleType = 'topic-category';
-						node.data.padded = false;
 					}
 					else if (level === this.props.options.autonumber.guideDepth) { //Guide
-						if (Number(this.props.options.autonumber.offset) > sharedIndex[0]) { //apply offset
-							sharedIndex[0] = Number(this.props.options.autonumber.offset);
-							index = sharedIndex[0]++;
+						if (node.title.includes(': '))
+							node.title = node.title.replace(/^[^:]*: /, '');
+						node.title = node.title.replace(':', '-');
+						if (Number(this.props.options.autonumber.offset) > chapterIndex) { //apply offset
+							chapterIndex = Number(this.props.options.autonumber.offset);
 						}
 						node.data.articleType = 'topic-guide';
-						node.data.padded = `${('' + index).padStart(2, '0')}: ${node.title}`;
+						node.data.padded = `${('' + chapterIndex).padStart(2, '0')}: ${node.title}`;
 						
 						let prefix = this.props.options.autonumber.chapterPrefix + ' ' || '';
-						node.title = `${prefix}${index}: ${node.title}`;
-						node.chapter = index;
+						node.title = `${prefix}${chapterIndex}: ${node.title}`;
+						node.chapter = chapterIndex;
+						chapterIndex++
 					}
 					else if (level > this.props.options.autonumber.guideDepth) { //Topic
+						let index = sharedIndex[0]++;
+						if (node.title.includes(': '))
+							node.title = node.title.replace(/^[^:]*: /, '');
+						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic';
 						node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
 						
@@ -930,14 +946,21 @@ class RemixerPanel extends React.Component {
 				node.title = node.title.trim();
 				
 			}
-			else if (node.data.padded && node.data.original.data.padded) {
-				//autonumberer disabled but already has padded
+			
+
+			
+			//checking if padded correctly
+			if (node.data.padded && node.data.original.data.padded) {
+				//already padded correctly
 			}
-			else if (node.data.status !== 'new' && node.data.original.data.relativePath) {
+			else if (node.data.status !== 'new' && node.data.original.data.relativePath) {//initial padding
 				try {
-					let match = node.data.original.data.relativePath.match(/(?<=\/)[^/]*?$/);
-					node.data.padded = match ? match[0] : false;
-					node.data.original.data.padded = node.data.padded;
+					if (!node.data.original.data.padded) {
+						let match = node.data.original.data.relativePath.match(/(?<=\/)[^/]*?$/);
+						node.data.original.data.padded = match ? match[0] : false;
+					}
+					if (!node.data.padded)
+						node.data.padded = node.data.original.data.padded || node.title;
 				} catch (e) {
 					console.error(e);
 					node.data.padded = node.title;
@@ -947,7 +970,9 @@ class RemixerPanel extends React.Component {
 				node.data.padded = node.title;
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
-			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`).replace(/ /g, '_');
+			node.data.padded = node.data.padded.replace(/ /g, '_');
+			node.data.original.data.padded = node.data.original.data.padded.replace(/ /g, '_');
+			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`);
 			
 			//check status on whether pages are modified
 			if (node.data.status === 'unchanged' || node.data.status === 'modified') {
@@ -985,7 +1010,7 @@ class RemixerPanel extends React.Component {
 			
 			node.extraClasses = node.extraClasses.join(' ');
 			node.lazy = false;
-			if (node.children && node.title !== 'Front Matter' && node.title !== 'Back Matter') { //recurse down to children
+			if (node.children) { //recurse down to children
 				let sharedIndex = [1];
 				for (let i = 0; i < node.children.length; i++) {
 					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node);
@@ -994,7 +1019,7 @@ class RemixerPanel extends React.Component {
 			return node;
 		};
 		
-		if (!customRoot) {
+		if (!customRoot) { //recurse down
 			for (let i = 0; i < root.children.length; i++) {
 				if (root.children[i].lazy) {
 					await root.children[i].visitAndLoad();
@@ -1007,7 +1032,7 @@ class RemixerPanel extends React.Component {
 		processNode(d, sharedIndex, 0);
 		
 		if (changes)
-			this.props.enqueueSnackbar(`The autonumberer modified ${changes} pages.`, {
+			this.props.enqueueSnackbar(`The Remixer suggested changes to ${changes} pages.`, {
 				variant: 'warning',
 				anchorOrigin: {
 					vertical: 'bottom',

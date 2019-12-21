@@ -517,6 +517,13 @@ function PublishSubPanel(props) {
 					});
 				await completedPage(page, 'Deleted', 'deleted', response);
 			}
+		
+		
+		for (const page of props.working) {
+			let response;
+			if (['topic-category', 'topic-guide'].includes(page.articleType))
+				response = await LibreTexts.authenticatedFetch(page.path, 'unorder', null);
+		}
 		setState('done');
 		setCounter({
 			percentage: 100,
@@ -529,7 +536,9 @@ function PublishSubPanel(props) {
 			if (text !== 'Deleted')
 				setCounter(
 					(counter) => {
-						const total = props.working.length;
+						let total = props.working.length;
+						if (props.sorted.unchanged)
+							total -= props.sorted.unchanged.length;
 						let current = counter.pages + 1;
 						const elapsed = (new Date() - startedAt) / 1000;
 						const rate = current / elapsed;

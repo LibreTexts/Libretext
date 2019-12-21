@@ -80,8 +80,8 @@ export default class Remixer extends React.Component {
 			//reset redo
 			this.setState({redoArray: []});
 		}
-		let today = new Date();
-		newState['lastSaved'] = `Autosaved @ ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}:${today.getSeconds().toString().padStart(2, '0')}`;
+		newState.name = undefined;
+		newState['lastSaved'] = (new Date()).toISOString();
 		this.setState(newState);
 		this.save({...this.state, ...newState});
 	};
