@@ -42,7 +42,7 @@
 					let tag = tags[i].split(":")[1];
 					switch (tag) {
 						case "publicdomain":
-							return { label: "cc-publicdomain", title: "Public Domain", link: "#" };
+							return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
 						case "ccby":
 							return { label: "cc-BY", title: "CC BY",  link: "https://creativecommons.org/licenses/by/4.0/" };
 						case "ccbysa":
@@ -101,57 +101,51 @@
 	document.getElementById("main_div").innerHTML =
 		`
             <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                 <div class="modal" id="myModal">
-					<div class="modal-content">
-						<span id="myModal_Child">&nbsp;</span>
+					<div class="modal-content" id="myModal_Slide">
+                            <span  id="myModal_Child"></span>
+
                     </div>
-                </div>				
+                </div>
+         
 		`;
 
 	function ccDetector() {
 		const cc = getCC();
 		if (cc) {
-
+            $("#myModal").slideDown(800);
+            $('#myModal_Slide').slideDown(800);
 			switch (cc.label) {
 				case "cc-BY":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
-					break;
+                    thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
+                    break;
 				case "cc-by-sa":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-sa":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: <br> You can can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nd":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-nd":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this liscense <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this liscense <a href=${cc.link}>here</a> `;
 					break;
-				case "gnu":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run, study, share and modify the software. Learn more about this liscense <a href=${cc.link}>here</a>`;
+                case "gnu":
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this liscense <a href=${cc.link}>here</a>`;
 					break;
 				case "gnudsl":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "gnufdl":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "arr":
-					modal.style.display = "block";
-					thing.innerHTML = `The content you just copied is a ${cc.title} license: You are NOT allowed to distribute or remix the content at all.`;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You are NOT allowed to distribute or remix the content at all.`;
 					break;
 				case "cc-publicdomain":
 					return null;
@@ -160,10 +154,17 @@
 
 		}
 	}
-	
- 	window.onclick = function(event) {
+	/*window.onload = function () {
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+	}*/
+	  window.onclick = function(event) {
 	  if (event.target == modal) {
-		modal.style.display = "none";
+          $("#myModal").slideUp(800);
+          $('#myModal_Slide').slideUp(800); 
+     
+      
 	  }
 	} 
 
@@ -171,7 +172,8 @@
 
 	var modal = document.getElementById("myModal");
 	var thing = document.getElementById("myModal_Child");
-	document.body.appendChild(modal);
+
+    document.body.appendChild(modal);
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
 })();
