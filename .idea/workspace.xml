@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/OptionsPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1097,20 +1093,7 @@
       <workItem from="1576871661418" duration="196000" />
       <workItem from="1576871970937" duration="5675000" />
       <workItem from="1576898342183" duration="9626000" />
-    </task>
-    <task id="LOCAL-00185" summary="Bugfix encodeHTML">
-      <created>1557210187563</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1557210187564</updated>
-    </task>
-    <task id="LOCAL-00186" summary="Contributor copy-source">
-      <created>1557291514334</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1557291514335</updated>
+      <workItem from="1576984297849" duration="4609000" />
     </task>
     <task id="LOCAL-00187" summary="Added regular expressions to Dashboard">
       <created>1558154711179</created>
@@ -1441,7 +1424,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576737086092</updated>
     </task>
-    <option name="localTasksCounter" value="234" />
+    <task id="LOCAL-00234" summary="Emergency Bugfix Root Node Padding">
+      <created>1576987628936</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1576987628937</updated>
+    </task>
+    <task id="LOCAL-00235" summary="Emergency Bugfix Root Node Padding&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;">
+      <created>1576987650750</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1576987650750</updated>
+    </task>
+    <option name="localTasksCounter" value="236" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1497,8 +1494,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="nodePrint A4 and new Covers" />
-    <MESSAGE value="Fixing Travis.ci" />
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="refreshListAdd" />
     <MESSAGE value="Importer Alpha" />
@@ -1522,7 +1517,9 @@
     <MESSAGE value="ReRemixer Expansion Panel summary" />
     <MESSAGE value="Added Revise Current LibreText" />
     <MESSAGE value="Bugfix revise-current&#10;&#10;Page properties were not being sorted into current.data which meant the data went missing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix revise-current&#10;&#10;Page properties were not being sorted into current.data which meant the data went missing." />
+    <MESSAGE value="Emergency Bugfix Root Node Padding" />
+    <MESSAGE value="Emergency Bugfix Root Node Padding&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Emergency Bugfix Root Node Padding&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="118" key="#Deployment" timestamp="1576641068015">
@@ -1537,15 +1534,21 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="534" y="187" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1707.920@0.0.1707.920" timestamp="1575443509201" />
-    <state x="435" y="0" key="CommitChangelistDialog2" timestamp="1576912347233">
+    <state x="435" y="0" key="CommitChangelistDialog2" timestamp="1576987648694">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="435" y="0" key="CommitChangelistDialog2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576987648694" />
     <state x="435" y="0" key="CommitChangelistDialog2/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912347233" />
     <state x="435" y="0" key="CommitChangelistDialog2/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576737083920" />
     <state x="391" y="0" key="CommitChangelistDialog2/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575574947021" />
-    <state width="279" height="524" key="GridCell.Tab.0.bottom" timestamp="1576912022805">
+    <state x="164" y="79" key="DiffContextDialog" timestamp="1576987694126">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="164" y="79" key="DiffContextDialog/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576987694126" />
+    <state width="208" height="524" key="GridCell.Tab.0.bottom" timestamp="1576989058396">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="208" height="524" key="GridCell.Tab.0.bottom/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576989058396" />
     <state width="241" height="456" key="GridCell.Tab.0.bottom/-1448.0.1158.821/0.0.1707.920@-1448.0.1158.821" timestamp="1576898169905" />
     <state width="279" height="524" key="GridCell.Tab.0.bottom/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912022805" />
     <state width="237" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
@@ -1553,9 +1556,10 @@
     <state width="415" height="523" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.bottom/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="279" height="524" key="GridCell.Tab.0.center" timestamp="1576912022804">
+    <state width="208" height="524" key="GridCell.Tab.0.center" timestamp="1576989058396">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="208" height="524" key="GridCell.Tab.0.center/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576989058396" />
     <state width="241" height="456" key="GridCell.Tab.0.center/-1448.0.1158.821/0.0.1707.920@-1448.0.1158.821" timestamp="1576898169904" />
     <state width="279" height="524" key="GridCell.Tab.0.center/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912022804" />
     <state width="237" height="684" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
@@ -1563,9 +1567,10 @@
     <state width="415" height="523" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580703" />
     <state width="271" height="635" key="GridCell.Tab.0.center/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="279" height="524" key="GridCell.Tab.0.left" timestamp="1576912022804">
+    <state width="208" height="524" key="GridCell.Tab.0.left" timestamp="1576989058396">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="208" height="524" key="GridCell.Tab.0.left/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576989058396" />
     <state width="241" height="456" key="GridCell.Tab.0.left/-1448.0.1158.821/0.0.1707.920@-1448.0.1158.821" timestamp="1576898169904" />
     <state width="279" height="524" key="GridCell.Tab.0.left/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912022804" />
     <state width="237" height="684" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1575679600741" />
@@ -1573,9 +1578,10 @@
     <state width="415" height="523" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1576043842580" />
     <state width="235" height="454" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575664580702" />
     <state width="271" height="635" key="GridCell.Tab.0.left/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575669664903" />
-    <state width="279" height="524" key="GridCell.Tab.0.right" timestamp="1576912022804">
+    <state width="208" height="524" key="GridCell.Tab.0.right" timestamp="1576989058396">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state width="208" height="524" key="GridCell.Tab.0.right/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576989058396" />
     <state width="241" height="456" key="GridCell.Tab.0.right/-1448.0.1158.821/0.0.1707.920@-1448.0.1158.821" timestamp="1576898169904" />
     <state width="279" height="524" key="GridCell.Tab.0.right/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912022804" />
     <state width="237" height="684" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1575679600742" />
@@ -1587,9 +1593,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="355" y="102" key="SettingsEditor/0.0.1707.920@0.0.1707.920" timestamp="1575443627381" />
-    <state x="446" y="174" key="Vcs.Push.Dialog.v2" timestamp="1576912353995">
+    <state x="446" y="174" key="Vcs.Push.Dialog.v2" timestamp="1576987695931">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="446" y="174" key="Vcs.Push.Dialog.v2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576987695931" />
     <state x="446" y="174" key="Vcs.Push.Dialog.v2/-1448.0.1158.821/0.0.1707.920@0.0.1707.920" timestamp="1576912353995" />
     <state x="446" y="174" key="Vcs.Push.Dialog.v2/0.0.1707.920/-2036.0.1357.809@0.0.1707.920" timestamp="1576737275215" />
     <state x="1026" y="105" width="433" height="698" key="ftp.server.browser" timestamp="1576641065502">
@@ -1602,7 +1609,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>1273</line>
+          <line>1265</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

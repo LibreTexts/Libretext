@@ -944,19 +944,18 @@ class RemixerPanel extends React.Component {
 					}
 				}
 				node.title = node.title.trim();
-				
+				node.data.padded = node.data.padded.replace(/:/g, '%3A');
 			}
 			
-
 			
 			//checking if padded correctly
 			if (node.data.padded && node.data.original.data.padded) {
 				//already padded correctly
 			}
-			else if (node.data.status !== 'new' && node.data.original.data.relativePath) {//initial padding
+			else if (node.data.status !== 'new' && node.data.original.data.sourceURL) {//initial padding
 				try {
 					if (!node.data.original.data.padded) {
-						let match = node.data.original.data.relativePath.match(/(?<=\/)[^/]*?$/);
+						let match = node.data.original.data.sourceURL.match(/(?<=\/)[^/]*?$/);
 						node.data.original.data.padded = match ? match[0] : false;
 					}
 					if (!node.data.padded)
@@ -966,8 +965,10 @@ class RemixerPanel extends React.Component {
 					node.data.padded = node.title;
 				}
 			}
-			else
-				node.data.padded = node.title;
+			else {
+				node.data.original.data.padded = node.data.original.data.padded || node.title;
+				node.data.padded = node.data.padded || node.title;
+			}
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
 			node.data.padded = node.data.padded.replace(/ /g, '_');
@@ -982,6 +983,7 @@ class RemixerPanel extends React.Component {
 				delete originalData.status;
 				delete originalData.response;
 				delete originalData.relativePath;
+				delete originalData.changed;
 				let changed = [];
 				for (let key in originalData) {
 					if (originalData.hasOwnProperty(key)) {

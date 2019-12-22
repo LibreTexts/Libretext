@@ -405,7 +405,7 @@ function PublishSubPanel(props) {
 	function saveLog() {
 		let result = new Blob([JSON.stringify({results: results, ...props}, null, 2)], {type: 'application/json;charset=utf-8'});
 		const textToSaveAsURL = window.URL.createObjectURL(result);
-		const fileNameToSaveAs = `${props.name}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.librelog`;
+		const fileNameToSaveAs = `${props.RemixTree.title}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.librelog`;
 		
 		const downloadLink = document.createElement("a");
 		downloadLink.download = fileNameToSaveAs;
@@ -428,7 +428,7 @@ function PublishSubPanel(props) {
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
 			return false;
 		}
-		if (!props.name || props.name === "New Text. Drag onto me to get started") {
+		if (!props.RemixTree.title || props.RemixTree.title === "New Text. Drag onto me to get started") {
 			enqueueSnackbar(`No Title provided!`, {
 				variant: 'error',
 				anchorOrigin: {
@@ -459,7 +459,7 @@ function PublishSubPanel(props) {
 					body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
 				});
 			}
-			destRoot = `${destRoot}/${props.name.replace(/ /g, '_')}`;
+			destRoot = `${destRoot}/${props.RemixTree.title.replace(/ /g, '_')}`;
 		}
 		else
 			destRoot = props.RemixTree.data.url;
@@ -522,7 +522,9 @@ function PublishSubPanel(props) {
 		for (const page of props.working) {
 			let response;
 			if (['topic-category', 'topic-guide'].includes(page.articleType))
-				response = await LibreTexts.authenticatedFetch(page.path, 'unorder', null);
+				response = await LibreTexts.authenticatedFetch(page.path, 'unorder', null, {
+					method: 'PUT'
+				});
 		}
 		setState('done');
 		setCounter({
