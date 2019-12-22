@@ -763,10 +763,14 @@ puppeteer.launch({
 					summary = body;
 			}
 			
-			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes')?`<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>`:null}${summary || ''}</div></div>${await getLevel(current)}`;
+			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes') ? `<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>` : ''}${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
 				let uploadContent = content.replace(/style="column-count: 2"/g, '');
-				await authenticatedFetch(`${path}/Front_Matter/10: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
+				let res = await authenticatedFetch(`${path}/00:_Front_Matter/10: Table of Contents`, `move?title=Table of Contents&to=${path}/00:_Front_Matter/03:_Table_of_Contents&dream.out.format=json`, subdomain, 'PrintBot', {
+					method: "POST" //migration for old Matter. Remove by June 2020
+				});
+				console.log(await res.json());
+				await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
 					method: 'POST',
 					body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
@@ -1431,15 +1435,14 @@ puppeteer.launch({
 			
 			//Merge up Text or Chapters
 			let content;
-			if (!['Text', 'Chapters'].includes(current.title)) {
-				for (let i = 0; i < current.subpages.length; i++) {
-					await getAPI(current.subpages[i]);
-					if (['Text', 'Chapters'].includes(current.subpages[i].title)) {
-						content = current.subpages[i];
-						break;
-					}
+			for (let i = 0; i < current.subpages.length; i++) {
+				await getAPI(current.subpages[i]);
+				if (['Text', 'Chapters'].includes(current.subpages[i].title)) {
+					content = current.subpages[i];
+					break;
 				}
 			}
+			
 			if (content) {
 				content.title = current.title;
 				content.tags = current.tags.concat(content.tags);
@@ -1476,10 +1479,17 @@ puppeteer.launch({
 			async function getMatter(text) {
 				let path = current.url.split('/').splice(3).join('/');
 				let miniIndex = 1;
-				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, 'contents?abort=exists&dream.out.format=json', current.subdomain, 'PrintBot', {
+				let title = text;
+				text = `${(text === 'Front' ? '00' : 'zz')}:_${text}`;
+				let res = await authenticatedFetch(`${path}/${title}_Matter`, `move?title=${encodeURIComponent(title + ' Matter')}&to=${path}/${text} Matter&allow=deleteredirects&dream.out.format=json`, current.subdomain, 'PrintBot', {
+					method: "POST" //migration for old Matter. Remove by June 2020
+				});
+				// console.log(await res.json());
+				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&abort=exists&dream.out.format=json`, current.subdomain, 'PrintBot', {
 					method: "POST",
 					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
 				});
+				// console.log(createMatter = await createMatter.json());
 				// if (createMatter.ok) { //Add properties if it is new
 				await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
 					putProperty('mindtouch.page#welcomeHidden', true),
@@ -1492,10 +1502,9 @@ puppeteer.launch({
 					method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
 					body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
 				});*/
-				getImage(`${path}/${text}_Matter`, text).then();
+				getImage(`${path}/${text}_Matter`, title).then();
 				// }
-				if (text === 'Front')
-					await defaultMatter(text);
+				await defaultMatter(text);
 				
 				
 				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
@@ -1516,7 +1525,7 @@ puppeteer.launch({
 						url: subpage['uri.ui'],
 						subdomain: current.subdomain,
 						id: subpage['@id'],
-						matter: text,
+						matter: title,
 						index: ++totalIndex,
 						miniIndex: miniIndex++,
 					}
@@ -1536,7 +1545,7 @@ puppeteer.launch({
 				}
 				
 				async function defaultMatter(text) {
-					if (text === 'Front') {
+					if (text.includes('Front')) {
 						current = await getAPI(current);
 						await getInformation(current);
 						
@@ -1561,14 +1570,14 @@ puppeteer.launch({
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header-title</a></p>"
 						});
 					}
-					else if (text === 'Back') {
+					else if (text.includes('Back')) {
 					
 					}
 				}
 				
-				async function getImage(path, text) {
+				async function getImage(path, title) {
 					let image;
-					switch (text) {
+					switch (title) {
 						case 'Front':
 							image = 'https://chem.libretexts.org/@api/deki/files/239315/Front_Matter.jpg?origin=mt-web';
 							break;
@@ -2188,8 +2197,8 @@ async function getAPI(page, getContents) {
 		tags = tags.map((elem) => elem.title);
 		page.id = response['@id'];
 		page.title = page.title || response.title;
-		page.tags = tags;
-		page.properties = properties;
+		page.tags = page.tags || tags;
+		page.properties = page.properties || properties;
 		page.subdomain = subdomain;
 		page.path = response.path['#text'];
 		page.modified = new Date(response['date.modified']);

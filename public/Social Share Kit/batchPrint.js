@@ -16,7 +16,7 @@ if (!window["batchPrint.js"]) {
 	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 	const isPro = document.getElementById("proHolder").innerText === 'true';
 	const groups = document.getElementById("groupHolder").innerText;
-	const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g,'\''));
+	const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g, '\''));
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	const targetComputer = 'batch.libretexts.org';
 	let request;
@@ -118,6 +118,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
 				innerHTML += `<a onclick = "event.preventDefault(); nikGetCitation()" href='#' class='mt-icon-quote'>Get Citation</a>`;
 				innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
+				innerHTML += `<a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" href='#' class='mt-icon-shuffle'>Unorder Page</a>`;
 				innerHTML += `</div></div>`;
 			}
 			else {
