@@ -618,7 +618,6 @@ function PublishSubPanel(props) {
 						else {
 							if (page.articleType === 'topic-guide') {
 								await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single", page.path),
-									putProperty('mindtouch.page#welcomeHidden', true, page.path),
 									putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", page.path)]
 								)
 							}

@@ -884,7 +884,7 @@ class RemixerPanel extends React.Component {
 			
 			//handling Front/Back matter organization
 			if (node.title === 'Front Matter' || node.title === 'Back Matter') {
-				let index = node.title === 'Front Matter' ? 0 : 99;
+				let index = node.title === 'Front Matter' ? '00' : 'zz';
 				if (!node.data.padded)
 					node.data.padded = `${('' + index).padStart(2, '0')}: ${node.title}`;
 				node.matterIndex = 0;
@@ -949,10 +949,14 @@ class RemixerPanel extends React.Component {
 			
 			
 			//checking if padded correctly
-			if (node.data.padded && node.data.original.data.padded) {
+			if (node.data.padded && (node.data.status === 'new' || node.data.original.data.padded)) {
 				//already padded correctly
+				//and if page is an existing page it has its original padding stored
 			}
-			else if (node.data.status !== 'new' && node.data.original.data.sourceURL) {//initial padding
+			else if (node.data.status === 'new') { //new pages
+				node.data.padded = node.data.padded || node.title;
+			}
+			else if (node.data.original.data.sourceURL) {//initial padding
 				try {
 					if (!node.data.original.data.padded) {
 						let match = node.data.original.data.sourceURL.match(/(?<=\/)[^/]*?$/);
@@ -972,7 +976,8 @@ class RemixerPanel extends React.Component {
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
 			node.data.padded = node.data.padded.replace(/ /g, '_');
-			node.data.original.data.padded = node.data.original.data.padded.replace(/ /g, '_');
+			if (node.data.original && node.data.original.data.padded)
+				node.data.original.data.padded = node.data.original.data.padded.replace(/ /g, '_');
 			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`);
 			
 			//check status on whether pages are modified
