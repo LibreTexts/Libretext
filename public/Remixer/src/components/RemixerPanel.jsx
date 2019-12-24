@@ -421,7 +421,7 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('title', event.target.value)}
 						fullWidth
 					/>
-					{this.state.edit.status === 'new' ? <> //only for new
+					{this.state.edit.status === 'new' ? <>
 							<TextField
 								margin="dense"
 								label="Source URL (optional)"
@@ -976,7 +976,7 @@ class RemixerPanel extends React.Component {
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
 			node.data.padded = node.data.padded.replace(/ /g, '_');
-			if (node.data.original && node.data.original.data.padded)
+			if (node.data.original  && node.data.original.data && node.data.original.data.padded)
 				node.data.original.data.padded = node.data.original.data.padded.replace(/ /g, '_');
 			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`);
 			
