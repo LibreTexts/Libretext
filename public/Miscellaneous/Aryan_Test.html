@@ -11,7 +11,8 @@
 <body>
 <p><input id="text" style="width:80%" type="text" value="This is QR Content" /></p>
 
-<p>&nbsp;</p>
+<p><iframe id = "test" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" id="tet" src="https://www.youtube.com/embed/gG3pytAY2MY" width="560"></iframe></p>
+
 
 <div id="qrcode" style="width:100px; height:100px; margin-top:15px;">&nbsp;</div>
 <script type="text/javascript">/*<![CDATA[*/
@@ -20,7 +21,9 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 	height : 100
 });
 function makeCode () {		
-	var elText = document.getElementById("text");
+	var elText = document.getElementById("test");
+	elText = elText.src.toString();
+	print(elText)
 	
 	if (!elText.value) {
 		alert("Input a text");
