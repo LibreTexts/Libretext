@@ -118,33 +118,43 @@
             $('#myModal_Slide').slideDown(800);
 			switch (cc.label) {
 				case "cc-BY":
+					thing_parent.setAttribute("style", "background-color: #ffeb3b;");
                     thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
                     break;
 				case "cc-by-sa":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-sa":
+					thing_parent.setAttribute("style", "background-color: #ffeb3b;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc":
+					thing_parent.setAttribute("style", "background-color: #ffeb3b;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: <br> You can can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nd":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-nd":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this liscense <a href=${cc.link}>here</a> `;
 					break;
                 case "gnu":
+					thing_parent.setAttribute("style", "background-color: #ffeb3b;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this liscense <a href=${cc.link}>here</a>`;
 					break;
 				case "gnudsl":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "gnufdl":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "arr":
+					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You are NOT allowed to distribute or remix the content at all.`;
 					break;
 				case "cc-publicdomain":
@@ -172,7 +182,7 @@
 
 	var modal = document.getElementById("myModal");
 	var thing = document.getElementById("myModal_Child");
-
+	var thing_parent = document.getElementById("myModal_Slide");
     document.body.appendChild(modal);
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', fn);
