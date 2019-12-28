@@ -1,5 +1,4 @@
-﻿
-if (!window["youtubeIFrame"]) {
+﻿if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 
 	//On load work this function
