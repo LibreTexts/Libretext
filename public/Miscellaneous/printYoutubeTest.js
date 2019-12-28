@@ -1,24 +1,61 @@
-﻿/*if (!window["youtubeIFrame"]) {
+﻿if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 
+	//On load work this function
 	window.addEventListener("load", () => {
 
 		let candidates = $("iframe");
+			//For each specific video that we find
 			for (let i = 0; i < candidates.length; i++) {
 			let iframe = candidates[i];
+
+			iframe.id = 'qrcode'+i;
+			console.log(iframe.id);
+		
+
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 100,
+				height : 100
+			});
+			function makeCode () {		
+				var elText = document.getElementById(iframe.id).src;
+				console.log(elText);
+				if (!elText) {
+					alert("Input a text");
+					/*elText.focus();*/
+					return;
+				}
+			qrcode.makeCode(elText);
+			}
+
+			makeCode();
+			$("#text").
+				on("blur", function () {
+					makeCode();
+				}).
+				on("keydown", function (e) {
+					if (e.keyCode == 13) {
+						makeCode();
+					}
+				});
+
 			if (iframe && iframe.src && !iframe.classList.contains("youtubeIFrame")) {
 				let videoID = iframe.src.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
-/*				if(videoID) {
+				if(videoID) {
 					console.log(videoID);
+					
 				}
 				if (iframe.src.includes("www.youtube.com") || iframe.src.includes("www.youtube-nocookie.com")) {
 					videoID = videoID[2];
 					iframe.src = iframe.src.replace('www.youtube.com','www.youtube-nocookie.com');
+					let that_id = 'qrcode'+i;
+					console.log(that_id)
+					iframe.id = that_id
 					iframe.classList.add("youtubeIFrame");
 					let youtubeImgContainer = document.createElement("a");
 					youtubeImgContainer.innerHTML = `<img class="youtubeImage" src="https://img.youtube.com/vi/${videoID}/0.jpg\"/>`;
-					youtubeImgContainer.href = "https://www.youtube.com/watch?v="+videoID;
-
+					let link = youtubeImgContainer.href = "https://www.youtube.com/watch?v="+videoID;
+					
 					youtubeImgContainer.classList.add("youtubeImageContainer");
 					$(youtubeImgContainer).insertAfter(iframe);
 
@@ -32,39 +69,7 @@
 	});
 }
 
-class autoqr {
-	constructor(qr){
-	this.qrcode = qr;
-	}
-}
 
-console.log()
-
-$.getScript('https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js', function(
-		{newQR = new autoqr(QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i));
-		document.getElementByID("QRGen").innerHTML = autoqr
-	}));
-
-
-
-
-
-
-				 // QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
-				 //
-					// QRCode.toDataURL("stuff2")
-					*/
-
-/**
- * @fileoverview
- * - Using the 'QRCode for Javascript library'
- * - Fixed dataset of 'QRCode for Javascript library' for support full-spec.
- * - this library has no dependencies.
- * 
- * @author davidshimjs
- * @see <a href="http://www.d-project.com/" target="_blank">http://www.d-project.com/</a>
- * @see <a href="http://jeromeetienne.github.com/jquery-qrcode/" target="_blank">http://jeromeetienne.github.com/jquery-qrcode/</a>
- */
 var QRCode;
 
 (function () {
