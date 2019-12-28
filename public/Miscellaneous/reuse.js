@@ -14,6 +14,7 @@ const libraries = {
 	'Workforce': 'workforce'
 };
 
+//Contains useful custom functions
 const LibreTexts = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
@@ -28,6 +29,24 @@ const LibreTexts = {
 	parseURL: parseURL,
 	getCurrent: getCurrent,
 	libraries: libraries,
+};
+
+//Plugins to the Editor are registered onto this object for later activation
+const LibreEditor = {
+	registerAll: (config) => {
+		if (LibreEditor.done)
+			console.log('Already registered plugins');
+		else {
+			for (const key in LibreEditor) {
+				if (LibreEditor.hasOwnProperty(key) && key !== 'registerAll') {
+					const element = LibreEditor[key];
+					if (typeof element === 'function')
+						element(config);
+				}
+			}
+			LibreEditor.done = true;
+		}
+	}
 };
 
 async function authenticatedFetch(path, api, subdomain, options = {}) {
