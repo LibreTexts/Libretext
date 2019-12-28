@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>CateTest2</title>
+	<title>CateTest3</title>
 	<script src="printYoutubeTest.js"></script>
-	<script src="Libretext/public/Miscellaneous/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
 	<script src= "https://awesomefiles.libretexts.org/Miscellaneous/qrcode.js"></script>
 	<script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="printYoutube.css" type="text/css" rel="stylesheet"/>
@@ -34,23 +33,14 @@
 		</div>
 	</div>
 
-
-<!-- img for qrcode, also text that will display with it, is below -->
-
+<div id="QRGen">
 
 <input id="text" type="text" value="link" style="width:80%" /><br />
 <img id="qrcode"></img>
+</div>
 
 
-<!-- Script for qr code is below. It will not run properly if script is above qr img -->
 
-<script>
-
-QRCode.toDataURL("https://www.youtube.com/watch?v=hy8d8nXa-Jw").then(i => document.getElementById("qrcode").src=i)
-
-QRCode.toDataURL("stuff2")
-
-</script>
 
 	<p> Content that separates these videos</p>
 
