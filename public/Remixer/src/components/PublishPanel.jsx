@@ -886,7 +886,7 @@ function PublishSubPanel(props) {
 				case 'deleted': //skip because this is handled later
 					break;
 				case 'unchanged':
-					await completedPage(page, 'Skipped', 'unchanged');
+					// await completedPage(page, 'Skipped', 'unchanged');
 					break;
 			}
 			

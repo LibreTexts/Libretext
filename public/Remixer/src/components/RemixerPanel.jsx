@@ -731,7 +731,7 @@ class RemixerPanel extends React.Component {
 		newEdit.node = node;
 		
 		newEdit.autonumbered = this.props.options.enableAutonumber &&
-			(newEdit.relativePath.endsWith('Front_Matter') || newEdit.relativePath.endsWith('Back_Matter') || newEdit.depth >= this.props.options.guideDepth);
+			(newEdit.relativePath.endsWith('Front_Matter') || newEdit.relativePath.endsWith('Back_Matter') || newEdit.depth >= this.props.options.autonumber.guideDepth);
 		
 		console.log(node, newEdit);
 		this.setState({edit: newEdit, editDialog: true});
@@ -943,9 +943,10 @@ class RemixerPanel extends React.Component {
 						node.chapter = `${chapter}.${index}`;
 					}
 				}
-				node.title = node.title.trim();
-				node.data.padded = node.data.padded.replace(/:/g, '%3A');
 			}
+			node.title = node.title.trim();
+			if (node.data.padded)
+				node.data.padded = node.data.padded.replace(/:/g, '%3A');
 			
 			
 			//checking if padded correctly
@@ -976,7 +977,7 @@ class RemixerPanel extends React.Component {
 			
 			node.data.parentID = parent.data.id || node.data.parentID;
 			node.data.padded = node.data.padded.replace(/ /g, '_');
-			if (node.data.original  && node.data.original.data && node.data.original.data.padded)
+			if (node.data.original && node.data.original.data && node.data.original.data.padded)
 				node.data.original.data.padded = node.data.original.data.padded.replace(/ /g, '_');
 			node.data.relativePath = node.key === "ROOT" ? '' : (`${parent.data.relativePath}/${(node.data.padded).replace(/\//g, '\/')}`);
 			
@@ -993,7 +994,7 @@ class RemixerPanel extends React.Component {
 				for (let key in originalData) {
 					if (originalData.hasOwnProperty(key)) {
 						if (JSON.stringify(data[key]) !== JSON.stringify(originalData[key])) {
-							console.log(key, data[key], originalData[key]);
+							// console.log(key, data[key], originalData[key]);
 							changed.push({key: key, original: originalData[key], change: data[key]});
 						}
 					}
