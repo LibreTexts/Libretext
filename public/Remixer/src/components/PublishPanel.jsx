@@ -283,7 +283,9 @@ function PublishSubPanel(props) {
 	let [show, setShow] = React.useState({success: true, failed: true});
 	const [isActive, setIsActive] = useState(false);
 	const {enqueueSnackbar} = useSnackbar();
-	
+	let total = props.working.length;
+	if (props.sorted.unchanged)
+		total -= props.sorted.unchanged.length;
 	
 	useEffect(() => {
 		if (props.publishing && props.working) {
@@ -362,7 +364,7 @@ function PublishSubPanel(props) {
 					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip>
 				</div> : null}
 				<LinearProgress variant="determinate" style={{width: '100%'}}
-				                value={Math.round(counter.pages / props.working.length * 1000) / 10}/>
+				                value={Math.round(counter.pages / total * 1000) / 10}/>
 			</Toolbar>
 		</AppBar>
 	</Paper>;
@@ -373,8 +375,8 @@ function PublishSubPanel(props) {
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Publish In Progress
-						({counter.percentage})<br/>
-						{counter.pages} / {props.working.length}
+						({`${Math.round(counter.pages / total * 1000) / 10}%`})<br/>
+						{counter.pages} / {total}
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
@@ -485,7 +487,6 @@ function PublishSubPanel(props) {
 		//All set to start publish
 		setState('processing');
 		setCounter({
-			percentage: 0,
 			pages: 0,
 			eta: 'Calculating',
 		});
@@ -528,8 +529,7 @@ function PublishSubPanel(props) {
 		}
 		setState('done');
 		setCounter({
-			percentage: 100,
-			pages: props.working.length,
+			pages: total,
 			eta: 'Done!',
 		});
 		setIsActive(false);
@@ -538,9 +538,6 @@ function PublishSubPanel(props) {
 			if (text !== 'Deleted')
 				setCounter(
 					(counter) => {
-						let total = props.working.length;
-						if (props.sorted.unchanged)
-							total -= props.sorted.unchanged.length;
 						let current = counter.pages + 1;
 						const elapsed = (new Date() - startedAt) / 1000;
 						const rate = current / elapsed;
@@ -548,7 +545,6 @@ function PublishSubPanel(props) {
 						const eta = estimated - elapsed;
 						
 						return {
-							percentage: `${Math.round(current / total * 1000) / 10}%`,
 							pages: current,
 							eta: secondsToStr(eta),
 						}
