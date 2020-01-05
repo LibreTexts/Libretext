@@ -551,6 +551,11 @@ async function downloadFile(data, socket) {
 		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('.epub'))
 			data.url = data.url + '/open/download?type=epub';
 	}
+	else if (data.type === 'pretext') {
+		response = await fetch(data.url + '/archive/master.zip', {mode: "HEAD"});
+		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('.zip'))
+			data.url = data.url + '/archive/master.zip';
+	}
 	response = await fetch(data.url);
 	
 	// Step 2: get total length
