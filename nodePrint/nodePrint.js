@@ -762,8 +762,9 @@ puppeteer.launch({
 				else
 					summary = body;
 			}
+			let imageExists = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail`);
 			
-			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes') ? `<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>` : ''}${summary || ''}</div></div>${await getLevel(current)}`;
+			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes') && imageExists.ok ? `<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>` : ''}${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
 				let uploadContent = content.replace(/style="column-count: 2"/g, '');
 				let res = await authenticatedFetch(`${path}/00:_Front_Matter/10: Table of Contents`, `move?title=Table of Contents&to=${path}/00:_Front_Matter/03:_Table_of_Contents&dream.out.format=json`, subdomain, 'PrintBot', {
