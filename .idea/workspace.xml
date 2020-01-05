@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,19 +81,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
     </key>
   </component>
   <component name="RestClientSettings">
