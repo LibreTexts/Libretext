@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Beeline Complex integration">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +66,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Henry Agnew/BeeLine" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Aryan Suri/Customization" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -329,6 +329,7 @@
     <option name="viewStates">
       <list>
         <serviceView>
+          <option name="contentProportion" value="0.513308" />
           <treeState>
             <expand />
             <select />
@@ -1476,6 +1477,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Beeline Complex integration" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="446" y="120" key="#Deployment" timestamp="1578183386016">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="446" y="120" key="#Deployment/0.0.1707.920/-1440.0.1440.860@0.0.1707.920" timestamp="1578183386016" />
     <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2" timestamp="1576995346989">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

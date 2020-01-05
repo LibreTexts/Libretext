@@ -1,0 +1,29 @@
+{
+
+  "name": "customization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ]"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babelify": "^10.0.0",
+    "node-fetch": "^2.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "react-textfit": "^1.1.0",
+    "react-toggle": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "latest",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0"
+  }
+}
