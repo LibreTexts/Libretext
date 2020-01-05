@@ -518,6 +518,14 @@ io.on('connection', function (socket) {
 });
 
 async function jobHandler(data, socket) {
+	//ensure file exists
+	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	data.socket = socket;
+	if (!await fs.exists(data.path)) {
+		socket.emit('errorMessage', 'File does not exist!');
+		return;
+	}
+	console.log(`Processing ${data.filename}`);
 	switch (data.type) {
 		case "epub":
 			return processEPUB(data, socket);
@@ -528,7 +536,7 @@ async function jobHandler(data, socket) {
 		case "pdf":
 			return null;
 		case "pretext":
-			return null;
+			return processPretext(data, socket);
 		default:
 			break;
 	}
@@ -631,22 +639,13 @@ async function listFiles(data, socket) {
 	}
 }
 
-/*processEUPB({
-	path: './ImportFiles/hdagnew@ucdavis.edu/epub/Copy%20of%2088%20Open%20Essays.epub',
+processPretext({
+	path: './ImportFiles/hdagnew@ucdavis.edu/pretext/aata-master.zip',
 	user: 'hdagnew@ucdavis.edu',
 	subdomain: 'chem'
-}, {emit: (a, b) => console.error(b)});*/
+}, {emit: (a, b) => console.error(b)});
 
 async function processCommonCartridge(data, socket) {
-	//ensure file exists
-	console.log(`Processing ${data.filename}`);
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	data.socket = socket;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
-	
 	try {
 		zipLocal.unzip = util.promisify(zipLocal.unzip);
 		let unzipped = await zipLocal.unzip(data.path);
@@ -945,16 +944,9 @@ async function processCommonCartridge(data, socket) {
 }
 
 async function processEPUB(data, socket) {
-	data.socket = socket;
 	const Working = {}; // since user and subdomain are unchanged for these calls
 	Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
 	Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
-	
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
 	
 	let epub = new EPub(data.path);
 	epub.parse();
@@ -1202,14 +1194,6 @@ async function processEPUB(data, socket) {
 }
 
 async function processLibreMap(data, socket) {
-	//ensure file exists
-	console.log(`Processing ${data.filename}`);
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	data.socket = socket;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
 	const rootURL = `https://libremaps.libretexts.org/`;
 	const rootAPI = `${rootURL}/api/v1`;
 	
@@ -1332,6 +1316,313 @@ async function processLibreMap(data, socket) {
 	} catch (e) {
 		console.error(e);
 		socket.emit('errorMessage', JSON.stringify(e));
+	}
+}
+
+async function processPretext(data, socket) {
+	try {
+		zipLocal.unzip = util.promisify(zipLocal.unzip);
+		let unzipped = await zipLocal.unzip(data.path);
+		unzipped.save = util.promisify(unzipped.save);
+		await fs.emptyDir(`${data.path}-Unzipped`);
+		await unzipped.save(`${data.path}-Unzipped`);
+		
+		let source = await runProcess('grep', ['-rl', '-e', "'<pretext\\|<mathbook'", `${data.path}-Unzipped`]);
+		if (!source) {
+			socket.emit('errorMessage', 'Cannot find Pretext source!');
+			return;
+		}
+		
+		let rootPath = `${data.path}-Unzipped/out`;
+		await fs.emptyDir(rootPath);
+		let manifest = await runProcess('xsltproc', ['--xinclude', './mathbook/xsl/pretext-json-manifest.xsl', source]);
+		if (!manifest) {
+			socket.emit('errorMessage', 'Invalid manifest!');
+			return;
+		}
+		else
+			manifest = JSON.parse(manifest);
+		console.log(manifest);
+		let xsltproc = await runProcess('xsltproc', ['--xinclude', '-o', rootPath + '/', './mathbook/xsl/pretext-basic-html.xsl', source]);
+		
+		console.log(xsltproc);
+		
+		return;
+		
+		
+		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+		const Working = {}; // since user and subdomain are unchanged for these calls
+		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
+		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
+		
+		//go through html and upload
+		//setup parent pages
+		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+		}, data.subdomain);
+		onlinePath += `/${data.filename}`;
+		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
+		}, data.subdomain);
+		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
+		
+		
+		//process manifest
+		
+		let totalPages = 0;
+		manifest = manifest.map((page) => digestPage(page, resources));
+		
+		//begin page uploads
+		let firstEntry = {
+			title: data.filename,
+			type: 'Coverpage',
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`,
+		};
+		let log = [firstEntry];
+		let backlog = [firstEntry];
+		let eta = new Eta(totalPages, true);
+		let backlogClearer = setInterval(clearBacklog, 1000);
+		
+		//process content pages
+		for (let i = 0; i < organization.length; i++) {
+			await processPage(organization[i], rootPath, onlinePath, i);
+		}
+		
+		
+		//process attachments and non-content pages
+		let path = `${onlinePath}/Resources`;
+		await Working.authenticatedFetch(path, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
+		}, data.subdomain);
+		await Promise.all(
+			[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+				Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+				Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+		for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
+			socket.emit('progress', {
+				percentage: key,
+				pages: `Uploading ${value.length} items for ${key}`,
+				eta: 'Waiting on Resource uploads',
+			});
+			await processAttachments(value, rootPath, `${onlinePath}/Resources/${key.replace(/\//g, '***')}`, socket);
+			let entry = {
+				title: key,
+				type: 'resources',
+				url: `https://${data.subdomain}.libretexts.org/${onlinePath}/Resources/${key.replace(/\//g, '_')}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			console.log(key, value.length);
+		}
+		
+		
+		//finishing up
+		socket.emit('setState', {
+			state: 'done',
+			log: log,
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`
+		});
+		clearInterval(backlogClearer);
+		await clearBacklog();
+		
+		//Function Zone
+		function digestPage(page, resources) {
+			let result = {};
+			result.title = page.elements.find(elem => elem.name === 'title');
+			if (!result.title.elements)
+				result.title = `Untitled Page ${totalPages}`;
+			else result.title = result.title.elements[0].text;
+			result.title = result.title.replace(/&/g, 'and');
+			result.subpages = page.elements.filter(elem => elem.name === 'item');
+			
+			if (!result.subpages.length) {
+				result.type = 'topic';
+			}
+			else {
+				result.subpages = result.subpages.map(elem => digestPage(elem, resources));
+				if (result.subpages[0].type === 'topic')
+					result.type = 'guide';
+				else
+					result.type = 'category';
+			}
+			if (page.attributes && page.attributes.identifierref) {
+				result.href = resources[page.attributes.identifierref];
+				resources[page.attributes.identifierref].active = true;
+			}
+			totalPages++;
+			return result;
+		}
+		
+		async function processPage(page, rootPath, onlinePath, index) {
+			let safeTitle = encodeURIComponent(page.title);
+			let path = `${onlinePath}/${("" + index).padStart(2, "0")}: ${page.title.replace(/[?/&]/g, '_')}`;
+			if (page.type === 'category') {
+				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+				}, data.subdomain);
+				await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+			}
+			else if (page.type === 'guide') {
+				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
+				}, data.subdomain);
+				await Promise.all(
+					[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+						Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+						Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+				
+			}
+			else if (page.type === 'topic') {
+				if (!page.href || !(page.href.file.endsWith('.html') || page.href.file.endsWith('.xml'))) {
+					page.type = 'attachment';
+					await processAttachments([page.href], rootPath, path);
+				}
+				else {
+					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
+					let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
+					
+					contents = await uploadImages(contents, path, imageProcessor, data);
+					
+					async function imageProcessor(imagePath) {
+						let filename = decodeURIComponent(imagePath).replace('$IMS-CC-FILEBASE$', '');
+						if (filename.startsWith('../')) {
+							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
+							filename = filename.match(/(?<=\.\.\/).*/)[0];
+						}
+						let okay = filename && await fs.exists(currentPath + filename);
+						return [filename, okay ? await fs.readFile(currentPath + filename) : false, currentPath + filename];
+					}
+					
+					
+					let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
+						method: 'POST',
+						body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+					});
+					if (!response.ok) {
+						let error = await response.text();
+						console.error(error);
+						socket.emit('errorMessage', error);
+					}
+					await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
+				}
+			}
+			
+			//report page upload
+			console.log(page.type, page.title);
+			let entry = {
+				title: page.title,
+				type: page.type,
+				url: `https://${data.subdomain}.libretexts.org/${path}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			eta.iterate();
+			socket.emit('progress', {
+				percentage: `${Math.round(log.length / totalPages * 1000) / 10}%`,
+				pages: `${log.length} / ${totalPages} pages processed`,
+				eta: eta.format("{{etah}}"),
+			});
+			
+			//recurse down
+			if (page.type !== 'topic') {
+				for (let i = 0; i < page.subpages.length; i++) {
+					await processPage(page.subpages[i], rootPath, path, i)
+				}
+			}
+		}
+		
+		async function processAttachments(resources, rootPath, onlinePath, socket) {
+			resources = resources.filter(elem => elem);
+			if (!resources.length)
+				return false;
+			let entries = [];
+			let title = onlinePath.match(/(?<=\/)[^\/]*?$/)[0].replace(/\*\*\*/g, '/');
+			onlinePath = onlinePath.replace(/\*\*\*/g, '_');
+			
+			for (let i = 0; i < resources.length; i++) {
+				try {
+					let filename = decodeURIComponent(resources[i].file).replace('$IMS-CC-FILEBASE$', '');
+					let currentPath = rootPath;
+					if (filename.startsWith('../')) {
+						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
+						filename = filename.match(/(?<=\.\.\/).*/)[0];
+					}
+					if (await fs.exists(currentPath + '/' + filename)) {
+						let file = await fs.readFile(currentPath + '/' + filename);
+						filename = filename.match(/(?<=\/)[^\/]*?$/)[0];
+						let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
+							method: 'PUT',
+							body: file,
+						});
+						if (response.ok) {
+							let fileID = await response.json();
+							entries.push({title: filename, id: fileID['@id']});
+						}
+					}
+					if (socket) {
+						socket.emit('progress', {
+							percentage: `${i} / ${resources.length} files`,
+							pages: `Uploading ${resources[i].type}`,
+							eta: `Waiting on attachments`,
+						});
+					}
+					
+				} catch (e) {
+				
+				}
+			}
+			if (!entries.length)
+				return false;
+			let contents = entries.map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
+			
+			
+			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&title=${encodeURIComponent(title)}&dream.out.format=json`, {
+				method: 'POST',
+				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
+			}
+		}
+		
+		async function clearBacklog() {
+			if (backlog.length) {
+				socket.emit('pages', backlog);
+				backlog = [];
+			}
+		}
+		
+	} catch (e) {
+		console.error(e);
+		socket.emit('errorMessage', JSON.stringify(e));
+	}
+	function runProcess(first, otherArgs = []) {
+		return new Promise(resolve => {
+			const spawn = require('child_process').spawn;
+			let res = '';
+			let child;
+			if (process.platform === "win32") {
+				child = spawn('bash', ['-c', `${first} ${otherArgs.join(' ')}`]);
+			}
+			else
+				child = spawn(first, otherArgs);
+			child.stderr.on('data', function (buffer) {
+				// console.error(buffer.toString());
+			});
+			child.stdout.on('data', function (buffer) {
+				res += buffer.toString();
+			});
+			child.stdout.on('end', function () {
+				resolve(res);
+			});
+		})
 	}
 }
 
