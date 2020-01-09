@@ -421,7 +421,7 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('title', event.target.value)}
 						fullWidth
 					/>
-					{this.state.edit.status === 'new' ? <>
+					{this.state.edit.status === 'new' ? <> //only for new
 							<TextField
 								margin="dense"
 								label="Source URL (optional)"
@@ -439,11 +439,11 @@ class RemixerPanel extends React.Component {
 								   }}> Visit {this.state.edit.sourceURL || ''}</a> : null}</>
 						: <>
 							<Tooltip
-								title={this.state.edit.autonumbered && this.state.edit.padded ? 'Disable the autonumberer to change the auto url title' : ''}>
+								title={this.props.options.enableAutonumber && this.state.edit.padded ? 'Disable the autonumberer to change the auto url title' : ''}>
 								<TextField
 									autoFocus
 									margin="dense"
-									disabled={this.state.edit.padded && this.state.edit.autonumbered}
+									disabled={this.state.edit.padded && this.props.options.enableAutonumber}
 									label="URL name"
 									value={this.state.edit.padded || ''}
 									onChange={(event) => this.changeEdit('padded', event.target.value)}
@@ -460,12 +460,12 @@ class RemixerPanel extends React.Component {
 						</>}
 					<div style={{display: 'flex', flex: 1}}>
 						<Tooltip
-							title={this.state.edit.autonumbered ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
+							title={this.props.options.enableAutonumber ? 'Disable the autonumberer to select a non-recommended article type' : ''}>
 							<TextField
 								style={{flex: 1}}
 								select
 								label="Article type"
-								disabled={this.state.edit.autonumbered}
+								disabled={this.props.options.enableAutonumber}
 								value={this.state.edit.articleType || ''}
 								onChange={(event) => {
 									this.changeEdit('articleType', event.target.value);
@@ -729,10 +729,6 @@ class RemixerPanel extends React.Component {
 		if (!newEdit.original)
 			newEdit.original = JSON.parse(JSON.stringify(newEdit));
 		newEdit.node = node;
-		
-		newEdit.autonumbered = this.props.options.enableAutonumber &&
-			(newEdit.relativePath.endsWith('Front_Matter') || newEdit.relativePath.endsWith('Back_Matter') || newEdit.depth >= this.props.options.autonumber.guideDepth);
-		
 		console.log(node, newEdit);
 		this.setState({edit: newEdit, editDialog: true});
 	};
@@ -875,7 +871,7 @@ class RemixerPanel extends React.Component {
 			}
 		}
 		let changes = 0;
-		let chapterIndex = 1;
+		let chapterIndex = 0;
 		
 		let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
 			node.title = node.title.replace(/&amp;|&/g, 'and').trim();
@@ -898,18 +894,20 @@ class RemixerPanel extends React.Component {
 				&& this.props.options.autonumber.guideDepth
 				&& node.data.status !== 'deleted') { //autonumberer enabled
 				if (node.title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/)
-					&& !this.props.options.overwriteSuffix
+					&& !this.props.options.autonumber.overwriteSuffix
 					&& level > this.props.options.autonumber.guideDepth) {
 					//skip for lettered subpages unless overwriteSuffix is enabled
 					
-					let index = node.title.match(/(?<=[0-9]+\.)[0-9]*?[A-Za-z]+?(?=:)/)[0];
+					let index = node.title.match(/(?<=[0-9]+\.)([0-9]*?)([A-Za-z]+?)(?=:)/);
+					index = index[1] ? index[2] : '.' + index[2];
+					
 					node.data.articleType = 'topic';
 					node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
 					
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 					node.title = node.title.replace(/^[^:]*: /, '');
 					node.title = node.title.replace(':', '-');
-					node.title = `${prefix}${chapter}.${index}: ${node.title}`;
+					node.title = `${prefix}${chapter}${index}: ${node.title}`;
 				}
 				else {
 					if (level < this.props.options.autonumber.guideDepth) { //Unit
@@ -937,6 +935,10 @@ class RemixerPanel extends React.Component {
 						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic';
 						node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
+						if (Number(this.props.options.autonumber.topicStart) > index) { //apply offset
+							sharedIndex[0] = Number(this.props.options.autonumber.topicStart);
+							index = sharedIndex[0]++;
+						}
 						
 						let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 						node.title = `${prefix}${chapter}.${index}: ${node.title}`;
@@ -1019,7 +1021,7 @@ class RemixerPanel extends React.Component {
 			node.extraClasses = node.extraClasses.join(' ');
 			node.lazy = false;
 			if (node.children) { //recurse down to children
-				let sharedIndex = [1];
+				let sharedIndex = [0];
 				for (let i = 0; i < node.children.length; i++) {
 					node.children[i] = processNode(node.children[i], sharedIndex, level + 1, node);
 				}
@@ -1036,7 +1038,7 @@ class RemixerPanel extends React.Component {
 		}
 		let d = customRoot || root.toDict(true);
 		// let depth = this.getDepth(d);
-		let sharedIndex = [1];
+		let sharedIndex = [0];
 		processNode(d, sharedIndex, 0);
 		
 		if (changes)

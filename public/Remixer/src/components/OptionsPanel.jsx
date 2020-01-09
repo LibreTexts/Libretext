@@ -232,23 +232,9 @@ export default function OptionsPanel(props) {
 					<MenuItem value='Topic'>Topic</MenuItem>
 					<MenuItem value='Section'>Section</MenuItem>
 				</TextField>
-				<Tooltip
-					title={`All pages shallower than ${props.options.autonumber.guideDepth || 1} will be categories, all pages at this depth will be guides, and all deeper will be topics.`}>
-					<TextField
-						style={{margin: 0}}
-						id="standard-number"
-						label="Guide Depth"
-						helperText={`This determines the tree depth at which the pages are automatically guides.`}
-						type="number"
-						margin="normal"
-						fullWidth
-						value={props.options.autonumber.guideDepth || 1}
-						onChange={event => changeOption('autonumber.guideDepth', Math.max(event.target.value, 0))}
-						variant="filled"/>
-				</Tooltip>
 				<div style={{display: 'flex', justifyContent: 'space-between', marginTop: 20}}>
 					<TextField
-						style={{margin: 0}}
+						style={{margin: 0, width: '48%'}}
 						id="standard-number"
 						label="Initial Chapter Number"
 						type="number"
@@ -256,6 +242,30 @@ export default function OptionsPanel(props) {
 						value={props.options.autonumber.offset}
 						onChange={event => changeOption('autonumber.offset', Math.max(event.target.value, 0))}
 						variant="filled"/>
+					<TextField
+						style={{margin: 0, width: '48%'}}
+						id="standard-number"
+						label="Initial Topic Number"
+						type="number"
+						margin="normal"
+						value={props.options.autonumber.topicStart}
+						onChange={event => changeOption('autonumber.topicStart', Math.max(event.target.value, 0))}
+						variant="filled"/>
+				</div>
+				<div style={{display: 'flex', justifyContent: 'space-between', marginTop: 20}}>
+					<Tooltip
+						title={`All pages shallower than ${props.options.autonumber.guideDepth} will be categories, all pages at this depth will be guides, and all deeper will be topics.`}>
+						<TextField
+							style={{margin: 0, width: '50%'}}
+							id="standard-number"
+							label="Guide Depth"
+							helperText={`This determines the tree depth at which the pages are automatically guides.`}
+							type="number"
+							margin="normal"
+							value={props.options.autonumber.guideDepth}
+							onChange={event => changeOption('autonumber.guideDepth', Math.max(event.target.value, 0))}
+							variant="filled"/>
+					</Tooltip>
 					<div style={{
 						display: 'flex',
 						alignItems: 'center',

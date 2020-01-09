@@ -34,11 +34,12 @@ export default class Remixer extends React.Component {
 				enableAutonumber: true,
 				autonumber: {
 					guideDepth: 1,
+					topicStart: 1,
 					offset: 1,
 					chapterPrefix: '',
 					pagePrefix: '',
+					overwriteSuffix: false,
 				},
-				overwriteSuffix: false,
 			},
 			swapDialog: false,
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
