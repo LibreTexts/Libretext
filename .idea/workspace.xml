@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Beeline Complex integration">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API/analytics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/PDFMerger.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/PDFMerger.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,18 +301,18 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
+      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
-      <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.build" />
-      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
@@ -1049,6 +1047,7 @@
       <workItem from="1576524964767" duration="599000" />
       <workItem from="1576633719271" duration="1204000" />
       <workItem from="1576995717275" duration="635000" />
+      <workItem from="1578618999896" duration="1177000" />
     </task>
     <task id="LOCAL-00181" summary="Added encodeHTML">
       <created>1556508210666</created>

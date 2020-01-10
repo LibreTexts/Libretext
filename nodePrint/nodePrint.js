@@ -1636,7 +1636,7 @@ puppeteer.launch({
 			let failed = false;
 			
 			try {
-				let number = kubernetesServiceHost ? 10 : 4;
+				let number = kubernetesServiceHost ? 10 : 3;
 				if (options.multiple) {
 					number /= 2;
 					number = Math.floor(number); //integer check
