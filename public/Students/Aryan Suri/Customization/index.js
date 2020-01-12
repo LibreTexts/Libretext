@@ -1,10 +1,9 @@
 
-import React, {useEffect, useState, } from 'react';
-import FontSizeChanger from 'react-font-size-changer';
+import React, {useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import Switch from 'react-switch';
-import ExposurePlus1SharpIcon from '@material-ui/icons/ExposurePlus1Sharp';
-import ExposureNeg1SharpIcon from '@material-ui/icons/ExposureNeg1Sharp';
+import FontSizeChanger from 'react-font-size-changer';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 const target = document.createElement("div");
 
@@ -25,46 +24,65 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 			$('.elm-skin-container').addClass('darkMode');
 	}, []);
 	
+
 	
-	
-	//const [count, setCount] = useState(0);
-	const [background, setBackground] = useState('#ff8f00');
+	const [background, setBackground] = useState('#9ccc65');
 	console.log(background);
 	
+	
+
 	return(
 	
 	<div style={{backgroundColor: background,
-				height: "100vh" }}>
+				height: "100vh" ,
+				padding: 50}}>
 		
-		<h2 onClick = {() => setBackground('#2196f3')}>Click Me To Change Background Color</h2>
+		
 		{/*<button onClick ={() => setBackground('#2196f3')}>Click Me</button>*/}
 		{/* <Helmet>
 			<style> {'body {background-color: red; }'}	</style>
                
         </Helmet> */}
-		<FontSizeChanger targets={['#target']} 
+		
+		<span>
+			
+			<FontSizeChanger targets={['#target']} 
 						onChange={(element, newValue, oldValue)=> {console.log(element, newValue, oldValue);}} 
-						options={{stepSize: 2,
-								range: 5}}
+						options={{stepSize: 1,
+								range: 3}}
 						customButtons = {{
-							up: <ExposurePlus1SharpIcon/>,
-							down: <ExposureNeg1SharpIcon/>,
+							up: <ZoomInIcon/>,
+							down: <ZoomOutIcon/>,
 							style: {
-								border: '0'
+								border: '0',
+								padding: 5
 							},
 							buttonsMargins: 10
 						}}
 >
-		</FontSizeChanger>
-		<h2> Font Size Changer Test.</h2>
+		</FontSizeChanger></span>
+		<h2 onClick = { () => setBackground('#2196f3')}> Font Size Changer Test.</h2>
 		<p id="target">
+		Ku um nachmittag knabenhaft fluchtigen. Gesicht nur unrecht familie braunen vor melodie. Es tanzmusik mudigkeit nachgehen verodeten ri. Bin getrunken die klimperte unbemerkt gestrigen bis. Ers sieht man fromm leise szene gro litze waren. Bandes baumen vom bleibt halfte fur fruhen war freude sag. Mundart spatzen erzahlt was fingern gut solchen. 
 
-		Satisfied conveying an dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do mr prevailed. Mr feeling do chiefly cordial in do. Water timed folly right aware if oh truth. Imprudence attachment him his for sympathize. Large above be to means. Dashwood do provided stronger is. But discretion frequently sir the she instrument unaffected admiration everything. 
+Feld tun ihn tief ist ruth froh funf. Glaubs schale lernen ist her. Was mir gro faden miene ungut gehts neues sieht. Se pa kennet la lustig lassig pa lauter. All richten der besorgt schritt sie her. Vorbeugte duftenden bi schonheit zu erstaunen. Handen sofort wu pa wasser. 
 
-An country demesne message it. Bachelor domestic extended doubtful as concerns at. Morning prudent removal an letters by. On could my in order never it. Or excited certain sixteen it to parties colonel. Depending conveying direction has led immediate. Law gate her well bed life feet seen rent. On nature or no except it sussex. 
+Ordentlich getunchten in flusterton en grashalden. Jeder es indem ob euren. Litze buben so nahen es du wills mager se. Sieben pfeife ja da langst hellen. Angenommen bescheiden besonderes in am em verschwand aufzulosen da. Fu an es unwissend zu liebhaben argerlich schleiche ausdenken. Geh nah kraftlos gegenden launisch verwohnt nur schweren prachtig. Familie stimmts die gefreut sto steilen preisen gesicht. 
 
-Led ask possible mistress relation elegance eat likewise debating. By message or am nothing amongst chiefly address. The its enable direct men depend highly. Ham windows sixteen who inquiry fortune demands. Is be upon sang fond must shew. Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly. 
-			
+Feierabend messingnen grasgarten zu la. Ture sehr mann hort ich mut dem. Du laut bist es eben hier trug. Grundstuck ab zu he lattenzaun dazwischen schuchtern so. Vor hab heimweh gerbers und samstag. Madchens gemessen in blaulich so hindurch liebsten. Hob mehr see man laut hand seid dort ehe moge. 
+
+Zuhorte erstieg fremder mu in er es. La immer nahen so ihnen ja. Zinnerne es schlafen wirklich ku gepflegt leuchter er verstand in. Weibern ob da endlich gelesen. Esse eben hat bin fur vorn haar lich ists. Familien ri indessen brannten begierig herunter sprachen je. Lauf chen se da ri mu ruth. Offnung tadelte meister trocken brachte he so en stiefel. 
+
+Ihr vorsichtig wohnzimmer getunchten das bescheiden begleitete. Konnen neu fraget lag groben gefuhl gro uns. Ei te wu la ortes sogar mager gutes bello. Gepfiffen an schwachem gestrigen em angerufen. Weg hellen gerade kinder ihn schade mut. Indes nur tur dahin anzug orten feuer indem. 
+
+Bett em ziel furs will paar an se so. Vor lampchen gelandes ans sichtbar gebrauch ich. Der leuchtturm angenommen kindlichen ist bin fluchtigen. Ernsthaft hemdarmel erstaunen eia das einfacher. Begleitete zaunpfahle dammerigen wir tat bin. Stellte klopfen dus ten kam schlank schlich. Ein ist orte und herd auch wies. 
+
+Wachsam wer schones barbele gewogen ein eigenes. Pa en so bist ja eile hals sein euer. Bett und sage weg mirs gelt fur dort. Kartoffeln halboffene ob ungerechte vertreiben lehrlingen te. Brotkugeln vorpfeifen neidgefuhl zu erhaltenen so es nachtessen geheiratet. Wollen herauf leisen rothfu freude aus nah. Gerbers unrecht te in zwiebel an. 
+
+Brachte dus gerbers stickig die. Sprach heimat und ruhmte zeitig eck wichse. So da frei ob brot da alte sage dran. Eia zog darin mir genie der dahin denen. Um erschrak gelandes ja la arbeiter he. Zu leuchtete es ja flanierte kraftiger. 
+
+Se dort denk er kein. Verstand was ihm kindbett gelandes ein. Weiterhin erstaunen schneider als schonheit aufstehen kam. Las man grausam man wimpern gesicht zwingen manchen steilen. Zart mu gern ja dame sies. Augenblick verstehsts em bi aufmerksam bangigkeit. 
+
 
 		</p>
 		
