@@ -410,7 +410,7 @@ function handler(request, response) {
 							}
 							
 							content = content.replace(images[i], toReplace);
-							content = content.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+							// content = content.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
 						}
 					}
 				}
@@ -1366,7 +1366,7 @@ async function uploadImages(contents, path, imageProcessor, data) {
 				}
 				
 				contents = contents.replace(images[i], toReplace);
-				contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+				// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
 			}
 		}
 	}

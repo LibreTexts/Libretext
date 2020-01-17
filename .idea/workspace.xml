@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Beeline Complex integration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/PDFMerger.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/PDFMerger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/TOC.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/TOC.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Molecules/GLmol/js/GLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Molecules/GLmol/js/GLWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +60,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -1048,6 +1053,9 @@
       <workItem from="1576633719271" duration="1204000" />
       <workItem from="1576995717275" duration="635000" />
       <workItem from="1578618999896" duration="1177000" />
+      <workItem from="1578620925457" duration="218000" />
+      <workItem from="1578623267877" duration="2291000" />
+      <workItem from="1578776297276" duration="940000" />
     </task>
     <task id="LOCAL-00181" summary="Added encodeHTML">
       <created>1556508210666</created>
@@ -1476,10 +1484,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="Beeline Complex integration" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2" timestamp="1576995346989">
+    <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2" timestamp="1578777245977">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576995346989" />
+    <state x="165" y="0" key="CommitChangelistDialog2/0.0.1707.920@0.0.1707.920" timestamp="1578777245977" />
     <state x="164" y="74" key="DiffContextDialog" timestamp="1576190040098">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
