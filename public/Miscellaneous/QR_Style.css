@@ -35,6 +35,17 @@
 	outline: 0
 }
 
+#qrcode {
+	width:160px;
+	height:160px;
+	margin-top:15px;
+  }
+  
+div[id^=this_qrcode] {
+	 display : none;
+  }
+
+
 @media print {
 	.youtubeIFrame {
 		display: none
@@ -58,17 +69,11 @@
 	.mt-video-widget .ytp-button {
 		display: block;
 	}
+
+	div[id^=this_qrcode] {
+		display : block;
+	 }
 }
 
-.qrcode {
-	display:block;
-	align:center;
-}
+  
 
-
-
-#qrcode {
-  width:160px;
-  height:160px;
-  margin-top:15px;
-}

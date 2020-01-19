@@ -1,4 +1,5 @@
-﻿if (!window["youtubeIFrame"]) {
+﻿
+if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 
 	//On load work this function
@@ -8,60 +9,55 @@
 			//For each specific video that we find
 			for (let i = 0; i < candidates.length; i++) {
 			let iframe = candidates[i];
-			iframe.id = 'qrcode'+i;
-			console.log(iframe.id);
+iframe.id = 'qrcode'+i;
+console.log(iframe.id);
+this_iframe = document.getElementsByTagName("P");
+this_iframe.id = 'iframe'+i;
+console.log(this_iframe.id);
 		
-
 				if (iframe.src.includes("www.youtube.com") || iframe.src.includes("www.youtube-nocookie.com")) {
-					//Create unique qrcode div
-					//More effective than creating a div for each frame in html
+this_qrcode = document.createElement("div")
+this_qrcode.style.cssText = "width:100px; height:100px; margin-top:15px; padding: 50px; z-index:100000000;";
+this_qrcode.id = 'this_qrcode'+i;
 
-					this_qrcode = document.createElement("div");
-					this_qrcode.innerHTML = `<div  style="width:100px; height:100px; margin-top:15px; padding: 50px; z-index:100;">&nbsp;</div>`;
-					
-					//TODO: append to iframe instead of pageText
-					document.getElementById("pageText").appendChild(this_qrcode);
-					this_qrcode.id = 'this_qrcode'+i;
-					console.log(this_qrcode.id);
-					var qrcode = new QRCode(document.getElementById(this_qrcode.id), {
-						width : 100,
-						height : 100,
+document.getElementById('pageText').appendChild(this_qrcode);
+var qrcode = new QRCode(document.getElementById(this_qrcode.id), {
+	width : 100,
+	height : 100,
 
-					});
+});
 
-					function makeCode () {		
-						var elText = document.getElementById(iframe.id).src;
-						console.log(elText);
-						if (!elText) {
-							alert("Input a text");
-							return;
-						}
-						//See down below
-						qrcode.makeCode(elText);
+function makeCode () {		
+	var elText = document.getElementById(iframe.id).src;
+	console.log(elText);
+	if (!elText) {
+		alert("Input a text");
+		/*elText.focus();*/
+		return;
+	}
+	
+	qrcode.makeCode(elText);
+     
+}
+makeCode();
+$("#text").
+	on("blur", function () {
+		makeCode();
+	}).
+	on("keydown", function (e) {
+		if (e.keyCode == 13) {
+			makeCode();
+		}
+	});
 
-					}
-
-					makeCode();
-					$("#text").
-						on("blur", function () {
-							makeCode();
-						}).
-						on("keydown", function (e) {
-							if (e.keyCode == 13) {
-								makeCode();
-							}
-						});
-
-			/*		ADD THIS BACK IN ONCE youtubeImageContainer IS FIXED
-
+			/*
 					youtubeImgContainer.classList.add("youtubeImageContainer");
 					$(youtubeImgContainer).insertAfter(iframe);
 
 					let extraDiv = document.createElement("div");
 					extraDiv.innerHTML = '<button class="ytp-large-play-button ytp-button" aria-label="Play"><svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%"><path class="ytp-large-play-button-bg" d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fill-opacity="0.8"></path><path d="M 45,24 27,14 27,34" fill="#fff"></path></svg></button>';
 					// $(extraDiv).insertAfter(youtubeImgContainer);
-					youtubeImgContainer.appendChild(extraDiv);
-			*/
+					youtubeImgContainer.appendChild(extraDiv);*/
 				}
 			
 		}
