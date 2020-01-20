@@ -449,7 +449,11 @@
 		let filename = file['filename'];
 		
 		if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
-			filename = `=${filename}`;
+			let hasThumbnail = await LibreTexts.authenticatedFetch(null, "files/=mindtouch.page%2523thumbnail");
+			if (hasThumbnail.ok)
+				return false;
+			else
+				filename = `=mindtouch.page%23thumbnail`;
 		}
 		let image = await authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
 		

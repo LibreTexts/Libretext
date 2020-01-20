@@ -39,6 +39,7 @@ function LibreTextsReuse() {
 		authenticatedFetch: authenticatedFetch,
 		getSubpages: getSubpages,
 		getKeys: getKeys,
+		getCitationInformation: getCitationInformation,
 		// getSubpagesAlternate: getSubpagesAlternate,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
@@ -98,6 +99,80 @@ function LibreTextsReuse() {
 			getKeys.keys = await keys.json();
 		}
 		return getKeys.keys;
+	}
+	
+	async function getCitationInformation(url = window.location.href) {
+		const urlArray = url.replace("?action=edit", "").split("/");
+		let coverpage;
+		let result = {};
+		for (let i = urlArray.length; i > 3; i--) { //see if there is a coverpage above this page
+			let path = urlArray.slice(0, i).join("/");
+			let response = await getAPI(path);
+			if (i === urlArray.length) {
+				result = await parseTags(response);
+			}
+			if (response.tags.includes("coverpage:yes")) {
+				coverpage = response;
+				break;
+			}
+		}
+		
+		if (coverpage) {
+			result.coverpage = await parseTags(coverpage);
+		}
+		
+		async function parseTags(page) {
+			const citationInformation = {originalResponse: page};
+			
+			for (let i = 0; i < page.tags.length; i++) {
+				let tag = page.tags[i];
+				if (tag)
+					tag = tag.replace(/\\\\/g, '\n');
+				else
+					continue;
+				
+				let items;
+				if (tag.startsWith('lulu@')) {
+					items = tag.split('@');
+				}
+				else if (tag.startsWith('lulu|')) {
+					items = tag.split('|');
+				}
+				else if (tag.startsWith('lulu,')) {
+					items = tag.split(',');
+				}
+				if (items) {
+					if (items[1])
+						citationInformation.title = items[1];
+					if (items[2])
+						citationInformation.name = items[2];
+					if (items[3])
+						citationInformation.companyname = items[3];
+					if (items[4])
+						citationInformation.shortTitle = items[4];
+					break;
+				}
+				else if (tag.startsWith('authorname:')) { //get some information from authorbar
+					citationInformation.authorTag = tag.replace('authorname:', '');
+					
+					if (!citationInformation.name) {
+						if (typeof getCitationInformation.libreAuthors === 'undefined') {
+							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${page.subdomain}`);
+							getCitationInformation.libreAuthors = await authors.json();
+						}
+						
+						let information = getCitationInformation.libreAuthors[citationInformation.authorTag];
+						if (information) {
+							Object.assign(citationInformation, information);
+						}
+					}
+				}
+			}
+			
+			return citationInformation;
+		}
+		
+		return result;
 	}
 	
 	async function getSubpages(rootURL, username) {
