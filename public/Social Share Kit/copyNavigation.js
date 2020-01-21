@@ -403,13 +403,12 @@
 			}
 			if (tags.includes("transcluded:yes")) {
 				//Next to title
-				if (!tags.includes("article:topic-category") && !tags.includes("article:topic-guide")) {
-					let icon = document.createElement("a");
-					icon.classList.add("mt-icon-flow-branch");
-					icon.classList.add("printHide");
-					icon.onclick = copyContent;
-					target.after(icon);
-				}
+				let icon = document.createElement("a");
+				icon.classList.add("mt-icon-flow-branch");
+				icon.classList.add("printHide");
+				icon.onclick = copyContent;
+				target.after(icon);
+				
 			}
 		}
 	}
