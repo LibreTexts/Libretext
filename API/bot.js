@@ -2,6 +2,7 @@ const http = require('http');
 const timestamp = require('console-timestamp');
 const server = http.createServer(handler);
 const io = require('socket.io')(server, {path: '/bot/ws'});
+const cheerio = require('cheerio');
 const nodeStatic = require('node-static');
 const staticFileServer = new nodeStatic.Server('./BotLogs');
 const fs = require('fs-extra');
@@ -65,6 +66,7 @@ io.on('connection', function (socket) {
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
 	socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
+	socket.on('convertContainers', (data) => jobHandler('convertContainers', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -77,6 +79,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'deadLinks':
 			case 'headerFix':
 			case 'foreignImage':
+			case 'convertContainers':
 				return input.root;
 		}
 	}
@@ -88,6 +91,7 @@ async function jobHandler(jobType, input, socket) {
 			case 'deadLinks':
 			case 'headerFix':
 			case 'foreignImage':
+			case 'convertContainers':
 				return {root: input.root};
 		}
 	}
@@ -95,10 +99,11 @@ async function jobHandler(jobType, input, socket) {
 	function parallelCount() {
 		switch (jobType) {
 			case 'foreignImage':
-				return 2;
+				return 1;
 			case 'findReplace':
 			case 'deadLinks':
 			case 'headerFix':
+			case 'convertContainers':
 				return 10;
 		}
 	}
@@ -184,6 +189,10 @@ async function jobHandler(jobType, input, socket) {
 				[result, numLinks] = await deadLinks(input, content);
 				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
 				break;
+			case 'convertContainers':
+				[result, numContainers] = await convertContainers(input, content);
+				comment = `[BOT ${ID}] Upgraded ${numContainers} Containers`;
+				break;
 			case 'headerFix':
 				result = await headerFix(input, content);
 				comment = `[BOT ${ID}] Fixed Headers`;
@@ -213,7 +222,7 @@ async function jobHandler(jobType, input, socket) {
 			}
 		}
 		
-		if (!result || result === content)
+		if (!result || result === content || jobType === 'foreignImage')
 			return;
 		
 		// result = LibreTexts.encodeHTML(result);
@@ -253,7 +262,7 @@ async function jobHandler(jobType, input, socket) {
 		ID: ID,
 		jobType: input.jobType,
 		params: getParameters(),
-		pages: log,
+		pages: log.reverse(),
 	};
 	await logCompleted(result, input.findOnly);
 	if (pageSummaryCount)
@@ -502,6 +511,46 @@ async function foreignImage(input, content, path) {
 		}
 	});
 	return [result, count];
+}
+
+async function convertContainers(input, content) {
+	if (!content.includes('boxtitle'))
+		return [false, 0];
+	
+	const $ = cheerio.load(content);
+	
+	let result = '';
+	let count = 0;
+	
+	let old = ['skills', 'example', 'exercise', 'objectives', 'query', 'notewithlegend', 'notewithoutlegend', 'procedure', 'definition', 'theorem', 'lemma', 'notation', 'proposition'];
+	old.forEach(type => {
+		$(`div.${type}`).each((i, elem) => {
+			count++;
+			elem.tagName = `fieldset`;
+			elem.attribs.class = `box${newType(type)}`;
+			let container = $(elem);
+			
+			let title = container.find('.boxtitle')[0];
+			title.name = 'legend';
+			title.attribs.class = 'boxlegend';
+			
+			// console.log(container.html());
+		});
+	});
+	result = $.html();
+	console.log(result);
+	await fs.writeFile('test.html', result);
+	
+	return [result, count];
+	
+	function newType(type) {
+		switch (type) {
+			case 'skills':
+				return 'objectives';
+			default:
+				return type;
+		}
+	}
 }
 
 //Helper Logging functions
