@@ -37,12 +37,17 @@ class ReRemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		this.setState({
-			LibraryTree: await RemixerFunctions.getSubpages('home', this.state.subdomain, {
-				linkTitle: true,
-				includeMatter: true
-			})
+		let content = await RemixerFunctions.getSubpages('home', this.state.subdomain, {
+			linkTitle: true,
+			includeMatter: true
 		});
+		
+		//prevent Pro users from modifying Bookshelves
+		if (this.props.permission !== 'Admin') {
+			content = content.filter((page) => !page.path.startsWith('Bookshelves'));
+		}
+		
+		this.setState({LibraryTree: content});
 		LeftAlert.slideUp();
 		LTLeft.fancytree({
 			source: this.state.LibraryTree,
@@ -233,6 +238,16 @@ class ReRemixerPanel extends React.Component {
 			});
 			return;
 		}
+		else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
+			this.props.enqueueSnackbar('You have insufficient permissions to modify this page', {
+				variant: 'error',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
+			return;
+		}
 		this.setState({transferring: true});
 		await currentlyActive.visitAndLoad();
 		this.setState({transferring: false});
@@ -242,7 +257,6 @@ class ReRemixerPanel extends React.Component {
 		currentlyActive.expanded = true;
 		let rootPath = currentlyActive.data.path;
 		RemixerFunctions.ReRemixTree(currentlyActive, rootPath);
-		
 		
 		
 		this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {

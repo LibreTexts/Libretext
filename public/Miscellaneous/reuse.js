@@ -219,6 +219,16 @@ function LibreTextsReuse() {
 			page.content = response.content;
 			if (response['page.parent'])
 				page.parentID = parseInt(response['page.parent']['@id']);
+			if (response.security && response.security['permissions.effective']) {
+				let permissions = response.security['permissions.effective'].operations['#text'];
+				if (permissions.includes('CHANGEPERMISSIONS'))
+					page.security = 'Editor';
+				else if (permissions.includes('UPDATE'))
+					page.security = 'Author';
+				else if (permissions.includes('READ'))
+					page.security = 'Viewer';
+			}
+			
 		}
 		else {
 			let error = await response.json();

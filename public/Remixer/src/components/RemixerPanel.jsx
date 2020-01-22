@@ -914,12 +914,13 @@ class RemixerPanel extends React.Component {
 						node.data.articleType = 'topic-category';
 					}
 					else if (level === this.props.options.autonumber.guideDepth) { //Guide
-						if (node.title.includes(': '))
-							node.title = node.title.replace(/^[^:]*: /, '');
-						node.title = node.title.replace(':', '-');
 						if (Number(this.props.options.autonumber.offset) > chapterIndex) { //apply offset
 							chapterIndex = Number(this.props.options.autonumber.offset);
 						}
+						
+						if (node.title.includes(': '))
+							node.title = node.title.replace(/^[^:]*: /, '');
+						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic-guide';
 						node.data.padded = `${('' + chapterIndex).padStart(2, '0')}: ${node.title}`;
 						
@@ -930,15 +931,16 @@ class RemixerPanel extends React.Component {
 					}
 					else if (level > this.props.options.autonumber.guideDepth) { //Topic
 						let index = sharedIndex[0]++;
+						if (Number(this.props.options.autonumber.topicStart) > index) { //apply offset
+							sharedIndex[0] = Number(this.props.options.autonumber.topicStart);
+							index = sharedIndex[0]++;
+						}
+						
 						if (node.title.includes(': '))
 							node.title = node.title.replace(/^[^:]*: /, '');
 						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic';
 						node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
-						if (Number(this.props.options.autonumber.topicStart) > index) { //apply offset
-							sharedIndex[0] = Number(this.props.options.autonumber.topicStart);
-							index = sharedIndex[0]++;
-						}
 						
 						let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 						node.title = `${prefix}${chapter}.${index}: ${node.title}`;
@@ -947,8 +949,10 @@ class RemixerPanel extends React.Component {
 				}
 			}
 			node.title = node.title.trim();
-			if (node.data.padded)
-				node.data.padded = node.data.padded.replace(/:/g, '%3A');
+			if (node.data.padded && node.data.padded.includes(':')) {
+				node.data.padded = encodeURIComponent(node.data.padded);
+				node.data.padded = node.data.padded.replace(/%20/g, ' ');
+			}
 			
 			
 			//checking if padded correctly
