@@ -40,11 +40,19 @@
 	height:160px;
 	margin-top:15px;
   }
+
+.thisqrcode {
+	padding: 20px; 
+	background-color: white;
+	z-index: 100000; 
+	position:absolute; 
+	top: 0px;
+  }
   
 div[id^=this_qrcode] {
-	 display : none;
-  }
-
+	display: none;
+}
+  
 
 @media print {
 	.youtubeIFrame {
@@ -70,10 +78,7 @@ div[id^=this_qrcode] {
 		display: block;
 	}
 
-	div[id^=this_qrcode] {
-		display : block;
-	 }
+	div[id^=this_qrcode]{
+		display: block;
+		}
 }
-
-  
-
