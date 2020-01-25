@@ -3,8 +3,8 @@
 	page-break-inside: avoid;
 }
 
-.youtubeImage {
-	object-fit: cover;
+img.youtubeImage {
+	object-fit: contain;
 }
 
 .ytp-large-play-button {
