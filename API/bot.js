@@ -99,7 +99,7 @@ async function jobHandler(jobType, input, socket) {
 	function parallelCount() {
 		switch (jobType) {
 			case 'foreignImage':
-				return 1;
+				return 2;
 			case 'findReplace':
 			case 'deadLinks':
 			case 'headerFix':
@@ -522,23 +522,32 @@ async function convertContainers(input, content) {
 	let result = '';
 	let count = 0;
 	
-	let old = ['skills', 'example', 'exercise', 'objectives', 'query', 'notewithlegend', 'notewithoutlegend', 'procedure', 'definition', 'theorem', 'lemma', 'notation', 'proposition'];
+	let old = ['skills', 'example', 'exercise', 'objectives', 'query', 'note1', 'procedure', 'definition', 'theorem', 'lemma', 'notation', 'proposition'];
+	
 	old.forEach(type => {
 		$(`div.${type}`).each((i, elem) => {
 			count++;
-			elem.tagName = `fieldset`;
-			elem.attribs.class = `box${newType(type)}`;
 			let container = $(elem);
+			let oldType = type;
 			
-			let title = container.find('.boxtitle')[0];
-			title.name = 'legend';
-			title.attribs.class = 'boxlegend';
+			let title = container.find('.boxtitle'); //if title exists
+			if (!title || !title.length) {
+				if (oldType === 'note1')
+					oldType = 'note2'
+			}
+			else {
+				title = title[0];
+				title.name = 'legend';
+				title.attribs.class = 'boxlegend';
+			}
 			
-			// console.log(container.html());
+			elem.tagName = `fieldset`;
+			elem.attribs.class = `box${newType(oldType)}`;
+			
 		});
 	});
 	result = $.html();
-	console.log(result);
+	// console.log(result);
 	await fs.writeFile('test.html', result);
 	
 	return [result, count];
@@ -547,6 +556,10 @@ async function convertContainers(input, content) {
 		switch (type) {
 			case 'skills':
 				return 'objectives';
+			case 'note1':
+			return 'notewithlegend';
+			case 'note2':
+				return 'notewithoutlegend';
 			default:
 				return type;
 		}
