@@ -191,6 +191,10 @@ function LibreTextsReuse() {
 			let {properties, tags, files} = response;
 			if (properties['@count'] !== '0' && properties.property) {
 				properties = properties.property.length ? properties.property : [properties.property]
+				properties = properties.map((prop) => {
+					if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+					else return prop
+				});
 			}
 			else {
 				properties = [];
@@ -203,6 +207,16 @@ function LibreTextsReuse() {
 			}
 			if (files.file) {
 				files = files.file.length ? files.file : [files.file];
+				files = files.map((file) => {
+					return {
+						'id': file['@id'],
+						'revision': file['@revision'],
+						'href': file['@href'],
+						'contents': file['contents'],
+						'created': file['date.created'],
+						'filename':file['filename']
+					}
+				});
 			}
 			else {
 				files = []

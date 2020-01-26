@@ -31,7 +31,11 @@ export default function OptionsPanel(props) {
 	}
 	
 	function saveJSON() {
-		let result = new Blob([JSON.stringify(props, null, 2)], {type: 'application/json;charset=utf-8'});
+		let temp = {...props};
+		delete temp.undoArray;
+		delete temp.redoArray;
+		
+		let result = new Blob([JSON.stringify(temp, null, 2)], {type: 'application/json;charset=utf-8'});
 		const textToSaveAsURL = window.URL.createObjectURL(result);
 		const fileNameToSaveAs = `${props.RemixTree.title || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.${props.mode.toLowerCase()}`;
 		

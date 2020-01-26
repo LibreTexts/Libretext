@@ -720,31 +720,17 @@ function PublishSubPanel(props) {
 							}
 							else if (page.copyMode === 'full') {
 								//Fancy file transfer VERY SLOW BUT EFFECTIVE
-								response = await LibreTexts.authenticatedFetch(source.path, 'files?dream.out.format=json', source.subdomain);
-								if (response.ok) {
-									let files = await response.json();
-									if (files['@count'] !== '0') {
-										if (files.file) {
-											if (!files.file.length) {
-												files = [files.file];
-											}
-											else {
-												files = files.file;
-											}
-										}
-									}
-									let promiseArray = [];
-									for (let i = 0; i < files.length; i++) {
-										let file = files[i];
-										if (file['@res-is-deleted'] === 'false')
-											promiseArray.push(processFile(file, source, page.path, file['@id']));
-									}
-									promiseArray = await Promise.all(promiseArray);
-									for (let i = 0; i < promiseArray.length; i++) {
-										if (promiseArray[i]) {
-											contents = contents.replace(promiseArray[i].original, promiseArray[i].final);
-											contents = contents.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
-										}
+								let files = source.files;
+								let promiseArray = [];
+								for (let i = 0; i < files.length; i++) {
+									let file = files[i];
+									promiseArray.push(processFile(file, source, page.path, file['id']));
+								}
+								promiseArray = await Promise.all(promiseArray);
+								for (let i = 0; i < promiseArray.length; i++) {
+									if (promiseArray[i]) {
+										contents = contents.replace(promiseArray[i].original, promiseArray[i].final);
+										contents = contents.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
 									}
 								}
 								
@@ -803,10 +789,6 @@ function PublishSubPanel(props) {
 					}
 					
 					//Handle properties
-					source.properties = source.properties.map((prop) => {
-						if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
-						else return prop
-					});
 					if (page.articleType === 'topic-guide')
 						source.properties = source.properties.concat([{
 							name: "mindtouch.idf#guideDisplay",
