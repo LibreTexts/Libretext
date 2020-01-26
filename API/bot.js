@@ -514,7 +514,7 @@ async function foreignImage(input, content, path) {
 }
 
 async function convertContainers(input, content) {
-	if (!content.includes('boxtitle'))
+	if (!content.includes('boxtitle') && !content.includes('note1'))
 		return [false, 0];
 	
 	const $ = cheerio.load(content);
@@ -557,7 +557,7 @@ async function convertContainers(input, content) {
 			case 'skills':
 				return 'objectives';
 			case 'note1':
-			return 'notewithlegend';
+				return 'notewithlegend';
 			case 'note2':
 				return 'notewithoutlegend';
 			default:
