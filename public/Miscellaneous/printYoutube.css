@@ -3,7 +3,7 @@
 	page-break-inside: avoid;
 }
 
-.youtubeImage {
+img.youtubeImage {
 	object-fit: cover;
 }
 
@@ -35,6 +35,19 @@
 	outline: 0
 }
 
+
+.thisqrcode {
+	padding: 2px;
+	background-color: white;
+	position:absolute; 
+	top: 0px;
+  }
+  
+div[id^=this_qrcode] {
+	display: none;
+}
+  
+
 @media print {
 	.youtubeIFrame {
 		display: none
@@ -58,4 +71,8 @@
 	.mt-video-widget .ytp-button {
 		display: block;
 	}
+
+	div[id^=this_qrcode]{
+		display: block;
+		}
 }
