@@ -4,7 +4,7 @@
 }
 
 img.youtubeImage {
-	object-fit: contain;
+	object-fit: cover;
 }
 
 .ytp-large-play-button {
@@ -35,16 +35,10 @@ img.youtubeImage {
 	outline: 0
 }
 
-#qrcode {
-	width:160px;
-	height:160px;
-	margin-top:15px;
-  }
 
 .thisqrcode {
-	padding: 20px; 
+	padding: 2px;
 	background-color: white;
-	z-index: 100000; 
 	position:absolute; 
 	top: 0px;
   }
