@@ -8,11 +8,13 @@
 			let media = document.getElementsByClassName("elm-social-share")[0];
 			media.parentElement.insertBefore(nav, media);
 		}
-		propagatorOption();
-		downloadOption();
-		remixerOption();
-		copyTranscludeOption();
-		copyContentOption();
+		if (!window.location.hostname.startsWith('query')) {
+			propagatorOption();
+			downloadOption();
+			remixerOption();
+			copyTranscludeOption();
+			copyContentOption();
+		}
 		// setInterval(editorContentReuseLink, 500);
 	}
 	
@@ -138,6 +140,7 @@
 			}
 		}
 	}
+	
 	function downloadOption() {
 		let targetName = "mt-new-page";
 		let copy = document.getElementsByClassName(targetName);
@@ -400,13 +403,12 @@
 			}
 			if (tags.includes("transcluded:yes")) {
 				//Next to title
-				if (!tags.includes("article:topic-category") && !tags.includes("article:topic-guide")) {
-					let icon = document.createElement("a");
-					icon.classList.add("mt-icon-flow-branch");
-					icon.classList.add("printHide");
-					icon.onclick = copyContent;
-					target.after(icon);
-				}
+				let icon = document.createElement("a");
+				icon.classList.add("mt-icon-flow-branch");
+				icon.classList.add("printHide");
+				icon.onclick = copyContent;
+				target.after(icon);
+				
 			}
 		}
 	}
@@ -446,7 +448,11 @@
 		let filename = file['filename'];
 		
 		if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
-			filename = `=${filename}`;
+			let hasThumbnail = await LibreTexts.authenticatedFetch(null, "files/=mindtouch.page%2523thumbnail");
+			if (hasThumbnail.ok)
+				return false;
+			else
+				filename = `=mindtouch.page%23thumbnail`;
 		}
 		let image = await authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
 		
@@ -471,7 +477,8 @@
 		if (window !== window.top && window.location.href.includes("contentOnly")) {
 			document.getElementsByClassName("elm-header")[0].style.display = "none";
 			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
-		}});
+		}
+	});
 })();
 
 

@@ -8,10 +8,23 @@ const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const async = require('async');
 const util = require('util');
-const deepMerge = require('deepmerge');
 const he = require('he');
 
-
+const libraries = {
+	'Biology': 'bio',
+	'Business': 'biz',
+	'Chemistry': 'chem',
+	'Engineering': 'eng',
+	'Espanol': 'espanol',
+	'Geology': 'geo',
+	'Humanities': 'human',
+	'Mathematics': 'math',
+	'Medicine': 'med',
+	'Physics': 'phys',
+	'Social Sciences': 'socialsci',
+	'Statistics': 'stats',
+	'Workforce': 'workforce'
+};
 let LibreTextsFunctions = {
 	authenticatedFetch: authenticatedFetch,
 	getSubpages: getSubpages,
@@ -22,8 +35,12 @@ let LibreTextsFunctions = {
 	authenticate: authenticate,
 	addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
+	parseURL: parseURL,
+	libraries: libraries,
 };
 
+
+//Function Zone
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
 	if (!isNaN(path)) {
@@ -37,14 +54,15 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		console.error(`Invalid subdomain ${subdomain}`);
 		return false;
 	}
+	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+		api = `/${api}`;
 	if (!username) {
-		options = deepMerge({
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest',
-				'x-deki-token': authenBrowser[subdomain]
-			}
+		options = optionsMerge({
+			'X-Requested-With': 'XMLHttpRequest',
+			'x-deki-token': authenBrowser[subdomain]
+			
 		}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	else {
 		const user = "=" + username;
@@ -55,8 +73,17 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		const hash = hmac.digest('hex');
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
-		options = deepMerge({headers: {'x-deki-token': token}}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`, options);
+		options = optionsMerge({'x-deki-token': token}, options);
+		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+	}
+	
+	function optionsMerge(headers, options) {
+		if (options.headers) {
+			options.headers = Object.assign(headers, options.headers)
+		}
+		else
+			options.headers = headers;
+		return options;
 	}
 }
 
@@ -243,22 +270,22 @@ function clarifySubdomain(url) {
 }
 
 function decodeHTML(content) {
-/*	let ret = content.replace(/&gt;/g, '>');
-	ret = ret.replace(/&lt;/g, '<');
-	ret = ret.replace(/&quot;/g, '"');
-	ret = ret.replace(/&apos;/g, "'");
-	ret = ret.replace(/&amp;/g, '&');*/
+	/*	let ret = content.replace(/&gt;/g, '>');
+		ret = ret.replace(/&lt;/g, '<');
+		ret = ret.replace(/&quot;/g, '"');
+		ret = ret.replace(/&apos;/g, "'");
+		ret = ret.replace(/&amp;/g, '&');*/
 	return he.decode(content);
 }
 
 function encodeHTML(content) {
-/*	let ret = content;
-	ret = ret.replace(/&/g, '&amp;');
-	ret = ret.replace(/>/g, '&gt;');
-	ret = ret.replace(/</g, '&lt;');
-	ret = ret.replace(/"/g, '&quot;');
-	ret = ret.replace(/'/g, "&apos;");*/
-	return he.encode(content,{'useNamedReferences': true});
+	/*	let ret = content;
+		ret = ret.replace(/&/g, '&amp;');
+		ret = ret.replace(/>/g, '&gt;');
+		ret = ret.replace(/</g, '&lt;');
+		ret = ret.replace(/"/g, '&quot;');
+		ret = ret.replace(/'/g, "&apos;");*/
+	return he.encode(content, {'useNamedReferences': true});
 }
 
 function authenticate(username, subdomain) {
@@ -286,6 +313,15 @@ function extractSubdomain(url) {
 	let origin = url.split("/")[2].split(".");
 	const subdomain = origin[0];
 	return subdomain;
+}
+
+function parseURL(url) {
+	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
+	}
+	else {
+		return [];
+	}
 }
 
 module.exports = LibreTextsFunctions;

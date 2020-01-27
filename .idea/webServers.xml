@@ -11,7 +11,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="bd8ae14e-20c9-4b98-b7d8-0d5951748072" name="Batch" url="http://batch.libretexts.org">
-        <fileTransfer host="batch.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
+        <fileTransfer host="batch.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
@@ -20,6 +20,14 @@
       </webServer>
       <webServer id="235867bc-e72f-44dc-acdd-1eb27c78cbcb" name="API" url="http://api.libretexts.org">
         <fileTransfer host="api.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/root" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="4d0ba47b-3ce7-49df-9533-4c62f2808c28" name="Test" url="http://test.libretexts.org">
+        <fileTransfer host="test.libretexts.org" port="22" privateKey="C:\Users\Henry\.ssh\id_rsa" rootFolder="/home/hagnew" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

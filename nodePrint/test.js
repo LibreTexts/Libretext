@@ -17,7 +17,7 @@ describe('basic response', function () {
 });
 
 describe('dynamic response', function () {
-	this.timeout(20000);
+	this.timeout(60000);
 	customTest(200, 'print/url=https://chem.libretexts.org/?no-cache');
 	customTest(200, 'print/url=https://chem.libretexts.org/');
 	customTest(403, 'print/url=https://chem.libretexts.org/NodePrintTest');

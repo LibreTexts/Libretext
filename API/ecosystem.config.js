@@ -18,7 +18,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "schedule.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
@@ -36,7 +35,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "timetrack.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
@@ -54,7 +52,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "propagator.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
@@ -72,7 +69,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "import.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
     },
@@ -89,7 +85,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "analytics.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
@@ -107,7 +102,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "endpoint.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
@@ -125,7 +119,6 @@ module.exports = {
       cwd	: '/root/api',
       watch	: "bot.js",
       ignore_watch : ["node_modules","public","Data","epubs"],
-      "exec_mode": "cluster_mode",
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
     },
