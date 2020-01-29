@@ -1,5 +1,23 @@
 const LibreTexts = LibreTextsReuse();
 
+//Plugins to the Editor are registered onto this object for later activation
+const LibreEditor = {
+	registerAll: (config) => {
+		if (LibreEditor.done)
+			console.log('Already registered plugins');
+		else {
+			for (const key in LibreEditor) {
+				if (LibreEditor.hasOwnProperty(key) && key !== 'registerAll') {
+					const element = LibreEditor[key];
+					if (typeof element === 'function')
+						element(config);
+				}
+			}
+			LibreEditor.done = true;
+		}
+	}
+};
+
 function LibreTextsReuse() {
 	const libraries = {
 		'Biology': 'bio',
@@ -16,11 +34,12 @@ function LibreTextsReuse() {
 		'Statistics': 'stats',
 		'Workforce': 'workforce'
 	};
-	
+
 	return {
 		authenticatedFetch: authenticatedFetch,
 		getSubpages: getSubpages,
 		getKeys: getKeys,
+		getCitationInformation: getCitationInformation,
 		// getSubpagesAlternate: getSubpagesAlternate,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
@@ -33,7 +52,7 @@ function LibreTextsReuse() {
 		getAPI: getAPI,
 		libraries: libraries,
 	};
-	
+
 	//Function Zone
 	async function authenticatedFetch(path, api = '', subdomain, options = {}) {
 		let isNumber;
@@ -63,9 +82,9 @@ function LibreTextsReuse() {
 		let token = keys[subdomain];
 		if (current === subdomain)
 			headers['X-Requested-With'] = 'XMLHttpRequest';
-		
+
 		headers['x-deki-token'] = token;
-		
+
 		options.headers = headers;
 		if (arbitraryPage)
 			return await fetch(path, options);
@@ -73,7 +92,7 @@ function LibreTextsReuse() {
 			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`,
 				options);
 	}
-	
+
 	async function getKeys() {
 		if (typeof getKeys.keys === 'undefined') {
 			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
@@ -81,17 +100,91 @@ function LibreTextsReuse() {
 		}
 		return getKeys.keys;
 	}
-	
+
+	async function getCitationInformation(url = window.location.href) {
+		const urlArray = url.replace("?action=edit", "").split("/");
+		let coverpage;
+		let result = {};
+		for (let i = urlArray.length; i > 3; i--) { //see if there is a coverpage above this page
+			let path = urlArray.slice(0, i).join("/");
+			let response = await getAPI(path);
+			if (i === urlArray.length) {
+				result = await parseTags(response);
+			}
+			if (response.tags.includes("coverpage:yes")) {
+				coverpage = response;
+				break;
+			}
+		}
+
+		if (coverpage) {
+			result.coverpage = await parseTags(coverpage);
+		}
+
+		async function parseTags(page) {
+			const citationInformation = { originalResponse: page };
+
+			for (let i = 0; i < page.tags.length; i++) {
+				let tag = page.tags[i];
+				if (tag)
+					tag = tag.replace(/\\\\/g, '\n');
+				else
+					continue;
+
+				let items;
+				if (tag.startsWith('lulu@')) {
+					items = tag.split('@');
+				}
+				else if (tag.startsWith('lulu|')) {
+					items = tag.split('|');
+				}
+				else if (tag.startsWith('lulu,')) {
+					items = tag.split(',');
+				}
+				if (items) {
+					if (items[1])
+						citationInformation.title = items[1];
+					if (items[2])
+						citationInformation.name = items[2];
+					if (items[3])
+						citationInformation.companyname = items[3];
+					if (items[4])
+						citationInformation.shortTitle = items[4];
+					break;
+				}
+				else if (tag.startsWith('authorname:')) { //get some information from authorbar
+					citationInformation.authorTag = tag.replace('authorname:', '');
+
+					if (!citationInformation.name) {
+						if (typeof getCitationInformation.libreAuthors === 'undefined') {
+							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${page.subdomain}`);
+							getCitationInformation.libreAuthors = await authors.json();
+						}
+
+						let information = getCitationInformation.libreAuthors[citationInformation.authorTag];
+						if (information) {
+							Object.assign(citationInformation, information);
+						}
+					}
+				}
+			}
+
+			return citationInformation;
+		}
+
+		return result;
+	}
+
 	async function getSubpages(rootURL, username) {
 		let origin = rootURL.split("/")[2].split(".");
 		const subdomain = origin[0];
-		
+
 		origin = rootURL.split("/").splice(0, 3).join('/');
 		let path = rootURL.split('/').splice(3).join('/');
-		
+
 		let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', username, subdomain);
 		pages = await pages.json();
-		
+
 		let info = await authenticatedFetch(path, 'info?dream.out.format=json', username, subdomain);
 		info = await info.json();
 		return {
@@ -99,13 +192,13 @@ function LibreTextsReuse() {
 			url: rootURL,
 			children: await subpageCallback(pages)
 		};
-		
-		
+
+
 		async function subpageCallback(info) {
 			const subpageArray = info["page.subpage"];
 			const result = [];
 			const promiseArray = [];
-			
+
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
 				let path = subpage.path["#text"];
@@ -124,12 +217,12 @@ function LibreTextsReuse() {
 					relativePath: url.replace(rootURL, '')
 				};
 			}
-			
+
 			if (subpageArray && subpageArray.length) {
 				for (let i = 0; i < subpageArray.length; i++) {
 					promiseArray[i] = subpage(subpageArray[i], i);
 				}
-				
+
 				await Promise.all(promiseArray);
 				return result;
 			}
@@ -138,7 +231,7 @@ function LibreTextsReuse() {
 			}
 		}
 	}
-	
+
 	function decodeHTML(content) {
 		let ret = content.replace(/&gt;/g, '>');
 		ret = ret.replace(/&lt;/g, '<');
@@ -147,7 +240,7 @@ function LibreTextsReuse() {
 		ret = ret.replace(/&amp;/g, '&');
 		return ret;
 	}
-	
+
 	function encodeHTML(content) {
 		let ret = content;
 		ret = ret.replace(/&/g, '&amp;');
@@ -157,13 +250,13 @@ function LibreTextsReuse() {
 		ret = ret.replace(/'/g, "&apos;");
 		return ret;
 	}
-	
+
 	function extractSubdomain(url = window.location.href) {
 		let origin = url.split("/")[2].split(".");
 		const subdomain = origin[0];
 		return subdomain;
 	}
-	
+
 	function parseURL(url = window.location.href) {
 		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 			return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
@@ -172,7 +265,7 @@ function LibreTextsReuse() {
 			return [];
 		}
 	}
-	
+
 	//fills in missing API data for a page
 	async function getAPI(page, getContents) {
 		if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
@@ -188,11 +281,11 @@ function LibreTextsReuse() {
 		// page.response = response;
 		if (response.ok) {
 			response = await response.json();
-			let {properties, tags, files} = response;
+			let { properties, tags, files } = response;
 			if (properties['@count'] !== '0' && properties.property) {
 				properties = properties.property.length ? properties.property : [properties.property]
 				properties = properties.map((prop) => {
-					if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+					if (prop['@revision']) return { name: prop['@name'], value: prop.contents['#text'] };
 					else return prop
 				});
 			}
@@ -214,7 +307,7 @@ function LibreTextsReuse() {
 						'href': file['@href'],
 						'contents': file['contents'],
 						'created': file['date.created'],
-						'filename':file['filename']
+						'filename': file['filename']
 					}
 				});
 			}
@@ -242,7 +335,7 @@ function LibreTextsReuse() {
 				else if (permissions.includes('READ'))
 					page.security = 'Viewer';
 			}
-			
+
 		}
 		else {
 			let error = await response.json();
@@ -254,13 +347,13 @@ function LibreTextsReuse() {
 		}
 		return page;
 	}
-	
+
 	async function getCurrent() {
 		let page = window.location.href;
 		let subdomain = extractSubdomain(page);
 		let path = page.replace(/^.*?libretexts.org\//, '');
 		LibreTexts.authenticatedFetch(path, 'contents?mode=edit', subdomain).then(async (data) => console.log(await data.text()))
 	}
-	
+
 }
 
