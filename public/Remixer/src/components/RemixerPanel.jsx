@@ -901,13 +901,12 @@ class RemixerPanel extends React.Component {
 					let index = node.title.match(/(?<=[0-9]+\.)([0-9]*?)([A-Za-z]+?)(?=:)/);
 					index = index[1] ? index[2] : '.' + index[2];
 					
-					node.data.articleType = 'topic';
-					node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
-					
 					let prefix = this.props.options.autonumber.pagePrefix + ' ' || '';
 					node.title = node.title.replace(/^[^:]*: /, '');
 					node.title = node.title.replace(':', '-');
+					node.data.padded = `${chapter}${index}: ${node.title}`;
 					node.title = `${prefix}${chapter}${index}: ${node.title}`;
+					node.data.articleType = 'topic';
 				}
 				else {
 					if (level < this.props.options.autonumber.guideDepth) { //Unit
