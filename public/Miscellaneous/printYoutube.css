@@ -37,15 +37,9 @@ img.youtubeImage {
 
 
 .thisqrcode {
-	padding: 2px;
-	background-color: white;
-	position:absolute; 
+	position:absolute;
 	top: 0px;
   }
-  
-div[id^=this_qrcode] {
-	display: none;
-}
   
 
 @media print {
@@ -71,8 +65,4 @@ div[id^=this_qrcode] {
 	.mt-video-widget .ytp-button {
 		display: block;
 	}
-
-	div[id^=this_qrcode]{
-		display: block;
-		}
 }

@@ -259,7 +259,7 @@ function LibreTextsReuse() {
 	
 	function parseURL(url = window.location.href) {
 		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
-			return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
+			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
 		else {
 			return [];
@@ -284,6 +284,10 @@ function LibreTextsReuse() {
 			let {properties, tags, files} = response;
 			if (properties['@count'] !== '0' && properties.property) {
 				properties = properties.property.length ? properties.property : [properties.property]
+				properties = properties.map((prop) => {
+					if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+					else return prop
+				});
 			}
 			else {
 				properties = [];
@@ -296,6 +300,16 @@ function LibreTextsReuse() {
 			}
 			if (files.file) {
 				files = files.file.length ? files.file : [files.file];
+				files = files.map((file) => {
+					return {
+						'id': file['@id'],
+						'revision': file['@revision'],
+						'href': file['@href'],
+						'contents': file['contents'],
+						'created': file['date.created'],
+						'filename': file['filename']
+					}
+				});
 			}
 			else {
 				files = []
@@ -312,6 +326,16 @@ function LibreTextsReuse() {
 			page.content = response.content;
 			if (response['page.parent'])
 				page.parentID = parseInt(response['page.parent']['@id']);
+			if (response.security && response.security['permissions.effective']) {
+				let permissions = response.security['permissions.effective'].operations['#text'];
+				if (permissions.includes('CHANGEPERMISSIONS'))
+					page.security = 'Editor';
+				else if (permissions.includes('UPDATE'))
+					page.security = 'Author';
+				else if (permissions.includes('READ'))
+					page.security = 'Viewer';
+			}
+			
 		}
 		else {
 			let error = await response.json();

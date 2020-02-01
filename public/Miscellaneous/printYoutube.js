@@ -1,7 +1,7 @@
 ﻿if (!window["youtubeIFrame"]) {
 	window["youtubeIframe"] = true;
 	
-	window.addEventListener("load", () => {
+	window.addEventListener("load", async () => {
 		
 		let candidates = $("iframe");
 		for (let i = 0; i < candidates.length; i++) {
@@ -17,10 +17,10 @@
 				}
 				
 				
-				let this_qrcode = document.createElement("div");
+				let this_qrcode = document.createElement("canvas");
 				this_qrcode.classList.add("thisqrcode");
 				this_qrcode.id = 'this_qrcode' + i;
-				console.log(this_qrcode.id);
+				// console.log(this_qrcode.id);
 				
 				
 				iframe.classList.add("youtubeIFrame");
@@ -39,13 +39,12 @@ extraDiv.innerHTML = '<button class="ytp-large-play-button ytp-button" aria-labe
 				youtubeImgContainer.appendChild(extraDiv);*/
 				
 				youtubeImgContainer.appendChild(this_qrcode);
-				const qrcode = new QRCode(document.getElementById(this_qrcode.id), {
+				let qrcode = await QRCode.toDataURL(this_qrcode, youtubeImgContainer.href, {
 					width: 100,
 					height: 100,
-					
+					margin: 2,
 				});
 				console.log(youtubeImgContainer.href);
-				qrcode.makeCode(youtubeImgContainer.href);
 				
 				iframe.src = iframe.src.replace('www.youtube.com', 'www.youtube-nocookie.com');
 			}
