@@ -50,16 +50,12 @@ if (!window["batchPrint.js"]) {
 			if (tags.includes('coverpage:yes')) {
 				
 				let subdomain = window.location.origin.split("/")[2].split(".")[0];
-				let one = subdomain === 'espanol' ? fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/home.json`)
-					: fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Courses.json`);
-				let two = fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/Bookshelves.json`);
-				one = await one;
-				two = await two;
-				one = one.ok ? await one.json() : [];
-				two = two.ok ? await two.json() : [];
+				let part = subdomain === 'espanol' ? 'home' : window.location.href.includes('/Courses') ? 'Courses' : 'Bookshelves';
+				
+				downloads = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
+				downloads = await downloads.json();
 				
 				let id = document.getElementById('pageIDHolder').innerText;
-				downloads = downloads.concat(one, two);
 				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
 				if (!isPro && downloadEntry.tags.includes('luluPro'))
 					downloadEntry = false;
@@ -71,9 +67,9 @@ if (!window["batchPrint.js"]) {
 					<a href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf?margin" target="_blank" title="Get a Lulu size PDF of this page" type="application/pdf">Lulu</a>
 				</div></div>`;
 			
-			if (batchAccess) {
+			if (batchAccess && !document.getElementById('tagsHolder').innerText.includes('"article:topic"')) {
 				// $('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
-				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Batch</span></button>';
+				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Compile</span></button>';
 			}
 			if (downloadEntry) {
 				if (bookstore)
@@ -89,7 +85,7 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Refresh Text</a>` : ''}
+					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
 					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
@@ -99,7 +95,7 @@ if (!window["batchPrint.js"]) {
 			}
 			
 			//Beeline
-			if(window.beelineEnabled) {
+			if (window.beelineEnabled) {
 				innerHTML += `<div class="LTdropdown beeline-toggles" style="float:left; background-color: #d4d4d4; color:black"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
 				innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
 title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
@@ -383,7 +379,9 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 				}
 				batchButton.innerText = "Redownload";
 				window.location = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`
+				window["batchComplete"] = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
+				setTimeout(()=>window.location.reload(), 5000);
+				
 			}
 		}
 		

@@ -41,7 +41,7 @@ puppeteer.launch({
 		const localServer = http.createServer(handler);
 		const staticFileServer = new nodeStatic.Server('./public');
 		let port = 3001;
-		keys = await fetch('https://keys.libretexts.org/authenBrowser.json', {headers: {origin: 'print.libretexts.org'}});
+		keys = await fetch('https://files.libretexts.org/authenBrowser.json', {headers: {origin: 'print.libretexts.org'}});
 		keys = await keys.json();
 		server.listen(port);
 		if (process.argv.length >= 3 && parseInt(process.argv[2])) {
