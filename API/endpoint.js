@@ -25,7 +25,7 @@ async function handler(request, response) {
 	if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
 		responseError('Unauthorized', 401);
 	}
-	else if (url.startsWith('/getKey') && false) { //moved to keys.libretexts.org
+	else if (url.startsWith('/getKey') && false) { //moved to files.libretexts.org
 		if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
 			response.writeHead(200, {
 				'Access-Control-Allow-Origin': request.headers.origin || null,

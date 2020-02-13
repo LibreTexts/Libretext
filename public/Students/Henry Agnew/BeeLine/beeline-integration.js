@@ -190,7 +190,11 @@ function activateBeeLine() {
 	if (navigator.webdriver && tags.includes('beeline:print')) {
 		doBeeline('bright', "enabled via tag");
 	}
-	else if (typeof (Cookies.get("beeline")) != "undefined") {
+	else if (window.beelineEnabled === false){
+		Cookies.set("beeline", "off", {domain: 'libretexts.org'});
+		console.log('Beeline has been permanently disabled');
+	}
+	else if (typeof (Cookies.get("beeline")) != "undefined" && window.beelineEnabled) {
 		doBeeline(Cookies.get("beeline"), "enabled via cookie");
 	}
 }

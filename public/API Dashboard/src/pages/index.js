@@ -5,6 +5,7 @@ import DeadLinks from "../components/DeadLinks";
 import HeaderFix from "../components/HeaderFix";
 import ForeignImage from "../components/ForeignImage";
 import ReactDOM from 'react-dom';
+import ConvertContainers from "../components/ConvertContainers";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -31,6 +32,7 @@ class Dashboard extends React.Component {
 					<option value={'DeadLinks'}>Dead link killer</option>
 					<option value={'HeaderFix'}>Header Fixer</option>
 					<option value={'ForeignImage'}>Foreign Image Importer</option>
+					<option value={'ConvertContainers'}>Upgrade Containers</option>
 				</select>
 				<div>
 					<label style={{display: 'flex', alignItems: 'center'}}>
@@ -71,6 +73,8 @@ class Dashboard extends React.Component {
 				return <HeaderFix devMode={this.state.devMode}/>;
 			case "ForeignImage":
 				return <ForeignImage devMode={this.state.devMode}/>;
+			case "ConvertContainers":
+				return <ConvertContainers devMode={this.state.devMode}/>;
 		}
 	}
 	

@@ -8,7 +8,7 @@ async function TOC() {
 	if (!navigator.webdriver || !window.matchMedia('print').matches) {
 		for (let i = urlArray.length; i > 3; i--) {
 			let path = urlArray.slice(3, i).join("/");
-			let response = await authenticatedFetch(path, 'tags?dream.out.format=json');
+			let response = await LibreTexts.authenticatedFetch(path, 'tags?dream.out.format=json');
 			let tags = await response.json();
 			if (tags.tag) {
 				if (tags.tag.length) {
@@ -17,7 +17,7 @@ async function TOC() {
 				else {
 					tags = tags.tag["@value"];
 				}
-				if ((tags.includes("coverpage:yes") || tags.includes("coverpage:toc"))) {
+				if (tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) {
 					coverpage = path;
 					break;
 				}
@@ -33,10 +33,10 @@ async function TOC() {
 		const origin = window.location.origin;
 		path = path.replace(origin + "/", "");
 		//get coverpage title & subpages;
-		let info = authenticatedFetch(path, 'info?dream.out.format=json');
+		let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
 		
 		
-		let response = await authenticatedFetch(path, 'subpages?dream.out.format=json');
+		let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
 		response = await response.json();
 		info = await info;
 		info = await info.json();
@@ -65,7 +65,7 @@ async function TOC() {
 				let defaultOpen = window.location.href.includes(url) && !currentPage;
 				let children = hasChildren ? undefined : [];
 				if (hasChildren && (full || defaultOpen)) { //recurse down
-					children = await authenticatedFetch(path, 'subpages?dream.out.format=json');
+					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
 					children = await children.json();
 					children = await
 						subpageCallback(children, false);
@@ -112,27 +112,5 @@ async function TOC() {
 				})
 			}
 		}
-	}
-	
-	async function authenticatedFetch(path, api, subdomain) {
-		let isNumber;
-		if (!isNaN(path)) {
-			path = parseInt(path);
-			isNumber = true;
-		}
-		if (typeof authenticatedFetch.keys === 'undefined') {
-			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
-			authenticatedFetch.keys = await keys.json();
-		}
-		let current = window.location.origin.split('/')[2].split('.')[0];
-		let headers = {};
-		subdomain = subdomain || current;
-		let token = authenticatedFetch.keys[subdomain];
-		headers['x-deki-token'] = token;
-		if (current === subdomain)
-			headers['X-Requested-With'] = 'XMLHttpRequest';
-		
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-			{headers: headers});
 	}
 }

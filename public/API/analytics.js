@@ -129,11 +129,11 @@ if (!window["analytics.js"]) {
 		
 		function getGroup() {
 			let groups = document.getElementById('groupHolder').innerText;
-			let classArray = ['Chem2BH', 'KU110'];
+			let classArray = ['Chem2BH-W20', 'KU110'];
 			let result = [];
-			if (window.location.href.includes('Facciotti') && document.getElementsByClassName('nb_sidebar').length) {
+/*			if (window.location.href.includes('Facciotti') && document.getElementsByClassName('nb_sidebar').length) {
 				result.push('Bis2AFacciotti');
-			}
+			}*/
 			
 			for (let i = 0; i < classArray.length; i++) {
 				if (groups.includes(classArray[i])) {
