@@ -1,5 +1,4 @@
 (function () {
-	let currentToken;
 	
 	function fn() {
 		let nav = document.getElementsByClassName("elm-article-pagination");
@@ -355,17 +354,16 @@
 						success = true;
 					}
 					if (success) {
-						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
+						await LibreTexts.authenticatedFetch(pageID, `contents?edittime=now`, subdomain, {
 							method: "POST",
 							body: result,
-							headers: {'x-deki-token': currentToken}
 						});
 						
 						let tags = await getTags(pageID, sourceTags);
-						await fetch(`/@api/deki/pages/${pageID}/tags`, {
+						await LibreTexts.authenticatedFetch(pageID, `tags`, subdomain, {
 							method: "PUT",
 							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': currentToken}
+							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						});
 						location.reload();
 					}
@@ -427,10 +425,9 @@
 		let image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
 		
 		image = await image.blob();
-		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+		let response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, child.data.subdomain, {
 			method: "PUT",
 			body: image,
-			headers: {'x-deki-token': currentToken}
 		});
 		response = await response.json();
 		let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
