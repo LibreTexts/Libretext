@@ -266,6 +266,11 @@ function LibreTextsReuse() {
 		}
 	}
 	
+	//interacts with api.libretexts.org
+	async function sendAPI() {
+		await fetch(`https://api.libretexts.org`, {})
+	}
+	
 	//fills in missing API data for a page
 	async function getAPI(page, getContents) {
 		if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))

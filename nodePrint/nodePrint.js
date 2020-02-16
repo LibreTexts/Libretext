@@ -767,11 +767,11 @@ puppeteer.launch({
 			let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes') && imageExists.ok ? `<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>` : ''}${summary || ''}</div></div>${await getLevel(current)}`;
 			if (tags.includes('coverpage:yes')) {
 				let uploadContent = content.replace(/style="column-count: 2"/g, '');
-				let res = await authenticatedFetch(`${path}/00:_Front_Matter/10: Table of Contents`, `move?title=Table of Contents&to=${path}/00:_Front_Matter/03:_Table_of_Contents&dream.out.format=json`, subdomain, 'PrintBot', {
+				let res = await authenticatedFetch(`${path}/00:_Front_Matter/10: Table of Contents`, `move?title=Table of Contents&to=${path}/00:_Front_Matter/03:_Table_of_Contents&dream.out.format=json`, subdomain, null, {
 					method: "POST" //migration for old Matter. Remove by June 2020
 				});
 				console.log(await res.json());
-				await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'PrintBot', {
+				await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, null, {
 					method: 'POST',
 					body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
 				});
@@ -1482,11 +1482,11 @@ puppeteer.launch({
 				let miniIndex = 1;
 				let title = text;
 				text = `${(text === 'Front' ? '00' : 'zz')}:_${text}`;
-				let res = await authenticatedFetch(`${path}/${title}_Matter`, `move?title=${encodeURIComponent(title + ' Matter')}&to=${path}/${text} Matter&allow=deleteredirects&dream.out.format=json`, current.subdomain, 'PrintBot', {
+				let res = await authenticatedFetch(`${path}/${title}_Matter`, `move?title=${encodeURIComponent(title + ' Matter')}&to=${path}/${text} Matter&allow=deleteredirects&dream.out.format=json`, current.subdomain, null, {
 					method: "POST" //migration for old Matter. Remove by June 2020
 				});
 				// console.log(await res.json());
-				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&abort=exists&dream.out.format=json`, current.subdomain, 'PrintBot', {
+				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&abort=exists&dream.out.format=json`, current.subdomain, null, {
 					method: "POST",
 					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
 				});
@@ -1496,10 +1496,10 @@ puppeteer.launch({
 					putProperty('mindtouch.page#welcomeHidden', true),
 					putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
 				
-				/*let userID = await authenticatedFetch('', `@api/deki/users/=PrintBot?dream.out.format=json`, current.subdomain, 'PrintBot');
+				/*let userID = await authenticatedFetch('', `@api/deki/users/=PrintBot?dream.out.format=json`, current.subdomain, null);
 				userID = (await userID.json())['@id'];
 				
-				await authenticatedFetch(`${path}/${text}_Matter`, 'security?dream.out.format=json', current.subdomain, 'PrintBot', {
+				await authenticatedFetch(`${path}/${text}_Matter`, 'security?dream.out.format=json', current.subdomain, null, {
 					method: "POST", headers: {'Content-Type': 'text/xml; charset=utf-8'},
 					body: `<security><permissions.page><restriction>Semi-Private</restriction></permissions.page><grants.added><grant><permissions><role>Manager</role></permissions><user id="${userID}"></user></grant></grants.added></security>`
 				});*/
@@ -1538,7 +1538,7 @@ puppeteer.launch({
 				return response;
 				
 				async function putProperty(property, value) {
-					return await authenticatedFetch(`${path}/${text}_Matter`, 'properties?dream.out.format=json', current.subdomain, 'PrintBot', {
+					return await authenticatedFetch(`${path}/${text}_Matter`, 'properties?dream.out.format=json', current.subdomain, null, {
 						method: "POST",
 						body: value,
 						headers: {"Slug": property}
@@ -1552,7 +1552,7 @@ puppeteer.launch({
 						
 						//Create TitlePage
 						let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2};
-						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'PrintBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, null, {
 							method: "POST",
 							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative; align-items: center">
 <div style=" display:flex; flex:1; flex-direction: column; justify-content: center">
@@ -1565,7 +1565,7 @@ puppeteer.launch({
 						});
 						
 						//Create InfoPage
-						await authenticatedFetch(`${path}/${text}_Matter/02:_InfoPage`, 'contents?abort=exists&title=InfoPage&dream.out.format=json', current.subdomain, 'PrintBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/02:_InfoPage`, 'contents?abort=exists&title=InfoPage&dream.out.format=json', current.subdomain, null, {
 							method: "POST",
 							body: "<p class=\"mt-script-comment\">Cross Library Transclusion</p><pre class=\"script\">template('CrossTransclude/Web',{'Library':'chem','PageID':170365});</pre>" +
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header-title</a></p>"
@@ -1590,7 +1590,7 @@ puppeteer.launch({
 					}
 					image = await fetch(image);
 					image = await image.blob();
-					authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", current.subdomain, 'PrintBot', {
+					authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", current.subdomain, null, {
 						method: "PUT",
 						body: image,
 					}).then();
@@ -1882,7 +1882,7 @@ puppeteer.launch({
 	}
 );
 
-async function authenticatedFetch(path, api, subdomain, username, options = {}) {
+async function authenticatedFetch(path, api, subdomain, username = 'LibreBot', options = {}) {
 	let isNumber;
 	let url;
 	if (!path)
