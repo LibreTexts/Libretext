@@ -137,7 +137,8 @@ export default function Importer(props) {
 								{({index, style}) => {
 									let page = results[index];
 									return <div style={style}
-									            key={results.length - index - 1}>{results.length - index - 1} Created {page.type}&nbsp;
+									            // key={results.length - index}>{results.length - index} Created {page.type}&nbsp;
+									            key={results.length - index}>{results.length - index} Created {page.type}&nbsp;
 										<a target='_blank' href={page.url}>{page.title}</a></div>
 								}}
 							</List>
@@ -154,7 +155,7 @@ export default function Importer(props) {
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Upload In Progress
-						({counter}% Received)
+						({counter} Received)
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
