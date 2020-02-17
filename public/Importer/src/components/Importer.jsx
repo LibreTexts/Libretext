@@ -308,6 +308,8 @@ export default function Importer(props) {
 				return [".imscc", ".zip"];
 			case 'libremap':
 				return [".xlsx"];
+			case "pretext":
+				return [".zip"];
 			default:
 				return [];
 		}
