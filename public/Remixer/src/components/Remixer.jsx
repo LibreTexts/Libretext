@@ -10,11 +10,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import {createMuiTheme} from '@material-ui/core/styles';
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import {blue} from "@material-ui/core/colors";
+import {blue, grey} from "@material-ui/core/colors";
+import {Switch} from "@material-ui/core";
 
 
 export default class Remixer extends React.Component {
@@ -148,17 +147,21 @@ export default class Remixer extends React.Component {
 			palette: {
 				type: dark ? 'dark' : 'light',
 				primary: blue,
-				secondary: {main: '#008000'}
+				secondary: {main: '#008000'},
+				default: grey,
 			},
 		});
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
-				<Select onChange={(e) => this.setState({swapDialog: e.target.value})} value={this.state.mode}>
-					<MenuItem value={'Remix'}>New Remix</MenuItem>
-					{this.allowedReRemixer() ?
-						<MenuItem value={'ReRemix'}>Edit Remix</MenuItem> : null}
-				</Select>
+				<div>New Remix
+				{this.allowedReRemixer() ?
+					<>
+						<Switch onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
+						        checked={this.state.mode === 'ReRemix'} color="default"/>
+						
+						Edit Remix</> : null}
+				</div>
 				<span>{this.state.lastSave}</span>
 			</div>
 			
