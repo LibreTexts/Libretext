@@ -1,14 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
 const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
 const fs = require('fs-extra');
 const md5 = require('md5');
 const LibreTexts = require('./reuse.js');
-let port = 3005;
+let port = 3007;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
 }
@@ -18,39 +17,131 @@ const prefix = '/elevate';
 const botUsername = 'LibreBot';
 //Creates a user sandbox and limits permissions to just that user
 app.put(`${prefix}/createSandbox`, createSandbox);
+app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
-createSandbox({body:{username: 'hdagnew@ucdavis.edu', id: 10332, subdomain: 'chem'}});
 
 async function createSandbox(req, res) {
 	const body = req.body;
-	let path = `Courses/Remixer_University/Username: ${body.username}`;
-	let response /*= await LibreTexts.authenticatedFetch(path, 'contents', body.subdomain, botUsername, {
+	console.log(body);
+	let path = `Sandboxes/${body.username}`;
+	let result = '';
+	let response = await LibreTexts.authenticatedFetch(path, 'contents', body.subdomain, botUsername, {
 		method: 'POST',
-		body: '<p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
+		body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
 	});
-	console.log(await response.text())*/;
-	let result =
-	response = await LibreTexts.authenticatedFetch(path, 'security?dream.out.format=json', body.subdomain, botUsername, {
-		method: 'PUT',
-		headers: {'content-type':'application/xml; charset=utf-8'},
-		body: `<security>
-    <permissions.page>
-        <restriction>Semi-Private</restriction>
-    </permissions.page>
-    <grants>
-        <grant><group id="2"></group><permissions><role>Manager</role></permissions></grant>
-        <grant>
-            <user id="${body.id}"></user>
-            <permissions>
-                <role>Manager</role>
-            </permissions>
-        </grant>
-    </grants>
-</security>`
-	});
+	if (!response.ok) {
+		result += 'Sandbox Already Exists.';
+		res.status(200);
+	}
+	else {
+		result += 'Sandbox Created.';
+		
+		//
+		const groups = await getGroups(body.subdomain);
+		const developerGroup = groups.find((e) => e.name === 'Developer');
+		
+		response = await LibreTexts.authenticatedFetch(path, 'security?dream.out.format=json', body.subdomain, botUsername, {
+			method: 'PUT',
+			headers: {'content-type': 'application/xml; charset=utf-8'},
+			body: `<security>
+	    <permissions.page>
+	        <restriction>Semi-Private</restriction>
+	    </permissions.page>
+	    <grants>
+	        <grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>
+	        <grant>
+	            <user id="${body.id}"></user>
+	            <permissions>
+	                <role>Manager</role>
+	            </permissions>
+	        </grant>
+	    </grants>
+	</security>`
+		});
+		
+		if (response.ok) {
+			result += '\nSandbox Set to Private.';
+			res.status(200);
+		}
+		else {
+			result += `\nError: ${await response.text()}`;
+			res.status(500);
+		}
+		
+	}
 	
-	console.log(await response.text());
 	
-	//url = LibreTexts.clarifySubdomain(url);
+	//console.log(result)
+	res.send(result);
 }
 
+async function getGroups(subdomain) {
+	let groups;
+	if (typeof getGroups.groups !== "undefined") { //reuse old data
+		return getGroups.groups;
+	}
+	
+	groups = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/groups?dream.out.format=json`, null, null, 'LibreBot');
+	
+	groups = await groups.json();
+	
+	if (groups['@count'] !== '0' && groups.group) {
+		groups = groups.group.length ? groups.group : [groups.group];
+		groups = groups.map((prop) => {
+			return {name: prop['groupname'], id: prop['@id'], role: prop['permissions.group'].role['#text']};
+		});
+	}
+	else {
+		groups = [];
+	}
+	getGroups.groups = groups;
+	return groups;
+}
+
+async function createSandboxes() {
+	const alternateBotUsername = 'Replace with something';
+	
+	const libraries = Object.values(LibreTexts.libraries);
+	for (let i = 0; i < libraries.length; i++) {
+		let subdomain = libraries[i];
+		let path = `Sandboxes`;
+		let result = '';
+		let response = await LibreTexts.authenticatedFetch(path, 'contents', subdomain, alternateBotUsername, {
+			method: 'POST',
+			body: '<h2>This page contains your personal sandbox.</h2><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
+		});
+		// console.log(await response.text());
+		
+		let userID = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=LibreBot?dream.out.format=json`, null, null, 'LibreBot');
+		userID = (await userID.json())['@id'];
+		
+		
+		result += `${subdomain} Sandbox Created.`;
+		
+		response = await LibreTexts.authenticatedFetch(path, 'security?dream.out.format=json', subdomain, alternateBotUsername, {
+			method: 'PUT',
+			headers: {'content-type': 'application/xml; charset=utf-8'},
+			body: `<security>
+	    <permissions.page>
+	        <restriction>Semi-Private</restriction>
+	    </permissions.page>
+	    <grants>
+	        <grant>
+	            <user id="${userID}"></user>
+	            <permissions>
+	                <role>Manager</role>
+	            </permissions>
+	        </grant>
+	    </grants>
+	</security>`
+		});
+		if (response.ok) {
+			result += '\nSandbox Set to Semi-Private.';
+		}
+		else {
+			result += `\nError: ${await response.text()}`;
+		}
+		console.log(result);
+	}
+	
+}

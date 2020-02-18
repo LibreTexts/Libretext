@@ -43,16 +43,23 @@ let LibreTextsFunctions = {
 //Function Zone
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
-	if (!isNaN(path)) {
-		path = parseInt(path);
-		isNumber = true;
+	
+	let arbitraryPage = !api && !subdomain && path.startsWith('https://');
+	if (arbitraryPage) {
+		[subdomain] = parseURL(path);
 	}
-	if (path === 'home') {
-		isNumber = true;
-	}
-	if (!subdomain) {
-		console.error(`Invalid subdomain ${subdomain}`);
-		return false;
+	else {
+		if (!isNaN(path)) {
+			path = parseInt(path);
+			isNumber = true;
+		}
+		if (path === 'home') {
+			isNumber = true;
+		}
+		if (!subdomain) {
+			console.error(`Invalid subdomain ${subdomain}`);
+			return false;
+		}
 	}
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
@@ -62,7 +69,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			'x-deki-token': authenBrowser[subdomain]
 			
 		}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	else {
 		const user = "=" + username;
@@ -74,6 +84,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
 		options = optionsMerge({'x-deki-token': token}, options);
+		
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
 		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	

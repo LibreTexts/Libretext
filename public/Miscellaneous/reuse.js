@@ -49,6 +49,7 @@ function LibreTextsReuse() {
 		extractSubdomain: extractSubdomain,
 		parseURL: parseURL,
 		getCurrent: getCurrent,
+		sendAPI: sendAPI,
 		getAPI: getAPI,
 		libraries: libraries,
 	};
@@ -95,7 +96,7 @@ function LibreTextsReuse() {
 	
 	async function getKeys() {
 		if (typeof getKeys.keys === 'undefined') {
-			let keys = await fetch('https://files.libretexts.org/authenBrowser.json');
+			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
 			getKeys.keys = await keys.json();
 		}
 		return getKeys.keys;
@@ -266,9 +267,14 @@ function LibreTextsReuse() {
 		}
 	}
 	
-	//interacts with api.libretexts.org
-	async function sendAPI() {
-		await fetch(`https://api.libretexts.org`, {})
+	async function sendAPI(api, payload) {
+		//will require authentication for api/v2
+		
+		await fetch(`https://api.libretexts.org/elevate/${api}`, {
+			method: 'PUT',
+			body: JSON.stringify(payload),
+			headers: {'Content-Type': 'application/json'}
+		})
 	}
 	
 	//fills in missing API data for a page

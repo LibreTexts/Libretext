@@ -11,8 +11,9 @@
 			propagatorOption();
 			downloadOption();
 			remixerOption();
-			copyTranscludeOption();
-			copyContentOption();
+			//copyTranscludeOption();
+			copyContentOption(); //Forker
+			sandboxOption();
 		}
 		// setInterval(editorContentReuseLink, 500);
 	}
@@ -408,6 +409,32 @@
 				target.after(icon);
 				
 			}
+		}
+	}
+	
+	function sandboxOption() {
+		let original = document.getElementsByClassName("mt-user-menu-my-contributions");
+		if (original.length) {
+			original = original[0];
+			let copy = original.cloneNode(true);
+			let copyTarget = copy.getElementsByTagName("a")[0];
+			copyTarget.removeAttribute('href');
+			copyTarget.onclick = goToSandbox;
+			copyTarget.innerText = "Your Sandbox";
+			copyTarget.classList.add("mt-icon-select-all");
+			copyTarget.classList.remove("mt-icon-my-contributions");
+			copyTarget.title = "Go to your personal Sandbox";
+			original.parentNode.insertBefore(copy, original);
+		}
+		async function goToSandbox(){
+			let username = document.getElementById('usernameHolder').innerText;
+			let id = document.getElementById('userIDHolder').innerText;
+			let [subdomain] = LibreTexts.parseURL();
+			
+			await LibreTexts.sendAPI('createSandbox',{username:username, id:id, subdomain:subdomain});
+			
+			document.location.replace(`/Sandboxes/${username}`);
+			
 		}
 	}
 	

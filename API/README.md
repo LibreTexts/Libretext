@@ -10,6 +10,7 @@ api.libretexts.org
 | Analytics   | 3004 | Receives Analytics events from custom analytics.js |
 | Endpoint    | 3005 | Provides miscellaneous API services |
 | Bot         | 3006 | Background library traversal services |
+| Elevate     | 3007 | Greatly limits permissions of basic users. |
 
 
 Schedule
