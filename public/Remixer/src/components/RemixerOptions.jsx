@@ -17,15 +17,23 @@ export default function RemixerOptions(props) {
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		const result = [];
 		
-		const isDemonstration = RemixerFunctions.userPermissions() === 'Workshop';
-		if (isDemonstration) {
-			result.push({
-				url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
-				title: 'Remixer University'
-			});
-			setInstitutions(result);
-			props.updateRemixer({institution: `https://${subdomain}.libretexts.org/Courses/Remixer_University`});
-			return result;
+		switch (RemixerFunctions.userPermissions()) {
+			case 'Basic':
+				result.push({
+					url: `https://${subdomain}.libretexts.org/Sandboxes`,
+					title: 'Your Personal Sandbox'
+				});
+				setInstitutions(result);
+				props.updateRemixer({institution: result[0].url});
+				return result;
+			case 'Workshop':
+				result.push({
+					url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
+					title: 'Remixer University'
+				});
+				setInstitutions(result);
+				props.updateRemixer({institution: result[0].url});
+				return result;
 		}
 		
 		let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);

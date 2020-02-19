@@ -37,7 +37,12 @@ class ReRemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		let content = await RemixerFunctions.getSubpages('home', this.state.subdomain, {
+		let path = 'home';
+		if (this.props.permission !== 'Admin') {
+			path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
+		}
+		
+		let content = await RemixerFunctions.getSubpages(path, this.state.subdomain, {
 			linkTitle: true,
 			includeMatter: true
 		});

@@ -44,6 +44,7 @@ export default class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 		};
+		LibreTexts.sendAPI('createSandbox', document.getElementById('usernameHolder').innerText).then();
 		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
 			state = {
@@ -138,7 +139,7 @@ export default class Remixer extends React.Component {
 			}
 		}
 		this.setState(result);
-	}
+	};
 	
 	render() {
 		// console.log(this.state, 'Rerender');
@@ -155,12 +156,13 @@ export default class Remixer extends React.Component {
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
 				<div>New Remix
-				{this.allowedReRemixer() ?
-					<>
-						<Switch onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
-						        checked={this.state.mode === 'ReRemix'} color="default"/>
-						
-						Edit Remix</> : null}
+					{this.allowedReRemixer() ?
+						<>
+							<Switch
+								onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
+								checked={this.state.mode === 'ReRemix'} color="default"/>
+							
+							Edit Remix</> : null}
 				</div>
 				<span>{this.state.lastSave}</span>
 			</div>

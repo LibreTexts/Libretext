@@ -354,7 +354,7 @@ class RemixerPanel extends React.Component {
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({name: this.props.RemixTree.title, stage: 'Publishing'})
-				        }}>Publish
+				        }}>{this.props.permission === 'Basic'?'Save to Sandbox':'Publish'}
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer' data-beeline-skip>
