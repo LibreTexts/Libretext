@@ -50,7 +50,7 @@ export default function RemixerOptions(props) {
 	}
 	
 	let title = props.RemixTree.title;
-	title = title && title !== "New LibreText. Drag onto me to get started" ? title : '';
+	title = title && title !== "New Remix. Drag onto me to get started" ? title : '';
 	
 	return <div style={{display: 'flex', margin: 10, alignItems: 'center', color: 'black'}}>
 			<div style={{
@@ -59,7 +59,7 @@ export default function RemixerOptions(props) {
 				marginRight: 10,
 				flex: 1
 			}}><TextField
-				label="LibreText name"
+				label="Remix name"
 				margin="normal"
 				variant="outlined"
 				value={title}

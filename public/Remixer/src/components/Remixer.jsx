@@ -44,7 +44,12 @@ export default class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 		};
-		LibreTexts.sendAPI('createSandbox', document.getElementById('usernameHolder').innerText).then();
+		const [current] = LibreTexts.parseURL();
+		LibreTexts.sendAPI('createSandbox', {
+			username: document.getElementById('usernameHolder').innerText,
+			id: document.getElementById('userIDHolder').innerText,
+			subdomain: current,
+		}).then();
 		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
 			state = {
@@ -67,7 +72,14 @@ export default class Remixer extends React.Component {
 	}
 	
 	allowedReRemixer(permission = this.state.permission) {
-		return permission === 'Admin' || permission === 'Pro';
+		switch (permission) {
+			case "Admin":
+			case "Pro":
+			case "Basic":
+				return true;
+			default:
+				return false;
+		}
 	}
 	
 	updateRemixer = (newState, updateUndo) => {
@@ -154,7 +166,7 @@ export default class Remixer extends React.Component {
 		});
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-			<div className="navigationBar" style={{justifyContent: 'space-between'}}>
+			<div className="navigationBar" style={{justifyContent: 'center'}}>
 				<div>New Remix
 					{this.allowedReRemixer() ?
 						<>

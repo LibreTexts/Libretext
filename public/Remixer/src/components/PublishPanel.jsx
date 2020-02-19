@@ -240,7 +240,7 @@ export default function PublishPanel(props) {
 						<ArrowBack/>Revise
 					</Button>
 					<Button color='secondary' onClick={() => setPublishing(Math.random())}>
-						Publish<Publish/>
+						{props.permission === 'Basic' ? 'Save to Sandbox' : 'Publish'}<Publish/>
 					</Button>
 				</ButtonGroup>
 			</Paper>
@@ -460,6 +460,9 @@ function PublishSubPanel(props) {
 					method: 'POST',
 					body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
 				});
+			}
+			else if (destRoot.endsWith('Sandboxes')) {
+				destRoot += `/${document.getElementById('usernameHolder').innerText}`;
 			}
 			destRoot = `${destRoot}/${props.RemixTree.title.replace(/ /g, '_')}`;
 		}

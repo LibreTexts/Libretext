@@ -39,7 +39,7 @@ function generateDefault(chapters, pages) {
 	}
 	
 	return {
-		title: "New LibreText. Drag onto me to get started",
+		title: "New Remix. Drag onto me to get started",
 		key: "ROOT",
 		url: "",
 		data: {
