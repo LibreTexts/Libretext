@@ -418,7 +418,7 @@
 			original = original[0];
 			let copy = original.cloneNode(true);
 			let copyTarget = copy.getElementsByTagName("a")[0];
-			copyTarget.removeAttribute('href');
+			copyTarget.href = '#';
 			copyTarget.onclick = goToSandbox;
 			copyTarget.innerText = "Your Sandbox";
 			copyTarget.classList.add("mt-icon-select-all");

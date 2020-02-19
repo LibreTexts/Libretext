@@ -48,7 +48,7 @@ async function createSandbox(req, res) {
 	        <restriction>Semi-Private</restriction>
 	    </permissions.page>
 	    <grants>
-	        <grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>
+	        ${developerGroup? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>`:''}
 	        <grant>
 	            <user id="${body.id}"></user>
 	            <permissions>
