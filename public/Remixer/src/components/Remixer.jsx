@@ -45,11 +45,11 @@ export default class Remixer extends React.Component {
 			currentlyActive: '',
 		};
 		const [current] = LibreTexts.parseURL();
-		LibreTexts.sendAPI('createSandbox', {
+		/*LibreTexts.sendAPI('createSandbox', {
 			username: document.getElementById('usernameHolder').innerText,
 			id: document.getElementById('userIDHolder').innerText,
 			subdomain: current,
-		}).then();
+		}).then();*/
 		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
 			state = {
