@@ -39,7 +39,7 @@ function generateDefault(chapters, pages) {
 	}
 	
 	return {
-		title: "New Remix. Drag onto me to get started",
+		title: "New Untitled Remix",
 		key: "ROOT",
 		url: "",
 		data: {

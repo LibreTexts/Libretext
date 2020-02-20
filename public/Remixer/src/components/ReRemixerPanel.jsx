@@ -38,9 +38,9 @@ class ReRemixerPanel extends React.Component {
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
 		let path = 'home';
-		if (this.props.permission !== 'Admin') {
+		if (this.props.permission === 'Basic')
 			path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
-		}
+		
 		
 		let content = await RemixerFunctions.getSubpages(path, this.state.subdomain, {
 			linkTitle: true,
@@ -51,6 +51,26 @@ class ReRemixerPanel extends React.Component {
 		if (this.props.permission !== 'Admin') {
 			content = content.filter((page) => !page.path.startsWith('Bookshelves'));
 		}
+		
+		// customized Snackbar
+		const action = key => (
+			<>
+				<Button onClick={() => { this.props.closeSnackbar(key) }}>
+					Dismiss
+				</Button>
+			</>
+		);
+		
+		if (!content.length && this.props.permission === 'Basic')
+			this.props.enqueueSnackbar('It looks like your Sandbox is empty! Try making a Remix using New Remix first.', {
+				variant: 'error',
+				autoHideDuration: 60000,
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+				action
+			});
 		
 		this.setState({LibraryTree: content});
 		LeftAlert.slideUp();

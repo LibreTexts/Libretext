@@ -167,7 +167,7 @@ export default class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'center'}}>
-				<div>New Remix
+				<div style={{fontSize:'130%'}}>New Remix
 					{this.allowedReRemixer() ?
 						<>
 							<Switch

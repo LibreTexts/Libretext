@@ -430,7 +430,7 @@ function PublishSubPanel(props) {
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Institution%20Request';
 			return false;
 		}
-		if (!props.RemixTree.title || props.RemixTree.title === "New Text. Drag onto me to get started") {
+		if (!props.RemixTree.title || props.RemixTree.title === "New Untitled Remix") {
 			enqueueSnackbar(`No Title provided!`, {
 				variant: 'error',
 				anchorOrigin: {

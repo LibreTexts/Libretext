@@ -267,6 +267,7 @@ class RemixerPanel extends React.Component {
 		});
 		
 		
+		$('body').off('drop');
 		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 		LTRight.append('<div id=\'LTRightAlert\'>You shouldn\'t see this</div>');
 		$('#LTRightAlert,#LTLeftAlert').hide();
@@ -303,11 +304,24 @@ class RemixerPanel extends React.Component {
 		let deleted = currentlyActive && currentlyActive.data.status === 'deleted';
 		let permission = RemixerFunctions.userPermissions(true);
 		return <div id='LTForm'>
-			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
-				<div className='LTTitle'><Tooltip title={permission.description}>
-					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.permission} Mode
-						<Info style={{marginLeft: 10}}/></div>
-				</Tooltip></div>
+			<div className="LTFormHeader" style={{backgroundColor: permission.color, justifyContent: "space-between"}}>
+				<Tooltip title={`Start Over`}>
+					<Button variant="contained"
+					        onClick={() => {
+						        this.props.mode === 'Remix'
+							        ? this.setState({resetDialog: true})
+							        : this.setState({reRemixDialog: true});
+					        }}><Refresh/>Start Over</Button>
+				</Tooltip>
+				
+				<div className='LTTitle'>
+					<Tooltip title={permission.description}>
+						<div style={{display: 'flex', alignItems: 'center', marginLeft: 10}}>
+							{this.props.permission} Mode
+							<Info style={{marginLeft: 10}}/>
+						</div>
+					</Tooltip>
+				</div>
 				
 				
 				{!deleted ? <>
@@ -342,19 +356,11 @@ class RemixerPanel extends React.Component {
 				         disabled={deleted}>
 					<Button variant="contained" onClick={this.mergeUp}><span>Merge Folder Up</span><MergeType/></Button>
 				</Tooltip>*/}
-				<Tooltip title={`Start Over`}>
-					<Button variant="contained"
-					        onClick={() => {
-						        this.props.mode === 'Remix'
-							        ? this.setState({resetDialog: true})
-							        : this.setState({reRemixDialog: true});
-					        }}><Refresh/></Button>
-				</Tooltip>
 				<Button variant="contained" color="secondary"
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({name: this.props.RemixTree.title, stage: 'Publishing'})
-				        }}>{this.props.permission === 'Basic'?'Save to Sandbox':'Publish'}
+				        }}>{this.props.permission === 'Basic' ? 'Save to Sandbox' : 'Publish'}
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer' data-beeline-skip>
