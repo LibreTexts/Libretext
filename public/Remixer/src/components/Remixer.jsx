@@ -45,11 +45,12 @@ export default class Remixer extends React.Component {
 			currentlyActive: '',
 		};
 		const [current] = LibreTexts.parseURL();
-		/*LibreTexts.sendAPI('createSandbox', {
-			username: document.getElementById('usernameHolder').innerText,
-			id: document.getElementById('userIDHolder').innerText,
-			subdomain: current,
-		}).then();*/
+		if (defaultState.permission !== 'Demonstration')
+			LibreTexts.sendAPI('createSandbox', {
+				username: document.getElementById('usernameHolder').innerText,
+				id: document.getElementById('userIDHolder').innerText,
+				subdomain: current,
+			}).then();
 		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
 			state = {
@@ -167,7 +168,7 @@ export default class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'center'}}>
-				<div style={{fontSize:'130%'}}>New Remix
+				<div style={{fontSize: '130%'}}>New Remix
 					{this.allowedReRemixer() ?
 						<>
 							<Switch
