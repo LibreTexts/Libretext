@@ -1,6 +1,8 @@
 const express = require('express');
+const check = require('./checkAuthorization');
 const app = express();
 app.use(express.json());
+app.use(check);
 
 const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
@@ -12,7 +14,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
 }
 const now1 = new Date();
-app.listen(port, () => console.log('Restarted ' + timestamp('MM/DD hh:mm', now1)));
+app.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`));
 const prefix = '/elevate';
 const botUsername = 'LibreBot';
 //Creates a user sandbox and limits permissions to just that user
@@ -22,21 +24,21 @@ app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
 async function createSandbox(req, res) {
 	const body = req.body;
-	console.log(body);
+	// console.log(body);
+	
 	let path = `Sandboxes/${body.username}`;
-	let result = '';
+	let result = body.username;
 	let response = await LibreTexts.authenticatedFetch(path, 'contents', body.subdomain, botUsername, {
 		method: 'POST',
 		body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
 	});
-	if (!response.ok) {
-		result += 'Sandbox Already Exists.';
+	if (!response.ok && !body.force) {
+		result += ' Sandbox Already Exists.';
 		res.status(200);
 	}
 	else {
-		result += 'Sandbox Created.';
+		result += ' Sandbox Created.';
 		
-		//
 		const groups = await getGroups(body.subdomain);
 		const developerGroup = groups.find((e) => e.name === 'Developer');
 		
@@ -48,7 +50,7 @@ async function createSandbox(req, res) {
 	        <restriction>Semi-Private</restriction>
 	    </permissions.page>
 	    <grants>
-	        ${developerGroup? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>`:''}
+	        ${developerGroup ? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>` : ''}
 	        <grant>
 	            <user id="${body.id}"></user>
 	            <permissions>
@@ -60,18 +62,19 @@ async function createSandbox(req, res) {
 		});
 		
 		if (response.ok) {
-			result += '\nSandbox Set to Private.';
+			result += ' Set to Private.';
 			res.status(200);
 		}
 		else {
 			result += `\nError: ${await response.text()}`;
 			res.status(500);
+			console.error(result);
 		}
 		
 	}
 	
 	
-	//console.log(result)
+	console.log(`[createSandbox] ${result}`);
 	res.send(result);
 }
 

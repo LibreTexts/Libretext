@@ -267,11 +267,20 @@ function LibreTextsReuse() {
 		}
 	}
 	
-	async function sendAPI(api, payload) {
-		//will require authentication for api/v2
+	async function sendAPI(api, options = {}, method = 'PUT') {
+		let [current, path] = LibreTexts.parseURL();
+		let payload = {
+			username: document.getElementById('usernameHolder').innerText,
+			id: document.getElementById('userIDHolder').innerText,
+			subdomain: current,
+			token:(await getKeys())[current],
+			path: path,
+			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
+		};
+		payload = {...payload, ...options};
 		
 		await fetch(`https://api.libretexts.org/elevate/${api}`, {
-			method: 'PUT',
+			method: method,
 			body: JSON.stringify(payload),
 			headers: {'Content-Type': 'application/json'}
 		})

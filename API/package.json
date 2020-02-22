@@ -1,5 +1,5 @@
 {
-  "name": "Bots",
+  "name": "LibreTexts API",
   "version": "1.0.0",
   "dependencies": {
     "JSONStream": "^1.3.5",

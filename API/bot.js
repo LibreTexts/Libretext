@@ -20,7 +20,7 @@ const now1 = new Date();
 fs.emptyDir('BotLogs/Working');
 fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
-console.log('Restarted ' + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;

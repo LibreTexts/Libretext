@@ -428,10 +428,8 @@
 		}
 		async function goToSandbox(){
 			let username = document.getElementById('usernameHolder').innerText;
-			let id = document.getElementById('userIDHolder').innerText;
-			let [subdomain] = LibreTexts.parseURL();
 			
-			await LibreTexts.sendAPI('createSandbox',{username:username, id:id, subdomain:subdomain});
+			await LibreTexts.sendAPI('createSandbox',{force:true});
 			
 			document.location.replace(`/Sandboxes/${username}`);
 			
