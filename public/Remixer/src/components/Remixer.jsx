@@ -44,13 +44,8 @@ export default class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 		};
-		const [current] = LibreTexts.parseURL();
 		if (defaultState.permission !== 'Demonstration')
-			LibreTexts.sendAPI('createSandbox', {
-				username: document.getElementById('usernameHolder').innerText,
-				id: document.getElementById('userIDHolder').innerText,
-				subdomain: current,
-			}).then();
+			LibreTexts.sendAPI('createSandbox', {force: true}).then();
 		let state = defaultState;
 		if (localStorage.getItem('RemixerState')) {
 			state = {

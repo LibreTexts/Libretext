@@ -427,7 +427,8 @@ class RemixerPanel extends React.Component {
 						onChange={(event) => this.changeEdit('title', event.target.value)}
 						fullWidth
 					/>
-					{this.state.edit.status === 'new' ? <> //only for new
+					{/*only for new*/}
+					{this.state.edit.status === 'new' ? <>
 							<TextField
 								margin="dense"
 								label="Source URL (optional)"
