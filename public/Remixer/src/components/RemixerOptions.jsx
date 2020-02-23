@@ -22,17 +22,17 @@ export default function RemixerOptions(props) {
 		
 		switch (RemixerFunctions.userPermissions()) {
 			case 'Basic':
+			// case 'Workshop':
 				setInstitutions(result);
 				props.updateRemixer({institution: result[0].url});
 				return result;
-			case 'Workshop':
-				result.push({
-					url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
-					title: 'Remixer University'
-				});
-				setInstitutions(result);
-				props.updateRemixer({institution: result[0].url});
-				return result;
+			/*result.push({
+				url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
+				title: 'Remixer University'
+			});
+			setInstitutions(result);
+			props.updateRemixer({institution: result[0].url});
+			return result;*/
 		}
 		
 		let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);

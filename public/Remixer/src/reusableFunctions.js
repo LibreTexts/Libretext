@@ -67,24 +67,22 @@ function userPermissions(full) {
 		permission = 'Pro';
 	else if (isPro && groups.includes('faculty'))
 		permission = 'Faculty';
-	else if (groups.includes('workshop'))
-		permission = 'Workshop';
-	else if (isPro && groups.includes('basicuser'))
+/*	else if (groups.includes('workshop'))
+		permission = 'Workshop';*/
+	else if (isPro && (groups.includes('basicuser') || groups.includes('workshop')))
 		permission = 'Basic';
 	
 	const colors = {
 		Admin: '#323232',
 		Pro: '#9c27b0',
-		Faculty: '#127bc4',
-		Workshop: '#098a0e',
-		Basic: '#8a7512',
+		Faculty: '#0f67a6',
+		Basic: '#c38323',
 		Demonstration: '#767676',
 	};
 	const descriptions = {
 		Admin: 'Administrators have full access to the Remixer, including the ReRemixer',
 		Pro: 'Pro users are given permission to use the Remixer and ReRemixer',
 		Faculty: 'Registered Faculty can use the Remixer',
-		Workshop: 'Workshop users have access to the Remixer and can publish to the Workshop University',
 		Basic: 'Basic users can work on Remixes in their sandbox',
 		Demonstration: 'In Demonstration mode, the Remixer is functional but users cannot publish their end result to LibreTexts. Contact info@libretexts.org if you are a faculty member who is interested in publishing their own Remix!',
 	};
