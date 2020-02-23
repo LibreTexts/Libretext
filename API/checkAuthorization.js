@@ -5,6 +5,7 @@ async function checkAuthorization(req, res, next) {
 	const body = req.body;
 	const user = await getUser(body.username, body.subdomain);
 	req.body.user = user;
+	// console.log(user);
 	if (body.seatedCheck > 10 ** 15 || user.seated !== 'true' || body.token !== authenBrowser[body.subdomain] || body.id !== user.id || body.seatedCheck < 10 ** 10) {
 		res.status(403);
 		next(`${body.username} Unauthorized`);
@@ -17,6 +18,8 @@ async function getUser(username, subdomain) {
 	
 	user = await user.json();
 	user.seated = user['license.seat'];
+	if(user.seated['#text'])
+		user.seated = user.seated['#text'];
 	user.id = user['@id'];
 	
 	//condense groups

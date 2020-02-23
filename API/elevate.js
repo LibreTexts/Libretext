@@ -28,7 +28,7 @@ async function createSandbox(req, res) {
 	// console.log(body);
 	
 	let path = `Sandboxes/${body.username}`;
-	let result = body.username;
+	let result = `${body.subdomain}/${body.username}`;
 	let response = await LibreTexts.authenticatedFetch(path, 'contents', body.subdomain, botUsername, {
 		method: 'POST',
 		body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
@@ -68,7 +68,7 @@ async function createSandbox(req, res) {
 	    <grants>
 	        ${developerGroup ? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>` : ''}
 	        <grant>
-	            <user id="${body.id}"></user>
+	            <user id="${body.user.id}"></user>
 	            <permissions>
 	                <role>Manager</role>
 	            </permissions>
@@ -155,7 +155,7 @@ async function createSandboxes() {
 	</security>`
 		});
 		if (response.ok) {
-			result += '\nSandbox Set to Semi-Private.';
+			result += '\nSandbox Set to Private.';
 		}
 		else {
 			result += `\nError: ${await response.text()}`;
