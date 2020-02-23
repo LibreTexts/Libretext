@@ -133,7 +133,7 @@ async function downloadFile(data, socket) {
 	}
 	const contentLength = +response.headers.get('Content-Length');
 	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
-		data.filename = response.headers.get('content-disposition').match(/(?<=filename=).*$/)[0];
+		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?="$)/)[0];
 	
 	// Step 3: read the data
 	let receivedLength = 0; // received that many bytes at the moment
@@ -218,7 +218,7 @@ async function processCommonCartridge(data, socket) {
 		}
 		
 		let rootPath = `${data.path}-Unzipped`;
-		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+		let onlinePath = `Sandboxes/${data.user}`;
 		const Working = {}; // since user and subdomain are unchanged for these calls
 		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
 		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
@@ -554,7 +554,7 @@ async function processEPUB(data, socket) {
 		}
 	}
 	
-	let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+	let onlinePath = `Sandboxes/${data.user}`;
 	await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 		method: "POST",
 		body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
@@ -922,7 +922,7 @@ async function processPretext(data, socket) {
 		await fs.writeJSON('out.json', current);
 		
 		
-		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+		let onlinePath = `Sandboxes/${data.user}`;
 		const Working = {}; // since user and subdomain are unchanged for these calls
 		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
 		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);

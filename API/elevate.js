@@ -63,7 +63,7 @@ async function createSandbox(req, res) {
 			headers: {'content-type': 'application/xml; charset=utf-8'},
 			body: `<security>
 	    <permissions.page>
-	        <restriction>Semi-Private</restriction>
+	        <restriction>Private</restriction>
 	    </permissions.page>
 	    <grants>
 	        ${developerGroup ? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>` : ''}
@@ -142,7 +142,7 @@ async function createSandboxes() {
 			headers: {'content-type': 'application/xml; charset=utf-8'},
 			body: `<security>
 	    <permissions.page>
-	        <restriction>Semi-Private</restriction>
+	        <restriction>Private</restriction>
 	    </permissions.page>
 	    <grants>
 	        <grant>
