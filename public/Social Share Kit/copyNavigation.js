@@ -427,12 +427,10 @@
 			original.parentNode.insertBefore(copy, original);
 		}
 		async function goToSandbox(){
-			let username = document.getElementById('usernameHolder').innerText;
+			// let username = document.getElementById('usernameHolder').innerText;
 			
 			await LibreTexts.sendAPI('createSandbox',{force:true});
-			
-			document.location.replace(`/Sandboxes/${username}`);
-			
+			document.location.replace(`/Sandboxes`);
 		}
 	}
 	

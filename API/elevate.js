@@ -8,6 +8,7 @@ const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
 const fs = require('fs-extra');
 const md5 = require('md5');
+const fetch = require('node-fetch');
 const LibreTexts = require('./reuse.js');
 let port = 3007;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -39,6 +40,21 @@ async function createSandbox(req, res) {
 	else {
 		result += ' Sandbox Created.';
 		
+		//add thumbnail
+		if (typeof createSandbox.image === 'undefined') {
+			let image = 'https://files.libretexts.org/DefaultImages/sandbox.jpg';
+			image = await fetch(image);
+			image = await image.blob();
+			createSandbox.image = image;
+		}
+		let imageExists = await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail?dream.out.format=json", body.subdomain);
+		if (!imageExists.ok)
+			await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", body.subdomain, 'LibreBot', {
+				method: "PUT",
+				body: createSandbox.image,
+			});
+		
+		//change permissions
 		const groups = await getGroups(body.subdomain);
 		const developerGroup = groups.find((e) => e.name === 'Developer');
 		
@@ -115,7 +131,7 @@ async function createSandboxes() {
 		});
 		// console.log(await response.text());
 		
-		let userID = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=LibreBot?dream.out.format=json`, null, null, 'LibreBot');
+		let userID = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(alternateBotUsername))}?dream.out.format=json`, null, null, 'LibreBot');
 		userID = (await userID.json())['@id'];
 		
 		
