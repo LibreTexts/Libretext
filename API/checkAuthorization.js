@@ -7,7 +7,7 @@ async function checkAuthorization(req, res, next) {
 	req.body.user = user;
 	if (body.seatedCheck > 10 ** 15 || user.seated !== 'true' || body.token !== authenBrowser[body.subdomain] || body.id !== user.id || body.seatedCheck < 10 ** 10) {
 		res.status(403);
-		next('Unauthorized');
+		next(`${body.username} Unauthorized`);
 	}
 	next();
 }
