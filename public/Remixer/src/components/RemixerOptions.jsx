@@ -15,14 +15,13 @@ export default function RemixerOptions(props) {
 	
 	async function getInstitutions() {
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
-		const result = [];
+		const result = [{
+			url: `https://${subdomain}.libretexts.org/Sandboxes`,
+			title: 'Your Personal Sandbox'
+		}];
 		
 		switch (RemixerFunctions.userPermissions()) {
 			case 'Basic':
-				result.push({
-					url: `https://${subdomain}.libretexts.org/Sandboxes`,
-					title: 'Your Personal Sandbox'
-				});
 				setInstitutions(result);
 				props.updateRemixer({institution: result[0].url});
 				return result;
@@ -42,7 +41,8 @@ export default function RemixerOptions(props) {
 		// console.log(subpageArray);
 		for (let i = 0; i < subpageArray.length; i++) {
 			let institution = subpageArray[i];
-			result.push({url: institution['uri.ui'], title: institution.title});
+			if (!institution.title.includes('Remixer University'))
+				result.push({url: institution['uri.ui'], title: institution.title});
 		}
 		result.push({url: '', title: 'Not listed? Contact info@libretexts.org'});
 		setInstitutions(result);
