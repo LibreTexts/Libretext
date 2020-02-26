@@ -22,7 +22,6 @@ export default function RemixerOptions(props) {
 		
 		switch (RemixerFunctions.userPermissions()) {
 			case 'Basic':
-			// case 'Workshop':
 				setInstitutions(result);
 				props.updateRemixer({institution: result[0].url});
 				return result;

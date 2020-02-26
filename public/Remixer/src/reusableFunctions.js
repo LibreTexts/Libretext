@@ -80,9 +80,9 @@ function userPermissions(full) {
 		Demonstration: '#767676',
 	};
 	const descriptions = {
-		Admin: 'Administrators have full access to the Remixer, including the ReRemixer',
+		Admin: 'Administrators have full access to the Remixer and ReRemixer everywhere',
 		Pro: 'Pro users are given permission to use the Remixer and ReRemixer',
-		Faculty: 'Registered Faculty can use the Remixer',
+		Faculty: 'Registered Faculty can use the Remixer in the course shells.',
 		Basic: 'Basic users can work on Remixes in their sandbox',
 		Demonstration: 'In Demonstration mode, the Remixer is functional but users cannot publish their end result to LibreTexts. Contact info@libretexts.org if you are a faculty member who is interested in publishing their own Remix!',
 	};

@@ -55,10 +55,10 @@ export default class Remixer extends React.Component {
 				href: window.location.href, //nonpermanent
 			};
 		}
-		if (!this.allowedReRemixer(state.permission) && state.mode === 'ReRemix') { //prevent insecure access
+		/*if (!this.allowedReRemixer(state.permission) && state.mode === 'ReRemix') { //prevent insecure access
 			state = defaultState;
 			alert('You do not currently have permission to access the ReRemixer.');
-		}
+		}*/
 		if (state.type) {
 			state.permission = state.mode;
 			state.mode = state.type;
@@ -67,7 +67,7 @@ export default class Remixer extends React.Component {
 		this.state = state;
 	}
 	
-	allowedReRemixer(permission = this.state.permission) {
+	/*allowedReRemixer(permission = this.state.permission) {
 		switch (permission) {
 			case "Admin":
 			case "Pro":
@@ -76,7 +76,7 @@ export default class Remixer extends React.Component {
 			default:
 				return false;
 		}
-	}
+	}*/
 	
 	updateRemixer = (newState, updateUndo) => {
 		if (updateUndo) {
@@ -163,14 +163,12 @@ export default class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'center'}}>
-				<div style={{fontSize: '130%'}}>New Remix
-					{this.allowedReRemixer() ?
-						<>
-							<Switch
-								onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
-								checked={this.state.mode === 'ReRemix'} color="default"/>
-							
-							Edit Remix</> : null}
+				<div style={{fontSize: '130%'}}>
+					New Remix
+					<Switch
+						onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
+						checked={this.state.mode === 'ReRemix'} color="default"/>
+					Edit Remix
 				</div>
 				<span>{this.state.lastSave}</span>
 			</div>

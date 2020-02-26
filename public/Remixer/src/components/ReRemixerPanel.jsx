@@ -37,9 +37,16 @@ class ReRemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		let path = 'home';
-		if (this.props.permission === 'Basic')
-			path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
+		let path;
+		switch (this.props.permission) {
+			case "Faculty":
+			case "Basic":
+				path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
+				break;
+			default:
+				path = 'home';
+				break;
+		}
 		
 		
 		let content = await RemixerFunctions.getSubpages(path, this.state.subdomain, {
@@ -55,13 +62,15 @@ class ReRemixerPanel extends React.Component {
 		// customized Snackbar
 		const action = key => (
 			<>
-				<Button onClick={() => { this.props.closeSnackbar(key) }}>
+				<Button onClick={() => {
+					this.props.closeSnackbar(key)
+				}}>
 					Dismiss
 				</Button>
 			</>
 		);
 		
-		if (!content.length && this.props.permission === 'Basic')
+		if (!content.length && path !== 'home')
 			this.props.enqueueSnackbar('It looks like your Sandbox is empty! Try making a Remix using New Remix first.', {
 				variant: 'error',
 				autoHideDuration: 60000,
