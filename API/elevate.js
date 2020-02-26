@@ -49,7 +49,7 @@ async function createSandbox(req, res) {
 		}
 		let imageExists = await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail?dream.out.format=json", body.subdomain);
 		if (!imageExists.ok)
-			await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", body.subdomain, 'LibreBot', {
+			await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", body.subdomain, botUsername, {
 				method: "PUT",
 				body: createSandbox.image,
 			});
@@ -63,7 +63,7 @@ async function createSandbox(req, res) {
 			headers: {'content-type': 'application/xml; charset=utf-8'},
 			body: `<security>
 	    <permissions.page>
-	        <restriction>Private</restriction>
+	        <restriction>Semi-Private</restriction>
 	    </permissions.page>
 	    <grants>
 	        ${developerGroup ? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>` : ''}
@@ -78,7 +78,7 @@ async function createSandbox(req, res) {
 		});
 		
 		if (response.ok) {
-			result += ' Set to Private.';
+			result += ' Set to Semi-Private.';
 			res.status(200);
 		}
 		else {
@@ -96,8 +96,11 @@ async function createSandbox(req, res) {
 
 async function getGroups(subdomain) {
 	let groups;
-	if (typeof getGroups.groups !== "undefined") { //reuse old data
-		return getGroups.groups;
+	if (typeof getGroups.groups === "undefined") { //reuse old data
+		getGroups.groups = {};
+	}
+	if (typeof getGroups.groups[subdomain] !== "undefined" && getGroups.groups[subdomain].length) { //reuse old data
+		return getGroups.groups[subdomain];
 	}
 	
 	groups = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/groups?dream.out.format=json`, null, null, 'LibreBot');
@@ -113,7 +116,7 @@ async function getGroups(subdomain) {
 	else {
 		groups = [];
 	}
-	getGroups.groups = groups;
+	getGroups.groups[subdomain] = groups;
 	return groups;
 }
 
@@ -142,7 +145,7 @@ async function createSandboxes() {
 			headers: {'content-type': 'application/xml; charset=utf-8'},
 			body: `<security>
 	    <permissions.page>
-	        <restriction>Private</restriction>
+	        <restriction>Semi-Private</restriction>
 	    </permissions.page>
 	    <grants>
 	        <grant>
@@ -155,7 +158,7 @@ async function createSandboxes() {
 	</security>`
 		});
 		if (response.ok) {
-			result += '\nSandbox Set to Private.';
+			result += '\nSandbox Set to Semi-Private.';
 		}
 		else {
 			result += `\nError: ${await response.text()}`;

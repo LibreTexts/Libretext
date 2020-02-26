@@ -1175,10 +1175,19 @@ puppeteer.launch({
 						page.on('dialog', async dialog => {
 							await dialog.dismiss();
 						});
-						await page.goto(url + "?no-cache", {
-							timeout: 50000,
-							waitUntil: ["load", "domcontentloaded", 'networkidle0']
-						});
+						if (url.includes('Sandboxes')) {
+							let content = await authenticatedFetch(`https://${current.subdomain}.libretexts.org/${current.path}?authenticate=true`, null, null, 'LibreBot');
+							content = await content.text();
+							await page.setContent(content, {
+								timeout: 50000,
+								waitUntil: ["load", "domcontentloaded", 'networkidle0']
+							});
+						}
+						else
+							await page.goto(url + "?no-cache", {
+								timeout: 50000,
+								waitUntil: ["load", "domcontentloaded", 'networkidle0']
+							});
 					} catch (err) {
 						console.error(`ERROR  Timeout Exceeded ${url}`);
 					}
@@ -1884,38 +1893,38 @@ puppeteer.launch({
 
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
-	let url;
-	if (!path)
-		path = 'home';
-	if (!isNaN(path)) {
-		path = parseInt(path);
-		isNumber = true;
+	
+	let arbitraryPage = !api && !subdomain && path.startsWith('https://');
+	if (arbitraryPage) {
+		[subdomain] = parseURL(path);
 	}
-	if (path === 'home') {
-		isNumber = true;
-	}
-	if (!subdomain) {
-		console.error(`Invalid subdomain ${subdomain}`);
-		return false;
+	else {
+		if (!isNaN(path)) {
+			path = parseInt(path);
+			isNumber = true;
+		}
+		if (path === 'home') {
+			isNumber = true;
+		}
+		if (!subdomain) {
+			console.error(`Invalid subdomain ${subdomain}`);
+			return false;
+		}
 	}
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
-	
-	
-	if (api.startsWith('/@api/deki'))  // for non-pages calls
-		url = `https://${subdomain}.libretexts.org${api}`;
-	else
-		url = `https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`;
-	
-	if (!username) { //anonymous request
+	if (!username) {
 		options = optionsMerge({
 			'X-Requested-With': 'XMLHttpRequest',
 			'x-deki-token': authenBrowser[subdomain]
 			
 		}, options);
-		return await fetch(url, options);
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
-	else { //server request
+	else {
 		const user = "=" + username;
 		const crypto = require('crypto');
 		const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
@@ -1925,7 +1934,11 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
 		options = optionsMerge({'x-deki-token': token}, options);
-		return await fetch(url, options);
+		
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	
 	function optionsMerge(headers, options) {
@@ -2179,7 +2192,7 @@ async function getAPI(page, getContents) {
 	page.url = page.url.replace('?contentOnly', '');
 	let [subdomain, path] = parseURL(page.url);
 	// console.log(page.url);
-	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain);
+	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain, path.startsWith('Sandboxes') ? 'LibreBot' : '');
 	if (response.ok) {
 		response = await response.json();
 		let {properties, tags} = response;
