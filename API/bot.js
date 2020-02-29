@@ -222,7 +222,7 @@ async function jobHandler(jobType, input, socket) {
 			}
 		}
 		
-		if (!result || result === content || jobType === 'foreignImage')
+		if (!result || result === content)
 			return;
 		
 		// result = LibreTexts.encodeHTML(result);
