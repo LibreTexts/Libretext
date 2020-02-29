@@ -1899,6 +1899,8 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		[subdomain] = parseURL(path);
 	}
 	else {
+		if (path === "")
+			path = "home";
 		if (!isNaN(path)) {
 			path = parseInt(path);
 			isNumber = true;
