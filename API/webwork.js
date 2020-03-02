@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const async = require('async');
 const fetch = require('node-fetch');
 const LibreTexts = require('./reuse.js');
+const sleep = require('sleep-promise');
 
 main();
 
@@ -58,6 +59,7 @@ async function main() {
 				for (let problem of section.children) {
 					let problemRoot = `${sectionRoot}/${problem.filename}`;
 					await createStructure(problemRoot, 'topic', problem);
+					await sleep(800);
 				}
 			}
 		}
@@ -79,14 +81,18 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 		}
 		else
 			content = `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-${type}</a></p>`;
-		
-		let response = await LibreTexts.authenticatedFetch(path, 'contents?edittime=now', 'query', 'LibreBot', {
-			method: "POST",
-			body: content,
-		});
-		if (!response.ok) {
-			let error = await response.text();
-			console.log(error);
+		try {
+			let response = await LibreTexts.authenticatedFetch(path, 'contents?abort=exists', 'query', 'LibreBot', {
+				method: "POST",
+				body: content,
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				return false;
+			}
+		} catch (e) {
+			console.error(e);
 			return false;
 		}
 		
@@ -96,7 +102,7 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 			await putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path);
 		}
 		
-		if(type !== 'topic'){
+		if (type !== 'topic') {
 			if (typeof createStructure.image === 'undefined') {
 				let image = 'https://files.libretexts.org/DefaultImages/default.png';
 				image = await fetch(image);
@@ -105,10 +111,10 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 			}
 			// let imageExists = await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail?dream.out.format=json", 'query');
 			// if (!imageExists.ok)
-				await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", 'query', 'LibreBot', {
-					method: "PUT",
-					body: createStructure.image,
-				});
+			await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", 'query', 'LibreBot', {
+				method: "PUT",
+				body: createStructure.image,
+			});
 		}
 		
 		console.log(`Created: ${path}`);
@@ -147,6 +153,8 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 		working = arrayToObject(working, `DB${parent}_id`);
 		for (let [, prob] of Object.entries(children)) {
 			let target = working[prob[`DB${parent}_id`]];
+			if(!target)
+				continue;
 			
 			if (target.children && target.children.length)
 				target.children.push(prob);

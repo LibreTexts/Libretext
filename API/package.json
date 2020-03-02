@@ -25,6 +25,7 @@
     "node-static": "^0.7.11",
     "perf_hooks": "0.0.1",
     "simple-git": "^1.131.0",
+    "sleep-promise": "^8.0.1",
     "socket.io": "^2.3.0",
     "xml-js": "^1.6.11",
     "zip-local": "^0.3.4"

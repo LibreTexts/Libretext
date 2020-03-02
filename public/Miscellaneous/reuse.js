@@ -48,6 +48,7 @@ function LibreTextsReuse() {
 		// addLinks: addLinks,
 		extractSubdomain: extractSubdomain,
 		parseURL: parseURL,
+		cleanPath: cleanPath,
 		getCurrent: getCurrent,
 		sendAPI: sendAPI,
 		getAPI: getAPI,
@@ -59,6 +60,7 @@ function LibreTextsReuse() {
 		let isNumber;
 		let [current, currentPath] = parseURL();
 		path = path || currentPath;
+		path = String(path);
 		let arbitraryPage = !api && !subdomain && path.startsWith('https://');
 		if (arbitraryPage) {
 			[subdomain] = parseURL(path);
@@ -202,11 +204,11 @@ function LibreTextsReuse() {
 			
 			async function subpage(subpage, index) {
 				let url = subpage["uri.ui"];
-				let path = subpage.path["#text"];
+				let id = subpage['@id'];
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren) { //recurse down
-					children = await authenticatedFetch(path, 'subpages?dream.out.format=json', username, subdomain);
+					children = await authenticatedFetch(id, 'subpages?dream.out.format=json', username, subdomain);
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
@@ -214,7 +216,7 @@ function LibreTextsReuse() {
 					title: subpage.title,
 					url: url,
 					children: children,
-					id: subpage['@id'],
+					id: id,
 					relativePath: url.replace(rootURL, '')
 				};
 			}
@@ -267,13 +269,23 @@ function LibreTextsReuse() {
 		}
 	}
 	
+	function cleanPath(path) {
+		path = decodeURIComponent(decodeURIComponent((path)));
+		let originalPath = path;
+		path = path.replace('?title=', '');
+		path = path.replace(/[+!@#$%^&*{}\\]/g, '');
+		if (originalPath === path)
+			return false;
+		return path;
+	}
+	
 	async function sendAPI(api, options = {}, method = 'PUT') {
 		let [current, path] = LibreTexts.parseURL();
 		let payload = {
 			username: document.getElementById('usernameHolder').innerText,
 			id: document.getElementById('userIDHolder').innerText,
 			subdomain: current,
-			token:(await getKeys())[current],
+			token: (await getKeys())[current],
 			path: path,
 			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
 		};
@@ -295,10 +307,10 @@ function LibreTextsReuse() {
 				url: page
 			};
 		page.url = page.url.replace('?contentOnly', '');
+		
 		let [subdomain, path] = parseURL(page.url);
 		// console.log(page.url);
 		let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain);
-		// page.response = response;
 		if (response.ok) {
 			response = await response.json();
 			let {properties, tags, files} = response;

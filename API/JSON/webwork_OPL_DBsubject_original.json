@@ -1,0 +1,126 @@
+[
+  {
+    "DBsubject_id": 27,
+    "name": "Abstract algebra"
+  },
+  {
+    "DBsubject_id": 3,
+    "name": "Algebra"
+  },
+  {
+    "DBsubject_id": 25,
+    "name": "Arithmetic"
+  },
+  {
+    "DBsubject_id": 2,
+    "name": "Calculus - multivariable"
+  },
+  {
+    "DBsubject_id": 1,
+    "name": "Calculus - single variable"
+  },
+  {
+    "DBsubject_id": 11,
+    "name": "Combinatorics"
+  },
+  {
+    "DBsubject_id": 24,
+    "name": "Complex analysis"
+  },
+  {
+    "DBsubject_id": 30,
+    "name": "Computer science"
+  },
+  {
+    "DBsubject_id": 28,
+    "name": "Cryptography"
+  },
+  {
+    "DBsubject_id": 5,
+    "name": "Differential equations"
+  },
+  {
+    "DBsubject_id": 14,
+    "name": "Dynamics"
+  },
+  {
+    "DBsubject_id": 18,
+    "name": "Electric circuits"
+  },
+  {
+    "DBsubject_id": 23,
+    "name": "Financial mathematics"
+  },
+  {
+    "DBsubject_id": 17,
+    "name": "Fluid mechanics"
+  },
+  {
+    "DBsubject_id": 8,
+    "name": "Geometry"
+  },
+  {
+    "DBsubject_id": 12,
+    "name": "Graph theory"
+  },
+  {
+    "DBsubject_id": 6,
+    "name": "Linear algebra"
+  },
+  {
+    "DBsubject_id": 20,
+    "name": "Material and energy balances"
+  },
+  {
+    "DBsubject_id": 15,
+    "name": "Mechanics of materials"
+  },
+  {
+    "DBsubject_id": 26,
+    "name": "Number theory"
+  },
+  {
+    "DBsubject_id": 21,
+    "name": "Operations research"
+  },
+  {
+    "DBsubject_id": 7,
+    "name": "Precalculus"
+  },
+  {
+    "DBsubject_id": 9,
+    "name": "Probability"
+  },
+  {
+    "DBsubject_id": 29,
+    "name": "Real analysis"
+  },
+  {
+    "DBsubject_id": 22,
+    "name": "Set theory and logic"
+  },
+  {
+    "DBsubject_id": 13,
+    "name": "Statics"
+  },
+  {
+    "DBsubject_id": 10,
+    "name": "Statistics"
+  },
+  {
+    "DBsubject_id": 19,
+    "name": "Thermodynamics"
+  },
+  {
+    "DBsubject_id": 4,
+    "name": "Trigonometry"
+  },
+  {
+    "DBsubject_id": 16,
+    "name": "Vibrations"
+  },
+  {
+    "DBsubject_id": 31,
+    "name": "WeBWorK"
+  }
+]

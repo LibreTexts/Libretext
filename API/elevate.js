@@ -20,6 +20,7 @@ const prefix = '/elevate';
 const botUsername = 'LibreBot';
 //Creates a user sandbox and limits permissions to just that user
 app.put(`${prefix}/createSandbox`, createSandbox);
+app.put(`${prefix}/cleanPath`, cleanPath);
 app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
 
@@ -166,4 +167,24 @@ async function createSandboxes() {
 		console.log(result);
 	}
 	
+}
+
+async function cleanPath(req, res) {
+	const body = req.body;
+	res.status(200);
+	let page = await LibreTexts.authenticatedFetch(body.pageID, '?dream.out.format=json', body.subdomain, 'LibreBot');
+	page = await page.json();
+	let path = page['uri.ui'];
+	[, path] = LibreTexts.parseURL(path);
+	path = LibreTexts.cleanPath(path);
+	if (path || body.force) {
+		await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
+			body.subdomain, 'LibreBot', {
+				method: 'POST'
+			});
+		console.log(`[cleanPath] ${path}`);
+		res.send(path);
+	}
+	else
+		res.send('okay');
 }
