@@ -8,7 +8,7 @@ main();
 
 async function main() {
 	
-	//path, keyword > problems
+	/*//path, keyword > problems
 	let problems = await fs.readJSON('./JSON/webwork_OPL_pgfile.json');
 	problems = arrayToObject(problems, 'pgfile_id');
 	
@@ -37,33 +37,34 @@ async function main() {
 	//problem > section
 	let structure = await reconcileStructure('section', problems);
 	structure = await reconcileStructure('chapter', structure);
-	structure = await reconcileStructure('subject', structure);
+	structure = await reconcileStructure('subject', structure);*/
 	
-	
+	let structure =
+		await fs.readJSON('./webwork/3-20.json');
 	console.log(structure[1]);
 	
-	let root = 'Assessment_Gallery/Mathematics/WeBWorK_Import';
-	for (let [, subject] of Object.entries(structure)) {
-		let subjectRoot = `${root}/${subject.name}`;
-		await createStructure(subjectRoot);
-		
-		for (let chapter of subject.children) {
-			let chapterRoot = `${subjectRoot}/${chapter.name}`;
-			await createStructure(chapterRoot);
+	/*	let root = 'Assessment_Gallery/Mathematics/WeBWorK_Import';
+		for (let [, subject] of Object.entries(structure)) {
+			let subjectRoot = `${root}/${subject.name}`;
+			await createStructure(subjectRoot);
 			
-			
-			for (let section of chapter.children) {
-				let sectionRoot = `${chapterRoot}/${section.name}`;
-				await createStructure(sectionRoot, 'guide');
+			for (let chapter of subject.children) {
+				let chapterRoot = `${subjectRoot}/${chapter.name}`;
+				await createStructure(chapterRoot);
 				
-				for (let problem of section.children) {
-					let problemRoot = `${sectionRoot}/${problem.filename}`;
-					await createStructure(problemRoot, 'topic', problem);
-					await sleep(800);
+				
+				for (let section of chapter.children) {
+					let sectionRoot = `${chapterRoot}/${section.name}`;
+					await createStructure(sectionRoot, 'guide');
+					
+					for (let problem of section.children) {
+						let problemRoot = `${sectionRoot}/${problem.filename}`;
+						await createStructure(problemRoot, 'topic', problem);
+						await sleep(800);
+					}
 				}
 			}
-		}
-	}
+		}*/
 	
 	async function createStructure(path, type = 'category', problem) {
 		let content;
@@ -153,7 +154,7 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 		working = arrayToObject(working, `DB${parent}_id`);
 		for (let [, prob] of Object.entries(children)) {
 			let target = working[prob[`DB${parent}_id`]];
-			if(!target)
+			if (!target)
 				continue;
 			
 			if (target.children && target.children.length)
