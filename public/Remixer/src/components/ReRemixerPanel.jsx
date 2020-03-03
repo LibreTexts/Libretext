@@ -16,7 +16,8 @@ class ReRemixerPanel extends React.Component {
 		let root = $('#LTLeft').fancytree('getTree').getRootNode();
 		root = root.toDict(true);
 		this.setState({LibraryTree: root.children});
-		this.props.updateRemixer({currentlyActive: active});
+		if (active)
+			this.props.updateRemixer({currentlyActive: active});
 	};
 	
 	constructor() {
@@ -164,6 +165,7 @@ class ReRemixerPanel extends React.Component {
 		
 		LTLeft.append('<div id=\'LTLeftAlert\'>You shouldn\'t see this</div>');
 		$('#LTLeftAlert').hide();
+		this.updateLeft();
 		this.setState({initialized: true});
 	}
 	
@@ -291,7 +293,6 @@ class ReRemixerPanel extends React.Component {
 		currentlyActive.expanded = true;
 		let rootPath = currentlyActive.data.path;
 		RemixerFunctions.ReRemixTree(currentlyActive, rootPath);
-		
 		
 		this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {
 			variant: 'success',

@@ -169,8 +169,18 @@ async function getSubpages(path, subdomain, options = {
 		async function subpage(subpage, index) {
 			let url = subpage['uri.ui'];
 			let path = subpage.path['#text'];
-			url = url.replace('?title=', '');
-			path = path.replace('?title=', '');
+			let id = subpage['@id'];
+			//clean path if necessary
+			let cleaned = LibreTexts.cleanPath(path);
+			if (cleaned || path.includes('?title=')) {
+				cleaned = await LibreTexts.sendAPI('cleanPath', {pageID: id, force: true});
+				cleaned = await cleaned.text();
+				if (cleaned !== 'okay'){
+					path = cleaned;
+					url = `https://${subdomain}.libretexts.org/${path}`;
+				}
+			}
+			
 			const hasChildren = subpage['@subpages'] === 'true';
 			let children = hasChildren ? undefined : [];
 			if (hasChildren && options.full) { //recurse down

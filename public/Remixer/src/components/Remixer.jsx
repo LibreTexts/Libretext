@@ -163,12 +163,13 @@ export default class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar" style={{justifyContent: 'center'}}>
-				<div style={{fontSize: '130%'}}>
-					New Remix
+				<div style={{fontSize: '130%', cursor:'pointer'}}
+				     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
+				>
+					New Remix Mode
 					<Switch
-						onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
 						checked={this.state.mode === 'ReRemix'} color="default"/>
-					Edit Remix
+					Edit Remix Mode
 				</div>
 				<span>{this.state.lastSave}</span>
 			</div>

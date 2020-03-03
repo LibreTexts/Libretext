@@ -925,7 +925,7 @@ class RemixerPanel extends React.Component {
 						}
 						
 						if (node.title.includes(': '))
-							node.title = node.title.replace(/^[^:]*: /, '');
+							node.title = node.title.replace(/^[0-9]+[.0-9A-z]*?: /, '');
 						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic-guide';
 						node.data.padded = `${('' + chapterIndex).padStart(2, '0')}: ${node.title}`;
@@ -955,9 +955,12 @@ class RemixerPanel extends React.Component {
 				}
 			}
 			node.title = node.title.trim();
-			if (node.data.padded && node.data.padded.includes(':')) {
-				node.data.padded = encodeURIComponent(node.data.padded);
-				node.data.padded = node.data.padded.replace(/%20/g, ' ');
+			if (node.data.padded) {
+				node.data.padded = node.data.padded.replace(/[+!@#$%^&*{}\\/]/g, '');
+				if (node.data.padded.includes(':')) {
+					node.data.padded = encodeURIComponent(node.data.padded);
+					node.data.padded = node.data.padded.replace(/%20/g, ' ');
+				}
 			}
 			
 			
