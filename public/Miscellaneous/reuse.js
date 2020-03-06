@@ -98,7 +98,7 @@ function LibreTextsReuse() {
 	
 	async function getKeys() {
 		if (typeof getKeys.keys === 'undefined') {
-			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
+			let keys = await fetch('https://files.libretexts.org/authenBrowser.json');
 			getKeys.keys = await keys.json();
 		}
 		return getKeys.keys;
