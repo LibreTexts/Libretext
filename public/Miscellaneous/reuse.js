@@ -291,7 +291,7 @@ function LibreTextsReuse() {
 		};
 		payload = {...payload, ...options};
 		
-		await fetch(`https://api.libretexts.org/elevate/${api}`, {
+		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
 			method: method,
 			body: JSON.stringify(payload),
 			headers: {'Content-Type': 'application/json'}
