@@ -220,6 +220,7 @@ export default function OptionsPanel(props) {
 					<MenuItem value=''>No Prefix</MenuItem>
 					<MenuItem value='Chapter'>Chapter</MenuItem>
 					<MenuItem value='Section'>Section</MenuItem>
+					<MenuItem value='Unit'>Unit</MenuItem>
 				</TextField>
 				<TextField
 					select
@@ -235,6 +236,7 @@ export default function OptionsPanel(props) {
 					<MenuItem value='Page'>Page</MenuItem>
 					<MenuItem value='Topic'>Topic</MenuItem>
 					<MenuItem value='Section'>Section</MenuItem>
+					<MenuItem value='Lesson'>Lesson</MenuItem>
 				</TextField>
 				<div style={{display: 'flex', justifyContent: 'space-between', marginTop: 20}}>
 					<TextField

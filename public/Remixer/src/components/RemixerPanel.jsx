@@ -873,7 +873,7 @@ class RemixerPanel extends React.Component {
 		let root;
 		if (!customRoot) {
 			root = $('#LTRight').fancytree('getTree').getNodeByKey('ROOT');
-			if (!root || !root.children) {
+			if (!root) {
 				return false;
 			}
 		}
@@ -925,7 +925,7 @@ class RemixerPanel extends React.Component {
 						}
 						
 						if (node.title.includes(': '))
-							node.title = node.title.replace(/^[0-9]+[.0-9A-z]*?: /, '');
+							node.title = node.title.replace(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /, '');
 						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic-guide';
 						node.data.padded = `${('' + chapterIndex).padStart(2, '0')}: ${node.title}`;
@@ -943,7 +943,7 @@ class RemixerPanel extends React.Component {
 						}
 						
 						if (node.title.includes(': '))
-							node.title = node.title.replace(/^[^:]*: /, '');
+							node.title = node.title.replace(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /, '');
 						node.title = node.title.replace(':', '-');
 						node.data.articleType = 'topic';
 						node.data.padded = `${chapter}.${('' + index).padStart(2, '0')}: ${node.title}`;
@@ -1042,7 +1042,9 @@ class RemixerPanel extends React.Component {
 			return node;
 		};
 		
-		if (!customRoot) { //recurse down
+		if (root && !root.children)
+			root.children = [];
+		else if (!customRoot) { //recurse down
 			for (let i = 0; i < root.children.length; i++) {
 				if (root.children[i].lazy) {
 					await root.children[i].visitAndLoad();
