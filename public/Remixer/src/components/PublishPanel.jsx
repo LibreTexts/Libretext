@@ -454,20 +454,14 @@ function PublishSubPanel(props) {
 		let destRoot;
 		if (props.mode === 'Remix') {
 			destRoot = props.institution;
-			if (destRoot.includes('Remixer_University')) {
-				destRoot += `/Username:_${document.getElementById('usernameHolder').innerText}`;
-				await LibreTexts.authenticatedFetch(destRoot, 'contents?abort=exists', null, {
-					method: 'POST',
-					body: '<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>',
-				});
-			}
-			else if (destRoot.endsWith('Sandboxes')) {
+			if (destRoot.endsWith('Sandboxes')) {
 				destRoot += `/${document.getElementById('usernameHolder').innerText}`;
 			}
 			destRoot = `${destRoot}/${props.RemixTree.title.replace(/ /g, '_')}`;
 		}
 		else
 			destRoot = props.RemixTree.data.url;
+		destRoot = LibreTexts.cleanPath(destRoot);
 		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
 		if (response.ok && !props.override && props.mode !== 'ReRemix') {
