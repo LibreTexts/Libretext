@@ -1176,21 +1176,27 @@ puppeteer.launch({
 							await dialog.dismiss();
 						});
 						if (url.includes('Sandboxes')) {
-							let content = await authenticatedFetch(`https://${current.subdomain}.libretexts.org/${current.path}?authenticate=true`, null, null, 'LibreBot');
-							content = await content.text();
-							await page.setContent(content, {
+							await page.goto(`https://${current.subdomain}.libretexts.org` + "?no-cache", {
 								timeout: 50000,
 								waitUntil: ["load", "domcontentloaded", 'networkidle0']
 							});
+							
+							//authenticate the BOT
+							let token = authenticate('LibreBot', current.subdomain);
+							await page.evaluate(async function (token, subdomain, redirect) {
+								await fetch(`https://${subdomain}.libretexts.org/@api/deki/users/authenticate?x-deki-token=${token}&redirect=${redirect}`);
+							}, token, current.subdomain, url);
+							
 						}
-						else
-							await page.goto(url + "?no-cache", {
-								timeout: 50000,
-								waitUntil: ["load", "domcontentloaded", 'networkidle0']
-							});
+						
+						await page.goto(url + "?no-cache", {
+							timeout: 50000,
+							waitUntil: ["load", "domcontentloaded", 'networkidle0']
+						});
 					} catch (err) {
 						console.error(`ERROR  Timeout Exceeded ${url}`);
 					}
+					
 					const out = await page.evaluate(function (url) {
 						let prefix = "";
 						let title = document.getElementById("title");
@@ -1891,6 +1897,17 @@ puppeteer.launch({
 	}
 );
 
+function authenticate(user, subdomain){
+	user = '=' + user;
+	const crypto = require('crypto');
+	const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
+	const epoch = Math.floor(Date.now() / 1000);
+	hmac.update(`${authen[subdomain].key}${epoch}${user}`);
+	const hash = hmac.digest('hex');
+	let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
+	return token;
+}
+
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
 	
@@ -1927,14 +1944,7 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	else {
-		const user = "=" + username;
-		const crypto = require('crypto');
-		const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
-		const epoch = Math.floor(Date.now() / 1000);
-		hmac.update(`${authen[subdomain].key}${epoch}${user}`);
-		const hash = hmac.digest('hex');
-		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
-		
+		let token = authenticate(username, subdomain);
 		options = optionsMerge({'x-deki-token': token}, options);
 		
 		if (arbitraryPage)
