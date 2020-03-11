@@ -1204,7 +1204,7 @@ puppeteer.launch({
 						
 						if (title) {
 							let color = window.getComputedStyle(title).color;
-							innerText = title.textContent;
+							innerText = title.innerText;
 							if (innerText && innerText.includes(":")) {
 								prefix = innerText.split(":")[0];
 							}
