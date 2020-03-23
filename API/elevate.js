@@ -188,3 +188,5 @@ async function cleanPath(req, res) {
 	else
 		res.send('okay');
 }
+
+async function fork(req, res){}
