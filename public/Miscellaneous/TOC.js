@@ -1,29 +1,11 @@
 window.addEventListener('load', TOC);
 
 async function TOC() {
-	const urlArray = window.location.href.replace("?action=edit", "").split("/");
 	let coverpage;
 	let coverTitle;
 	let content;
 	if (!navigator.webdriver || !window.matchMedia('print').matches) {
-		for (let i = urlArray.length; i > 3; i--) {
-			let path = urlArray.slice(3, i).join("/");
-			let response = await LibreTexts.authenticatedFetch(path, 'tags?dream.out.format=json');
-			let tags = await response.json();
-			if (tags.tag) {
-				if (tags.tag.length) {
-					tags = tags.tag.map((tag) => tag["@value"]);
-				}
-				else {
-					tags = tags.tag["@value"];
-				}
-				if (tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) {
-					coverpage = path;
-					break;
-				}
-			}
-		}
-		
+		coverpage = await LibreTexts.getCoverpage();
 		if (coverpage) {
 			await makeTOC(coverpage, true);
 		}

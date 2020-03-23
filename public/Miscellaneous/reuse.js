@@ -37,10 +37,6 @@ function LibreTextsReuse() {
 	
 	return {
 		authenticatedFetch: authenticatedFetch,
-		getSubpages: getSubpages,
-		getKeys: getKeys,
-		getCitationInformation: getCitationInformation,
-		// getSubpagesAlternate: getSubpagesAlternate,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
 		decodeHTML: decodeHTML,
@@ -49,13 +45,81 @@ function LibreTextsReuse() {
 		extractSubdomain: extractSubdomain,
 		parseURL: parseURL,
 		cleanPath: cleanPath,
-		getCurrent: getCurrent,
 		sendAPI: sendAPI,
+		getSubpages: getSubpages,
+		getKeys: getKeys,
+		getCitationInformation: getCitationInformation,
+		// getSubpagesAlternate: getSubpagesAlternate,
 		getAPI: getAPI,
+		getCurrentContents: getCurrentContents,
+		getCoverpage: getCoverpage,
 		libraries: libraries,
 	};
 	
 	//Function Zone
+	function decodeHTML(content) {
+		let ret = content.replace(/&gt;/g, '>');
+		ret = ret.replace(/&lt;/g, '<');
+		ret = ret.replace(/&quot;/g, '"');
+		ret = ret.replace(/&apos;/g, "'");
+		ret = ret.replace(/&amp;/g, '&');
+		return ret;
+	}
+	
+	function encodeHTML(content) {
+		let ret = content;
+		ret = ret.replace(/&/g, '&amp;');
+		ret = ret.replace(/>/g, '&gt;');
+		ret = ret.replace(/</g, '&lt;');
+		ret = ret.replace(/"/g, '&quot;');
+		ret = ret.replace(/'/g, "&apos;");
+		return ret;
+	}
+	
+	function extractSubdomain(url = window.location.href) {
+		let origin = url.split("/")[2].split(".");
+		const subdomain = origin[0];
+		return subdomain;
+	}
+	
+	function parseURL(url = window.location.href) {
+		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
+		}
+		else {
+			return [];
+		}
+	}
+	
+	function cleanPath(path) {
+		path = decodeURIComponent(decodeURIComponent((path)));
+		let originalPath = path;
+		path = path.replace('?title=', '');
+		path = path.replace(/[+!@#$%^&*{}\\]/g, '');
+		if (originalPath === path)
+			return false;
+		return path;
+	}
+	
+	async function sendAPI(api, options = {}, method = 'PUT') {
+		let [current, path] = LibreTexts.parseURL();
+		let payload = {
+			username: document.getElementById('usernameHolder').innerText,
+			id: document.getElementById('userIDHolder').innerText,
+			subdomain: current,
+			token: (await getKeys())[current],
+			path: path,
+			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
+		};
+		payload = {...payload, ...options};
+		
+		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
+			method: method,
+			body: JSON.stringify(payload),
+			headers: {'Content-Type': 'application/json'}
+		})
+	}
+	
 	async function authenticatedFetch(path, api = '', subdomain, options = {}) {
 		let isNumber;
 		let [current, currentPath] = parseURL();
@@ -105,20 +169,8 @@ function LibreTextsReuse() {
 	}
 	
 	async function getCitationInformation(url = window.location.href) {
-		const urlArray = url.replace("?action=edit", "").split("/");
-		let coverpage;
+		let coverpage = await LibreTexts.getCoverpage(url);
 		let result = {};
-		for (let i = urlArray.length; i > 3; i--) { //see if there is a coverpage above this page
-			let path = urlArray.slice(0, i).join("/");
-			let response = await getAPI(path);
-			if (i === urlArray.length) {
-				result = await parseTags(response);
-			}
-			if (response.tags.includes("coverpage:yes")) {
-				coverpage = response;
-				break;
-			}
-		}
 		
 		if (coverpage) {
 			result.coverpage = await parseTags(coverpage);
@@ -235,69 +287,6 @@ function LibreTextsReuse() {
 		}
 	}
 	
-	function decodeHTML(content) {
-		let ret = content.replace(/&gt;/g, '>');
-		ret = ret.replace(/&lt;/g, '<');
-		ret = ret.replace(/&quot;/g, '"');
-		ret = ret.replace(/&apos;/g, "'");
-		ret = ret.replace(/&amp;/g, '&');
-		return ret;
-	}
-	
-	function encodeHTML(content) {
-		let ret = content;
-		ret = ret.replace(/&/g, '&amp;');
-		ret = ret.replace(/>/g, '&gt;');
-		ret = ret.replace(/</g, '&lt;');
-		ret = ret.replace(/"/g, '&quot;');
-		ret = ret.replace(/'/g, "&apos;");
-		return ret;
-	}
-	
-	function extractSubdomain(url = window.location.href) {
-		let origin = url.split("/")[2].split(".");
-		const subdomain = origin[0];
-		return subdomain;
-	}
-	
-	function parseURL(url = window.location.href) {
-		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
-			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
-		}
-		else {
-			return [];
-		}
-	}
-	
-	function cleanPath(path) {
-		path = decodeURIComponent(decodeURIComponent((path)));
-		let originalPath = path;
-		path = path.replace('?title=', '');
-		path = path.replace(/[+!@#$%^&*{}\\]/g, '');
-		if (originalPath === path)
-			return false;
-		return path;
-	}
-	
-	async function sendAPI(api, options = {}, method = 'PUT') {
-		let [current, path] = LibreTexts.parseURL();
-		let payload = {
-			username: document.getElementById('usernameHolder').innerText,
-			id: document.getElementById('userIDHolder').innerText,
-			subdomain: current,
-			token: (await getKeys())[current],
-			path: path,
-			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
-		};
-		payload = {...payload, ...options};
-		
-		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
-			method: method,
-			body: JSON.stringify(payload),
-			headers: {'Content-Type': 'application/json'}
-		})
-	}
-	
 	//fills in missing API data for a page
 	async function getAPI(page, getContents) {
 		if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
@@ -380,11 +369,32 @@ function LibreTextsReuse() {
 		return page;
 	}
 	
-	async function getCurrent() {
-		let page = window.location.href;
-		let subdomain = extractSubdomain(page);
-		let path = page.replace(/^.*?libretexts.org\//, '');
-		LibreTexts.authenticatedFetch(path, 'contents?mode=edit', subdomain).then(async (data) => console.log(await data.text()))
+	async function getCurrentContents() {
+		LibreTexts.authenticatedFetch(window.location.href, 'contents?mode=edit').then(async (data) => console.log(await data.text()))
+	}
+	
+	async function getCoverpage(url = window.location.href) {
+		if (typeof getCoverpage.coverpage === 'undefined') {
+			const urlArray = url.replace("?action=edit", "").split("/");
+			for (let i = urlArray.length; i > 3; i--) {
+				let path = urlArray.slice(3, i).join("/");
+				let response = await LibreTexts.authenticatedFetch(path, 'tags?dream.out.format=json');
+				let tags = await response.json();
+				if (tags.tag) {
+					if (tags.tag.length) {
+						tags = tags.tag.map((tag) => tag["@value"]);
+					}
+					else {
+						tags = tags.tag["@value"];
+					}
+					if (tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) {
+						getCoverpage.coverpage = path;
+						break;
+					}
+				}
+			}
+		}
+		return getCoverpage.coverpage;
 	}
 	
 }
