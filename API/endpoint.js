@@ -190,12 +190,13 @@ async function handler(request, response) {
 					if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
 						let content = await fs.readJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`);
 						if (content) {
-							let index = content.findIndex(elem => elem.id === input.content.id);
+							let array = content.items || content;
+							let index = array.findIndex(elem => elem.id === input.content.id);
 							if (index && index !== -1) {
-								content[index] = input.content;
+								array[index] = input.content;
 							}
 							else {
-								content.push(input.content);
+								array.push(input.content);
 							}
 							await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
 						}

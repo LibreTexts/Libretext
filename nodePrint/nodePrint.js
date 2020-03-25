@@ -382,7 +382,10 @@ puppeteer.launch({
 								subdomain: subdomain,
 								path: path,
 								identifier: md5(keys[subdomain]),
-								content: finished
+								content: {
+									timestamp: new Date(),
+									items: finished
+								}
 							}),
 							headers: {
 								origin: 'print.libretexts.org'

@@ -40,6 +40,8 @@ if (!window["batchPrint.js"]) {
 				
 				downloads = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
 				downloads = await downloads.json();
+				if(downloads.items)
+					downloads = downloads.items;
 				
 				let id = document.getElementById('pageIDHolder').innerText;
 				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);

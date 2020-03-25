@@ -66,6 +66,11 @@ async function doCenter() {
 	one = one.ok ? await one.json() : [];
 	two = two.ok ? await two.json() : [];
 	
+	if (one.items)
+		one = one.items;
+	if (two.items)
+		two = two.items;
+	
 	downloads = downloads.concat(one, two);
 	downloads = downloads.filter((text) => text.link && (!text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide"));
 	if (!JSON.parse(document.getElementById("proHolder").innerText))
