@@ -70,6 +70,9 @@ async function main() {
 		let content;
 		if (type === 'topic') {
 			let tags = problem.keywords || [];
+			tags.push('showtoc:no');
+			tags.push(`path-Library/${problem.path_id}/${problem.filename}`);
+			
 			if (problem.author_id)
 				tags.push(`author-${problem.author_id.firstname} ${problem.author_id.lastname}`);
 			tags = tags.map(tag => `<a href=\"#\">${tag}</a>`).join('');
