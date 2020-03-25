@@ -345,7 +345,7 @@ function cleanPath(path) {
 	path = decodeURIComponent(decodeURIComponent((path)));
 	let originalPath = path;
 	path = path.replace('?title=', '');
-	path = path.replace(/[+!@#$%^&*{}\\]/g, '');
+	path = path.replace(/[+!#$%^&*{}\\]/g, '');
 	return path;
 }
 

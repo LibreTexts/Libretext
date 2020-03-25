@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="sendAPI returns response">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1763,10 +1760,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576995169755" />
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585171579508">
+    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585176626176">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585171579508" />
+    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585176626176" />
     <state x="558" y="82" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582319524059" />
     <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/0.0.1707.920@0.0.1707.920" timestamp="1580015554097" />
   </component>
