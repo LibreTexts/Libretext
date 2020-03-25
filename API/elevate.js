@@ -176,8 +176,9 @@ async function cleanPath(req, res) {
 	page = await page.json();
 	let path = page['uri.ui'];
 	[, path] = LibreTexts.parseURL(path);
+	let originalPath = path;
 	path = LibreTexts.cleanPath(path);
-	if (path || body.force) {
+	if (path && (originalPath === path || body.force)) {
 		await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
 			body.subdomain, 'LibreBot', {
 				method: 'POST'
@@ -189,4 +190,5 @@ async function cleanPath(req, res) {
 		res.send('okay');
 }
 
-async function fork(req, res){}
+async function fork(req, res) {
+}

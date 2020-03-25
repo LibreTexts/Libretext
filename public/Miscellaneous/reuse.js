@@ -83,7 +83,7 @@ function LibreTextsReuse() {
 	}
 	
 	function parseURL(url = window.location.href) {
-		if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+		if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
 		else {
@@ -93,11 +93,8 @@ function LibreTextsReuse() {
 	
 	function cleanPath(path) {
 		path = decodeURIComponent(decodeURIComponent((path)));
-		let originalPath = path;
 		path = path.replace('?title=', '');
 		path = path.replace(/[+!@#$%^&*{}\\]/g, '');
-		if (originalPath === path)
-			return false;
 		return path;
 	}
 	

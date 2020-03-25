@@ -333,7 +333,7 @@ function extractSubdomain(url) {
 }
 
 function parseURL(url) {
-	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+	if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
 	}
 	else {
@@ -346,8 +346,6 @@ function cleanPath(path) {
 	let originalPath = path;
 	path = path.replace('?title=', '');
 	path = path.replace(/[+!@#$%^&*{}\\]/g, '');
-	if (originalPath === path)
-		return false;
 	return path;
 }
 
