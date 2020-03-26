@@ -1,8 +1,8 @@
 (function () {
 	processContents();
-	let contentJSON;
-	
-	let indexedJSON;
+    let indexExclusions = ["Source"];
+    let indexRequirements = "";
+
 	
 	//main function
 	async function processContents() {
@@ -26,11 +26,10 @@
 				{headers: headers});
 			if (contents.ok) {
 				contents = await contents.json();
-				contentJSON = contents;
 				
 				contents = contents.body;
 				//insert lots of code here to transform contents so that it looks like a textbook index
-				indexedJSON = pageIndexHTMLToJSON(contents);
+				let indexedJSON = pageIndexHTMLToJSON(contents);
 				indexedJSON.taggedTerms = trimTermTag(indexedJSON.taggedTerms);
 				indexedJSON.taggedTerms = sortTerms(indexedJSON.taggedTerms);
 				jsonToHTMLTable(indexedJSON);
@@ -214,8 +213,14 @@
 		for (let i = 0; i < alphabet.length; i++) {
 			let indexLetterTerm = {"letter": alphabet[i], "terms": []};
 			for (let u = termPos; u < pageList.taggedTerms.length; u++) {
-				if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() == alphabet[i]) {
-					indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
+				for (var j = 0; j < indexExclusions.length; j++) { // Check Exclusions
+                    if (pageList.taggedTerms[u].name.charAt(0).toUpperCase()+pageList.taggedTerms[u].name.substring(1,indexExclusions[j].length) === indexExclusions[j]) {
+                        termPos++;
+                        continue;
+                    }
+                }
+                if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() == alphabet[i] && (indexRequirements === "" || pageList.taggedTerms[u].name.charAt(0).toUpperCase()+pageList.taggedTerms[u].name.substring(1,indexRequirements.length) === indexRequirements)) { // Check if term is in letter, check if term is part of the requirement
+                    indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
 					termPos++;
 				}
 				else {
@@ -259,7 +264,3 @@
 		alert(message);
 	}
 })();
-
-
-
-
