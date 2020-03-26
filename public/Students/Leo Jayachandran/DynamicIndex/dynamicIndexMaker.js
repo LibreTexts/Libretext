@@ -22,7 +22,7 @@
 				'X-Requested-With': 'XMLHttpRequest'
 			};
 			
-			let contents = await fetch(url,
+			let contents = await LibreTexts.authenticatedFetch(url, undefined, undefined,
 				{headers: headers});
 			if (contents.ok) {
 				contents = await contents.json();
