@@ -461,7 +461,6 @@ function PublishSubPanel(props) {
 		}
 		else
 			destRoot = props.RemixTree.data.url;
-		destRoot = LibreTexts.cleanPath(destRoot);
 		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
 		if (response.ok && !props.override && props.mode !== 'ReRemix') {
