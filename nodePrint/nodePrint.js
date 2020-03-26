@@ -1584,10 +1584,11 @@ puppeteer.launch({
 					}
 					else if (text.includes('Back')) {
 						//Create Index
-						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, 'contents?abort=exists&title=Index&dream.out.format=json', current.subdomain, 'LibreBot', {
+						//Will need to undo in April 2020 abort=exists
+						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, 'contents?edittime=now&title=Index&dream.out.format=json', current.subdomain, 'LibreBot', {
 							method: "POST",
 							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
-								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
+								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
 						});
 					}
 				}
