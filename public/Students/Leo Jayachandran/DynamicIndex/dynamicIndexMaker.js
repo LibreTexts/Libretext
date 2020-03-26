@@ -184,7 +184,8 @@
 	async function getIndexingURL() {
 		let results;
 		const coverPage = await LibreTexts.getCoverpage();
-		results = await LibreTexts.getAPI("https://chem.libretexts.org/" + coverPage);
+		let [subdomain] = LibreTexts.parseURL();
+		results = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}`);
 		return results;
 	}
 	
