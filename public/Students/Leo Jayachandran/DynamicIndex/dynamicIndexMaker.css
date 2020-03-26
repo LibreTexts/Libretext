@@ -1,26 +1,30 @@
 .indexPages {
-    margin-left: 1.2em;
+	margin-left: 1.2em;
 }
 
 #indexLetterList {
-    text-align: center;
+	text-align: center;
 }
 
 .termDiv p {
-margin-top: 0;
-margin-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 @media print {
-div.pagesTextDiv {
-    font-size: 0.75em;
-}
+	div.pagesTextDiv {
+		font-size: 0.75em;
+	}
 
-.termDiv {
-    break-inside: avoid !important;
-}
+	.termDiv {
+		break-inside: avoid !important;
+	}
 
-#indexLetterList {
-    display: none;
-}
+	#indexLetterList {
+		display: none;
+	}
+
+	.letterDiv:first-child  h2.indexRowHeadCells {
+		margin-top: 0!important;
+	}
 }

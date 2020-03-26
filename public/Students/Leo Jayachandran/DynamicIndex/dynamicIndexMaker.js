@@ -6,7 +6,8 @@
 	
 	//main function
 	async function processContents() {
-		$("#pageText").append(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
+		$(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
+		
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		let coverPageInfo;
 		
