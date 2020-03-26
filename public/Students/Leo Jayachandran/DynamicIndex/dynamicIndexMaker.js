@@ -1,8 +1,8 @@
 (function () {
 	processContents();
-    let indexExclusions = ["Source"];
-    let indexRequirements = "";
-
+	let indexExclusions = ["source", 'lulu'];
+	let indexRequirements = "";
+	
 	
 	//main function
 	async function processContents() {
@@ -214,13 +214,13 @@
 			let indexLetterTerm = {"letter": alphabet[i], "terms": []};
 			for (let u = termPos; u < pageList.taggedTerms.length; u++) {
 				for (var j = 0; j < indexExclusions.length; j++) { // Check Exclusions
-                    if (pageList.taggedTerms[u].name.charAt(0).toUpperCase()+pageList.taggedTerms[u].name.substring(1,indexExclusions[j].length) === indexExclusions[j]) {
-                        termPos++;
-                        continue;
-                    }
-                }
-                if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() == alphabet[i] && (indexRequirements === "" || pageList.taggedTerms[u].name.charAt(0).toUpperCase()+pageList.taggedTerms[u].name.substring(1,indexRequirements.length) === indexRequirements)) { // Check if term is in letter, check if term is part of the requirement
-                    indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
+					if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() + pageList.taggedTerms[u].name.substring(1, indexExclusions[j].length) === indexExclusions[j]) {
+						termPos++;
+						continue;
+					}
+				}
+				if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() == alphabet[i] && (indexRequirements === "" || pageList.taggedTerms[u].name.charAt(0).toUpperCase() + pageList.taggedTerms[u].name.substring(1, indexRequirements.length) === indexRequirements)) { // Check if term is in letter, check if term is part of the requirement
+					indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
 					termPos++;
 				}
 				else {
@@ -260,7 +260,7 @@
 	}
 	
 	function invalidLink(message) {
-	    console.error(message);
+		console.error(message);
 		alert(message);
 	}
 })();
