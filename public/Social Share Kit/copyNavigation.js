@@ -217,6 +217,19 @@
 	
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
+			let [, path] = LibreTexts.parseURL();
+			if (path.startsWith('Sandboxes')) {
+				let response = await LibreTexts.sendAPI('fork');
+				response = await response.text();
+				if (response.includes('Successfully forked')) {
+					
+					alert(response + '.\n The page will now reload.');
+					location.reload();
+				}
+				else alert(response);
+				return;
+			}
+			
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
 			let current = window.location.origin.split('/')[2].split('.')[0];
 			let response = await LibreTexts.authenticatedFetch(pageID, `contents?mode=raw`);
@@ -382,7 +395,8 @@
 		const isPro = document.getElementById("proHolder").innerText === 'true';
 		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
 		let target = $("span.title.mt-title-edit");
-		if (tags && (isAdmin || (isPro && groups.includes('contributor')))) {
+		let [, path] = LibreTexts.parseURL();
+		if (tags && (isAdmin || (isPro && (groups.includes('contributor') || path.startsWith('Sandboxes'))))) {
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
@@ -426,10 +440,11 @@
 			copyTarget.title = "Go to your personal Sandbox";
 			original.parentNode.insertBefore(copy, original);
 		}
-		async function goToSandbox(){
+		
+		async function goToSandbox() {
 			// let username = document.getElementById('usernameHolder').innerText;
 			
-			await LibreTexts.sendAPI('createSandbox',{force:true});
+			await LibreTexts.sendAPI('createSandbox', {force: true});
 			document.location.replace(`/Sandboxes`);
 		}
 	}
