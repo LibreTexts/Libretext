@@ -349,8 +349,8 @@ function cleanPath(path) {
 	return path;
 }
 
-//fills in missing API data for a page
-async function getAPI(page, getContents) {
+//fills in missing API data for a page. Username optional
+async function getAPI(page, getContents, username = undefined) {
 	if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
 		return page;
 	else if (typeof page === 'string')
@@ -360,7 +360,7 @@ async function getAPI(page, getContents) {
 	page.url = page.url.replace('?contentOnly', '');
 	let [subdomain, path] = parseURL(page.url);
 	// console.log(page.url);
-	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain);
+	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain, username);
 	// page.response = response;
 	if (response.ok) {
 		response = await response.json();
