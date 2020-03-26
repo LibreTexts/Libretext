@@ -214,7 +214,7 @@
 			let indexLetterTerm = {"letter": alphabet[i], "terms": []};
 			for (let u = termPos; u < pageList.taggedTerms.length; u++) {
 				for (var j = 0; j < indexExclusions.length; j++) { // Check Exclusions
-					if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() + pageList.taggedTerms[u].name.substring(1, indexExclusions[j].length) === indexExclusions[j]) {
+					if (pageList.taggedTerms[u].name.charAt(0).toLowerCase() + pageList.taggedTerms[u].name.substring(1, indexExclusions[j].length) === indexExclusions[j]) {
 						termPos++;
 						continue;
 					}
