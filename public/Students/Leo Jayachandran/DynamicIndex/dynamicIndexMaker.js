@@ -253,7 +253,7 @@
 				let $termText = $(`<p>${alphabetisedIndex[i].terms[u].name}</p>`);
 				let $pagesText = $(`<div class = "pagesTextDiv"></div>`);
 				for (let j = 0; j < alphabetisedIndex[i].terms[u].pages.length; j++) {
-					$pagesText.append(`<a class = 'indexPages' title = '${alphabetisedIndex[i].terms[u].pages[j].pageName}' href = "${alphabetisedIndex[i].terms[u].pages[j].pageLink}">${alphabetisedIndex[i].terms[u].pages[j].pageName}</a> &#10; <br/>`);
+					$pagesText.append(`<a class = 'indexPages' title = "${alphabetisedIndex[i].terms[u].pages[j].pageName}" href = "${alphabetisedIndex[i].terms[u].pages[j].pageLink}">${alphabetisedIndex[i].terms[u].pages[j].pageName}</a> &#10; <br/>`);
 				}
 				$termDiv.append($termText, $pagesText);
 			}
