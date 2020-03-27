@@ -30,30 +30,29 @@
 						case "gnufdl":
 							return { label: "gnufdl", title: "GNU FDL", link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
 						case "arr":
-							return { label: "arr", title: "All Rights Reserved ©", };
-
+							return { label: "arr", title: "All Rights Reserved Â©", };
+						
 					}
 				}
 			}
 		}
 		return null; //not found
 	}
-
+	
 	$('body').append(`
-                <div class="modal" id="myModal">
-					<div class="modal-content" id="myModal_Slide">
-                            <span  id="myModal_Child"></span>
-
+                <div id="warningModal">
+					<div id="warningModalSlide">
+                            <span id="warningModalChild"></span>
                     </div>
                 </div>
 		`);
-
+	
 	function ccDetector() {
 		const cc = getCC();
 		console.log(cc);
 		if (cc) {
-			$("#myModal").slideDown(800);
-			$('#myModal_Slide').slideDown(800);
+			$("#warningModal").slideDown(800);
+			$('#warningModalSlide').slideDown(800);
 			switch (cc.label) {
 				case "cc-BY":
 					thing_parent.setAttribute("style", "background-color: #aed581;");
@@ -73,16 +72,16 @@
 					break;
 				case "cc-by-nd":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
-
+					
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-nd":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this liscense <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "gnu":
 					thing_parent.setAttribute("style", "background-color: #fff176;");
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this liscense <a href=${cc.link}>here</a>`;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this license <a href=${cc.link}>here</a>`;
 					break;
 				case "gnudsl":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
@@ -95,16 +94,16 @@
 				case "arr":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
 					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You are NOT allowed to distribute or remix the content at all.`;
-
+					
 					break;
 				case "cc-publicdomain":
 					return null;
 					break;
 			}
-
+			
 		}
 	}
-
+	
 	function ccPageLabel() {
 		const cc = getCC();
 		if (cc) {
@@ -125,19 +124,19 @@
 			else {
 				pageLabel.innerHTML = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size:30px" href="${cc.link}"><i class='cc ${cc.label}'></i></a>`;
 			}
-
-
+			
+			
 			if ($("li.elm-last-modified").length)
 				$("li.elm-last-modified")[0].before(pageLabel);
 			else
 				pageLabel.style.display = "none";
 		}
 		const pageNumberHolder = document.getElementById("pageNumberHolder");
-			if ($("li.elm-page-restriction").length)
-				$("li.elm-page-restriction")[0].after(pageNumberHolder);
-			else
-				pageNumberHolder.style.display = "none";
-
+		if ($("li.elm-page-restriction").length)
+			$("li.elm-page-restriction")[0].after(pageNumberHolder);
+		else
+			pageNumberHolder.style.display = "none";
+		
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		if ($(".elm-social-share").length) {
 			let html = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><div id="batchPrint"></div>';
@@ -147,8 +146,8 @@
 			SocialShareKit.init();
 			window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' };
 		}
-
-
+		
+		
 		if (!isAdmin) {
 			const donor = document.createElement("script");
 			donor.type = "text/javascript";
@@ -157,18 +156,18 @@
 				document.getElementById("donate").appendChild(donor);
 		}
 	}
-
+	
 	window.addEventListener('click', function (event) {
 		if (event.target == modal) {
-			$("#myModal").slideUp(800);
-			$('#myModal_Slide').slideUp(800);
+			$("#warningModal").slideUp(800);
+			$('#warningModalSlide').slideUp(800);
 		}
 	});
-
-
-	const modal = document.getElementById("myModal");
-	const thing = document.getElementById("myModal_Child");
-	const thing_parent = document.getElementById("myModal_Slide");
+	
+	
+	const modal = document.getElementById("warningModal");
+	const thing = document.getElementById("warningModalChild");
+	const thing_parent = document.getElementById("warningModalSlide");
 	document.body.appendChild(modal);
 	document.addEventListener("copy", ccDetector);
 	document.addEventListener('DOMContentLoaded', ccPageLabel)
