@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ] && TIME /T",
+    "package": "browserify \"./src/pages/index.js\" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ] && bash -c \"sed -i \"s/REPLACEWITHDATE/$(date -Iseconds)/g\" bundle.js\" && TIME /T",
     "test": ""
   },
   "author": "",
@@ -15,6 +15,7 @@
     "@material-ui/styles": "^4.9.6",
     "babelify": "^10.0.0",
     "create-react-class": "^15.6.3",
+    "deepmerge": "^4.2.2",
     "diff": "^4.0.2",
     "node-fetch": "^2.6.0",
     "notistack": "^0.9.9",

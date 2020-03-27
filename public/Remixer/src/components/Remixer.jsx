@@ -14,7 +14,9 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import {blue, grey} from "@material-ui/core/colors";
 import {Switch} from "@material-ui/core";
-
+import merge from "deepmerge";
+import Tooltip from "@material-ui/core/Tooltip";
+import Info from "@material-ui/icons/Info";
 
 export default class Remixer extends React.Component {
 	constructor(props) {
@@ -47,36 +49,33 @@ export default class Remixer extends React.Component {
 		if (defaultState.permission !== 'Demonstration')
 			LibreTexts.sendAPI('createSandbox', {force: true}).then();
 		let state = defaultState;
-		if (localStorage.getItem('RemixerState')) {
+		
+		/*if (localStorage.getItem('RemixerState')) {
 			state = {
 				...state, ...JSON.parse(localStorage.getItem('RemixerState')),
 				permission: RemixerFunctions.userPermissions(), //nonpermanent
 				user: document.getElementById('usernameHolder').innerText, //nonpermanent
 				href: window.location.href, //nonpermanent
 			};
-		}
-		/*if (!this.allowedReRemixer(state.permission) && state.mode === 'ReRemix') { //prevent insecure access
-			state = defaultState;
-			alert('You do not currently have permission to access the ReRemixer.');
 		}*/
+		let oldState = localStorage.getItem('RemixerState');
+		if (oldState) {
+			oldState = JSON.parse(localStorage.getItem('RemixerState'));
+			state.options = merge(state.options, oldState.options);
+			console.log(state.options);
+		}
 		if (state.type) {
 			state.permission = state.mode;
 			state.mode = state.type;
 			delete state.type;
 		}
 		this.state = state;
+		
+		window.addEventListener('beforeunload', event => {
+			localStorage.setItem('lastRemixerAutosave', JSON.stringify(this.state));
+			console.log('Shutting down Remixer!');
+		})
 	}
-	
-	/*allowedReRemixer(permission = this.state.permission) {
-		switch (permission) {
-			case "Admin":
-			case "Pro":
-			case "Basic":
-				return true;
-			default:
-				return false;
-		}
-	}*/
 	
 	updateRemixer = (newState, updateUndo) => {
 		if (updateUndo) {
@@ -124,6 +123,21 @@ export default class Remixer extends React.Component {
 		this.save({...this.state, ...result});
 	};
 	
+	loadAutosave = () => {
+		let autosave = localStorage.getItem('lastRemixerAutosave');
+		if (autosave) {
+			autosave = JSON.parse(autosave);
+			let newState = {
+				mode: autosave.mode,
+				stage: autosave.stage,
+				defaultCopyMode: autosave.defaultCopyMode,
+				RemixTree: autosave.RemixTree,
+				currentlyActive: '',
+			};
+			this.setState(newState);
+			this.save({...this.state, ...newState});
+		}
+	};
 	
 	handleSwap = (doSwap) => {
 		let result = {swapDialog: false};
@@ -162,8 +176,9 @@ export default class Remixer extends React.Component {
 		});
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-			<div className="navigationBar" style={{justifyContent: 'center'}}>
-				<div style={{fontSize: '130%', cursor:'pointer'}}
+			<div className="navigationBar">
+				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}><Info/></Tooltip></div>
+				<div style={{fontSize: '130%', cursor: 'pointer'}}
 				     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
 				>
 					New Remix Mode
@@ -171,7 +186,12 @@ export default class Remixer extends React.Component {
 						checked={this.state.mode === 'ReRemix'} color="default"/>
 					Edit Remix Mode
 				</div>
-				<span>{this.state.lastSave}</span>
+				<Tooltip title={'Autosaves are from when you last closed the Remixer'}>
+					<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+						<Button variant="contained" onClick={this.loadAutosave} disabled={!localStorage.getItem('lastRemixerAutosave')}>Load
+						                                                                                    Autosave</Button>
+					</div>
+				</Tooltip>
 			</div>
 			
 			{this.renderState()}
