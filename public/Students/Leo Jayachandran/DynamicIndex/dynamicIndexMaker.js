@@ -1,14 +1,14 @@
 (function () {
 	processContents();
 	let indexExclusions = ["source", 'lulu' , "@"]; // Case insensitive
-	let indexRequirements =  [""]; // Case sensisitve  if ends with @, that tag will be trimmed, else it will be left as it(Can be entered here or in currentScript.dataset.filter)
+	let indexRequirements =  [""]; // Case sensisitve  if ends with @, that tag will be trimmed, else it will be left as it(Can be entered here or in currentScript.dataset.filter, currentScript.dataset.filter takes priority)
 	
 	
 	//main function
 	async function processContents() {
         $(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
         if (typeof(currentScript) !== "undefined" && typeof(currentScript.dataset) !== "undefined" && typeof(currentScript.dataset.filter) !== "undefined") {
-            indexRequirements =  JSON.parse(currentScript.dataset.filter);
+            indexRequirements = ((currentScript.dataset.filter.startsWith("[")) ? JSON.parse(currentScript.dataset.filter) : [currentScript.dataset.filter]);
         }
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		let coverPageInfo;
@@ -185,8 +185,8 @@
 		let testStrings = ["a ", "an ", "the "];
 		for (let i = 0; i < newList.length; i++) {
 			for (let u = 0; u < testStrings.length; u++) {
-				if (newList[i].name.substring(0, testStrings[u].length) == testStrings[u]) {
-					newList[i].name = newList[i].name.slice(testStrings[u].length);
+				if (newList[i].name.toLowerCase().startsWith(testStrings[u])) {
+					newList[i].name = newList[i].name.replace(testStrings[u].length, "");
 				}
 			}
 		}
@@ -205,7 +205,7 @@
 	function sortTerms(termList/*Array with Pages*/) {
 		let newList = termList.slice();
 		newList.sort(function (a, b) {
-			return ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1)
+			return ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
 		});
 		return newList;
 	}
