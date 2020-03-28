@@ -7,8 +7,8 @@
 	//main function
 	async function processContents() {
         $(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
-        if (typeof(currentScript) !== "undefined" && typeof(currentScript.dataset) !== "undefined" && typeof(currentScript.dataset.filter) !== "undefined") {
-            indexRequirements = ((currentScript.dataset.filter.startsWith("[")) ? JSON.parse(currentScript.dataset.filter) : [currentScript.dataset.filter]);
+        if (typeof(document.currentScript.dataset) !== "undefined" && typeof(document.currentScript.dataset.filter) !== "undefined") {
+            indexRequirements = ((document.currentScript.dataset.filter.startsWith("[")) ? JSON.parse(document.currentScript.dataset.filter) : [document.currentScript.dataset.filter]);
         }
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		let coverPageInfo;
@@ -151,10 +151,10 @@
 			//update termcutstring
             termCutString = termCutString.slice(postPagelistPosition + postPagelist.length);
             
-            var canPush = true;
+            let canPush = true;
             //Filter term
             
-            for (var e = 0; e < indexRequirements.length; e++) { // Inclusions
+            for (let e = 0; e < indexRequirements.length; e++) { // Inclusions
                 if (canPush && newTerm.name.includes(indexRequirements[e])) { // if requirement is present, trim and continue check, if term is absent, 
                     if (indexRequirements[e].endsWith("@")) { // Trim the term name if filter ends with @
                         newTerm.name = newTerm.name.replace(indexRequirements[e], "").trim();
@@ -165,7 +165,7 @@
                 }
             }
             
-            for (var e = 0 ; e < indexExclusions.length; e++) { // Exclusions
+            for (let e = 0 ; e < indexExclusions.length; e++) { // Exclusions
                 if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
                     canPush = false;
                     break;
@@ -278,7 +278,7 @@
 				let $termText = $(`<p>${alphabetisedIndex[i].terms[u].name}</p>`);
 				let $pagesText = $(`<div class = "pagesTextDiv"></div>`);
 				for (let j = 0; j < alphabetisedIndex[i].terms[u].pages.length; j++) {
-                    var pageToAdd = $(`<a></a>`).html(alphabetisedIndex[i].terms[u].pages[j].pageName).attr({
+                    let pageToAdd = $(`<a></a>`).html(alphabetisedIndex[i].terms[u].pages[j].pageName).attr({
                         "title": alphabetisedIndex[i].terms[u].pages[j].pageName,
                         "href": alphabetisedIndex[i].terms[u].pages[j].pageLink,
                         "class" : "indexPages"
