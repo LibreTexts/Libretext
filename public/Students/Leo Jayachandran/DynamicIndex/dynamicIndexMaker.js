@@ -1,6 +1,6 @@
 (function () {
 	processContents();
-	let indexExclusions = ["source", 'lulu']; // Case insensitive
+	let indexExclusions = ["source", 'lulu' , "@"]; // Case insensitive
 	let indexRequirements =  [""]; // Case sensisitve  if ends with @, that tag will be trimmed, else it will be left as it(Can be entered here or in currentScript.dataset.filter)
 	
 	
@@ -154,12 +154,6 @@
             var canPush = true;
             //Filter term
             
-            for (var e = 0 ; e < indexExclusions.length; e++) { // Exclusions
-                if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
-                    canPush = false;
-                    break;
-                }
-            }
             for (var e = 0; e < indexRequirements.length; e++) { // Inclusions
                 if (canPush && newTerm.name.includes(indexRequirements[e])) { // if requirement is present, trim and continue check, if term is absent, 
                     if (indexRequirements[e].endsWith("@")) { // Trim the term name if filter ends with @
@@ -171,6 +165,12 @@
                 }
             }
             
+            for (var e = 0 ; e < indexExclusions.length; e++) { // Exclusions
+                if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
+                    canPush = false;
+                    break;
+                }
+            }
             //Push new term
             if (canPush) {
                 pageList.taggedTerms.push(newTerm);
