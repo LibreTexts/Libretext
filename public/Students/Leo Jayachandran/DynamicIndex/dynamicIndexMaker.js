@@ -1,13 +1,15 @@
 (function () {
 	processContents();
-	let indexExclusions = ["source", 'lulu'];
-	let indexRequirements = "";
+	let indexExclusions = ["source", 'lulu']; // Case insensitive
+	let indexRequirements =  [""]; // Case sensisitve  if ends with @, that tag will be trimmed, else it will be left as it(Can be entered here or in currentScript.dataset.filter)
 	
 	
 	//main function
 	async function processContents() {
-		$(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
-		
+        $(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
+        if (typeof(currentScript) !== "undefined" && typeof(currentScript.dataset) !== "undefined" && typeof(currentScript.dataset.filter) !== "undefined") {
+            indexRequirements =  JSON.parse(currentScript.dataset.filter);
+        }
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
 		let coverPageInfo;
 		
@@ -110,7 +112,7 @@
 		let firstLoopCheck = 0;
 		while (termCutString.length > 0) { //loop through the different terms
 			//Find the title of the term
-			let termName = termCutString.substring(termCutString.search(preTermName) + preTermName.length, termCutString.search(postTermName));
+            let termName = termCutString.substring(termCutString.search(preTermName) + preTermName.length, termCutString.search(postTermName));
 			let newTerm = {
 				"name": termName,
 				"pages": [
@@ -144,10 +146,36 @@
 				cutString = cutString.slice(termEnd + termEndString.length);
 				newTerm.pages.push(newPage);
 				
-			}
-			pageList.taggedTerms.push(newTerm);
+            }
+            
 			//update termcutstring
-			termCutString = termCutString.slice(postPagelistPosition + postPagelist.length);
+            termCutString = termCutString.slice(postPagelistPosition + postPagelist.length);
+            
+            var canPush = true;
+            //Filter term
+            
+            for (var e = 0 ; e < indexExclusions.length; e++) { // Exclusions
+                if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
+                    canPush = false;
+                    break;
+                }
+            }
+            for (var e = 0; e < indexRequirements.length; e++) { // Inclusions
+                if (canPush && newTerm.name.includes(indexRequirements[e])) { // if requirement is present, trim and continue check, if term is absent, 
+                    if (indexRequirements[e].endsWith("@")) { // Trim the term name if filter ends with @
+                        newTerm.name = newTerm.name.replace(indexRequirements[e], "").trim();
+                    }
+                } else { // stop checking
+                    canPush = false;
+                    break;
+                }
+            }
+            
+            //Push new term
+            if (canPush) {
+                pageList.taggedTerms.push(newTerm);
+            }
+            
 		}
 		return pageList;
 	}
@@ -164,7 +192,8 @@
 		}
 		return newList;
 	}
-	
+
+
 	function sortPage(pageList/*Array with Pages*/) {
 		let newList = pageList.slice();
 		newList.sort(function (a, b) {
@@ -214,14 +243,10 @@
 		for (let i = 0; i < alphabet.length; i++) {
 			let indexLetterTerm = {"letter": alphabet[i], "terms": []};
 			for (let u = termPos; u < pageList.taggedTerms.length; u++) {
-				for (var j = 0; j < indexExclusions.length; j++) { // Check Exclusions
-					if (pageList.taggedTerms[u].name.charAt(0).toLowerCase() + pageList.taggedTerms[u].name.substring(1, indexExclusions[j].length) === indexExclusions[j]) {
-						termPos++;
-						continue;
-					}
-				}
-				if (pageList.taggedTerms[u].name.charAt(0).toUpperCase() == alphabet[i] && (indexRequirements === "" || pageList.taggedTerms[u].name.charAt(0).toUpperCase() + pageList.taggedTerms[u].name.substring(1, indexRequirements.length) === indexRequirements)) { // Check if term is in letter, check if term is part of the requirement
-					indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
+				
+				if (pageList.taggedTerms[u].name.toUpperCase().startsWith(alphabet[i])) { // Check if term is in letter
+                    
+                    indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
 					termPos++;
 				}
 				else {
@@ -253,7 +278,13 @@
 				let $termText = $(`<p>${alphabetisedIndex[i].terms[u].name}</p>`);
 				let $pagesText = $(`<div class = "pagesTextDiv"></div>`);
 				for (let j = 0; j < alphabetisedIndex[i].terms[u].pages.length; j++) {
-					$pagesText.append(`<a class = 'indexPages' title = "${alphabetisedIndex[i].terms[u].pages[j].pageName}" href = "${alphabetisedIndex[i].terms[u].pages[j].pageLink}">${alphabetisedIndex[i].terms[u].pages[j].pageName}</a> &#10; <br/>`);
+                    var pageToAdd = $(`<a></a>`).html(alphabetisedIndex[i].terms[u].pages[j].pageName).attr({
+                        "title": alphabetisedIndex[i].terms[u].pages[j].pageName,
+                        "href": alphabetisedIndex[i].terms[u].pages[j].pageLink,
+                        "class" : "indexPages"
+                    });
+
+					$pagesText.append(pageToAdd, `&#10; <br/>`);
 				}
 				$termDiv.append($termText, $pagesText);
 			}
