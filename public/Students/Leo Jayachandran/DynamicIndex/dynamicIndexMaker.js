@@ -181,13 +181,13 @@
 		return pageList;
 	}
 	
-	function trimTermTag(termList/*Array with Terms*/) {
+	function trimTermTag(termList/*Array with Terms*/) { //Trims the, a , an from the start of the tag if present
 		let newList = termList.slice();
-		let testStrings = ["a ", "an ", "the "];
+		let articleStrings = ["a ", "an ", "the "];
 		for (let i = 0; i < newList.length; i++) {
-			for (let u = 0; u < testStrings.length; u++) {
-				if (newList[i].name.toLowerCase().startsWith(testStrings[u])) {
-					newList[i].name = newList[i].name.replace(testStrings[u].length, "");
+			for (let u = 0; u < articleStrings.length; u++) {
+				if (newList[i].name.toLowerCase().startsWith(articleStrings[u])) {
+					newList[i].name = newList[i].name.replace(articleStrings[u].length, "");
 				}
 			}
 		}
