@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -1094,13 +1096,9 @@
       <workItem from="1585162283010" duration="879000" />
       <workItem from="1585169322969" duration="2206000" />
       <workItem from="1585259419383" duration="1088000" />
-    </task>
-    <task id="LOCAL-00198" summary="Mandeep margins">
-      <created>1560405494608</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1560405494609</updated>
+      <workItem from="1585343669284" duration="553000" />
+      <workItem from="1585345191189" duration="614000" />
+      <workItem from="1585427773494" duration="366000" />
     </task>
     <task id="LOCAL-00199" summary="Foreign Image">
       <created>1560471493895</created>
@@ -1438,7 +1436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585260235337</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="Updated licenses.js">
+      <created>1585333709699</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1585333709699</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1494,7 +1499,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Hack-a-Mole" />
     <MESSAGE value="Added Store: to downloads bar" />
     <MESSAGE value="Bugfix Importer Padded titles" />
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
@@ -1519,7 +1523,8 @@
     <MESSAGE value="bundled dynamicIndexMaker.js&#10;&#10;-wrapped dynamicIndexMaker.js in self-invoking function&#10;-changed var to let/const&#10;-formatted file&#10;-still has type coercion issues" />
     <MESSAGE value="Bugfix dynamicIndexMaker.js non-chem libraries" />
     <MESSAGE value="Bugfix dynamicIndexMaker.js authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix dynamicIndexMaker.js authentication" />
+    <MESSAGE value="Updated licenses.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated licenses.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1579596460816">
@@ -1539,11 +1544,11 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="793" y="107" key="#xdebugger.evaluate/0.0.1368.872@0.0.1368.872" timestamp="1582655095547" />
-    <state x="627" y="0" width="1075" height="782" key="CommitChangelistDialog2" timestamp="1585264306926">
+    <state x="627" y="0" width="1075" height="782" key="CommitChangelistDialog2" timestamp="1585333709038">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576995346989" />
-    <state x="627" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585264306926" />
+    <state x="627" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585333709038" />
     <state x="132" y="0" width="948" height="872" key="CommitChangelistDialog2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015106278" />
     <state x="133" y="0" width="985" height="872" key="CommitChangelistDialog2/0.0.1368.872@0.0.1368.872" timestamp="1583260174068" />
     <state x="148" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1583529109310" />
@@ -1747,10 +1752,10 @@
     </state>
     <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585188022269" />
     <state x="277" y="54" key="SettingsEditor/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191484618" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1585260237389">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1585333711954">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260237389" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585333711954" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015111019" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872@0.0.1368.872" timestamp="1583260177643" />
     <state x="401" y="169" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1581375684399" />

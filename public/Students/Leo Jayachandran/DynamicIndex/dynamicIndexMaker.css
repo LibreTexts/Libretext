@@ -24,7 +24,7 @@
 		display: none;
 	}
 
-	.letterDiv:first-child  h2.indexRowHeadCells {
-		margin-top: 0!important;
+	.letterDiv:first-child h2.indexRowHeadCells {
+		margin-top: 0 !important;
 	}
 }
