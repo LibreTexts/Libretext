@@ -7,7 +7,7 @@
 	//main function
 	async function processContents() {
 		$(document.currentScript).after(`<div id="indexDiv"><p id="indexLetterList"></p><div id="indexTable"></div></div>`);
-		if (typeof (document.currentScript.dataset) !== "undefined" && typeof (document.currentScript.dataset.filter) !== "undefined") {
+		if (document.currentScript.dataset && document.currentScript.dataset.filter) {
 			indexRequirements = ((document.currentScript.dataset.filter.startsWith("[")) ? JSON.parse(document.currentScript.dataset.filter) : [document.currentScript.dataset.filter]);
 		}
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
