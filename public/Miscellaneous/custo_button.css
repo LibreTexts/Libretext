@@ -1,0 +1,97 @@
+   /* The Modal (background) */
+   .modal_ar {
+     display: none; /* Hidden by default */
+     position: fixed; /* Stay in place */
+     z-index: 10000; /* Sit on top */
+     padding-top: 100px; /* Location of the box */
+     left: 0;
+     top: 0;
+     width: 100%; /* Full width */
+     height: 100%; /* Full height */
+     overflow: auto; /* Enable scroll if needed */
+     background-color: rgb(0,0,0); /* Fallback color */
+     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+     
+   }
+   
+   
+   /* Modal Content */
+   .modal-content_ar {
+     background-color: #e0e0e0;
+     margin: auto;
+     padding: 15px;
+     border: 1px solid #888;
+     width: 60%;
+     font-family: 'Roboto';
+     font-size: 14px;
+   }
+   
+   .select {
+     width: 50%;
+     opacity: 0;
+   }
+   /* The Close Button */
+   .close_ar {
+     margin-top: 0px;
+     color: #aaaaaa;
+     float: right;
+     font-size: 28px;
+     font-weight: bold;
+   }
+   
+   .close_ar:hover,
+   .close_ar:focus {
+     color: #000;
+     text-decoration: none;
+     cursor: pointer;
+   }
+   .slidecontainer {
+     width: 100%;
+     padding-top: 20px;
+   }
+   
+   .slider_ar {
+     
+     -webkit-appearance: none;
+     width: 100%;
+     height: 8px;
+     border-radius: 0px;
+     background: #d3d3d3;
+     outline: none;
+     opacity: 0.7;
+     -webkit-transition: .2s;
+     transition: opacity .2s;
+   }
+   
+   .slider_ar:hover {
+     opacity: 1;
+   }
+   
+   .slider_ar::-webkit-slider-thumb {
+     -webkit-appearance: none;
+     appearance: none;
+     width: 15px;
+     height: 15px;
+     border-radius: 0%;
+     background: black;
+     cursor: pointer;
+   }
+   
+   .slider_ar::-moz-range-thumb {
+     width: 25px;
+     height: 25px;
+     border-radius: 50%;
+     background: black;
+     cursor: pointer;
+   }
+   .changeMe{
+      
+   }
+   .darkbtn{
+       text-align:center;
+   }
+   
+   #fs, #darkbtn, #size, #width{
+       margin-top: 10px;
+       margin-bottom: 10px;
+   }
