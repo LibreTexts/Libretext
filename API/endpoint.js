@@ -14,7 +14,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-console.log('Restarted ' + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -24,27 +24,6 @@ async function handler(request, response) {
 	
 	if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
 		responseError('Unauthorized', 401);
-	}
-	else if (url.startsWith('/getKey') && false) { //moved to keys.libretexts.org
-		if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-			response.writeHead(200, {
-				'Access-Control-Allow-Origin': request.headers.origin || null,
-				'Access-Control-Allow-Methods': 'GET',
-			});
-			response.end();
-		}
-		else if (request.method === 'GET') {
-			response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-				'Access-Control-Allow-Origin': request.headers.origin || null,
-				'Access-Control-Allow-Methods': 'GET',
-				'Content-Type': 'application/json',
-			} : {'Content-Type': 'application/json'});
-			response.write(JSON.stringify(authenBrowser));
-			response.end();
-		}
-		else {
-			responseError(request.method + ' Not Acceptable', 406);
-		}
 	}
 	else if (url.startsWith('/contents')) {
 		if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
@@ -211,12 +190,13 @@ async function handler(request, response) {
 					if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
 						let content = await fs.readJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`);
 						if (content) {
-							let index = content.findIndex(elem => elem.id === input.content.id);
+							let array = content.items || content;
+							let index = array.findIndex(elem => elem.id === input.content.id);
 							if (index && index !== -1) {
-								content[index] = input.content;
+								array[index] = input.content;
 							}
 							else {
-								content.push(input.content);
+								array.push(input.content);
 							}
 							await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
 						}
@@ -233,38 +213,6 @@ async function handler(request, response) {
 		}
 		else {
 			responseError(request.method + ' Not Acceptable', 406);
-		}
-	}
-	else if (url === '/subpages' && false) { // disabled
-		if (request.headers.host.includes('.miniland1333.com') && request.method === 'OPTIONS') { //options checking
-			response.writeHead(200, {
-				'Access-Control-Allow-Origin': request.headers.origin || null,
-				'Access-Control-Allow-Methods': 'PUT',
-				'Content-Type': ' application/json',
-			});
-			response.end();
-		}
-		else if (request.method === 'PUT') {
-			response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-				'Access-Control-Allow-Origin': request.headers.origin || null,
-				'Access-Control-Allow-Methods': 'PUT',
-				'Content-Type': ' application/json',
-			} : {'Content-Type': ' application/json'});
-			let body = [];
-			request.on('data', (chunk) => {
-				body.push(chunk);
-			}).on('end', async () => {
-				body = Buffer.concat(body).toString();
-				
-				let input = JSON.parse(body);
-				const username = input.username;
-				const rootURL = input.rootURL;
-				console.time(`Subpages: ${rootURL}`);
-				let finalResult = await LibreTexts.getSubpages(rootURL, username, {getDetails: true, delay: true});
-				console.timeEnd(`Subpages: ${rootURL}`);
-				response.write(JSON.stringify(finalResult));
-				response.end();
-			});
 		}
 	}
 	else if (url.startsWith('/getAuthors/')) {

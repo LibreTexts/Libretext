@@ -1,7 +1,7 @@
 const scheduler = require('node-schedule');
 const fetch = require("node-fetch");
 const timestamp = require("console-timestamp");
-
+const port = null;
 
 const now1 = new Date();
 const schedule = {
@@ -39,5 +39,5 @@ for (let i = 0; i < times.length; i++) {
 	});
 	// console.log(`Set ${schedule[times[i]]} for ${times[i]}`);
 }
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 setInterval(() => {}, 10000);
