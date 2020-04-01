@@ -67,8 +67,8 @@ function userPermissions(full) {
 		permission = 'Pro';
 	else if (isPro && groups.includes('faculty'))
 		permission = 'Faculty';
-/*	else if (groups.includes('workshop'))
-		permission = 'Workshop';*/
+	/*	else if (groups.includes('workshop'))
+			permission = 'Workshop';*/
 	else if (isPro && (groups.includes('basicuser') || groups.includes('workshop')))
 		permission = 'Basic';
 	
@@ -176,7 +176,7 @@ async function getSubpages(path, subdomain, options = {
 			if (originalPath !== path || path.includes('?title=')) {
 				let cleaned = await LibreTexts.sendAPI('cleanPath', {pageID: id, force: true});
 				cleaned = await cleaned.text();
-				if (cleaned !== 'okay'){
+				if (cleaned !== 'okay' && cleaned !== 'RESTRICTED') {
 					path = cleaned;
 					url = `https://${subdomain}.libretexts.org/${path}`;
 				}

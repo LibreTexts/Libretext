@@ -58,6 +58,7 @@ export default class Remixer extends React.Component {
 				href: window.location.href, //nonpermanent
 			};
 		}*/
+		alert('To load the Remix you were previously working on, click Load Autosave');
 		let oldState = localStorage.getItem('RemixerState');
 		if (oldState) {
 			oldState = JSON.parse(localStorage.getItem('RemixerState'));

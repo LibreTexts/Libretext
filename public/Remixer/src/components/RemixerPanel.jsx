@@ -956,7 +956,7 @@ class RemixerPanel extends React.Component {
 			}
 			node.title = node.title.trim();
 			if (node.data.padded) {
-				node.data.padded = node.data.padded.replace(/[+!@#$%^&*{}\\/]/g, '');
+				node.data.padded = LibreTexts.cleanPath(node.data.padded);
 				if (node.data.padded.includes(':')) {
 					node.data.padded = encodeURIComponent(node.data.padded);
 					node.data.padded = node.data.padded.replace(/%20/g, ' ');
