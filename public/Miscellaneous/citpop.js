@@ -34,12 +34,13 @@ function buildcite(verbose=false){
     if($("li[class='mt-author-companyname']").find('a').text() != ''){
         var fullinst = $("li[class='mt-author-companyname']").find('a').text()
         jsobj['publisher'] = fullinst
-    }   
+    }
     /* Bug Checking */
     if(verbose){
         console.log(accdate);
         console.log(book);
         console.log(authors)
+	console.log($("li[class='mt-author-information']").find('a'))
     }
             // Extend Available Templates //
     let mlaname = 'mla';
@@ -53,14 +54,15 @@ function buildcite(verbose=false){
     Cite.plugins.config.get('csl').templates.add(mlaname, mlatemplate);
     Cite.plugins.config.get('csl').templates.add(acsname, acstemplate);
     Cite.plugins.config.get('csl').templates.add(chicagoname, chicagotemplate);
-    var citetemp = $('#citeSelect').val();
+    citetemp = $('#citeSelect').children("option:Selected").val();
+    console.log(citetemp)
     let citeobj = new Cite(jsobj);
     let output = citeobj.format('bibliography',{
         format: 'text',
         template: citetemp,
         lang: 'en-US'
     });
-    $('#citeText').val(output);
+    $('#citeText').val(output.trim());
     console.log(output);
 };
 // Author Name Helper Function //  
@@ -139,7 +141,7 @@ function namesplitter(name, verbose=false){
     return authors
     }
 // Build Modal //
-function nikGetCitation(){
+function nikGetCitation2(){
     var citeInt = document.createElement("div");
     var citeBg = document.createElement("div");
     var citeCont = document.createElement("div");
@@ -150,9 +152,15 @@ function nikGetCitation(){
     var citeClose = document.createElement("BUTTON");
     var elements = {'citeInt': citeInt,'citeBg': citeBg, 'citeCont': citeCont, 'citeHead': citeHead, 'citeText': citeText, 'citeButtons':citeButtons, 'citeSelect': citeSelect, 'citeClose':citeClose};
     var options ={'':'Template Selection','apa':"APA", 'harvard1':"Harvard", 'vancouver':"Vancouver", 'mla':"MLA", 'chicago':"Chicago", 'acs':"ACS"}
-
-
+    var head = document.getElementsByTagName('HEAD')[0];
+    var link = document.createElement('link');
+    $('nav.elm-header-user-nav.elm-nav').zIndex(5);
     $('body').append(citeInt);
+    link.id='modal_css';
+    link.rel='stylesheet';
+    link.type='text/css';
+    link.href='https://test.libretexts.org/nwlundgren/development/citpop.css';
+    head.append(link);
     citeInt.append(citeBg,citeCont);
     citeCont.append(citeHead,citeText,citeButtons);
     citeButtons.append(citeSelect,citeClose);
@@ -173,9 +181,17 @@ function nikGetCitation(){
     $('#citeClose').on('click',function(){
         $('#citeBg').replaceWith('');
         $('#citeCont').replaceWith('');
+	$('#citeInt').remove();
+        $('#modal_css').remove();
+        $('nav.elm-header-user-nav.elm-nav').zIndex(990);
     });
     $('#citeBg').on('click',function(){
         $('#citeBg').replaceWith('');
         $('#citeCont').replaceWith('');
-        });
+	$('#citeInt').remove();
+        $('#modal_css').remove();
+        $('nav.elm-header-user-nav.elm-nav').zIndex(990);
+    });
     };
+
+
