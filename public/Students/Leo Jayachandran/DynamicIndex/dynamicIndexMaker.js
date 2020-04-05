@@ -1,6 +1,6 @@
 (function () {
 	processContents();
-	let indexExclusions = ["source", 'lulu', "@"]; // Case insensitive
+	let indexExclusions = ["source", 'lulu', "@", "-"]; // Case insensitive
 	let indexRequirements = [""]; // Case sensisitve  if ends with @, that tag will be trimmed, else it will be left as it(Can be entered here or in currentScript.dataset.filter, currentScript.dataset.filter takes priority)
 	
 	
