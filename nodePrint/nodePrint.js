@@ -509,12 +509,14 @@ puppeteer.launch({
 					current.authorTag = tag.replace('authorname:', '');
 					
 					if (!current.name) {
-						if (typeof getInformation.libreAuthors === 'undefined') {
+						if(typeof getInformation.libreAuthors === 'undefined')
+							getInformation.libreAuthors={};
+						if (!getInformation.libreAuthors[current.subdomain]) {
 							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
-							getInformation.libreAuthors = await authors.json();
+							getInformation.libreAuthors[current.subdomain] = await authors.json();
 						}
 						
-						let information = getInformation.libreAuthors[current.authorTag];
+						let information = getInformation.libreAuthors[current.subdomain][current.authorTag];
 						if (information) {
 							Object.assign(current, information);
 						}

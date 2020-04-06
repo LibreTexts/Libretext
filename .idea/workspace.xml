@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1099,13 +1100,7 @@
       <workItem from="1585343669284" duration="553000" />
       <workItem from="1585345191189" duration="614000" />
       <workItem from="1585427773494" duration="366000" />
-    </task>
-    <task id="LOCAL-00199" summary="Foreign Image">
-      <created>1560471493895</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1560471493896</updated>
+      <workItem from="1586209738248" duration="1489000" />
     </task>
     <task id="LOCAL-00200" summary="Front, Middle, Back Matter">
       <created>1560727631553</created>
@@ -1443,7 +1438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585333709699</updated>
     </task>
-    <option name="localTasksCounter" value="248" />
+    <task id="LOCAL-00248" summary="Developer menu buildcite()">
+      <created>1586127016421</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1586127016422</updated>
+    </task>
+    <option name="localTasksCounter" value="249" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1499,7 +1501,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added Store: to downloads bar" />
     <MESSAGE value="Bugfix Importer Padded titles" />
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
     <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
@@ -1524,7 +1525,8 @@
     <MESSAGE value="Bugfix dynamicIndexMaker.js non-chem libraries" />
     <MESSAGE value="Bugfix dynamicIndexMaker.js authentication" />
     <MESSAGE value="Updated licenses.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated licenses.js" />
+    <MESSAGE value="Developer menu buildcite()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Developer menu buildcite()" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1579596460816">
