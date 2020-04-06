@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Students/Henry Agnew/BeeLine/beeline-integration.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Henry Agnew/BeeLine/beeline-integration.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1100,14 +1100,7 @@
       <workItem from="1585343669284" duration="553000" />
       <workItem from="1585345191189" duration="614000" />
       <workItem from="1585427773494" duration="366000" />
-      <workItem from="1586209738248" duration="1489000" />
-    </task>
-    <task id="LOCAL-00200" summary="Front, Middle, Back Matter">
-      <created>1560727631553</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1560727631555</updated>
+      <workItem from="1586209738248" duration="2470000" />
     </task>
     <task id="LOCAL-00201" summary="Portal Config">
       <created>1560729681926</created>
@@ -1445,7 +1438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586127016422</updated>
     </task>
-    <option name="localTasksCounter" value="249" />
+    <task id="LOCAL-00249" summary="author bar multi-library">
+      <created>1586212627897</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1586212627897</updated>
+    </task>
+    <option name="localTasksCounter" value="250" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1501,7 +1501,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix Importer Padded titles" />
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
     <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
     <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
@@ -1526,7 +1525,8 @@
     <MESSAGE value="Bugfix dynamicIndexMaker.js authentication" />
     <MESSAGE value="Updated licenses.js" />
     <MESSAGE value="Developer menu buildcite()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Developer menu buildcite()" />
+    <MESSAGE value="author bar multi-library" />
+    <option name="LAST_COMMIT_MESSAGE" value="author bar multi-library" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1579596460816">
@@ -1546,9 +1546,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="793" y="107" key="#xdebugger.evaluate/0.0.1368.872@0.0.1368.872" timestamp="1582655095547" />
-    <state x="627" y="0" width="1075" height="782" key="CommitChangelistDialog2" timestamp="1586127015633">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1356" y="0" width="1075" height="782" key="CommitChangelistDialog2" timestamp="1586212627203">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212627203" />
     <state x="627" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586127015633" />
     <state x="132" y="0" width="948" height="872" key="CommitChangelistDialog2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015106278" />
     <state x="133" y="0" width="985" height="872" key="CommitChangelistDialog2/0.0.1368.872@0.0.1368.872" timestamp="1583260174068" />
@@ -1741,9 +1742,10 @@
     </state>
     <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585188022269" />
     <state x="277" y="54" key="SettingsEditor/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191484618" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1586127018039">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1586212629334">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212629334" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586127018039" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015111019" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872@0.0.1368.872" timestamp="1583260177643" />
