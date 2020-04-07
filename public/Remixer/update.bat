@@ -1,1 +1,0 @@
-browserify "./src/pages/index.js" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] --plugins [ @babel/plugin-proposal-class-properties ]  ] && bash -c "sed -i "s/REPLACEWITHDATE/$(date -Iseconds)/g" bundle.js" && TIME /T
