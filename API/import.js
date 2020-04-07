@@ -1166,7 +1166,7 @@ async function uploadImages(contents, path, imageProcessor, data) {
 					toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
 				}
 				else {
-					toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+					toReplace = images[i].replace(/(?<=<img .*?src=").*\/(?=.*?")/, `/@api/deki/files/${fileID}/`);
 				}
 				
 				contents = contents.replace(images[i], toReplace);

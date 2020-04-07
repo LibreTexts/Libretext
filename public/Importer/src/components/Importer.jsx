@@ -155,7 +155,7 @@ export default function Importer(props) {
 				return <div className="status" style={{backgroundColor: 'orange'}}>
 					<div>
 						Upload In Progress
-						({counter} Received)
+						({counter}% Received)
 					</div>
 					<div className="spinner">
 						<div className="bounce1"/>
