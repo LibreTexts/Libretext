@@ -1,0 +1,125 @@
+#citeInt{
+   
+    width: 100%;
+    height: 100%;
+}
+#citeBg{
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:rgba(0,0,0,0.4);
+}
+#citeCont{
+    position: fixed;
+    top:225px;
+    z-index: 11;
+    height: 250px;
+    background-color: #fefefe;
+    margin-top: -150px;
+    margin-left: 20%; 
+    width: 58%;
+    border-radius: 13px;
+    border: 2px solid #098dd0;
+}
+#citeHead{
+    position:relative;
+    margin-bottom: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#citeHead h1{
+    text-align: left;
+    font-family: Tahoma,Arial,serif;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 2%;
+    font-size: 187.5%;
+    color: #098dd0;
+}
+#citeCont textarea{
+    position: relative
+    left: 10%;
+    margin: -2% 7% 1% 7%;
+    width: 85%;
+    height: 50%;
+    resize:none;
+    color: dimgray;
+    padding-top: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+#citeButtons{
+    margin-bottom: 20px;
+}
+#citeFormat{
+    position: relative;
+    z-index: 1;
+}
+#citeClose{
+    position: relative;
+    float: right;
+    height: 25px;
+    margin-right: 8%;
+    margin-bottom: 1%;
+    z-index: 1;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    border: 1px solid #aaa;
+    border-radius: .5em;
+    background: #fff;
+}
+#citeSelect {
+    position: relative;
+    left: 7%;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    padding: .6em 1.4em .5em .8em;
+    width: 50%;
+    max-width: 180px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+}
+#citeSelect::-ms-expand {
+    display: none;
+}
+#citeSelect:hover {
+    border-color: #888;
+}
+#citeSelect:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+#citeSelect option {
+    font-weight:normal;
+}
+#citesSelect:hover {
+      background-image:
+        linear-gradient(45deg, white 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, white 50%),
+        radial-gradient(gray 70%, transparent 72%);
+      background-position:
+        calc(100% - 15px) calc(1em - 1px),
+        calc(100% - 20px) calc(1em - 1px),
+        calc(100% - .95em) .3em;
+      background-size:
+        5px 5px,
+        5px 5px,
+        1.5em 1.5em;
+      background-repeat: no-repeat;
+      outline: 0;
+    }
