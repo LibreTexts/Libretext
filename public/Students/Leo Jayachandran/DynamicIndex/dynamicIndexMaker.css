@@ -1,0 +1,30 @@
+.indexPages {
+	margin-left: 1.2em;
+}
+
+#indexLetterList {
+	text-align: center;
+}
+
+.termDiv p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+@media print {
+	div.pagesTextDiv {
+		font-size: 0.75em;
+	}
+
+	.termDiv {
+		break-inside: avoid !important;
+	}
+
+	#indexLetterList {
+		display: none;
+	}
+
+	.letterDiv:first-child h2.indexRowHeadCells {
+		margin-top: 0 !important;
+	}
+}

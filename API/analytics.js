@@ -14,7 +14,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 const staticFileServer = new nodeStatic.Server('./public');
 server.listen(port);
 const now1 = new Date();
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -144,7 +144,7 @@ function handler(request, response) {
 		await fs.copy(`./analyticsData/${courseName}`, `./analyticsData/ZIP/${courseName}/RAW`);
 		
 		//Webwork Processing
-		if (courseName === 'Chem2BH') {
+		/*if (courseName === 'Chem2BH') {
 			const connection = mysql.createConnection(secure.mysql);
 			connection.connect();
 			connection.query = util.promisify(connection.query);
@@ -173,9 +173,9 @@ function handler(request, response) {
 			await fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/webwork.json`, JSON.stringify(result, null, "\t"));
 			await fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/webwork.csv`, resultCSV);
 			connection.end();
-		}
+		}*/
 		
-		
+		console.log(`Beginning ${courseName}`);
 		//Reprocessing raw data
 		let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
 		console.time('Reprocessing');
@@ -211,19 +211,22 @@ function handler(request, response) {
 							if (!line) {
 								continue;
 							}
-							resultCSV += `\n${line.actor.courseName},${line.actor.library},${line.actor.id},${line.actor.platform ? line.actor.platform.description : 'undefined'},${line.verb},${line.object.page},${line.object.id},"${line.object.timestamp}",${line.object.pageSession},${line.object.timeMe}`;
+							resultCSV += `\n${line.actor.courseName}##${line.actor.library}##${line.actor.id}##${line.actor.platform ? line.actor.platform.description : 'undefined'}##${line.verb}##${line.object.page}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
 							switch (line.verb) {
 								case 'left':
-									resultCSV += `,${line.type}`;
+									resultCSV += `##${line.type}`;
 									break;
 								case 'read':
-									resultCSV += `,${line.result.percent}`;
+									resultCSV += `##${line.result.percent}`;
 									break;
 								case 'answerReveal':
-									resultCSV += `,${line.result.answer}`;
+									resultCSV += `##${line.result.answer}`;
 									break;
 							}
+							
 						}
+						resultCSV = resultCSV.replace(/,/g,'%2C');
+						resultCSV = resultCSV.replace(/##/g,',');
 						
 						await Promise.all([fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t")),
 						fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV)]);

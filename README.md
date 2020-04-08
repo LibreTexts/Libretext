@@ -1,7 +1,7 @@
 LibreTexts
 ============
 [![Build Status](https://travis-ci.org/LibreTexts/Libretext.svg?branch=master)](https://travis-ci.org/LibreTexts/Libretext)
-[![buddy pipeline](https://app.buddy.works/libretexts/libretext/pipelines/pipeline/210707/badge.svg?token=10ee49d48a092bc13f596ae1236698214b32aaab2d9157800b93b1146780ce9f "buddy pipeline")](https://app.buddy.works/libretexts/libretext/pipelines/pipeline/210707)
+[![Sync to DigitalOcean Spaces](https://github.com/LibreTexts/Libretext/workflows/Sync%20to%20DigitalOcean%20Spaces/badge.svg)](https://github.com/LibreTexts/Libretext/actions?query=workflow%3A%22Sync+to+DigitalOcean+Spaces%22)
 
 This is the primary repository for LibreTexts Javascript integrations and modifications. Client scripts are included in `./public` while server-side scripts are located within the other top-level directories.
 

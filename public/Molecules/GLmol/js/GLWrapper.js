@@ -8,6 +8,7 @@ var enabled = !currentScript.dataset.disabled;
 
 var target = document.createElement("div");
 target.id = 'GL' + index;
+target.classList.add('glmol');
 
 if (!window["GLloaded"]) {
 	alert('Make sure to set the "Embed GLmol" tag to "yes"  under \'Page settings\' at top of page for this to work');

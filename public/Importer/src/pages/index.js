@@ -23,7 +23,7 @@ function Dashboard() {
 				<option value={'commoncartridge'}>Import Common Cartridge</option>
 				<option value={'libremap'}>Import into LibreMaps</option>
 				{/*<option value={'pdf'}>Import PDF</option>*/}
-				{/*<option value={'pretext'}>Import PreTeXt</option>*/}
+				<option value={'pretext'}>Import PreTeXt</option>
 			</select>
 			<div>
 				<label style={{display: 'flex', alignItems: 'center'}}>

@@ -1,5 +1,4 @@
 (function () {
-	let currentToken;
 	
 	function fn() {
 		let nav = document.getElementsByClassName("elm-article-pagination");
@@ -8,11 +7,14 @@
 			let media = document.getElementsByClassName("elm-social-share")[0];
 			media.parentElement.insertBefore(nav, media);
 		}
-		propagatorOption();
-		downloadOption();
-		remixerOption();
-		copyTranscludeOption();
-		copyContentOption();
+		if (!window.location.hostname.startsWith('query')) {
+			propagatorOption();
+			downloadOption();
+			remixerOption();
+			//copyTranscludeOption();
+			copyContentOption(); //Forker
+			sandboxOption();
+		}
 		// setInterval(editorContentReuseLink, 500);
 	}
 	
@@ -138,6 +140,7 @@
 			}
 		}
 	}
+	
 	function downloadOption() {
 		let targetName = "mt-new-page";
 		let copy = document.getElementsByClassName(targetName);
@@ -186,7 +189,7 @@
 	}
 	
 	async function getTags(pageID, extraArray) {
-		let tags = await authenticatedFetch(pageID, 'tags?dream.out.format=json');
+		let tags = await LibreTexts.authenticatedFetch(pageID, 'tags?dream.out.format=json');
 		tags = await tags.json();
 		if (tags["@count"] !== "0") {
 			if (tags.tag) {
@@ -214,9 +217,22 @@
 	
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
+			let [, path] = LibreTexts.parseURL();
+			if (path.startsWith('Sandboxes')) {
+				let response = await LibreTexts.sendAPI('fork');
+				response = await response.text();
+				if (response.includes('Successfully forked')) {
+					
+					alert(response + '.\n The page will now reload.');
+					location.reload();
+				}
+				else alert(response);
+				return;
+			}
+			
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
 			let current = window.location.origin.split('/')[2].split('.')[0];
-			let response = await authenticatedFetch(pageID, `contents?mode=raw`);
+			let response = await LibreTexts.authenticatedFetch(pageID, `contents?mode=raw`);
 			let sourceTags = [];
 			if (response.ok) {
 				let contentReuse = await response.text();
@@ -234,14 +250,14 @@
 							let path = JSON.parse(matches[0].match(/{.*?}/)[0].replace(/'/g, '"'));
 							
 							//Get cross content
-							let content = await authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
+							let content = await LibreTexts.authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
 							subdomain = path.Library;
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
 							
 							
-							response = await authenticatedFetch(path.PageID, 'files?dream.out.format=json', path.Library);
+							response = await LibreTexts.authenticatedFetch(path.PageID, 'files?dream.out.format=json', path.Library);
 							if (response.ok) {
 								let files = await response.json();
 								if (files["@count"] !== "0") {
@@ -296,8 +312,8 @@
 								.replace(/&quot;\)\s*?<\/pre>/, '')
 								.replace('data-page="', '');
 							
-							let content = await authenticatedFetch(path, 'contents?mode=raw', subdomain);
-							let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
+							let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain);
+							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 							content = await content.text();
 							info = await info.json();
 							content = decodeHTML(content);
@@ -307,7 +323,7 @@
 							//End compliance code
 							
 							if (subdomain) {
-								response = await authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
+								response = await LibreTexts.authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
 								alert('Copying files over. This may take a while...');
 								if (response.ok) {
 									let files = await response.json();
@@ -352,17 +368,16 @@
 						success = true;
 					}
 					if (success) {
-						await fetch(`/@api/deki/pages/${pageID}/contents?edittime=now`, {
+						await LibreTexts.authenticatedFetch(pageID, `contents?edittime=now`, subdomain, {
 							method: "POST",
 							body: result,
-							headers: {'x-deki-token': currentToken}
 						});
 						
 						let tags = await getTags(pageID, sourceTags);
-						await fetch(`/@api/deki/pages/${pageID}/tags`, {
+						await LibreTexts.authenticatedFetch(pageID, `tags`, subdomain, {
 							method: "PUT",
 							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': currentToken}
+							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						});
 						location.reload();
 					}
@@ -380,7 +395,8 @@
 		const isPro = document.getElementById("proHolder").innerText === 'true';
 		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
 		let target = $("span.title.mt-title-edit");
-		if (tags && (isAdmin || (isPro && groups.includes('contributor')))) {
+		let [, path] = LibreTexts.parseURL();
+		if (tags && (isAdmin || (isPro && (groups.includes('contributor') || path.startsWith('Sandboxes'))))) {
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
@@ -400,44 +416,36 @@
 			}
 			if (tags.includes("transcluded:yes")) {
 				//Next to title
-				if (!tags.includes("article:topic-category") && !tags.includes("article:topic-guide")) {
-					let icon = document.createElement("a");
-					icon.classList.add("mt-icon-flow-branch");
-					icon.classList.add("printHide");
-					icon.onclick = copyContent;
-					target.after(icon);
-				}
+				let icon = document.createElement("a");
+				icon.classList.add("mt-icon-flow-branch");
+				icon.classList.add("printHide");
+				icon.onclick = copyContent;
+				target.after(icon);
+				
 			}
 		}
 	}
 	
-	async function authenticatedFetch(path, api, subdomain) {
-		let isNumber;
-		if (!isNaN(path)) {
-			path = parseInt(path);
-			isNumber = true;
+	function sandboxOption() {
+		let original = document.getElementsByClassName("mt-user-menu-my-contributions");
+		if (original.length) {
+			original = original[0];
+			let copy = original.cloneNode(true);
+			let copyTarget = copy.getElementsByTagName("a")[0];
+			copyTarget.href = '#';
+			copyTarget.onclick = goToSandbox;
+			copyTarget.innerText = "Your Sandbox";
+			copyTarget.classList.add("mt-icon-select-all");
+			copyTarget.classList.remove("mt-icon-my-contributions");
+			copyTarget.title = "Go to your personal Sandbox";
+			original.parentNode.insertBefore(copy, original);
 		}
-		let current = window.location.origin.split('/')[2].split('.')[0];
-		let headers = {};
-		subdomain = subdomain || current;
-		if (typeof authenticatedFetch.keys === 'undefined') {
-			let keys = await fetch('https://keys.libretexts.org/authenBrowser.json');
-			keys = await keys.json();
-			currentToken = keys[subdomain];
-			authenticatedFetch.keys = keys;
-		}
-		let token = authenticatedFetch.keys[subdomain];
-		headers['x-deki-token'] = token;
-		if (api === 'contents?mode=raw') {
-			return await fetch(`https://api.libretexts.org/endpoint/contents`,
-				{method: 'PUT', body: JSON.stringify({path: path, subdomain: subdomain})});
-		}
-		else {
-			if (current === subdomain)
-				headers['X-Requested-With'] = 'XMLHttpRequest';
+		
+		async function goToSandbox() {
+			// let username = document.getElementById('usernameHolder').innerText;
 			
-			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}/${api}`,
-				{headers: headers});
+			await LibreTexts.sendAPI('createSandbox', {force: true});
+			document.location.replace(`/Sandboxes`);
 		}
 	}
 	
@@ -446,15 +454,18 @@
 		let filename = file['filename'];
 		
 		if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
-			filename = `=${filename}`;
+			let hasThumbnail = await LibreTexts.authenticatedFetch(null, "files/=mindtouch.page%2523thumbnail");
+			if (hasThumbnail.ok)
+				return false;
+			else
+				filename = `=mindtouch.page%23thumbnail`;
 		}
-		let image = await authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
+		let image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
 		
 		image = await image.blob();
-		let response = await fetch(`/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}?dream.out.format=json`, {
+		let response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, child.data.subdomain, {
 			method: "PUT",
 			body: image,
-			headers: {'x-deki-token': currentToken}
 		});
 		response = await response.json();
 		let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
@@ -471,7 +482,8 @@
 		if (window !== window.top && window.location.href.includes("contentOnly")) {
 			document.getElementsByClassName("elm-header")[0].style.display = "none";
 			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
-		}});
+		}
+	});
 })();
 
 

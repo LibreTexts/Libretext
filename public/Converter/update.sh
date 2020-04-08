@@ -10,9 +10,9 @@ echo "Bundling..."
 if true
 then
 echo "Minifying..."
-browserify ./Converter.js -d -t [ babelify --presets [ env react ] ] | uglifyjs -c > bundle.js
+browserify ./Converter.js -d -t [ babelify --presets [ @babel/env @babel/react ] ] | uglifyjs -c > bundle.js
 else
-browserify "./Converter.js" -o bundle.js -d -t [ babelify --presets [ env react ] ]
+browserify "./Converter.js" -o bundle.js -d -t [ babelify --presets [ @babel/env @babel/react ] ]
 fi
 echo "Bundle Created"
 

@@ -122,5 +122,22 @@ module.exports = {
       "cron_restart": "30 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
     },
+    {
+      name      : 'elevate',
+      script    : 'elevate.js',
+      env: {
+        COMMON_VARIABLE: 'true',
+	  TZ: 'America/Los_Angeles'
+      },
+      env_production : {
+        NODE_ENV: 'production'
+      },
+      cwd	: '/root/api',
+      watch	: "elevate.js",
+      ignore_watch : ["node_modules","public","Data","epubs"],
+      "cron_restart": "30 00 * * *",
+      "log_date_format"  : "YY/MM/DD HH:mm:ss"
+
+    },
   ],
 };

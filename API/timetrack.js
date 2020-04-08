@@ -11,7 +11,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 const fetch = require("node-fetch");
 
 function handler(request, response) {

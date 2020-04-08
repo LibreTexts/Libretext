@@ -3,7 +3,7 @@
 	page-break-inside: avoid;
 }
 
-.youtubeImage {
+img.youtubeImage {
 	object-fit: cover;
 }
 
@@ -34,6 +34,13 @@
 	line-height: inherit;
 	outline: 0
 }
+
+
+.thisqrcode {
+	position:absolute;
+	top: 0px;
+  }
+  
 
 @media print {
 	.youtubeIFrame {
