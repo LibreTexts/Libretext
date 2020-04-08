@@ -91,9 +91,6 @@
     box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
     border-radius: .5em;
 }
-#citeSelect::-ms-expand {
-    display: none;
-}
 #citeSelect:hover {
     border-color: #888;
 }
@@ -107,19 +104,3 @@
 #citeSelect option {
     font-weight:normal;
 }
-#citesSelect:hover {
-      background-image:
-        linear-gradient(45deg, white 50%, transparent 50%),
-        linear-gradient(135deg, transparent 50%, white 50%),
-        radial-gradient(gray 70%, transparent 72%);
-      background-position:
-        calc(100% - 15px) calc(1em - 1px),
-        calc(100% - 20px) calc(1em - 1px),
-        calc(100% - .95em) .3em;
-      background-size:
-        5px 5px,
-        5px 5px,
-        1.5em 1.5em;
-      background-repeat: no-repeat;
-      outline: 0;
-    }

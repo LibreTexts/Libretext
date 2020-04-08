@@ -1,0 +1,41 @@
+{
+  "cli": {
+    "title": "CLI"
+  },
+  "getting_started": {
+    "title": "Getting Started"
+  },
+  "plugins": {
+    "title": "Plugins",
+    "children": []
+  },
+  "cite": {
+    "title": "Cite",
+    "children": {
+      "cite_constructor": {"title": "Cite Constructor"},
+      "cite_data": {"title": "Cite Data Methods"},
+      "cite_output": {"title": "Cite Output Methods"}
+    }
+  },
+  "input": {
+    "title": "Input",
+    "children": {
+      "input_formats": {"title": "Input Formats"},
+      "input_options": {"title": "Input Options"},
+      "input_plugins": {"title": "Input Plugins"}
+    }
+  },
+  "output": {
+    "title": "Output",
+    "children": {
+      "output_formats": {"title": "Output Formats"},
+      "output_options": {"title": "Output Options"},
+      "output_plugins": {"title": "Output Plugins",
+        "children": {
+          "output_plugins_dict": {"title": "Dictionary Plugins"},
+          "output_plugins_csl": {"title": "CSL Plugins"}
+        }
+      }
+    }
+  }
+}
