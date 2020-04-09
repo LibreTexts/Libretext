@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/src/components/Importer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="Libretext" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -51,7 +51,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -78,7 +77,8 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="standardjs.codestyle.accepted" value="true" />
     <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
@@ -187,14 +187,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.dist">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
-      <method v="2" />
-    </configuration>
-    <configuration name="elevate.js" type="NodeJSConfigurationType" temporary="true" application-parameters="80" nameIsGenerated="true" path-to-js-file="elevate.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="endpoint.js" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="endpoint.js" working-dir="$PROJECT_DIR$/API">
@@ -206,21 +203,14 @@
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
-    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
-      <method v="2" />
-    </configuration>
-    <configuration name="webwork.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/API/webwork.js" working-dir="$PROJECT_DIR$/API">
-      <method v="2" />
-    </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
-          <option name="JSONFilePath" value="" />
+          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="buildCliOptions" value="" />
           <option name="command" value="" />
           <option name="containerName" value="nodeprint" />
           <option name="entrypoint" value="" />
-          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="portBindings">
             <list>
               <DockerPortBindingImpl>
@@ -233,6 +223,16 @@
           <option name="sourceFilePath" value="nodePrint/Dockerfile" />
         </settings>
       </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="--2--" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="--2--" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="API Dashboard" type="js.build_tools.npm">
@@ -295,6 +295,36 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="dist" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dist" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dist:minify" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dist:minify" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dist:regular" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Students/Nicholas Lundgren/citation.js-master/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dist:regular" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -315,36 +345,25 @@
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Node.js.elevate.js" />
-      <item itemvalue="Node.js.schedule.js" />
-      <item itemvalue="Node.js.webwork.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.build" />
+      <item itemvalue="npm.dist" />
+      <item itemvalue="npm.dist:minify" />
+      <item itemvalue="npm.--2--" />
+      <item itemvalue="npm.dist:regular" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
-        <item itemvalue="Node.js.webwork.js" />
-        <item itemvalue="Node.js.schedule.js" />
-        <item itemvalue="Node.js.elevate.js" />
+        <item itemvalue="npm.dist" />
+        <item itemvalue="npm.dist:regular" />
+        <item itemvalue="npm.--2--" />
+        <item itemvalue="npm.dist:minify" />
         <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -1453,16 +1472,14 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1481,9 +1498,9 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="SHOW_UNVERSIONED_FILES_WHILE_COMMIT" value="false" />
     <ignored-roots>
@@ -1537,6 +1554,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="446" y="120" key="#Deployment/0.0.1707.920@0.0.1707.920" timestamp="1579596460815" />
+    <state x="623" y="262" key="#Usage_Scope" timestamp="1586470119260">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="623" y="262" key="#Usage_Scope/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470119260" />
     <state x="175" y="96" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582420624250">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1584,10 +1605,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="504" height="684" key="GridCell.Tab.-1.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1581839600574" />
-    <state width="677" height="515" key="GridCell.Tab.0.bottom" timestamp="1585260509141">
+    <state width="1663" height="242" key="GridCell.Tab.0.bottom" timestamp="1586470556689">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="677" height="515" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260509141" />
+    <state width="1663" height="242" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470556689" />
     <state width="225" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583608499406" />
     <state width="444" height="466" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1595,10 +1616,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.bottom/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355841" />
-    <state width="677" height="515" key="GridCell.Tab.0.center" timestamp="1585260509140">
+    <state width="1663" height="242" key="GridCell.Tab.0.center" timestamp="1586470556689">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="677" height="515" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260509140" />
+    <state width="1663" height="242" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470556689" />
     <state width="225" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1606,10 +1627,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.center/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355840" />
-    <state width="677" height="515" key="GridCell.Tab.0.left" timestamp="1585260509140">
+    <state width="1663" height="242" key="GridCell.Tab.0.left" timestamp="1586470556688">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="677" height="515" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260509140" />
+    <state width="1663" height="242" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470556688" />
     <state width="225" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400623" />
@@ -1617,10 +1638,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.left/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355839" />
-    <state width="677" height="515" key="GridCell.Tab.0.right" timestamp="1585260509141">
+    <state width="1663" height="242" key="GridCell.Tab.0.right" timestamp="1586470556689">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="677" height="515" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260509141" />
+    <state width="1663" height="242" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470556689" />
     <state width="225" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1741,10 +1762,10 @@
     </state>
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585260226605" />
     <state x="2513" y="56" key="RollbackChangesDialog/0.0.1536.824/1920.0.1600.860@1920.0.1600.860" timestamp="1580503412142" />
-    <state x="308" y="60" key="SettingsEditor" timestamp="1585188022269">
+    <state x="308" y="60" key="SettingsEditor" timestamp="1586470127777">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585188022269" />
+    <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586470127777" />
     <state x="277" y="54" key="SettingsEditor/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191484618" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1586215254365">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1778,11 +1799,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx</url>
-          <line>133</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/elevate.js</url>
           <line>309</line>

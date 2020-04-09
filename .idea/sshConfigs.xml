@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="front.libretexts.org" id="827db6e6-31b1-4a22-b754-b4ca7e3a0839" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Front" nameFormat="CUSTOM" />
+      <sshConfig host="batch.libretexts.org" id="592be281-a11c-4e28-8b48-4669ecf02a2b" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Batch" nameFormat="CUSTOM" />
+      <sshConfig host="api.libretexts.org" id="e8593a4e-436e-48ff-a17b-7e6845a81a53" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="API" nameFormat="CUSTOM" />
+      <sshConfig host="test.libretexts.org" id="f05d726f-3c09-4213-aa95-6e9b4bd010c0" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Test" nameFormat="CUSTOM" />
+      <sshConfig host="front.libretexts.org" id="89dd0a08-6daa-4015-bdf0-9ad6e68445a9" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Front" nameFormat="CUSTOM" />
+      <sshConfig host="batch.libretexts.org" id="329aa0c3-654e-48cf-91d2-d17b0950199b" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Batch" nameFormat="CUSTOM" />
+      <sshConfig host="api.libretexts.org" id="1b6c38f7-59c1-430c-a747-5d22b07f2301" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="API" nameFormat="CUSTOM" />
+      <sshConfig host="test.libretexts.org" id="d437b673-d05f-4d43-a822-74239fd06736" keyPath="C:\Users\Henry\.ssh\id_rsa" port="22" customName="Test" nameFormat="CUSTOM" />
+    </configs>
+  </component>
+</project>

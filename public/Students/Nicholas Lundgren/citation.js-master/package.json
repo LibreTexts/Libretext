@@ -38,23 +38,23 @@
     "@citation-js/plugin-doi": "0.4.9",
     "@citation-js/plugin-ris": "0.4.9",
     "@citation-js/plugin-wikidata": "0.4.9",
-    "citeproc": "^2.2.10"
+    "citeproc": "^2.2.33"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
-    "core-js": "^3.1.4",
+    "browserify": "^16.5.1",
+    "core-js": "^3.6.5",
     "disc": "^1.3.2",
-    "glob": "^7.1.4",
-    "jsdoc": "^3.6.3",
+    "glob": "^7.1.6",
+    "jsdoc": "^3.6.4",
     "markdown-toc": "^1.2.0",
     "minami": "^1.2.3",
-    "mocha": "^6.1.4",
-    "regenerator-runtime": "^0.13.2",
+    "mocha": "^6.2.3",
+    "regenerator-runtime": "^0.13.5",
     "standard": "^12.0.1",
-    "uglify-js": "^3.6.0"
+    "uglify-js": "^3.8.1"
   },
   "scripts": {
     "lint": "standard",
