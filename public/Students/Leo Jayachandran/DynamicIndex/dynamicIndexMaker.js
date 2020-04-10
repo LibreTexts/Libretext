@@ -165,7 +165,27 @@
 					break;
 				}
 			}
+			if (canPush) {
+				let startsWithLetter = false;
+				//Create list of letters
+				let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+				//Check if the name starts with any of the letters
+				for (var k = 0; k < alphabet.length; k++) {
+					// if doesn't start with a previous letter
+					if (!(startsWithLetter)) {
+						//Check if it starts with this letter
+						startsWithLetter = newTerm.name.toUpperCase().startsWith(alphabet[k]);
+						continue;
+					}
+					//Stop checking
+					break;
+				}
+				canPush = startsWithLetter;
+			}
+
 			
+
+
 			for (let e = 0; e < indexExclusions.length; e++) { // Exclusions
 				if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
 					canPush = false;
