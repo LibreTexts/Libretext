@@ -11,7 +11,6 @@
 			indexRequirements = ((document.currentScript.dataset.filter.startsWith("[")) ? JSON.parse(document.currentScript.dataset.filter) : [document.currentScript.dataset.filter]);
 		}
 		let subdomain = window.location.origin.split('/')[2].split('.')[0];
-		let coverPageInfo;
 		
 		const dynamicURL = await getIndexingURL();
 		let url = `https://${subdomain}.libretexts.org/@api/deki/pages/=Template%253AMindTouch%252FIDF3%252FViews%252FTag_directory/contents?dream.out.format=json&pageid=${dynamicURL.id}`;
@@ -165,7 +164,7 @@
 					break;
 				}
 			}
-			
+
 			for (let e = 0; e < indexExclusions.length; e++) { // Exclusions
 				if (canPush && newTerm.name.toLowerCase().includes(indexExclusions[e])) { //Stop check if fails
 					canPush = false;
@@ -239,31 +238,34 @@
 		//sort terms alphabetically
 		let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 		let alphabetisedIndex = [];
-		
 		let termPos = 0;
+                let totalTerms = pageList.taggedTerms.length;
+                //Start indexing from the term that starts with A and ignore terms starting with non-letter characters
+                while (!(pageList.taggedTerms[termPos].name.toUpperCase().startsWith("A")) && termPos < totalTerms) {
+                        termPos++;
+                }
+                //Start assigning terms by first letter
 		for (let i = 0; i < alphabet.length; i++) {
 			let indexLetterTerm = {"letter": alphabet[i], "terms": []};
 			for (let u = termPos; u < pageList.taggedTerms.length; u++) {
-				
 				if (pageList.taggedTerms[u].name.toUpperCase().startsWith(alphabet[i])) { // Check if term is in letter
-					
 					indexLetterTerm["terms"].push(pageList.taggedTerms[u]);
 					termPos++;
-				}
-				else {
-					break;
+				} else {
+					break; //Also ensures after Z, anything else on the list won't be in the index
 				}
 			}
 			if (indexLetterTerm.terms.length !== 0) {
 				alphabetisedIndex.push(indexLetterTerm);
 			}
-		}
+                }
+                //create the html for the index
 		const $indexLetterList = $("#indexLetterList");
 		const $indexTable = $("#indexTable").html("");
 		//Terms sorted by alphabet
 		for (let i = 0; i < alphabetisedIndex.length; i++) {
-			$letterEntry = $(`<div class='letterDiv' id = 'letterDiv${alphabetisedIndex[i].letter}'></div>`).appendTo($indexTable);
-			$letterHeader = $(`<h2  class = 'indexRowHeadCells' id = 'indexHeadRow${alphabetisedIndex[i].letter}' >${alphabetisedIndex[i].letter}</h2>`);
+			let $letterEntry = $(`<div class='letterDiv' id = 'letterDiv${alphabetisedIndex[i].letter}'></div>`).appendTo($indexTable);
+			let $letterHeader = $(`<h2  class = 'indexRowHeadCells' id = 'indexHeadRow${alphabetisedIndex[i].letter}' >${alphabetisedIndex[i].letter}</h2>`);
 			const $indexBodyRow = $(`<div class = 'indexBodyRows' id = 'indexRow${alphabetisedIndex[i].letter}'></div>`).appendTo($letterEntry);
 			
 			//Create Bulleted List
@@ -274,8 +276,6 @@
 				if (u === 0) {
 					$termDiv.append($letterHeader);
 				}
-				
-				
 				let $termText = $(`<p>${alphabetisedIndex[i].terms[u].name}</p>`);
 				let $pagesText = $(`<div class = "pagesTextDiv"></div>`);
 				for (let j = 0; j < alphabetisedIndex[i].terms[u].pages.length; j++) {
