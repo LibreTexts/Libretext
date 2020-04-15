@@ -1521,7 +1521,7 @@ puppeteer.launch({
 				await defaultMatter(text);
 				
 				
-				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
+				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?limit=all&dream.out.format=json', current.subdomain);
 				if (!response.ok) {
 					// console.error(await response.text());
 					return [];
@@ -2001,7 +2001,7 @@ async function getSubpages(rootURL, options = {}) {
 	let path = rootURL.split('/').splice(3).join('/');
 	options['depth'] = 0;
 	
-	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 	pages = await pages.json();
 	
 	let result = {
@@ -2026,7 +2026,7 @@ async function getSubpages(rootURL, options = {}) {
 			const hassubpages = subpage["@subpages"] === "true";
 			let subpages = hassubpages ? undefined : [];
 			if (hassubpages) { //recurse down
-				subpages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				subpages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 				subpages = await subpages.json();
 				if (subpages && subpages['page.subpage'] && subpages['page.subpage'].length && subpage.title === 'Remixer University') { //Skip Remixer except for contruction guide
 					subpages['page.subpage'] = subpages['page.subpage'].filter((item) => item.title === "Contruction Guide");
