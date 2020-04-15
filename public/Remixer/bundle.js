@@ -89602,7 +89602,7 @@ var Remixer = /*#__PURE__*/function (_React$Component) {
           flex: 1
         }
       }, /*#__PURE__*/_react["default"].createElement(_Tooltip["default"], {
-        title: "Version ".concat(new Date("Mon Apr 06 2020 22:38:12 GMT-0700 (Pacific Daylight Time)"), "\nMade with \u2764")
+        title: "Version ".concat(new Date("Wed Apr 15 2020 14:13:55 GMT-0700 (Pacific Daylight Time)"), "\nMade with \u2764")
       }, /*#__PURE__*/_react["default"].createElement(_Info["default"], null))), /*#__PURE__*/_react["default"].createElement("div", {
         style: {
           fontSize: '130%',
@@ -92114,7 +92114,7 @@ function _getSubpages() {
                                     }
 
                                     _context.next = 18;
-                                    return LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+                                    return LibreTexts.authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 
                                   case 18:
                                     children = _context.sent;
@@ -92227,7 +92227,7 @@ function _getSubpages() {
             };
             path = path.replace("https://".concat(subdomain, ".libretexts.org/"), '');
             _context3.next = 6;
-            return LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+            return LibreTexts.authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 
           case 6:
             response = _context3.sent;

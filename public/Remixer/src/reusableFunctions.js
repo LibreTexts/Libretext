@@ -154,7 +154,7 @@ async function getSubpages(path, subdomain, options = {
 	full: false
 }) {
 	path = path.replace(`https://${subdomain}.libretexts.org/`, '');
-	let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+	let response = await LibreTexts.authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 	response = await response.json();
 	return await subpageCallback(response);
 	
@@ -185,7 +185,7 @@ async function getSubpages(path, subdomain, options = {
 			const hasChildren = subpage['@subpages'] === 'true';
 			let children = hasChildren ? undefined : [];
 			if (hasChildren && options.full) { //recurse down
-				children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				children = await LibreTexts.authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 				children = await children.json();
 				children = await subpageCallback(children);
 			}

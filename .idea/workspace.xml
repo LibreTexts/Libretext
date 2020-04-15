@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/Remixer/build.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="Libretext" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -32,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="citationmachine" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +50,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -189,7 +185,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.build.js">
+  <component name="RunManager" selected="npm.Remixer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -220,12 +216,11 @@
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
-          <option name="JSONFilePath" value="" />
+          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="buildCliOptions" value="" />
           <option name="command" value="" />
           <option name="containerName" value="nodeprint" />
           <option name="entrypoint" value="" />
-          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="portBindings">
             <list>
               <DockerPortBindingImpl>
@@ -323,34 +318,22 @@
       <item itemvalue="Node.js.elevate.js" />
       <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="Node.js.webwork.js" />
+      <item itemvalue="Node.js.build.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.build" />
-      <item itemvalue="Node.js.build.js" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.build.js" />
         <item itemvalue="npm.build" />
         <item itemvalue="Node.js.webwork.js" />
         <item itemvalue="Node.js.schedule.js" />
         <item itemvalue="Node.js.elevate.js" />
+        <item itemvalue="Node.js.build.js" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -1463,9 +1446,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1484,6 +1465,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -1536,10 +1518,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="Updated licenses.js" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="446" y="120" key="#Deployment" timestamp="1579596460816">
+    <state x="446" y="120" width="1079" height="683" key="#Deployment" timestamp="1586985366120">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="446" y="120" width="1079" height="683" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985366120" />
     <state x="446" y="120" key="#Deployment/0.0.1707.920@0.0.1707.920" timestamp="1579596460815" />
+    <state x="510" y="155" key="#SSH_Configurations" timestamp="1586985363644">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="510" y="155" key="#SSH_Configurations/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985363644" />
     <state x="175" y="96" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582420624250">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1586,10 +1573,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="504" height="684" key="GridCell.Tab.-1.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1581839600574" />
-    <state width="489" height="484" key="GridCell.Tab.0.bottom" timestamp="1586237883868">
+    <state width="609" height="746" key="GridCell.Tab.0.bottom" timestamp="1586985225011">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="489" height="484" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586237883868" />
+    <state width="609" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985225011" />
     <state width="225" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583608499406" />
     <state width="444" height="466" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1597,10 +1584,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.bottom/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355841" />
-    <state width="489" height="484" key="GridCell.Tab.0.center" timestamp="1586237883868">
+    <state width="609" height="746" key="GridCell.Tab.0.center" timestamp="1586985225010">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="489" height="484" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586237883868" />
+    <state width="609" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985225010" />
     <state width="225" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1608,10 +1595,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.center/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355840" />
-    <state width="489" height="484" key="GridCell.Tab.0.left" timestamp="1586237883868">
+    <state width="609" height="746" key="GridCell.Tab.0.left" timestamp="1586985225010">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="489" height="484" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586237883868" />
+    <state width="609" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985225010" />
     <state width="225" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400623" />
@@ -1619,10 +1606,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.left/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355839" />
-    <state width="489" height="484" key="GridCell.Tab.0.right" timestamp="1586237883868">
+    <state width="609" height="746" key="GridCell.Tab.0.right" timestamp="1586985225011">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="489" height="484" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586237883868" />
+    <state width="609" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985225011" />
     <state width="225" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
