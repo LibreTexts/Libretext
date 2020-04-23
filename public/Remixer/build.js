@@ -13,7 +13,7 @@ async function main() {
 		await fs.writeFile('./bundle.js', bundle);
 		console.log(new Date().toLocaleString());
 	});
-	browserify()
+	browserify({debug: true})
 		.add("./src/pages/index.js")
 		.transform(babelify, {
 			presets: ["@babel/preset-env", "@babel/preset-react"],

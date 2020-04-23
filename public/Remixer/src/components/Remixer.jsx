@@ -17,8 +17,9 @@ import {Switch} from "@material-ui/core";
 import merge from "deepmerge";
 import Tooltip from "@material-ui/core/Tooltip";
 import Info from "@material-ui/icons/Info";
+import {withSnackbar} from "notistack";
 
-export default class Remixer extends React.Component {
+class Remixer extends React.Component {
 	constructor(props) {
 		super(props);
 		const defaultState = {
@@ -47,7 +48,7 @@ export default class Remixer extends React.Component {
 			currentlyActive: '',
 		};
 		if (defaultState.permission !== 'Demonstration')
-			LibreTexts.sendAPI('createSandbox', {force: true}).then();
+			LibreTexts.sendAPI('createSandbox').then();
 		let state = defaultState;
 		
 		/*if (localStorage.getItem('RemixerState')) {
@@ -58,7 +59,7 @@ export default class Remixer extends React.Component {
 				href: window.location.href, //nonpermanent
 			};
 		}*/
-		alert('To load the Remix you were previously working on, click Load Autosave');
+		// alert('To load the Remix you were previously working on, click Load Autosave');
 		let oldState = localStorage.getItem('RemixerState');
 		if (oldState) {
 			oldState = JSON.parse(localStorage.getItem('RemixerState'));
@@ -137,6 +138,13 @@ export default class Remixer extends React.Component {
 			};
 			this.setState(newState);
 			this.save({...this.state, ...newState});
+			this.props.enqueueSnackbar(`Loaded previous session!`, {
+				variant: 'success',
+				anchorOrigin: {
+					vertical: 'bottom',
+					horizontal: 'right',
+				},
+			});
 		}
 	};
 	
@@ -187,10 +195,10 @@ export default class Remixer extends React.Component {
 						checked={this.state.mode === 'ReRemix'} color="default"/>
 					Edit Remix Mode
 				</div>
-				<Tooltip title={'Autosaves are from when you last closed the Remixer'}>
+				<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
 					<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
 						<Button variant="contained" onClick={this.loadAutosave} disabled={!localStorage.getItem('lastRemixerAutosave')}>Load
-						                                                                                    Autosave</Button>
+						                                                                                    from previous session</Button>
 					</div>
 				</Tooltip>
 			</div>
@@ -239,3 +247,4 @@ export default class Remixer extends React.Component {
 		}
 	}
 }
+export default withSnackbar(Remixer); //Allows snackbars

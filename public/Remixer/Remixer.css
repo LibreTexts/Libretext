@@ -1,180 +1,195 @@
 .mt-content-container #Remixer p {
-	font-size: 0.75rem;
-	line-height: 1em;
-	margin-block: 0;
+    font-size: 0.75rem;
+    line-height: 1em;
+    margin-block: 0;
 }
 
 .publishPanel .status {
-	padding: 10px;
-	border-radius: 10px;
-	color: white;
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	flex: none;
-	height: 30px;
-	width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: none;
+    height: 30px;
+    width: 100%;
 }
 
 .CenterContainer > .navigationBar {
-	border-radius: 10px;
-	color: white;
-	background-color: #127bc4;
-	display: flex;
-	align-items: center;
-	margin: 10px 0;
-	padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: #127bc4;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
 }
 
 .navigationBar select, .navigationBar > option {
-	background: #127bc4;
-	width: fit-content;
-	color: white;
+    background: #127bc4;
+    width: fit-content;
+    color: white;
 }
 
 .mt-label:after, label:after {
-	content: unset;
+    content: unset;
 }
 
 .MuiTooltip-tooltip {
-	font-size: 0.8rem;
+    font-size: 0.8rem;
 }
 
 .MuiMenuItem-root > div {
-	width: 100%;
+    width: 100%;
 }
 
 #results {
-	white-space: pre;
-	flex: 1;
-	width: 95%;
+    white-space: pre;
+    flex: 1;
+    width: 95%;
 }
 
 #FindReplace {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .topPanel {
-	display: flex;
-	margin: 0px 10px;
+    display: flex;
+    margin: 0px 10px;
 }
 
 .topPanel > div {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: stretch;
-	flex: 1;
-	padding: 10px;
-	background-color: #f3f3f3;
-	border-radius: 10px;
-	margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: stretch;
+    flex: 1;
+    padding: 10px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    margin: 5px;
 }
 
 .topPanel label {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .CenterContainer label:after {
-	content: none;
+    content: none;
 }
 
 input:focus, input:hover, .no-touch input:hover {
-	border: unset;
-	box-shadow: unset;
+    border: unset;
+    box-shadow: unset;
 }
 
 .mt-checkbox, input[type=checkbox], input[type=radio] {
-	position: absolute;
+    position: absolute;
 }
 
 .mt-content-container #LTForm ul {
-	font-size: unset;
+    font-size: unset;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-size: unset;
+    font-size: unset;
 }
 
 .mt-legend, legend {
-	font-size: unset;
-	margin: unset;
-	padding: unset;
+    font-size: unset;
+    margin: unset;
+    padding: unset;
 }
 
 .LTFormHeader button {
-	margin: 0 2px;
+    margin: 0 2px;
 }
 
 .LTFormHeader button.Mui-disabled {
-	color: #e0e0e0;
-	border: 1px solid #e0e0e0;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
 
 .LTFormHeader button.MuiButton-containedSecondary:hover {
-	background: #bcbcbc;
+    background: #bcbcbc;
 }
 
 /*hide action button labels*/
 .LTFormHeader > button > span > span {
-	font-size: 0;
-	transition-duration: 500ms;
+    font-size: 0;
+    transition-duration: 500ms;
 }
 
 .LTFormHeader > button.expandedLabel > span > span {
-	font-size: unset;
+    font-size: unset;
 }
 
 .LTFormHeader > button:hover > span > span {
-	font-size: inherit;
+    font-size: inherit;
 }
 
 /*category*/
 #LTForm .article-topic-category span.fancytree-icon:before {
-	content: '\e62a'
+    content: '\e62a'
 }
 
 /*guide*/
 #LTForm .article-topic-guide span.fancytree-icon:before {
-	content: '\e84a'
+    content: '\e84a'
 }
 
 /*topic*/
 #LTForm .article-topic span.fancytree-icon:before {
-	content: '\e8aa'
+    content: '\e8aa'
 }
 
+#LTForm.ReRemixerPanel .security-Editor *, #LTForm.ReRemixerPanel .security-Author * {
+    color: #117bc4;
+}
+
+#LTForm.ReRemixerPanel .RemixerLastText > * {
+    font-style: italic;
+}
+
+#LTForm.ReRemixerPanel .RemixerLastText:only-child {
+    border-bottom: 1px solid #6b6b6b;
+    margin-bottom: 10px;
+    width: auto;
+}
+
+
 #LTForm .status-new .fancytree-title,
-#LTForm .status-new .fancytree-icon  {
-	color: green;
+#LTForm .status-new .fancytree-icon {
+    color: green;
 }
 
 #LTForm .status-modified .fancytree-title,
-#LTForm .status-modified .fancytree-icon  {
-	color: orange;
+#LTForm .status-modified .fancytree-icon {
+    color: orange;
 }
 
 #LTForm .status-deleted .fancytree-title,
 #LTForm .status-deleted .fancytree-icon {
-	color: red;
-	text-decoration: line-through;
+    color: red;
+    text-decoration: line-through;
 }
 
 #editDialog .MuiChip-root > span {
-	text-overflow: ellipsis;
-	max-width: 90px;
-	overflow: hidden;
-	display: block;
+    text-overflow: ellipsis;
+    max-width: 90px;
+    overflow: hidden;
+    display: block;
 }
 
 #editDialog .MuiFilledInput-root {
-	flex: 1
+    flex: 1
 }
 
 div#LTPreviewForm {
-	margin: 0;
-	width: 100%;
+    margin: 0;
+    width: 100%;
 }

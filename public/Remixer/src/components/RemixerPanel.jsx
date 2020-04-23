@@ -303,7 +303,7 @@ class RemixerPanel extends React.Component {
 		
 		let deleted = currentlyActive && currentlyActive.data.status === 'deleted';
 		let permission = RemixerFunctions.userPermissions(true);
-		return <div id='LTForm'>
+		return <div id='LTForm' className='RemixerPanel'>
 			<div className="LTFormHeader" style={{backgroundColor: permission.color, justifyContent: "space-between"}}>
 				<Tooltip title={`Start Over`}>
 					<Button variant="contained"
@@ -360,7 +360,7 @@ class RemixerPanel extends React.Component {
 				        onClick={() => {
 					        this.autonumber();
 					        this.props.updateRemixer({name: this.props.RemixTree.title, stage: 'Publishing'})
-				        }}>{this.props.permission === 'Basic' ? 'Save to Sandbox' : 'Publish'}
+				        }}>Save to Server
 					<Publish/></Button>
 			</div>
 			<div id='LTFormContainer' data-beeline-skip>

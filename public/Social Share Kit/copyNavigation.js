@@ -106,6 +106,12 @@
 			copy.classList.remove("mt-user-menu-user");
 			let copyTarget = copy.getElementsByTagName("a")[0];
 			copyTarget.href = window.location.origin + "/Under_Construction/Development_Details/OER_Remixer";
+			copyTarget.addEventListener('click', () => {
+				localStorage.setItem('RemixerLastText', JSON.stringify({
+					title: document.getElementById('titleHolder').innerText,
+					url: window.location.href
+				}));
+			})
 			copyTarget.innerText = "Remixer";
 			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
 				copyTarget.id = "RemixerIcon";
@@ -195,8 +201,7 @@
 			if (tags.tag) {
 				if (tags.tag.length) {
 					tags = tags.tag.map((tag) => tag["@value"]);
-				}
-				else {
+				} else {
 					tags = [tags.tag["@value"]];
 				}
 			}
@@ -209,8 +214,7 @@
 			tags.splice(tags.indexOf("transcluded:yes"), 1);
 			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
 			return "<tags>" + tags + "</tags>";
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -225,8 +229,7 @@
 					
 					alert(response + '.\n The page will now reload.');
 					location.reload();
-				}
-				else alert(response);
+				} else alert(response);
 				return;
 			}
 			
@@ -265,8 +268,7 @@
 									if (files.file) {
 										if (!files.file.length) {
 											files = [files.file];
-										}
-										else {
+										} else {
 											files = files.file;
 										}
 									}
@@ -331,8 +333,7 @@
 										if (files.file) {
 											if (!files.file.length) {
 												files = [files.file];
-											}
-											else {
+											} else {
 												files = files.file;
 											}
 										}
@@ -380,8 +381,7 @@
 							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						});
 						location.reload();
-					}
-					else {
+					} else {
 						alert("No content-reuse sections detected!");
 					}
 				}
@@ -444,7 +444,7 @@
 		async function goToSandbox() {
 			// let username = document.getElementById('usernameHolder').innerText;
 			
-			await LibreTexts.sendAPI('createSandbox', {force: true});
+			await LibreTexts.sendAPI('createSandbox');
 			document.location.replace(`/Sandboxes`);
 		}
 	}

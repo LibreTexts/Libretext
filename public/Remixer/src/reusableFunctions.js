@@ -200,12 +200,15 @@ async function getSubpages(path, subdomain, options = {
 					status: 'new',
 				};
 				miniResult = await LibreTexts.getAPI(miniResult);
+				miniResult.extraClasses = `security-${miniResult.security} `;
 				
 				let type = miniResult.tags.find(elem => elem.startsWith('article:'));
 				if (type) {
 					miniResult.articleType = type.split('article:')[1];
-					miniResult.extraClasses = `article-${miniResult.articleType}`;
+					miniResult.extraClasses += `article-${miniResult.articleType} `;
 				}
+				if (miniResult.tags.includes('coverpage:yes'))
+					miniResult.extraClasses += `coverpage-yes `;
 				miniResult.tags = miniResult.tags.filter(elem => !elem.startsWith('article:'));
 				result[index] = miniResult;
 			}
@@ -218,8 +221,7 @@ async function getSubpages(path, subdomain, options = {
 			
 			await Promise.all(promiseArray);
 			return result.filter(elem => elem);
-		}
-		else {
+		} else {
 			return [];
 		}
 	}

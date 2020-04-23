@@ -240,7 +240,7 @@ export default function PublishPanel(props) {
 						<ArrowBack/>Revise
 					</Button>
 					<Button color='secondary' onClick={() => setPublishing(Math.random())}>
-						{props.permission === 'Basic' ? 'Save to Sandbox' : 'Publish'}<Publish/>
+						Save to Server<Publish/>
 					</Button>
 				</ButtonGroup>
 			</Paper>

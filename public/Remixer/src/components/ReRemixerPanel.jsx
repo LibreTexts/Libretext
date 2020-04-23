@@ -16,7 +16,7 @@ class ReRemixerPanel extends React.Component {
 		let root = $('#LTLeft').fancytree('getTree').getRootNode();
 		root = root.toDict(true);
 		this.setState({LibraryTree: root.children});
-		if (active)
+		if (active !== undefined)
 			this.props.updateRemixer({currentlyActive: active});
 	};
 	
@@ -38,16 +38,16 @@ class ReRemixerPanel extends React.Component {
 		let LeftAlert = $('#LTLeftAlert');
 		LeftAlert.text(`Loading ${name}`);
 		LeftAlert.slideDown();
-		let path;
-		switch (this.props.permission) {
-			case "Faculty":
-			case "Basic":
-				path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
-				break;
-			default:
-				path = 'home';
-				break;
-		}
+		let path = 'home';
+		/*		switch (this.props.permission) {
+					case "Faculty":
+					case "Basic":
+						path = `Sandboxes/${document.getElementById('usernameHolder').innerText}`;
+						break;
+					default:
+						path = 'home';
+						break;
+				}*/
 		
 		
 		let content = await RemixerFunctions.getSubpages(path, this.state.subdomain, {
@@ -56,9 +56,9 @@ class ReRemixerPanel extends React.Component {
 		});
 		
 		//prevent Pro users from modifying Bookshelves
-		if (this.props.permission !== 'Admin') {
+		/*if (this.props.permission !== 'Admin') {
 			content = content.filter((page) => !page.path.startsWith('Bookshelves'));
-		}
+		}*/
 		
 		// customized Snackbar
 		const action = key => (
@@ -71,16 +71,30 @@ class ReRemixerPanel extends React.Component {
 			</>
 		);
 		
-		if (!content.length && path !== 'home')
-			this.props.enqueueSnackbar('It looks like your Sandbox is empty! Try making a Remix using New Remix first.', {
-				variant: 'error',
-				autoHideDuration: 60000,
-				anchorOrigin: {
-					vertical: 'bottom',
-					horizontal: 'right',
-				},
-				action
+		if (!content.find(item => item.title.startsWith('Sandboxes'))) {
+			let sandboxes = await RemixerFunctions.getSubpages('Sandboxes', this.state.subdomain, {
+				linkTitle: true,
+				includeMatter: true
 			});
+			
+			content.push({
+				title: 'Sandboxes',
+				children: sandboxes
+			});
+		}
+		if (localStorage.getItem('RemixerLastText')) {
+			let lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
+			lastText = await LibreTexts.getAPI(lastText.url);
+			lastText.title = `${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
+			lastText.lazy = true;
+			lastText.extraClasses = `security-${lastText.security} RemixerLastText `
+			lastText.children = await RemixerFunctions.getSubpages(lastText.path, this.state.subdomain, {
+				linkTitle: true,
+				includeMatter: true
+			})
+			
+			content.unshift(lastText)
+		}
 		
 		this.setState({LibraryTree: content});
 		LeftAlert.slideUp();
@@ -187,7 +201,7 @@ class ReRemixerPanel extends React.Component {
 		}
 		
 		let permission = RemixerFunctions.userPermissions(true);
-		return <div id='LTForm'>
+		return <div id='LTForm' className='ReRemixerPanel'>
 			<div className="LTFormHeader" style={{backgroundColor: permission.color}}>
 				<div className='LTTitle'><Tooltip title={permission.description}>
 					<div style={{display: 'flex', alignItems: 'center'}}>{this.props.permission} Mode
@@ -273,8 +287,7 @@ class ReRemixerPanel extends React.Component {
 				},
 			});
 			return;
-		}
-		else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
+		} else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
 			this.props.enqueueSnackbar('You have insufficient permissions to modify this page', {
 				variant: 'error',
 				anchorOrigin: {
