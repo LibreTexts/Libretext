@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import RemixerFunctions from '../reusableFunctions';
 
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -20,21 +19,22 @@ export default function RemixerOptions(props) {
 			title: 'Your Personal Sandbox'
 		}];
 		
-		switch (RemixerFunctions.userPermissions()) {
-			case 'Basic':
-				setInstitutions(result);
-				props.updateRemixer({institution: result[0].url});
-				return result;
-			/*result.push({
-				url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
-				title: 'Remixer University'
-			});
-			setInstitutions(result);
-			props.updateRemixer({institution: result[0].url});
-			return result;*/
-		}
+		/*switch (RemixerFunctions.userPermissions()) {
+			case 'Basic':*/
+		setInstitutions(result);
+		props.updateRemixer({institution: result[0].url});
+		return result;
+		/*result.push({
+			url: `https://${subdomain}.libretexts.org/Courses/Remixer_University`,
+			title: 'Remixer University'
+		});
+		setInstitutions(result);
+		props.updateRemixer({institution: result[0].url});
+		return result;*/
+		// }
 		
-		let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
+		
+		/*let response = await LibreTexts.authenticatedFetch('Courses', 'subpages?dream.out.format=json', subdomain);
 		response = await response.json();
 		const subpageArray = (response['@count'] === '1' ? [response['page.subpage']] : response['page.subpage']) || [];
 		// console.log(subpageArray);
@@ -45,7 +45,7 @@ export default function RemixerOptions(props) {
 		}
 		result.push({url: '', title: 'Not listed? Contact info@libretexts.org'});
 		setInstitutions(result);
-		props.updateRemixer({institution: result[0].url});
+		props.updateRemixer({institution: result[0].url});*/
 	}
 	
 	let title = props.RemixTree.title;
@@ -62,25 +62,13 @@ export default function RemixerOptions(props) {
 			margin="normal"
 			variant="outlined"
 			value={title}
+			helperText={props.mode === 'Remix' ? 'Your Remix will be saved to your personal sandbox.' : null}
 			onChange={(event) => {
 				const tempTree = props.RemixTree;
 				tempTree.title = event.target.value;
 				props.updateRemixer({RemixTree: tempTree});
 			}}
 		/>
-			{props.mode === 'Remix' ? <TextField
-				select
-				label="Institution"
-				value={props.institution || ""}
-				onChange={(event) => {
-					props.updateRemixer({institution: event.target.value});
-				}}
-				helperText="Please select your institution"
-				margin="normal"
-				variant="outlined"
-			>{institutions.map(elem => <MenuItem key={elem.url}
-			                                     value={elem.url}>{elem.title}</MenuItem>)}
-			</TextField> : null}
 			{props.permission !== 'Basic' ? <TextField
 				select
 				id='defaultCopyMode'
@@ -109,7 +97,7 @@ export default function RemixerOptions(props) {
 					<MenuItem value='full'>
 						<Tooltip
 							title="[Only for Admins] Copy-full mode duplicates a page along with all of the images and attachments on it. Best for cross-library migrations.">
-							<div>Copy-Full</div>
+							<div>Copy-Full [Only for Admins]</div>
 						</Tooltip>
 					</MenuItem>
 					: null}

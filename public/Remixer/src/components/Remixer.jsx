@@ -186,7 +186,9 @@ class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar">
-				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}><Info/></Tooltip></div>
+				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+					<Info/>
+				</Tooltip></div>
 				<div style={{fontSize: '130%', cursor: 'pointer'}}
 				     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
 				>
@@ -197,8 +199,9 @@ class Remixer extends React.Component {
 				</div>
 				<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
 					<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
-						<Button variant="contained" onClick={this.loadAutosave} disabled={!localStorage.getItem('lastRemixerAutosave')}>Load
-						                                                                                    from previous session</Button>
+						<Button variant="contained" onClick={this.loadAutosave}
+						        disabled={!localStorage.getItem('lastRemixerAutosave')}>
+							Load from previous session</Button>
 					</div>
 				</Tooltip>
 			</div>
@@ -247,4 +250,5 @@ class Remixer extends React.Component {
 		}
 	}
 }
+
 export default withSnackbar(Remixer); //Allows snackbars

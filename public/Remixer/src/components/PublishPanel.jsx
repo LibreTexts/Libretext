@@ -19,10 +19,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Description from "@material-ui/icons/Description";
 import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import {Switch} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Warning from "@material-ui/icons/Warning";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {useSnackbar} from 'notistack';
 import IconButton from "@material-ui/core/IconButton";
@@ -664,7 +661,7 @@ function PublishSubPanel(props) {
 							break;
 						case 'fork':
 						case 'full':
-							if (source.subdomain === currentSubdomain && ['Admin', 'Pro'].includes(props.permission))
+							if (source.subdomain === currentSubdomain && 'Admin' === props.permission)
 								contents = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain);
 							else
 								contents = await fetch('https://api.libretexts.org/endpoint/contents', {

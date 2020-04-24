@@ -55,7 +55,7 @@ class ReRemixerPanel extends React.Component {
 			includeMatter: true
 		});
 		
-		//prevent Pro users from modifying Bookshelves
+		//prevent Developer users from modifying Bookshelves
 		/*if (this.props.permission !== 'Admin') {
 			content = content.filter((page) => !page.path.startsWith('Bookshelves'));
 		}*/

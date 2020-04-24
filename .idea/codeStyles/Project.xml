@@ -25,6 +25,7 @@
       </formatting-settings>
     </DBN-SQL>
     <codeStyleSettings language="JavaScript">
+      <option name="ELSE_ON_NEW_LINE" value="true" />
       <indentOptions>
         <option name="USE_TAB_CHARACTER" value="true" />
         <option name="SMART_TABS" value="true" />
