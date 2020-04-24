@@ -40,7 +40,6 @@ export default function PublishPanel(props) {
 	const [panel, setPanel] = React.useState('summary');
 	let [initialized, setInitialized] = React.useState();
 	let [publishing, setPublishing] = React.useState();
-	let [override, setOverride] = React.useState(false);
 	let [reviseDialog, setReviseDialog] = React.useState(false);
 	const {enqueueSnackbar} = useSnackbar();
 	
@@ -212,22 +211,6 @@ export default function PublishPanel(props) {
 					</Tabs>
 				</AppBar>
 				{panel === 'summary' ? generateSummary() : null}
-				{panel === 'summary' ?
-					<Tooltip
-						title='Existing pages will not be overwritten unless this option is enabled. Leave off for maximum safety.'>
-						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-							<FormControlLabel
-								style={{display: 'flex', alignItems: 'center', margin: '0 5px 0 0'}}
-								control={
-									<Switch
-										inputProps={{'aria-label': 'primary checkbox'}}
-										checked={override}
-										onChange={() => setOverride(!override)}
-									/>}
-								label="Overwrite existing pages"/>
-							<Warning style={{color: 'red'}}/>
-						</div>
-					</Tooltip> : null}
 				<div id='LTPreviewForm' className='treePanel'
 				     style={{display: panel === 'tree' ? 'flex' : 'none'}}></div>
 				<ButtonGroup
@@ -244,8 +227,7 @@ export default function PublishPanel(props) {
 					</Button>
 				</ButtonGroup>
 			</Paper>
-			<PublishSubPanel {...props} working={pageArray} sorted={sorted} publishing={publishing}
-			                 override={override}/>
+			<PublishSubPanel {...props} working={pageArray} sorted={sorted} publishing={publishing}/>
 			<Dialog open={reviseDialog} onClose={() => setReviseDialog(false)}
 			        aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Revise or Select Another Text?</DialogTitle>
@@ -440,17 +422,6 @@ function PublishSubPanel(props) {
 			});
 			return false;
 		}
-		if (props.mode === 'ReRemix' && !props.override && props.sorted.modified && props.sorted.modified.length) {
-			enqueueSnackbar(`The ReRemixer requires "Overwrite Existing Pages" to be turned on when modifying pages.
-			Remember to double check the changes that you are about to make since it may not be easy to undo them later!`, {
-				variant: 'warning',
-				anchorOrigin: {
-					vertical: 'bottom',
-					horizontal: 'right',
-				},
-			});
-			return false;
-		}
 		let destRoot;
 		if (props.mode === 'Remix') {
 			destRoot = props.institution;
@@ -463,8 +434,8 @@ function PublishSubPanel(props) {
 			destRoot = props.RemixTree.data.url;
 		
 		let response = await LibreTexts.authenticatedFetch(destRoot, 'info');
-		if (response.ok && !props.override && props.mode !== 'ReRemix') {
-			enqueueSnackbar(`The page ${destRoot} already exists! Either change the Title or bypass this safety check by enabling "Overwrite Existing Pages".`, {
+		if (response.ok && props.mode !== 'ReRemix') {
+			enqueueSnackbar(`The page ${destRoot} already exists! You must either change the Title or change where you are saving this Remix.`, {
 				variant: 'warning',
 				anchorOrigin: {
 					vertical: 'bottom',
@@ -490,7 +461,7 @@ function PublishSubPanel(props) {
 		setIsActive(true);
 		setResults([]);
 		console.log(props);
-		let writeMode = props.override ? 'edittime=now' : 'abort=exists';
+		let writeMode = 'edittime=now';
 		let startedAt = new Date();
 		
 		//process cover
