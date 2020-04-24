@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Fixed 100+ subpages">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Typo Fix Remixer developer permissions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/build.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/Remixer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/RemixerPanel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/reusableFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1103,21 +1094,9 @@
       <workItem from="1587596047264" duration="610000" />
       <workItem from="1587602541425" duration="1550000" />
       <workItem from="1587616670865" duration="1485000" />
-      <workItem from="1587624298221" duration="308000" />
-    </task>
-    <task id="LOCAL-00199" summary="Foreign Image">
-      <created>1560471493895</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1560471493896</updated>
-    </task>
-    <task id="LOCAL-00200" summary="Front, Middle, Back Matter">
-      <created>1560727631553</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1560727631555</updated>
+      <workItem from="1587624298221" duration="532000" />
+      <workItem from="1587671553500" duration="593000" />
+      <workItem from="1587689685297" duration="621000" />
     </task>
     <task id="LOCAL-00201" summary="Portal Config">
       <created>1560729681926</created>
@@ -1448,7 +1427,21 @@
       <option name="project" value="LOCAL" />
       <updated>1585333709699</updated>
     </task>
-    <option name="localTasksCounter" value="248" />
+    <task id="LOCAL-00248" summary="Added other User Sandboxes for collaboration&#10;&#10;- Allows for other users to collaborate in other Sandboxes they have permission to access.&#10;- Also added RemixerLastText for easy ReRemixing">
+      <created>1587624817798</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1587624817799</updated>
+    </task>
+    <task id="LOCAL-00249" summary="Typo Fix Remixer developer permissions">
+      <created>1587690052454</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1587690052454</updated>
+    </task>
+    <option name="localTasksCounter" value="250" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1503,8 +1496,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added Store: to downloads bar" />
-    <MESSAGE value="Bugfix Importer Padded titles" />
     <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
     <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
     <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
@@ -1528,7 +1519,9 @@
     <MESSAGE value="Bugfix dynamicIndexMaker.js non-chem libraries" />
     <MESSAGE value="Bugfix dynamicIndexMaker.js authentication" />
     <MESSAGE value="Updated licenses.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated licenses.js" />
+    <MESSAGE value="Added other User Sandboxes for collaboration&#10;&#10;- Allows for other users to collaborate in other Sandboxes they have permission to access.&#10;- Also added RemixerLastText for easy ReRemixing" />
+    <MESSAGE value="Typo Fix Remixer developer permissions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Typo Fix Remixer developer permissions" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" width="1079" height="683" key="#Deployment" timestamp="1586985366120">
@@ -1557,10 +1550,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="793" y="107" key="#xdebugger.evaluate/0.0.1368.872@0.0.1368.872" timestamp="1582655095547" />
-    <state x="627" y="0" width="1075" height="782" key="CommitChangelistDialog2" timestamp="1585333709038">
+    <state x="264" y="0" width="1119" height="920" key="CommitChangelistDialog2" timestamp="1587690050968">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="627" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585333709038" />
+    <state x="264" y="0" width="1119" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587690050968" />
     <state x="132" y="0" width="948" height="872" key="CommitChangelistDialog2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015106278" />
     <state x="133" y="0" width="985" height="872" key="CommitChangelistDialog2/0.0.1368.872@0.0.1368.872" timestamp="1583260174068" />
     <state x="148" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1583529109310" />
@@ -1590,10 +1583,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="504" height="684" key="GridCell.Tab.-1.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1581839600574" />
-    <state width="302" height="561" key="GridCell.Tab.0.bottom" timestamp="1587618156965">
+    <state width="302" height="746" key="GridCell.Tab.0.bottom" timestamp="1587689872982">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="302" height="561" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587618156965" />
+    <state width="302" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587689872982" />
     <state width="225" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583608499406" />
     <state width="444" height="466" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1601,10 +1594,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.bottom/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355841" />
-    <state width="302" height="561" key="GridCell.Tab.0.center" timestamp="1587618156965">
+    <state width="302" height="746" key="GridCell.Tab.0.center" timestamp="1587689872982">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="302" height="561" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587618156965" />
+    <state width="302" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587689872982" />
     <state width="225" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1612,10 +1605,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.center/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355840" />
-    <state width="302" height="561" key="GridCell.Tab.0.left" timestamp="1587618156964">
+    <state width="302" height="746" key="GridCell.Tab.0.left" timestamp="1587689872982">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="302" height="561" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587618156964" />
+    <state width="302" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587689872982" />
     <state width="225" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400623" />
@@ -1623,10 +1616,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.left/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355839" />
-    <state width="302" height="561" key="GridCell.Tab.0.right" timestamp="1587618156965">
+    <state width="302" height="746" key="GridCell.Tab.0.right" timestamp="1587689872982">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="302" height="561" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587618156965" />
+    <state width="302" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587689872982" />
     <state width="225" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1752,10 +1745,10 @@
     </state>
     <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587418525690" />
     <state x="277" y="54" key="SettingsEditor/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191484618" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1585333711954">
+    <state x="521" y="177" key="Vcs.Push.Dialog.v2" timestamp="1587690054604">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585333711954" />
+    <state x="521" y="177" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587690054604" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582015111019" />
     <state x="357" y="179" key="Vcs.Push.Dialog.v2/0.0.1368.872@0.0.1368.872" timestamp="1583260177643" />
     <state x="401" y="169" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1581375684399" />

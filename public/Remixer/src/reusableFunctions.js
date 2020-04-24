@@ -63,12 +63,10 @@ function userPermissions(full) {
 	
 	if (isAdmin)
 		permission = "Admin";
-	else if (isPro && groups.includes('reremixer'))
+	else if (isPro && (groups.includes('reremixer') || groups.includes('developer')))
 		permission = 'Pro';
-	else if (isPro && groups.includes('faculty'))
+	else if (isPro && (groups.includes('faculty') || groups.includes('contributor')))
 		permission = 'Faculty';
-	/*	else if (groups.includes('workshop'))
-			permission = 'Workshop';*/
 	else if (isPro && (groups.includes('basicuser') || groups.includes('workshop')))
 		permission = 'Basic';
 	
