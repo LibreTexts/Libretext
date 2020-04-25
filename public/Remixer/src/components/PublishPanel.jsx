@@ -340,7 +340,11 @@ function PublishSubPanel(props) {
 					
 					<h6><a href={finished} target='_blank'>Your new Text is available here</a></h6>
 					<Tooltip title='Download Progress Log'
-					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip>
+					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip><br/>
+					{'Basic' === props.permission ? <h6>
+						<a href={`mailto:info@libretexts.org?Subject=Move Remix to Campus Hub ${finished}`}>
+							Contact info@libretexts.org to move this Remix to a Campus Hub</a>
+					</h6> : null}
 				</div> : null}
 				<LinearProgress variant="determinate" style={{width: '100%'}}
 				                value={Math.round(counter.pages / total * 1000) / 10}/>
