@@ -94,7 +94,7 @@ export default function PublishPanel(props) {
 					else if (page.data.padded !== page.data.original.data.padded
 						|| page.title !== page.data.original.title) { //renamed
 						page.data.modifiedType = 'Renamed';
-						objectResult['moved'].push(page);
+						objectResult['renamed'].push(page);
 					}
 					else {
 						page.data.modifiedType = 'Tags Modified';

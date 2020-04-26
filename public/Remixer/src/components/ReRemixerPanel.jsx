@@ -82,19 +82,22 @@ class ReRemixerPanel extends React.Component {
 				children: sandboxes
 			});
 		}
+		let lastText
 		if (localStorage.getItem('RemixerLastText')) {
-			let lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
+			lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
 			lastText = await LibreTexts.getAPI(lastText.url);
-			lastText.title = `${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
+			lastText.title = `<b>Last Linked: </b>${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
 			lastText.lazy = true;
-			lastText.extraClasses = `security-${lastText.security} RemixerLastText `
+			lastText.extraClasses = `security-${lastText.security} `
 			lastText.children = await RemixerFunctions.getSubpages(lastText.path, this.state.subdomain, {
 				linkTitle: true,
 				includeMatter: true
 			})
-			
-			content.unshift(lastText)
 		}
+		else
+			lastText = {title: 'No Last Linked Text'};
+		lastText.tooltip = 'Last Linked';
+		content.unshift(lastText);
 		
 		this.setState({LibraryTree: content});
 		LeftAlert.slideUp();
@@ -171,9 +174,12 @@ class ReRemixerPanel extends React.Component {
 			},
 			icon: (event, data) => {
 				if (data.node.getLevel() === 1)
-					return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
+					if (!data.node.getPrevSibling())
+						return 'mt-icon-history2';
+					else
+						return `https://libretexts.org/img/LibreTexts/glyphs/${this.state.subdomain}.png`;
 			},
-			tooltip: (event, data) => `${(data.node.data.status || 'new').toUpperCase()} page`
+			tooltip: (event, data) => data.node.tooltip || `${(data.node.data.status || 'new').toUpperCase()} page`
 		});
 		
 		
@@ -287,7 +293,8 @@ class ReRemixerPanel extends React.Component {
 				},
 			});
 			return;
-		} else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
+		}
+		else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
 			this.props.enqueueSnackbar('You have insufficient permissions to modify this page', {
 				variant: 'error',
 				anchorOrigin: {
@@ -302,6 +309,7 @@ class ReRemixerPanel extends React.Component {
 		this.setState({transferring: false});
 		
 		currentlyActive = currentlyActive.toDict(true);
+		currentlyActive.title = currentlyActive.title.replace('<b>Last Linked: </b>', '');
 		currentlyActive.key = 'ROOT';
 		currentlyActive.expanded = true;
 		let rootPath = currentlyActive.data.path;

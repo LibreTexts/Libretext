@@ -151,14 +151,18 @@ h1, h2, h3, h4, h5, h6 {
     color: #117bc4;
 }
 
-#LTForm.ReRemixerPanel .RemixerLastText > * {
-    font-style: italic;
+#LTForm.ReRemixerPanel .ui-fancytree > li:first-child {
+    background: #117bc4;
+    margin-bottom: 10px;
+    border-radius: 20px;
 }
 
-#LTForm.ReRemixerPanel .RemixerLastText:only-child {
-    border-bottom: 1px solid #6b6b6b;
-    margin-bottom: 10px;
-    width: auto;
+#LTForm.ReRemixerPanel .ui-fancytree > li:first-child * {
+    color: black;
+}
+
+#LTForm.ReRemixerPanel .ui-fancytree > li:first-child .security-Editor *, #LTForm.ReRemixerPanel .ui-fancytree > li:first-child .security-Author * {
+    color: lightgrey;
 }
 
 
