@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Downloads Center/createBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/elevate.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/elevate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +185,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Downloads Center">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1575,10 +1574,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state width="504" height="684" key="GridCell.Tab.-1.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1581839600574" />
-    <state width="555" height="561" key="GridCell.Tab.0.bottom" timestamp="1586985904206">
+    <state width="505" height="561" key="GridCell.Tab.0.bottom" timestamp="1587928234171">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="555" height="561" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985904206" />
+    <state width="505" height="561" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587928234171" />
     <state width="225" height="684" key="GridCell.Tab.0.bottom/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583608499406" />
     <state width="444" height="466" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1586,10 +1585,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.bottom/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.bottom/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355841" />
-    <state width="555" height="561" key="GridCell.Tab.0.center" timestamp="1586985904205">
+    <state width="505" height="561" key="GridCell.Tab.0.center" timestamp="1587928234170">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="555" height="561" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985904205" />
+    <state width="505" height="561" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587928234170" />
     <state width="225" height="684" key="GridCell.Tab.0.center/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
@@ -1597,10 +1596,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.center/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.center/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355840" />
-    <state width="555" height="561" key="GridCell.Tab.0.left" timestamp="1586985904205">
+    <state width="505" height="561" key="GridCell.Tab.0.left" timestamp="1587928234170">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="555" height="561" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985904205" />
+    <state width="505" height="561" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587928234170" />
     <state width="225" height="684" key="GridCell.Tab.0.left/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400623" />
@@ -1608,10 +1607,10 @@
     <state width="408" height="569" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1582422170964" />
     <state width="353" height="641" key="GridCell.Tab.0.left/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583559251602" />
     <state width="480" height="605" key="GridCell.Tab.0.left/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191355839" />
-    <state width="555" height="561" key="GridCell.Tab.0.right" timestamp="1586985904205">
+    <state width="505" height="561" key="GridCell.Tab.0.right" timestamp="1587928234171">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="555" height="561" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985904205" />
+    <state width="505" height="561" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587928234171" />
     <state width="225" height="684" key="GridCell.Tab.0.right/0.0.1368.872/-1440.0.1440.860@0.0.1368.872" timestamp="1582013711737" />
     <state width="353" height="654" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583608499405" />
     <state width="444" height="466" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1600.860@0.0.1536.824" timestamp="1582321400624" />
