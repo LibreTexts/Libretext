@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "node build.js",
-    "test": ""
+    "package": "node createBundle.js"
   },
   "author": "",
   "license": "",

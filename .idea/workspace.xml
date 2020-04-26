@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/Remixer.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/Remixer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/createBundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +191,7 @@
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
-    <configuration name="build.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/public/Remixer/build.js" working-dir="$PROJECT_DIR$/public/Remixer">
+    <configuration name="createBundle.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/public/Remixer/createBundle.js" working-dir="$PROJECT_DIR$/public/Remixer">
       <method v="2" />
     </configuration>
     <configuration name="elevate.js" type="NodeJSConfigurationType" temporary="true" application-parameters="80" nameIsGenerated="true" path-to-js-file="elevate.js" working-dir="$PROJECT_DIR$/API">
@@ -319,17 +317,17 @@
       <item itemvalue="Node.js.elevate.js" />
       <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="Node.js.webwork.js" />
-      <item itemvalue="Node.js.build.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.build" />
+      <item itemvalue="Node.js.createBundle.js" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="npm.build" />
-        <item itemvalue="Node.js.build.js" />
+        <item itemvalue="Node.js.createBundle.js" />
         <item itemvalue="Node.js.webwork.js" />
         <item itemvalue="Node.js.schedule.js" />
         <item itemvalue="Node.js.elevate.js" />
