@@ -299,7 +299,8 @@
 						success = true;
 					}
 					contentReuse = result;
-					
+
+					[subdomain] = await LibreTexts.parseURL();
 					//Local Forker
 					matches = contentReuse.match(/(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g) || contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 					if (matches && matches.length) {
@@ -311,8 +312,15 @@
 								.replace('wiki.page(&quot;', '')
 								.replace(/&quot;\)\s*?<\/pre>/, '')
 								.replace('data-page="', '');
-							
-							let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain);
+
+							let content = await fetch('https://api.libretexts.org/endpoint/contents', {
+								method: 'PUT',
+								body: JSON.stringify({
+									path: path,
+									api: 'contents?mode=raw',
+									subdomain: subdomain,
+								}),
+							})
 							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 							content = await content.text();
 							info = await info.json();
@@ -393,10 +401,10 @@
 		let tags = document.getElementById("pageTagsHolder");
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		const isPro = document.getElementById("proHolder").innerText === 'true';
-		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
+		// const groups = document.getElementById("groupHolder").innerText.toLowerCase();
 		let target = $("span.title.mt-title-edit");
 		let [, path] = LibreTexts.parseURL();
-		if (tags && (isAdmin || (isPro && (groups.includes('contributor') || path.startsWith('Sandboxes'))))) {
+		if (tags && isPro && target.length) {
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);

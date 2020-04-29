@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/Downloads Center/createBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1091,6 +1088,7 @@
       <workItem from="1586233656313" duration="77000" />
       <workItem from="1586234009127" duration="1269000" />
       <workItem from="1586985923968" duration="81000" />
+      <workItem from="1588132268539" duration="367000" />
     </task>
     <task id="LOCAL-00202" summary="Downloads Center remove Remixer University">
       <created>1560732437244</created>
