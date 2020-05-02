@@ -40,7 +40,7 @@ if (!window["batchPrint.js"]) {
 				
 				downloads = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
 				downloads = await downloads.json();
-				if(downloads.items)
+				if (downloads.items)
 					downloads = downloads.items;
 				
 				let id = document.getElementById('pageIDHolder').innerText;
@@ -185,7 +185,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 				batchButton.innerText = "Redownload";
 				window.location = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
 				window["batchComplete"] = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
-				setTimeout(()=>window.location.reload(), 5000);
+				setTimeout(() => window.location.reload(), 5000);
 				
 			}
 		}

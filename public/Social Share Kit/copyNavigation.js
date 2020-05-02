@@ -201,7 +201,8 @@
 			if (tags.tag) {
 				if (tags.tag.length) {
 					tags = tags.tag.map((tag) => tag["@value"]);
-				} else {
+				}
+				else {
 					tags = [tags.tag["@value"]];
 				}
 			}
@@ -214,7 +215,8 @@
 			tags.splice(tags.indexOf("transcluded:yes"), 1);
 			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
 			return "<tags>" + tags + "</tags>";
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -229,7 +231,8 @@
 					
 					alert(response + '.\n The page will now reload.');
 					location.reload();
-				} else alert(response);
+				}
+				else alert(response);
 				return;
 			}
 			
@@ -268,7 +271,8 @@
 									if (files.file) {
 										if (!files.file.length) {
 											files = [files.file];
-										} else {
+										}
+										else {
 											files = files.file;
 										}
 									}
@@ -333,7 +337,8 @@
 										if (files.file) {
 											if (!files.file.length) {
 												files = [files.file];
-											} else {
+											}
+											else {
 												files = files.file;
 											}
 										}
@@ -381,7 +386,8 @@
 							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						});
 						location.reload();
-					} else {
+					}
+					else {
 						alert("No content-reuse sections detected!");
 					}
 				}

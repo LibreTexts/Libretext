@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/createBundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Remixer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,12 +318,12 @@
       <item itemvalue="Node.js.elevate.js" />
       <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="Node.js.webwork.js" />
+      <item itemvalue="Node.js.createBundle.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.build" />
-      <item itemvalue="Node.js.createBundle.js" />
     </list>
     <recent_temporary>
       <list>
@@ -1534,11 +1535,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="446" y="120" width="1079" height="683" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586985366120" />
-    <state x="446" y="120" key="#Deployment/0.0.1707.920@0.0.1707.920" timestamp="1579596460815" />
-    <state x="602" y="84" key="#JavaScript" timestamp="1587412994890">
+    <state x="602" y="84" width="739" height="752" key="#JavaScript" timestamp="1588443689866">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="602" y="84" key="#JavaScript/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587412994890" />
+    <state x="602" y="84" width="739" height="752" key="#JavaScript/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1588443689866" />
     <state x="510" y="155" key="#SSH_Configurations" timestamp="1586985363644">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1742,15 +1742,15 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="599" height="569" key="GridCell.Tab.4.right/0.0.1707.920@0.0.1707.920" timestamp="1582420807180" />
-    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1587771645409">
+    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1588443518701">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587771645409" />
+    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1588443518701" />
     <state x="2513" y="56" key="RollbackChangesDialog/0.0.1536.824/1920.0.1600.860@1920.0.1600.860" timestamp="1580503412142" />
-    <state x="308" y="60" key="SettingsEditor" timestamp="1587769812966">
+    <state x="488" y="76" width="1168" height="711" key="SettingsEditor" timestamp="1588443901338">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="308" y="60" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1587769812966" />
+    <state x="488" y="76" width="1168" height="711" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1588443901338" />
     <state x="277" y="54" key="SettingsEditor/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583191484618" />
     <state x="521" y="177" key="Vcs.Push.Dialog.v2" timestamp="1587779147541">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1767,7 +1767,6 @@
     </state>
     <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585203229536" />
     <state width="1243" height="444" key="XDebugger.FullValuePopup/0.0.1368.872@0.0.1368.872" timestamp="1582480822740" />
-    <state width="1550" height="468" key="XDebugger.FullValuePopup/0.0.1707.920@0.0.1707.920" timestamp="1579594014731" />
     <state width="1396" height="420" key="XDebugger.FullValuePopup/3520.-10.1368.887/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1583190324933" />
     <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1585203041299">
       <screen x="0" y="0" width="1707" height="920" />
