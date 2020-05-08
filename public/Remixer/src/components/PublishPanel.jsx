@@ -459,8 +459,9 @@ function PublishSubPanel(props) {
 			eta: 'Calculating',
 		});
 		setSeconds(0);
-		setIsActive(true);
 		setResults([]);
+		await LibreTexts.sendAPI('createSandbox');
+		setIsActive(true);
 		console.log(props);
 		let writeMode = 'edittime=now';
 		let startedAt = new Date();
