@@ -6,6 +6,7 @@ import HeaderFix from "../components/HeaderFix";
 import ForeignImage from "../components/ForeignImage";
 import ReactDOM from 'react-dom';
 import ConvertContainers from "../components/ConvertContainers";
+import Multi from "../components/Multi";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -33,6 +34,7 @@ class Dashboard extends React.Component {
 					<option value={'HeaderFix'}>Header Fixer</option>
 					<option value={'ForeignImage'}>Foreign Image Importer</option>
 					<option value={'ConvertContainers'}>Upgrade Containers</option>
+					<option value={'Multistep Preset'}>Multistep Preset</option>
 				</select>
 				<div>
 					<label style={{display: 'flex', alignItems: 'center'}}>
@@ -75,6 +77,8 @@ class Dashboard extends React.Component {
 				return <ForeignImage devMode={this.state.devMode}/>;
 			case "ConvertContainers":
 				return <ConvertContainers devMode={this.state.devMode}/>;
+			case "Multistep Preset":
+				return <Multi devMode={this.state.devMode}/>;
 		}
 	}
 	

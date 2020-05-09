@@ -24,7 +24,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="4d0ba47b-3ce7-49df-9533-4c62f2808c28" name="Test" url="http://test.libretexts.org">
-        <fileTransfer rootFolder="/home/hagnew" accessType="SFTP" host="front.libretexts.org" port="22" sshConfigId="11858421-7d87-4d9a-a8a8-efb7403adf0d" sshConfig="hagnew@front.libretexts.org:22 key" keyPair="true">
+        <fileTransfer rootFolder="/home/hagnew" accessType="SFTP" host="test.libretexts.org" port="22" sshConfigId="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" sshConfig="hagnew@test.libretexts.org:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
