@@ -104,7 +104,6 @@ export default class Multi extends React.Component {
             root: this.state.root,
             user: this.state.user,
             multi: this.state.multi,
-            multiName: this.state.multiName,
             findOnly: this.state.findOnly,
         };
 
@@ -117,9 +116,9 @@ export default class Multi extends React.Component {
             return false;
         }
         if (request.findOnly) {
-            if (confirm(`The bot will find all pages with this ${this.state.multi.length} step preset. No Changes will be made.`))
+            if (confirm(`The bot will find all pages with  ${this.state.multi.name}, which has ${this.state.multi.body.length} steps. No Changes will be made.`))
                 this.sendRequest(request);
-        } else if (confirm(`The bot will perform this ${this.state.multi.length} step preset. Click OK to proceed.`)) {
+        } else if (confirm(`The bot will perform ${this.state.multi.name}, which has ${this.state.multi.body.length} steps. Click OK to proceed.`)) {
             this.sendRequest(request);
         }
     }
@@ -188,14 +187,14 @@ export default class Multi extends React.Component {
                             let value = e.target.value;
                             if (value) {
                                 value = JSON.parse(value);
-                                this.setState({multi: value, multiName: e.target.key});
+                                this.setState({multi: value});
                             } else
                                 this.setState({multi: undefined});
                         }}>
                             <option value="">Select a Multistep Preset</option>
                             {
                                 this.state.presets.map((preset) =>
-                                    <option key={preset.name} value={JSON.stringify(preset.body)}>{preset.name}
+                                    <option key={preset.name} value={JSON.stringify(preset)}>{preset.name}
                                     </option>)
                             }
                         </select>

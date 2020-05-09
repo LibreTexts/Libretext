@@ -8,8 +8,9 @@
             <mapping deploy="/api" local="$PROJECT_DIR$/API" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/API/aata-master" />
             <excludedPath local="true" path="$PROJECT_DIR$/API/mathbook" />
+            <excludedPath local="true" path="$PROJECT_DIR$/API/BotLogs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/API/ImportFiles" />
           </excludedPaths>
         </serverdata>
       </paths>
