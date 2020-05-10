@@ -11,6 +11,7 @@ const jsdiff = require('diff');
 require('colors');
 const async = require('async');
 const LibreTexts = require('./reuse.js');
+const tidy = require("tidy-html5").tidy_html5;
 let port = 3006;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
     port = parseInt(process.argv[2]);
@@ -187,8 +188,10 @@ async function jobHandler(jobType, input, socket) {
         if (jobType === 'multipreset' && input.multi) {
             jobs = input.multi.body;
             jobs = jobs.map((j) => {
-                if (j.find)
+                if (j.find) {
+                    j.regex = Boolean(j.find.match(/^\/[\s\S]*\/$/));
                     j.jobType = 'findReplace';
+                }
                 return j;
 
             })
@@ -224,8 +227,9 @@ async function jobHandler(jobType, input, socket) {
                         result = tidy(result);
                     break;
             }
+            if (result && result !== lastResult)
+                console.log(comment);
             result = result || lastResult;
-            console.log(comment);
         }
 
         if (jobType === 'multipreset')
@@ -362,6 +366,7 @@ async function revert(input, socket) {
 //Operator Functions
 async function findReplace(input, content) {
     // content = content.replace(/\\n/g, '\n');
+
     let result = content.replaceAll(input.find, input.replace, input);
     if (result !== content) {
         /*      const diff = jsdiff.diffWords(content, result);
