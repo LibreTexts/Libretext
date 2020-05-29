@@ -224,7 +224,7 @@ async function jobHandler(jobType, input, socket) {
                     break;
                 case 'clean':
                     if (result !== content)
-                        result = tidy(result);
+                        result = tidy(result); //{indent:'auto','indent-spaces':4}
                     break;
             }
             if (result && result !== lastResult)

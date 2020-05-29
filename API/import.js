@@ -702,13 +702,7 @@ async function processEPUB(data, socket) {
 			path = isSimple ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
 			
 			//remove extraneous link tags
-			let containerTags = contents.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
-			if (containerTags) {
-				for (let i = 0; i < containerTags.length; i++) {
-					let toReplace = containerTags[i].match(/<img.*?"\/>/)[0];
-					contents = contents.replace(containerTags[i], toReplace);
-				}
-			}
+			contents = contents.replace(/<a>\n\s*?(<img [\s\S]*?)<\/a>/gm, '$1');
 			
 			contents = await uploadImages(contents, path, imageProcessor, data);
 			
