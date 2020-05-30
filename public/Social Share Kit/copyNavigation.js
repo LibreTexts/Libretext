@@ -1,5 +1,5 @@
 (function () {
-	
+
 	function fn() {
 		let nav = document.getElementsByClassName("elm-article-pagination");
 		if (nav.length) {
@@ -17,7 +17,7 @@
 		}
 		// setInterval(editorContentReuseLink, 500);
 	}
-	
+
 	function copyTranscludeOption() {
 		let tags = document.getElementById("pageTagsHolder");
 		if (tags) {
@@ -39,7 +39,7 @@
 			}
 		}
 	}
-	
+
 	function propagatorOption() {
 		const isAdmin = document.getElementById("adminHolder").innerText === "true";
 		const isLibrarySpecific = window.location.href.includes('LibrarySpecific');
@@ -62,7 +62,7 @@
 			}
 		}
 	}
-	
+
 	async function askPropagator() {
 		if (confirm(`Propagate ${window.location.href} to the other libraries?`)) {
 			let url = window.location.href;
@@ -86,7 +86,7 @@
 			}
 		}
 	}
-	
+
 	function remixerOption() {
 		let targetName = "mt-new-page";
 		let copy = document.getElementsByClassName(targetName);
@@ -115,7 +115,7 @@
 			copyTarget.innerText = "Remixer";
 			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
 				copyTarget.id = "RemixerIcon";
-			
+
 			copyTarget.classList.add("mt-icon-tree");
 			copyTarget.classList.remove("mt-icon-new-page");
 			copyTarget.classList.remove("mt-icon-site-tools");
@@ -146,7 +146,7 @@
 			}
 		}
 	}
-	
+
 	function downloadOption() {
 		let targetName = "mt-new-page";
 		let copy = document.getElementsByClassName(targetName);
@@ -169,7 +169,7 @@
 			copyTarget.innerText = "Downloads";
 			if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
 				copyTarget.id = "DownloadIcon";
-			
+
 			copyTarget.classList.add("mt-icon-download");
 			copyTarget.classList.remove("mt-icon-new-page");
 			copyTarget.classList.remove("mt-icon-site-tools");
@@ -193,7 +193,7 @@
 			original.parentNode.insertBefore(copy, target)
 		}
 	}
-	
+
 	async function getTags(pageID, extraArray) {
 		let tags = await LibreTexts.authenticatedFetch(pageID, 'tags?dream.out.format=json');
 		tags = await tags.json();
@@ -201,8 +201,7 @@
 			if (tags.tag) {
 				if (tags.tag.length) {
 					tags = tags.tag.map((tag) => tag["@value"]);
-				}
-				else {
+				} else {
 					tags = [tags.tag["@value"]];
 				}
 			}
@@ -215,12 +214,11 @@
 			tags.splice(tags.indexOf("transcluded:yes"), 1);
 			tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
 			return "<tags>" + tags + "</tags>";
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
-	
+
 	async function copyContent() {
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
 			let [, path] = LibreTexts.parseURL();
@@ -228,14 +226,13 @@
 				let response = await LibreTexts.sendAPI('fork');
 				response = await response.text();
 				if (response.includes('Successfully forked')) {
-					
+
 					alert(response + '.\n The page will now reload.');
 					location.reload();
-				}
-				else alert(response);
+				} else alert(response);
 				return;
 			}
-			
+
 			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
 			let current = window.location.origin.split('/')[2].split('.')[0];
 			let response = await LibreTexts.authenticatedFetch(pageID, `contents?mode=raw`);
@@ -245,7 +242,7 @@
 				if (contentReuse) {
 					contentReuse = decodeHTML(contentReuse);
 					contentReuse = contentReuse.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
-					
+
 					//Cross-library Forker
 					let result = contentReuse;
 					let success;
@@ -254,15 +251,15 @@
 					if (matches && matches.length) {
 						do {
 							let path = JSON.parse(matches[0].match(/{.*?}/)[0].replace(/'/g, '"'));
-							
+
 							//Get cross content
 							let content = await LibreTexts.authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
 							subdomain = path.Library;
 							content = await content.text();
 							content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
 							content = decodeHTML(content);
-							
-							
+
+
 							response = await LibreTexts.authenticatedFetch(path.PageID, 'files?dream.out.format=json', path.Library);
 							if (response.ok) {
 								let files = await response.json();
@@ -271,8 +268,7 @@
 									if (files.file) {
 										if (!files.file.length) {
 											files = [files.file];
-										}
-										else {
+										} else {
 											files = files.file;
 										}
 									}
@@ -295,12 +291,12 @@
 								}
 							}
 							sourceTags.push(`source-${subdomain}-${path.PageID}`);
-							
+
 							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${path.PageID}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${path.PageID}</p></div></div>`;
-							
+
 							result = result.replace(matches[0], content);
 							matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
-							
+
 						} while (matches && matches.length);
 						success = true;
 					}
@@ -331,11 +327,11 @@
 							content = await content.text();
 							info = await info.json();
 							content = decodeHTML(content);
-							
+
 							// WAITING FOR ECMA 2018      content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
 							content = content.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
 							//End compliance code
-							
+
 							if (subdomain) {
 								response = await LibreTexts.authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
 								alert('Copying files over. This may take a while...');
@@ -345,8 +341,7 @@
 										if (files.file) {
 											if (!files.file.length) {
 												files = [files.file];
-											}
-											else {
+											} else {
 												files = files.file;
 											}
 										}
@@ -369,14 +364,14 @@
 									}
 								}
 							}
-							
+
 							subdomain = subdomain || current;
 							sourceTags.push(`source-${subdomain}-${info['@id']}`);
-							
+
 							content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${info['@id']}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${info['@id']}</p></div></div>`;
-							
+
 							result = result.replace(matches[0], content);
-							
+
 							matches = result.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 						} while (matches && matches.length);
 						success = true;
@@ -386,7 +381,7 @@
 							method: "POST",
 							body: result,
 						});
-						
+
 						let tags = await getTags(pageID, sourceTags);
 						await LibreTexts.authenticatedFetch(pageID, `tags`, subdomain, {
 							method: "PUT",
@@ -394,27 +389,40 @@
 							headers: {"Content-Type": "text/xml; charset=utf-8"}
 						});
 						location.reload();
-					}
-					else {
+					} else {
 						alert("No content-reuse sections detected!");
 					}
 				}
 			}
 		}
 	}
-	
-	function copyContentOption() {
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async function copyContentOption() {
 		let tags = document.getElementById("pageTagsHolder");
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		const isPro = document.getElementById("proHolder").innerText === 'true';
 		// const groups = document.getElementById("groupHolder").innerText.toLowerCase();
-		let target = $("span.title.mt-title-edit");
+
+		let $target = $("span.title.mt-title-edit");
 		let [, path] = LibreTexts.parseURL();
-		if (tags && isPro && target.length) {
+		if (tags && isPro) {
+			let time = 0;
+			while (!$target.length) {
+				if (time > 30) //timeout
+					return null;
+				await sleep(500);
+				time += 0.5;
+				$target = $("span.title.mt-title-edit");
+			}
+
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
-			
+
 			//Options menu
 			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
 			if (copy.length) {
@@ -434,12 +442,12 @@
 				icon.classList.add("mt-icon-flow-branch");
 				icon.classList.add("printHide");
 				icon.onclick = copyContent;
-				target.after(icon);
-				
+				$target.after(icon);
+
 			}
 		}
 	}
-	
+
 	function sandboxOption() {
 		let original = document.getElementsByClassName("mt-user-menu-my-contributions");
 		if (original.length) {
@@ -454,19 +462,19 @@
 			copyTarget.title = "Go to your personal Sandbox";
 			original.parentNode.insertBefore(copy, original);
 		}
-		
+
 		async function goToSandbox() {
 			// let username = document.getElementById('usernameHolder').innerText;
-			
+
 			await LibreTexts.sendAPI('createSandbox');
 			document.location.replace(`/Sandboxes`);
 		}
 	}
-	
+
 	async function processFile(file, child, path, id) {
 		//only files with extensions
 		let filename = file['filename'];
-		
+
 		if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
 			let hasThumbnail = await LibreTexts.authenticatedFetch(null, "files/=mindtouch.page%2523thumbnail");
 			if (hasThumbnail.ok)
@@ -475,7 +483,7 @@
 				filename = `=mindtouch.page%23thumbnail`;
 		}
 		let image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
-		
+
 		image = await image.blob();
 		let response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, child.data.subdomain, {
 			method: "PUT",
@@ -490,8 +498,8 @@
 			final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`
 		};
 	}
-	
-	document.addEventListener('DOMContentLoaded', () => setTimeout(fn, 800));
+
+	document.addEventListener('DOMContentLoaded', fn);
 	document.addEventListener('DOMContentLoaded', () => {
 		if (window !== window.top && window.location.href.includes("contentOnly")) {
 			document.getElementsByClassName("elm-header")[0].style.display = "none";
