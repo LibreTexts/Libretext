@@ -43,7 +43,7 @@
     color: #098dd0;
 }
 #citeCont textarea{
-    position: relative;
+    position: relative
     left: 10%;
     margin: -2% 7% 1% 7%;
     width: 85%;
@@ -103,4 +103,20 @@
 }
 #citeSelect option {
     font-weight:normal;
+}
+
+#citeCopy {
+    position: relative;
+    float: right;
+    margin-right: 10px;
+    height: 25px;
+    color: #444;
+    border: 1px solid #aaa;
+    border-radius: .5em;
+    background: #fff;
+    margin-left: 10%;
+    font-weight: 700;
+    font-size: 12px;
+    font-family: sans-serif;
+    z-index: 5;
 }
