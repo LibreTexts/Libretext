@@ -87,12 +87,12 @@ class ReRemixerPanel extends React.Component {
 			lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
 			lastText = await LibreTexts.getAPI(lastText.url);
 			lastText.title = `<b>Last Linked: </b>${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
-			lastText.lazy = true;
-			lastText.extraClasses = `security-${lastText.security} `
 			lastText.children = await RemixerFunctions.getSubpages(lastText.path, this.state.subdomain, {
 				linkTitle: true,
 				includeMatter: true
-			})
+			});
+			lastText.lazy = lastText.children && lastText.children.length;
+			lastText.extraClasses = `security-${lastText.security} `;
 		}
 		else
 			lastText = {title: 'No Last Linked Text'};

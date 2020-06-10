@@ -18,6 +18,7 @@ import merge from "deepmerge";
 import Tooltip from "@material-ui/core/Tooltip";
 import Info from "@material-ui/icons/Info";
 import {withSnackbar} from "notistack";
+import DemoEnd from "./DemoEnd";
 
 class Remixer extends React.Component {
 	constructor(props) {
@@ -189,21 +190,24 @@ class Remixer extends React.Component {
 				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
 					<Info/>
 				</Tooltip></div>
-				<div style={{fontSize: '130%', cursor: 'pointer'}}
-				     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
-				>
-					New Remix Mode
-					<Switch
-						checked={this.state.mode === 'ReRemix'} color="default"/>
-					Edit Remix Mode
-				</div>
-				<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
-					<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
-						<Button variant="contained" onClick={this.loadAutosave}
-						        disabled={!localStorage.getItem('lastRemixerAutosave')}>
-							Load from previous session</Button>
-					</div>
-				</Tooltip>
+				{this.state.permission !== 'Demonstration' ?
+					<>
+						<div style={{fontSize: '130%', cursor: 'pointer'}}
+						     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
+						>
+							New Remix Mode
+							<Switch
+								checked={this.state.mode === 'ReRemix'} color="default"/>
+							Edit Remix Mode
+						</div>
+						<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
+							<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+								<Button variant="contained" onClick={this.loadAutosave}
+								        disabled={!localStorage.getItem('lastRemixerAutosave')}>
+									Load from previous session</Button>
+							</div>
+						</Tooltip>
+					</> : null}
 			</div>
 			
 			{this.renderState()}
@@ -242,9 +246,12 @@ class Remixer extends React.Component {
 					<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
 				</>;
 			case 'Publishing':
-				return <>
-					<PublishPanel {...this.state} updateRemixer={this.updateRemixer}/>
-				</>;
+				if (this.state.permission === 'Demonstration')
+					return <><DemoEnd {...this.state} updateRemixer={this.updateRemixer}/></>
+				else
+					return <>
+						<PublishPanel {...this.state} updateRemixer={this.updateRemixer}/>
+					</>;
 			default:
 				return <div>Default</div>;
 		}

@@ -5,6 +5,7 @@ let RemixerFunctions = {
 	articleTypeToTitle: articleTypeToTitle,
 	getSubpages: getSubpages,
 	ReRemixTree: ReRemixTree,
+	downloadFile, downloadFile,
 };
 
 function generateDefault(chapters, pages) {
@@ -92,7 +93,6 @@ function userPermissions(full) {
 		return {permission: permission, color: colors[permission], description: descriptions[permission]}
 }
 
-
 function statusColor(status) {
 	switch (status) {
 		case 'unchanged':
@@ -107,7 +107,6 @@ function statusColor(status) {
 			return status;
 	}
 }
-
 
 function articleTypeToTitle(type) {
 	switch (type) {
@@ -223,6 +222,24 @@ async function getSubpages(path, subdomain, options = {
 		} else {
 			return [];
 		}
+	}
+}
+
+function downloadFile(data, filename) {
+	const textToSaveAsURL = window.URL.createObjectURL(data);
+	
+	const downloadLink = document.createElement("a");
+	downloadLink.download = filename;
+	downloadLink.innerHTML = "Download File";
+	downloadLink.href = textToSaveAsURL;
+	downloadLink.onclick = destroyClickedElement;
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+	
+	downloadLink.click();
+	
+	function destroyClickedElement(event) {
+		document.body.removeChild(event.target);
 	}
 }
 

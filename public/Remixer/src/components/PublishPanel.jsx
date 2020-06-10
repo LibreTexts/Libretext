@@ -243,7 +243,7 @@ export default function PublishPanel(props) {
 						Revise current Text
 					</Button>
 					<Button onClick={() => {
-						props.updateRemixer({stage: 'ReRemixing'})
+						props.updateRemixer({stage: 'ReRemixing'});
 					}} color="primary">
 						Select another Text
 					</Button>
@@ -447,7 +447,7 @@ function PublishSubPanel(props) {
 			return false;
 		}
 		if (props.permission === 'Demonstration') {
-			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'))
+			if (confirm('Thanks for trying out the OER Remixer in Demonstration mode!\n\nIf you are interested, contact us to get a free account so that you can publish your own LibreText! Would you like to send an email to info@libretexts.com to get started?'));
 				window.location.href = 'mailto:info@libretexts.org?subject=Remixer%20Account%20Request';
 			return false;
 		}

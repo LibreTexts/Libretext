@@ -14,6 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useSnackbar} from 'notistack';
 import Paper from "@material-ui/core/Paper";
+import RemixerFunctions from "../reusableFunctions";
 
 export default function OptionsPanel(props) {
 	let [autonumberOpen, setAutonumberOpen] = useState(false);
@@ -35,23 +36,11 @@ export default function OptionsPanel(props) {
 		delete temp.undoArray;
 		delete temp.redoArray;
 		
-		let result = new Blob([JSON.stringify(temp, null, 2)], {type: 'application/json;charset=utf-8'});
-		const textToSaveAsURL = window.URL.createObjectURL(result);
+		let data = new Blob([JSON.stringify(temp, null, 2)], {type: 'application/json;charset=utf-8'});
 		const fileNameToSaveAs = `${props.RemixTree.title || 'Unnamed Remix'}-${props.institution.match(/(?<=\/)[^/]*?$/)[0]}.${props.mode.toLowerCase()}`;
 		
-		const downloadLink = document.createElement("a");
-		downloadLink.download = fileNameToSaveAs;
-		downloadLink.innerHTML = "Download File";
-		downloadLink.href = textToSaveAsURL;
-		downloadLink.onclick = destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
+		RemixerFunctions.downloadFile(data, fileNameToSaveAs);
 		
-		downloadLink.click();
-		
-		function destroyClickedElement(event) {
-			document.body.removeChild(event.target);
-		}
 	}
 	
 	function loadJSON() {
