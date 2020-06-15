@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Fixed copyNavigation.js formatting">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/timetrack.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/timetrack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Front/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -1107,14 +1099,7 @@
       <workItem from="1590773524153" duration="839000" />
       <workItem from="1590874833832" duration="1403000" />
       <workItem from="1592174385258" duration="1907000" />
-      <workItem from="1592193412392" duration="3470000" />
-    </task>
-    <task id="LOCAL-00207" summary="Spacing fix">
-      <created>1563075794870</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1563075794871</updated>
+      <workItem from="1592193412392" duration="3791000" />
     </task>
     <task id="LOCAL-00208" summary="Bugfix async">
       <created>1564074794207</created>
@@ -1452,7 +1437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591766600387</updated>
     </task>
-    <option name="localTasksCounter" value="256" />
+    <task id="LOCAL-00256" summary="Replaced insecure node-static for API">
+      <created>1592197182544</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1592197182545</updated>
+    </task>
+    <option name="localTasksCounter" value="257" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1507,7 +1499,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Installed Beeline kill switch" />
     <MESSAGE value="Added GetCitationInformation for Nik" />
     <MESSAGE value="Made transcluded icon on all transcluded:yes pages" />
     <MESSAGE value="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers" />
@@ -1532,7 +1523,8 @@
     <MESSAGE value="Fixed bot Regex" />
     <MESSAGE value="Bugfix importer &lt;img&gt;" />
     <MESSAGE value="Fixed copyNavigation.js formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed copyNavigation.js formatting" />
+    <MESSAGE value="Replaced insecure node-static for API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced insecure node-static for API" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1589058308183">
@@ -1551,11 +1543,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592195858399" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592177878512">
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592197181631">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212627203" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592177878512" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592197181631" />
     <state x="2074" y="0" key="CommitChangelistDialog2/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583558694156" />
     <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1589058303781">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1633,11 +1625,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592193679472" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1591766603845">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1592197184629">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212629334" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1591766603845" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592197184629" />
     <state x="2338" y="174" key="Vcs.Push.Dialog.v2/1920.0.1600.850/0.0.1536.824@1920.0.1600.850" timestamp="1583558697371" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1589158829226">
       <screen x="0" y="0" width="1707" height="920" />
