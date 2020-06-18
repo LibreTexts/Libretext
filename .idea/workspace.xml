@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/elevate.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/elevate.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1088,14 +1087,7 @@
       <workItem from="1590874833832" duration="1403000" />
       <workItem from="1592174385258" duration="1907000" />
       <workItem from="1592193412392" duration="4519000" />
-      <workItem from="1592516645580" duration="3737000" />
-    </task>
-    <task id="LOCAL-00209" summary="nodePrint A4 and new Covers">
-      <created>1564894139181</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1564894139181</updated>
+      <workItem from="1592516645580" duration="4250000" />
     </task>
     <task id="LOCAL-00210" summary="Fixing Travis.ci">
       <created>1564902887976</created>
@@ -1433,7 +1425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592197312985</updated>
     </task>
-    <option name="localTasksCounter" value="258" />
+    <task id="LOCAL-00258" summary="Allow forking of sections">
+      <created>1592520727131</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1592520727132</updated>
+    </task>
+    <option name="localTasksCounter" value="259" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1488,7 +1487,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Made transcluded icon on all transcluded:yes pages" />
     <MESSAGE value="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers" />
     <MESSAGE value="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables." />
     <MESSAGE value="Updated Forker to user authenticatedFetch" />
@@ -1513,7 +1511,8 @@
     <MESSAGE value="Fixed copyNavigation.js formatting" />
     <MESSAGE value="Replaced insecure node-static for API" />
     <MESSAGE value="Replaced insecure node-static for Front" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced insecure node-static for Front" />
+    <MESSAGE value="Allow forking of sections" />
+    <option name="LAST_COMMIT_MESSAGE" value="Allow forking of sections" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1589058308183">
@@ -1532,63 +1531,67 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592516751876" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592197312271">
+    <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1592520407991">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592520726449">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212627203" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592197312271" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520726449" />
     <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1589058303781">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058303781" />
-    <state width="552" height="746" key="GridCell.Tab.0.bottom" timestamp="1592520213235">
+    <state width="750" height="746" key="GridCell.Tab.0.bottom" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213235" />
-    <state width="552" height="746" key="GridCell.Tab.0.center" timestamp="1592520213235">
+    <state width="750" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.0.center" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213235" />
-    <state width="552" height="746" key="GridCell.Tab.0.left" timestamp="1592520213235">
+    <state width="750" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.0.left" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213235" />
-    <state width="552" height="746" key="GridCell.Tab.0.right" timestamp="1592520213235">
+    <state width="750" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.0.right" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213235" />
-    <state width="552" height="746" key="GridCell.Tab.1.bottom" timestamp="1592520225233">
+    <state width="750" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.1.bottom" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520225233" />
-    <state width="552" height="746" key="GridCell.Tab.1.center" timestamp="1592520225233">
+    <state width="750" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.1.center" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520225233" />
-    <state width="552" height="746" key="GridCell.Tab.1.left" timestamp="1592520225233">
+    <state width="750" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.1.left" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520225233" />
-    <state width="552" height="746" key="GridCell.Tab.1.right" timestamp="1592520225233">
+    <state width="750" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.1.right" timestamp="1592520899244">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520225233" />
-    <state width="552" height="746" key="GridCell.Tab.2.bottom" timestamp="1592520213103">
+    <state width="750" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
+    <state width="750" height="746" key="GridCell.Tab.2.bottom" timestamp="1592520899245">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213103" />
-    <state width="552" height="746" key="GridCell.Tab.2.center" timestamp="1592520213103">
+    <state width="750" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
+    <state width="750" height="746" key="GridCell.Tab.2.center" timestamp="1592520899245">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213103" />
-    <state width="552" height="746" key="GridCell.Tab.2.left" timestamp="1592520213103">
+    <state width="750" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
+    <state width="750" height="746" key="GridCell.Tab.2.left" timestamp="1592520899245">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213103" />
-    <state width="552" height="746" key="GridCell.Tab.2.right" timestamp="1592520213103">
+    <state width="750" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
+    <state width="750" height="746" key="GridCell.Tab.2.right" timestamp="1592520899245">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="552" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520213103" />
+    <state width="750" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
     <state x="633" y="60" key="RollbackChangesDialog" timestamp="1591766724325">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1597,11 +1600,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592193679472" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1592197314313">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1592520734462">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212629334" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592197314313" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520734462" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1592519300573">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1626,24 +1629,6 @@
           <url>file://$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx</url>
           <line>133</line>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/elevate.js</url>
-          <line>283</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/elevate.js</url>
-          <line>288</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/elevate.js</url>
-          <line>280</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -20,19 +20,19 @@ const LibreEditor = {
 
 function LibreTextsReuse() {
 	const libraries = {
-		'Biology': 'bio',
-		'Business': 'biz',
-		'Chemistry': 'chem',
-		'Engineering': 'eng',
-		'Espanol': 'espanol',
-		'Geology': 'geo',
-		'Humanities': 'human',
-		'Mathematics': 'math',
-		'Medicine': 'med',
-		'Physics': 'phys',
-		'Social Sciences': 'socialsci',
-		'Statistics': 'stats',
-		'Workforce': 'workforce'
+		"Biology": "bio",
+		"Business": "biz",
+		"Chemistry": "chem",
+		"Engineering": "eng",
+		"Espanol": "espanol",
+		"Geology": "geo",
+		"Humanities": "human",
+		"Mathematics": "math",
+		"Medicine": "med",
+		"Physics": "phys",
+		"Social Sciences": "socialsci",
+		"Statistics": "stats",
+		"Workforce": "workforce"
 	};
 	
 	return {
