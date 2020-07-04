@@ -173,6 +173,7 @@ async function createSandboxes() {
 
 async function cleanPath(req, res) {
 	const body = req.body;
+	body.subdomain = body.pageSubdomain || body.subdomain;
 	let page = await LibreTexts.authenticatedFetch(body.pageID, '?dream.out.format=json', body.subdomain, 'LibreBot');
 	page = await page.json();
 	let path = page['uri.ui'];
