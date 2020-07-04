@@ -80,7 +80,7 @@ function handler(request, response) {
 			});
 			response.end();
 		}
-		else if (request.method === "GET") {
+		else if (["GET", "HEAD"].includes(request.method)) {
 			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
 				"Access-Control-Allow-Methods": "GET",
@@ -180,7 +180,7 @@ function handler(request, response) {
 		let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
 		
 		const stats = await fs.stat(`./analyticsSecure/secureAccess-${courseName}.zip`);
-		if(Date.now() - stats.mtime <10 * 60000){ //10 minute cache
+		if (Date.now() - stats.mtime < 10 * 60000) { //10 minute cache
 			console.log('Found in cache');
 		}
 		else {

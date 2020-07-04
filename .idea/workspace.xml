@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +188,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.elevate">
+  <component name="RunManager" selected="Node.js.import.js">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1088,13 +1093,10 @@
       <workItem from="1592174385258" duration="1907000" />
       <workItem from="1592193412392" duration="4519000" />
       <workItem from="1592516645580" duration="4250000" />
-    </task>
-    <task id="LOCAL-00210" summary="Fixing Travis.ci">
-      <created>1564902887976</created>
-      <option name="number" value="00210" />
-      <option name="presentableId" value="LOCAL-00210" />
-      <option name="project" value="LOCAL" />
-      <updated>1564902887976</updated>
+      <workItem from="1592521230118" duration="152000" />
+      <workItem from="1593497669617" duration="916000" />
+      <workItem from="1593652041533" duration="1403000" />
+      <workItem from="1593657454903" duration="5887000" />
     </task>
     <task id="LOCAL-00211" summary="Updated README.md">
       <created>1565893345929</created>
@@ -1432,7 +1434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592520727132</updated>
     </task>
-    <option name="localTasksCounter" value="259" />
+    <task id="LOCAL-00259" summary="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON">
+      <created>1592521313815</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1592521313815</updated>
+    </task>
+    <option name="localTasksCounter" value="260" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1487,7 +1496,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers" />
     <MESSAGE value="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables." />
     <MESSAGE value="Updated Forker to user authenticatedFetch" />
     <MESSAGE value="Refreshed Importer bundle.js" />
@@ -1512,7 +1520,8 @@
     <MESSAGE value="Replaced insecure node-static for API" />
     <MESSAGE value="Replaced insecure node-static for Front" />
     <MESSAGE value="Allow forking of sections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Allow forking of sections" />
+    <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
+    <option name="LAST_COMMIT_MESSAGE" value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1589058308183">
@@ -1535,63 +1544,63 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592520726449">
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1592521313112">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212627203" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520726449" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592521313112" />
     <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1589058303781">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058303781" />
-    <state width="750" height="746" key="GridCell.Tab.0.bottom" timestamp="1592520899244">
+    <state width="541" height="534" key="GridCell.Tab.0.bottom" timestamp="1593667299771">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.0.center" timestamp="1592520899244">
+    <state width="541" height="534" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299771" />
+    <state width="541" height="534" key="GridCell.Tab.0.center" timestamp="1593667299771">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.0.left" timestamp="1592520899244">
+    <state width="541" height="534" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299771" />
+    <state width="541" height="534" key="GridCell.Tab.0.left" timestamp="1593667299771">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.0.right" timestamp="1592520899244">
+    <state width="541" height="534" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299771" />
+    <state width="541" height="534" key="GridCell.Tab.0.right" timestamp="1593667299771">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.1.bottom" timestamp="1592520899244">
+    <state width="541" height="534" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299771" />
+    <state width="533" height="534" key="GridCell.Tab.1.bottom" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.1.center" timestamp="1592520899244">
+    <state width="533" height="534" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.1.center" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.1.left" timestamp="1592520899244">
+    <state width="533" height="534" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.1.left" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.1.right" timestamp="1592520899244">
+    <state width="533" height="534" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.1.right" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899244" />
-    <state width="750" height="746" key="GridCell.Tab.2.bottom" timestamp="1592520899245">
+    <state width="533" height="534" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.2.bottom" timestamp="1593667299762">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
-    <state width="750" height="746" key="GridCell.Tab.2.center" timestamp="1592520899245">
+    <state width="533" height="534" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299762" />
+    <state width="533" height="534" key="GridCell.Tab.2.center" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
-    <state width="750" height="746" key="GridCell.Tab.2.left" timestamp="1592520899245">
+    <state width="533" height="534" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.2.left" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
-    <state width="750" height="746" key="GridCell.Tab.2.right" timestamp="1592520899245">
+    <state width="533" height="534" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
+    <state width="533" height="534" key="GridCell.Tab.2.right" timestamp="1593667299761">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="750" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520899245" />
+    <state width="533" height="534" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593667299761" />
     <state x="633" y="60" key="RollbackChangesDialog" timestamp="1591766724325">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1600,11 +1609,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592193679472" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1592520734462">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1592521315078">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212629334" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520734462" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592521315078" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1592519300573">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1630,9 +1639,20 @@
           <line>133</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
+          <line>1198</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>704</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
-        <breakpoint type="javascript-exception">
+        <breakpoint enabled="true" type="javascript-exception">
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>

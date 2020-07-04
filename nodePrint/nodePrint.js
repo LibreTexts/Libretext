@@ -188,7 +188,7 @@ puppeteer.launch({
 					});
 					response.end();
 				}
-				else if (request.method === "GET") {
+				else if (["GET", "HEAD"].includes(request.method)) {
 					response.writeHead(200, request.headers.host && request.headers.host.includes(".miniland1333.com") ? {
 						"Access-Control-Allow-Origin": request.headers.origin || null,
 						"Access-Control-Allow-Methods": "GET",
