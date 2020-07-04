@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/analytics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Importer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1097,13 +1093,7 @@
       <workItem from="1593497669617" duration="916000" />
       <workItem from="1593652041533" duration="1403000" />
       <workItem from="1593657454903" duration="5887000" />
-    </task>
-    <task id="LOCAL-00211" summary="Updated README.md">
-      <created>1565893345929</created>
-      <option name="number" value="00211" />
-      <option name="presentableId" value="LOCAL-00211" />
-      <option name="project" value="LOCAL" />
-      <updated>1565893345930</updated>
+      <workItem from="1593837432426" duration="333000" />
     </task>
     <task id="LOCAL-00212" summary="refreshListAdd">
       <created>1566027234221</created>
@@ -1441,7 +1431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592521313815</updated>
     </task>
-    <option name="localTasksCounter" value="260" />
+    <task id="LOCAL-00260" summary="Added HEAD to /ping">
+      <created>1593837769937</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1593837769937</updated>
+    </task>
+    <option name="localTasksCounter" value="261" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1496,7 +1493,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables." />
     <MESSAGE value="Updated Forker to user authenticatedFetch" />
     <MESSAGE value="Refreshed Importer bundle.js" />
     <MESSAGE value="Added Toggle Switch for New&lt;==&gt;Edit Remix" />
@@ -1521,7 +1517,8 @@
     <MESSAGE value="Replaced insecure node-static for Front" />
     <MESSAGE value="Allow forking of sections" />
     <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
-    <option name="LAST_COMMIT_MESSAGE" value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
+    <MESSAGE value="Added HEAD to /ping" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added HEAD to /ping" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1589058308183">
@@ -1647,7 +1644,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
           <line>704</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
