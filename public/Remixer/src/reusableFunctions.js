@@ -172,7 +172,7 @@ async function getSubpages(path, subdomain, options = {
 			let originalPath = path;
 			path = LibreTexts.cleanPath(path);
 			if (originalPath !== path || path.includes('?title=')) {
-				let cleaned = await LibreTexts.sendAPI('cleanPath', {pageID: id, force: true});
+				let cleaned = await LibreTexts.sendAPI('cleanPath', {pageID: id, force: true, pageSubdomain:subdomain});
 				cleaned = await cleaned.text();
 				if (cleaned !== 'okay' && cleaned !== 'RESTRICTED') {
 					path = cleaned;
