@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -181,7 +184,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.elevate">
+  <component name="RunManager" selected="Node.js.nodePrint">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -311,6 +314,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
@@ -1091,6 +1095,7 @@
       <workItem from="1593652041533" duration="1403000" />
       <workItem from="1593657454903" duration="5887000" />
       <workItem from="1593837432426" duration="333000" />
+      <workItem from="1594230030677" duration="1207000" />
     </task>
     <task id="LOCAL-00213" summary="Importer Alpha">
       <created>1566192889434</created>
@@ -1551,21 +1556,25 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058303781" />
-    <state width="477" height="746" key="GridCell.Tab.0.bottom" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="250" height="649" key="GridCell.Tab.0.bottom" timestamp="1594162821548">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state width="250" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
     <state width="477" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.0.center" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="250" height="649" key="GridCell.Tab.0.center" timestamp="1594162821548">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state width="250" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
     <state width="477" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.0.left" timestamp="1593838593324">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="250" height="649" key="GridCell.Tab.0.left" timestamp="1594162821548">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state width="250" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
     <state width="477" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593324" />
-    <state width="477" height="746" key="GridCell.Tab.0.right" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="250" height="649" key="GridCell.Tab.0.right" timestamp="1594162821548">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state width="250" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
     <state width="477" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
     <state width="477" height="746" key="GridCell.Tab.1.bottom" timestamp="1593838593326">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1616,18 +1625,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592519300573" />
-    <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1585203041299">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585203041299" />
     <state x="739" y="112" width="448" height="699" key="ftp.server.browser" timestamp="1589058295023">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058295023" />
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog" timestamp="1585264189019">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1585264189019" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1636,11 +1637,6 @@
           <url>file://$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx</url>
           <line>133</line>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>1198</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
