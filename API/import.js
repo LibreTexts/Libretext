@@ -666,7 +666,7 @@ async function processEPUB(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: parseFloat(log.length / whole.length * 100).toFixed(1),
+				percentage: `${parseFloat(log.length / whole.length * 100).toFixed(1)}%`,
 				pages: `${log.length} / ${whole.length}`,
 				eta: eta.format("{{etah}}"),
 			});
@@ -699,16 +699,13 @@ async function processEPUB(data, socket) {
 				chapterNumber = parseInt(chapterNumber[0]);
 				path = chapterNumber < 10 ? "0" + path : path;
 			}
-			path = isSimple ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
-			
-			//remove extraneous link tags
-			let containerTags = contents.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
-			if (containerTags) {
-				for (let i = 0; i < containerTags.length; i++) {
-					let toReplace = containerTags[i].match(/<img.*?"\/>/)[0];
-					contents = contents.replace(containerTags[i], toReplace);
-				}
+			try {
+				path = isSimple || !filteredChapters[chapterNumber - 1] ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
+			}catch (e) {
+				console.error(e);
 			}
+			//remove extraneous link tags
+			contents = contents.replace(/<a>\n\s*?(<img [\s\S]*?)<\/a>/gm, '$1');
 			
 			contents = await uploadImages(contents, path, imageProcessor, data);
 			
@@ -720,7 +717,13 @@ async function processEPUB(data, socket) {
 					prefix = prefix.match(/.*\/(?=.*?\/$)/)[0];
 					filename = filename.match(/(?<=\.\.\/).*/)[0];
 				}
-				return [filename, await epub.readFile(prefix + filename)];
+				let file;
+				try {
+					if (filename && !filename.includes('base64') && !filename.includes('#fixme'))
+						file = await epub.readFile(prefix + filename);
+				} catch (e) {
+				}
+				return [filename, file, prefix + filename];
 			}
 			
 			let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
@@ -1166,7 +1169,7 @@ async function uploadImages(contents, path, imageProcessor, data) {
 					toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
 				}
 				else {
-					toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+					toReplace = images[i].replace(/(?<=<img .*?src=").*\/(?=.*?")/, `/@api/deki/files/${fileID}/`);
 				}
 				
 				contents = contents.replace(images[i], toReplace);

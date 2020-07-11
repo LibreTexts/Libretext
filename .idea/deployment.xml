@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Test" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Test" persistUploadOnCheckin="false" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc;node_modules;.git;">
     <serverData>
       <paths name="API">
         <serverdata>
@@ -8,15 +8,16 @@
             <mapping deploy="/api" local="$PROJECT_DIR$/API" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/API/aata-master" />
             <excludedPath local="true" path="$PROJECT_DIR$/API/mathbook" />
+            <excludedPath local="true" path="$PROJECT_DIR$/API/BotLogs" />
+            <excludedPath local="true" path="$PROJECT_DIR$/API/ImportFiles" />
           </excludedPaths>
         </serverdata>
       </paths>
       <paths name="Batch">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$/nodePrint" web="/" />
+            <mapping deploy="/root/nodePrint" local="$PROJECT_DIR$/nodePrint" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/nodePrint/PDF" />

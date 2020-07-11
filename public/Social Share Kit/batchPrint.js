@@ -101,7 +101,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 				innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
 				innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
 				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); nikGetCitation()" href='#' class='mt-icon-quote'>Get Citation</a>`;
+				innerHTML += `<a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>Get Citation</a>`;
 				innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
 				innerHTML += `<a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" href='#' class='mt-icon-shuffle'>Unorder Page</a>`;
 				innerHTML += `</div></div>`;
@@ -109,8 +109,8 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 			else {
 				
 			}
-			
-			batchPrint.innerHTML = innerHTML;
+			if (batchPrint)
+				batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
 				getTOCLink.rel = "nofollow";

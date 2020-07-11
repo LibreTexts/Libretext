@@ -186,15 +186,11 @@ function activateBeeLine() {
 		doBeeline(theme, "theme change");
 	});*/
 	
-	let tags = document.getElementById('pageTagsHolder').innerText;
-	if (navigator.webdriver && tags.includes('beeline:print')) {
-		doBeeline('bright', "enabled via tag");
-	}
-	else if (window.beelineEnabled === false){
+	if (window.beelineEnabled === false){
 		Cookies.set("beeline", "off", {domain: 'libretexts.org'});
 		console.log('Beeline has been permanently disabled');
 	}
-	else if (typeof (Cookies.get("beeline")) != "undefined" && window.beelineEnabled) {
+	else if (typeof (Cookies.get("beeline")) != "undefined" && window.beelineEnabled && Cookies.get("beeline") !== "off" ) {
 		doBeeline(Cookies.get("beeline"), "enabled via cookie");
 	}
 }

@@ -153,9 +153,9 @@ async function getSubpages(rootURL, username, options = {}) {
 		getDetails: options.getDetails,
 		getContents: options.getContents
 	});
-	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
+	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, username);
 	pages = await pages.json();
-	
+
 	let contentsArray = [{url: rootURL, id: info['@id'], contents: contents}];
 	let flatArray = [rootURL];
 	let numpages = setInterval(() => {
@@ -193,7 +193,7 @@ async function getSubpages(rootURL, username, options = {}) {
 			let children = hasChildren ? undefined : [];
 			let {contents, properties, tags} = await getPage(path, username, options);
 			if (hasChildren) { //recurse down
-				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
+				children = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, username);
 				children = await children.json();
 				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
 					delay: options.delay,

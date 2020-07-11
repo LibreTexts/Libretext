@@ -188,7 +188,7 @@ puppeteer.launch({
 					});
 					response.end();
 				}
-				else if (request.method === "GET") {
+				else if (["GET", "HEAD"].includes(request.method)) {
 					response.writeHead(200, request.headers.host && request.headers.host.includes(".miniland1333.com") ? {
 						"Access-Control-Allow-Origin": request.headers.origin || null,
 						"Access-Control-Allow-Methods": "GET",
@@ -509,12 +509,14 @@ puppeteer.launch({
 					current.authorTag = tag.replace('authorname:', '');
 					
 					if (!current.name) {
-						if (typeof getInformation.libreAuthors === 'undefined') {
+						if(typeof getInformation.libreAuthors === 'undefined')
+							getInformation.libreAuthors={};
+						if (!getInformation.libreAuthors[current.subdomain]) {
 							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
-							getInformation.libreAuthors = await authors.json();
+							getInformation.libreAuthors[current.subdomain] = await authors.json();
 						}
 						
-						let information = getInformation.libreAuthors[current.authorTag];
+						let information = getInformation.libreAuthors[current.subdomain][current.authorTag];
 						if (information) {
 							Object.assign(current, information);
 						}
@@ -1281,7 +1283,7 @@ puppeteer.launch({
 						`<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 						
 						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="${current.subdomain}.libretexts.org/link?${current.id}&pdf">https://${current.subdomain}.libretexts.org/link?${current.id}</a>` +
+						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
 						'</div>';
 					if ((performance.now() - start) / 1000 > 20)
 						console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
@@ -1519,7 +1521,7 @@ puppeteer.launch({
 				await defaultMatter(text);
 				
 				
-				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?dream.out.format=json', current.subdomain);
+				let response = await authenticatedFetch(`${path}/${text}_Matter`, 'subpages?limit=all&dream.out.format=json', current.subdomain);
 				if (!response.ok) {
 					// console.error(await response.text());
 					return [];
@@ -1999,7 +2001,7 @@ async function getSubpages(rootURL, options = {}) {
 	let path = rootURL.split('/').splice(3).join('/');
 	options['depth'] = 0;
 	
-	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 	pages = await pages.json();
 	
 	let result = {
@@ -2024,7 +2026,7 @@ async function getSubpages(rootURL, options = {}) {
 			const hassubpages = subpage["@subpages"] === "true";
 			let subpages = hassubpages ? undefined : [];
 			if (hassubpages) { //recurse down
-				subpages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+				subpages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 				subpages = await subpages.json();
 				if (subpages && subpages['page.subpage'] && subpages['page.subpage'].length && subpage.title === 'Remixer University') { //Skip Remixer except for contruction guide
 					subpages['page.subpage'] = subpages['page.subpage'].filter((item) => item.title === "Contruction Guide");

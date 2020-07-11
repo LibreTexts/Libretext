@@ -46,10 +46,10 @@ export default class LibreText extends React.Component {
 						<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
 						{email ? <a onClick={() => {
-							if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?')) {
+							if (confirm('This will compile all of the pages and will take quite a while. Are you sure?')) {
 								batch(this.props.item.link)
 							}
-						}} href='#' className={'mt-icon-spinner6'}>Refresh Text</a> : ''}
+						}} href='#' className={'mt-icon-spinner6'}>Compile Full</a> : ''}
 						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 						   target='_blank'>Individual ZIP</a>
 						{bookstore ?

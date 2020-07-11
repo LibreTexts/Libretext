@@ -306,6 +306,7 @@
 					}
 					contentReuse = result;
 					
+					[subdomain] = await LibreTexts.parseURL();
 					//Local Forker
 					matches = contentReuse.match(/(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g) || contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 					if (matches && matches.length) {
@@ -318,7 +319,14 @@
 								.replace(/&quot;\)\s*?<\/pre>/, '')
 								.replace('data-page="', '');
 							
-							let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain);
+							let content = await fetch('https://api.libretexts.org/endpoint/contents', {
+								method: 'PUT',
+								body: JSON.stringify({
+									path: path,
+									api: 'contents?mode=raw',
+									subdomain: subdomain,
+								}),
+							})
 							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 							content = await content.text();
 							info = await info.json();
@@ -395,14 +403,28 @@
 		}
 	}
 	
-	function copyContentOption() {
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
+	async function copyContentOption() {
 		let tags = document.getElementById("pageTagsHolder");
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		const isPro = document.getElementById("proHolder").innerText === 'true';
-		const groups = document.getElementById("groupHolder").innerText.toLowerCase();
-		let target = $("span.title.mt-title-edit");
+		// const groups = document.getElementById("groupHolder").innerText.toLowerCase();
+		
+		let $target = $("span.title.mt-title-edit");
 		let [, path] = LibreTexts.parseURL();
-		if (tags && (isAdmin || (isPro && (groups.includes('contributor') || path.startsWith('Sandboxes'))))) {
+		if (tags && isPro) {
+			let time = 0;
+			while (!$target.length) {
+				if (time > 30) //timeout
+					return null;
+				await sleep(500);
+				time += 0.5;
+				$target = $("span.title.mt-title-edit");
+			}
+			
 			tags = tags.innerText;
 			tags = tags.replace(/\\/g, "");
 			tags = JSON.parse(tags);
@@ -426,7 +448,7 @@
 				icon.classList.add("mt-icon-flow-branch");
 				icon.classList.add("printHide");
 				icon.onclick = copyContent;
-				target.after(icon);
+				$target.after(icon);
 				
 			}
 		}
@@ -483,7 +505,7 @@
 		};
 	}
 	
-	document.addEventListener('DOMContentLoaded', () => setTimeout(fn, 800));
+	document.addEventListener('DOMContentLoaded', fn);
 	document.addEventListener('DOMContentLoaded', () => {
 		if (window !== window.top && window.location.href.includes("contentOnly")) {
 			document.getElementsByClassName("elm-header")[0].style.display = "none";

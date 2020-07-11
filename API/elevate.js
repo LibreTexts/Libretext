@@ -8,6 +8,7 @@ const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
 const fs = require('fs-extra');
 const md5 = require('md5');
+const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const LibreTexts = require('./reuse.js');
 let port = 3007;
@@ -172,7 +173,7 @@ async function createSandboxes() {
 
 async function cleanPath(req, res) {
 	const body = req.body;
-	res.status(200);
+	body.subdomain = body.pageSubdomain || body.subdomain;
 	let page = await LibreTexts.authenticatedFetch(body.pageID, '?dream.out.format=json', body.subdomain, 'LibreBot');
 	page = await page.json();
 	let path = page['uri.ui'];
@@ -180,11 +181,18 @@ async function cleanPath(req, res) {
 	let originalPath = path;
 	path = LibreTexts.cleanPath(path);
 	if (path && (originalPath === path || body.force)) {
-		await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
-			body.subdomain, 'LibreBot', {
-				method: 'POST'
-			});
+		try {
+			await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
+				body.subdomain, 'LibreBot', {
+					method: 'POST'
+				});
+		} catch (e) {
+			console.error(`[cleanPath] ${path}`);
+			res.status(500);
+			throw e;
+		}
 		console.log(`[cleanPath] ${path}`);
+		res.status(200);
 		res.send(path);
 	}
 	else
@@ -247,11 +255,16 @@ async function fork(req, res) {
 					let matches = original.match(/(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g) || original.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
 					if (matches) {
 						for (let i = 0; i < matches.length; i++) {
-							let path;
+							let path, section;
 							if (matches[i].startsWith('<div class="mt-contentreuse-widget'))
 								path = matches[i].match(/(?<=data-page=")[^"]+/)[0];
 							else
 								path = matches[i].match(/(?<=<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(?=&quot;\)\s*?<\/pre>)/)[0];
+							
+							if (path.includes("&quot;, &quot;")) {
+								[, path, section] = path.match(/(^.*)&quot;, &quot;(.*$)/);
+								console.log(path, section);
+							}
 							
 							let contentReuse = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain, 'Cross-Library');
 							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain, 'Cross-Library');
@@ -260,6 +273,21 @@ async function fork(req, res) {
 							contentReuse = LibreTexts.decodeHTML(contentReuse);
 							
 							contentReuse = contentReuse.match(/(?<=<body>)[\s\S]*?(?=<\/body>)/)[0];
+							if (section) {
+								console.log(`Grabbing section "${section}"`);
+								const $ = cheerio.load(contentReuse);
+								const sections = $('.mt-section');
+								for (let j = 0; j < sections.length; j++) {
+									const sec = $(sections[j]);
+									let secTitle = sec.text();
+									if (secTitle && secTitle.includes(section)) {
+										contentReuse = sec.html()
+										// console.log(contentReuse);
+										break;
+									}
+								}
+							}
+							
 							if (crossLibrary) {
 								contentReuse = await copyFiles(contentReuse, {
 										subdomain: crossLibrary,
@@ -279,6 +307,7 @@ async function fork(req, res) {
 					}
 					return result;
 				}
+				
 				sourceTags = sourceTags.concat(current.tags);
 				sourceTags.splice(sourceTags.indexOf("transcluded:yes"), 1);
 				sourceTags = sourceTags.map(tag => `<a href="#">${tag}</a>`).join('');

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="SshConfigs">
     <configs>
       <sshConfig host="test.libretexts.org" id="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
@@ -9,3 +10,14 @@
     </configs>
   </component>
 </project>
+=======
+    <component name="SshConfigs">
+        <configs>
+            <sshConfig host="test.libretexts.org" id="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
+            <sshConfig host="api.libretexts.org" id="721eabf3-5484-42ce-80cd-fbe06c622364" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
+            <sshConfig host="batch.libretexts.org" id="340bdb47-09c2-4fea-962a-fb2fedada4c8" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
+            <sshConfig host="front.libretexts.org" id="11858421-7d87-4d9a-a8a8-efb7403adf0d" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
+        </configs>
+    </component>
+</project>
+>>>>>>> master

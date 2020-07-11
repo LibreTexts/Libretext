@@ -10,7 +10,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="bd8ae14e-20c9-4b98-b7d8-0d5951748072" name="Batch" url="http://batch.libretexts.org">
-        <fileTransfer rootFolder="/root/nodePrint" accessType="SFTP" host="batch.libretexts.org" port="22" sshConfigId="340bdb47-09c2-4fea-962a-fb2fedada4c8" sshConfig="root@batch.libretexts.org:22 key" keyPair="true">
+        <fileTransfer accessType="SFTP" host="batch.libretexts.org" port="22" sshConfigId="340bdb47-09c2-4fea-962a-fb2fedada4c8" sshConfig="root@batch.libretexts.org:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
@@ -23,10 +23,10 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
-      <webServer id="06172313-0671-4112-a421-44bb6288aace" name="Test" url="https://awesomefiles.libretexts.org">
+      <webServer id="4d0ba47b-3ce7-49df-9533-4c62f2808c28" name="Test" url="http://test.libretexts.org">
         <fileTransfer rootFolder="/home/hagnew" accessType="SFTP" host="test.libretexts.org" port="22" sshConfigId="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" sshConfig="hagnew@test.libretexts.org:22 key" keyPair="true">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+            <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
         </fileTransfer>
       </webServer>

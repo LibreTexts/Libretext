@@ -20,19 +20,19 @@ const LibreEditor = {
 
 function LibreTextsReuse() {
 	const libraries = {
-		'Biology': 'bio',
-		'Business': 'biz',
-		'Chemistry': 'chem',
-		'Engineering': 'eng',
-		'Espanol': 'espanol',
-		'Geology': 'geo',
-		'Humanities': 'human',
-		'Mathematics': 'math',
-		'Medicine': 'med',
-		'Physics': 'phys',
-		'Social Sciences': 'socialsci',
-		'Statistics': 'stats',
-		'Workforce': 'workforce'
+		"Biology": "bio",
+		"Business": "biz",
+		"Chemistry": "chem",
+		"Engineering": "eng",
+		"Espanol": "espanol",
+		"Geology": "geo",
+		"Humanities": "human",
+		"Mathematics": "math",
+		"Medicine": "med",
+		"Physics": "phys",
+		"Social Sciences": "socialsci",
+		"Statistics": "stats",
+		"Workforce": "workforce"
 	};
 	
 	return {
@@ -234,7 +234,7 @@ function LibreTextsReuse() {
 		origin = rootURL.split("/").splice(0, 3).join('/');
 		let path = rootURL.split('/').splice(3).join('/');
 		
-		let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', username, subdomain);
+		let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', username, subdomain);
 		pages = await pages.json();
 		
 		let info = await authenticatedFetch(path, 'info?dream.out.format=json', username, subdomain);
@@ -257,7 +257,7 @@ function LibreTextsReuse() {
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren) { //recurse down
-					children = await authenticatedFetch(id, 'subpages?dream.out.format=json', username, subdomain);
+					children = await authenticatedFetch(id, 'subpages?limit=all&dream.out.format=json', username, subdomain);
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
