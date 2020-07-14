@@ -180,16 +180,20 @@ async function cleanPath(req, res) {
 	[, path] = LibreTexts.parseURL(path);
 	let originalPath = path;
 	path = LibreTexts.cleanPath(path);
-	if (path && (originalPath === path || body.force)) {
+	if (path && (originalPath !== path || body.force)) {
 		try {
-			await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
+			let makeChange = await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
 				body.subdomain, 'LibreBot', {
 					method: 'POST'
 				});
+			if (makeChange.ok)
+				console.log(await makeChange.text());
+			else
+				throw Error(await makeChange.text());
 		} catch (e) {
 			console.error(`[cleanPath] ${path}`);
 			res.status(500);
-			throw e;
+			return;
 		}
 		console.log(`[cleanPath] ${path}`);
 		res.status(200);
