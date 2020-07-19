@@ -9,11 +9,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from "@material-ui/core/TableBody";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 
 export default function BatchMonitor(props) {
 	const [batchData, setBatchData] = React.useState(initializeLibraryObject);
 	const [toBatch, setToBatch] = React.useState(initializeLibraryObject);
+	const [dialogOpen, setDialogOpen] = React.useState(false);
 	const [allBatch, setAllBatch] = React.useState({courses: 'unchecked', bookshelves: 'unchecked'});
 	const batchEndpoint = props.devMode ? 'https://home.miniland1333.com/print' : 'https://batch.libretexts.org/print'
 	const pathStyle = {cursor: 'pointer', userSelect: 'none'};
@@ -116,8 +122,16 @@ export default function BatchMonitor(props) {
 		setAllBatch({...allBatch});
 	}
 	
-	async function requestBatch() {
-		alert('Hello!');
+	const requestBatch = (nocache) => (event) => {
+		fetch(batchEndpoint + '/Refresh', {
+			method: 'PUT',
+			body: JSON.stringify({
+				"libraries": toBatch,
+				"nocache": nocache
+			})
+		}).then(async (data) => alert(await data.text()));
+		setDialogOpen(false);
+		
 	}
 	
 	function createTable() {
@@ -180,7 +194,8 @@ export default function BatchMonitor(props) {
 					<Table size="small" style={{display: 'inline-table'}}>
 						<TableHead><TableRow>
 							<TableCell>
-								<Button variant="contained" color="primary" onClick={requestBatch}>Batch</Button>
+								<Button variant="contained" color="primary"
+								        onClick={() => setDialogOpen(true)}>Batch</Button>
 							</TableCell>
 							<TableCell>Library</TableCell>
 							<TableCell onClick={changeAllCheckbox('courses')} style={pathStyle}>
@@ -200,6 +215,26 @@ export default function BatchMonitor(props) {
 					</Table>
 				</TableContainer>
 			</div>
+			<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}
+			        aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Send request to Batch</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Do you want to send the Batch request as cache or nocache?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setDialogOpen(false)} color="primary">
+						Cancel
+					</Button>
+					<Button onClick={requestBatch(true)} color="primary">
+						NoCache
+					</Button>
+					<Button onClick={requestBatch()} color="primary">
+						Cache
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	)
 	
