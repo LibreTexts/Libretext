@@ -17,7 +17,7 @@ const querystring = require('querystring');
 const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
-const storage = require('node-persist');
+// const storage = require('node-persist');
 const JSZip = require("jszip");
 const he = require("he");
 const convert = require('xml-js');
@@ -49,7 +49,7 @@ puppeteer.launch({
 			localServer.listen(port);
 		}
 		const now1 = new Date();
-		await storage.init();
+		// await storage.init();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF/Letter/Margin');
 		fs.ensureDir('./PDF/A4/Margin');
@@ -61,6 +61,7 @@ puppeteer.launch({
 		});
 		
 		let working = {};
+		let workingLibraries = {};
 		const eventEmitter = new events.EventEmitter();
 		
 		//Determine if in Kubernetes
@@ -68,6 +69,8 @@ puppeteer.launch({
 		if (kubernetesServiceHost) {
 			console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
 		}
+		const numThreads = kubernetesServiceHost ? 10 : 3;
+		const concurrentTexts = 2;
 		
 		Gbrowser = browser;
 		Gserver = server;
@@ -86,7 +89,14 @@ puppeteer.launch({
 				size = 'A4'
 			}
 			
-			if (url.startsWith("/url=")) { //single page
+			if (request.headers.host === 'home.miniland1333.com' && request.method === 'OPTIONS') { //options checking
+				response.writeHead(200, {
+					'Access-Control-Allow-Origin': request.headers.origin || null,
+					'Access-Control-Allow-Methods': 'HEAD, GET, PUT',
+				});
+				response.end();
+			}
+			else if (url.startsWith("/url=")) { //single page
 				url = url.split('/url=')[1];
 				
 				//query string handling
@@ -255,8 +265,8 @@ puppeteer.launch({
 						'Content-Disposition': 'attachment',
 						'cache-control': 'no-cache'
 					}, request, response);
-					let count = await storage.getItem('downloadCount') || 0;
-					await storage.setItem('downloadCount', count + 1);
+					/*let count = await storage.getItem('downloadCount') || 0;
+					await storage.setItem('downloadCount', count + 1);*/
 					let now2 = new Date();
 					await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${ip} ${url}\n`);
 				}
@@ -265,139 +275,140 @@ puppeteer.launch({
 					staticFileServer.serveFile("404.html", 404, {}, request, response);
 				}
 			}
-			else if (url === '/Stats') {
+			/*else if (url === '/Stats') {
 				response.write("" + (await storage.getItem('downloadCount') || 0));
 				response.end();
 			}
 			else if (url === '/StatsFull') {
 				staticFileServer.serveFile(`./StatsFull.txt`, 404, {'cache-control': 'no-cache'}, request, response);
-			}
-			else if (url.startsWith('/Refresh=')) {
-				//Remove all files older than 2 months.
-				console.log(`Cleaning...`);
-				let count = 0;
-				let heartbeat = setInterval(() => {
-					if (response && !response.finished)
-						response.write(`${(++count)}s\r\n`.padStart(5, ' '))
-				}, 1000);
-				findRemoveSync('./PDF', {
-					age: {seconds: 60 * 8.64e+4},
-					dir: "*",
-					files: "*.*",
-				});
+			}*/
+			else if (url.startsWith('/Refresh') && request.method === 'PUT') {
 				if (!request.headers.origin || !request.headers.origin.endsWith("libretexts.org")) {
 					responseError('Unauthorized', 401);
-				}
-				
-				url = url.split('/Refresh=')[1];
-				let isNoCache = false;
-				if (url.endsWith('?no-cache') || url.endsWith('?nocache')) {
-					url = url.replace('?no-cache', '');
-					url = url.replace('?nocache', '');
-					isNoCache = true;
-				}
-				
-				// try {
-				let subdomains = url.split('/')[0];
-				let paths;
-				if (subdomains === 'all') {
-					subdomains = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
-					paths = ['Courses', 'Bookshelves'];
-					console.log(`Starting All ${subdomains.join(', ')}`)
+					return;
 				}
 				else {
-					subdomains = subdomains.split(',');
-					if (!url.includes('/')) {
-						paths = ['Courses', 'Bookshelves'];
-					}
-					else {
-						paths = url.split('/').slice(1).join('/');
-						if (paths === 'all') {
-							paths = ['Courses', 'Bookshelves'];
+					response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
+						'Access-Control-Allow-Origin': request.headers.origin || null,
+						'Access-Control-Allow-Methods': 'PUT',
+						'Content-Type': 'application/json',
+					} : {'Content-Type': 'application/json'});
+				}
+				let body = [];
+				request.on('data', (chunk) => {
+					body.push(chunk);
+				}).on('end', async () => {
+					body = Buffer.concat(body).toString();
+					let input = JSON.parse(body);
+					
+					let toBatch = [];
+					for (const library in input.libraries) {
+						if (!input.libraries.hasOwnProperty(library))
+							continue;
+						let libraryContents = input.libraries[library];
+						if (library === 'espanol' && libraryContents.home) {
+							toBatch.push({subdomain: library, paths: ['home']});
 						}
 						else {
-							paths = paths.split(',');
-						}
-					}
-				}
-				console.log(subdomains, paths);
-				
-				for (let i = 0; i < subdomains.length; i++) {
-					for (let j = 0; j < paths.length; j++) {
-						let subdomain = subdomains[i];
-						let path = subdomain === 'espanol' ? 'home' : paths[j];
-						
-						console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
-						let all = await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
-						let texts = [];
-						let standalone = [];
-						let finished = [];
-						console.log(`Sorting ${subdomain} ${path} ${ip}`);
-						await sort(all);
-						
-						async function sort(current) {
-							current = await getAPI(current);
-							for (let i = 0; i < current.subpages.length; i++) {
-								let page = current.subpages[i];
-								page = await getAPI(page);
-								if (page.modified === 'restricted')
-									continue;
-								if (page.title === 'Remixer University')
-									page.subpages = page.subpages.filter((item) => item.title === "Contruction Guide");
-								
-								if (page.tags.includes('coverpage:yes')) {
-									texts.push(page);
-								}
-								else {
-									standalone.push(page.url);
-									if (page.tags.includes('article:topic-category') && page.subpages)
-										await sort(page);
-								}
-							}
+							let paths = [];
+							if (libraryContents.courses)
+								paths.push('Courses');
+							if (libraryContents.bookshelves)
+								paths.push('Bookshelves');
+							if (paths.length)
+								toBatch.push({subdomain: library, paths: paths});
 						}
 						
-						clearInterval(heartbeat);
-						if (!response.finished)
-							response.write(`Processing ${texts.length} LibreTexts`); // and ${standalone.length} standalone pages
-						response.end();
-						
-						//process Texts
-						console.log(`Processing ${texts.length} LibreTexts`);
-						let availIndex = [1, 2];
-						await async.mapLimit(texts, 2, async (current, callback) => {
-							let index = availIndex.shift();
-							finished.push(await getLibretext(current, null, {
-								current: current,
-								ip: `<<Batch [${index}]>>`.padEnd(15),
-								index: index,
-								nocache: isNoCache,
-								multiple: true,
-							}));
-							availIndex.push(index);
-						});
-						
-						await fetch('https://api.libretexts.org/endpoint/refreshList', {
-							method: 'PUT',
-							body: JSON.stringify({
-								subdomain: subdomain,
-								path: path,
-								identifier: md5(keys[subdomain]),
-								content: {
-									timestamp: new Date(),
-									items: finished
-								}
-							}),
-							headers: {
-								origin: 'print.libretexts.org'
-							}
-						});
-						console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
-						if (subdomain === 'espanol')
-							break; //Only processing home path
-						
 					}
-				}
-				
+					
+					console.log(toBatch);
+					response.write(JSON.stringify(toBatch, null, 2));
+					response.end();
+					
+					//Remove all files older than 2 months.
+					console.log(`Cleaning...`);
+					/*let count = 0;
+					let heartbeat = setInterval(() => {
+						if (response && !response.finished)
+							response.write(`${(++count)}s\r\n`.padStart(5, ' '))
+					}, 1000);*/
+					findRemoveSync('./PDF', {
+						age: {seconds: 60 * 8.64e+4},
+						dir: "*",
+						files: "*.*",
+					});
+					
+					
+					for (const library of toBatch) {
+						for (const path of library.paths) {
+							const subdomain = library.subdomain
+							console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
+							let all = await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
+							let texts = [];
+							let standalone = [];
+							let finished = [];
+							console.log(`Sorting ${subdomain} ${path} ${ip}`);
+							await sort(all);
+							
+							async function sort(current) {
+								current = await getAPI(current);
+								for (let i = 0; i < current.subpages.length; i++) {
+									let page = current.subpages[i];
+									page = await getAPI(page);
+									if (page.modified === 'restricted')
+										continue;
+									if (page.title === 'Remixer University')
+										page.subpages = page.subpages.filter((item) => item.title === "Contruction Guide");
+									
+									if (page.tags.includes('coverpage:yes')) {
+										texts.push(page);
+									}
+									else {
+										standalone.push(page.url);
+										if (page.tags.includes('article:topic-category') && page.subpages)
+											await sort(page);
+									}
+								}
+							}
+							
+							//process Texts
+							console.log(`Processing ${texts.length} LibreTexts in ${subdomain}`);
+							let availIndex = Array.from(Array(concurrentTexts), (_, i) => i + 1);
+							await async.mapLimit(texts, concurrentTexts, async (current, callback) => {
+								let index = availIndex.shift();
+								finished.push(await getLibretext(current, null, {
+									current: current,
+									ip: `<<Batch [${index}]>>`.padEnd(15),
+									index: index,
+									nocache: input.nocache,
+									multiple: true,
+								}));
+								availIndex.push(index);
+							});
+							
+							await fetch('https://api.libretexts.org/endpoint/refreshList', {
+								method: 'PUT',
+								body: JSON.stringify({
+									subdomain: subdomain,
+									path: path,
+									identifier: md5(keys[subdomain]),
+									content: {
+										timestamp: new Date(),
+										items: finished
+									}
+								}),
+								headers: {
+									origin: 'print.libretexts.org'
+								}
+							});
+							console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
+							if (subdomain === 'espanol')
+								break; //Only processing home path
+							
+						}
+					}
+					
+				});
 			}
 			else { //static server
 				// console.log(url);
@@ -509,8 +520,8 @@ puppeteer.launch({
 					current.authorTag = tag.replace('authorname:', '');
 					
 					if (!current.name) {
-						if(typeof getInformation.libreAuthors === 'undefined')
-							getInformation.libreAuthors={};
+						if (typeof getInformation.libreAuthors === 'undefined')
+							getInformation.libreAuthors = {};
 						if (!getInformation.libreAuthors[current.subdomain]) {
 							let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${current.subdomain}`, {headers: {'origin': 'print.libretexts.org'}});
 							getInformation.libreAuthors[current.subdomain] = await authors.json();
@@ -1586,12 +1597,18 @@ puppeteer.launch({
 					}
 					else if (text.includes('Back')) {
 						//Create Index
-						//Will need to undo in April 2020 abort=exists
-						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, 'contents?edittime=now&title=Index&dream.out.format=json', current.subdomain, 'LibreBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, 'contents?abort=exists&title=Index&dream.out.format=json', current.subdomain, 'LibreBot', {
 							method: "POST",
 							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
 						});
+						
+						//Create Glossary Needs to be enabled
+						/*await authenticatedFetch(`${path}/${text}_Matter/20:Glossary`, 'contents?abort=exists&title=Glossary&dream.out.format=json', current.subdomain, 'LibreBot', {
+							method: "POST",
+							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
+								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
+						});*/
 					}
 				}
 				
@@ -1655,9 +1672,9 @@ puppeteer.launch({
 			let failed = false;
 			
 			try {
-				let number = kubernetesServiceHost ? 10 : 4;
+				let number = numThreads;
 				if (options.multiple) {
-					number /= 2;
+					number /= concurrentTexts;
 					number = Math.floor(number); //integer check
 				}
 				await async.mapLimit(urlArray, number, async (page) => {
