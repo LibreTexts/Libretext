@@ -470,10 +470,12 @@
 		}
 		
 		async function goToSandbox() {
-			// let username = document.getElementById('usernameHolder').innerText;
+			let username = document.getElementById('usernameHolder').innerText;
+			let isAdmin = document.getElementById('adminHolder').innerText;
+			isAdmin = (isAdmin === 'true') ? `/${username}` : '';
 			
 			await LibreTexts.sendAPI('createSandbox');
-			document.location.replace(`/Sandboxes`);
+			document.location.replace(`/Sandboxes${isAdmin}`);
 		}
 	}
 	
