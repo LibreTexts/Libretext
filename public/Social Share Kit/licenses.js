@@ -134,6 +134,9 @@
 		const pageNumberHolder = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)
 			$("li.elm-page-restriction")[0].after(pageNumberHolder);
+		else if (window.location.host.startsWith('query') && $("li.elm-last-modified").length)
+			$("li.elm-last-modified")[0].after(pageNumberHolder);
+		
 		else
 			pageNumberHolder.style.display = "none";
 		
