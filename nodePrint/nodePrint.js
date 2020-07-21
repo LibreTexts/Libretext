@@ -1144,6 +1144,9 @@ puppeteer.launch({
 			else if (!isNoCache && allExist && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
 				// 8.64e+7 ms/day
 				console.log(`CACHE  ${ip} ${url}`);
+				if (ip.startsWith('<<Batch ')) {
+					await sleep(800);
+				}
 				return {filename: escapedURL + '.pdf'};
 			}
 			else if (!isNoCache && working[escapedURL]) { //another thread is already working
@@ -2303,6 +2306,10 @@ function parseURL(url) {
 	else {
 		return [];
 	}
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function stop() {
