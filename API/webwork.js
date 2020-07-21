@@ -2,7 +2,6 @@ const fs = require('fs-extra');
 const async = require('async');
 const fetch = require('node-fetch');
 const LibreTexts = require('./reuse.js');
-const sleep = require('sleep-promise');
 
 main();
 
