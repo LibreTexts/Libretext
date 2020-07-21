@@ -8,7 +8,6 @@ This is the primary repository for LibreTexts Javascript integrations and modifi
 | Directory     | Description |
 | ----------- | ----------- |
 | API     | Various backend services |
-| ContactForm \[Deprecated\]     | Recaptcha form spam filter |
 | Front    | Scripts for directing web traffic |
 | install     | Files for installing nodePrint |
 | Kubeconfig     | Files for setting up nodePrint in Kubernetes |

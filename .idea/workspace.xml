@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Initial BatchMonitor.jsx GUI">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/LIBRARIES.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/LIBRARIES_BACKUP.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/QUESTIONS.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/imas_libraries.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/imas_library_items.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/imathas_imas_questionset.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/importIMATHAS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Import_IMATHAS/sitemap.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/PDFMerger.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/PDFMerger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/webwork.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/webwork.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactForm/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactForm/contactForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactForm/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactForm/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactForm/sendPDF.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/components/BatchMonitor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/components/BatchMonitor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/copyNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/licenses.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,8 +314,8 @@
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
-      <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.elevate" />
+      <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
@@ -1114,28 +1124,14 @@
       <workItem from="1595143861334" duration="188000" />
       <workItem from="1595187044559" duration="1974000" />
       <workItem from="1595194563360" duration="622000" />
-      <workItem from="1595196870221" duration="829000" />
-    </task>
-    <task id="LOCAL-00215" summary="Initial getSubpagesFull">
-      <created>1566543835848</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1566543835849</updated>
-    </task>
-    <task id="LOCAL-00216" summary="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix">
-      <created>1567238992193</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1567238992194</updated>
-    </task>
-    <task id="LOCAL-00217" summary="Updated Cover Spine logo">
-      <created>1567363903069</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1567363903069</updated>
+      <workItem from="1595196870221" duration="1023000" />
+      <workItem from="1595198064460" duration="604000" />
+      <workItem from="1595206703836" duration="140000" />
+      <workItem from="1595218718451" duration="435000" />
+      <workItem from="1595220061641" duration="418000" />
+      <workItem from="1595263552363" duration="851000" />
+      <workItem from="1595267623015" duration="424000" />
+      <workItem from="1595303026534" duration="414000" />
     </task>
     <task id="LOCAL-00218" summary="authenticatedFetch /pages endpoint">
       <created>1567403066808</created>
@@ -1459,7 +1455,28 @@
       <option name="project" value="LOCAL" />
       <updated>1595197391679</updated>
     </task>
-    <option name="localTasksCounter" value="264" />
+    <task id="LOCAL-00264" summary="Updated cleanPath to be less aggressive">
+      <created>1595197860410</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197860410</updated>
+    </task>
+    <task id="LOCAL-00265" summary="Hooked up BatchMonitor.jsx to nodePrint.js">
+      <created>1595197890270</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197890270</updated>
+    </task>
+    <task id="LOCAL-00266" summary="Added pageNumber to Query">
+      <created>1595264170807</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1595264170807</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1514,9 +1531,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Fixed createSandbox userID" />
-    <MESSAGE value="Fixed foreignImage" />
-    <MESSAGE value="Added cleanPath to elevate.js" />
     <MESSAGE value="Implemented webwork.js import" />
     <MESSAGE value="sendAPI returns response" />
     <MESSAGE value="bundled dynamicIndexMaker.js&#10;&#10;-wrapped dynamicIndexMaker.js in self-invoking function&#10;-changed var to let/const&#10;-formatted file&#10;-still has type coercion issues" />
@@ -1539,7 +1553,10 @@
     <MESSAGE value="Fixed cross-subdomain cleanPath" />
     <MESSAGE value="Initial BatchMonitor.jsx GUI" />
     <MESSAGE value="Updated Sandboxes for Admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Sandboxes for Admin" />
+    <MESSAGE value="Updated cleanPath to be less aggressive" />
+    <MESSAGE value="Hooked up BatchMonitor.jsx to nodePrint.js" />
+    <MESSAGE value="Added pageNumber to Query" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pageNumber to Query" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1566,10 +1583,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595197390819">
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595264167138">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595197390819" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595264167138" />
     <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1646,10 +1663,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689589752" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1595197699473">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1595264173896">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595197699473" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595264173896" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1594794175047">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
