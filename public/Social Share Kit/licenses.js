@@ -12,25 +12,57 @@
 						case "publicdomain":
 							return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
 						case "ccby":
-							return { label: "cc-BY", title: "CC BY", link: "https://creativecommons.org/licenses/by/4.0/" };
+							return {
+								label: "cc-BY",
+								title: "CC BY",
+								link: "https://creativecommons.org/licenses/by/4.0/"
+							};
 						case "ccbysa":
-							return { label: "cc-by-sa", title: "CC BY-SA", link: "https://creativecommons.org/licenses/by-sa/4.0/" };
+							return {
+								label: "cc-by-sa",
+								title: "CC BY-SA",
+								link: "https://creativecommons.org/licenses/by-sa/4.0/"
+							};
 						case "ccbyncsa":
-							return { label: "cc-by-nc-sa", title: "CC BY-NC-SA", link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
+							return {
+								label: "cc-by-nc-sa",
+								title: "CC BY-NC-SA",
+								link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+							};
 						case "ccbync":
-							return { label: "cc-by-nc", title: "CC BY-NC", link: "https://creativecommons.org/licenses/by-nc/4.0/" };
+							return {
+								label: "cc-by-nc",
+								title: "CC BY-NC",
+								link: "https://creativecommons.org/licenses/by-nc/4.0/"
+							};
 						case "ccbynd":
-							return { label: "cc-by-nd", title: "CC BY-ND", link: "https://creativecommons.org/licenses/by-nd/4.0/" };
+							return {
+								label: "cc-by-nd",
+								title: "CC BY-ND",
+								link: "https://creativecommons.org/licenses/by-nd/4.0/"
+							};
 						case "ccbyncnd":
-							return { label: "cc-by-nc-nd", title: "CC BY-NC-ND", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
+							return {
+								label: "cc-by-nc-nd",
+								title: "CC BY-NC-ND",
+								link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+							};
 						case "gnu":
-							return { label: "gnu", title: "GNU GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
+							return {
+								label: "gnu",
+								title: "GNU GPL",
+								link: "https://www.gnu.org/licenses/gpl-3.0.en.html"
+							};
 						case "gnudsl":
-							return { label: "gnudsl", title: "GNU DSL", link: "https://www.gnu.org/licenses/dsl.html" };
+							return {label: "gnudsl", title: "GNU DSL", link: "https://www.gnu.org/licenses/dsl.html"};
 						case "gnufdl":
-							return { label: "gnufdl", title: "GNU FDL", link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
+							return {
+								label: "gnufdl",
+								title: "GNU FDL",
+								link: "https://www.gnu.org/licenses/fdl-1.3.en.html"
+							};
 						case "arr":
-							return { label: "arr", title: "All Rights Reserved Â©", };
+							return {label: "arr", title: "All Rights Reserved Â©",};
 						
 					}
 				}
@@ -134,6 +166,9 @@
 		const pageNumberHolder = document.getElementById("pageNumberHolder");
 		if ($("li.elm-page-restriction").length)
 			$("li.elm-page-restriction")[0].after(pageNumberHolder);
+		else if (window.location.host.startsWith('query') && $("li.elm-last-modified").length)
+			$("li.elm-last-modified")[0].after(pageNumberHolder);
+		
 		else
 			pageNumberHolder.style.display = "none";
 		

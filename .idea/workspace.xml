@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Fixed cleanPath permissions error&#10;&#10;Require Developer group added to /Bookshelves">
-      <change beforePath="$PROJECT_DIR$/.idea/sshConfigs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,20 +17,20 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="package.json" />
         <option value="XSLT Stylesheet" />
         <option value="HTML File" />
         <option value="README" />
         <option value="CSS File" />
         <option value="HTTP Request" />
         <option value="JavaScript File" />
+        <option value="package.json" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,7 +68,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sushi-chef-libretext" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -83,17 +86,17 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Import" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\Mathjax3\Mathjax3Fonts" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -185,7 +188,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="Node.js.elevate">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -202,6 +205,9 @@
       <method v="2" />
     </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
+      <method v="2" />
+    </configuration>
+    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/API/schedule.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -276,16 +282,6 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -300,23 +296,22 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
+      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Node.js.schedule.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
-      <item itemvalue="npm.build" />
-      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
-        <item itemvalue="npm.build" />
+        <item itemvalue="Node.js.schedule.js" />
       </list>
     </recent_temporary>
   </component>
@@ -1097,69 +1092,40 @@
       <workItem from="1593657454903" duration="5887000" />
       <workItem from="1593837432426" duration="333000" />
       <workItem from="1594230030677" duration="1207000" />
-    </task>
-    <task id="LOCAL-00214" summary="Importer Beta">
-      <created>1566361853035</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1566361853035</updated>
-    </task>
-    <task id="LOCAL-00215" summary="Initial getSubpagesFull">
-      <created>1566543835848</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1566543835849</updated>
-    </task>
-    <task id="LOCAL-00216" summary="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix">
-      <created>1567238992193</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1567238992194</updated>
-    </task>
-    <task id="LOCAL-00217" summary="Updated Cover Spine logo">
-      <created>1567363903069</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1567363903069</updated>
-    </task>
-    <task id="LOCAL-00218" summary="authenticatedFetch /pages endpoint">
-      <created>1567403066808</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1567403066809</updated>
-    </task>
-    <task id="LOCAL-00219" summary="Reuse.js getKeys">
-      <created>1567463164951</created>
-      <option name="number" value="00219" />
-      <option name="presentableId" value="LOCAL-00219" />
-      <option name="project" value="LOCAL" />
-      <updated>1567463164951</updated>
-    </task>
-    <task id="LOCAL-00220" summary="Nodejs clean on restart">
-      <created>1567729433295</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1567729433295</updated>
-    </task>
-    <task id="LOCAL-00221" summary="Importer Common Cartridge">
-      <created>1567804885236</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1567804885237</updated>
-    </task>
-    <task id="LOCAL-00222" summary="Hack-a-Mole">
-      <created>1567930301339</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1567930301340</updated>
+      <workItem from="1594763605597" duration="599000" />
+      <workItem from="1594776539657" duration="187000" />
+      <workItem from="1594776745773" duration="4722000" />
+      <workItem from="1594790180377" duration="21454000" />
+      <workItem from="1595027300111" duration="21177000" />
+      <workItem from="1595058006745" duration="364000" />
+      <workItem from="1595093583296" duration="16685000" />
+      <workItem from="1595119478110" duration="628000" />
+      <workItem from="1595120956474" duration="634000" />
+      <workItem from="1595125272596" duration="210000" />
+      <workItem from="1595126520615" duration="1714000" />
+      <workItem from="1595134454138" duration="17000" />
+      <workItem from="1595134773748" duration="56000" />
+      <workItem from="1595140290533" duration="204000" />
+      <workItem from="1595143861334" duration="188000" />
+      <workItem from="1595187044559" duration="1974000" />
+      <workItem from="1595194563360" duration="622000" />
+      <workItem from="1595196870221" duration="1023000" />
+      <workItem from="1595198064460" duration="604000" />
+      <workItem from="1595206703836" duration="140000" />
+      <workItem from="1595218718451" duration="435000" />
+      <workItem from="1595220061641" duration="418000" />
+      <workItem from="1595263552363" duration="851000" />
+      <workItem from="1595267623015" duration="424000" />
+      <workItem from="1595303026534" duration="2020000" />
+      <workItem from="1595357221594" duration="1440000" />
+      <workItem from="1595371681869" duration="2741000" />
+      <workItem from="1595393067421" duration="3420000" />
+      <workItem from="1595447418188" duration="672000" />
+      <workItem from="1595457838981" duration="669000" />
+      <workItem from="1595460904331" duration="105000" />
+      <workItem from="1595525020185" duration="46000" />
+      <workItem from="1595537414387" duration="2475000" />
+      <workItem from="1595552160006" duration="4622000" />
     </task>
     <task id="LOCAL-00223" summary="Added Store: to downloads bar">
       <created>1568009265497</created>
@@ -1434,14 +1400,77 @@
       <option name="project" value="LOCAL" />
       <updated>1593838618239</updated>
     </task>
-    <task id="LOCAL-00262" summary="Fixed cleanPath permissions error&#10;&#10;Require Developer group added to /Bookshelves">
-      <created>1594689654224</created>
+    <task id="LOCAL-00262" summary="Initial BatchMonitor.jsx GUI">
+      <created>1595057643156</created>
       <option name="number" value="00262" />
       <option name="presentableId" value="LOCAL-00262" />
       <option name="project" value="LOCAL" />
-      <updated>1594689654224</updated>
+      <updated>1595057643157</updated>
     </task>
-    <option name="localTasksCounter" value="263" />
+    <task id="LOCAL-00263" summary="Updated Sandboxes for Admin">
+      <created>1595197391678</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197391679</updated>
+    </task>
+    <task id="LOCAL-00264" summary="Updated cleanPath to be less aggressive">
+      <created>1595197860410</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197860410</updated>
+    </task>
+    <task id="LOCAL-00265" summary="Hooked up BatchMonitor.jsx to nodePrint.js">
+      <created>1595197890270</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197890270</updated>
+    </task>
+    <task id="LOCAL-00266" summary="Added pageNumber to Query">
+      <created>1595264170807</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1595264170807</updated>
+    </task>
+    <task id="LOCAL-00267" summary="Import IMAthAS">
+      <created>1595303484519</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303484520</updated>
+    </task>
+    <task id="LOCAL-00268" summary="Removed deprecated/incomplete functions">
+      <created>1595303712444</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303712444</updated>
+    </task>
+    <task id="LOCAL-00269" summary="Updated cleanPath whitelist">
+      <created>1595303738198</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303738198</updated>
+    </task>
+    <task id="LOCAL-00270" summary="Reduced PDFMerger.js memory usage">
+      <created>1595555842261</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1595555842262</updated>
+    </task>
+    <task id="LOCAL-00271" summary="Forker changed from Cross-Library to LibreBot">
+      <created>1595561784519</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1595561784519</updated>
+    </task>
+    <option name="localTasksCounter" value="272" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1496,15 +1525,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added Toggle Switch for New&lt;==&gt;Edit Remix" />
-    <MESSAGE value="Fixed createSandbox userID" />
-    <MESSAGE value="Fixed foreignImage" />
-    <MESSAGE value="Added cleanPath to elevate.js" />
-    <MESSAGE value="Implemented webwork.js import" />
-    <MESSAGE value="sendAPI returns response" />
-    <MESSAGE value="bundled dynamicIndexMaker.js&#10;&#10;-wrapped dynamicIndexMaker.js in self-invoking function&#10;-changed var to let/const&#10;-formatted file&#10;-still has type coercion issues" />
-    <MESSAGE value="Bugfix dynamicIndexMaker.js non-chem libraries" />
-    <MESSAGE value="Bugfix dynamicIndexMaker.js authentication" />
     <MESSAGE value="Updated licenses.js" />
     <MESSAGE value="Developer menu buildcite()" />
     <MESSAGE value="author bar multi-library" />
@@ -1520,14 +1540,23 @@
     <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
     <MESSAGE value="Added HEAD to /ping" />
     <MESSAGE value="Fixed cross-subdomain cleanPath" />
-    <MESSAGE value="Fixed cleanPath permissions error&#10;&#10;Require Developer group added to /Bookshelves" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed cleanPath permissions error&#10;&#10;Require Developer group added to /Bookshelves" />
+    <MESSAGE value="Initial BatchMonitor.jsx GUI" />
+    <MESSAGE value="Updated Sandboxes for Admin" />
+    <MESSAGE value="Updated cleanPath to be less aggressive" />
+    <MESSAGE value="Hooked up BatchMonitor.jsx to nodePrint.js" />
+    <MESSAGE value="Added pageNumber to Query" />
+    <MESSAGE value="Import IMAthAS" />
+    <MESSAGE value="Removed deprecated/incomplete functions" />
+    <MESSAGE value="Updated cleanPath whitelist" />
+    <MESSAGE value="Reduced PDFMerger.js memory usage" />
+    <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Forker changed from Cross-Library to LibreBot" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="446" y="120" key="#Deployment" timestamp="1594689967439">
+    <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="120" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689967439" />
+    <state x="446" y="120" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933732591" />
     <state x="-1404" y="36" key="#JavaScript" timestamp="1590875834403">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1536,108 +1565,143 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="766" y="99" key="#SSH_Configurations/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586986000477" />
-    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592516751876">
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595038356386">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592516751876" />
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595038356386" />
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595037543255">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595037543255" />
     <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1592520407991">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1594689931872">
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595561783825">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212627203" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689931872" />
+    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595303737610" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561783825" />
     <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="164" y="73" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838628410" />
-    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1589058303781">
+    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1595194585696">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058303781" />
-    <state width="250" height="649" key="GridCell.Tab.0.bottom" timestamp="1594162821548">
+    <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
+    <state width="559" height="746" key="GridCell.Tab.0.bottom" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="559" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.0.center" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="559" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.0.left" timestamp="1595561628013">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="559" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628013" />
+    <state width="559" height="746" key="GridCell.Tab.0.right" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="559" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.bottom" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.center" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.left" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.right" timestamp="1595561628014">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.2.bottom" timestamp="1595561628015">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.center" timestamp="1595561628015">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.left" timestamp="1595561628015">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.right" timestamp="1595561628015">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="597" height="476" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1595058066135">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
+    <state x="308" y="60" width="1113" height="710" key="SettingsEditor" timestamp="1594689589752">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689589752" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1595561786167">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595303740280" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561786167" />
+    <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561233825" />
+    <state x="-1834" y="-14" width="1359" height="665" maximized="true" key="dock-window-1" timestamp="1594790696178">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="250" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
-    <state width="477" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="250" height="649" key="GridCell.Tab.0.center" timestamp="1594162821548">
+    <state x="-1834" y="-14" width="1359" height="665" maximized="true" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594790696178" />
+    <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2" timestamp="1594792219967">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="250" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
-    <state width="477" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="250" height="649" key="GridCell.Tab.0.left" timestamp="1594162821548">
-      <screen x="-1920" y="0" width="1536" height="816" />
-    </state>
-    <state width="250" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
-    <state width="477" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593324" />
-    <state width="250" height="649" key="GridCell.Tab.0.right" timestamp="1594162821548">
-      <screen x="-1920" y="0" width="1536" height="816" />
-    </state>
-    <state width="250" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594162821548" />
-    <state width="477" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.1.bottom" timestamp="1593838593326">
+    <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594792219967" />
+    <state x="739" y="112" width="448" height="699" key="ftp.server.browser" timestamp="1594933728997">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="477" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593326" />
-    <state width="477" height="746" key="GridCell.Tab.1.center" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.1.left" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.1.right" timestamp="1593838593325">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593325" />
-    <state width="477" height="746" key="GridCell.Tab.2.bottom" timestamp="1593838593326">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593326" />
-    <state width="477" height="746" key="GridCell.Tab.2.center" timestamp="1593838593326">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593326" />
-    <state width="477" height="746" key="GridCell.Tab.2.left" timestamp="1593838593326">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593326" />
-    <state width="477" height="746" key="GridCell.Tab.2.right" timestamp="1593838593326">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="477" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838593326" />
-    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1591766724325">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1591766724325" />
-    <state x="308" y="60" width="1113" height="710" key="SettingsEditor" timestamp="1593838661777">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838661777" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1593838629410">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1586212629334" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838629410" />
-    <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1592519300573">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592519300573" />
-    <state x="739" y="112" width="448" height="699" key="ftp.server.browser" timestamp="1589058295023">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1589058295023" />
+    <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933728997" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/elevate.js</url>
-          <line>309</line>
-          <option name="timeStamp" value="37" />
+          <url>file://$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx</url>
+          <line>133</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>704</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
+          <line>350</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
+          <line>1142</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

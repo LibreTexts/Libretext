@@ -343,9 +343,9 @@ function parseURL(url) {
 
 function cleanPath(path) {
 	path = decodeURIComponent(decodeURIComponent((path)));
-	let originalPath = path;
 	path = path.replace('?title=', '');
-	path = path.replace(/[+!#$%^&*{}\\]/g, '');
+	path = path.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	path = path.replace(/[^A-Za-z0-9()_ :%\-.'\/]/g, '');
 	return path;
 }
 

@@ -221,22 +221,22 @@
 		}
 	}
 	
-	async function copyContent() {
+	async function copyContent(e) {
+		e.preventDefault();
 		if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
 			let [, path] = LibreTexts.parseURL();
-			if (path.startsWith('Sandboxes')) {
-				let response = await LibreTexts.sendAPI('fork');
-				response = await response.text();
-				if (response.includes('Successfully forked')) {
-					
-					alert(response + '.\n The page will now reload.');
-					location.reload();
-				}
-				else alert(response);
-				return;
+			let response = await LibreTexts.sendAPI('fork');
+			response = await response.text();
+			if (response.includes('Successfully forked')) {
+				
+				alert(response + '.\n The page will now reload.');
+				location.reload();
 			}
+			else
+				alert(response);
 			
-			let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
+			
+			/*let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
 			let current = window.location.origin.split('/')[2].split('.')[0];
 			let response = await LibreTexts.authenticatedFetch(pageID, `contents?mode=raw`);
 			let sourceTags = [];
@@ -399,7 +399,7 @@
 						alert("No content-reuse sections detected!");
 					}
 				}
-			}
+			}*/
 		}
 	}
 	
@@ -470,10 +470,12 @@
 		}
 		
 		async function goToSandbox() {
-			// let username = document.getElementById('usernameHolder').innerText;
+			let username = document.getElementById('usernameHolder').innerText;
+			let isAdmin = document.getElementById('adminHolder').innerText;
+			isAdmin = (isAdmin === 'true') ? `/${username}` : '';
 			
 			await LibreTexts.sendAPI('createSandbox');
-			document.location.replace(`/Sandboxes`);
+			document.location.replace(`/Sandboxes${isAdmin}`);
 		}
 	}
 	

@@ -54,7 +54,7 @@ module.exports = function (src, dest, opts, callback) {
 	
 	var jarPath = dirPathArr.join(path.sep);
 	
-	var command = ['java -jar -Xmx4G "' + jarPath + '" PDFMerger'];
+	var command = ['java -jar -Xmx3G "' + jarPath + '" PDFMerger'];
 	
 	checkSrc(src, function (err, norm_src) {
 		
