@@ -182,7 +182,7 @@ async function cleanPath(req, res) {
 	path = LibreTexts.cleanPath(path);
 	if (path && (originalPath !== path || body.force)) {
 		try {
-			let makeChange = await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${path}&allow=deleteredirects&dream.out.format=json`,
+			let makeChange = await LibreTexts.authenticatedFetch(body.pageID, `move?title=${encodeURIComponent(page.title)}&to=${encodeURIComponent(path)}&allow=deleteredirects&dream.out.format=json`,
 				body.subdomain, 'LibreBot', {
 					method: 'POST'
 				});
@@ -192,6 +192,7 @@ async function cleanPath(req, res) {
 				throw Error(await makeChange.text());
 		} catch (e) {
 			console.error(`[cleanPath] ${path}`);
+			console.error(e);
 			res.status(500);
 			return;
 		}
@@ -332,7 +333,7 @@ async function fork(req, res) {
 			}
 		} catch (e) {
 			res.status(500);
-			console.error(e.message);
+			console.error(e);
 			res.send(e.message);
 		}
 	}
