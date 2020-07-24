@@ -217,7 +217,7 @@ async function fork(req, res) {
 				original = LibreTexts.decodeHTML(original);
 				original = original.match(/(?<=<body>)[\s\S]*?(?=<\/body>)/)[0];
 				
-				//Cross-library Forker
+				//LibreBot Forker
 				let result = original;
 				let success;
 				let index = getIndex(current.tags);
@@ -229,7 +229,7 @@ async function fork(req, res) {
 						source = {subdomain: source.Library, path: source.PageID};
 						
 						//Get cross content
-						let contentReuse = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain, 'Cross-Library');
+						let contentReuse = await LibreTexts.authenticatedFetch(source.path, 'contents?mode=raw', source.subdomain, 'LibreBot');
 						crossLibrary = source.subdomain;
 						contentReuse = await contentReuse.text();
 						contentReuse = contentReuse.match(/(?<=<body>)[\s\S]*?(?=<\/body>)/)[0];
@@ -271,8 +271,8 @@ async function fork(req, res) {
 								console.log(path, section);
 							}
 							
-							let contentReuse = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain, 'Cross-Library');
-							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain, 'Cross-Library');
+							let contentReuse = await LibreTexts.authenticatedFetch(path, 'contents?mode=raw', subdomain, 'LibreBot');
+							let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain, 'LibreBot');
 							contentReuse = await contentReuse.text();
 							info = await info.json();
 							contentReuse = LibreTexts.decodeHTML(contentReuse);
@@ -316,8 +316,9 @@ async function fork(req, res) {
 				sourceTags = sourceTags.concat(current.tags);
 				sourceTags.splice(sourceTags.indexOf("transcluded:yes"), 1);
 				sourceTags = sourceTags.map(tag => `<a href="#">${tag}</a>`).join('');
+				const comment = `[BOT Fork] Successfully forked https://${body.subdomain}.libretexts.org/${body.path}`;
 				if (success) {
-					await LibreTexts.authenticatedFetch(destination.path, `contents?edittime=now`, destination.subdomain, body.username, {
+					await LibreTexts.authenticatedFetch(destination.path, `contents?edittime=now&comment=${encodeURIComponent(comment)}`, destination.subdomain, body.username, {
 						method: "POST",
 						body: result + `<p class="template:tag-insert"><em>Tags recommended by the template: </em>${sourceTags}</p>`,
 					});
@@ -360,7 +361,7 @@ async function fork(req, res) {
 	
 	
 	async function copyFiles(content, source, destination, user) {
-		let response = await LibreTexts.authenticatedFetch(source.path, 'files?dream.out.format=json', source.subdomain, 'Cross-Library');
+		let response = await LibreTexts.authenticatedFetch(source.path, 'files?dream.out.format=json', source.subdomain, 'LibreBot');
 		if (response.ok) {
 			let files = await response.json();
 			if (files["@count"] !== "0") {
