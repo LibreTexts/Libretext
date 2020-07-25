@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="seatedCheck for sendAPI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
@@ -1561,10 +1562,6 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1404" y="36" key="#JavaScript/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1590875834403" />
-    <state x="766" y="99" key="#SSH_Configurations" timestamp="1586986000477">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="766" y="99" key="#SSH_Configurations/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1586986000477" />
     <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595038356386">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1577,10 +1574,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595561783825">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1356" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595711850761">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595303737610" />
+    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711850761" />
     <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561783825" />
     <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1590,25 +1587,25 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="559" height="746" key="GridCell.Tab.0.bottom" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="294" height="649" key="GridCell.Tab.0.bottom" timestamp="1595711852819">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="597" height="476" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="294" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
     <state width="559" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.0.center" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="294" height="649" key="GridCell.Tab.0.center" timestamp="1595711852819">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="597" height="476" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="294" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
     <state width="559" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.0.left" timestamp="1595561628013">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="294" height="649" key="GridCell.Tab.0.left" timestamp="1595711852818">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="597" height="476" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="294" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852818" />
     <state width="559" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628013" />
-    <state width="559" height="746" key="GridCell.Tab.0.right" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="294" height="649" key="GridCell.Tab.0.right" timestamp="1595711852819">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="597" height="476" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580886" />
+    <state width="294" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
     <state width="559" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
     <state width="559" height="746" key="GridCell.Tab.1.bottom" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />

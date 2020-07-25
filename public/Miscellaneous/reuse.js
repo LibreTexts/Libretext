@@ -100,6 +100,9 @@ function LibreTextsReuse() {
 	}
 	
 	async function sendAPI(api, options = {}, method = 'PUT') {
+		if (!document.getElementById('seatedCheck'))
+			throw Error('User not authenticated');
+		
 		let [current, path] = LibreTexts.parseURL();
 		let payload = {
 			username: document.getElementById('usernameHolder').innerText,
