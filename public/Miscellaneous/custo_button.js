@@ -36,7 +36,7 @@ upperDiv.innerHTML=`
     <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
-        <input class="slider_ar" type="range" min="90" max="150" value="" step="5" id="size" 
+        <input class="slider_ar" type="range" min="90" max="150" value="100" step="5" id="size" 
 
 
     
@@ -45,17 +45,20 @@ upperDiv.innerHTML=`
 <div class="custom_field">   
   <input class="slider_ar" type="range" min="0" max="450" value="" step ="10" id="width">
 </div>
- 
+    <div id="enterBL"></div>
+        
+
+    
 
     <div class="custom_field">
-            <a class="btn btn-large" data-color="bright">Bright</a>
-			<a class="btn btn-large" data-color="dark">Dark</a>
-			<a class="btn btn-large" data-color="blues">Blues</a>
-			<a class="btn btn-large" data-color="gray">Gray</a>
-			<a class="btn btn-large" data-color="night_blues">Inverted</a>
-			<a class="btn btn-large" data-color="off">Off</a>
-			<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>
-
+        <a class="btn btn-large" onlick="$('.elm-skin-container').toggleClass('bright'); " data-color="bright">Bright</a>
+			  <a class="btn btn-large" data-color="dark">Dark</a>
+			  <a class="btn btn-large" data-color="blues">Blues</a>
+			  <a class="btn btn-large" data-color="gray">Gray</a>
+			  <a class="btn btn-large" data-color="night_blues">Inverted</a>
+		  	<a class="btn btn-large" data-color="off">Off</a>
+        <a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>
+        
     </div>
 </div>
 
@@ -85,9 +88,21 @@ upperDiv.innerHTML=`
                 <iframe class="pubchem-widget" style="display:none; width:400px;" src="https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&amp;embed=true" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;" id="iFrameResizer0">
                 </iframe>
             </div>         
-        <a id="ref_table" href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables" target="_blank" >Reference Table</a>
-            <div class="custom_field">                
-                <iframe id="reff_table" class="pubchem-widget" style="display:none; width:400px;" src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables"></iframe>
+        <a id="ref_table" target="_blank" >Reference Table</a>
+            <div id="ref_table_put" class="custom_field" style="display: none; background-color: white ">                
+<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Acid-Base_Indicators"> Acid-Base Indicators</a>
+<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Analytic References </a>
+<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Atomic and Molecular properties </a>
+<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Bulk_Properties"> Bulk properties </a>
+<a> Electrochemistry Tables </a>
+<a> equilibirum constants </a>
+<a> group theory tables </a>
+<a> Mathematical functions </a>
+<a> Nuclear tables </a>
+<a> Solvents </a>
+<a> Spectroscopic parameters </a>
+<a> Thermodynamics Tables </a>
+
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
                 <div id="phy_table_put" class="custom_field">
@@ -99,9 +114,9 @@ upperDiv.innerHTML=`
             <div id="gloss_table_put" class="custom_field">
             </div>
         <a id="conversion_table">Conversion Calculator</a>
-        <div class="custom_field" >
+        <div class="custom_field"  id="conversion_table_put" style="display:none; background-color: white;" >
 
-                    <div id="conversion_table_put" style="display:none;" class="converter-wrapper">
+                    <div class="converter-wrapper">
   
 
   <form name="property_form">
@@ -207,34 +222,8 @@ upperDiv.innerHTML=`
 
 
 
-<p class="changeMe">
-  So insisted received is occasion advanced honoured. Among ready to which up. Attacks smiling and may out assured moments man nothing outward. Thrown any behind afford either the set depend one temper. Instrument melancholy in acceptance collecting frequently be if. Zealously now pronounce existence add you instantly say offending. Merry their far had widen was. Concerns no in expenses raillery formerly.
-
-  Kindness to he horrible reserved ye. Effect twenty indeed beyond for not had county. The use him without greatly can private. Increasing it unpleasant no of contrasted no continuing. Nothing colonel my no removed in weather. It dissimilar in up devonshire inhabiting.
-
-  Sigh view am high neat half to what. Sent late held than set why wife our. If an blessing building steepest. Agreement distrusts mrs six affection satisfied. Day blushes visitor end company old prevent chapter. Consider declared out expenses her concerns. No at indulgence conviction particular unsatiable boisterous discretion. Direct enough off others say eldest may exeter she. Possible all ignorant supplied get settling marriage recurred.
-
-  Unpacked now declared put you confined daughter improved. Celebrated imprudence few interested especially reasonable off one. Wonder bed elinor family secure met. It want gave west into high no in. Depend repair met before man admire see and. An he observe be it covered delight hastily message. Margaret no ladyship endeavor ye to settling.
-
-  Impossible considered invitation him men instrument saw celebrated unpleasant. Put rest and must set kind next many near nay. He exquisite continued explained middleton am. Voice hours young woody has she think equal. Estate moment he at on wonder at season little. Six garden result summer set family esteem nay estate. End admiration mrs unreserved discovered comparison especially invitation.
-
-  Offered say visited elderly and. Waited period are played family man formed. He ye body or made on pain part meet. You one delay nor begin our folly abode. By disposed replying mr me unpacked no. As moonlight of my resolving unwilling.
-
-  Consulted perpetual of pronounce me delivered. Too months nay end change relied who beauty wishes matter. Shew of john real park so rest we on. Ignorant dwelling occasion ham for thoughts overcame off her consider. Polite it elinor is depend. His not get talked effect worthy barton. Household shameless incommode at no objection behaviour. Especially do at he possession insensible sympathize boisterous it. Songs he on an widen me event truth. Certain law age brother sending amongst why covered.
-
-  In show dull give need so held. One order all scale sense her gay style wrote. Incommode our not one ourselves residence. Shall there whose those stand she end. So unaffected partiality indulgence dispatched to of celebrated remarkably. Unfeeling are had allowance own perceived abilities.
-
-  Windows talking painted pasture yet its express parties use. Sure last upon he same as knew next. Of believed or diverted no rejoiced. End friendship sufficient assistance can prosperous met. As game he show it park do. Was has unknown few certain ten promise. No finished my an likewise cheerful packages we. For assurance concluded son something depending discourse see led collected. Packages oh no denoting my advanced humoured. Pressed be so thought natural.
-
-  Arrived compass prepare an on as. Reasonable particular on my it in sympathize. Size now easy eat hand how. Unwilling he departure elsewhere dejection at. Heart large seems may purse means few blind. Exquisite newspaper attending on certainty oh suspicion of. He less do quit evil is. Add matter family active mutual put wishes happen.
-
-
-
-
-
-</p>
-
 `
+let bL = document.getElementById("enterBl");
 
 let sidebar = document.getElementById("custom_sidebar");
 let sidebar1 = document.getElementById("sidebar1");
@@ -422,6 +411,15 @@ $( '#gloss_table').click(function () {
   }
 });
 
+$( '#ref_table').click(function () {
+  if ( $( "#ref_table_put" ).is( ":hidden" ) ) {
+    
+    $( "#ref_table_put" ).slideDown("slow");
+  } else {
+    $( "#ref_table_put" ).slideUp("slow");
+  }
+});
+
 $( '#phy_table').click(function () {
   if ( $( "#phy_table_put" ).is( ":hidden" ) ) {
     
@@ -451,15 +449,94 @@ $( '#conversion_table').click(function () {
     $( "#conversion_table_put" ).slideUp("slow");
   }
 });
-/*if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
-			localStorage.setItem('darkMode', true);
-		if (localStorage.getItem('darkMode') === 'true')
-			$('.elm-skin-container').addClass('darkMode');
-*/
+
+function activateBeeLine() {
+	const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
+	
+	const doBeeline = function (theme, action) {
+		for (let i = 0; i < beelineELements.length; i++) {
+			const beeline = new BeeLineReader(beelineELements[i], {
+				theme: theme,
+				skipBackgroundColor: true,
+				handleResize: true,
+				skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote'],
+			});
+			
+			Cookies.set("beeline", theme, {domain: 'libretexts.org'});
+			if (theme === "off") {
+				beeline.uncolor();
+				if (typeof ga === 'function') {
+					ga('send', 'event', 'Beeline', 'disabled');
+				}
+			}
+			else {
+				beeline.color();
+				if (typeof ga === 'function') {
+					ga('send', 'event', 'Beeline', action, theme);
+				}
+			}
+			
+			
+			const contentContainer = $('.elm-skin-container');
+			if (theme === 'night_blues') {
+				contentContainer.addClass('darkMode');
+				localStorage.setItem('darkMode', true);
+			}
+			else {
+				contentContainer.removeClass('darkMode');
+				localStorage.setItem('darkMode', false);
+			}
+		}
+	};
+	
+	setBeelineToggles();
+	
+	function setBeelineToggles() {
+		const toggles = $('.beeline-toggles');
+		
+		if (toggles[0]) {
+			const btns = toggles.find('button, a');
+			
+			btns.click(function (e) {
+				if (!e.target.href)
+					e.preventDefault();
+				const theme = $(this).attr("data-color");
+				if (!theme)
+					return;
+				btns.removeClass('active');
+				btns.filter('a[data-color="' + theme + '"]').addClass('active');
+				btns.filter('button[data-color="' + theme + '"]').addClass('active');
+				
+				doBeeline(theme, theme);
+			});
+		}
+	};
+
+
+
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
 			localStorage.setItem('darkMode', true);
 		if (localStorage.getItem('darkMode') === 'true')
 			$('.elm-skin-container').addClass('darkMode');
+
+
+
+			if (window.beelineEnabled) {
+				bL.innerHTML += `<div class="LTdropdown beeline-toggles" style="float:left; background-color: #d4d4d4; color:black"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
+				bL.innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
+title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
+<img style="margin-right: 5px; width:25px; height: 25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;
+				bL.innerHTML += `<a class="btn btn-large" data-color="bright">Bright</a>`;
+				bL.innerHTML += `<a class="btn btn-large" data-color="dark">Dark</a>`;
+				bL.innerHTML += `<a class="btn btn-large" data-color="blues">Blues</a>`;
+				bL.innerHTML += `<a class="btn btn-large" data-color="gray">Gray</a>`;
+				bL.innerHTML += `<a class="btn btn-large" data-color="night_blues">Inverted</a>`;
+				bL.innerHTML += `<a class="btn btn-large active" data-color="off">Off</a>`;
+				bL.innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
+				bL.innerHTML += `</div></div>`;
+};
+
+
 /*
 if(window.beelineEnabled) {
     //bLine.innerHTML += <a class="btn btn-large" style="margin-top: 10px; margin-left: 10px;" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
@@ -480,8 +557,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 			}*/
    
 
-$('.changeMe').css("font-size", localStorage.getItem('font_size') + "px");
-console.log(localStorage.getItem('font_size') + ": INITIAL SIZE");
+
 
 $('.changeMe').css("font-family", localStorage.getItem('font_family') );
 console.log(localStorage.getItem('font_family') + ": INITIAL FONT");
@@ -496,7 +572,7 @@ console.log(localStorage.getItem('page_width') + ": INITIAL WIDTH");
 $("#fs").change(function() {
     //alert($(this).val());
     var initial_data = $(this).val();
-    $('.changeMe').css("font-family", initial_data);
+    $('.mt-content-container').css("font-family", initial_data);
     $("#fs").val(initial_data);
     
     
