@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="seatedCheck for sendAPI">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +61,6 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -1147,14 +1140,8 @@
       <workItem from="1595985428105" duration="1302000" />
       <workItem from="1596052522053" duration="6185000" />
       <workItem from="1596130076337" duration="2047000" />
-      <workItem from="1596170919439" duration="255000" />
-    </task>
-    <task id="LOCAL-00224" summary="Bugfix Importer Padded titles">
-      <created>1568100699034</created>
-      <option name="number" value="00224" />
-      <option name="presentableId" value="LOCAL-00224" />
-      <option name="project" value="LOCAL" />
-      <updated>1568100699034</updated>
+      <workItem from="1596170919439" duration="675000" />
+      <workItem from="1596171701886" duration="1462000" />
     </task>
     <task id="LOCAL-00225" summary="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!">
       <created>1568535324280</created>
@@ -1492,7 +1479,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595712118523</updated>
     </task>
-    <option name="localTasksCounter" value="273" />
+    <task id="LOCAL-00273" summary=" Updated batchPrint.js with Chapters">
+      <created>1596171586243</created>
+      <option name="number" value="00273" />
+      <option name="presentableId" value="LOCAL-00273" />
+      <option name="project" value="LOCAL" />
+      <updated>1596171586244</updated>
+    </task>
+    <option name="localTasksCounter" value="274" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1547,7 +1541,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Developer menu buildcite()" />
     <MESSAGE value="author bar multi-library" />
     <MESSAGE value="Updated dark mode" />
     <MESSAGE value="Starting API Dashboard Multi presets" />
@@ -1572,7 +1565,8 @@
     <MESSAGE value="Reduced PDFMerger.js memory usage" />
     <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
     <MESSAGE value="seatedCheck for sendAPI" />
-    <option name="LAST_COMMIT_MESSAGE" value="seatedCheck for sendAPI" />
+    <MESSAGE value=" Updated batchPrint.js with Chapters" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Updated batchPrint.js with Chapters" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1587,6 +1581,10 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1404" y="36" key="#JavaScript/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1590875834403" />
+    <state x="-1333" y="51" key="#Menus_and_Toolbars" timestamp="1596173889071">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
     <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595038356386">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1599,10 +1597,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1596171130061">
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1596171584514">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171130061" />
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171584514" />
     <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561783825" />
     <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1672,19 +1670,20 @@
     </state>
     <state width="597" height="476" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
     <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1595058066135">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1350" y="53" key="RollbackChangesDialog" timestamp="1596171211473">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171211473" />
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor" timestamp="1596171181463">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689589752" />
-    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1595712119998">
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1596171600882">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595712119998" />
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171600882" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561786167" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
       <screen x="0" y="0" width="1707" height="920" />
