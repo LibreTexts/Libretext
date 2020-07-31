@@ -46,10 +46,10 @@ function handler(request, response) {
 					let path = url.split("/").slice(3).join("/");
 					let {content, tags, properties} = await getContent();
 					
-					let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
+					let otherArray = Object.values(LibreTexts.libraries);
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
 					
-					//Propagatate
+					//Propagate
 					let promiseArray = [];
 					for (let i = 0; i < otherArray.length; i++) {
 						promiseArray.push(propagatePage(otherArray[i], path));

@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="seatedCheck for sendAPI">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/DownloadsCenter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/propagator.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/propagator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/src/pages/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/components/LibreText.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Social Share Kit/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +50,10 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="KubernetesApiPersistence">
+    <option name="context" value="docker-for-desktop" />
+    <option name="namespace" value="default" />
+  </component>
   <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -69,7 +77,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sushi-chef-libretext" />
+    <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -80,17 +89,17 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
@@ -189,7 +198,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.elevate">
+  <component name="RunManager" selected="npm.API Dashboard">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -316,6 +325,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1127,13 +1137,17 @@
       <workItem from="1595525020185" duration="46000" />
       <workItem from="1595537414387" duration="2475000" />
       <workItem from="1595552160006" duration="4622000" />
-    </task>
-    <task id="LOCAL-00223" summary="Added Store: to downloads bar">
-      <created>1568009265497</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1568009265498</updated>
+      <workItem from="1595711949812" duration="320000" />
+      <workItem from="1595720557153" duration="2346000" />
+      <workItem from="1595874507625" duration="153000" />
+      <workItem from="1595874680890" duration="424000" />
+      <workItem from="1595876269633" duration="584000" />
+      <workItem from="1595973123686" duration="18000" />
+      <workItem from="1595973164264" duration="39000" />
+      <workItem from="1595985428105" duration="1302000" />
+      <workItem from="1596052522053" duration="6185000" />
+      <workItem from="1596130076337" duration="2047000" />
+      <workItem from="1596170919439" duration="255000" />
     </task>
     <task id="LOCAL-00224" summary="Bugfix Importer Padded titles">
       <created>1568100699034</created>
@@ -1471,11 +1485,18 @@
       <option name="project" value="LOCAL" />
       <updated>1595561784519</updated>
     </task>
-    <option name="localTasksCounter" value="272" />
+    <task id="LOCAL-00272" summary="seatedCheck for sendAPI">
+      <created>1595712118523</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1595712118523</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -1526,7 +1547,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Updated licenses.js" />
     <MESSAGE value="Developer menu buildcite()" />
     <MESSAGE value="author bar multi-library" />
     <MESSAGE value="Updated dark mode" />
@@ -1551,13 +1571,18 @@
     <MESSAGE value="Updated cleanPath whitelist" />
     <MESSAGE value="Reduced PDFMerger.js memory usage" />
     <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forker changed from Cross-Library to LibreBot" />
+    <MESSAGE value="seatedCheck for sendAPI" />
+    <option name="LAST_COMMIT_MESSAGE" value="seatedCheck for sendAPI" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="446" y="120" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933732591" />
+    <state x="-1525" y="90" key="#Inspections" timestamp="1595998124965">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1525" y="90" key="#Inspections/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595998124965" />
     <state x="-1404" y="36" key="#JavaScript" timestamp="1590875834403">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1574,10 +1599,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="-1356" y="0" width="1009" height="920" key="CommitChangelistDialog2" timestamp="1595711850761">
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1596171130061">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1356" y="0" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711850761" />
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171130061" />
     <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561783825" />
     <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1587,25 +1612,25 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="294" height="649" key="GridCell.Tab.0.bottom" timestamp="1595711852819">
+    <state width="294" height="649" key="GridCell.Tab.0.bottom" timestamp="1595876853185">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="294" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
+    <state width="294" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
     <state width="559" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="294" height="649" key="GridCell.Tab.0.center" timestamp="1595711852819">
+    <state width="294" height="649" key="GridCell.Tab.0.center" timestamp="1595876853185">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="294" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
+    <state width="294" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
     <state width="559" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="294" height="649" key="GridCell.Tab.0.left" timestamp="1595711852818">
+    <state width="294" height="649" key="GridCell.Tab.0.left" timestamp="1595876853185">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="294" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852818" />
+    <state width="294" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
     <state width="559" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628013" />
-    <state width="294" height="649" key="GridCell.Tab.0.right" timestamp="1595711852819">
+    <state width="294" height="649" key="GridCell.Tab.0.right" timestamp="1595876853185">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="294" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595711852819" />
+    <state width="294" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
     <state width="559" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
     <state width="559" height="746" key="GridCell.Tab.1.bottom" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1651,14 +1676,15 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
-    <state x="308" y="60" width="1113" height="710" key="SettingsEditor" timestamp="1594689589752">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor" timestamp="1596171181463">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689589752" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1595561786167">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1595712119998">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595303740280" />
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595712119998" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561786167" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1692,12 +1718,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>350</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>1142</line>
+          <line>1143</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>

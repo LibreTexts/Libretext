@@ -101,7 +101,7 @@ class Center extends React.Component {
 			                                                                format={this.state.format}/>);
 			
 			return <>
-				<CssBaseline/>
+				{/*<CssBaseline/>*/}
 				<div className={'CenterContainer'}>
 					<div style={{display: 'flex', backgroundColor: '#0f67a6', flexWrap: 'wrap'}}>
 						<Autocomplete

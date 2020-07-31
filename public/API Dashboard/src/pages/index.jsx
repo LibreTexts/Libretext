@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			panel: 'BatchMonitor', //TODO: DISABLE BEFORE PRODUCTION
+			panel: 'FindAndReplace',
 			devMode: localStorage.getItem('devMode'),
 		}
 	}

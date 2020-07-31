@@ -27,6 +27,7 @@ function LibreTextsReuse() {
 		"Espanol": "espanol",
 		"Geology": "geo",
 		"Humanities": "human",
+		"K12 Education":"k12",
 		"Mathematics": "math",
 		"Medicine": "med",
 		"Physics": "phys",
