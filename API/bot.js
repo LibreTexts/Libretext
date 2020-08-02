@@ -2,14 +2,16 @@ const http = require('http');
 const timestamp = require('console-timestamp');
 const server = http.createServer(handler);
 const io = require('socket.io')(server, {path: '/bot/ws'});
-const nodeStatic = require('node-static');
-const staticFileServer = new nodeStatic.Server('./BotLogs');
+const cheerio = require('cheerio');
+const nodeStatic = require('serve-static');
+const finalhandler = require('finalhandler');
 const fs = require('fs-extra');
 const fetch = require('node-fetch');
 const jsdiff = require('diff');
 require('colors');
 const async = require('async');
 const LibreTexts = require('./reuse.js');
+const tidy = require("tidy-html5").tidy_html5;
 let port = 3006;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
@@ -19,7 +21,7 @@ const now1 = new Date();
 fs.emptyDir('BotLogs/Working');
 fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
-console.log('Restarted ' + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 async function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -29,19 +31,16 @@ async function handler(request, response) {
 	
 	if (url.startsWith('/websocketclient')) {
 		//Serve client socket.io Javascript file
-		staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
-	}
-	else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
-		responseError('Unauthorized', 401);
+		const staticFileServer = nodeStatic('node_modules/socket.io-client/dist', {fallthrough: false});
+		request.url = 'socket.io.js';
+		staticFileServer(request, response, finalhandler(request, response));
+		} else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
+			responseError('Unauthorized', 401);
 	}
 	else if (url.startsWith('/Logs/')) {
-		request.url = request.url.replace('bot/Logs/', '');
-		staticFileServer.serve(request, response, function (error, res) {
-			//on error
-			if (error && error.status === 404) {//404 File not Found
-				staticFileServer.serveFile('../public/404.html', 404, {}, request, response);
-			}
-		});
+		const staticFileServer = nodeStatic('BotLogs', {fallthrough: false});
+		request.url = request.url.replace('Logs/', '');
+		staticFileServer(request, response, finalhandler(request, response));
 	}
 	else {
 		responseError('Action not found', 400);
@@ -65,6 +64,8 @@ io.on('connection', function (socket) {
 	socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
 	socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
 	socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
+	socket.on('convertContainers', (data) => jobHandler('convertContainers', data, socket));
+	socket.on('multipreset', (data) => jobHandler('multipreset', data, socket));
 	
 	socket.on('revert', (data) => revert(data, socket));
 });
@@ -77,7 +78,10 @@ async function jobHandler(jobType, input, socket) {
 			case 'deadLinks':
 			case 'headerFix':
 			case 'foreignImage':
+			case 'convertContainers':
 				return input.root;
+			case 'multipreset':
+				return input.root && input.multi;
 		}
 	}
 	
@@ -88,7 +92,10 @@ async function jobHandler(jobType, input, socket) {
 			case 'deadLinks':
 			case 'headerFix':
 			case 'foreignImage':
+			case 'convertContainers':
 				return {root: input.root};
+			case 'multipreset':
+				return {root: input.root, multi: input.multi};
 		}
 	}
 	
@@ -99,7 +106,9 @@ async function jobHandler(jobType, input, socket) {
 			case 'findReplace':
 			case 'deadLinks':
 			case 'headerFix':
-				return 10;
+			case 'convertContainers':
+			case 'multipreset':
+				return 5;
 		}
 	}
 	
@@ -174,27 +183,57 @@ async function jobHandler(jobType, input, socket) {
 		// content = LibreTexts.decodeHTML(content);
 		// console.log(content);
 		
-		let result, comment;
-		switch (jobType) {
-			case 'findReplace':
-				result = await findReplace(input, content);
-				comment = `[BOT ${ID}] Replaced "${input.find}" with "${input.replace}"`;
-				break;
-			case 'deadLinks':
-				[result, numLinks] = await deadLinks(input, content);
-				comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
-				break;
-			case 'headerFix':
-				result = await headerFix(input, content);
-				comment = `[BOT ${ID}] Fixed Headers`;
-				break;
-			case 'foreignImage':
-				[result, count] = await foreignImage(input, content, path);
-				comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
-				if (input.findOnly && count)
-					result = 'findOnly';
-				break;
+		let result = content, comment, jobs = [{jobType: jobType, ...input}];
+		
+		if (jobType === 'multipreset' && input.multi) {
+			jobs = input.multi.body;
+			jobs = jobs.map((j) => {
+				if (j.find) {
+					j.regex = Boolean(j.find.match(/^\/[\s\S]*\/$/));
+					j.jobType = 'findReplace';
+				}
+				return j;
+				
+			})
 		}
+		
+		for (const job of jobs) {
+			let lastResult = result;
+			switch (job.jobType) {
+				case 'findReplace':
+					result = await findReplace(job, result);
+					comment = `[BOT ${ID}] Replaced "${job.find}" with "${job.replace}"`;
+					break;
+				case 'deadLinks':
+					[result, numLinks] = await deadLinks(job, result);
+					comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
+					break;
+				case 'convertContainers':
+					[result, numContainers] = await convertContainers(job, result);
+					comment = `[BOT ${ID}] Upgraded ${numContainers} Containers`;
+					break;
+				case 'headerFix':
+					result = await headerFix(job, result);
+					comment = `[BOT ${ID}] Fixed Headers`;
+					break;
+				case 'foreignImage':
+					[result, count] = await foreignImage(job, result, path);
+					comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
+					// if (job.findOnly && count)
+					//     result = 'findOnly';
+					break;
+				case 'clean':
+					if (result !== content)
+						result = tidy(result); //{indent:'auto','indent-spaces':4}
+					break;
+			}
+			if (result && result !== lastResult)
+				console.log(comment);
+			result = result || lastResult;
+		}
+		
+		if (jobType === 'multipreset')
+			comment = `[BOT ${ID}] Performed Multipreset ${input.multi.name}`;
 		
 		//Page summaries
 		if (input.summaries) {
@@ -253,7 +292,7 @@ async function jobHandler(jobType, input, socket) {
 		ID: ID,
 		jobType: input.jobType,
 		params: getParameters(),
-		pages: log,
+		pages: log.reverse(),
 	};
 	await logCompleted(result, input.findOnly);
 	if (pageSummaryCount)
@@ -328,6 +367,7 @@ async function revert(input, socket) {
 //Operator Functions
 async function findReplace(input, content) {
 	// content = content.replace(/\\n/g, '\n');
+	
 	let result = content.replaceAll(input.find, input.replace, input);
 	if (result !== content) {
 		/*      const diff = jsdiff.diffWords(content, result);
@@ -390,7 +430,9 @@ async function deadLinks(input, content) {
 			else
 				console.log(`Dead ${response}! ${url}`);
 			
-			result = result.replace(link, link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0]);
+			let replacement = link.match(/(?<=<a(| .*?)>).*?(?=<\/a>)/)[0];
+			replacement = replacement.replace(/https?:\/\//, '');
+			result = result.replace(link, replacement);
 			count++;
 		}
 	});
@@ -502,6 +544,59 @@ async function foreignImage(input, content, path) {
 		}
 	});
 	return [result, count];
+}
+
+async function convertContainers(input, content) {
+	if (!content.includes('boxtitle') && !content.includes('note1'))
+		return [false, 0];
+	
+	const $ = cheerio.load(content);
+	
+	let result = '';
+	let count = 0;
+	
+	let old = ['skills', 'example', 'exercise', 'objectives', 'query', 'note1', 'procedure', 'definition', 'theorem', 'lemma', 'notation', 'proposition'];
+	
+	old.forEach(type => {
+		$(`div.${type}`).each((i, elem) => {
+			count++;
+			let container = $(elem);
+			let oldType = type;
+			
+			let title = container.find('.boxtitle'); //if title exists
+			if (!title || !title.length) {
+				if (oldType === 'note1')
+					oldType = 'note2'
+			}
+			else {
+				title = title[0];
+				title.name = 'legend';
+				title.attribs.class = 'boxlegend';
+			}
+			
+			elem.tagName = `fieldset`;
+			elem.attribs.class = `box${newType(oldType)}`;
+			
+		});
+	});
+	result = $.html();
+	// console.log(result);
+	await fs.writeFile('test.html', result);
+	
+	return [result, count];
+	
+	function newType(type) {
+		switch (type) {
+			case 'skills':
+				return 'objectives';
+			case 'note1':
+				return 'notewithlegend';
+			case 'note2':
+				return 'notewithoutlegend';
+			default:
+				return type;
+		}
+	}
 }
 
 //Helper Logging functions

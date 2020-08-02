@@ -3,26 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="Libretext" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="package.json" />
         <option value="XSLT Stylesheet" />
         <option value="HTML File" />
         <option value="README" />
         <option value="CSS File" />
         <option value="HTTP Request" />
         <option value="JavaScript File" />
+        <option value="package.json" />
       </list>
     </option>
   </component>
@@ -44,19 +47,24 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="KubernetesApiPersistence">
+    <option name="context" value="docker-for-desktop" />
+    <option name="namespace" value="default" />
+  </component>
   <component name="ProjectId" id="1OQcDvr7HzAagSG46ECo9LG0M8i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
@@ -64,8 +72,13 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
+
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Aryan Suri/Customization" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
+
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -76,17 +89,31 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
+
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\Import" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
+
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
@@ -185,11 +212,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.API Dashboard">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
     <configuration name="bot.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="bot.js" working-dir="$PROJECT_DIR$/API">
+      <method v="2" />
+    </configuration>
+    <configuration name="elevate" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="elevate.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="endpoint.js" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="endpoint.js" working-dir="$PROJECT_DIR$/API">
@@ -201,18 +231,17 @@
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
-    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="schedule.js" working-dir="$PROJECT_DIR$/API">
+    <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/API/schedule.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
-          <option name="JSONFilePath" value="" />
+          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="buildCliOptions" value="" />
           <option name="command" value="" />
           <option name="containerName" value="nodeprint" />
           <option name="entrypoint" value="" />
-          <option name="imageTag" value="hagnew-nodeprint" />
           <option name="portBindings">
             <list>
               <DockerPortBindingImpl>
@@ -277,16 +306,6 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/public/Molecules/MoleculeGenerator/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -304,6 +323,7 @@
       <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
+      <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
@@ -312,31 +332,16 @@
       <item itemvalue="npm.Downloads Center" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
-      <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
         <item itemvalue="Node.js.schedule.js" />
-        <item itemvalue="npm.build" />
-        <item itemvalue="Node.js.schedule.js" />
-        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <option name="contentProportion" value="0.513308" />
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1048,314 +1053,118 @@
       <workItem from="1576524964767" duration="599000" />
       <workItem from="1576633719271" duration="1204000" />
       <workItem from="1576995717275" duration="635000" />
-    </task>
-    <task id="LOCAL-00181" summary="Added encodeHTML">
-      <created>1556508210666</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1556508210667</updated>
-    </task>
-    <task id="LOCAL-00182" summary="Added percentage to Dashboard">
-      <created>1556862419516</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1556862419516</updated>
-    </task>
-    <task id="LOCAL-00183" summary="Pages API for root requests">
-      <created>1556953782927</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1556953782929</updated>
-    </task>
-    <task id="LOCAL-00184" summary="Added statsFull">
-      <created>1556954946161</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1556954946161</updated>
-    </task>
-    <task id="LOCAL-00185" summary="Bugfix encodeHTML">
-      <created>1557210187563</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1557210187564</updated>
-    </task>
-    <task id="LOCAL-00186" summary="Contributor copy-source">
-      <created>1557291514334</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1557291514335</updated>
-    </task>
-    <task id="LOCAL-00187" summary="Added regular expressions to Dashboard">
-      <created>1558154711179</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1558154711180</updated>
-    </task>
-    <task id="LOCAL-00188" summary="NodePrint RenderTimeout fix">
-      <created>1558494542831</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1558494542832</updated>
-    </task>
-    <task id="LOCAL-00189" summary="RenderTimeout Resolve">
-      <created>1558495461287</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1558495461287</updated>
-    </task>
-    <task id="LOCAL-00190" summary="Initial Portals">
-      <created>1558591772323</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1558591772324</updated>
-    </task>
-    <task id="LOCAL-00191" summary="Updated README.md">
-      <created>1558592268022</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1558592268023</updated>
-    </task>
-    <task id="LOCAL-00192" summary="findReplace =&gt; findAndReplace">
-      <created>1558924256815</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1558924256816</updated>
-    </task>
-    <task id="LOCAL-00193" summary="Deadlinks timeout">
-      <created>1559280530033</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1559280530037</updated>
-    </task>
-    <task id="LOCAL-00194" summary="Mandeep BatchAccess fix">
-      <created>1559874263301</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1559874263302</updated>
-    </task>
-    <task id="LOCAL-00195" summary="npm update&#10;&#10;Github Security Fixes">
-      <created>1559961588595</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1559961588596</updated>
-    </task>
-    <task id="LOCAL-00196" summary="updated css-loader">
-      <created>1560045023399</created>
-      <option name="number" value="00196" />
-      <option name="presentableId" value="LOCAL-00196" />
-      <option name="project" value="LOCAL" />
-      <updated>1560045023400</updated>
-    </task>
-    <task id="LOCAL-00197" summary="Preset escaping">
-      <created>1560312658510</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1560312658510</updated>
-    </task>
-    <task id="LOCAL-00198" summary="Mandeep margins">
-      <created>1560405494608</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1560405494609</updated>
-    </task>
-    <task id="LOCAL-00199" summary="Foreign Image">
-      <created>1560471493895</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1560471493896</updated>
-    </task>
-    <task id="LOCAL-00200" summary="Front, Middle, Back Matter">
-      <created>1560727631553</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1560727631555</updated>
-    </task>
-    <task id="LOCAL-00201" summary="Portal Config">
-      <created>1560729681926</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1560729681927</updated>
-    </task>
-    <task id="LOCAL-00202" summary="Downloads Center remove Remixer University">
-      <created>1560732437244</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1560732437244</updated>
-    </task>
-    <task id="LOCAL-00203" summary="Bugfix newlines">
-      <created>1560743256657</created>
-      <option name="number" value="00203" />
-      <option name="presentableId" value="LOCAL-00203" />
-      <option name="project" value="LOCAL" />
-      <updated>1560743256658</updated>
-    </task>
-    <task id="LOCAL-00204" summary="FindReplace summaries">
-      <created>1560843782565</created>
-      <option name="number" value="00204" />
-      <option name="presentableId" value="LOCAL-00204" />
-      <option name="project" value="LOCAL" />
-      <updated>1560843782565</updated>
-    </task>
-    <task id="LOCAL-00205" summary="Security Fix MoleculeGenerator">
-      <created>1561273711273</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1561273711275</updated>
-    </task>
-    <task id="LOCAL-00206" summary="Bugfix Remixer cross-origin">
-      <created>1561406914178</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1561406914179</updated>
-    </task>
-    <task id="LOCAL-00207" summary="Spacing fix">
-      <created>1563075794870</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1563075794871</updated>
-    </task>
-    <task id="LOCAL-00208" summary="Bugfix async">
-      <created>1564074794207</created>
-      <option name="number" value="00208" />
-      <option name="presentableId" value="LOCAL-00208" />
-      <option name="project" value="LOCAL" />
-      <updated>1564074794207</updated>
-    </task>
-    <task id="LOCAL-00209" summary="nodePrint A4 and new Covers">
-      <created>1564894139181</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1564894139181</updated>
-    </task>
-    <task id="LOCAL-00210" summary="Fixing Travis.ci">
-      <created>1564902887976</created>
-      <option name="number" value="00210" />
-      <option name="presentableId" value="LOCAL-00210" />
-      <option name="project" value="LOCAL" />
-      <updated>1564902887976</updated>
-    </task>
-    <task id="LOCAL-00211" summary="Updated README.md">
-      <created>1565893345929</created>
-      <option name="number" value="00211" />
-      <option name="presentableId" value="LOCAL-00211" />
-      <option name="project" value="LOCAL" />
-      <updated>1565893345930</updated>
-    </task>
-    <task id="LOCAL-00212" summary="refreshListAdd">
-      <created>1566027234221</created>
-      <option name="number" value="00212" />
-      <option name="presentableId" value="LOCAL-00212" />
-      <option name="project" value="LOCAL" />
-      <updated>1566027234221</updated>
-    </task>
-    <task id="LOCAL-00213" summary="Importer Alpha">
-      <created>1566192889434</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1566192889434</updated>
-    </task>
-    <task id="LOCAL-00214" summary="Importer Beta">
-      <created>1566361853035</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1566361853035</updated>
-    </task>
-    <task id="LOCAL-00215" summary="Initial getSubpagesFull">
-      <created>1566543835848</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1566543835849</updated>
-    </task>
-    <task id="LOCAL-00216" summary="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix">
-      <created>1567238992193</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1567238992194</updated>
-    </task>
-    <task id="LOCAL-00217" summary="Updated Cover Spine logo">
-      <created>1567363903069</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1567363903069</updated>
-    </task>
-    <task id="LOCAL-00218" summary="authenticatedFetch /pages endpoint">
-      <created>1567403066808</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1567403066809</updated>
-    </task>
-    <task id="LOCAL-00219" summary="Reuse.js getKeys">
-      <created>1567463164951</created>
-      <option name="number" value="00219" />
-      <option name="presentableId" value="LOCAL-00219" />
-      <option name="project" value="LOCAL" />
-      <updated>1567463164951</updated>
-    </task>
-    <task id="LOCAL-00220" summary="Nodejs clean on restart">
-      <created>1567729433295</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1567729433295</updated>
-    </task>
-    <task id="LOCAL-00221" summary="Importer Common Cartridge">
-      <created>1567804885236</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1567804885237</updated>
-    </task>
-    <task id="LOCAL-00222" summary="Hack-a-Mole">
-      <created>1567930301339</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1567930301340</updated>
-    </task>
-    <task id="LOCAL-00223" summary="Added Store: to downloads bar">
-      <created>1568009265497</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1568009265498</updated>
-    </task>
-    <task id="LOCAL-00224" summary="Bugfix Importer Padded titles">
-      <created>1568100699034</created>
-      <option name="number" value="00224" />
-      <option name="presentableId" value="LOCAL-00224" />
-      <option name="project" value="LOCAL" />
-      <updated>1568100699034</updated>
+      <workItem from="1578618999896" duration="1177000" />
+      <workItem from="1578620925457" duration="218000" />
+      <workItem from="1578623267877" duration="2291000" />
+      <workItem from="1578776297276" duration="940000" />
+      <workItem from="1579233460238" duration="176000" />
+      <workItem from="1579237506981" duration="527000" />
+      <workItem from="1579375530059" duration="449000" />
+      <workItem from="1579378011866" duration="3407000" />
+      <workItem from="1579472195704" duration="4631000" />
+      <workItem from="1579588634952" duration="8232000" />
+      <workItem from="1579674102952" duration="2065000" />
+      <workItem from="1579916451982" duration="267000" />
+      <workItem from="1579936365726" duration="1165000" />
+      <workItem from="1579979572830" duration="1681000" />
+      <workItem from="1580007104260" duration="618000" />
+      <workItem from="1580007736481" duration="600000" />
+      <workItem from="1580337458886" duration="254000" />
+      <workItem from="1580499285214" duration="609000" />
+      <workItem from="1580502443209" duration="5317000" />
+      <workItem from="1581313481676" duration="1301000" />
+      <workItem from="1581813982494" duration="2578000" />
+      <workItem from="1581834529129" duration="4854000" />
+      <workItem from="1581927349306" duration="252000" />
+      <workItem from="1581964993264" duration="785000" />
+      <workItem from="1582089720682" duration="319000" />
+      <workItem from="1582319381498" duration="265000" />
+      <workItem from="1582351334856" duration="6573000" />
+      <workItem from="1582440495962" duration="514000" />
+      <workItem from="1582481394327" duration="9000" />
+      <workItem from="1582495717284" duration="1061000" />
+      <workItem from="1582582994664" duration="659000" />
+      <workItem from="1582653067448" duration="74000" />
+      <workItem from="1582654179033" duration="336000" />
+      <workItem from="1582654819902" duration="357000" />
+      <workItem from="1583180121567" duration="9941000" />
+      <workItem from="1583361781683" duration="4000" />
+      <workItem from="1583529045962" duration="597000" />
+      <workItem from="1585162066010" duration="36000" />
+      <workItem from="1585162283010" duration="879000" />
+      <workItem from="1585169322969" duration="2206000" />
+      <workItem from="1585259419383" duration="1088000" />
+      <workItem from="1585343669284" duration="553000" />
+      <workItem from="1585345191189" duration="614000" />
+      <workItem from="1585427773494" duration="366000" />
+      <workItem from="1586209738248" duration="2532000" />
+      <workItem from="1586225858499" duration="599000" />
+      <workItem from="1586233656313" duration="77000" />
+      <workItem from="1586234009127" duration="1269000" />
+      <workItem from="1586985923968" duration="81000" />
+      <workItem from="1588132268539" duration="367000" />
+      <workItem from="1589042660905" duration="11184000" />
+      <workItem from="1589071685911" duration="92000" />
+      <workItem from="1589077158423" duration="853000" />
+      <workItem from="1589158208240" duration="833000" />
+      <workItem from="1589159151222" duration="146000" />
+      <workItem from="1590773524153" duration="839000" />
+      <workItem from="1590874833832" duration="1403000" />
+      <workItem from="1592174385258" duration="1907000" />
+      <workItem from="1592193412392" duration="4519000" />
+      <workItem from="1592516645580" duration="4250000" />
+      <workItem from="1592521230118" duration="152000" />
+      <workItem from="1593497669617" duration="916000" />
+      <workItem from="1593652041533" duration="1403000" />
+      <workItem from="1593657454903" duration="5887000" />
+      <workItem from="1593837432426" duration="333000" />
+      <workItem from="1594230030677" duration="1207000" />
+      <workItem from="1594763605597" duration="599000" />
+      <workItem from="1594776539657" duration="187000" />
+      <workItem from="1594776745773" duration="4722000" />
+      <workItem from="1594790180377" duration="21454000" />
+      <workItem from="1595027300111" duration="21177000" />
+      <workItem from="1595058006745" duration="364000" />
+      <workItem from="1595093583296" duration="16685000" />
+      <workItem from="1595119478110" duration="628000" />
+      <workItem from="1595120956474" duration="634000" />
+      <workItem from="1595125272596" duration="210000" />
+      <workItem from="1595126520615" duration="1714000" />
+      <workItem from="1595134454138" duration="17000" />
+      <workItem from="1595134773748" duration="56000" />
+      <workItem from="1595140290533" duration="204000" />
+      <workItem from="1595143861334" duration="188000" />
+      <workItem from="1595187044559" duration="1974000" />
+      <workItem from="1595194563360" duration="622000" />
+      <workItem from="1595196870221" duration="1023000" />
+      <workItem from="1595198064460" duration="604000" />
+      <workItem from="1595206703836" duration="140000" />
+      <workItem from="1595218718451" duration="435000" />
+      <workItem from="1595220061641" duration="418000" />
+      <workItem from="1595263552363" duration="851000" />
+      <workItem from="1595267623015" duration="424000" />
+      <workItem from="1595303026534" duration="2020000" />
+      <workItem from="1595357221594" duration="1440000" />
+      <workItem from="1595371681869" duration="2741000" />
+      <workItem from="1595393067421" duration="3420000" />
+      <workItem from="1595447418188" duration="672000" />
+      <workItem from="1595457838981" duration="669000" />
+      <workItem from="1595460904331" duration="105000" />
+      <workItem from="1595525020185" duration="46000" />
+      <workItem from="1595537414387" duration="2475000" />
+      <workItem from="1595552160006" duration="4622000" />
+      <workItem from="1595711949812" duration="320000" />
+      <workItem from="1595720557153" duration="2346000" />
+      <workItem from="1595874507625" duration="153000" />
+      <workItem from="1595874680890" duration="424000" />
+      <workItem from="1595876269633" duration="584000" />
+      <workItem from="1595973123686" duration="18000" />
+      <workItem from="1595973164264" duration="39000" />
+      <workItem from="1595985428105" duration="1302000" />
+      <workItem from="1596052522053" duration="6185000" />
+      <workItem from="1596130076337" duration="2047000" />
+      <workItem from="1596170919439" duration="675000" />
+      <workItem from="1596171701886" duration="1462000" />
     </task>
     <task id="LOCAL-00225" summary="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!">
       <created>1568535324280</created>
@@ -1392,20 +1201,326 @@
       <option name="project" value="LOCAL" />
       <updated>1571854546919</updated>
     </task>
-    <option name="localTasksCounter" value="230" />
+    <task id="LOCAL-00230" summary="Reenabled alt-texts for Importer">
+      <created>1579233530952</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1579233530952</updated>
+    </task>
+    <task id="LOCAL-00231" summary="Installed Beeline kill switch">
+      <created>1579237961643</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1579237961644</updated>
+    </task>
+    <task id="LOCAL-00232" summary="Added GetCitationInformation for Nik">
+      <created>1579498109393</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1579498109394</updated>
+    </task>
+    <task id="LOCAL-00233" summary="Made transcluded icon on all transcluded:yes pages">
+      <created>1579591237229</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1579591237230</updated>
+    </task>
+    <task id="LOCAL-00234" summary="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers">
+      <created>1579937519672</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1579937519672</updated>
+    </task>
+    <task id="LOCAL-00235" summary="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables.">
+      <created>1581375682723</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1581375682723</updated>
+    </task>
+    <task id="LOCAL-00236" summary="Updated Forker to user authenticatedFetch">
+      <created>1581815127393</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1581815127395</updated>
+    </task>
+    <task id="LOCAL-00237" summary="Refreshed Importer bundle.js">
+      <created>1581927586329</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1581927586329</updated>
+    </task>
+    <task id="LOCAL-00238" summary="Added Toggle Switch for New&lt;==&gt;Edit Remix">
+      <created>1582015107792</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1582015107792</updated>
+    </task>
+    <task id="LOCAL-00239" summary="Fixed createSandbox userID">
+      <created>1582496732342</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1582496732344</updated>
+    </task>
+    <task id="LOCAL-00240" summary="Fixed foreignImage">
+      <created>1583004097245</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1583004097246</updated>
+    </task>
+    <task id="LOCAL-00241" summary="Added cleanPath to elevate.js">
+      <created>1583191548383</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1583191548384</updated>
+    </task>
+    <task id="LOCAL-00242" summary="Implemented webwork.js import">
+      <created>1583260175092</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1583260175092</updated>
+    </task>
+    <task id="LOCAL-00243" summary="sendAPI returns response">
+      <created>1583558695856</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1583558695859</updated>
+    </task>
+    <task id="LOCAL-00244" summary="bundled dynamicIndexMaker.js&#10;&#10;-wrapped dynamicIndexMaker.js in self-invoking function&#10;-changed var to let/const&#10;-formatted file&#10;-still has type coercion issues">
+      <created>1585243918420</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1585243918420</updated>
+    </task>
+    <task id="LOCAL-00245" summary="Bugfix dynamicIndexMaker.js non-chem libraries">
+      <created>1585258801896</created>
+      <option name="number" value="00245" />
+      <option name="presentableId" value="LOCAL-00245" />
+      <option name="project" value="LOCAL" />
+      <updated>1585258801896</updated>
+    </task>
+    <task id="LOCAL-00246" summary="Bugfix dynamicIndexMaker.js authentication">
+      <created>1585260235337</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1585260235337</updated>
+    </task>
+    <task id="LOCAL-00247" summary="Updated licenses.js">
+      <created>1585333709699</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1585333709699</updated>
+    </task>
+    <task id="LOCAL-00248" summary="Developer menu buildcite()">
+      <created>1586127016421</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1586127016422</updated>
+    </task>
+    <task id="LOCAL-00249" summary="author bar multi-library">
+      <created>1586212627897</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1586212627897</updated>
+    </task>
+    <task id="LOCAL-00250" summary="Updated dark mode">
+      <created>1586215253028</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1586215253028</updated>
+    </task>
+    <task id="LOCAL-00251" summary="Starting API Dashboard Multi presets">
+      <created>1589054442157</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1589054442157</updated>
+    </task>
+    <task id="LOCAL-00252" summary="Implemented API Dashboard Multi presets">
+      <created>1589058883028</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1589058883028</updated>
+    </task>
+    <task id="LOCAL-00253" summary="Fixed bot Regex">
+      <created>1589078000224</created>
+      <option name="number" value="00253" />
+      <option name="presentableId" value="LOCAL-00253" />
+      <option name="project" value="LOCAL" />
+      <updated>1589078000225</updated>
+    </task>
+    <task id="LOCAL-00254" summary="Bugfix importer &lt;img&gt;">
+      <created>1590774350817</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1590774350818</updated>
+    </task>
+    <task id="LOCAL-00255" summary="Fixed copyNavigation.js formatting">
+      <created>1591766600387</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1591766600387</updated>
+    </task>
+    <task id="LOCAL-00256" summary="Replaced insecure node-static for API">
+      <created>1592197182544</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1592197182545</updated>
+    </task>
+    <task id="LOCAL-00257" summary="Replaced insecure node-static for Front">
+      <created>1592197312985</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1592197312985</updated>
+    </task>
+    <task id="LOCAL-00258" summary="Allow forking of sections">
+      <created>1592520727131</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1592520727132</updated>
+    </task>
+    <task id="LOCAL-00259" summary="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON">
+      <created>1592521313815</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1592521313815</updated>
+    </task>
+    <task id="LOCAL-00260" summary="Added HEAD to /ping">
+      <created>1593837769937</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1593837769937</updated>
+    </task>
+    <task id="LOCAL-00261" summary="Fixed cross-subdomain cleanPath">
+      <created>1593838618239</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1593838618239</updated>
+    </task>
+    <task id="LOCAL-00262" summary="Initial BatchMonitor.jsx GUI">
+      <created>1595057643156</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1595057643157</updated>
+    </task>
+    <task id="LOCAL-00263" summary="Updated Sandboxes for Admin">
+      <created>1595197391678</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197391679</updated>
+    </task>
+    <task id="LOCAL-00264" summary="Updated cleanPath to be less aggressive">
+      <created>1595197860410</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197860410</updated>
+    </task>
+    <task id="LOCAL-00265" summary="Hooked up BatchMonitor.jsx to nodePrint.js">
+      <created>1595197890270</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1595197890270</updated>
+    </task>
+    <task id="LOCAL-00266" summary="Added pageNumber to Query">
+      <created>1595264170807</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1595264170807</updated>
+    </task>
+    <task id="LOCAL-00267" summary="Import IMAthAS">
+      <created>1595303484519</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303484520</updated>
+    </task>
+    <task id="LOCAL-00268" summary="Removed deprecated/incomplete functions">
+      <created>1595303712444</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303712444</updated>
+    </task>
+    <task id="LOCAL-00269" summary="Updated cleanPath whitelist">
+      <created>1595303738198</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1595303738198</updated>
+    </task>
+    <task id="LOCAL-00270" summary="Reduced PDFMerger.js memory usage">
+      <created>1595555842261</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1595555842262</updated>
+    </task>
+    <task id="LOCAL-00271" summary="Forker changed from Cross-Library to LibreBot">
+      <created>1595561784519</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1595561784519</updated>
+    </task>
+    <task id="LOCAL-00272" summary="seatedCheck for sendAPI">
+      <created>1595712118523</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1595712118523</updated>
+    </task>
+    <task id="LOCAL-00273" summary=" Updated batchPrint.js with Chapters">
+      <created>1596171586243</created>
+      <option name="number" value="00273" />
+      <option name="presentableId" value="LOCAL-00273" />
+      <option name="project" value="LOCAL" />
+      <updated>1596171586244</updated>
+    </task>
+    <option name="localTasksCounter" value="274" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -1424,6 +1539,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -1448,134 +1564,194 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Security Fix MoleculeGenerator" />
-    <MESSAGE value="Bugfix Remixer cross-origin" />
-    <MESSAGE value="Spacing fix" />
-    <MESSAGE value="Bugfix async" />
-    <MESSAGE value="nodePrint A4 and new Covers" />
-    <MESSAGE value="Fixing Travis.ci" />
-    <MESSAGE value="Updated README.md" />
-    <MESSAGE value="refreshListAdd" />
-    <MESSAGE value="Importer Alpha" />
-    <MESSAGE value="Importer Beta" />
-    <MESSAGE value="Initial getSubpagesFull" />
-    <MESSAGE value="nodePrint performance update&#10;&#10;TODO: Mathjax bugfix" />
-    <MESSAGE value="Updated Cover Spine logo" />
-    <MESSAGE value="authenticatedFetch /pages endpoint" />
-    <MESSAGE value="Reuse.js getKeys" />
-    <MESSAGE value="Nodejs clean on restart" />
-    <MESSAGE value="Importer Common Cartridge" />
-    <MESSAGE value="Hack-a-Mole" />
-    <MESSAGE value="Added Store: to downloads bar" />
-    <MESSAGE value="Bugfix Importer Padded titles" />
-    <MESSAGE value="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!" />
-    <MESSAGE value="Bugfix for LibreTexts that are exactly 24 pages." />
-    <MESSAGE value="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC." />
-    <MESSAGE value="Added Excel to LibreMap into Importer" />
-    <MESSAGE value="Beeline Complex integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beeline Complex integration" />
+    <MESSAGE value="author bar multi-library" />
+    <MESSAGE value="Updated dark mode" />
+    <MESSAGE value="Starting API Dashboard Multi presets" />
+    <MESSAGE value="Implemented API Dashboard Multi presets" />
+    <MESSAGE value="Fixed bot Regex" />
+    <MESSAGE value="Bugfix importer &lt;img&gt;" />
+    <MESSAGE value="Fixed copyNavigation.js formatting" />
+    <MESSAGE value="Replaced insecure node-static for API" />
+    <MESSAGE value="Replaced insecure node-static for Front" />
+    <MESSAGE value="Allow forking of sections" />
+    <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
+    <MESSAGE value="Added HEAD to /ping" />
+    <MESSAGE value="Fixed cross-subdomain cleanPath" />
+    <MESSAGE value="Initial BatchMonitor.jsx GUI" />
+    <MESSAGE value="Updated Sandboxes for Admin" />
+    <MESSAGE value="Updated cleanPath to be less aggressive" />
+    <MESSAGE value="Hooked up BatchMonitor.jsx to nodePrint.js" />
+    <MESSAGE value="Added pageNumber to Query" />
+    <MESSAGE value="Import IMAthAS" />
+    <MESSAGE value="Removed deprecated/incomplete functions" />
+    <MESSAGE value="Updated cleanPath whitelist" />
+    <MESSAGE value="Reduced PDFMerger.js memory usage" />
+    <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
+    <MESSAGE value="seatedCheck for sendAPI" />
+    <MESSAGE value=" Updated batchPrint.js with Chapters" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Updated batchPrint.js with Chapters" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="446" y="120" key="#Deployment" timestamp="1578183386016">
+
+    <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
+
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="120" key="#Deployment/0.0.1707.920/-1440.0.1440.860@0.0.1707.920" timestamp="1578183386016" />
-    <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2" timestamp="1576995346989">
+    <state x="446" y="120" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933732591" />
+    <state x="-1525" y="90" key="#Inspections" timestamp="1595998124965">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1525" y="90" key="#Inspections/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595998124965" />
+    <state x="-1404" y="36" key="#JavaScript" timestamp="1590875834403">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1404" y="36" key="#JavaScript/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1590875834403" />
+    <state x="-1333" y="51" key="#Menus_and_Toolbars" timestamp="1596173889071">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595038356386">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="165" y="0" width="1418" height="920" key="CommitChangelistDialog2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576995346989" />
-    <state x="164" y="74" key="DiffContextDialog" timestamp="1576190040098">
+    <state x="309" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595038356386" />
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595037543255">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="164" y="74" key="DiffContextDialog/0.0.1707.920@0.0.1707.920" timestamp="1576190040098" />
-    <state width="622" height="732" key="GridCell.Tab.0.bottom" timestamp="1576996352924">
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595037543255" />
+    <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1592520407991">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.0.bottom/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352924" />
-    <state width="1663" height="65" key="GridCell.Tab.0.bottom/-1440.0.1440.840/0.0.1707.920@0.0.1707.920" timestamp="1576479893967" />
-    <state width="639" height="732" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="271" height="635" key="GridCell.Tab.0.bottom/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503898" />
-    <state width="622" height="732" key="GridCell.Tab.0.center" timestamp="1576996352924">
+    <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1596171584514">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171584514" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561783825" />
+    <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.0.center/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352924" />
-    <state width="1663" height="65" key="GridCell.Tab.0.center/-1440.0.1440.840/0.0.1707.920@0.0.1707.920" timestamp="1576479893967" />
-    <state width="639" height="732" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1576222024349" />
-    <state width="271" height="635" key="GridCell.Tab.0.center/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503897" />
-    <state width="622" height="732" key="GridCell.Tab.0.left" timestamp="1576996352923">
+    <state x="164" y="73" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838628410" />
+    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1595194585696">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.0.left/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352923" />
-    <state width="1663" height="65" key="GridCell.Tab.0.left/-1440.0.1440.840/0.0.1707.920@0.0.1707.920" timestamp="1576479893966" />
-    <state width="639" height="732" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1576222024349" />
-    <state width="271" height="635" key="GridCell.Tab.0.left/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503896" />
-    <state width="622" height="732" key="GridCell.Tab.0.right" timestamp="1576996352924">
+    <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
+    <state width="294" height="649" key="GridCell.Tab.0.bottom" timestamp="1595876853185">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="294" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
+    <state width="559" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="294" height="649" key="GridCell.Tab.0.center" timestamp="1595876853185">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="294" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
+    <state width="559" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="294" height="649" key="GridCell.Tab.0.left" timestamp="1595876853185">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="294" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
+    <state width="559" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628013" />
+    <state width="294" height="649" key="GridCell.Tab.0.right" timestamp="1595876853185">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="294" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
+    <state width="559" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.bottom" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.0.right/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352924" />
-    <state width="1663" height="65" key="GridCell.Tab.0.right/-1440.0.1440.840/0.0.1707.920@0.0.1707.920" timestamp="1576479893967" />
-    <state width="639" height="732" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1576222024349" />
-    <state width="271" height="635" key="GridCell.Tab.0.right/3520.-10.912.1343/1920.0.1600.860/0.0.1536.824@0.0.1536.824" timestamp="1575670503898" />
-    <state width="622" height="732" key="GridCell.Tab.1.bottom" timestamp="1576996352703">
+    <state width="597" height="476" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.center" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.1.bottom/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352703" />
-    <state width="639" height="732" key="GridCell.Tab.1.bottom/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.1.center" timestamp="1576996352703">
+    <state width="597" height="476" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.left" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.1.center/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352703" />
-    <state width="639" height="732" key="GridCell.Tab.1.center/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.1.left" timestamp="1576996352702">
+    <state width="597" height="476" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.1.right" timestamp="1595561628014">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.1.left/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352702" />
-    <state width="639" height="732" key="GridCell.Tab.1.left/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.1.right" timestamp="1576996352703">
+    <state width="597" height="476" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
+    <state width="559" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="559" height="746" key="GridCell.Tab.2.bottom" timestamp="1595561628015">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.1.right/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352703" />
-    <state width="639" height="732" key="GridCell.Tab.1.right/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.2.bottom" timestamp="1576996352704">
+    <state width="597" height="476" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.center" timestamp="1595561628015">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.2.bottom/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352704" />
-    <state width="639" height="732" key="GridCell.Tab.2.bottom/0.0.1707.920@0.0.1707.920" timestamp="1576222024351" />
-    <state width="622" height="732" key="GridCell.Tab.2.center" timestamp="1576996352703">
+    <state width="597" height="476" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.left" timestamp="1595561628015">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.2.center/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352703" />
-    <state width="639" height="732" key="GridCell.Tab.2.center/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.2.left" timestamp="1576996352703">
+    <state width="597" height="476" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="559" height="746" key="GridCell.Tab.2.right" timestamp="1595561628015">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.2.left/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352703" />
-    <state width="639" height="732" key="GridCell.Tab.2.left/0.0.1707.920@0.0.1707.920" timestamp="1576222024350" />
-    <state width="622" height="732" key="GridCell.Tab.2.right" timestamp="1576996352704">
+    <state width="597" height="476" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
+    <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state x="-1350" y="53" key="RollbackChangesDialog" timestamp="1596171211473">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171211473" />
+    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
+    <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor" timestamp="1596171181463">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
+    <state x="308" y="60" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594689589752" />
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1596171600882">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171600882" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561786167" />
+    <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="622" height="732" key="GridCell.Tab.2.right/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576996352704" />
-    <state width="639" height="732" key="GridCell.Tab.2.right/0.0.1707.920@0.0.1707.920" timestamp="1576222024351" />
-    <state x="446" y="189" key="Vcs.Push.Dialog.v2" timestamp="1576190041465">
+    <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561233825" />
+    <state x="-1834" y="-14" width="1359" height="665" maximized="true" key="dock-window-1" timestamp="1594790696178">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1834" y="-14" width="1359" height="665" maximized="true" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594790696178" />
+    <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2" timestamp="1594792219967">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594792219967" />
+    <state x="739" y="112" width="448" height="699" key="ftp.server.browser" timestamp="1594933728997">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="446" y="189" key="Vcs.Push.Dialog.v2/0.0.1707.920@0.0.1707.920" timestamp="1576190041465" />
-    <state width="1550" height="468" key="XDebugger.FullValuePopup" timestamp="1576993823446">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="1550" height="468" key="XDebugger.FullValuePopup/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576993823446" />
-    <state x="520" y="75" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576220981359">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="520" y="75" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1707.920@0.0.1707.920" timestamp="1576220981359" />
-    <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1576995169755">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="413" y="115" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1024.0.1024.708/0.0.1707.920@0.0.1707.920" timestamp="1576995169755" />
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog" timestamp="1576043253797">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="620" y="92" key="git4idea.branch.GitSmartOperationDialog/0.0.1707.920@0.0.1707.920" timestamp="1576043253797" />
+    <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933728997" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public/Remixer/src/components/PublishPanel.jsx</url>
+          <line>133</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/API/import.js</url>
+          <line>704</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
+          <line>1143</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties uncaughtOnly="true" />
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

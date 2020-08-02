@@ -1,5 +1,7 @@
 const http = require('http');
-const nodeStatic = require('node-static');
+const nodeStatic = require('serve-static');
+const staticFileServer = nodeStatic('analyticsSecure', {fallthrough: false});
+const finalhandler = require('finalhandler');
 const timestamp = require("console-timestamp");
 const fs = require("fs-extra");
 const server = http.createServer(handler);
@@ -11,10 +13,9 @@ let port = 3004;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
 }
-const staticFileServer = new nodeStatic.Server('./public');
 server.listen(port);
 const now1 = new Date();
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -79,7 +80,7 @@ function handler(request, response) {
 			});
 			response.end();
 		}
-		else if (request.method === "GET") {
+		else if (["GET", "HEAD"].includes(request.method)) {
 			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
 				"Access-Control-Allow-Origin": request.headers.origin || null,
 				"Access-Control-Allow-Methods": "GET",
@@ -135,7 +136,6 @@ function handler(request, response) {
 		response.end();
 	}
 	
-	
 	async function secureAccess(courseName) {
 		await fs.ensureDir(`./analyticsData/ZIP/${courseName}`);
 		await fs.emptyDir(`./analyticsData/ZIP/${courseName}/RAW`);
@@ -178,75 +178,79 @@ function handler(request, response) {
 		console.log(`Beginning ${courseName}`);
 		//Reprocessing raw data
 		let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
-		console.time('Reprocessing');
-		for (let i = 0; i < months.length; i++) {
-			let month = months[i];
-			if (month.isDirectory()) {
-				await fs.ensureDir(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/`);
-				await fs.ensureDir(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/`);
-				//process each month
-				let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW/${month.name}`, {withFileTypes: true});
-				for (let j = 0; j < students.length; j++) {
-					let student = students[j];
-					if (student.isFile()) {
-						student = student.name;
-						const fileRoot = student.replace('.txt', '');
-						let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
-						lines = lines.toString().replace(/\n$/, "").split('\n');
-						lines = lines.map((line) => {
-							try {
-								let result = JSON.parse(line);
-								return result;
-							} catch (e) {
-								console.error(`Invalid: ${line}`);
-								return undefined;
-							}
-						});
-						let result = lines;
-						let resultCSV = 'courseName, library, id, platform, verb, pageURL, pageID, timestamp, pageSession, timeMe, [type or percent]';
-						
-						//CSV Handling
-						for (let k = 0; k < result.length; k++) {
-							let line = lines[k];
-							if (!line) {
-								continue;
-							}
-							resultCSV += `\n${line.actor.courseName}##${line.actor.library}##${line.actor.id}##${line.actor.platform ? line.actor.platform.description : 'undefined'}##${line.verb}##${line.object.page}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
-							switch (line.verb) {
-								case 'left':
-									resultCSV += `##${line.type}`;
-									break;
-								case 'read':
-									resultCSV += `##${line.result.percent}`;
-									break;
-								case 'answerReveal':
-									resultCSV += `##${line.result.answer}`;
-									break;
-							}
+		
+		const stats = await fs.stat(`./analyticsSecure/secureAccess-${courseName}.zip`);
+		if (Date.now() - stats.mtime < 10 * 60000) { //10 minute cache
+			console.log('Found in cache');
+		}
+		else {
+			console.time('Reprocessing');
+			for (let i = 0; i < months.length; i++) {
+				let month = months[i];
+				if (month.isDirectory()) {
+					await fs.ensureDir(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/`);
+					await fs.ensureDir(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/`);
+					//process each month
+					let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW/${month.name}`, {withFileTypes: true});
+					for (let j = 0; j < students.length; j++) {
+						let student = students[j];
+						if (student.isFile()) {
+							student = student.name;
+							const fileRoot = student.replace('.txt', '');
+							let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
+							lines = lines.toString().replace(/\n$/, "").split('\n');
+							lines = lines.map((line) => {
+								try {
+									let result = JSON.parse(line);
+									return result;
+								} catch (e) {
+									console.error(`Invalid: ${line}`);
+									return undefined;
+								}
+							});
+							let result = lines;
+							let resultCSV = 'courseName, library, id, platform, verb, pageURL, pageID, timestamp, pageSession, timeMe, [type or percent]';
 							
+							//CSV Handling
+							for (let k = 0; k < result.length; k++) {
+								let line = lines[k];
+								if (!line) {
+									continue;
+								}
+								resultCSV += `\n${line.actor.courseName}##${line.actor.library}##${line.actor.id}##${line.actor.platform ? line.actor.platform.description : 'undefined'}##${line.verb}##${line.object.page}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
+								switch (line.verb) {
+									case 'left':
+										resultCSV += `##${line.type}`;
+										break;
+									case 'read':
+										resultCSV += `##${line.result.percent}`;
+										break;
+									case 'answerReveal':
+										resultCSV += `##${line.result.answer}`;
+										break;
+								}
+								
+							}
+							resultCSV = resultCSV.replace(/,/g, '%2C');
+							resultCSV = resultCSV.replace(/##/g, ',');
+							
+							await Promise.all([fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t")),
+								fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV)]);
 						}
-						resultCSV = resultCSV.replace(/,/g,'%2C');
-						resultCSV = resultCSV.replace(/##/g,',');
-						
-						await Promise.all([fs.writeFile(`./analyticsData/ZIP/${courseName}/JSON/${month.name}/${fileRoot}.json`, JSON.stringify(result, null, "\t")),
-						fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${month.name}/${fileRoot}.csv`, resultCSV)]);
 					}
 				}
 			}
+			console.timeEnd('Reprocessing');
+			console.time('Compressing');
+			await fs.ensureDir('./analyticsSecure');
+			zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./analyticsSecure/secureAccess-${courseName}.zip`);
+			console.timeEnd('Compressing');
 		}
-		console.timeEnd('Reprocessing');
 		
-		
-		console.time('Compressing');
-		await fs.ensureDir('./analyticsSecure');
-		zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./analyticsSecure/secureAccess-${courseName}.zip`);
-		console.timeEnd('Compressing');
 		console.log(`Secure Access ${courseName} ${ip}`);
 		
-		staticFileServer.serveFile(`../analyticsSecure/secureAccess-${courseName}.zip`, 200, request.headers.host.includes(".miniland1333.com") ? {
-			"Access-Control-Allow-Origin": request.headers.origin || null,
-			"Access-Control-Allow-Methods": "PUT"
-		} : {}, request, response);
+		request.url = `secureAccess-${courseName}.zip`;
+		staticFileServer(request, response, finalhandler(request, response));
 	}
 	
 }

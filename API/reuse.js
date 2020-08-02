@@ -18,6 +18,7 @@ const libraries = {
 	'Espanol': 'espanol',
 	'Geology': 'geo',
 	'Humanities': 'human',
+	'K12 Education':'k12',
 	'Mathematics': 'math',
 	'Medicine': 'med',
 	'Physics': 'phys',
@@ -36,6 +37,8 @@ let LibreTextsFunctions = {
 	addLinks: addLinks,
 	extractSubdomain: extractSubdomain,
 	parseURL: parseURL,
+	cleanPath: cleanPath,
+	getAPI: getAPI,
 	libraries: libraries,
 };
 
@@ -43,16 +46,24 @@ let LibreTextsFunctions = {
 //Function Zone
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
 	let isNumber;
-	if (!isNaN(path)) {
-		path = parseInt(path);
-		isNumber = true;
+	path = String(path);
+	
+	let arbitraryPage = !api && !subdomain && path.startsWith('https://');
+	if (arbitraryPage) {
+		[subdomain] = parseURL(path);
 	}
-	if (path === 'home') {
-		isNumber = true;
-	}
-	if (!subdomain) {
-		console.error(`Invalid subdomain ${subdomain}`);
-		return false;
+	else {
+		if (!isNaN(path)) {
+			path = parseInt(path);
+			isNumber = true;
+		}
+		if (path === 'home') {
+			isNumber = true;
+		}
+		if (!subdomain) {
+			console.error(`Invalid subdomain ${subdomain}`);
+			return false;
+		}
 	}
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
@@ -62,7 +73,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			'x-deki-token': authenBrowser[subdomain]
 			
 		}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	else {
 		const user = "=" + username;
@@ -74,7 +88,11 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 		let token = `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 		
 		options = optionsMerge({'x-deki-token': token}, options);
-		return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+		
+		if (arbitraryPage)
+			return await fetch(path, options);
+		else
+			return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
 	}
 	
 	function optionsMerge(headers, options) {
@@ -136,9 +154,9 @@ async function getSubpages(rootURL, username, options = {}) {
 		getDetails: options.getDetails,
 		getContents: options.getContents
 	});
-	let pages = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
+	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, username);
 	pages = await pages.json();
-	
+
 	let contentsArray = [{url: rootURL, id: info['@id'], contents: contents}];
 	let flatArray = [rootURL];
 	let numpages = setInterval(() => {
@@ -176,7 +194,7 @@ async function getSubpages(rootURL, username, options = {}) {
 			let children = hasChildren ? undefined : [];
 			let {contents, properties, tags} = await getPage(path, username, options);
 			if (hasChildren) { //recurse down
-				children = await authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain, username);
+				children = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, username);
 				children = await children.json();
 				children = await subpageCallback(children, !tags.includes('coverpage:yes') && options.delay ? {
 					delay: options.delay,
@@ -316,12 +334,102 @@ function extractSubdomain(url) {
 }
 
 function parseURL(url) {
-	if (url.match(/https?:\/\/.*?\.libretexts\.org/)) {
+	if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
 	}
 	else {
 		return [];
 	}
+}
+
+function cleanPath(path) {
+	path = decodeURIComponent(decodeURIComponent((path)));
+	path = path.replace('?title=', '');
+	path = path.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	path = path.replace(/[^A-Za-z0-9()_ :%\-.'\/]/g, '');
+	return path;
+}
+
+//fills in missing API data for a page. Username optional
+async function getAPI(page, getContents, username = undefined) {
+	if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
+		return page;
+	else if (typeof page === 'string')
+		page = {
+			url: page
+		};
+	page.url = page.url.replace('?contentOnly', '');
+	let [subdomain, path] = parseURL(page.url);
+	// console.log(page.url);
+	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain, username);
+	// page.response = response;
+	if (response.ok) {
+		response = await response.json();
+		let {properties, tags, files} = response;
+		if (properties['@count'] !== '0' && properties.property) {
+			properties = properties.property.length ? properties.property : [properties.property]
+			properties = properties.map((prop) => {
+				if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
+				else return prop
+			});
+		}
+		else {
+			properties = [];
+		}
+		if (tags.tag) {
+			tags = tags.tag.length ? tags.tag : [tags.tag];
+		}
+		else {
+			tags = []
+		}
+		if (files.file) {
+			files = files.file.length ? files.file : [files.file];
+			files = files.map((file) => {
+				return {
+					'id': file['@id'],
+					'revision': file['@revision'],
+					'href': file['@href'],
+					'contents': file['contents'],
+					'created': file['date.created'],
+					'filename': file['filename']
+				}
+			});
+		}
+		else {
+			files = []
+		}
+		tags = tags.map((elem) => elem.title);
+		page.id = parseInt(response['@id']);
+		page.title = page.title || response.title;
+		page.tags = page.tags || tags;
+		page.properties = page.properties || properties;
+		page.subdomain = subdomain;
+		page.files = page.files || files;
+		page.path = response.path['#text'];
+		page.modified = new Date(response['date.modified']);
+		page.content = response.content;
+		if (response['page.parent'])
+			page.parentID = parseInt(response['page.parent']['@id']);
+		if (response.security && response.security['permissions.effective']) {
+			let permissions = response.security['permissions.effective'].operations['#text'];
+			if (permissions.includes('CHANGEPERMISSIONS'))
+				page.security = 'Editor';
+			else if (permissions.includes('UPDATE'))
+				page.security = 'Author';
+			else if (permissions.includes('READ'))
+				page.security = 'Viewer';
+		}
+		
+	}
+	else {
+		let error = await response.json();
+		// console.error(`Can't get ${page.url}`);
+		page.subdomain = subdomain;
+		page.path = path;
+		page.modified = 'restricted';
+		page.error = error;
+	}
+	return page;
 }
 
 module.exports = LibreTextsFunctions;

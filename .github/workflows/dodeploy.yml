@@ -1,0 +1,23 @@
+name: Sync to DigitalOcean Spaces
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Sending to DigitalOcean
+      uses: LibreTexts/do-space-sync-action@master
+      with:
+        args: --acl public-read
+      env:
+        SOURCE_DIR: './public'
+        DEST_DIR: 'github/LibreTextsMain'
+        SPACE_NAME: ${{ secrets.Spaces_Name }}
+        SPACE_REGION: ${{ secrets.Spaces_Region}}
+        SPACE_ACCESS_KEY_ID: ${{ secrets.Spaces_Key }}
+        SPACE_SECRET_ACCESS_KEY: ${{ secrets.Spaces_Secret }}
