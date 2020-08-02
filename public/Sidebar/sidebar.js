@@ -34,3 +34,17 @@ $("#b_button").hover( function(){
    $('#b_title').fadeOut(200);
 
 });
+
+function frontpage(){
+   var x = $('.mt-icon-next-article').closest('a').attr('href');
+        console.log(x);
+  
+  this.location.href = x;
+}
+function backpage(){
+  
+  var x = $('.mt-icon-previous-article').closest('a').attr('href');
+        console.log(x);
+  
+  this.location.href = x;
+}
