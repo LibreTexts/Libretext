@@ -9,7 +9,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -46,10 +46,10 @@ function handler(request, response) {
 					let path = url.split("/").slice(3).join("/");
 					let {content, tags, properties} = await getContent();
 					
-					let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
+					let otherArray = Object.values(LibreTexts.libraries);
 					otherArray.splice(otherArray.indexOf(Ssubdomain), 1);
 					
-					//Propagatate
+					//Propagate
 					let promiseArray = [];
 					for (let i = 0; i < otherArray.length; i++) {
 						promiseArray.push(propagatePage(otherArray[i], path));

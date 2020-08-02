@@ -25,7 +25,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 server.listen(port);
 const now1 = new Date();
 // fs.emptyDir('ImportFiles');
-console.log("Restarted " + timestamp('MM/DD hh:mm', now1));
+console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 
 function handler(request, response) {
@@ -37,86 +37,6 @@ function handler(request, response) {
 	if (url.startsWith('/websocketclient')) {
 		//Serve client socket.io Javascript file
 		staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
-	}
-	else if (url === "/import") {
-		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
-			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " application/json",
-				});
-				response.end();
-			}
-			else if (request.method === "POST") {
-				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " application/json",
-				} : {"Content-Type": " application/json"});
-				let body = [];
-				request.on('data', (chunk) => {
-					body.push(chunk);
-				}).on('end', async () => {
-					body = Buffer.concat(body).toString();
-					
-					let input = JSON.parse(body);
-					if (!(input.url && input.url.match(/^(http|https):\/\//))) {
-						reportMessage('This source is not valid, please check your URL', true);
-						response.end();
-					}
-					else {
-						const subdomain = request.headers.origin.split("/")[2].split(".")[0];
-						input.url = input.url.replace(/\/$/, "");
-						console.log(input.url);
-						processEPUB(input.url, subdomain, input.user).then();
-					}
-				});
-			}
-			else {
-				responseError(request.method + " Not Acceptable", 406)
-			}
-		}
-	}
-	else if (url.startsWith("/pretext")) {
-		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
-			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " application/json",
-				});
-				response.end();
-			}
-			else if (request.method === "POST") {
-				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " application/json",
-				} : {"Content-Type": " application/json"});
-				let body = [];
-				request.on('data', (chunk) => {
-					body.push(chunk);
-				}).on('end', async () => {
-					body = Buffer.concat(body).toString();
-					
-					let input = JSON.parse(body);
-					if (!(input.url && input.url.match(/^(http|https):\/\//))) {
-						reportMessage('This source is not valid, please check your URL', true);
-						response.end();
-					}
-					else {
-						const subdomain = request.headers.origin.split("/")[2].split(".")[0];
-						input.url = input.url.replace(/\/$/, "");
-						console.log(input.url);
-						processPretext(input.url, subdomain, input.user).then();
-					}
-				});
-			}
-			else {
-				responseError(request.method + " Not Acceptable", 406)
-			}
-		}
 	}
 	else {
 		responseError('Action not found', 400);
@@ -142,366 +62,6 @@ function handler(request, response) {
 		};
 		response.write(JSON.stringify(json) + "\r\n");
 	}
-	
-	async function processEPUB(target, subdomain, user) {
-		const start = performance.now();
-		reportMessage('Downloading...This will take quite a while...');
-		target = target.trim();
-		let url = target;
-		let checkURL = await fetch(url, {
-			method: 'HEAD',
-			headers: {'x-deki-token': LibreTexts.authenticate(user, subdomain)}
-		});
-		let isEpub = target.endsWith('.epub')
-			|| checkURL.headers.get('content-type').includes('application/epub+zip')
-			|| checkURL.headers.get('content-type').includes('application/octet-stream');
-		console.log(checkURL.headers.get('content-type'));
-		if (!checkURL.ok || !isEpub) {
-			url = target + '/open/download?type=epub';
-			checkURL = await fetch(url, {
-				method: 'HEAD',
-				headers: {'x-deki-token': LibreTexts.authenticate(user, subdomain)}
-			});
-			isEpub = checkURL.headers.get('content-type').includes('application/epub+zip');
-			if (!checkURL.ok || !isEpub) {
-				reportMessage('This source is not valid, please check your URL', true);
-				response.end();
-				return false;
-			}
-		}
-		let epubName = `epubs/${filenamify(target)}${target.endsWith('.epub') ? 'epub' : '.epub'}`;
-		if (!await fs.pathExists(epubName)) {
-			let count = 0;
-			let heartbeat = setInterval(() => reportMessage(`Downloading...This will take quite a while...\nTime elapsed: ${++count} seconds`), 1000);
-			let data = await download(url);
-			await fs.ensureDir('epubs');
-			await fs.writeFile(epubName, data);
-			clearInterval(heartbeat);
-			reportMessage('EPUB download complete. Processing...');
-		}
-		else {
-			reportMessage('Cached EPUB found. Processing...');
-		}
-		
-		let epub = new EPub(epubName);
-		epub.on("end", async function () {
-			const title = epub.metadata.title;
-			let filtered = [];
-			let chapters = [];
-			let whole = [];
-			const toc = epub.flow;
-			let chapterIndex = 0;
-			let pageIndex = 1;
-			
-			for (let i = 0; i < toc.length; i++) {
-				if (toc[i].level) {
-					//front and back matter ignored
-					let page = toc[i];
-					let indexes = page.title.match(/^[0-9]+\.[0-9]/);
-					if (indexes) {
-						indexes = indexes[0];
-						page.title = page.title.replace(indexes, indexes + ':');
-					}
-					else {
-						page.title = `${chapterIndex}.${pageIndex}: ${page.title}`;
-					}
-					pageIndex++;
-					filtered.push({title: page.title, id: page.id, href: page.href});
-				}
-				else if (toc[i].href.includes('-chapter-') || toc[i].href.includes('part-')) {
-					chapters.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
-					chapterIndex++;
-					pageIndex = 1;
-				}
-				whole.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
-			}
-			
-			let filteredChapters = [];
-			for (let i = 0; i < chapters.length; i++) {
-				let current = chapters[i];
-				if (!current.title.includes('Summary')) {
-					current.index = i;
-					filteredChapters.push(current);
-				}
-			}
-			
-			let root = `https://${subdomain}.libretexts.org/Courses/Remixer_University/Importer/${title}`;
-			let subroot = `/Courses/Remixer_University/Importer/${title}`;
-			const isSimple = !filtered.length || !filteredChapters.length;
-			if (await coverPage(subroot, isSimple)) {
-				if (isSimple) { //falling back to simple import
-					reportMessage('Warning: Cannot determine structure. Falling back to simple import.', true);
-					await processPages(whole, root, subroot, null);
-				}
-				else {
-					await processChapters(root, subroot, filteredChapters);
-					await processPages(filtered, root, subroot, filteredChapters);
-				}
-				
-				const end = performance.now();
-				let time = end - start;
-				time /= 100;
-				time = Math.round(time);
-				time /= 10;
-				
-				reportMessage(`Upload ${title} complete!`);
-				reportMessage({
-					messageType: "complete",
-					timeTaken: time,
-					resultURL: subroot,
-				});
-			}
-			else {
-				reportMessage('Page already exists!', true);
-			}
-			response.end()
-		});
-		epub.parse();
-		
-		async function coverPage(subroot, isSimple) {
-			const token = LibreTexts.authenticate(user, subdomain);
-			let content = isSimple ? '<p>{{template.ShowGuide()}}</p>' : '<p>{{template.ShowCategory()}}</p>';
-			// TODO Reenable ?abort=exists
-			let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(subroot))}/contents?edittime=now`, {
-				method: "POST",
-				body: content,
-				headers: {'x-deki-token': token}
-			});
-			if (!response.ok) {
-				let error = await response.text();
-				reportMessage(error, true);
-				return false;
-			}
-			let tags = `<tags><tag value="article:topic-${isSimple ? 'guide' : 'category'}"/><tag value="coverpage:yes"/></tags>`;
-			let propertyArray = isSimple ? [putProperty("mindtouch.idf#guideDisplay", "single", subroot),
-					putProperty('mindtouch.page#welcomeHidden', true, subroot),
-					putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", subroot)]
-				: [putProperty('mindtouch.page#welcomeHidden', true, subroot),
-					putProperty('mindtouch.idf#subpageListing', 'simple', subroot)];
-			
-			propertyArray.push(fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(subroot))}/tags`, {
-				method: "PUT",
-				body: tags,
-				headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': token}
-			}));
-			
-			await Promise.all(propertyArray);
-			return true;
-		}
-		
-		async function processChapters(root, subroot, chapters) {
-			await async.mapLimit(chapters, 5, processChapter);
-			
-			async function processChapter(chapter) {
-				const token = LibreTexts.authenticate(user, subdomain);
-				let title = chapter.title;
-				title = title.replace("Chapter ", "");
-				let number = title.match(/[0-9]+(?= )/);
-				if (number) {
-					number = number[0];
-				}
-				else {
-					number = chapter.index + 1;
-					if (!title.startsWith(`${chapter.index + 1}:`))
-						title = `${chapter.index + 1}: ${title}`;
-				}
-				let padded = title.replace(number, ("" + number).padStart(2, "0"));
-				chapter.title = title;
-				chapter.padded = padded;
-				let location = `${subroot}/${title}`;
-				let content = "<p>{{template.ShowGuide()}}</p>";
-				let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(location))}/contents?edittime=now`, {
-					method: "POST",
-					body: content,
-					headers: {'x-deki-token': token}
-				});
-				if (!response.ok) {
-					let error = await response.text();
-					reportMessage(error, true);
-					return false;
-				}
-				else {
-					let href = await response.text();
-					href = href.match(/(?<=<uri.ui>).*?(?=<\/uri.ui>)/)[0];
-					console.log('Chapter ' + href);
-				}
-				
-				let tags = '<tags><tag value="article:topic-guide"/></tags>';
-				if (padded !== title) {
-					let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(location))}/move?title=${encodeURIComponent(title)}&name=${encodeURIComponent(padded)}`, {
-						method: "POST",
-						headers: {'x-deki-token': token}
-					});
-					if (!response.ok) {
-						let error = await response.text();
-						reportMessage(error, true);
-					}
-					else {
-						// reportMessage(await response.text());
-					}
-				}
-				
-				await Promise.all(
-					[putProperty("mindtouch.idf#guideDisplay", "single", location),
-						putProperty('mindtouch.page#welcomeHidden', true, location),
-						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", location),
-						fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(location))}/tags`, {
-							method: "PUT",
-							body: tags,
-							headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': token}
-						})]);
-				return true;
-			}
-		}
-		
-		async function processPages(splice, root, subroot, filteredChapters) {
-			let completed = 0;
-			let isSimple = filteredChapters === null;
-			const eta = new Eta(splice.length, true);
-			let untitled = 0;
-			
-			async function processPage(page) {
-				const token = LibreTexts.authenticate(user, subdomain);
-				epub.getChapterRaw = util.promisify(epub.getChapterRaw);
-				epub.getImage = util.promisify(epub.getImage);
-				epub.readFile = util.promisify(epub.readFile);
-				let content = await epub.getChapterRaw(page.id);
-				let pressBooksContent = content.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>\n*<\/body>)/m);
-				if (pressBooksContent) {
-					content = pressBooksContent[0];
-				}
-				
-				let path = page.title || `Untitled Page ${++untitled}`;
-				
-				let chapterNumber = path.match(/.*?(?=\.)/);
-				let padded;
-				if (!isSimple && chapterNumber) {
-					chapterNumber = parseInt(chapterNumber[0]);
-					padded = chapterNumber < 10 ? "0" + path : false;
-				}
-				path = isSimple ? `${subroot}/${path}` : `${subroot}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
-				
-				//remove extraneous link tags
-				let containerTags = content.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
-				if (containerTags) {
-					for (let i = 0; i < containerTags.length; i++) {
-						let toReplace = containerTags[i].match(/<img.*?"\/>/)[0];
-						content = content.replace(containerTags[i], toReplace);
-					}
-				}
-				
-				//Rewrite image src url
-				let images = content.match(/<img .*?src=".*?\/.*?>/g);
-				let src = content.match(/(?<=<img .*?src=").*?(?=")/g);
-				const atRoot = images === null;
-				if (atRoot) {
-					images = content.match(/<img .*?src=".*?>/g);
-				}
-				if (src) {
-					for (let i = 0; i < src.length; i++) {
-						if (!src[i].startsWith('http')) {
-							const fileID = await uploadImage(src[i]);
-							let toReplace;
-							if (atRoot) { // at root url
-								toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
-							}
-							else {
-								toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
-							}
-							
-							content = content.replace(images[i], toReplace);
-							content = content.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
-						}
-					}
-				}
-				await uploadContent();
-				completed++;
-				eta.iterate();
-				reportMessage({
-					messageType: "progress",
-					percent: (Math.round(completed / splice.length * 1000) / 10),
-					eta: eta.format("{{etah}}"),
-					// count: count,
-				});
-				
-				
-				//Function Zone
-				async function uploadContent() {
-					let url = `https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/contents?edittime=now`;
-					let response = await fetch(url, {
-						method: 'POST',
-						body: content,
-						headers: {'x-deki-token': token}
-					});
-					if (response.ok) {
-						let href = await response.text();
-						href = href.match(/(?<=<uri.ui>).*?(?=<\/uri.ui>)/)[0];
-						console.log(href);
-					}
-					else {
-						let error = await response.text();
-						reportMessage(error, true);
-					}
-					
-					await putProperty('mindtouch.page#welcomeHidden', true, path);
-					let tags = '<tags><tag value="article:topic"/></tags>';
-					await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=` + encodeURIComponent(encodeURIComponent(path)) + "/tags", {
-						method: "PUT",
-						body: tags,
-						headers: {"Content-Type": "text/xml; charset=utf-8", 'x-deki-token': token}
-					});
-				}
-				
-				async function uploadImage(filename) {
-					// filename = filename.replace('.svg', '.png');
-					filename = decodeURIComponent(filename);
-					let prefix = page.href.match(/.*\//);
-					prefix = prefix ? prefix[0] : '';
-					if (prefix && filename.startsWith('../')) {
-						prefix = prefix.match(/.*\/(?=.*?\/$)/)[0];
-						filename = filename.match(/(?<=\.\.\/).*/)[0];
-					}
-					
-					let image = await epub.readFile(prefix + filename);
-					
-					
-					if (!image) {
-						reportMessage(filename, true);
-						return false;
-					}
-					let shortname = filename.match(/(?<=\/)[^\/]*?$/);
-					if (shortname) {
-						filename = shortname[0];
-					}
-					let response = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${encodeURIComponent(encodeURIComponent(filename))}`, {
-						method: 'PUT',
-						body: image,
-						headers: {'x-deki-token': token}
-					});
-					if (response.ok) {
-						let fileID = await response.text();
-						fileID = fileID.match(/(?<=<file id=").*?(?=")/)[0];
-						return fileID;
-					}
-					else {
-						let error = await response.text();
-						reportMessage(error, true);
-					}
-				}
-			}
-			
-			return await async.mapLimit(splice, 5, processPage);
-		}
-		
-		async function putProperty(name, value, path) {
-			const token = LibreTexts.authenticate(user, subdomain);
-			await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/properties`, {
-				method: "POST",
-				body: value,
-				headers: {"Slug": name, 'x-deki-token': token}
-			})
-		}
-	}
 }
 
 
@@ -518,6 +78,14 @@ io.on('connection', function (socket) {
 });
 
 async function jobHandler(data, socket) {
+	//ensure file exists
+	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
+	data.socket = socket;
+	if (!await fs.exists(data.path)) {
+		socket.emit('errorMessage', 'File does not exist!');
+		return;
+	}
+	console.log(`Processing ${data.filename}`);
 	switch (data.type) {
 		case "epub":
 			return processEPUB(data, socket);
@@ -528,7 +96,7 @@ async function jobHandler(data, socket) {
 		case "pdf":
 			return null;
 		case "pretext":
-			return null;
+			return processPretext(data, socket);
 		default:
 			break;
 	}
@@ -551,6 +119,11 @@ async function downloadFile(data, socket) {
 		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('.epub'))
 			data.url = data.url + '/open/download?type=epub';
 	}
+	else if (data.type === 'pretext') {
+		response = await fetch(data.url + '/archive/master.zip', {mode: "HEAD"});
+		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('.zip'))
+			data.url = data.url + '/archive/master.zip';
+	}
 	response = await fetch(data.url);
 	
 	// Step 2: get total length
@@ -559,8 +132,8 @@ async function downloadFile(data, socket) {
 		return;
 	}
 	const contentLength = +response.headers.get('Content-Length');
-	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/))
-		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*?(?=")/)[0];
+	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
+		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?="$)/)[0];
 	
 	// Step 3: read the data
 	let receivedLength = 0; // received that many bytes at the moment
@@ -569,7 +142,7 @@ async function downloadFile(data, socket) {
 		response.body.on('data', (value) => {
 			chunks.push(value);
 			receivedLength += value.length;
-			socket.emit('progress', Math.round(receivedLength / contentLength * 1000) / 10);
+			socket.emit('progress', parseFloat(receivedLength / contentLength * 100).toFixed(1));
 		});
 		response.body.on('end', resolve);
 	});
@@ -599,7 +172,7 @@ async function sendFile(data, socket, done) { //upload file to server for proces
 	}
 	if (socket.sendFile) {
 		socket.sendFile.buffer[data.index] = data.buffer;
-		socket.emit('progress', Math.round(socket.sendFile.buffer.length / socket.sendFile.length * 1000) / 10);
+		socket.emit('progress', parseFloat(socket.sendFile.buffer.length / socket.sendFile.length * 100).toFixed(1));
 		done(data.index);
 	}
 	
@@ -626,22 +199,13 @@ async function listFiles(data, socket) {
 	}
 }
 
-/*processEUPB({
-	path: './ImportFiles/hdagnew@ucdavis.edu/epub/Copy%20of%2088%20Open%20Essays.epub',
+/*processPretext({
+	path: './ImportFiles/hdagnew@ucdavis.edu/pretext/aata-master.zip',
 	user: 'hdagnew@ucdavis.edu',
 	subdomain: 'chem'
 }, {emit: (a, b) => console.error(b)});*/
 
 async function processCommonCartridge(data, socket) {
-	//ensure file exists
-	console.log(`Processing ${data.filename}`);
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	data.socket = socket;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
-	
 	try {
 		zipLocal.unzip = util.promisify(zipLocal.unzip);
 		let unzipped = await zipLocal.unzip(data.path);
@@ -654,7 +218,7 @@ async function processCommonCartridge(data, socket) {
 		}
 		
 		let rootPath = `${data.path}-Unzipped`;
-		let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+		let onlinePath = `Sandboxes/${data.user}`;
 		const Working = {}; // since user and subdomain are unchanged for these calls
 		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
 		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
@@ -857,7 +421,7 @@ async function processCommonCartridge(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: `${Math.round(log.length / totalPages * 1000) / 10}%`,
+				percentage: `${parseFloat(log.length / totalPages * 100).toFixed(1)}%`,
 				pages: `${log.length} / ${totalPages} pages processed`,
 				eta: eta.format("{{etah}}"),
 			});
@@ -940,16 +504,9 @@ async function processCommonCartridge(data, socket) {
 }
 
 async function processEPUB(data, socket) {
-	data.socket = socket;
 	const Working = {}; // since user and subdomain are unchanged for these calls
 	Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
 	Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
-	
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
 	
 	let epub = new EPub(data.path);
 	epub.parse();
@@ -997,7 +554,7 @@ async function processEPUB(data, socket) {
 		}
 	}
 	
-	let onlinePath = `Courses/Remixer_University/Username:_${data.user}`;
+	let onlinePath = `Sandboxes/${data.user}`;
 	await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 		method: "POST",
 		body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
@@ -1109,7 +666,7 @@ async function processEPUB(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: Math.round(log.length / whole.length * 1000) / 10,
+				percentage: `${parseFloat(log.length / whole.length * 100).toFixed(1)}%`,
 				pages: `${log.length} / ${whole.length}`,
 				eta: eta.format("{{etah}}"),
 			});
@@ -1142,16 +699,13 @@ async function processEPUB(data, socket) {
 				chapterNumber = parseInt(chapterNumber[0]);
 				path = chapterNumber < 10 ? "0" + path : path;
 			}
-			path = isSimple ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
-			
-			//remove extraneous link tags
-			let containerTags = contents.match(/<a>\n\s*?<img [\s\S]*?<\/a>/gm);
-			if (containerTags) {
-				for (let i = 0; i < containerTags.length; i++) {
-					let toReplace = containerTags[i].match(/<img.*?"\/>/)[0];
-					contents = contents.replace(containerTags[i], toReplace);
-				}
+			try {
+				path = isSimple || !filteredChapters[chapterNumber - 1] ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
+			}catch (e) {
+				console.error(e);
 			}
+			//remove extraneous link tags
+			contents = contents.replace(/<a>\n\s*?(<img [\s\S]*?)<\/a>/gm, '$1');
 			
 			contents = await uploadImages(contents, path, imageProcessor, data);
 			
@@ -1163,7 +717,13 @@ async function processEPUB(data, socket) {
 					prefix = prefix.match(/.*\/(?=.*?\/$)/)[0];
 					filename = filename.match(/(?<=\.\.\/).*/)[0];
 				}
-				return [filename, await epub.readFile(prefix + filename)];
+				let file;
+				try {
+					if (filename && !filename.includes('base64') && !filename.includes('#fixme'))
+						file = await epub.readFile(prefix + filename);
+				} catch (e) {
+				}
+				return [filename, file, prefix + filename];
 			}
 			
 			let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
@@ -1188,7 +748,7 @@ async function processEPUB(data, socket) {
 			log.push(entry);
 			eta.iterate();
 			socket.emit('progress', {
-				percentage: `${Math.round(log.length / whole.length * 1000) / 10}%`,
+				percentage: `${parseFloat(log.length / whole.length * 100).toFixed(1)}%`,
 				pages: `${log.length} / ${whole.length} pages uploaded`,
 				eta: eta.format("{{etah}}"),
 			});
@@ -1197,14 +757,6 @@ async function processEPUB(data, socket) {
 }
 
 async function processLibreMap(data, socket) {
-	//ensure file exists
-	console.log(`Processing ${data.filename}`);
-	data.path = `./ImportFiles/${data.user}/${data.type}/${data.filename}`;
-	data.socket = socket;
-	if (!await fs.exists(data.path)) {
-		socket.emit('errorMessage', 'File does not exist!');
-		return;
-	}
 	const rootURL = `https://libremaps.libretexts.org/`;
 	const rootAPI = `${rootURL}/api/v1`;
 	
@@ -1330,6 +882,261 @@ async function processLibreMap(data, socket) {
 	}
 }
 
+async function processPretext(data, socket) {
+	//xsltproc ./mathbook/xsl/mathbook-html.xsl ./ImportFiles/hdagnew@ucdavis.edu/pretext/aata-master.zip-Unzipped/aata-master/src/aata.xml --xinclude -o out/
+	try {
+		zipLocal.unzip = util.promisify(zipLocal.unzip);
+		let unzipped = await zipLocal.unzip(data.path);
+		unzipped.save = util.promisify(unzipped.save);
+		await fs.emptyDir(`${data.path}-Unzipped`);
+		await unzipped.save(`${data.path}-Unzipped`);
+		
+		
+		//find the PreTeXt source within this zip file
+		let source = await runProcess('grep', ['-rl', '-E', "'<pretext|<mathbook'", `${data.path}-Unzipped`]);
+		if (!source) {
+			socket.emit('errorMessage', 'Cannot find a valid PreTeXt source root');
+			return;
+		}
+		
+		//obtain JSON manifest
+		let rootPath = `${data.path}-Unzipped/out`;
+		let current = await runProcess('xsltproc', ['--xinclude', './mathbook/xsl/pretext-json-manifest.xsl', source]);
+		if (!current) {
+			socket.emit('errorMessage', 'Invalid manifest!');
+			return;
+		}
+		
+		//process manifest
+		current = JSON.parse(current)[0];
+		let totalPages = 0;
+		digestPage(current);
+		current.source = 'index.html';
+		socket.emit('progress', {
+			percentage: `0`,
+			pages: `Building ${totalPages} pages. This may take a few minutes...`,
+			eta: 'Building PreTeXt',
+		});
+		
+		//Build PreTeXt
+		let xsltproc = await runProcess('xsltproc', ['--xinclude', '-o', rootPath + '/', './mathbook/xsl/pretext-basic-html.xsl', source]);
+		console.log('done building');
+		
+		await fs.writeJSON('out.json', current);
+		
+		
+		let onlinePath = `Sandboxes/${data.user}`;
+		const Working = {}; // since user and subdomain are unchanged for these calls
+		Working.authenticatedFetch = async (path, api, options) => await LibreTexts.authenticatedFetch(path, api, data.subdomain, data.user, options);
+		Working.putProperty = async (name, value, path) => await putProperty(name, value, path, data.subdomain, data.user);
+		
+		//go through html and upload
+		//setup parent pages
+		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
+			method: "POST",
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+		}, data.subdomain);
+		
+		//begin page uploads
+		let log = [];
+		let backlog = [];
+		let eta = new Eta(totalPages, true);
+		let backlogClearer = setInterval(clearBacklog, 1000);
+		
+		//process content pages
+		await processPage(current);
+		
+		
+		//finishing up
+		socket.emit('setState', {
+			state: 'done',
+			log: log,
+			url: `https://${data.subdomain}.libretexts.org/${onlinePath}`
+		});
+		clearInterval(backlogClearer);
+		await clearBacklog();
+		
+		//Function Zone
+		function digestPage(page, parent = {depth: 0, path: ''}) {
+			totalPages++;
+			page.depth = parent.depth + 1;
+			page.source = page.link.match(/(?<=^.*\/)[^\/]*?$/)[0];
+			page.path = `${parent.path}/${page.title}`;
+			
+			if (page.depth === 1)
+				page.type = 'category';
+			else if (page.depth === 2)
+				page.type = 'guide';
+			else
+				page.type = 'topic';
+			
+			//process children
+			for (let i = 0; i < page.children.length; i++) {
+				let child = page.children[i];
+				digestPage(child, page);
+			}
+		}
+		
+		async function processPage(page) {
+			let safeTitle = encodeURIComponent(page.title);
+			let path = `${onlinePath}${page.path.replace(/[?& ]/g, '_')}`;
+			
+			let response;
+			let contents = await fs.readFile(`${rootPath}/${page.source}`, 'utf8');
+			
+			//content cleanup
+			contents = contents.match(/(?<=<body>)[\s\S]*(?=<\/body>)/)[0];
+			contents = contents.replace(/(<nav class="summary-links">[\s\S]*?<\/nav>)/, '');
+			contents = contents.replace(/<a [^<>]*? class="permalink">¶<\/a>/, '');
+			
+			if (page.type === 'category') {
+				response = await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: contents + "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">coverpage:yes</a><a href=\"#\">article:topic-category</a></p>",
+				}, data.subdomain);
+				await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+			}
+			else if (page.type === 'guide') {
+				response = await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
+					method: "POST",
+					body: contents + "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
+				}, data.subdomain);
+				await Promise.all(
+					[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+						Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+						Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+				
+			}
+			else if (page.type === 'topic') {
+				response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
+					method: 'POST',
+					body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+				});
+			}
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				// socket.emit('errorMessage', error);
+			}
+			await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
+			
+			//report page upload
+			console.log(page.type, page.title);
+			let entry = {
+				title: page.title,
+				type: page.type,
+				url: `https://${data.subdomain}.libretexts.org/${path}`,
+			};
+			backlog.push(entry);
+			log.push(entry);
+			eta.iterate();
+			socket.emit('progress', {
+				percentage: `${parseFloat(log.length / totalPages * 100).toFixed(1)}%`,
+				pages: `${log.length} / ${totalPages} pages processed`,
+				eta: eta.format("{{etah}}"),
+			});
+			
+			//recurse down
+			for (let i = 0; i < page.children.length; i++) {
+				await processPage(page.children[i])
+			}
+		}
+		
+		async function processAttachments(resources, rootPath, onlinePath, socket) {
+			resources = resources.filter(elem => elem);
+			if (!resources.length)
+				return false;
+			let entries = [];
+			let title = onlinePath.match(/(?<=\/)[^\/]*?$/)[0].replace(/\*\*\*/g, '/');
+			onlinePath = onlinePath.replace(/\*\*\*/g, '_');
+			
+			for (let i = 0; i < resources.length; i++) {
+				try {
+					let filename = decodeURIComponent(resources[i].file).replace('$IMS-CC-FILEBASE$', '');
+					let currentPath = rootPath;
+					if (filename.startsWith('../')) {
+						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
+						filename = filename.match(/(?<=\.\.\/).*/)[0];
+					}
+					if (await fs.exists(currentPath + '/' + filename)) {
+						let file = await fs.readFile(currentPath + '/' + filename);
+						filename = filename.match(/(?<=\/)[^\/]*?$/)[0];
+						let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
+							method: 'PUT',
+							body: file,
+						});
+						if (response.ok) {
+							let fileID = await response.json();
+							entries.push({title: filename, id: fileID['@id']});
+						}
+					}
+					if (socket) {
+						socket.emit('progress', {
+							percentage: `${i} / ${resources.length} files`,
+							pages: `Uploading ${resources[i].type}`,
+							eta: `Waiting on attachments`,
+						});
+					}
+					
+				} catch (e) {
+				
+				}
+			}
+			if (!entries.length)
+				return false;
+			let contents = entries.map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
+			
+			
+			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&title=${encodeURIComponent(title)}&dream.out.format=json`, {
+				method: 'POST',
+				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+			});
+			if (!response.ok) {
+				let error = await response.text();
+				console.error(error);
+				socket.emit('errorMessage', error);
+			}
+		}
+		
+		async function clearBacklog() {
+			if (backlog.length) {
+				socket.emit('pages', backlog);
+				backlog = [];
+			}
+		}
+		
+	} catch (e) {
+		console.error(e);
+		socket.emit('errorMessage', JSON.stringify(e));
+	}
+	
+	function runProcess(first, otherArgs) {
+		return new Promise(function (resolve, reject) {
+			const spawn = require('child_process').spawn;
+			let res = '';
+			let child;
+			if (process.platform === "win32") //using WSL to open bash
+				child = spawn('bash', ['-c', `${first} ${otherArgs.join(' ')}`]);
+			else //running directly on bash
+				child = spawn(first, otherArgs);
+			
+			child.stdout.on('data', function (buffer) {
+				res += buffer.toString();
+			});
+			child.stderr.on('data', function (buffer) {
+				// console.error(buffer.toString());
+			});
+			child.stdout.on('end', function () {
+				resolve(res);
+			});
+			child.on('exit', function (code) {
+				if (code > 0)
+					reject(`child process exited with code ${code}`);
+			});
+		});
+	};
+}
+
 async function putProperty(name, value, path, subdomain, username) {
 	await LibreTexts.authenticatedFetch(path, "properties", subdomain, username, {
 		method: "POST",
@@ -1362,11 +1169,11 @@ async function uploadImages(contents, path, imageProcessor, data) {
 					toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
 				}
 				else {
-					toReplace = images[i].replace(/(?<=<img .*?src=").*\//, `/@api/deki/files/${fileID}/`);
+					toReplace = images[i].replace(/(?<=<img .*?src=").*\/(?=.*?")/, `/@api/deki/files/${fileID}/`);
 				}
 				
 				contents = contents.replace(images[i], toReplace);
-				contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
+				// contents = contents.replace(/(?<=<img .*?alt=")[^\/"]*?\/(?=.*?")/, '');
 			}
 		}
 	}

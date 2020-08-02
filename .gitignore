@@ -68,3 +68,4 @@ Temporary Items
 /API/BotLogs/
 /nodePrint/secrets.tar
 /API/ImportFiles/
+API/out.json

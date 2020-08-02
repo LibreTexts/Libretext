@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactCardFlip from 'react-card-flip';
-import {Textfit} from 'react-textfit';
 
 
 export default class LibreText extends React.Component {
@@ -16,8 +15,7 @@ export default class LibreText extends React.Component {
 	}
 	
 	render() {
-		let email = document.getElementById('userEmailHolder').textContent;
-		email = ['hdagnew@ucdavis.edu', 'delmarlarsen@gmail.com', 'dlarsen@ucdavis.edu'].includes(email);
+		let isAdmin = document.getElementById('adminHolder').textContent;
 		
 		let root = `https://batch.libretexts.org/print/${this.props.format}/Finished/`;
 		if (this.props.item.zipFilename)
@@ -32,7 +30,7 @@ export default class LibreText extends React.Component {
 			     onMouseLeave={() => this.handleClick(false)}>
 				<ReactCardFlip isFlipped={this.state.isFlipped}>
 					<div key="back" className='textSide textFront' style={this.borderStripe()}>
-						<div style={{flex: 2}} className='headerFit'><Textfit max={20}>{this.props.item.title}</Textfit>
+						<div style={{flex: 2}} className='headerFit'>{this.props.item.title}
 						</div>
 						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
 						</div>
@@ -45,11 +43,11 @@ export default class LibreText extends React.Component {
 						   target='_blank'>PDF</a>
 						<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
-						{email ? <a onClick={() => {
-							if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?')) {
+						{isAdmin ? <a onClick={() => {
+							if (confirm('This will compile all of the pages and will take quite a while. Are you sure?')) {
 								batch(this.props.item.link)
 							}
-						}} href='#' className={'mt-icon-spinner6'}>Refresh Text</a> : ''}
+						}} href='#' className={'mt-icon-spinner6'}>Compile Full</a> : ''}
 						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 						   target='_blank'>Individual ZIP</a>
 						{bookstore ?
