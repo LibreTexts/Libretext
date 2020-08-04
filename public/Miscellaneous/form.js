@@ -502,10 +502,14 @@ class LTForm {
 			
 			//confirm('You have previously saved work available.\nWould you like to restore your previous session?'))
 			if (localStorage.getItem('RemixerSession')) {
-				let d = JSON.parse(localStorage.getItem('RemixerSession'));
-				let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
-				root.fromDict(d);
-				root.setExpanded();
+				try {
+					let d = JSON.parse(localStorage.getItem('RemixerSession'));
+					let root = $("#LTRight").fancytree("getTree").getNodeByKey("ROOT");
+					root.fromDict(d);
+					root.setExpanded();
+				} catch (e) {
+					console.error(e)
+				}
 			}
 		}
 		
@@ -1025,7 +1029,7 @@ wiki.page("${child.path}", NULL)</pre>
 							
 							// Title cleanup
 							if (child.data.padded) {
-								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&name=" + child.data.padded, {
+								fetch("/@api/deki/pages/=" + encodeURIComponent(encodeURIComponent(path)) + "/move?title=" + child.title + "&to=" + child.data.padded, {
 									method: "POST",
 									headers: {
 										'x-deki-token': LTForm.keys[subdomain],
