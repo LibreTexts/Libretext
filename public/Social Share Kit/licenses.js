@@ -96,20 +96,20 @@
 					break;
 				case "cc-by-nc-sa":
 					thing_parent.setAttribute("style", "background-color: #fff176;");
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc":
 					thing_parent.setAttribute("style", "background-color: #fff176;");
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: <br> You can can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: <br> You can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nd":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
 					
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "cc-by-nc-nd":
 					thing_parent.setAttribute("style", "background-color: #f44336;");
-					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
+					thing.innerHTML = `The content you just copied is ${cc.title} licensed: You can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> `;
 					break;
 				case "gnu":
 					thing_parent.setAttribute("style", "background-color: #fff176;");

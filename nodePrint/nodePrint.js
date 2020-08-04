@@ -17,7 +17,7 @@ const querystring = require('querystring');
 const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
-// const storage = require('node-persist');
+const storage = require('node-persist');
 const JSZip = require("jszip");
 const he = require("he");
 const convert = require('xml-js');
@@ -50,7 +50,7 @@ puppeteer.launch({
 			localServer.listen(port);
 		}
 		const now1 = new Date();
-		// await storage.init();
+		await storage.init();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF/Letter/Margin');
 		fs.ensureDir('./PDF/A4/Margin');
@@ -87,7 +87,7 @@ puppeteer.launch({
 			url = url.replace("Letter/", "");
 			if (url.startsWith('/A4')) {
 				url = url.split('/A4')[1];
-				size = 'A4'
+				// size = 'A4'
 			}
 			
 			if (request.headers.host === 'home.miniland1333.com' && request.method === 'OPTIONS') { //options checking
@@ -167,18 +167,19 @@ puppeteer.launch({
 						let finished = await getLibretext(url, response, params);
 						let [subdomain, path] = parseURL(url);
 						
-						await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
-							method: 'PUT',
-							body: JSON.stringify({
-								subdomain: subdomain,
-								path: path.match(/^.*?(?=\/)/)[0],
-								identifier: md5(keys[subdomain]),
-								content: finished
-							}),
-							headers: {
-								origin: 'print.libretexts.org'
-							}
-						});
+						if (finished && finished.tags&& finished.tags.includes("coverpage:yes"))
+							await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
+								method: 'PUT',
+								body: JSON.stringify({
+									subdomain: subdomain,
+									path: path.match(/^.*?(?=\/)/)[0],
+									identifier: md5(keys[subdomain]),
+									content: finished
+								}),
+								headers: {
+									origin: 'print.libretexts.org'
+								}
+							});
 						
 						response.end();
 					}
@@ -266,21 +267,25 @@ puppeteer.launch({
 						'Content-Disposition': 'attachment',
 						'cache-control': 'no-cache'
 					}, request, response);
-					/*let count = await storage.getItem('downloadCount') || 0;
-					await storage.setItem('downloadCount', count + 1);*/
+					try {
+						let count = await storage.getItem('downloadCount') || 0;
+						await storage.setItem('downloadCount', count + 1);
+					}catch (e) {
+					
+					}
 					let now2 = new Date();
-					await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${ip} ${url}\n`);
+					// await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${ip} ${url}\n`);
 				}
 				else {
 					console.error(url);
 					staticFileServer.serveFile("404.html", 404, {}, request, response);
 				}
 			}
-			/*else if (url === '/Stats') {
+			else if (url === '/Stats') {
 				response.write("" + (await storage.getItem('downloadCount') || 0));
 				response.end();
 			}
-			else if (url === '/StatsFull') {
+			/*else if (url === '/StatsFull') {
 				staticFileServer.serveFile(`./StatsFull.txt`, 404, {'cache-control': 'no-cache'}, request, response);
 			}*/
 			else if (url.startsWith('/Refresh') && request.method === 'PUT') {
@@ -1123,8 +1128,8 @@ puppeteer.launch({
 				fs.exists(`./PDF/A4/${escapedURL}.pdf`),
 				fs.exists(`./PDF/A4/Margin/${escapedURL}.pdf`)];*/
 			let allExist = [fs.exists(`./PDF/Letter/Margin/${escapedURL}.pdf`)];
-			if (!compile)
-				allExist.push(fs.exists(`./PDF/A4/Margin/${escapedURL}.pdf`));
+			/*if (!compile)
+				allExist.push(fs.exists(`./PDF/A4/Margin/${escapedURL}.pdf`));*/
 			allExist = await Promise.all(allExist);
 			allExist = allExist.every((item) => item);
 			
@@ -1355,7 +1360,7 @@ puppeteer.launch({
 							}
 						});
 						// console.log(`3 ${(performance.now()-start)/1000}`);
-						if (!compile)
+						/*if (!compile)
 							await page.pdf({ //A4 Margin
 								path: `./PDF/A4/Margin/${PDFname}.pdf`,
 								displayHeaderFooter: showHeaders,
@@ -1374,7 +1379,7 @@ puppeteer.launch({
 									right: "0.75in",
 									left: "0.75in",
 								}
-							});
+							});*/
 					} catch (e) {
 						// console.error(e);
 					}
@@ -1903,9 +1908,9 @@ puppeteer.launch({
 				}));
 			// cleanup
 			await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
-			await fs.emptyDir(`./PDF/A4/libretexts/${zipFilename}`);
+			// await fs.emptyDir(`./PDF/A4/libretexts/${zipFilename}`);
 			await fs.remove(`./PDF/Letter/order/${thinName}`);
-			await fs.remove(`./PDF/A4/order/${thinName}`);
+			// await fs.remove(`./PDF/A4/order/${thinName}`);
 			
 			return {
 				zipFilename: zipFilename,

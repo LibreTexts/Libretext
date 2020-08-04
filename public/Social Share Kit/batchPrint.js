@@ -24,6 +24,7 @@ if (!window["batchPrint.js"]) {
 			localStorage.setItem('darkMode', true);
 		if (localStorage.getItem('darkMode') === 'true')
 			$('.elm-skin-container').addClass('darkMode');
+		localStorage.removeItem('PDFSize');
 		
 		handleInner().then();
 		
@@ -48,22 +49,21 @@ if (!window["batchPrint.js"]) {
 				if (!isPro && downloadEntry.tags.includes('luluPro'))
 					downloadEntry = false;
 			}
-			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/${localStorage.getItem('PDFSize') === 'A4' ? 'A4' : 'Letter'}/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
+			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
+			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
 			innerHTML += `<div class="LTdropdown-content">
-					<a onclick = "localStorage.setItem('PDFSize','Letter')" href="https://batch.libretexts.org/print/Letter/url=${window.location}.pdf"  target="_blank" title="Get a Letter PDF of this page" type="application/pdf">Letter</a>
-					<a onclick = "localStorage.setItem('PDFSize','A4')" href="https://batch.libretexts.org/print/A4/url=${window.location}.pdf" target="_blank" title="Get an A4 PDF of this page" type="application/pdf">A4</a>
+					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf">Full Book</a>
+					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf">Chapter</a>` : ``}
+					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
+					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6'>Compile</a>` : ''}
 				</div></div>`;
 			
-			if (batchAccess && !document.getElementById('tagsHolder').innerText.includes('"article:topic"')) {
-				// $('#pageNumberHolder').append(`<div>Hello ${email}!</div>`);
-				innerHTML += '<button id="batchButton" onclick="batch()" style="margin-right: 2px"><span>Compile</span></button>';
-			}
 			if (downloadEntry) {
 				if (bookstore)
 					bookstore = bookstore.split('store:')[1];
 				
 				
-				let root = `https://batch.libretexts.org/print/Letter/Finished/`;
+				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
 				innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
@@ -114,7 +114,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 			let getTOCLink = document.getElementById("getTOCLink");
 			if (getTOCLink) {
 				getTOCLink.rel = "nofollow";
-				getTOCLink.href = `https://batch.libretexts.org/print/Letter/toc=${url}`;
+				getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
 			}
 		}
 	};
@@ -135,7 +135,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 	function cover(target) {
 		let number = prompt('Number of content pages:');
 		if (number && !isNaN(number)) {
-			window.open(`https://batch.libretexts.org/print/Letter/cover=${target}&options={"numPages":"${number}", "hasExtraPadding":true}`);
+			window.open(`https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${number}", "hasExtraPadding":true}`);
 		}
 		else {
 			alert(`${number} is not recognized as a number. Please try again.`);
@@ -144,19 +144,16 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 	
 	// noinspection ES6ConvertVarToLetConst
 	var batch = (target) => {
-		if (!batchAccess) {
-			alert('Authorization Error');
-			return false;
-		}
 		if (window["batchComplete"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `https://${targetComputer}/print/Letter/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
-			const batchButton = document.getElementById("batchButton");
+			const batchButton = document.getElementById("printme");
+			batchButton.classList.remove('material-icons')
 			batchButton.innerText = 'Request sent...';
 			
 			
@@ -183,14 +180,27 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 					return;
 				}
 				batchButton.innerText = "Redownload";
-				window.location = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://${targetComputer}/print/Letter/Finished/${out.filename}/Full.pdf`;
-				setTimeout(() => window.location.reload(), 5000);
+				window.location = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
+				window["batchComplete"] = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
+				
+				let tags = document.getElementById('pageTagsHolder').innerText;
+				if (tags.includes('coverpage:yes'))
+					setTimeout(() => window.location.reload(), 5000);
 				
 			}
 		}
 		
 	};
+	
+	async function getBook() {
+		let coverpage = await LibreTexts.getCoverpage();
+		if (coverpage) {
+			let [subdomain] = LibreTexts.parseURL();
+			coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
+			return `https://${targetComputer}/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
+		}
+		return '#'
+	}
 	
 	document.addEventListener('DOMContentLoaded', fn);
 }
