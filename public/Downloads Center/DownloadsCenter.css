@@ -19,12 +19,43 @@
 	margin: 0 10px;
 }
 
-.CommonsAutocomplate{
+.mt-label:after, label:after {
+	content: unset;
+}
+
+.MuiTooltip-tooltip {
+	font-size: 0.8rem;
+}
+
+.MuiMenuItem-root > div {
+	width: 100%;
+}
+
+input:focus, input:hover, .no-touch input:hover {
+	border: unset;
+	box-shadow: unset;
+}
+
+.mt-checkbox, input[type=checkbox], input[type=radio] {
+	position: absolute;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: unset;
+}
+
+.mt-legend, legend {
+	font-size: unset;
+	margin: unset;
+	padding: unset;
+}
+
+.CommonsAutocomplate {
 	flex: 1;
 	min-width: 250px;
 }
 
-.MuiAutocomplete-popper  img {
+.MuiAutocomplete-popper img {
 	height: 20px !important;
 }
 
@@ -104,6 +135,7 @@
 .headerFit > div {
 	height: 80%;
 }
+
 .headerFit > div > div {
 	height: 100%;
 	display: flex;

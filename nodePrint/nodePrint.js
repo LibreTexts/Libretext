@@ -167,7 +167,7 @@ puppeteer.launch({
 						let finished = await getLibretext(url, response, params);
 						let [subdomain, path] = parseURL(url);
 						
-						if (finished.tags.includes("coverpage:yes"))
+						if (finished && finished.tags&& finished.tags.includes("coverpage:yes"))
 							await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
 								method: 'PUT',
 								body: JSON.stringify({
@@ -267,8 +267,12 @@ puppeteer.launch({
 						'Content-Disposition': 'attachment',
 						'cache-control': 'no-cache'
 					}, request, response);
-					let count = await storage.getItem('downloadCount') || 0;
-					await storage.setItem('downloadCount', count + 1);
+					try {
+						let count = await storage.getItem('downloadCount') || 0;
+						await storage.setItem('downloadCount', count + 1);
+					}catch (e) {
+					
+					}
 					let now2 = new Date();
 					// await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${ip} ${url}\n`);
 				}

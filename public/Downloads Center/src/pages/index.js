@@ -5,7 +5,6 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -101,9 +100,9 @@ class Center extends React.Component {
 			                                                                format={this.state.format}/>);
 			
 			return <>
-				{/*<CssBaseline/>*/}
+				{/*backgroundColor: '#0f67a6'*/}
 				<div className={'CenterContainer'}>
-					<div style={{display: 'flex', backgroundColor: '#0f67a6', flexWrap: 'wrap'}}>
+					<div style={{display: 'flex', flexWrap: 'wrap'}}>
 						<Autocomplete
 							id="title-demo" freeSolo
 							className='CommonsAutocomplate'
