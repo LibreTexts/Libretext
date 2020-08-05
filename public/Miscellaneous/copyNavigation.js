@@ -515,15 +515,3 @@
 		}
 	});
 })();
-
-
-function decodeHTML(content) {
-	let ret = content.replace(/&gt;/g, '>');
-	ret = ret.replace(/&lt;/g, '<');
-	ret = ret.replace(/&quot;/g, '"');
-	ret = ret.replace(/&apos;/g, "'");
-	ret = ret.replace(/&amp;/g, '&');
-	ret = ret.replace(/&mdash;/g, '—');
-	ret = ret.replace(/&ndash;/g, '–');
-	return ret;
-}
