@@ -3,13 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-
       <change beforePath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Students/Aryan Suri/Customization/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/API Dashboard/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Downloads Center/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Downloads Center/package.json" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +70,11 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Students/Aryan Suri/Customization" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/nodePrint" />
-
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -95,12 +91,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\commoncartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\ImportFiles\hdagnew@ucdavis.edu\CommonCartridge" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous\input\tex" />
-
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\nodePrint" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\API Dashboard\src\components" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
@@ -113,7 +107,6 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
@@ -212,7 +205,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.API Dashboard">
+  <component name="RunManager" selected="npm.Remixer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -339,9 +332,7 @@
       </list>
     </recent_temporary>
   </component>
-
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1592,9 +1583,7 @@
     <option name="LAST_COMMIT_MESSAGE" value=" Updated batchPrint.js with Chapters" />
   </component>
   <component name="WindowStateProjectService">
-
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
-
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="446" y="120" key="#Deployment/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933732591" />
