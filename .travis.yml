@@ -4,7 +4,7 @@ node_js:
 
 env:
   - TESTFOLDER=nodePrint
-  - TESTFOLDER=public/Remixer
+#  - TESTFOLDER=public/Remixer
 
 install: npm install --prefix $TESTFOLDER
 
