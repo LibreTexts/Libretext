@@ -92,3 +92,13 @@ margin-left: -4px;
       display:none;
     }
 }
+
+@media print {
+  #f_button {
+      display: none;
+    }
+   #b_button {
+       
+      display:none;
+    }
+}
