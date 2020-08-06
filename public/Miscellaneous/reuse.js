@@ -96,7 +96,7 @@ function LibreTextsReuse() {
 		path = decodeURIComponent(decodeURIComponent((path)));
 		path = path.replace('?title=', '');
 		path = path.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-		path = path.replace(/[^A-Za-z0-9()_ :%\-.'\/]/g, '');
+		path = path.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
 		return path;
 	}
 	
