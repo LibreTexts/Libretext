@@ -5,10 +5,12 @@ window.addEventListener("load", fbButtons);
 function fbButtons() {
 
    let first_div = document.createElement("div");
-   document.body.appendChild(first_div);
+   document.body.append(first_div);
 
    //inner HTML
    $(first_div).html(`
+
+    
     <button onclick="next_article_page()" id="f_button"><i id="right" class="fa fa-long-arrow-right "></i></button>
     <div class="button_title"  id="f_title" ></div>
     <button onclick="previous_article_page()"  id="b_button"><i id="left" class="fa fa-long-arrow-left "></i></button>
@@ -34,12 +36,16 @@ function fbButtons() {
 
    });
 
+   if ($("dd.mt-classification-value a:first").text() != 'Section or Page') {
 
+      $(first_div).remove();
 
+   } else {
+      console.log("btn show");
+
+   }
 
 }
-
-
 //Link Content
 function next_article_page() {
    let x = $('.mt-icon-next-article').closest('a').attr('href');
