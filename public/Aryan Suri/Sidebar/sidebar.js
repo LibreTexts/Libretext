@@ -62,11 +62,6 @@ function fbButtons() {
       let x = $('.mt-icon-previous-article').closest('a').attr('href');
       console.log(x);
 
-<<<<<<< HEAD
       this.location.href = x;
    
 }
-=======
-   this.location.href = x;
-}
->>>>>>> 4b8a8c560b5d657c8d4974d4a03b8f4c2d7cc2cd
