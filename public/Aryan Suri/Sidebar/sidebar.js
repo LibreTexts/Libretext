@@ -6,6 +6,7 @@ function fbButtons() {
 
    let first_div = document.createElement("div");
    document.body.append(first_div);
+   
 
    //inner HTML
    $(first_div).html(`
@@ -36,28 +37,31 @@ function fbButtons() {
 
    });
 
-   if ($("dd.mt-classification-value a:first").text() != 'Section or Page') {
-
-      $(first_div).remove();
-
-   } else {
-      console.log("btn show");
-
+   if($("#pageTagsHolder").text().includes('"article:topic"')){
+       console.log("found section/page");
+       
+       
+   } else {  
+       $(first_div).remove();
    }
+    
+   
 
 }
-//Link Content
-function next_article_page() {
-   let x = $('.mt-icon-next-article').closest('a').attr('href');
-   console.log(x);
+ //Link Content
+ function next_article_page() {
+      let x = $('.mt-icon-next-article').closest('a').attr('href');
+       
+      console.log(x);
 
-   this.location.href = x;
-}
+      this.location.href = x;
+   }
+    
+ function previous_article_page() {
 
-function previous_article_page() {
+      let x = $('.mt-icon-previous-article').closest('a').attr('href');
+      console.log(x);
 
-   let x = $('.mt-icon-previous-article').closest('a').attr('href');
-   console.log(x);
-
-   this.location.href = x;
+      this.location.href = x;
+   
 }
