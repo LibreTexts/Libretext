@@ -1,17 +1,17 @@
 window.addEventListener("load", _createSidebar);
 
 function _createSidebar() {
-    
-    
-const isPro = document.getElementById("proHolder").innerText === 'true';
+
+
+  const isPro = document.getElementById("proHolder").innerText === 'true';
 
 
 
-let upperDiv = document.createElement("div");
-document.body.append(upperDiv);
+  let upperDiv = document.createElement("div");
+  document.body.append(upperDiv);
 
-if (isPro) {
-        upperDiv.innerHTML=`
+  if (isPro) {
+    upperDiv.innerHTML = `
 
 
 
@@ -333,7 +333,7 @@ if (isPro) {
 
 
 ` } else {
-        upperDiv.innerHTML=`
+    upperDiv.innerHTML = `
 
 
 
@@ -597,255 +597,255 @@ if (isPro) {
 `
 
 
-    }
-   
-
-
- 
-    let mediaC = window.matchMedia("(max-width: 700px)");
-// Attach listener function on state changes
-
-let bL = document.getElementById("doBeeLine");
-
-let sidebar = document.getElementById("custom_sidebar");
-let sidebar1 = document.getElementById("sidebar1");
-let sidebar2 = document.getElementById("sidebar2");
-let sidebar3 = document.getElementById("sidebar3");
-let sidebar4 = document.getElementById("sidebar4");
-
-let btn = document.getElementById("myBtn");
-let sidebarbtn = document.getElementById("custom_open");
+  }
 
 
 
 
+  let mediaC = window.matchMedia("(max-width: 700px)");
+  // Attach listener function on state changes
+
+  let bL = document.getElementById("doBeeLine");
+
+  let sidebar = document.getElementById("custom_sidebar");
+  let sidebar1 = document.getElementById("sidebar1");
+  let sidebar2 = document.getElementById("sidebar2");
+  let sidebar3 = document.getElementById("sidebar3");
+  let sidebar4 = document.getElementById("sidebar4");
+
+  let btn = document.getElementById("myBtn");
+  let sidebarbtn = document.getElementById("custom_open");
 
 
 
-let this_span = document.getElementsByClassName("close_ar")[0];
-let bLine = document.getElementById("bLine");
 
 
- // Call listener function at run time
-document.body.appendChild(sidebarbtn);
-document.body.appendChild(sidebar);
-document.body.appendChild(sidebar1);
-document.body.appendChild(sidebar2);
 
 
-document.body.appendChild(sidebar4);
+  let this_span = document.getElementsByClassName("close_ar")[0];
+  let bLine = document.getElementById("bLine");
 
-  
-_removeDeveloper();
-function _removeDeveloper() {
-    
-    if(isPro) {
-        
-        document.body.appendChild(sidebar3);
+
+  // Call listener function at run time
+  document.body.appendChild(sidebarbtn);
+  document.body.appendChild(sidebar);
+  document.body.appendChild(sidebar1);
+  document.body.appendChild(sidebar2);
+
+
+  document.body.appendChild(sidebar4);
+
+
+  _removeDeveloper();
+  function _removeDeveloper() {
+
+    if (isPro) {
+
+      document.body.appendChild(sidebar3);
     } else {
-        return null;
+      return null;
     }
-}
+  }
 
 
 
 
-window.addEventListener('click',function(event) {
-  if (event.target == sidebarbtn){
- 
-          document.getElementById("custom_sidebar").style.width = "480px";
-      
-           
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+  window.addEventListener('click', function (event) {
+    if (event.target == sidebarbtn) {
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("open_sidebar1")){ 
+      document.getElementById("custom_sidebar").style.width = "480px";
+
+
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("open_sidebar1")) {
       document.getElementById("sidebar1").style.width = "480px";
       document.getElementById("custom_sidebar").style.width = "0";
-         
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("open_sidebar2")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("open_sidebar2")) {
       document.getElementById("sidebar2").style.width = "480px";
       document.getElementById("custom_sidebar").style.width = "0";
-          
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("open_sidebar3")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("open_sidebar3")) {
       document.getElementById("sidebar3").style.width = "480px";
       document.getElementById("custom_sidebar").style.width = "0";
-      
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
 
 
 
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("acess_home")){ 
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("acess_home")) {
       document.getElementById("sidebar1").style.width = "0";
       document.getElementById("custom_sidebar").style.width = "480px";
-       
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("acess_refer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("acess_refer")) {
       document.getElementById("sidebar2").style.width = "480px";
       document.getElementById("sidebar1").style.width = "0px";
-          
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("acess_developer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("acess_developer")) {
       document.getElementById("sidebar3").style.width = "480px";
       document.getElementById("sidebar1").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("refer_home")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("refer_home")) {
       document.getElementById("sidebar2").style.width = "0";
       document.getElementById("custom_sidebar").style.width = "480px";
-      
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("refer_acess")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("refer_acess")) {
       document.getElementById("sidebar1").style.width = "480px";
       document.getElementById("sidebar2").style.width = "0px";
- 
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("refer_developer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("refer_developer")) {
       document.getElementById("sidebar3").style.width = "480px";
       document.getElementById("sidebar2").style.width = "0px";
 
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("developer_home")){ 
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("developer_home")) {
       document.getElementById("sidebar3").style.width = "0";
       document.getElementById("custom_sidebar").style.width = "480px";
-  
 
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("developer_acess")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("developer_acess")) {
       document.getElementById("sidebar1").style.width = "480px";
       document.getElementById("sidebar3").style.width = "0px";
-  
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("developer_refer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("developer_refer")) {
       document.getElementById("sidebar2").style.width = "480px";
       document.getElementById("sidebar3").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("open_usage")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("open_usage")) {
       document.getElementById("sidebar4").style.width = "480px";
       document.getElementById("custom_sidebar").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("usage_home")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("usage_home")) {
       document.getElementById("custom_sidebar").style.width = "480px";
       document.getElementById("sidebar4").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("usage_acess")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("usage_acess")) {
       document.getElementById("sidebar1").style.width = "480px";
       document.getElementById("sidebar4").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("usage_refer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("usage_refer")) {
       document.getElementById("sidebar2").style.width = "480px";
       document.getElementById("sidebar4").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("usage_developer")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("usage_developer")) {
       document.getElementById("sidebar3").style.width = "480px";
       document.getElementById("sidebar4").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
 
 
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("acess_usage")){ 
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("acess_usage")) {
       document.getElementById("sidebar4").style.width = "480px";
       document.getElementById("sidebar1").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
 
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("refer_usage")){ 
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("refer_usage")) {
       document.getElementById("sidebar4").style.width = "480px";
       document.getElementById("sidebar2").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
 
-window.addEventListener('click',function(event) {
-  if (event.target == document.getElementById("developer_usage")){ 
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target == document.getElementById("developer_usage")) {
       document.getElementById("sidebar4").style.width = "480px";
       document.getElementById("sidebar3").style.width = "0px";
-    
-  //document.getElementById("main").style.marginLeft = "250px";
-}
-});
+
+      //document.getElementById("main").style.marginLeft = "250px";
+    }
+  });
 
 
 
@@ -853,165 +853,165 @@ window.addEventListener('click',function(event) {
 
 
 
-$(".mt-container-secondary").css("display", "none");
+  $(".mt-container-secondary").css("display", "none");
 
 
 
 
 
 
-    
 
 
-$( '#per_table').click(function () {
-  if ( $( "#iFrameResizer0" ).is( ":hidden" ) ) {
-    $( "#iFrameResizer0" ).slideDown( "slow" );
 
-  } else {
-    $( "#iFrameResizer0" ).slideUp("slow");
- 
-  }
-});
+  $('#per_table').click(function () {
+    if ($("#iFrameResizer0").is(":hidden")) {
+      $("#iFrameResizer0").slideDown("slow");
 
-$( '#gloss_table').click(function () {
-  if ( $( "#gloss_table_put" ).is( ":hidden" ) ) {
-    
-    $( "#gloss_table_put" ).load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary #a9abfa27-98d2-c6fa-0c61-a753f2b8dcb1");
-    $( "#gloss_table_put" ).slideDown("slow");
-  } else {
-    $( "#gloss_table_put" ).slideUp("slow");
-  }
-});
+    } else {
+      $("#iFrameResizer0").slideUp("slow");
 
-$( '#ref_table').click(function () {
-  if ( $( "#ref_table_put" ).is( ":hidden" ) ) {
-    
-    $( "#ref_table_put" ).slideDown("slow");
-  } else {
-    $( "#ref_table_put" ).slideUp("slow");
-  }
-});
+    }
+  });
 
-$( '#phy_table').click(function () {
-  if ( $( "#phy_table_put" ).is( ":hidden" ) ) {
-    
-    $( "#phy_table_put" ).load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants #pageText");
-    $( "#phy_table_put" ).slideDown("slow");
-  } else {
-    $( "#phy_table_put" ).slideUp("slow");
-  }
-});
+  $('#gloss_table').click(function () {
+    if ($("#gloss_table_put").is(":hidden")) {
+
+      $("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary #a9abfa27-98d2-c6fa-0c61-a753f2b8dcb1");
+      $("#gloss_table_put").slideDown("slow");
+    } else {
+      $("#gloss_table_put").slideUp("slow");
+    }
+  });
+
+  $('#ref_table').click(function () {
+    if ($("#ref_table_put").is(":hidden")) {
+
+      $("#ref_table_put").slideDown("slow");
+    } else {
+      $("#ref_table_put").slideUp("slow");
+    }
+  });
+
+  $('#phy_table').click(function () {
+    if ($("#phy_table_put").is(":hidden")) {
+
+      $("#phy_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants #pageText");
+      $("#phy_table_put").slideDown("slow");
+    } else {
+      $("#phy_table_put").slideUp("slow");
+    }
+  });
 
 
-$( '#conv_table').click(function () {
-  if ( $( "#conv_table_put" ).is( ":hidden" ) ) {
-    
-    $( "#conv_table_put" ).load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
-    $( "#conv_table_put" ).slideDown("slow");
-  } else {
-    $( "#conv_table_put" ).slideUp("slow");
-  }
-});
+  $('#conv_table').click(function () {
+    if ($("#conv_table_put").is(":hidden")) {
 
-$( '#conversion_table').click(function () {
-  if ( $( "#conversion_table_put" ).is( ":hidden" ) ) {
-    
-    $( "#conversion_table_put" ).slideDown("slow");
-  } else {
-    $( "#conversion_table_put" ).slideUp("slow");
-  }
-});
+      $("#conv_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
+      $("#conv_table_put").slideDown("slow");
+    } else {
+      $("#conv_table_put").slideUp("slow");
+    }
+  });
 
-$( '#construction-guide').click(function () {
-  if ( $( "#construction-guide-put" ).is( ":hidden" ) ) {
-    
-    $( "#construction-guide-put" ).slideDown("slow");
-  } else {
-    $( "#construction-guide-put" ).slideUp("slow");
-  }
-});
+  $('#conversion_table').click(function () {
+    if ($("#conversion_table_put").is(":hidden")) {
 
-if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
-			localStorage.setItem('darkMode', true);
-		if (localStorage.getItem('darkMode') === 'true')
-			$('.elm-skin-container').addClass('darkMode');
+      $("#conversion_table_put").slideDown("slow");
+    } else {
+      $("#conversion_table_put").slideUp("slow");
+    }
+  });
 
-function frontpage(){
-     var x = $('.mt-icon-next-article').closest('a').attr('href');
-   
-    
+  $('#construction-guide').click(function () {
+    if ($("#construction-guide-put").is(":hidden")) {
+
+      $("#construction-guide-put").slideDown("slow");
+    } else {
+      $("#construction-guide-put").slideUp("slow");
+    }
+  });
+
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
+    localStorage.setItem('darkMode', true);
+  if (localStorage.getItem('darkMode') === 'true')
+    $('.elm-skin-container').addClass('darkMode');
+
+  function frontpage() {
+    var x = $('.mt-icon-next-article').closest('a').attr('href');
+
+
     this.location.href = x;
-}
-function backpage(){
-    
+  }
+  function backpage() {
+
     var x = $('.mt-icon-previous-article').closest('a').attr('href');
 
-    
-    this.location.href = x;
-}
-activateBeeLine();
- function activateBeeLine() {
-	const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
-	
-	const doBeeline = function (theme, action) {
-		for (let i = 0; i < beelineELements.length; i++) {
-			const beeline = new BeeLineReader(beelineELements[i], {
-				theme: theme,
-				skipBackgroundColor: true,
-				handleResize: true,
-				skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
-			});
-			
-			Cookies.set("beeline", theme, {domain: 'libretexts.org'});
-			if (theme === "off") {
-				beeline.uncolor();
-				if (typeof ga === 'function') {
-					ga('send', 'event', 'Beeline', 'disabled');
-				}
-			}
-			else {
-				beeline.color();
-				if (typeof ga === 'function') {
-					ga('send', 'event', 'Beeline', action, theme);
-				}
-			}
-			
-			
-			const contentContainer = $('.elm-skin-container');
-			if (theme === 'night_blues') {
-				contentContainer.addClass('darkMode');
-				localStorage.setItem('darkMode', true);
-			}
-			else {
-				contentContainer.removeClass('darkMode');
-				localStorage.setItem('darkMode', false);
-			}
-		}
-	};
-    
 
-    setBeelineToggles();	
-	function setBeelineToggles() {
-		const toggles = $('.BLtoggle');
-		
-		if (toggles[0]) {
-			const btns = toggles.find('button, a');
-			
-			btns.click(function (e) {
-				if (!e.target.href)
-					e.preventDefault();
-				const theme = $(this).attr("data-color");
-				if (!theme)
-					return;
-				btns.removeClass('active');
-				btns.filter('a[data-color="' + theme + '"]').addClass('active');
-				btns.filter('button[data-color="' + theme + '"]').addClass('active');
-				
-				doBeeline(theme, theme);
-			});
-		}
-	}
-    
+    this.location.href = x;
+  }
+  activateBeeLine();
+  function activateBeeLine() {
+    const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
+
+    const doBeeline = function (theme, action) {
+      for (let i = 0; i < beelineELements.length; i++) {
+        const beeline = new BeeLineReader(beelineELements[i], {
+          theme: theme,
+          skipBackgroundColor: true,
+          handleResize: true,
+          skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
+        });
+
+        Cookies.set("beeline", theme, { domain: 'libretexts.org' });
+        if (theme === "off") {
+          beeline.uncolor();
+          if (typeof ga === 'function') {
+            ga('send', 'event', 'Beeline', 'disabled');
+          }
+        }
+        else {
+          beeline.color();
+          if (typeof ga === 'function') {
+            ga('send', 'event', 'Beeline', action, theme);
+          }
+        }
+
+
+        const contentContainer = $('.elm-skin-container');
+        if (theme === 'night_blues') {
+          contentContainer.addClass('darkMode');
+          localStorage.setItem('darkMode', true);
+        }
+        else {
+          contentContainer.removeClass('darkMode');
+          localStorage.setItem('darkMode', false);
+        }
+      }
+    };
+
+
+    setBeelineToggles();
+    function setBeelineToggles() {
+      const toggles = $('.BLtoggle');
+
+      if (toggles[0]) {
+        const btns = toggles.find('button, a');
+
+        btns.click(function (e) {
+          if (!e.target.href)
+            e.preventDefault();
+          const theme = $(this).attr("data-color");
+          if (!theme)
+            return;
+          btns.removeClass('active');
+          btns.filter('a[data-color="' + theme + '"]').addClass('active');
+          btns.filter('button[data-color="' + theme + '"]').addClass('active');
+
+          doBeeline(theme, theme);
+        });
+      }
+    }
+
 
 
     /*$("#doBeeLine").on("click", function () {
@@ -1031,145 +1031,140 @@ activateBeeLine();
     		doBeeline(theme, theme);
 	});
 */
-  
-    
- 
- 
-} 
-
-
-              
 
 
 
 
-$('.changeMe').css("font-family", localStorage.getItem('font_family') );
-
-
-$('.changeMe').css("margin-left", localStorage.getItem('page_width') + "px" );
-
-
-$('.changeMe').css("margin-right", localStorage.getItem('page_width') + "px" );
+  }
 
 
 
-$("#fs").change(function() {
+
+
+
+
+  $('.changeMe').css("font-family", localStorage.getItem('font_family'));
+
+
+  $('.changeMe').css("margin-left", localStorage.getItem('page_width') + "px");
+
+
+  $('.changeMe').css("margin-right", localStorage.getItem('page_width') + "px");
+
+
+
+  $("#fs").change(function () {
     //alert($(this).val());
     var initial_data = $(this).val();
     $('.mt-content-container').css("font-family", initial_data);
     $("#fs").val(initial_data);
-    
-    
+
+
     localStorage.setItem('font_family', initial_data);
     var final_data = localStorage.getItem('font_family');
 
-});
+  });
 
 
 
 
-$("#size").change(function() {
-    
+  $("#size").change(function () {
+
     var initial_data = $(this).val();
-  
-    
+
+
     //CHANGE CSS TO SIZE FUNC VALUE
-   $('section.mt-content-container *').css("font-size", initial_data + "rem");
+    $('section.mt-content-container *').css("font-size", initial_data + "rem");
     //INPUT THAT AS A PLACE HOLDER VALUE 
     $("#size").val(initial_data);
-    
+
     //LOG SIZE VALUE AFTER INPUT DATA
-  
+
     localStorage.setItem('font_size', initial_data);
     var final_data = localStorage.getItem('font_size');
 
-   
-});
+
+  });
 
 
-$("#width").change(function() {
+  $("#width").change(function () {
     var initial_data = $(this).val();
-    
+
     $('section.mt-content-container').css("margin-left", initial_data + "px");
     $('section.mt-content-container').css("margin-right", initial_data + "px");
-    
-     $("#width").val(initial_data);
-    
-    
-     localStorage.setItem('page_width', initial_data);
+
+    $("#width").val(initial_data);
+
+
+    localStorage.setItem('page_width', initial_data);
     var final_data = localStorage.getItem('page_width');
 
-    
-});
+
+  });
 
 
-$("#fs2").change(function() {
+  $("#fs2").change(function () {
     //alert($(this).val());
     var link = $(this).val();
     window.open(link, '_blank');
-    
-   
-});
-
-$('body').click(function (event) 
-{
-   if(!$(event.target).closest('#custom_sidebar').length && !$(event.target).is('#custom_sidebar')) {
-     document.getElementById("custom_sidebar").style.width = "0";
-   
-   }     
-});
-$('body').click(function (event) 
-{
-   if(!$(event.target).closest('#sidebar1').length && !$(event.target).is('#sidebar1')) {
-     document.getElementById("sidebar1").style.width = "0";
-    
-   }     
-});
-$('body').click(function (event) 
-{
-   if(!$(event.target).closest('#sidebar2').length && !$(event.target).is('#sidebar2')) {
-     document.getElementById("sidebar2").style.width = "0";
-    
-   }     
-});
-$('body').click(function (event) 
-{
-   if(!$(event.target).closest('#sidebar3').length && !$(event.target).is('#sidebar3')) {
-     document.getElementById("sidebar3").style.width = "0";
-    
-   }     
-});
-
-$('body').click(function (event) 
-{
-   if(!$(event.target).closest('#sidebar4').length && !$(event.target).is('#sidebar4')) {
-     document.getElementById("sidebar4").style.width = "0";
-    
-   }     
-});
 
 
-$(document).ready(function(){
-    $('a.toggler').click(function(){
-        $(this).toggleClass('off');
-        if($('#toggler-text').text() === 'Left') {
-            $('#toggler-text').text('Full');
-            $('section.mt-content-container *').css("text-align", "Left");
-            $('section.mt-content-container p').css("text-align", "Left");
-        } else {
-            $('#toggler-text').text('Left');
-            $('section.mt-content-container *').css("text-align", "justify");
-            $('section.mt-content-container p').css("text-align", "justify");
-        }
-  
+  });
+
+  $('body').click(function (event) {
+    if (!$(event.target).closest('#custom_sidebar').length && !$(event.target).is('#custom_sidebar')) {
+      document.getElementById("custom_sidebar").style.width = "0";
+
+    }
+  });
+  $('body').click(function (event) {
+    if (!$(event.target).closest('#sidebar1').length && !$(event.target).is('#sidebar1')) {
+      document.getElementById("sidebar1").style.width = "0";
+
+    }
+  });
+  $('body').click(function (event) {
+    if (!$(event.target).closest('#sidebar2').length && !$(event.target).is('#sidebar2')) {
+      document.getElementById("sidebar2").style.width = "0";
+
+    }
+  });
+  $('body').click(function (event) {
+    if (!$(event.target).closest('#sidebar3').length && !$(event.target).is('#sidebar3')) {
+      document.getElementById("sidebar3").style.width = "0";
+
+    }
+  });
+
+  $('body').click(function (event) {
+    if (!$(event.target).closest('#sidebar4').length && !$(event.target).is('#sidebar4')) {
+      document.getElementById("sidebar4").style.width = "0";
+
+    }
+  });
+
+
+  $(document).ready(function () {
+    $('a.toggler').click(function () {
+      $(this).toggleClass('off');
+      if ($('#toggler-text').text() === 'Left') {
+        $('#toggler-text').text('Full');
+        $('section.mt-content-container *').css("text-align", "Left");
+        $('section.mt-content-container p').css("text-align", "Left");
+      } else {
+        $('#toggler-text').text('Left');
+        $('section.mt-content-container *').css("text-align", "justify");
+        $('section.mt-content-container p').css("text-align", "justify");
+      }
+
     });
-});
+  });
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-//OTHER MODURALIZED FUNCTIONS
-    // BEELINE, DEFAULT BUTTON, ATTRIBUTION, GET CC, CONVERTER, TOC 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //OTHER MODURALIZED FUNCTIONS
+  // BEELINE, DEFAULT BUTTON, ATTRIBUTION, GET CC, CONVERTER, TOC 
 
 };
 
@@ -1177,21 +1172,21 @@ $(document).ready(function(){
 
 
 
-window.addEventListener('load',rtdefault);
-function rtdefault(){
-     $('section.mt-content-container *').css("font-size", 1.1 + "rem");
-     $("#size").val("1.1");
-     $("#width").val("0");
-     $("#toggler-text").attr("class","toggler");
-     $('section.mt-content-container').css("margin-left", 0 + "px");
-     $('section.mt-content-container').css("margin-right", 0 + "px");
-     $('section.mt-content-container p').css("text-align", "justify");
-     $('section.mt-content-container *').css("text-align", "justify");
-    
-    
+window.addEventListener('load', rtdefault);
+function rtdefault() {
+  $('section.mt-content-container *').css("font-size", 1.1 + "rem");
+  $("#size").val("1.1");
+  $("#width").val("0");
+  $("#toggler-text").attr("class", "toggler");
+  $('section.mt-content-container').css("margin-left", 0 + "px");
+  $('section.mt-content-container').css("margin-right", 0 + "px");
+  $('section.mt-content-container p').css("text-align", "justify");
+  $('section.mt-content-container *').css("text-align", "justify");
+
+
 };
 //BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
-                       
+
 
 
 //BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
@@ -1201,160 +1196,160 @@ function rtdefault(){
 window.addEventListener('load', TOC);
 
 async function TOC() {
-	let coverpage;
-	let coverTitle;
-	let content;
-	if (!navigator.webdriver || !window.matchMedia('print').matches) {
-		coverpage = await LibreTexts.getCoverpage();
-		if (coverpage) {
-			await makeTOC(coverpage, true);
-		}
-	}
-	
-	async function makeTOC(path, isRoot, full) {
-		const origin = window.location.origin;
-		path = path.replace(origin + "/", "");
-		//get coverpage title & subpages;
-		let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
-		
-		
-		let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-		response = await response.json();
-		info = await info;
-		info = await info.json();
-		coverTitle = info.title;
-		return await subpageCallback(response, isRoot);
-		
-		async function subpageCallback(info, isRoot) {
-			let subpageArray = info["page.subpage"];
-			const result = [];
-			const promiseArray = [];
-			if (!subpageArray)
-				return false;
-			
-			if (!subpageArray.length) {
-				subpageArray = [subpageArray];
-			}
-			for (let i = 0; i < subpageArray.length; i++) {
-				promiseArray[i] = subpage(subpageArray[i], i);
-			}
-			
-			async function subpage(subpage, index) {
-				let url = subpage["uri.ui"];
-				let path = subpage.path["#text"];
-				let currentPage = url === window.location.href;
-				const hasChildren = subpage["@subpages"] === "true";
-				let defaultOpen = window.location.href.includes(url) && !currentPage;
-				let children = hasChildren ? undefined : [];
-				if (hasChildren && (full || defaultOpen)) { //recurse down
-					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-					children = await children.json();
-					children = await
-						subpageCallback(children, false);
-				}
-				result[index] = {
-					title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
-					url: url,
-					selected: currentPage,
-					expanded: defaultOpen,
-					children: children,
-					lazy: !full
-				};
-			}
-			
-			await Promise.all(promiseArray);
-			if (isRoot) {
-				content = result;
+  let coverpage;
+  let coverTitle;
+  let content;
+  if (!navigator.webdriver || !window.matchMedia('print').matches) {
+    coverpage = await LibreTexts.getCoverpage();
+    if (coverpage) {
+      await makeTOC(coverpage, true);
+    }
+  }
 
-				initializeFancyTree();
-			}
-			return result;
-		}
-		
-		function initializeFancyTree() {
-			const target = $("#custom_target");
-			if (content) {
-				const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
-				button.text("Contents");
-				button.attr('id', "TOCbutton");
-				button.attr('title', "Expand/Contract Table of Contents");
-				button.addClass("toc-button");
-				target.addClass("toc-hierarchy");
-				// target.removeClass("elm-hierarchy mt-hierarchy");
-				target.innerHTML = "";
-				target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
-				target.fancytree({
-					source: content,
-					lazyLoad: function (event, data) {
-						var dfd = new $.Deferred();
-						let node = data.node;
-						data.result = dfd.promise();
-						makeTOC(node.data.url).then((result) => dfd.resolve(result));
-					}
-				})
-			}
-		}
-	}
+  async function makeTOC(path, isRoot, full) {
+    const origin = window.location.origin;
+    path = path.replace(origin + "/", "");
+    //get coverpage title & subpages;
+    let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
+
+
+    let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+    response = await response.json();
+    info = await info;
+    info = await info.json();
+    coverTitle = info.title;
+    return await subpageCallback(response, isRoot);
+
+    async function subpageCallback(info, isRoot) {
+      let subpageArray = info["page.subpage"];
+      const result = [];
+      const promiseArray = [];
+      if (!subpageArray)
+        return false;
+
+      if (!subpageArray.length) {
+        subpageArray = [subpageArray];
+      }
+      for (let i = 0; i < subpageArray.length; i++) {
+        promiseArray[i] = subpage(subpageArray[i], i);
+      }
+
+      async function subpage(subpage, index) {
+        let url = subpage["uri.ui"];
+        let path = subpage.path["#text"];
+        let currentPage = url === window.location.href;
+        const hasChildren = subpage["@subpages"] === "true";
+        let defaultOpen = window.location.href.includes(url) && !currentPage;
+        let children = hasChildren ? undefined : [];
+        if (hasChildren && (full || defaultOpen)) { //recurse down
+          children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+          children = await children.json();
+          children = await
+            subpageCallback(children, false);
+        }
+        result[index] = {
+          title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
+          url: url,
+          selected: currentPage,
+          expanded: defaultOpen,
+          children: children,
+          lazy: !full
+        };
+      }
+
+      await Promise.all(promiseArray);
+      if (isRoot) {
+        content = result;
+
+        initializeFancyTree();
+      }
+      return result;
+    }
+
+    function initializeFancyTree() {
+      const target = $("#custom_target");
+      if (content) {
+        const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
+        button.text("Contents");
+        button.attr('id', "TOCbutton");
+        button.attr('title', "Expand/Contract Table of Contents");
+        button.addClass("toc-button");
+        target.addClass("toc-hierarchy");
+        // target.removeClass("elm-hierarchy mt-hierarchy");
+        target.innerHTML = "";
+        target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
+        target.fancytree({
+          source: content,
+          lazyLoad: function (event, data) {
+            var dfd = new $.Deferred();
+            let node = data.node;
+            data.result = dfd.promise();
+            makeTOC(node.data.url).then((result) => dfd.resolve(result));
+          }
+        })
+      }
+    }
+  }
 }
 //ATTR
 
 window.addEventListener("load", getCC);
 window.addEventListener("load", getattrText);
 
-	function getCC() {
-		let tags = document.getElementById("pageTagsHolder");
-		if (tags) {
-			tags = tags.innerText;
-			tags = tags.replace(/\\/g, "");
-			tags = JSON.parse(tags);
-			for (let i = 0; i < tags.length; i++) {
-				if (tags[i].includes("license")) {
-					let tag = tags[i].split(":")[1];
-					switch (tag) {
-						case "publicdomain":
-							return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
-						case "ccby":
-							return { label: "cc-BY", title: "CC BY",  link: "https://creativecommons.org/licenses/by/4.0/" };
-						case "ccbysa":
-							return { label: "cc-by-sa", title: "CC BY-SA",  link: "https://creativecommons.org/licenses/by-sa/4.0/" };
-						case "ccbyncsa":
-							return { label: "cc-by-nc-sa", title: "CC BY-NC-SA",  link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
-						case "ccbync":
-							return { label: "cc-by-nc", title: "CC BY-NC",  link: "https://creativecommons.org/licenses/by-nc/4.0/" };
-						case "ccbynd":
-							return { label: "cc-by-nd", title: "CC BY-ND",  link: "https://creativecommons.org/licenses/by-nd/4.0/" };
-						case "ccbyncnd":
-							return { label: "cc-by-nc-nd", title: "CC BY-NC-ND",  link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
-						case "gnu":
-							return { label: "gnu", title: "GNU GPL",  link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
-						case "gnudsl":
-							return { label: "gnudsl", title: "GNU DSL",  link: "https://www.gnu.org/licenses/dsl.html" };
-						case "gnufdl":
-							return { label: "gnufdl", title: "GNU FDL",  link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
-						case "arr":
-							return { label: "arr", title: "All Rights Reserved ©",  };
+function getCC() {
+  let tags = document.getElementById("pageTagsHolder");
+  if (tags) {
+    tags = tags.innerText;
+    tags = tags.replace(/\\/g, "");
+    tags = JSON.parse(tags);
+    for (let i = 0; i < tags.length; i++) {
+      if (tags[i].includes("license")) {
+        let tag = tags[i].split(":")[1];
+        switch (tag) {
+          case "publicdomain":
+            return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
+          case "ccby":
+            return { label: "cc-BY", title: "CC BY", link: "https://creativecommons.org/licenses/by/4.0/" };
+          case "ccbysa":
+            return { label: "cc-by-sa", title: "CC BY-SA", link: "https://creativecommons.org/licenses/by-sa/4.0/" };
+          case "ccbyncsa":
+            return { label: "cc-by-nc-sa", title: "CC BY-NC-SA", link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
+          case "ccbync":
+            return { label: "cc-by-nc", title: "CC BY-NC", link: "https://creativecommons.org/licenses/by-nc/4.0/" };
+          case "ccbynd":
+            return { label: "cc-by-nd", title: "CC BY-ND", link: "https://creativecommons.org/licenses/by-nd/4.0/" };
+          case "ccbyncnd":
+            return { label: "cc-by-nc-nd", title: "CC BY-NC-ND", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
+          case "gnu":
+            return { label: "gnu", title: "GNU GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
+          case "gnudsl":
+            return { label: "gnudsl", title: "GNU DSL", link: "https://www.gnu.org/licenses/dsl.html" };
+          case "gnufdl":
+            return { label: "gnufdl", title: "GNU FDL", link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
+          case "arr":
+            return { label: "arr", title: "All Rights Reserved ©", };
 
-					}
-				}
-			}
-		}
-		return null; //not found
-	}
+        }
+      }
+    }
+  }
+  return null; //not found
+}
 
 
 
-function getattrText () {
-    let attrdiv = document.createElement("div");
-    document.body.appendChild(attrdiv);
-    
-    const cc = getCC();
-    let title = $("#titleHolder").text();
-    let titlestr = `"` + title + `"`;
-    let author = $("li.mt-author-information a:first").text();
-    let currentURL = window.location.href;
-//onclick="document.getElementById('attrModal').style.display='none'"
-    
-    $(attrdiv).html(`
+function getattrText() {
+  let attrdiv = document.createElement("div");
+  document.body.appendChild(attrdiv);
+
+  const cc = getCC();
+  let title = $("#titleHolder").text();
+  let titlestr = `"` + title + `"`;
+  let author = $("li.mt-author-information a:first").text();
+  let currentURL = window.location.href;
+  //onclick="document.getElementById('attrModal').style.display='none'"
+
+  $(attrdiv).html(`
 
     
     <div onclick="hideattr()" id="attrModal" class="attrModal">
@@ -1378,43 +1373,43 @@ function getattrText () {
         </div>
 
     </div>`);
-    
-    
-    //COPY THE TEXT
-    const attrCopy = document.getElementById("attr-copy");
-    
-    attrCopy.addEventListener("click", () => {
-          let text = document.getElementById("attr-text").innerText;
-          let elem = document.createElement("textarea");
-          document.body.appendChild(elem);
-          elem.value = text;
-          elem.select();
 
-          document.execCommand("copy");
-          document.body.removeChild(elem);
-    });
 
-    //AUTHOR LINKS
-    const attrAuthor = $("li.mt-author-information a:first").attr('href');
-    $("#attr-author").attr("href", attrAuthor);
-    $("#attr-author-link").attr("href", attrAuthor);
-    
-    //COPY THE HTML
-    const attrHTMLCopy = document.getElementById("attr-html");
-    
-    attrHTMLCopy.addEventListener("click", () => {
-          let text = $("#attr-text").html();
-      
-          let elem = document.createElement("textarea");
-          document.body.appendChild(elem);
-          elem.value = text;
-          elem.select();
+  //COPY THE TEXT
+  const attrCopy = document.getElementById("attr-copy");
 
-          document.execCommand("copy");
-          document.body.removeChild(elem);
-    });
-    
-    
+  attrCopy.addEventListener("click", () => {
+    let text = document.getElementById("attr-text").innerText;
+    let elem = document.createElement("textarea");
+    document.body.appendChild(elem);
+    elem.value = text;
+    elem.select();
+
+    document.execCommand("copy");
+    document.body.removeChild(elem);
+  });
+
+  //AUTHOR LINKS
+  const attrAuthor = $("li.mt-author-information a:first").attr('href');
+  $("#attr-author").attr("href", attrAuthor);
+  $("#attr-author-link").attr("href", attrAuthor);
+
+  //COPY THE HTML
+  const attrHTMLCopy = document.getElementById("attr-html");
+
+  attrHTMLCopy.addEventListener("click", () => {
+    let text = $("#attr-text").html();
+
+    let elem = document.createElement("textarea");
+    document.body.appendChild(elem);
+    elem.value = text;
+    elem.select();
+
+    document.execCommand("copy");
+    document.body.removeChild(elem);
+  });
+
+
 
 }
 
@@ -1424,18 +1419,18 @@ var modal = document.getElementById('attrModal');
 
 
 function showattr() {
-     document.getElementById("attrModal").style.display = "flex";
-    
+  document.getElementById("attrModal").style.display = "flex";
+
 }
 
 
 function hideattr() {
 
-    if(!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
-         document.getElementById("attrModal").style.display = "none";
-    }
-    
-    
+  if (!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
+    document.getElementById("attrModal").style.display = "none";
+  }
+
+
 }
 
 
@@ -1628,23 +1623,23 @@ function ConvertFromTo(sourceForm, targetForm) {
 }
 
 // This fragment initializes the property dropdown menu using the data defined above in the 'Data Definitions' section
-window.onload = function(e) {
+window.onload = function (e) {
   FillMenuWithArray(document.property_form.the_menu, property);
   UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
   UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu)
 }
 
 // Restricting textboxes to accept numbers + navigational keys only
-document.getElementById('numbersonly').addEventListener('keydown', function(e) {
+document.getElementById('numbersonly').addEventListener('keydown', function (e) {
   var key = e.keyCode ? e.keyCode : e.which;
 
   if (!([8, 9, 13, 27, 46, 110, 190].indexOf(key) !== -1 ||
-      (key == 65 && (e.ctrlKey || e.metaKey)) || // Select All 
-      (key == 67 && (e.ctrlKey || e.metaKey)) || // Copy
-      (key == 86 && (e.ctrlKey || e.metaKey)) || // Paste
-      (key >= 35 && key <= 40) || // End, Home, Arrows
-      (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) || // Numeric Keys
-      (key >= 96 && key <= 105) // Numpad
+    (key == 65 && (e.ctrlKey || e.metaKey)) || // Select All 
+    (key == 67 && (e.ctrlKey || e.metaKey)) || // Copy
+    (key == 86 && (e.ctrlKey || e.metaKey)) || // Paste
+    (key >= 35 && key <= 40) || // End, Home, Arrows
+    (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) || // Numeric Keys
+    (key >= 96 && key <= 105) // Numpad
       (key == 190) // Numpad
-    )) e.preventDefault();
+  )) e.preventDefault();
 });
