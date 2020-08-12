@@ -16,8 +16,9 @@ let LibreTextsGlossarizer = {
                     }
                 });
                 let bodycontent = (typeof (data.body) == "string") ? data.body : data.body[0];
-                if (!(bodycontent.includes('<tbody id="glossaryTable">'))) {
+                if (!(bodycontent.includes('Word' + "(s)"))) {
                     bodycontent = "";
+                    return [];
                 }
                 bodycontent = bodycontent.substring(bodycontent.search("</tbody>") + 8);
                 //Find the body of the glossary table
@@ -45,9 +46,10 @@ let LibreTextsGlossarizer = {
                         "term": "",
                         "description": ""
                     };
+                    //Get data from the columns in the row
                     let cols = {};
                     let colStart = [
-                        ['<td data-th="Word(s)">', "word"],
+                        ['<td data-th="Word' + '(s)">', "word"],
                         ['<td data-th="Definition">', "definition"],
                         ['<td data-th="Exclusions">', "exclusion"],
                         ['<td data-th="Image">', "image"],
@@ -55,30 +57,13 @@ let LibreTextsGlossarizer = {
                         ['<td data-th="Link">', "link"],
                         ['<td data-th="Source">', "source"]
                     ]
-                    //['<td data-th="Word(s)">', '<td data-th="Definition">', '<td data-th="Exclusions">', '<td data-th="Link">', '<td data-th="Source">'];
                     let colEnd = '</td>';
                     for (let t = 0; t < colStart.length; t++) {
                         let tag = colStart[t][0];
                         let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
                         cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
                     }
-                    if (cols["image"].length) {
-                        cols["definition"] += " " + cols["image"];
-                    }
-                    if (cols["caption"].length) {
-                        cols["definition"] += " " + cols["caption"];
-                    }
-                    if (cols["source"].length) {
-                        cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
-                    }
-                    if (cols["link"].length) {
-                        let aTagStart = 'href="';
-                        let aTagEnd = '">';
-                        let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
-                        newTerm["description"] = `<a href = "${href}">${cols["definition"]}</a>`;
-                    } else {
-                        newTerm["description"] = cols["definition"];
-                    }
+                    //Generate the description
                     let exclusions;
                     if (cols["exclusion"].length) {
                         exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
@@ -87,6 +72,27 @@ let LibreTextsGlossarizer = {
                         exclusions = "";
                     }
                     newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
+
+                    //Make Description
+                    if (cols["link"].length) {
+                        let aTagStart = 'href="';
+                        let aTagEnd = '">';
+                        let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
+                        cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
+                    }
+                    if (cols["image"].length) {
+                        cols["definition"] += " " + cols["image"];
+                    }
+                    if (cols["caption"].length) {
+                        cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
+                    }
+                    if (cols["source"].length) {
+                        cols["definition"] = cols["definition"].trim() + `<p class = "glossarySource">[Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]</p>`;
+                    }
+
+                    newTerm["description"] = cols["definition"];
+
+                    //Add new term
                     retrievedGlossary.push(newTerm);
                 }
                 return retrievedGlossary;
@@ -484,17 +490,19 @@ let LibreTextsGlossarizer = {
 
                     tooltip.bind("mouseleave", remove_tooltip);
                     tooltip.bind('click', remove_tooltip);
-                    target.bind( 'mouseleave', function() {setTimeout(function (word){
-                    	if ($(`#tooltip${word}:hover`).length == 0) {
-                    		$("#tooltip"+word).animate({
-                                top: '-=10',
-                                opacity: 0
-                            }, 50, function () {
-                                $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
-                                $(this).remove();
-                            });
-                    	}
-                    }, 300, target.html())});
+                    target.bind('mouseleave', function () {
+                        setTimeout(function (word) {
+                            if ($(`#tooltip${word}:hover`).length == 0) {
+                                $("#tooltip" + word).animate({
+                                    top: '-=10',
+                                    opacity: 0
+                                }, 50, function () {
+                                    $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
+                                    $(this).remove();
+                                });
+                            }
+                        }, 300, target.html())
+                    });
                 });
 
             }
@@ -530,7 +538,7 @@ let LibreTextsGlossarizer = {
         });
     },
     buildBackMatter: function () {
-        let $glossaryTable = $("table:contains('Word(s)')")
+        let $glossaryTable = $("table:contains('Word" + "(s)')")
         let tBody = $glossaryTable.html().replace(/&nbsp;/g, " ").replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
         tBody = tBody.substring(tBody.search("<tbody"), tBody.search("</tbody>")).trim();
         let tableRows = [];
@@ -552,7 +560,7 @@ let LibreTextsGlossarizer = {
             //Get cells in the 3 columns
             let cols = {};
             let colStart = [
-                ['<td data-th="Word(s)">', "word"],
+                ['<td data-th="Word' + '(s)">', "word"],
                 ['<td data-th="Definition">', "definition"],
                 ['<td data-th="Exclusions">', "exclusion"],
                 ['<td data-th="Image">', "image"],
@@ -560,7 +568,6 @@ let LibreTextsGlossarizer = {
                 ['<td data-th="Link">', "link"],
                 ['<td data-th="Source">', "source"]
             ]
-            //['<td data-th="Word(s)">', '<td data-th="Definition">', '<td data-th="Exclusions">', '<td data-th="Link">', '<td data-th="Source">'];
             let colEnd = '</td>';
             for (let t = 0; t < colStart.length; t++) {
                 let tag = colStart[t][0];
@@ -581,7 +588,7 @@ let LibreTextsGlossarizer = {
                 let aTagStart = 'href="';
                 let aTagEnd = '">';
                 let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
-                newTerm["description"] = `<a href = "${href}" class = "glossaryDefinition">${cols["definition"].trim()}</a>`;
+                newTerm["description"] = `<a href = "${href}" target="_blank" class = "glossaryDefinition">${cols["definition"].trim()}</a>`;
             } else {
                 newTerm["description"] = `<span class = "glossaryDefinition">${cols["definition"].trim()}</span>`;
             }
