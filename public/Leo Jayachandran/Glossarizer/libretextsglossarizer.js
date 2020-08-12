@@ -412,7 +412,6 @@ let LibreTextsGlossarizer = {
         (function ($, window) {
 
             function ToolTip() {
-
                 let targets = $('.glossarizer_replaced'),
                     target = false,
                     tooltip = false,
@@ -421,7 +420,7 @@ let LibreTextsGlossarizer = {
                 targets.bind('mouseenter', function () {
                     target = $(this);
                     tip = target.attr('title');
-                    tooltip = $('<div id="tooltip"></div>');
+                    tooltip = $(`<div id="tooltip${target.text()}" class= "tooltip"></div>`);
 
                     if (!tip || tip == '')
                         return false;
@@ -453,7 +452,7 @@ let LibreTextsGlossarizer = {
                             tooltip.removeClass('right');
 
                         if (pos_top < 0) {
-                            let pos_top = target.offset().top + target.outerHeight();
+                            pos_top = target.offset().top + target.outerHeight();
                             tooltip.addClass('top');
                         } else
                             tooltip.removeClass('top');
@@ -472,26 +471,30 @@ let LibreTextsGlossarizer = {
                     $(window).resize(init_tooltip);
 
                     let remove_tooltip = function () {
-                        tooltip.animate({
+                        $(".tooltip").animate({
                             top: '-=10',
                             opacity: 0
                         }, 50, function () {
+                            $(`.glossarizer_replaced:contains('${$(this).attr("id").substring(7)}')`).attr("title", $(this).html())
                             $(this).remove();
                         });
 
-                        target.attr('title', tip);
                     };
 
 
                     tooltip.bind("mouseleave", remove_tooltip);
                     tooltip.bind('click', remove_tooltip);
-                    target.bind("mouseleave", remove_tooltip);
-                    // target.bind( 'mouseleave', setTimeout(function (){
-                    // 	if ($("#tooltip:hover").length == 0) {
-                    // 		$("#tooltip").trigger("click");
-                    // 		remove_tooltip;
-                    // 	}
-                    // }, 300));
+                    target.bind( 'mouseleave', function() {setTimeout(function (word){
+                    	if ($(`#tooltip${word}:hover`).length == 0) {
+                    		$("#tooltip"+word).animate({
+                                top: '-=10',
+                                opacity: 0
+                            }, 50, function () {
+                                $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
+                                $(this).remove();
+                            });
+                    	}
+                    }, 300, target.html())});
                 });
 
             }
