@@ -81,7 +81,7 @@ let LibreTextsGlossarizer = {
                         cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
                     }
                     if (cols["image"].length) {
-                        cols["definition"] += " " + cols["image"];
+                        cols["definition"] += `<div class='imageContainer'>${cols["image"]}</div>`;
                     }
                     if (cols["caption"].length) {
                         cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
@@ -437,6 +437,11 @@ let LibreTextsGlossarizer = {
                         .appendTo('body');
 
                     let init_tooltip = function () {
+                        if (tooltip.html().includes("<img")) {
+                            if ($(".tooltip img").height() > 100) { 
+                                $(".tooltip img").height(100); // Downsize to 10em if image is too big
+                            }
+                        }
                         if ($(window).width() < tooltip.outerWidth() * 1.5)
                             tooltip.css('max-width', $(window).width() / 2);
                         else
@@ -476,6 +481,7 @@ let LibreTextsGlossarizer = {
                     init_tooltip();
                     $(window).resize(init_tooltip);
 
+
                     let remove_tooltip = function () {
                         $(".tooltip").animate({
                             top: '-=10',
@@ -486,9 +492,28 @@ let LibreTextsGlossarizer = {
                         });
 
                     };
+                    if (tooltip.html().includes("<img")) {
+                        $(".tooltip img").on("load", function () {
+                            init_tooltip();
+                            target.bind('mouseleave', function () {
+                                setTimeout(function (word) {
+                                    if ($(`#tooltip${word}:hover`).length == 0) {
+                                        $("#tooltip" + word).animate({
+                                            top: '-=10',
+                                            opacity: 0
+                                        }, 50, function () {
+                                            $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
+                                            $(this).remove();
+                                        });
+                                    }
+                                }, 300, target.html());
+                            });
+                        });
+                    } else {
+                        tooltip.bind("mouseleave", remove_tooltip);
+                        
+                    }
 
-
-                    tooltip.bind("mouseleave", remove_tooltip);
                     tooltip.bind('click', remove_tooltip);
                     target.bind('mouseleave', function () {
                         setTimeout(function (word) {
@@ -574,13 +599,6 @@ let LibreTextsGlossarizer = {
                 let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
                 cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
             }
-            //cols = [words, defintion, exclusions, image, link, source]
-            let words = 0,
-                definitions = 1,
-                exclusions = 2,
-                image = 3,
-                link = 4,
-                source = 5;
             if (cols["source"].length) {
                 cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
             }
