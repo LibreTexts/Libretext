@@ -1,13 +1,14 @@
-window.addEventListener("load", getCC);
-window.addEventListener("load", getattrText);
-window.addEventListener("load", _removeDeveloper);
+window.addEventListener("load", _createSidebar);
 
+function _createSidebar() {
+    
+    
 const isPro = document.getElementById("proHolder").innerText === 'true';
-console.log(isPro);
 
 
-var upperDiv = document.getElementById("ffs");
 
+let upperDiv = document.createElement("div");
+document.body.append(upperDiv);
 
 if (isPro) {
         upperDiv.innerHTML=`
@@ -61,6 +62,14 @@ if (isPro) {
    
    <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
+
+<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
+      <a id="SB_Inverted" class="btn btn-large" data-color="night_blues">Inverted</a>
+                <a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>
+                <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
+                <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
+                <a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
+                </div></div>
      </div>
 
 
@@ -135,7 +144,7 @@ if (isPro) {
 
   <div class="converter-side-a">
     <form name="form_A" onSubmit="return false">
-      <input type="text" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="CalculateUnit(document.form_A, document.form_B)">
+      <input type="text" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="CalculateUnit(document.form_A, document.form_B)">
       <span>
         <select name="unit_menu" onChange="CalculateUnit(document.form_B, document.form_A)">
         </select>
@@ -144,7 +153,7 @@ if (isPro) {
   </div> <!-- /converter-side-a -->
   
  <div class="converter-equals">
-   <p>=</p>
+   <p style="margin: 10px;">=</p>
  </div> <!-- /converter-side-a -->
 
   <div class="converter-side-b">
@@ -191,8 +200,22 @@ if (isPro) {
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
         <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
-        <a title="https://chem.libretexts.org/Courses/Remixer_University/Construction_Guide" href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
-        <a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
+        <a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
+      
+            <div id="construction-guide-put" class="custom_field" style="display: none; background-color: white ">                
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/00%3A_Front_Matter"> Front Matter</a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/01%3A_LibreTexts_Fundamentals">Libretexts Fundamentals</a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/02%3A_A_Framework_for_Designing_Online_Texts"> Online Texts </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/03%3A_Basic_Editing"> Basic Editing </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/04%3A_Advanced_Editing"> Advanced Editing </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/05%3A_Interactive_Elements">Interactive Elements </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/06%3A_Contributing%2C_Harvesting%2C_and_Curating_Content"> Curating Content </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/07%3A_Remixing_Existing_Content"> Removing Content </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/08%3A_Disseminating_Texts_and_Course_Shells"> Course Shells </a>
+<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/zz%3A_Back_Matter"> Back Matter </a>
+         </div>        
+
+<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 
     </div>
@@ -224,9 +247,9 @@ if (isPro) {
         </div>
     </div>
 
-    <div class="custom_field">
+    <!--<div class="custom_field">
          <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
-    </div>
+    </div>-->
 
     <div class="custom_field">
          <a onclick = "event.preventDefault(); showattr()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
@@ -310,7 +333,7 @@ if (isPro) {
 
 
 ` } else {
-            upperDiv.innerHTML=`
+        upperDiv.innerHTML=`
 
 
 
@@ -333,9 +356,13 @@ if (isPro) {
             <h5 id="acess_usage">Usage</h5>
         </div>
   
+     
+
 
   </div>
-
+    <div style="display: grid;" class="custom_field">
+        <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;border-bottom: 1px solid black !important;">Default Settings</button>
+    </div>
     <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
@@ -349,24 +376,22 @@ if (isPro) {
   <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="width">
 </div>
    <p class="h_ar">Text Align:</p>
-    <div class="custom_field">      
-        <select  class="selectAR" id="ta">
-        
-          
-            <option value="left">Left</option>
-            <option value="justify">Full</option>
-
-        </select>
+    <div class="custom_field"> 
+        <a id="toggler-text" href="#0" class="toggler">Left</a>
     </div>
    
-   <p class="h_ar">Beeline Modes:</p>
+   <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
+
+<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
+      <a id="SB_Inverted" class="btn btn-large" data-color="night_blues">Inverted</a>
+                <a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>
+                <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
+                <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
+                <a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
+                </div></div>
      </div>
 
-
-        
-    <p style="margin-top: 35%;" class="h_ar" onclick="rtdefault()" data-color="off"><a style="margin-left: 0 !important; padding: 0; margin-bottom:0px;">Default Settings</a></p> 
-    <p style="margin-top:-25px;" class="h_ar" onclick="rtdefault()" data-color="off"><a  href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank" style="margin-left: 0 !important; padding: 0; padding-top: 5px;">About BeeLine</a></p> 
 
    
 </div>
@@ -418,14 +443,11 @@ if (isPro) {
          <a id="phy_table" target="_blank" >Physical Constants</a>
                 <div id="phy_table_put" class="custom_field">
                 </div>
-        <a id="conv_table"  target="_blank" >Unit and Conversions</a>
-            <div id="conv_table_put" class="custom_field">   
-            </div>
         <!--<a id="gloss_table">Organic Chemistry Glossary</a>
             <div id="gloss_table_put" class="custom_field">
             </div>-->
         <a id="conversion_table">Conversion Calculator</a>
-        <div class="custom_field"  id="conversion_table_put" style="display:none; " >
+        <div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
                     <div class="converter-wrapper">
   
@@ -448,7 +470,7 @@ if (isPro) {
   </div> <!-- /converter-side-a -->
   
  <div class="converter-equals">
-   <p>=</p>
+   <p style="margin: 10px;>=</p>
  </div> <!-- /converter-side-a -->
 
   <div class="converter-side-b">
@@ -493,29 +515,39 @@ if (isPro) {
 
     </div>
 
+    <!--<div class="custom_field">
+         <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
+    </div>-->
+
     <div class="custom_field">
-         <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Citation</a>
+         <a onclick = "event.preventDefault(); showattr()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
 
     <div class="custom_field">
-         <a onclick = "event.preventDefault(); buildattr()" href='#' class='mt-icon-quote'>&nbsp;Get Attribution</a>
+        <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
     </div>
 
     <div class="custom_field">
-        <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet-Commons</a>
+        <a href="https://www.facebook.com/LibreTexts/" rel="external nofollow" target="_blank" class="mt-icon-facebook">&nbsp;Facebook</a>
     </div>
 
     <div class="custom_field">
-        <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline-Specific-Forums</a>   
+        <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
     </div>
 
     <div class="custom_field">
-        <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube-Channel</a>
+        <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
+    </div>
+
+    <div class="custom_field">
+        <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
     </div>
 
     <div class="custom_field">
         <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
     </div>
+
+
 
 </div>
 
@@ -547,26 +579,10 @@ if (isPro) {
         </div>
 
 
+       
   </div>
-<div style="width: 100%; padding: 10px;" class="mt-quick-search-container mt-toggle-form-container">
-    <form action="/Special:Search">
-        <input name="qid" id="mt-qid-skin" type="hidden" value="">
-        <input name="fpid" id="mt-search-filter-id" type="hidden" value="230">
-        <input name="fpth" id="mt-search-filter-path" type="hidden">
-        <input name="path" id="mt-search-path" type="hidden" value="">
 
-        <label class="mt-label" for="mt-site-search-input">
-            Search
-        </label>
-        <input style="width:90%; " class="mt-text mt-search search-field" name="q" id="mt-site-search-input" placeholder="Search" tabindex="1" type="search">
-        <button class="mt-button ui-button-icon mt-icon-site-search-button search-button" tabindex="2" type="submit">
-            Search
-        </button>
-    </form>
-</div>
-   
-
-  <div style="margin-top: 10px" class="" id="custom_target"></div>
+  <div  class="" id="custom_target"></div>
 </div>
 
 
@@ -578,14 +594,15 @@ if (isPro) {
 <button id="custom_open"  >☰
 </button> 
 
+`
 
 
+    }
+   
 
-` 
-}
 
-
-let mediaC = window.matchMedia("(max-width: 700px)");
+ 
+    let mediaC = window.matchMedia("(max-width: 700px)");
 // Attach listener function on state changes
 
 let bL = document.getElementById("doBeeLine");
@@ -615,6 +632,11 @@ document.body.appendChild(sidebar);
 document.body.appendChild(sidebar1);
 document.body.appendChild(sidebar2);
 
+
+document.body.appendChild(sidebar4);
+
+  
+_removeDeveloper();
 function _removeDeveloper() {
     
     if(isPro) {
@@ -624,8 +646,6 @@ function _removeDeveloper() {
         return null;
     }
 }
-document.body.appendChild(sidebar4);
-
 
 
 
@@ -829,13 +849,7 @@ window.addEventListener('click',function(event) {
 
 
 
-$(document).ready(function() {
-    console.log("ready");
-    console.log($("a.mt-icon-previous-article span").first().text());
-    console.log($("a.mt-icon-next-article span").first().text());
-    $('#f_title').text($("a.mt-icon-next-article span").first().text());
-    $('#b_title').text($("a.mt-icon-previous-article span").first().text());
-});
+
 
 
 
@@ -908,6 +922,15 @@ $( '#conversion_table').click(function () {
   }
 });
 
+$( '#construction-guide').click(function () {
+  if ( $( "#construction-guide-put" ).is( ":hidden" ) ) {
+    
+    $( "#construction-guide-put" ).slideDown("slow");
+  } else {
+    $( "#construction-guide-put" ).slideUp("slow");
+  }
+});
+
 if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
 			localStorage.setItem('darkMode', true);
 		if (localStorage.getItem('darkMode') === 'true')
@@ -915,18 +938,19 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.ge
 
 function frontpage(){
      var x = $('.mt-icon-next-article').closest('a').attr('href');
-          console.log(x);
+   
     
     this.location.href = x;
 }
 function backpage(){
     
     var x = $('.mt-icon-previous-article').closest('a').attr('href');
-          console.log(x);
+
     
     this.location.href = x;
 }
-function activateBeeLine() {
+activateBeeLine();
+ function activateBeeLine() {
 	const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
 	
 	const doBeeline = function (theme, action) {
@@ -988,12 +1012,10 @@ function activateBeeLine() {
 		}
 	}
     
-    $("#custom_sidebar").resizable();
 
-    $("#doBeeLine").on("click", function () {
-    		/*if (!activateBeeLine.theme && typeof (Cookies.get("beeline")) != "undefined")
-    			activateBeeLine.theme = Cookies.get("beeline");
-    		*/
+
+    /*$("#doBeeLine").on("click", function () {
+    		
 	    	const theme = activateBeeLine.theme !== 'bright' ? 'bright' : 'off';
     		
     		const toggles = $('.BLtoggle');
@@ -1008,37 +1030,27 @@ function activateBeeLine() {
     		event.preventDefault();
     		doBeeline(theme, theme);
 	});
-}
-
-if (window.beelineEnabled) {
+*/
+  
     
-                bL.innerHTML += `<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>`;
-                bL.innerHTML += `<a id="SB_Inverted" class="btn btn-large" data-color="night_blues">Inverted</a>`;
-				bL.innerHTML += `<a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>`;
-				bL.innerHTML += `<a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>`;
-				bL.innerHTML += `<a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>`;
-			    bL.innerHTML += `<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>`;
-                /*bL.innerHTML += `<a class="btn btn-large" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
-title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
-<img style="position:absolute; margin-top: 5px; margin-left: -30px; width:25px; height: 25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;*/
-                bL.innerHTML += `</div></div>`;
-    
-};
+ 
+ 
+} 
 
 
-			
+              
 
 
 
 
 $('.changeMe').css("font-family", localStorage.getItem('font_family') );
-console.log(localStorage.getItem('font_family') + ": INITIAL FONT");
+
 
 $('.changeMe').css("margin-left", localStorage.getItem('page_width') + "px" );
-console.log(localStorage.getItem('page_width') + ": INITIAL WIDTH");
+
 
 $('.changeMe').css("margin-right", localStorage.getItem('page_width') + "px" );
-console.log(localStorage.getItem('page_width') + ": INITIAL WIDTH");
+
 
 
 $("#fs").change(function() {
@@ -1050,20 +1062,10 @@ $("#fs").change(function() {
     
     localStorage.setItem('font_family', initial_data);
     var final_data = localStorage.getItem('font_family');
-    console.log(final_data +": FINAL FONT");
+
 });
 
-function rtdefault(){
-     $('section.mt-content-container *').css("font-size", 1.1 + "rem");
-     $("#size").val("1.1");
-     $("#width").val("0");
-     $('section.mt-content-container').css("margin-left", 0 + "px");
-     $('section.mt-content-container').css("margin-right", 0 + "px");
-    $('section.mt-content-container p').css("text-align", "justify");
-     $('section.mt-content-container *').css("text-align", "justify");
-    
-    
-};
+
 
 
 $("#size").change(function() {
@@ -1080,7 +1082,7 @@ $("#size").change(function() {
   
     localStorage.setItem('font_size', initial_data);
     var final_data = localStorage.getItem('font_size');
-    console.log(final_data +": FINAL SIZE");
+
    
 });
 
@@ -1096,7 +1098,7 @@ $("#width").change(function() {
     
      localStorage.setItem('page_width', initial_data);
     var final_data = localStorage.getItem('page_width');
-    console.log(final_data +": FINAL WIDTH");
+
     
 });
 
@@ -1164,9 +1166,37 @@ $(document).ready(function(){
 });
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-//------------------------------------------------------------------TOC CODE-----------------------------------------------------
+//OTHER MODURALIZED FUNCTIONS
+    // BEELINE, DEFAULT BUTTON, ATTRIBUTION, GET CC, CONVERTER, TOC 
+
+};
+
+
+
+
+
+window.addEventListener('load',rtdefault);
+function rtdefault(){
+     $('section.mt-content-container *').css("font-size", 1.1 + "rem");
+     $("#size").val("1.1");
+     $("#width").val("0");
+     $("#toggler-text").attr("class","toggler");
+     $('section.mt-content-container').css("margin-left", 0 + "px");
+     $('section.mt-content-container').css("margin-right", 0 + "px");
+     $('section.mt-content-container p').css("text-align", "justify");
+     $('section.mt-content-container *').css("text-align", "justify");
+    
+    
+};
+//BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
+                       
+
+
+//BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
+
+//TOC
 
 window.addEventListener('load', TOC);
 
@@ -1235,7 +1265,7 @@ async function TOC() {
 			await Promise.all(promiseArray);
 			if (isRoot) {
 				content = result;
-				// console.log(content);
+
 				initializeFancyTree();
 			}
 			return result;
@@ -1266,11 +1296,147 @@ async function TOC() {
 		}
 	}
 }
+//ATTR
+
+window.addEventListener("load", getCC);
+window.addEventListener("load", getattrText);
+
+	function getCC() {
+		let tags = document.getElementById("pageTagsHolder");
+		if (tags) {
+			tags = tags.innerText;
+			tags = tags.replace(/\\/g, "");
+			tags = JSON.parse(tags);
+			for (let i = 0; i < tags.length; i++) {
+				if (tags[i].includes("license")) {
+					let tag = tags[i].split(":")[1];
+					switch (tag) {
+						case "publicdomain":
+							return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
+						case "ccby":
+							return { label: "cc-BY", title: "CC BY",  link: "https://creativecommons.org/licenses/by/4.0/" };
+						case "ccbysa":
+							return { label: "cc-by-sa", title: "CC BY-SA",  link: "https://creativecommons.org/licenses/by-sa/4.0/" };
+						case "ccbyncsa":
+							return { label: "cc-by-nc-sa", title: "CC BY-NC-SA",  link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
+						case "ccbync":
+							return { label: "cc-by-nc", title: "CC BY-NC",  link: "https://creativecommons.org/licenses/by-nc/4.0/" };
+						case "ccbynd":
+							return { label: "cc-by-nd", title: "CC BY-ND",  link: "https://creativecommons.org/licenses/by-nd/4.0/" };
+						case "ccbyncnd":
+							return { label: "cc-by-nc-nd", title: "CC BY-NC-ND",  link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
+						case "gnu":
+							return { label: "gnu", title: "GNU GPL",  link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
+						case "gnudsl":
+							return { label: "gnudsl", title: "GNU DSL",  link: "https://www.gnu.org/licenses/dsl.html" };
+						case "gnufdl":
+							return { label: "gnufdl", title: "GNU FDL",  link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
+						case "arr":
+							return { label: "arr", title: "All Rights Reserved ©",  };
+
+					}
+				}
+			}
+		}
+		return null; //not found
+	}
 
 
 
+function getattrText () {
+    let attrdiv = document.createElement("div");
+    document.body.appendChild(attrdiv);
+    
+    const cc = getCC();
+    let title = $("#titleHolder").text();
+    let titlestr = `"` + title + `"`;
+    let author = $("li.mt-author-information a:first").text();
+    let currentURL = window.location.href;
+//onclick="document.getElementById('attrModal').style.display='none'"
+    
+    $(attrdiv).html(`
+
+    
+    <div onclick="hideattr()" id="attrModal" class="attrModal">
+
+  
+        <div id="aM-c" style="cursor: pointer" class="attrModal-content">
+            
+           
+            <h3>Attribution: </h3>
+
+            <div id="attrHTML">
+            <p id="attr-text"> <a href="${currentURL}"> ${titlestr} </a> by <a id="attr-author-link" href="">${author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>
+            </div>
 
 
+            <div id="attr-links">
+            <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Attribution</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="attr-author" style="text-decoration: none; color: #666"> Author's Page</a>
+            </div>
+        </div>
+
+    </div>`);
+    
+    
+    //COPY THE TEXT
+    const attrCopy = document.getElementById("attr-copy");
+    
+    attrCopy.addEventListener("click", () => {
+          let text = document.getElementById("attr-text").innerText;
+          let elem = document.createElement("textarea");
+          document.body.appendChild(elem);
+          elem.value = text;
+          elem.select();
+
+          document.execCommand("copy");
+          document.body.removeChild(elem);
+    });
+
+    //AUTHOR LINKS
+    const attrAuthor = $("li.mt-author-information a:first").attr('href');
+    $("#attr-author").attr("href", attrAuthor);
+    $("#attr-author-link").attr("href", attrAuthor);
+    
+    //COPY THE HTML
+    const attrHTMLCopy = document.getElementById("attr-html");
+    
+    attrHTMLCopy.addEventListener("click", () => {
+          let text = $("#attr-text").html();
+      
+          let elem = document.createElement("textarea");
+          document.body.appendChild(elem);
+          elem.value = text;
+          elem.select();
+
+          document.execCommand("copy");
+          document.body.removeChild(elem);
+    });
+    
+    
+
+}
+
+var modal = document.getElementById('attrModal');
+
+// When the user clicks anywhere outside of the modal, close it
+
+
+function showattr() {
+     document.getElementById("attrModal").style.display = "flex";
+    
+}
+
+
+function hideattr() {
+
+    if(!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
+         document.getElementById("attrModal").style.display = "none";
+    }
+    
+    
+}
 
 
 //------------------------------------------------------------------CONVERTER CODE-----------------------------------------------------
@@ -1469,7 +1635,7 @@ window.onload = function(e) {
 }
 
 // Restricting textboxes to accept numbers + navigational keys only
-document.getElementByClass('numbersonly').addEventListener('keydown', function(e) {
+document.getElementById('numbersonly').addEventListener('keydown', function(e) {
   var key = e.keyCode ? e.keyCode : e.which;
 
   if (!([8, 9, 13, 27, 46, 110, 190].indexOf(key) !== -1 ||
@@ -1482,158 +1648,3 @@ document.getElementByClass('numbersonly').addEventListener('keydown', function(e
       (key == 190) // Numpad
     )) e.preventDefault();
 });
-
-
-
-
-
-
-
-
-
-//-----------------------------------------------------------------ATTRIBUTION CODE--------------------------------//
-
-window.addEventListener("load", getCC);
-window.addEventListener("load", getattrText);
-
-	function getCC() {
-		let tags = document.getElementById("pageTagsHolder");
-		if (tags) {
-			tags = tags.innerText;
-			tags = tags.replace(/\\/g, "");
-			tags = JSON.parse(tags);
-			for (let i = 0; i < tags.length; i++) {
-				if (tags[i].includes("license")) {
-					let tag = tags[i].split(":")[1];
-					switch (tag) {
-						case "publicdomain":
-							return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
-						case "ccby":
-							return { label: "cc-BY", title: "CC BY",  link: "https://creativecommons.org/licenses/by/4.0/" };
-						case "ccbysa":
-							return { label: "cc-by-sa", title: "CC BY-SA",  link: "https://creativecommons.org/licenses/by-sa/4.0/" };
-						case "ccbyncsa":
-							return { label: "cc-by-nc-sa", title: "CC BY-NC-SA",  link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
-						case "ccbync":
-							return { label: "cc-by-nc", title: "CC BY-NC",  link: "https://creativecommons.org/licenses/by-nc/4.0/" };
-						case "ccbynd":
-							return { label: "cc-by-nd", title: "CC BY-ND",  link: "https://creativecommons.org/licenses/by-nd/4.0/" };
-						case "ccbyncnd":
-							return { label: "cc-by-nc-nd", title: "CC BY-NC-ND",  link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
-						case "gnu":
-							return { label: "gnu", title: "GNU GPL",  link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
-						case "gnudsl":
-							return { label: "gnudsl", title: "GNU DSL",  link: "https://www.gnu.org/licenses/dsl.html" };
-						case "gnufdl":
-							return { label: "gnufdl", title: "GNU FDL",  link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
-						case "arr":
-							return { label: "arr", title: "All Rights Reserved ©",  };
-
-					}
-				}
-			}
-		}
-		return null; //not found
-	}
-
-
-
-function getattrText () {
-    let attrdiv = document.createElement("div");
-    document.body.appendChild(attrdiv);
-    
-    const cc = getCC();
-    let title = $("#title span:first").text();
-    let titlestr = `"` + title + `"`;
-    let author = $("li.mt-author-information a:first").text();
-    let currentURL = window.location.href;
-//onclick="document.getElementById('attrModal').style.display='none'"
-    
-    $(attrdiv).html(`
-
-    
-    <div onclick="hideattr()" id="attrModal" class="attrModal">
-
-  
-        <div id="aM-c" style="cursor: pointer" class="attrModal-content">
-            
-           
-            <h3>Attribution: </h3>
-
-            <div id="attrHTML">
-            <p id="attr-text"> <a href="${currentURL}"> ${titlestr} </a> by <a id="attr-author-link" href="">${author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>
-            </div>
-
-
-            <div id="attr-links">
-            <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Attribution</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="attr-author" style="text-decoration: none; color: #666"> Author's Page</a>
-            </div>
-        </div>
-
-    </div>`);
-    
-    
-    //COPY THE TEXT
-    const attrCopy = document.getElementById("attr-copy");
-    
-    attrCopy.addEventListener("click", () => {
-          let text = document.getElementById("attr-text").innerText;
-          let elem = document.createElement("textarea");
-          document.body.appendChild(elem);
-          elem.value = text;
-          elem.select();
-
-          document.execCommand("copy");
-          document.body.removeChild(elem);
-    });
-
-    //AUTHOR LINKS
-    const attrAuthor = $("li.mt-author-information a:first").attr('href');
-    $("#attr-author").attr("href", attrAuthor);
-    $("#attr-author-link").attr("href", attrAuthor);
-    
-    //COPY THE HTML
-    const attrHTMLCopy = document.getElementById("attr-html");
-    
-    attrHTMLCopy.addEventListener("click", () => {
-          let text = $("#attr-text").html();
-          console.log(text);
-          let elem = document.createElement("textarea");
-          document.body.appendChild(elem);
-          elem.value = text;
-          elem.select();
-
-          document.execCommand("copy");
-          document.body.removeChild(elem);
-    });
-    
-    
-
-}
-
-var modal = document.getElementById('attrModal');
-
-// When the user clicks anywhere outside of the modal, close it
-
-
-function showattr() {
-     document.getElementById("attrModal").style.display = "flex";
-    
-}
-
-
-function hideattr() {
-
-    if(!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
-         document.getElementById("attrModal").style.display = "none";
-    }
-    
-    
-}
-//BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
-                       
-
-
-//BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
