@@ -8,7 +8,7 @@
     text-decoration-line: none;
 }
 
-#tooltip {
+.tooltip {
     text-align: center;
     color: #098dd0;
     background: #e5f5fe;
@@ -20,21 +20,31 @@
     border: 2px solid #30b3f6;
 }
 
-@media only screen and (max-width: 800px) {
-    #tooltip:before {
-        content: 'x';
-        position: absolute;
-        color: #098dd0;
-        right: 8px;
-        top: 3px;
-        font-size: 12px;
-    }
+.tooltip p {
+    margin-top: 0;
 }
 
-#tooltip:after
+.tooltip image {
+    max-height: 15%;
+}
 
-/* triangle decoration */
-    {
+.tooltip .caption {
+    margin-top: 0;
+}
+.tooltip .glossarySource {
+    text-align: right;
+    margin: 0;
+}
+
+.tooltip:before {
+    content: 'x';
+    position: absolute;
+    color: #098dd0;
+    right: 8px;
+    top: 3px;
+    font-size: 12px;
+}
+.tooltip:after {/* triangle decoration */
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -47,7 +57,7 @@
     margin-left: -10px;
 }
 
-#tooltip.top:after {
+tooltip.top:after {
     border-top-color: transparent;
     border-bottom: 2px solid #30b3f6;
     top: -20px;
@@ -55,12 +65,12 @@
 }
 
 
-#tooltip.left:after {
+.tooltip.left:after {
     left: 10px;
     margin: 0;
 }
 
-#tooltip.right:after {
+.tooltip.right:after {
     right: 10px;
     left: auto;
     margin: 0;
