@@ -1,27 +1,100 @@
-let LibreTextGlossarizer = {
-    makeGlossary: async function () {
-        async function getTextbookGlossaryPage() {
-            const coverPage = await LibreTexts.getCoverpage();
-            const subdomain = window.location.origin.split('/')[2].split('.')[0];
-            let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
-            let data = await LibreTexts.authenticatedFetch(glossaryPage.id, 'contents?dream.out.format=json').then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    console.log("Glossary not found!");
-                    return {
-                        body: ""
-                    };
+let LibreTextsGlossarizer = {
+    makeGlossary: async function (sourceOption) {
+        let glossaryRetriever = {
+            "textbook": async function getTextbookGlossaryPage() {
+                const coverPage = await LibreTexts.getCoverpage();
+                const subdomain = window.location.origin.split('/')[2].split('.')[0];
+                let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
+                let data = await LibreTexts.authenticatedFetch(glossaryPage.id, 'contents?dream.out.format=json').then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error("Glossary not found!");
+                        return {
+                            body: ""
+                        };
+                    }
+                });
+                let bodycontent = (typeof (data.body) == "string") ? data.body : data.body[0];
+                if (!(bodycontent.includes('<tbody id="glossaryTable">'))) {
+                    bodycontent = "";
                 }
-            });
-            let bodycontent = (typeof (data.body) == "string") ? data.body : data.body[0];
-            if (!(bodycontent.includes('<tbody id="glossaryTable">'))) {
-                bodycontent = "";
+                bodycontent = bodycontent.substring(bodycontent.search("</tbody>") + 8);
+                //Find the body of the glossary table
+                let tableStart = '<tbody';
+                let tableEnd = "</tbody>";
+                let startPoint = bodycontent.search(tableStart) + tableStart.length;
+                let endPoint = bodycontent.substring(startPoint).search(tableEnd) + startPoint;
+                let tBody = bodycontent.substring(startPoint, endPoint).replace(/&nbsp;/g, " ").trim();
+
+                //Generate the rows of the table
+                let tableRows = [];
+                for (let i = 0; i < tBody.length;) {
+                    let trimmedBody = tBody.substring(i);
+                    let rowStart = '<tr>';
+                    let rowEnd = '</tr>';
+                    let rowContent = trimmedBody.substring(trimmedBody.search(rowStart) + rowStart.length, trimmedBody.search(rowEnd)).trim();
+                    tableRows.push(rowContent);
+                    i += trimmedBody.search(rowEnd) + rowEnd.length;
+                }
+
+                //Generate the Glossary
+                let retrievedGlossary = [];
+                for (let r = 0; r < tableRows.length; r++) {
+                    let newTerm = {
+                        "term": "",
+                        "description": ""
+                    };
+                    let cols = {};
+                    let colStart = [
+                        ['<td data-th="Word(s)">', "word"],
+                        ['<td data-th="Definition">', "definition"],
+                        ['<td data-th="Exclusions">', "exclusion"],
+                        ['<td data-th="Image">', "image"],
+                        ['<td data-th="Caption">', "caption"],
+                        ['<td data-th="Link">', "link"],
+                        ['<td data-th="Source">', "source"]
+                    ]
+                    //['<td data-th="Word(s)">', '<td data-th="Definition">', '<td data-th="Exclusions">', '<td data-th="Link">', '<td data-th="Source">'];
+                    let colEnd = '</td>';
+                    for (let t = 0; t < colStart.length; t++) {
+                        let tag = colStart[t][0];
+                        let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
+                        cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
+                    }
+                    if (cols["image"].length) {
+                        cols["definition"] += " " + cols["image"];
+                    }
+                    if (cols["caption"].length) {
+                        cols["definition"] += " " + cols["caption"];
+                    }
+                    if (cols["source"].length) {
+                        cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
+                    }
+                    if (cols["link"].length) {
+                        let aTagStart = 'href="';
+                        let aTagEnd = '">';
+                        let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
+                        newTerm["description"] = `<a href = "${href}">${cols["definition"]}</a>`;
+                    } else {
+                        newTerm["description"] = cols["definition"];
+                    }
+                    let exclusions;
+                    if (cols["exclusion"].length) {
+                        exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
+                            .map((val) => " !" + val.trim()).toString().trim());
+                    } else {
+                        exclusions = "";
+                    }
+                    newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
+                    retrievedGlossary.push(newTerm);
+                }
+                return retrievedGlossary;
             }
-            return bodycontent;
-        }
-        let bodycontent = await getTextbookGlossaryPage();
-        if (bodycontent === "") { // Deal with incompatible Glossary
+        };
+        let chosenSource = sourceOption || "textbook";
+        retrievedGlossary = await glossaryRetriever[chosenSource]();
+        if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
             return;
         }
         let pluginName = 'glossarizer',
@@ -78,78 +151,8 @@ let LibreTextGlossarizer = {
 
             /* Fetch glossary JSON */
             //Trim the content to remove the example table
-            bodycontent = bodycontent.substring(bodycontent.search("</tbody>") + 8);
-            //Find the body of the glossary table
-            let tableStart = '<tbody';
-            let tableEnd = "</tbody>";
-            let startPoint = bodycontent.search(tableStart) + tableStart.length;
-            let endPoint = bodycontent.substring(startPoint).search(tableEnd) + startPoint;
-            let tBody = bodycontent.substring(startPoint, endPoint).replace(/&nbsp;/g, " ").trim();
 
-            //Generate the rows of the table
-            let tableRows = [];
-            for (let i = 0; i < tBody.length;) {
-                let trimmedBody = tBody.substring(i);
-                let rowStart = '<tr>';
-                let rowEnd = '</tr>';
-                let rowContent = trimmedBody.substring(trimmedBody.search(rowStart) + rowStart.length, trimmedBody.search(rowEnd)).trim();
-                tableRows.push(rowContent);
-                i += trimmedBody.search(rowEnd) + rowEnd.length;
-            }
-
-            //Generate the Glossary
-            let retrievedGlossary = [];
-            for (let r = 0; r < tableRows.length; r++) {
-                let newTerm = {
-                    "term": "",
-                    "description": ""
-                };
-                let cols = {};
-                let colStart = [
-                    ['<td data-th="Word(s)">', "word"],
-                    ['<td data-th="Definition">', "definition"],
-                    ['<td data-th="Exclusions">', "exclusion"],
-                    ['<td data-th="Image">', "image"],
-                    ['<td data-th="Caption">', "caption"],
-                    ['<td data-th="Link">', "link"],
-                    ['<td data-th="Source">', "source"]
-                ]
-                //['<td data-th="Word(s)">', '<td data-th="Definition">', '<td data-th="Exclusions">', '<td data-th="Link">', '<td data-th="Source">'];
-                let colEnd = '</td>';
-                for (let t = 0; t < colStart.length; t++) {
-                    let tag = colStart[t][0];
-                    let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
-                    cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
-                }
-                if (cols["image"].length) {
-                    cols["definition"] += " " + cols["image"];
-                }
-                if (cols["caption"].length) {
-                    cols["definition"] += " " + cols["caption"];
-                }
-                if (cols["source"].length) {
-                    cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
-                }
-                if (cols["link"].length) {
-                    let aTagStart = 'href="';
-                    let aTagEnd = '">';
-                    let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
-                    newTerm["description"] = `<a href = "${href}">${cols["definition"]}</a>`;
-                } else {
-                    newTerm["description"] = cols["definition"];
-                }
-                let exclusions;
-                if (cols["exclusion"].length) {
-                    exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
-                        .map((val) => " !" + val.trim()).toString().trim());
-                } else {
-                    exclusions = "";
-                }
-                newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
-                retrievedGlossary.push(newTerm);
-            }
             base.glossary = retrievedGlossary.splice(0);
-            console.log(base.glossary)
 
             if (!base.glossary.length || base.glossary.length == 0) return;
             /**
