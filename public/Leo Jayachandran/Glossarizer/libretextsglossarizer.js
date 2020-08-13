@@ -1,5 +1,44 @@
-let LibreTextsGlossarizer = {
-    makeGlossary: async function (sourceOption) {
+class LibreTextsGlossarizer {
+    constructor() {
+        this.pluginName = 'glossarizer';
+        this.defaults = {
+            replaceTag: 'div',
+            /* Matching words will be wrapped with abbr tags by default */
+            lookupTagName: 'p, ul, a, div',
+            /* Lookup in either paragraphs or lists. Do not replace in headings */
+            callback: null,
+            /* Callback once all tags are replaced: Call or tooltip or anything you like */
+            replaceOnce: false,
+            /* Replace only once in a TextNode */
+            replaceClass: 'glossarizer_replaced',
+            caseSensitive: false,
+            exactMatch: false
+        };
+
+    }
+    getTermCols(rowText) { // tableRows[r]
+        let cols = {};
+        let colStart = [
+            ['<td data-th="Word' + '(s)">', "word"],
+            ['<td data-th="Definition">', "definition"],
+            ['<td data-th="Exclusions">', "exclusion"],
+            ['<td data-th="Image">', "image"],
+            ['<td data-th="Caption">', "caption"],
+            ['<td data-th="Link">', "link"],
+            ['<td data-th="Source">', "source"]
+        ]
+        let colEnd = '</td>';
+        for (let t = 0; t < colStart.length; t++) {
+            let tag = colStart[t][0];
+            let colStr = rowText.substring(rowText.search(tag) + tag.length);
+            cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
+        }
+        return cols;
+    }
+    async makeGlossary(sourceOption) {
+        let pluginName = this.pluginName;
+        let defaults = this.defaults;
+        let getTermCols = this.getTermCols;
         let glossaryRetriever = {
             "textbook": async function getTextbookGlossaryPage() {
                 const coverPage = await LibreTexts.getCoverpage();
@@ -9,7 +48,7 @@ let LibreTextsGlossarizer = {
                     if (response.ok) {
                         return response.json();
                     } else {
-                        console.error("Glossary not found!");
+                        console.error("Textbook glossary not found!");
                         return {
                             body: ""
                         };
@@ -20,7 +59,7 @@ let LibreTextsGlossarizer = {
                     bodycontent = "";
                     return [];
                 }
-                bodycontent = bodycontent.substring(bodycontent.search("</tbody>") + 8);
+                bodycontent = bodycontent.substring(bodycontent.search(/<tbody.*>\s*<tr>\s*<td data-th="Word\(s\)"/));
                 //Find the body of the glossary table
                 let tableStart = '<tbody';
                 let tableEnd = "</tbody>";
@@ -47,22 +86,7 @@ let LibreTextsGlossarizer = {
                         "description": ""
                     };
                     //Get data from the columns in the row
-                    let cols = {};
-                    let colStart = [
-                        ['<td data-th="Word' + '(s)">', "word"],
-                        ['<td data-th="Definition">', "definition"],
-                        ['<td data-th="Exclusions">', "exclusion"],
-                        ['<td data-th="Image">', "image"],
-                        ['<td data-th="Caption">', "caption"],
-                        ['<td data-th="Link">', "link"],
-                        ['<td data-th="Source">', "source"]
-                    ]
-                    let colEnd = '</td>';
-                    for (let t = 0; t < colStart.length; t++) {
-                        let tag = colStart[t][0];
-                        let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
-                        cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
-                    }
+                    let cols = getTermCols(tableRows[r]);
                     //Generate the description
                     let exclusions;
                     if (cols["exclusion"].length) {
@@ -99,24 +123,12 @@ let LibreTextsGlossarizer = {
             }
         };
         let chosenSource = sourceOption || "textbook";
-        retrievedGlossary = await glossaryRetriever[chosenSource]();
+        let retrievedGlossary = await glossaryRetriever[chosenSource]();
         if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
+            console.error("incompatible glossary");
             return;
         }
-        let pluginName = 'glossarizer',
-            defaults = {
-                replaceTag: 'div',
-                /* Matching words will be wrapped with abbr tags by default */
-                lookupTagName: 'p, ul, a, div',
-                /* Lookup in either paragraphs or lists. Do not replace in headings */
-                callback: null,
-                /* Callback once all tags are replaced: Call or tooltip or anything you like */
-                replaceOnce: false,
-                /* Replace only once in a TextNode */
-                replaceClass: 'glossarizer_replaced',
-                caseSensitive: false,
-                exactMatch: false
-            };
+
         /**
          * Plugin Name: Glossarizer
          * Author : Vinay @Pebbleroad
@@ -415,126 +427,125 @@ let LibreTextsGlossarizer = {
         // 
         // Author : http://osvaldas.info/elegant-css-and-jquery-tooltip-responsive-mobile-friendly
         // 
-        (function ($, window) {
 
-            function ToolTip() {
-                let targets = $('.glossarizer_replaced'),
-                    target = false,
-                    tooltip = false,
-                    title = false;
+        function ToolTip() {
+            let targets = $("." + defaults.replaceClass),
+                target = false,
+                tooltip = false,
+                title = false;
 
-                targets.bind('mouseenter', function () {
-                    target = $(this);
-                    tip = target.attr('title');
-                    tooltip = $(`<div id="tooltip${target.text()}" class= "tooltip"></div>`);
+            targets.bind('mouseenter', function () {
+                target = $(this);
+                let tip = target.attr('title');
+                tooltip = $(`<div id="tooltip${target.text()}" class= "glossarizerTooltip"></div>`);
 
-                    if (!tip || tip == '')
-                        return false;
+                if (!tip || tip == '')
+                    return false;
 
-                    target.removeAttr('title');
-                    tooltip.css('opacity', 0)
-                        .html(tip)
-                        .appendTo('body');
+                target.removeAttr('title');
+                tooltip.css('opacity', 0)
+                    .html(tip)
+                    .appendTo('body');
 
-                    let init_tooltip = function () {
-                        if (tooltip.html().includes("<img")) {
-                            if ($(".tooltip img").height() > 100) { 
-                                $(".tooltip img").height(100); // Downsize to 10em if image is too big
-                            }
-                        }
-                        if ($(window).width() < tooltip.outerWidth() * 1.5)
-                            tooltip.css('max-width', $(window).width() / 2);
-                        else
-                            tooltip.css('max-width', 340);
-
-                        let pos_left = target.offset().left + (target.outerWidth() / 2) - (tooltip.outerWidth() / 2),
-                            pos_top = target.offset().top - tooltip.outerHeight() - 20;
-
-                        if (pos_left < 0) {
-                            pos_left = target.offset().left + target.outerWidth() / 2 - 20;
-                            tooltip.addClass('left');
-                        } else
-                            tooltip.removeClass('left');
-
-                        if (pos_left + tooltip.outerWidth() > $(window).width()) {
-                            pos_left = target.offset().left - tooltip.outerWidth() + target.outerWidth() / 2 + 20;
-                            tooltip.addClass('right');
-                        } else
-                            tooltip.removeClass('right');
-
-                        if (pos_top < 0) {
-                            pos_top = target.offset().top + target.outerHeight();
-                            tooltip.addClass('top');
-                        } else
-                            tooltip.removeClass('top');
-
-                        tooltip.css({
-                                left: pos_left,
-                                top: pos_top
-                            })
-                            .animate({
-                                top: '+=10',
-                                opacity: 1
-                            }, 50);
-                    };
-
-                    init_tooltip();
-                    $(window).resize(init_tooltip);
-
-
-                    let remove_tooltip = function () {
-                        $(".tooltip").animate({
-                            top: '-=10',
-                            opacity: 0
-                        }, 50, function () {
-                            $(`.glossarizer_replaced:contains('${$(this).attr("id").substring(7)}')`).attr("title", $(this).html())
-                            $(this).remove();
-                        });
-
-                    };
+                let init_tooltip = function () {
                     if (tooltip.html().includes("<img")) {
-                        $(".tooltip img").on("load", function () {
-                            init_tooltip();
-                            target.bind('mouseleave', function () {
-                                setTimeout(function (word) {
-                                    if ($(`#tooltip${word}:hover`).length == 0) {
-                                        $("#tooltip" + word).animate({
-                                            top: '-=10',
-                                            opacity: 0
-                                        }, 50, function () {
-                                            $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
-                                            $(this).remove();
-                                        });
-                                    }
-                                }, 300, target.html());
-                            });
-                        });
-                    } else {
-                        tooltip.bind("mouseleave", remove_tooltip);
-                        
+                        if ($(".glossarizerTooltip img").height() > 100) {
+                            $(".glossarizerTooltip img").height(100); // Downsize to 100px if image is too big
+                        }
                     }
+                    if ($(window).width() < tooltip.outerWidth() * 1.5)
+                        tooltip.css('max-width', $(window).width() / 2);
+                    else
+                        tooltip.css('max-width', 340);
 
-                    tooltip.bind('click', remove_tooltip);
-                    target.bind('mouseleave', function () {
-                        setTimeout(function (word) {
-                            if ($(`#tooltip${word}:hover`).length == 0) {
-                                $("#tooltip" + word).animate({
-                                    top: '-=10',
-                                    opacity: 0
-                                }, 50, function () {
-                                    $(`.glossarizer_replaced:contains('${word}')`).attr("title", $(this).html())
-                                    $(this).remove();
-                                });
-                            }
-                        }, 300, target.html())
+                    let pos_left = target.offset().left + (target.outerWidth() / 2) - (tooltip.outerWidth() / 2),
+                        pos_top = target.offset().top - tooltip.outerHeight() - 20;
+
+                    if (pos_left < 0) {
+                        pos_left = target.offset().left + target.outerWidth() / 2 - 20;
+                        tooltip.addClass('left');
+                    } else
+                        tooltip.removeClass('left');
+
+                    if (pos_left + tooltip.outerWidth() > $(window).width()) {
+                        pos_left = target.offset().left - tooltip.outerWidth() + target.outerWidth() / 2 + 20;
+                        tooltip.addClass('right');
+                    } else
+                        tooltip.removeClass('right');
+
+                    if (pos_top < 0) {
+                        pos_top = target.offset().top + target.outerHeight();
+                        tooltip.addClass('top');
+                    } else
+                        tooltip.removeClass('top');
+
+                    tooltip.css({
+                            left: pos_left,
+                            top: pos_top
+                        })
+                        .animate({
+                            top: '+=10',
+                            opacity: 1
+                        }, 50);
+                };
+
+                init_tooltip();
+                $(window).resize(init_tooltip);
+
+
+                let remove_tooltip = function () {
+                    $(".glossarizerTooltip").animate({
+                        top: '-=10',
+                        opacity: 0
+                    }, 50, function () {
+                        $(`.${defaults.replaceClass}:contains('${$(this).attr("id").substring(7)}')`).attr("title", $(this).html())
+                        $(this).remove();
                     });
+
+                };
+                if (tooltip.html().includes("<img")) {
+                    $(".glossarizerTooltip img").on("load", function () {
+                        init_tooltip();
+                        target.bind('mouseleave', function () {
+                            setTimeout(function (word) {
+                                if ($(`#tooltip${word}:hover`).length == 0) {
+                                    $("#tooltip" + word).animate({
+                                        top: '-=10',
+                                        opacity: 0
+                                    }, 50, function () {
+                                        $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
+                                        $(this).remove();
+                                    });
+                                }
+                            }, 300, target.html());
+                        });
+                    });
+                } else {
+                    tooltip.bind("mouseleave", remove_tooltip);
+
+                }
+
+                tooltip.bind('click', remove_tooltip);
+                target.bind('mouseleave', function () {
+                    setTimeout(function (word) {
+                        if ($(`#tooltip${word}:hover`).length == 0) {
+                            $("#tooltip" + word).animate({
+                                top: '-=10',
+                                opacity: 0
+                            }, 50, function () {
+                                $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
+                                $(this).remove();
+                            });
+                        }
+                    }, 300, target.html())
                 });
+            });
 
-            }
+        }
 
-            return window.tooltip = ToolTip;
+        window.tooltip = ToolTip;
 
-        })(jQuery, window)
+
 
         //Initialise Glossariser
         $(function () {
@@ -546,23 +557,23 @@ let LibreTextsGlossarizer = {
 
 
         });
-        /**
-         * Defaults
-         */
 
-    },
-    removeGlossary: function () {
-        $('.mt-content-container').removeData('plugin_glossarizer');
+    }
+    removeGlossary() {
+        let pluginName = this.pluginName;
+        let defaults = this.defaults;
+        $('.mt-content-container').removeData('plugin_' + pluginName);
 
         /* Remove wrapping tag */
-        $('.mt-content-container').find('.glossarizer_replaced').each(function () {
+        $('.mt-content-container').find(defaults.replaceClass).each(function () {
             let $this = $(this),
                 text = $this.text()
 
             $this.replaceWith(text);
         });
-    },
-    buildBackMatter: function () {
+    }
+
+    buildBackMatter() {
         let $glossaryTable = $("table:contains('Word" + "(s)')")
         let tBody = $glossaryTable.html().replace(/&nbsp;/g, " ").replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
         tBody = tBody.substring(tBody.search("<tbody"), tBody.search("</tbody>")).trim();
@@ -583,22 +594,7 @@ let LibreTextsGlossarizer = {
                 "description": ""
             };
             //Get cells in the 3 columns
-            let cols = {};
-            let colStart = [
-                ['<td data-th="Word' + '(s)">', "word"],
-                ['<td data-th="Definition">', "definition"],
-                ['<td data-th="Exclusions">', "exclusion"],
-                ['<td data-th="Image">', "image"],
-                ['<td data-th="Caption">', "caption"],
-                ['<td data-th="Link">', "link"],
-                ['<td data-th="Source">', "source"]
-            ]
-            let colEnd = '</td>';
-            for (let t = 0; t < colStart.length; t++) {
-                let tag = colStart[t][0];
-                let colStr = tableRows[r].substring(tableRows[r].search(tag) + tag.length);
-                cols[colStart[t][1]] = (colStr.substring(0, colStr.search(colEnd)).trim());
-            }
+            let cols = this.getTermCols(tableRows[r]);
             if (cols["source"].length) {
                 cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
             }
