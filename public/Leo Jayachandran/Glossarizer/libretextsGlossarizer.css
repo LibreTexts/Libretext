@@ -8,7 +8,7 @@
     text-decoration-line: none;
 }
 
-.tooltip {
+.glossarizerTooltip {
     text-align: center;
     color: #098dd0;
     background: #e5f5fe;
@@ -20,23 +20,19 @@
     border: 2px solid #30b3f6;
 }
 
-.tooltip p {
+.glossarizerTooltip p {
     margin-top: 0;
 }
 
-.tooltip image {
-    max-height: 15%;
-}
-
-.tooltip .caption {
+.glossarizerTooltip .caption {
     margin-top: 0;
 }
-.tooltip .glossarySource {
+.glossarizerTooltip .glossarySource {
     text-align: right;
     margin: 0;
 }
 
-.tooltip:before {
+.glossarizerTooltip:before {
     content: 'x';
     position: absolute;
     color: #098dd0;
@@ -44,7 +40,7 @@
     top: 3px;
     font-size: 12px;
 }
-.tooltip:after {/* triangle decoration */
+.glossarizerTooltip:after {/* triangle decoration */
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -65,12 +61,12 @@ tooltip.top:after {
 }
 
 
-.tooltip.left:after {
+.glossarizerTooltip.left:after {
     left: 10px;
     margin: 0;
 }
 
-.tooltip.right:after {
+.glossarizerTooltip.right:after {
     right: 10px;
     left: auto;
     margin: 0;
