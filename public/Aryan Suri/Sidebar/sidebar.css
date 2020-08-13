@@ -157,13 +157,13 @@ a.toggler.off {
   text-align: center;
 }
 
-#fs, #fs2, #darkbtn, #size, #width, #ta {
+#fs, #fs2, #darkbtn, #size, #slider-page-width, #ta {
   margin-top: 2px;
   margin-left: 10px;
   max-width: 95%;
 }
 
-#width {
+#slider-page-width {
   direction: rtl;
 }
 
