@@ -12,9 +12,6 @@ function _createSidebar() {
 
   if (isPro) {
     upperDiv.innerHTML = `
-
-
-
 <div id="sidebar1"  class="custom_sidebar">
   <div class="top-bar" style="">
         <div class="top-bar-unit">
