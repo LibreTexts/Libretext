@@ -1623,11 +1623,11 @@ function ConvertFromTo(sourceForm, targetForm) {
 }
 
 // This fragment initializes the property dropdown menu using the data defined above in the 'Data Definitions' section
-window.onload = function (e) {
+window.addEventListener('load', function (e) {
   FillMenuWithArray(document.property_form.the_menu, property);
   UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
   UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu)
-}
+});
 
 // Restricting textboxes to accept numbers + navigational keys only
 document.getElementById('numbersonly').addEventListener('keydown', function (e) {
