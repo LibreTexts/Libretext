@@ -279,14 +279,7 @@ function _createSidebar() {
 
 
 </div>
-
-
 <!-- HOME SIDEBAR -->
-
-
-
-
-
 <div id="custom_sidebar" class="custom_sidebar">
   <div class="top-bar" style="">
         <div class="top-bar-unit" style="background-color: #ececec; color:white;" >
@@ -309,31 +302,18 @@ function _createSidebar() {
 
         <div class="top-bar-unit">
             <h5 id="open_sidebar3" class="">Developers</h5>
-        </div>
-
-       
+        </div>  
   </div>
 
   <div  class="" id="custom_target"></div>
 </div>
 
-
-
-
-
 </div>
 
 <button id="custom_open"  >☰
 </button> 
-
-
-
-
 ` } else {
     upperDiv.innerHTML = `
-
-
-
 <div id="sidebar1"  class="custom_sidebar">
   <div class="top-bar" style="">
         <div class="top-bar-unit">
@@ -352,10 +332,6 @@ function _createSidebar() {
         <div class="top-bar-unit">
             <h5 id="acess_usage">Usage</h5>
         </div>
-  
-     
-
-
   </div>
     <div style="display: grid;" class="custom_field">
         <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;border-bottom: 1px solid black !important;">Default Settings</button>
@@ -363,10 +339,7 @@ function _createSidebar() {
     <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
-        <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size"> 
-
-
-    
+        <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size">  
     </div>
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
@@ -388,9 +361,6 @@ function _createSidebar() {
                 <a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
                 </div></div>
      </div>
-
-
-   
 </div>
 
 <div id="sidebar2"  class="custom_sidebar">
@@ -411,9 +381,7 @@ function _createSidebar() {
          <div class="top-bar-unit">
             <h5 id="refer_usage" >Usage</h5>
         </div>
-  
-
-       
+    
      </div>
     <div class="custom_field">
         
@@ -485,12 +453,7 @@ function _createSidebar() {
     </div>
     
 </div>
-
-
-
-
 <!--  USAGE SIDEBAR -->
-
 <div id="sidebar4"  class="custom_sidebar">
    <div class="top-bar" style="">
         <div class="top-bar-unit">
@@ -547,14 +510,7 @@ function _createSidebar() {
 
 
 </div>
-
-
 <!-- HOME SIDEBAR -->
-
-
-
-
-
 <div id="custom_sidebar" class="custom_sidebar">
   <div class="top-bar" style="">
         <div class="top-bar-unit" style="background-color: #ececec; color:white;" >
@@ -573,18 +529,11 @@ function _createSidebar() {
         
         <div class="top-bar-unit">
             <h5 id="open_usage"  class="">Usage</h5>
-        </div>
-
-
-       
+        </div>       
   </div>
 
   <div  class="" id="custom_target"></div>
 </div>
-
-
-
-
 
 </div>
 
@@ -592,12 +541,7 @@ function _createSidebar() {
 </button> 
 
 `
-
-
   }
-
-
-
 
   let mediaC = window.matchMedia("(max-width: 700px)");
   // Attach listener function on state changes
@@ -643,10 +587,6 @@ function _createSidebar() {
       return null;
     }
   }
-
-
-
-
   window.addEventListener('click', function (event) {
     if (event.target == sidebarbtn) {
 
@@ -843,23 +783,7 @@ function _createSidebar() {
       //document.getElementById("main").style.marginLeft = "250px";
     }
   });
-
-
-
-
-
-
-
   $(".mt-container-secondary").css("display", "none");
-
-
-
-
-
-
-
-
-
   $('#per_table').click(function () {
     if ($("#iFrameResizer0").is(":hidden")) {
       $("#iFrameResizer0").slideDown("slow");
@@ -1008,9 +932,6 @@ function _createSidebar() {
         });
       }
     }
-
-
-
     /*$("#doBeeLine").on("click", function () {
     		
 	    	const theme = activateBeeLine.theme !== 'bright' ? 'bright' : 'off';
@@ -1028,18 +949,7 @@ function _createSidebar() {
     		doBeeline(theme, theme);
 	});
 */
-
-
-
-
   }
-
-
-
-
-
-
-
   $('.changeMe').css("font-family", localStorage.getItem('font_family'));
 
 
@@ -1156,18 +1066,11 @@ function _createSidebar() {
 
     });
   });
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //OTHER MODURALIZED FUNCTIONS
-  // BEELINE, DEFAULT BUTTON, ATTRIBUTION, GET CC, CONVERTER, TOC 
-
+  // BEELINE, DEFAULT BUTTON, ATTRIBUTION, GET CC, CONVERTER, TO
 };
-
-
-
-
 
 window.addEventListener('load', rtdefault);
 function rtdefault() {
@@ -1179,8 +1082,6 @@ function rtdefault() {
   $('section.mt-content-container').css("margin-right", 0 + "px");
   $('section.mt-content-container p').css("text-align", "justify");
   $('section.mt-content-container *').css("text-align", "justify");
-
-
 };
 //BUTTON TESTING DOWN HERE BUTTON TESTING DOWN HERE//
 
