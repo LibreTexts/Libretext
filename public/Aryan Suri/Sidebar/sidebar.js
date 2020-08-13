@@ -50,7 +50,7 @@ function _createSidebar() {
     </div>
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
-  <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="width">
+  <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
 </div>
    <p class="h_ar">Text Align:</p>
     <div class="custom_field"> 
@@ -370,7 +370,7 @@ function _createSidebar() {
     </div>
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
-  <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="width">
+  <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
 </div>
    <p class="h_ar">Text Align:</p>
     <div class="custom_field"> 
@@ -1084,13 +1084,13 @@ function _createSidebar() {
   });
 
 
-  $("#width").change(function () {
+  $("#slider-page-width").change(function () {
     var initial_data = $(this).val();
 
     $('section.mt-content-container').css("margin-left", initial_data + "px");
     $('section.mt-content-container').css("margin-right", initial_data + "px");
 
-    $("#width").val(initial_data);
+    $("#slider-page-width").val(initial_data);
 
 
     localStorage.setItem('page_width', initial_data);
@@ -1173,7 +1173,7 @@ window.addEventListener('load', rtdefault);
 function rtdefault() {
   $('section.mt-content-container *').css("font-size", 1.1 + "rem");
   $("#size").val("1.1");
-  $("#width").val("0");
+  $("#slider-page-width").val("0");
   $("#toggler-text").attr("class", "toggler");
   $('section.mt-content-container').css("margin-left", 0 + "px");
   $('section.mt-content-container').css("margin-right", 0 + "px");
