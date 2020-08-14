@@ -13,7 +13,7 @@
     color: #098dd0;
     background: #e5f5fe;
     position: absolute;
-    z-index: 100;
+    z-index: 991;
     padding: 15px;
     border-radius: 5px;
     box-sizing: border-box;
@@ -22,6 +22,9 @@
 
 .glossarizerTooltip p {
     margin-top: 0;
+}
+.glossarizerTooltip img {
+    max-height: 100px;
 }
 
 .glossarizerTooltip .caption {
