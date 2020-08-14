@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "package": "node ../../Miscellaneous/createBundle.js"
-  },  "author": "",
+  },
+  "author": "",
   "license": "",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -14,13 +15,11 @@
     "create-react-class": "^15.6.3",
     "deepmerge": "^4.2.2",
     "diff": "^4.0.2",
-    "node-fetch": "^2.6.0",
     "notistack": "^0.9.17",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^5.2.1",
-    "react-textfit": "^1.1.0",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5"
   },

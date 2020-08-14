@@ -11,10 +11,6 @@
       <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/src/pages/index.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/FindReplace.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/FindReplace.jsx" afterDir="false" />
@@ -26,7 +22,7 @@
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/components/PublishPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/components/PublishPanel.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +33,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="XSLT Stylesheet" />
-        <option value="README" />
         <option value="CSS File" />
         <option value="HTTP Request" />
         <option value="package.json" />
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="README" />
       </list>
     </option>
   </component>
@@ -216,7 +212,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Mocha.nodePrintTest">
+  <component name="RunManager" selected="npm.Remixer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -334,19 +330,19 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
-      <item itemvalue="Docker.nodePrint Docker" />
-      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
+      <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Commons" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.package" />
+      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
@@ -1185,21 +1181,10 @@
       <workItem from="1596923892550" duration="1225000" />
       <workItem from="1597352497579" duration="5000" />
       <workItem from="1597363172015" duration="9243000" />
-      <workItem from="1597384142977" duration="1182000" />
-    </task>
-    <task id="LOCAL-00226" summary="Bugfix for LibreTexts that are exactly 24 pages.">
-      <created>1568606876382</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1568606876382</updated>
-    </task>
-    <task id="LOCAL-00227" summary="Bugfix catastrophic backtracking&#10;&#10;Fixed a bug where guides or categories with long page contents would take an exponential amount of time to create a TOC.">
-      <created>1568688088049</created>
-      <option name="number" value="00227" />
-      <option name="presentableId" value="LOCAL-00227" />
-      <option name="project" value="LOCAL" />
-      <updated>1568688088049</updated>
+      <workItem from="1597384142977" duration="2098000" />
+      <workItem from="1597388481565" duration="8000" />
+      <workItem from="1597388688369" duration="164000" />
+      <workItem from="1597388875420" duration="1357000" />
     </task>
     <task id="LOCAL-00228" summary="Added Excel to LibreMap into Importer">
       <created>1571288166416</created>
@@ -1530,7 +1515,21 @@
       <option name="project" value="LOCAL" />
       <updated>1597365246514</updated>
     </task>
-    <option name="localTasksCounter" value="275" />
+    <task id="LOCAL-00275" summary="Bugfix nodePrint.js being crawled by GoogleBot">
+      <created>1597385375168</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1597385375168</updated>
+    </task>
+    <task id="LOCAL-00276" summary="Break out activateBeeline() within sidebar.js">
+      <created>1597385624611</created>
+      <option name="number" value="00276" />
+      <option name="presentableId" value="LOCAL-00276" />
+      <option name="project" value="LOCAL" />
+      <updated>1597385624611</updated>
+    </task>
+    <option name="localTasksCounter" value="277" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1585,8 +1584,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Updated dark mode" />
-    <MESSAGE value="Starting API Dashboard Multi presets" />
     <MESSAGE value="Implemented API Dashboard Multi presets" />
     <MESSAGE value="Fixed bot Regex" />
     <MESSAGE value="Bugfix importer &lt;img&gt;" />
@@ -1610,7 +1607,9 @@
     <MESSAGE value="seatedCheck for sendAPI" />
     <MESSAGE value=" Updated batchPrint.js with Chapters" />
     <MESSAGE value="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React." />
+    <MESSAGE value="Bugfix nodePrint.js being crawled by GoogleBot" />
+    <MESSAGE value="Break out activateBeeline() within sidebar.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Break out activateBeeline() within sidebar.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1629,10 +1628,10 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
-    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597364267664">
+    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597388487455">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597364267664" />
+    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597388487455" />
     <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595037543255">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1641,11 +1640,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1597365243763">
+    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1597385623263">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171584514" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365243763" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597385623263" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1655,26 +1654,26 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="427" height="649" key="GridCell.Tab.0.bottom" timestamp="1597384622413">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="475" height="746" key="GridCell.Tab.0.bottom" timestamp="1597386242927">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="427" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
-    <state width="459" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830238" />
-    <state width="427" height="649" key="GridCell.Tab.0.center" timestamp="1597384622413">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="475" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597386242927" />
+    <state width="475" height="746" key="GridCell.Tab.0.center" timestamp="1597386242926">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="427" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
-    <state width="459" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830237" />
-    <state width="427" height="649" key="GridCell.Tab.0.left" timestamp="1597384622412">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="475" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597386242926" />
+    <state width="475" height="746" key="GridCell.Tab.0.left" timestamp="1597386242926">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="427" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622412" />
-    <state width="459" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830237" />
-    <state width="427" height="649" key="GridCell.Tab.0.right" timestamp="1597384622413">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="475" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597386242926" />
+    <state width="475" height="746" key="GridCell.Tab.0.right" timestamp="1597386242927">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="427" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
-    <state width="459" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830238" />
+    <state width="475" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597386242927" />
     <state width="234" height="649" key="GridCell.Tab.1.bottom" timestamp="1597384124866">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1725,11 +1724,11 @@
     </state>
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="139" y="67" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1596673183706" />
-    <state x="-1519" y="167" key="Vcs.Push.Dialog.v2" timestamp="1596171600882">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1597385626084">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171600882" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561786167" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597385626084" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

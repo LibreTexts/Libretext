@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Toggle from 'react-toggle';
 import {FixedSizeList as List} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import fetch from "node-fetch";
 
 export default function Importer(props) {
 	const [counter, setCounter] = useState(0);
