@@ -535,3 +535,9 @@ a.toggler.off {
   }
 }
 
+@media print {
+  #custom_open, .custom_sidebar {
+    display:none;
+  }
+}
+
