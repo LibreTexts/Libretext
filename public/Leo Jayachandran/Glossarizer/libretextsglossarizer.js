@@ -39,91 +39,95 @@ class LibreTextsGlossarizer {
         let pluginName = this.pluginName;
         let defaults = this.defaults;
         let getTermCols = this.getTermCols;
-        let glossaryRetriever = {
-            "textbook": async function getTextbookGlossaryPage() {
+        let chosenSourceID = 0;
+        switch ((sourceOption||"").trim().toLowerCase()) {
+            case "textbook":
+            default:
                 const coverPage = await LibreTexts.getCoverpage();
                 const subdomain = window.location.origin.split('/')[2].split('.')[0];
                 let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
-                let data = await LibreTexts.authenticatedFetch(glossaryPage.id, 'contents?dream.out.format=json').then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        console.error("Textbook glossary not found!");
-                        return {
-                            body: ""
-                        };
-                    }
-                });
-                let bodycontent = (typeof (data.body) == "string") ? data.body : data.body[0];
-                if (!(bodycontent.includes('Word' + "(s)"))) {
-                    bodycontent = "";
-                    return [];
-                }
-                bodycontent = bodycontent.substring(bodycontent.search(/<tbody.*>\s*<tr>\s*<td data-th="Word\(s\)"/));
-                //Find the body of the glossary table
-                let tableStart = '<tbody';
-                let tableEnd = "</tbody>";
-                let startPoint = bodycontent.search(tableStart) + tableStart.length;
-                let endPoint = bodycontent.substring(startPoint).search(tableEnd) + startPoint;
-                let tBody = bodycontent.substring(startPoint, endPoint).replace(/&nbsp;/g, " ").trim();
-
-                //Generate the rows of the table
-                let tableRows = [];
-                for (let i = 0; i < tBody.length;) {
-                    let trimmedBody = tBody.substring(i);
-                    let rowStart = '<tr>';
-                    let rowEnd = '</tr>';
-                    let rowContent = trimmedBody.substring(trimmedBody.search(rowStart) + rowStart.length, trimmedBody.search(rowEnd)).trim();
-                    tableRows.push(rowContent);
-                    i += trimmedBody.search(rowEnd) + rowEnd.length;
-                }
-
-                //Generate the Glossary
-                let retrievedGlossary = [];
-                for (let r = 0; r < tableRows.length; r++) {
-                    let newTerm = {
-                        "term": "",
-                        "description": ""
+                chosenSourceID = glossaryPage.id;
+        }
+        async function getGlossaryJSON(sourceID) {
+            let data = await LibreTexts.authenticatedFetch(sourceID, 'contents?dream.out.format=json').then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.error("Textbook glossary not found!");
+                    return {
+                        body: ""
                     };
-                    //Get data from the columns in the row
-                    let cols = getTermCols(tableRows[r]);
-                    //Generate the description
-                    let exclusions;
-                    if (cols["exclusion"].length) {
-                        exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
-                            .map((val) => " !" + val.trim()).toString().trim());
-                    } else {
-                        exclusions = "";
-                    }
-                    newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
-
-                    //Make Description
-                    if (cols["link"].length) {
-                        let aTagStart = 'href="';
-                        let aTagEnd = '">';
-                        let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
-                        cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
-                    }
-                    if (cols["image"].length) {
-                        cols["definition"] += `<div class='imageContainer'>${cols["image"]}</div>`;
-                    }
-                    if (cols["caption"].length) {
-                        cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
-                    }
-                    if (cols["source"].length) {
-                        cols["definition"] = cols["definition"].trim() + `<p class = "glossarySource">[Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]</p>`;
-                    }
-
-                    newTerm["description"] = cols["definition"];
-
-                    //Add new term
-                    retrievedGlossary.push(newTerm);
                 }
-                return retrievedGlossary;
+            });
+            let bodycontent = (typeof (data.body) == "string") ? data.body : data.body[0];
+            if (!(bodycontent.includes('Word' + "(s)"))) {
+                bodycontent = "";
+                return [];
             }
-        };
-        let chosenSource = sourceOption || "textbook";
-        let retrievedGlossary = await glossaryRetriever[chosenSource]();
+            bodycontent = bodycontent.substring(bodycontent.search(/<tbody.*>\s*<tr>\s*<td data-th="Word\(s\)"/));
+            //Find the body of the glossary table
+            let tableStart = '<tbody';
+            let tableEnd = "</tbody>";
+            let startPoint = bodycontent.search(tableStart) + tableStart.length;
+            let endPoint = bodycontent.substring(startPoint).search(tableEnd) + startPoint;
+            let tBody = bodycontent.substring(startPoint, endPoint).replace(/&nbsp;/g, " ").trim();
+
+            //Generate the rows of the table
+            let tableRows = [];
+            for (let i = 0; i < tBody.length;) {
+                let trimmedBody = tBody.substring(i);
+                let rowStart = '<tr>';
+                let rowEnd = '</tr>';
+                let rowContent = trimmedBody.substring(trimmedBody.search(rowStart) + rowStart.length, trimmedBody.search(rowEnd)).trim();
+                tableRows.push(rowContent);
+                i += trimmedBody.search(rowEnd) + rowEnd.length;
+            }
+
+            //Generate the Glossary
+            let retrievedGlossary = [];
+            for (let r = 0; r < tableRows.length; r++) {
+                let newTerm = {
+                    "term": "",
+                    "description": ""
+                };
+                //Get data from the columns in the row
+                let cols = getTermCols(tableRows[r]);
+                //Generate the description
+                let exclusions;
+                if (cols["exclusion"].length) {
+                    exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
+                        .map((val) => " !" + val.trim()).toString().trim());
+                } else {
+                    exclusions = "";
+                }
+                newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
+
+                //Make Description
+                if (cols["link"].length) {
+                    let aTagStart = 'href="';
+                    let aTagEnd = '">';
+                    let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
+                    cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
+                }
+                if (cols["image"].length) {
+                    cols["definition"] += `<div class='imageContainer'>${cols["image"]}</div>`;
+                }
+                if (cols["caption"].length) {
+                    cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
+                }
+                if (cols["source"].length) {
+                    cols["definition"] = cols["definition"].trim() + `<p class = "glossarySource">[Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]</p>`;
+                }
+
+                newTerm["description"] = cols["definition"];
+
+                //Add new term
+                retrievedGlossary.push(newTerm);
+            }
+            return retrievedGlossary;
+        }
+        let retrievedGlossary = await getGlossaryJSON(chosenSourceID);
+        
         if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
             console.error("incompatible glossary");
             return;
