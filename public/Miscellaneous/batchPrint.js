@@ -52,10 +52,10 @@ if (!window["batchPrint.js"]) {
 			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
 			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
 			innerHTML += `<div class="LTdropdown-content">
-					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf">Full Book</a>
-					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf">Chapter</a>` : ``}
+					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>
+					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
-					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6'>Compile</a>` : ''}
+					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
 				</div></div>`;
 			
 			if (downloadEntry) {

@@ -1502,13 +1502,17 @@ puppeteer.launch({
 			let TOCIndex = ++totalIndex;
 			
 			async function getMatter(text) {
+				if (!current.tags.includes('coverpage:yes')) {
+					console.log(`Skipping ${text} matter`);
+					return [];
+				}
 				let path = current.url.split('/').splice(3).join('/');
 				let miniIndex = 1;
 				let title = text;
 				text = `${(text === 'Front' ? '00' : 'zz')}:_${text}`;
 				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&abort=exists&dream.out.format=json`, current.subdomain, 'LibreBot', {
 					method: "POST",
-					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>"
+					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`
 				});
 				// console.log(createMatter = await createMatter.json());
 				if (createMatter.ok) { //Add properties if it is new

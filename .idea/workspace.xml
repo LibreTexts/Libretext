@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment=" Updated batchPrint.js with Chapters">
-      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/createBundle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Miscellaneous/package.json" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/Default.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/src/components/SubComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/src/pages/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/createBundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/createBundle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/FindReplace.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/FindReplace.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/Multi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/src/components/Multi.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/src/components/Importer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/src/components/Importer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/createBundle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/components/ReRemixerPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/components/ReRemixerPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/reusableFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +37,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="XSLT Stylesheet" />
-        <option value="HTML File" />
         <option value="README" />
         <option value="CSS File" />
         <option value="HTTP Request" />
-        <option value="JavaScript File" />
         <option value="package.json" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -85,7 +88,7 @@
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Miscellaneous" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -102,6 +105,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Victoria Huynh" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Binh Nguyen" />
@@ -212,7 +216,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Commons">
+  <component name="RunManager" selected="Mocha.nodePrintTest">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -306,6 +310,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="package" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/public/Henry Agnew/NewReactTemplate/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="package" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="nodePrintTest" type="mocha-javascript-test-runner">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -332,9 +346,11 @@
       <item itemvalue="npm.Commons" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
+      <item itemvalue="npm.package" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.package" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
     </recent_temporary>
@@ -1168,14 +1184,8 @@
       <workItem from="1596732884642" duration="1472000" />
       <workItem from="1596923892550" duration="1225000" />
       <workItem from="1597352497579" duration="5000" />
-      <workItem from="1597363172015" duration="1983000" />
-    </task>
-    <task id="LOCAL-00225" summary="Added QR Code TitlePage&#10;&#10;Remember to remove the override in a week!">
-      <created>1568535324280</created>
-      <option name="number" value="00225" />
-      <option name="presentableId" value="LOCAL-00225" />
-      <option name="project" value="LOCAL" />
-      <updated>1568535324281</updated>
+      <workItem from="1597363172015" duration="9243000" />
+      <workItem from="1597384142977" duration="1182000" />
     </task>
     <task id="LOCAL-00226" summary="Bugfix for LibreTexts that are exactly 24 pages.">
       <created>1568606876382</created>
@@ -1513,7 +1523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596171586244</updated>
     </task>
-    <option name="localTasksCounter" value="274" />
+    <task id="LOCAL-00274" summary="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React.">
+      <created>1597365246514</created>
+      <option name="number" value="00274" />
+      <option name="presentableId" value="LOCAL-00274" />
+      <option name="project" value="LOCAL" />
+      <updated>1597365246514</updated>
+    </task>
+    <option name="localTasksCounter" value="275" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1568,7 +1585,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="author bar multi-library" />
     <MESSAGE value="Updated dark mode" />
     <MESSAGE value="Starting API Dashboard Multi presets" />
     <MESSAGE value="Implemented API Dashboard Multi presets" />
@@ -1593,7 +1609,8 @@
     <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
     <MESSAGE value="seatedCheck for sendAPI" />
     <MESSAGE value=" Updated batchPrint.js with Chapters" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Updated batchPrint.js with Chapters" />
+    <MESSAGE value="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React." />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1624,83 +1641,84 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1596589359685">
+    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1597365243763">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171584514" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1596589359685" />
-    <state x="164" y="73" key="DiffContextDialog" timestamp="1593838628410">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365243763" />
+    <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1772" y="44" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597383786846" />
     <state x="164" y="73" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838628410" />
     <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1595194585696">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="489" height="510" key="GridCell.Tab.0.bottom" timestamp="1597365114890">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="294" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
-    <state width="489" height="510" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365114890" />
-    <state width="489" height="510" key="GridCell.Tab.0.center" timestamp="1597365114889">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="294" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
-    <state width="489" height="510" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365114889" />
-    <state width="489" height="510" key="GridCell.Tab.0.left" timestamp="1597365114889">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="294" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
-    <state width="489" height="510" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365114889" />
-    <state width="489" height="510" key="GridCell.Tab.0.right" timestamp="1597365114889">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="294" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595876853185" />
-    <state width="489" height="510" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597365114889" />
-    <state width="559" height="746" key="GridCell.Tab.1.bottom" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
-    <state width="559" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.1.center" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
-    <state width="559" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.1.left" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
-    <state width="559" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.1.right" timestamp="1595561628014">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580887" />
-    <state width="559" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="559" height="746" key="GridCell.Tab.2.bottom" timestamp="1595561628015">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
-    <state width="559" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="559" height="746" key="GridCell.Tab.2.center" timestamp="1595561628015">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
-    <state width="559" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="559" height="746" key="GridCell.Tab.2.left" timestamp="1595561628015">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
-    <state width="559" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="559" height="746" key="GridCell.Tab.2.right" timestamp="1595561628015">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state width="597" height="476" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1594934580888" />
-    <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state x="-1350" y="53" key="RollbackChangesDialog" timestamp="1596171211473">
+    <state width="427" height="649" key="GridCell.Tab.0.bottom" timestamp="1597384622413">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171211473" />
+    <state width="427" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
+    <state width="459" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830238" />
+    <state width="427" height="649" key="GridCell.Tab.0.center" timestamp="1597384622413">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="427" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
+    <state width="459" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830237" />
+    <state width="427" height="649" key="GridCell.Tab.0.left" timestamp="1597384622412">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="427" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622412" />
+    <state width="459" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830237" />
+    <state width="427" height="649" key="GridCell.Tab.0.right" timestamp="1597384622413">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="427" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384622413" />
+    <state width="459" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597371830238" />
+    <state width="234" height="649" key="GridCell.Tab.1.bottom" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="234" height="649" key="GridCell.Tab.1.center" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="234" height="649" key="GridCell.Tab.1.left" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="234" height="649" key="GridCell.Tab.1.right" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
+    <state width="234" height="649" key="GridCell.Tab.2.bottom" timestamp="1597384124867">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124867" />
+    <state width="559" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="234" height="649" key="GridCell.Tab.2.center" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="234" height="649" key="GridCell.Tab.2.left" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state width="234" height="649" key="GridCell.Tab.2.right" timestamp="1597384124866">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state width="234" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
+    <state x="-1350" y="53" key="RollbackChangesDialog" timestamp="1597383787712">
+      <screen x="-1920" y="0" width="1536" height="816" />
+    </state>
+    <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597383787712" />
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
     <state x="139" y="67" width="1002" height="707" key="SettingsEditor" timestamp="1596673183706">
       <screen x="0" y="0" width="1707" height="920" />
