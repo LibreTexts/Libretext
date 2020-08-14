@@ -448,18 +448,13 @@ class LibreTextsGlossarizer {
                     .appendTo('body');
 
                 let init_tooltip = function () {
-                    if (tooltip.html().includes("<img")) {
-                        if ($(".glossarizerTooltip img").height() > 100) {
-                            $(".glossarizerTooltip img").height(100); // Downsize to 100px if image is too big
-                        }
-                    }
-                    if ($(window).width() < tooltip.outerWidth() * 1.5)
+                    tooltip.css('max-width', "");
+                    if ($(window).width() <= tooltip.outerWidth() * 2)
                         tooltip.css('max-width', $(window).width() / 2);
                     else
                         tooltip.css('max-width', 340);
 
-                    let pos_left = target.offset().left + (target.outerWidth() / 2) - (tooltip.outerWidth() / 2),
-                        pos_top = target.offset().top - tooltip.outerHeight() - 20;
+                    let pos_left = target.offset().left + (target.outerWidth() / 2) - (tooltip.outerWidth() / 2);
 
                     if (pos_left < 0) {
                         pos_left = target.offset().left + target.outerWidth() / 2 - 20;
@@ -472,6 +467,8 @@ class LibreTextsGlossarizer {
                         tooltip.addClass('right');
                     } else
                         tooltip.removeClass('right');
+                    
+                    let pos_top = target.offset().top - tooltip.outerHeight() - 20;
 
                     if (pos_top < 0) {
                         pos_top = target.offset().top + target.outerHeight();
