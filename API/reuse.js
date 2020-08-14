@@ -18,7 +18,7 @@ const libraries = {
 	'Espanol': 'espanol',
 	'Geology': 'geo',
 	'Humanities': 'human',
-	'K12 Education':'k12',
+	'K12 Education': 'k12',
 	'Mathematics': 'math',
 	'Medicine': 'med',
 	'Physics': 'phys',
@@ -156,7 +156,7 @@ async function getSubpages(rootURL, username, options = {}) {
 	});
 	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, username);
 	pages = await pages.json();
-
+	
 	let contentsArray = [{url: rootURL, id: info['@id'], contents: contents}];
 	let flatArray = [rootURL];
 	let numpages = setInterval(() => {
@@ -344,10 +344,13 @@ function parseURL(url) {
 
 function cleanPath(path) {
 	path = decodeURIComponent(decodeURIComponent((path)));
-	path = path.replace('?title=', '');
-	path = path.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-	path = path.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
-	return path;
+	let front="", back = path;
+	if (path.includes('/'))
+		[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
+	back = back.replace('?title=', '');
+	back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
+	return front + back;
 }
 
 //fills in missing API data for a page. Username optional

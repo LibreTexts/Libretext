@@ -94,10 +94,13 @@ function LibreTextsReuse() {
 	
 	function cleanPath(path) {
 		path = decodeURIComponent(decodeURIComponent((path)));
-		path = path.replace('?title=', '');
-		path = path.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-		path = path.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
-		return path;
+		let front="", back = path;
+		if (path.includes('/'))
+			[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
+		back = back.replace('?title=', '');
+		back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+		back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
+		return front + back;
 	}
 	
 	async function sendAPI(api, options = {}, method = 'PUT') {

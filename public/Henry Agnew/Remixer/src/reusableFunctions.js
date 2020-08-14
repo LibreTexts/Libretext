@@ -171,7 +171,7 @@ async function getSubpages(path, subdomain, options = {
 			//clean path if necessary
 			let originalPath = path;
 			path = LibreTexts.cleanPath(path);
-			if (originalPath !== path || path.includes('?title=')) {
+			if (originalPath.includes('?title=') || originalPath !== path) {
 				try {
 					let cleaned = await LibreTexts.sendAPI('cleanPath', {
 						pageID: id,

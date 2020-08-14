@@ -86,6 +86,29 @@ class ReRemixerPanel extends React.Component {
 		if (localStorage.getItem('RemixerLastText')) {
 			lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
 			lastText = await LibreTexts.getAPI(lastText.url);
+			
+			//cleanPath for the page. Does not modify parent paths!
+			//removes url restricted or non-ascii characters
+			let originalPath = lastText.path;
+			let cleanedPath = LibreTexts.cleanPath(originalPath);
+			if (originalPath.includes('?title=') || originalPath !== cleanedPath) {
+				try {
+					let cleaned = await LibreTexts.sendAPI('cleanPath', {
+						pageID: lastText.id,
+						force: true,
+						pageSubdomain: lastText.subdomain
+					});
+					cleaned = await cleaned.text();
+					if (cleaned !== 'okay' && cleaned !== 'RESTRICTED') {
+						lastText.path = cleaned;
+						lastText.url = `https://${lastText.subdomain}.libretexts.org/${cleanedPath}`;
+					}
+				} catch (e) {
+					console.error(e);
+				}
+			}
+			
+			
 			lastText.title = `<b>Last Linked: </b>${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
 			lastText.children = await RemixerFunctions.getSubpages(lastText.path, this.state.subdomain, {
 				linkTitle: true,
@@ -284,17 +307,17 @@ class ReRemixerPanel extends React.Component {
 			});
 			return;
 		}
+		
 		if (!currentlyActive.isLazy()) {
-			this.props.enqueueSnackbar('Node must have children to ReRemix!', {
+			/*this.props.enqueueSnackbar('Node must have children to ReRemix!', {
 				variant: 'error',
 				anchorOrigin: {
 					vertical: 'bottom',
 					horizontal: 'right',
 				},
-			});
-			return;
+			});*/
 		}
-		else if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
+		if (currentlyActive.data.security && currentlyActive.data.security === 'Viewer') {
 			this.props.enqueueSnackbar('You have insufficient permissions to modify this page', {
 				variant: 'error',
 				anchorOrigin: {
@@ -304,15 +327,19 @@ class ReRemixerPanel extends React.Component {
 			});
 			return;
 		}
-		this.setState({transferring: true});
-		await currentlyActive.visitAndLoad();
-		this.setState({transferring: false});
+		if (currentlyActive.isLazy()) {
+			this.setState({transferring: true});
+			await currentlyActive.visitAndLoad();
+			this.setState({transferring: false});
+		}
 		
 		currentlyActive = currentlyActive.toDict(true);
 		currentlyActive.title = currentlyActive.title.replace('<b>Last Linked: </b>', '');
 		currentlyActive.key = 'ROOT';
 		currentlyActive.expanded = true;
 		let rootPath = currentlyActive.data.path;
+		if (!currentlyActive.children)
+			currentlyActive.children = [];
 		RemixerFunctions.ReRemixTree(currentlyActive, rootPath);
 		
 		this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {
