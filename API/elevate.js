@@ -186,8 +186,9 @@ async function cleanPath(req, res) {
 				body.subdomain, 'LibreBot', {
 					method: 'POST'
 				});
-			if (makeChange.ok)
-				console.log(await makeChange.text());
+			if (makeChange.ok){
+				// console.log(await makeChange.text());
+			}
 			else
 				throw Error(await makeChange.text());
 		} catch (e) {
