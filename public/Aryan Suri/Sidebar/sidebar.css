@@ -506,21 +506,11 @@ a.toggler.off {
 }
 
 @media print {
-  #custom_open {
-    display: none;
-  }
-  #custom_sidebar {
-    display: none;
-  }
-  #sidebar1 {
-    display: none;
-  }
-  #sidebar2 {
-    display: none;
-  }
-  #sidebar3 {
-    display: none;
-  }
+  #custom_open,
+  #custom_sidebar,
+  #sidebar1,
+  #sidebar2,
+  #sidebar3,
   #sidebar4 {
     display: none;
   }
