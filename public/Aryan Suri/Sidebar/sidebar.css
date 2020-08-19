@@ -2,7 +2,7 @@ a.toggler {
   background: #474747;
   cursor: pointer;
   border: 2px solid #d3d3d3;
-  border-right-width: 380px;
+  border-left-width: 230px;
   padding: 0 5px;
   border-radius: 5px;
   text-decoration: none !important;
@@ -12,12 +12,12 @@ a.toggler {
 }
 
 a.toggler.off {
-  border-right-width: 2px;
-  border-left-width: 380px;
+  border-left-width: 2px;
+  border-right-width: 230px;
 }
 
-.attrModal {
-  display: none;
+#attrModal {
+  display: flex;
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
@@ -35,23 +35,25 @@ a.toggler.off {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
+  justify-content: center;
+  align-content: center;
 }
 
 /* Modal Content/Box */
 
-.attrModal-content {
+#attrModalContent {
   background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  width: 40%;
+  width: 40vw;
+  margin-left: 520px;
   z-index: 30000001;
   top: calc(50% - 137px);
   position: absolute;
   border-radius: 10px;
-  margin-left: 500px
 }
 
-#attr-copy, #attr-author, #attr-html {
+#attr-copy, #attr-author, #attr-html, #attr-program {
   color: #666;
   text-decoration: none;
   transition: 1s;
@@ -65,37 +67,9 @@ a.toggler.off {
   font-style: italic !important;
 }
 
-#attr-copy:hover, #attr-author:hover, #attr-html:hover {
+#attr-copy:hover, #attr-author:hover, #attr-html:hover, #attr-program:hover {
   font-style: italic !important;
 }
-
-/* The Close Button */
-
-/* The Close Button */
-
-#navcover {
-  height: 100%;
-  /* 100% Full-height */
-  width: calc(100% - 400px);
-  /* 0 width - change this with JavaScript */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1000000001;
-  /* Stay on top */
-  top: 0;
-  right: 0;
-  background-color: #ececec;
-  /* Black*/
-  overflow-x: hidden;
-  /* Disable horizontal scroll */
-  overflow-y: hidden;
-  opacity: 0;
-  transition: 0s;
-  /* 0.5 second transition effect to slide in the sidebar */
-  display: none;
-}
-
-/* The Close Button */
 
 .close_ar {
   margin-top: 0px;
@@ -150,10 +124,6 @@ a.toggler.off {
   border-radius: 50%;
   background: black;
   cursor: pointer;
-}
-
-.darkbtn {
-  text-align: center;
 }
 
 #fs, #fs2, #darkbtn, #size, #slider-page-width, #ta {
@@ -253,8 +223,8 @@ a.toggler.off {
 /* The button used to open the sidebar */
 
 #custom_open {
-  width: 40px;
-  height: 40px;
+  width: 43.333px;
+  height: 43.333px;
   font-size: 15px;
   cursor: pointer;
   background-color: #127bc4;
@@ -262,7 +232,7 @@ a.toggler.off {
   border: none;
   border-radius: 0px;
   position: fixed;
-  top: 10px;
+  top: 0px;
   left: 0px;
   z-index: 30000001
 }
@@ -536,8 +506,30 @@ a.toggler.off {
 }
 
 @media print {
-  #custom_open, .custom_sidebar {
-    display:none;
+  #custom_open {
+    display: none;
+  }
+  #custom_sidebar {
+    display: none;
+  }
+  #sidebar1 {
+    display: none;
+  }
+  #sidebar2 {
+    display: none;
+  }
+  #sidebar3 {
+    display: none;
+  }
+  #sidebar4 {
+    display: none;
+  }
+  section.mt-content-container {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+  section.mt-content-container {
+    font-size: 1.1 rem !important;
+    text-align: justify !important;
   }
 }
-
