@@ -1,67 +1,48 @@
 window.addEventListener("load", fbButtons);
 
-
-//init function
 function fbButtons() {
 
-   let first_div = document.createElement("div");
-   document.body.append(first_div);
-   
+   let fbDiv = document.createElement("div");
+   let fbNext = $('.mt-icon-next-article').closest('a').attr('href');
+   let fbBack = $('.mt-icon-previous-article').closest('a').attr('href');
 
-   //inner HTML
-   $(first_div).html(`
+
+   document.body.append(fbDiv);
+   $(fbDiv).html(`
 
     
-    <button onclick="next_article_page()" id="f_button"><i id="right" class="fa fa-long-arrow-right "></i></button>
-    <div class="button_title"  id="f_title" ></div>
-    <button onclick="previous_article_page()"  id="b_button"><i id="left" class="fa fa-long-arrow-left "></i></button>
-    <div class="button_title"  id="b_title"></div>`);
+    <a href="${fbNext}"><button id="fButton"><i id="fbRight" class="fa fa-long-arrow-right "></i></button></a>
+    <div class="button_title"  id="fTitle" ></div>
+    <a href="${fbBack}"><button id="bButton"><i id="fbLeft" class="fa fa-long-arrow-left "></i></button></a>
+    <div class="button_title"  id="bTitle"></div>
 
-   $(document).ready(function () {
-      $('#f_title').text($("a.mt-icon-next-article span").first().text());
-      $('#b_title').text($("a.mt-icon-previous-article span").first().text());
-   });
+    `);
 
 
-   $("#f_button").hover(function () {
-      $('#f_title').fadeIn(200);
+   $('#fTitle').text($("a.mt-icon-next-article span").first().text());
+   $('#bTitle').text($("a.mt-icon-previous-article span").first().text());
+
+
+
+   $("#fButton").hover(function () {
+      $('#fTitle').fadeIn(200);
    }, function () {
-      $('#f_title').fadeOut(200);
+      $('#fTitle').fadeOut(200);
 
    });
 
-   $("#b_button").hover(function () {
-      $('#b_title').fadeIn(200);
+   $("#bButton").hover(function () {
+      $('#bTitle').fadeIn(200);
    }, function () {
-      $('#b_title').fadeOut(200);
+      $('#bTitle').fadeOut(200);
 
    });
 
-   if($("#pageTagsHolder").text().includes('"article:topic"')){
-       console.log("found section/page");
-       
-       
-   } else {  
-       $(first_div).remove();
+
+
+   if ($("#pageTagsHolder").text().includes('"article:topic"')) {
+
+   } else {
+      $(fbDiv).remove();
    }
-    
-   
-
-}
- //Link Content
- function next_article_page() {
-      let x = $('.mt-icon-next-article').closest('a').attr('href');
-       
-      console.log(x);
-
-      this.location.href = x;
-   }
-    
- function previous_article_page() {
-
-      let x = $('.mt-icon-previous-article').closest('a').attr('href');
-      console.log(x);
-
-      this.location.href = x;
-   
 }
