@@ -7,7 +7,7 @@ function fbButtons() {
    let first_div = document.createElement("div");
    document.body.append(first_div);
    
-
+   //TODO: Replace onclick functionality with links <a src=`${forward_link}`/>
    //inner HTML
    $(first_div).html(`
 
@@ -48,6 +48,7 @@ function fbButtons() {
    
 
 }
+/*
  //Link Content
  function next_article_page() {
       let x = $('.mt-icon-next-article').closest('a').attr('href');
@@ -65,3 +66,4 @@ function fbButtons() {
       this.location.href = x;
    
 }
+*/
