@@ -194,6 +194,7 @@ async function cleanPath(req, res) {
 		} catch (e) {
 			console.error(`[cleanPath] ${path}`);
 			console.error(e);
+			res.send(originalPath);
 			res.status(500);
 			return;
 		}

@@ -333,7 +333,8 @@ span.fancytree-icon {
 .fancytree-statusnode-loading span.fancytree-icon:hover,
 span.fancytree-icon.fancytree-icon-loading {
     background-image: url("https://chem.libretexts.org/@api/deki/files/145588/loading.gif?origin=mt-web");
-    background-position: 0px 0px;
+    background-position: center;
+    background-size: cover;
 }
 /* Status node icons */
 .fancytree-statusnode-error span.fancytree-icon,

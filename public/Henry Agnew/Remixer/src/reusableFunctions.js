@@ -183,7 +183,10 @@ async function getSubpages(path, subdomain, options = {
 						path = cleaned;
 						url = `https://${subdomain}.libretexts.org/${path}`;
 					}
-				}catch (e) {
+					else
+						path = originalPath;
+				} catch (e) {
+					path = originalPath;
 					console.error(e);
 				}
 			}
@@ -227,7 +230,8 @@ async function getSubpages(path, subdomain, options = {
 			
 			await Promise.all(promiseArray);
 			return result.filter(elem => elem);
-		} else {
+		}
+		else {
 			return [];
 		}
 	}

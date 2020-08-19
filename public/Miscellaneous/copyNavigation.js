@@ -43,7 +43,8 @@
 	function propagatorOption() {
 		const isAdmin = document.getElementById("adminHolder").innerText === "true";
 		const isLibrarySpecific = window.location.href.includes('LibrarySpecific');
-		if (isAdmin && !isLibrarySpecific) {
+		const libraryHeader = window.location.href.includes('Template:Custom/Views/Header');
+		if (isAdmin && !isLibrarySpecific && !libraryHeader) {
 			let copy = document.getElementsByClassName("mt-user-menu-copy-page");
 			if (copy.length) {
 				let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
@@ -472,10 +473,11 @@
 		async function goToSandbox() {
 			let username = document.getElementById('usernameHolder').innerText;
 			let isAdmin = document.getElementById('adminHolder').innerText;
-			isAdmin = (isAdmin === 'true') ? `/${username}` : '';
+			const groups = document.getElementById("groupHolder").innerText.toLowerCase();
+			const sandboxLocation = (isAdmin === 'true' || groups.includes('developer')) ? `/${username}` : '';
 			
 			await LibreTexts.sendAPI('createSandbox');
-			document.location.replace(`/Sandboxes${isAdmin}`);
+			document.location.replace(`/Sandboxes${sandboxLocation}`);
 		}
 	}
 	
@@ -508,10 +510,14 @@
 	}
 	
 	document.addEventListener('DOMContentLoaded', fn);
-	document.addEventListener('DOMContentLoaded', () => {
-		if (window !== window.top && window.location.href.includes("contentOnly")) {
-			document.getElementsByClassName("elm-header")[0].style.display = "none";
-			document.getElementById("mt-summary").style.setProperty("display", "none", "important");
-		}
-	});
+	
+	//hide headers if within an iframe
+	if (window !== window.top || window.location.href.includes("contentOnly") || window.location.href.includes("onlyContent")) {
+		document.body.classList.add("contentOnly");
+	}
+	if (window.location.href.includes("adaptView")
+		|| (document.referrer && document.referrer.match(/^https:\/\/([A-Za-z]*?\.)?adapt\.libretexts\.org/))) {
+		document.body.classList.add("contentOnly");
+		document.body.classList.add("adaptView");
+	}
 })();
