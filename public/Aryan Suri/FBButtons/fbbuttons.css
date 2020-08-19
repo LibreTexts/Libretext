@@ -72,19 +72,15 @@
 }
 
 @media only screen and (max-width: 1350px) {
-  #fButton {
+  #fButton, #bButton {
     display: none;
   }
-  #bButton {
-    display: none;
-  }
+
 }
 
 @media print {
-  #fButton {
+  #fButton, #bButton {
     display: none;
   }
-  #bButton {
-    display: none;
-  }
+
 }
