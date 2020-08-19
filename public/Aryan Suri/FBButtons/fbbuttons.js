@@ -11,9 +11,9 @@ function fbButtons() {
    $(fbDiv).html(`
 
     
-    <a href="${fbNext}"><button id="fButton"><i id="right" class="fa fa-long-arrow-right "></i></button></a>
+    <a href="${fbNext}"><button id="fButton"><i id="fbRight" class="fa fa-long-arrow-right "></i></button></a>
     <div class="button_title"  id="fTitle" ></div>
-    <a href="${fbBack}"><button id="bButton"><i id="left" class="fa fa-long-arrow-left "></i></button></a>
+    <a href="${fbBack}"><button id="bButton"><i id="fbLeft" class="fa fa-long-arrow-left "></i></button></a>
     <div class="button_title"  id="bTitle"></div>
 
     `);
