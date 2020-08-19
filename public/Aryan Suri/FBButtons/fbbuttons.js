@@ -45,8 +45,4 @@ function fbButtons() {
    } else {
       $(fbDiv).remove();
    }
-
-
-
 }
-
