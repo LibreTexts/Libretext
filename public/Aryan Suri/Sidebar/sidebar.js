@@ -1323,86 +1323,6 @@ function rtdefault() {
   $('section.mt-content-container p').css("text-align", "justify");
 };
 
-function activateBeeLine() {
-  const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
-
-  const doBeeline = function (theme, action) {
-    for (let i = 0; i < beelineELements.length; i++) {
-      const beeline = new BeeLineReader(beelineELements[i], {
-        theme: theme,
-        skipBackgroundColor: true,
-        handleResize: true,
-        skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
-      });
-
-      Cookies.set("beeline", theme, { domain: 'libretexts.org' });
-      if (theme === "off") {
-        beeline.uncolor();
-        if (typeof ga === 'function') {
-          ga('send', 'event', 'Beeline', 'disabled');
-        }
-      }
-      else {
-        beeline.color();
-        if (typeof ga === 'function') {
-          ga('send', 'event', 'Beeline', action, theme);
-        }
-      }
-      const contentContainer = $('.elm-skin-container');
-      if (theme === 'night_blues') {
-        contentContainer.addClass('darkMode');
-        localStorage.setItem('darkMode', true);
-      }
-      else {
-        contentContainer.removeClass('darkMode');
-        localStorage.setItem('darkMode', false);
-      }
-    }
-  };
-
-
-  setBeelineToggles();
-  function setBeelineToggles() {
-    const toggles = $('.BLtoggle');
-
-    if (toggles[0]) {
-      const btns = toggles.find('button, a');
-
-      btns.click(function (e) {
-        if (!e.target.href)
-          e.preventDefault();
-        const theme = $(this).attr("data-color");
-        if (!theme)
-          return;
-        btns.removeClass('active');
-        btns.filter('a[data-color="' + theme + '"]').addClass('active');
-        btns.filter('button[data-color="' + theme + '"]').addClass('active');
-
-        doBeeline(theme, theme);
-      });
-    }
-  }
-
-	/*$("#doBeeLine").on("click", function () {
-			
-			const theme = activateBeeLine.theme !== 'bright' ? 'bright' : 'off';
-			
-			const toggles = $('.BLtoggle');
-			
-			if (toggles[0]) {
-				const btns = toggles.find('button, a');
-				btns.removeClass('active');
-				btns.filter('a[data-color="' + theme + '"]').addClass('active');
-				btns.filter('button[data-color="' + theme + '"]').addClass('active');
-			}
-			activateBeeLine.theme = theme;
-			event.preventDefault();
-			doBeeline(theme, theme);
-	});
-*/
-}
-
-//TODO: Deprecate Miscellaneous/TOC.js
 async function TOC() {
   let coverpage;
   let coverTitle;
@@ -1540,18 +1460,21 @@ function getCC() {
   return null; //not found
 }
 
-function getattrText() {
-  let attrdiv = document.createElement("div");
-  document.body.appendChild(attrdiv);
-
-  const cc = getCC();
-  let title = $("#titleHolder").text();
-  let titlestr = `"` + title + `"`;
-  let author = $("li.mt-author-information a:first").text();
-  let currentURL = window.location.href;
-  //onclick="document.getElementById('attrModal').style.display='none'"
-
-  $(attrdiv).html(`
+/*
+class attribution() {
+    constructor() {
+        this.attrdiv = document.createElement("div");
+        this.cc = getCC();
+        this.title = $("#titleHolder").text();
+        this.titlestr =  `"` + title + `"`;
+        this.author = $("li.mt-author-information a:first").text();
+        this.currentURL = window.location.href;
+        this.attrCopy = document.getElementById("attr-copy");
+        document.body.appendChild(this.attrdiv);
+    }
+    
+    buildattribuion() {
+         $(attrdiv).html(`
 
     
     <div onclick="hideattr()" id="attrModal" class="attrModal">
@@ -1571,6 +1494,41 @@ function getattrText() {
             <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Attribution</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="attr-author" style="text-decoration: none; color: #666"> Author's Page</a>
+            </div>
+        </div>
+
+    </div>`);
+    
+    }
+} */
+
+function buildattribution() {
+  let attrdiv = document.createElement("div");
+  $(attrdiv).attr("id", "SB-PA-AD");
+  document.body.appendChild(attrdiv);
+
+  const cc = getCC();
+  let title = $("#titleHolder").text();
+  let titlestr = `"` + title + `"`;
+  let author = $("li.mt-author-information a:first").text();
+  let currentURL = window.location.href;
+
+  $(attrdiv).html(`
+
+    <div onclick="hideattr()" id="attrModal">
+
+        <div id="attrModalContent" style="cursor: pointer" >
+            
+            <div id="attrHTML">
+                <p id="attr-text"> <a href="${currentURL}"> ${titlestr} </a> by <a id="attr-author-link" href="">${author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>
+            </div>
+
+
+            <div id="attr-links">
+                <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Text</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="attr-author" style="text-decoration: none; color: #666"> Affiliation's Page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="attr-program" style="text-decoration: none; color: #666"> Program's Page</a>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
         </div>
 
