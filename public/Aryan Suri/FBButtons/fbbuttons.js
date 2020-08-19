@@ -39,7 +39,7 @@ function fbButtons() {
    });
 
 
-   //REMEMBER TO INVERT THIS BACK
+
    if ($("#pageTagsHolder").text().includes('"article:topic"')) {
 
    } else {
