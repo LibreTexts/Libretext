@@ -1,7 +1,4 @@
 window.addEventListener("load", createSidebar);
-window.addEventListener('load', TOC);
-window.addEventListener("load", getCC);
-
 
 window.addEventListener("load", () => {
   console.log(localStorage.getItem('page_width'));
@@ -658,6 +655,7 @@ function createSidebar() {
 
 `
   }
+  TOC();
   SBCC = new SBconverterCalculator();
   let sidebar = document.getElementById("custom_sidebar");
   let sidebar1 = document.getElementById("sidebar1");
@@ -1419,88 +1417,6 @@ async function TOC() {
     }
   }
 }
-
-function getCC() {
-  let tags = document.getElementById("pageTagsHolder");
-  if (tags) {
-    tags = tags.innerText;
-    tags = tags.replace(/\\/g, "");
-    tags = JSON.parse(tags);
-    for (let i = 0; i < tags.length; i++) {
-      if (tags[i].includes("license")) {
-        let tag = tags[i].split(":")[1];
-        switch (tag) {
-          case "publicdomain":
-            return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
-          case "ccby":
-            return { label: "cc-BY", title: "CC BY", link: "https://creativecommons.org/licenses/by/4.0/" };
-          case "ccbysa":
-            return { label: "cc-by-sa", title: "CC BY-SA", link: "https://creativecommons.org/licenses/by-sa/4.0/" };
-          case "ccbyncsa":
-            return { label: "cc-by-nc-sa", title: "CC BY-NC-SA", link: "https://creativecommons.org/licenses/by-nc-sa/4.0/" };
-          case "ccbync":
-            return { label: "cc-by-nc", title: "CC BY-NC", link: "https://creativecommons.org/licenses/by-nc/4.0/" };
-          case "ccbynd":
-            return { label: "cc-by-nd", title: "CC BY-ND", link: "https://creativecommons.org/licenses/by-nd/4.0/" };
-          case "ccbyncnd":
-            return { label: "cc-by-nc-nd", title: "CC BY-NC-ND", link: "https://creativecommons.org/licenses/by-nc-nd/4.0/" };
-          case "gnu":
-            return { label: "gnu", title: "GNU GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html" };
-          case "gnudsl":
-            return { label: "gnudsl", title: "GNU DSL", link: "https://www.gnu.org/licenses/dsl.html" };
-          case "gnufdl":
-            return { label: "gnufdl", title: "GNU FDL", link: "https://www.gnu.org/licenses/fdl-1.3.en.html" };
-          case "arr":
-            return { label: "arr", title: "All Rights Reserved ©", };
-
-        }
-      }
-    }
-  }
-  return null; //not found
-}
-
-/*
-class attribution() {
-    constructor() {
-        this.attrdiv = document.createElement("div");
-        this.cc = getCC();
-        this.title = $("#titleHolder").text();
-        this.titlestr =  `"` + title + `"`;
-        this.author = $("li.mt-author-information a:first").text();
-        this.currentURL = window.location.href;
-        this.attrCopy = document.getElementById("attr-copy");
-        document.body.appendChild(this.attrdiv);
-    }
-    
-    buildattribuion() {
-         $(attrdiv).html(`
-
-    
-    <div onclick="hideattr()" id="attrModal" class="attrModal">
-
-  
-        <div id="aM-c" style="cursor: pointer" class="attrModal-content">
-            
-           
-            <h3>Attribution: </h3>
-
-            <div id="attrHTML">
-            <p id="attr-text"> <a href="${currentURL}"> ${titlestr} </a> by <a id="attr-author-link" href="">${author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>
-            </div>
-
-
-            <div id="attr-links">
-            <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Attribution</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="attr-author" style="text-decoration: none; color: #666"> Author's Page</a>
-            </div>
-        </div>
-
-    </div>`);
-    
-    }
-} */
 
 function buildattribution() {
   let attrdiv = document.createElement("div");
