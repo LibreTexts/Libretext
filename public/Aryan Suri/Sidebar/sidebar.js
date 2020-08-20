@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", Sidebar);
 async function Sidebar() {
 	let param = getParam();
-	let tabs = getData();
+	let tabs = getData(param.pro);
 	let sidebar = buildSidebar();
     TOC();
     SBCC = new SBconverterCalculator();
@@ -9,12 +9,11 @@ async function Sidebar() {
 
 	function getSidebar() {
 		if (param.pro) {
-
 			switch (param.library) {
 				case "chem":
-					return [tabs.headerPRO, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers]
+					return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers]
 				default:
-					return [tabs.headerPRO, tabs.home, tabs.control, tabs.usage, tabs.developers]
+					return [tabs.header, tabs.home, tabs.control, tabs.usage, tabs.developers]
 			}
 		}
 
@@ -86,7 +85,8 @@ async function Sidebar() {
 				if (event.target == document.getElementById("custom_open")) {
 
 					$("#sidebarDiv").show();
-
+                    $("#sb2, #sb3, #sb4, #sb5").hide();
+				    $("#sb1").show();
 				}
 			});
 
@@ -236,14 +236,14 @@ async function Sidebar() {
 	}
 
 
-	function getData() {
+	function getData(pro) {
 
 
 		return {
 
 			"open": `<button id="custom_open"  >☰</button>`,
 
-			"headerPRO": `<div id="sbHeader" class="top-bar" style="">
+			"header": pro ? `<div id="sbHeader" class="top-bar" style="">
         <div class="top-bar-unit" >
             <h5 id="openContents">Contents</h5>
         </div>
@@ -265,9 +265,7 @@ async function Sidebar() {
         </div>
 
        
-        </div>`,
-
-            "header": ` <div id="sbHeader" class="top-bar" style="">
+        </div>` : ` <div id="sbHeader" class="top-bar" style="">
         <div class="top-bar-unit" >
             <h5 id="openContents">Contents</h5>
         </div>
