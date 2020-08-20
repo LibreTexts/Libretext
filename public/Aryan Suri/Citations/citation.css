@@ -1,0 +1,51 @@
+#citeModal {
+    display: flex;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: none;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    justify-content: center;
+    align-content: center;
+}
+
+#citeModalContent {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    z-index: 30000001;
+    top: calc(50% - 150px);
+    position: absolute;
+    border-radius: 10px;
+}
+
+#citeContent {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#citeText {
+    font-size: 1.1rem;
+}
+
+#citeSelect {
+    max-width: 30%;
+}
+
+#citeCopy:hover, #citeCopyHTML:hover {
+    font-style: italic !important;
+}
