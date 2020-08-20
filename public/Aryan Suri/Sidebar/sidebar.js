@@ -133,7 +133,6 @@ async function Sidebar() {
 			$('#phy_table').click(function () {
 				if ($("#phy_table_put").is(":hidden")) {
 
-					$("#phy_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants #pageText");
 					$("#phy_table_put").slideDown("slow");
 				} else {
 					$("#phy_table_put").slideUp("slow");
@@ -319,11 +318,10 @@ async function Sidebar() {
 
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
-                <div id="phy_table_put" class="custom_field">
+                <div  style="display: none;" id="phy_table_put" class="custom_field">
+                   <iframe style="width: 480px;" loading="lazy" src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"></iframe>
                 </div>
-        <!--<a id="gloss_table">Organic Chemistry Glossary</a>
-            <div id="gloss_table_put" class="custom_field">
-            </div>-->
+
         <a id="conversion_table">Conversion Calculator</a>
         <div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
