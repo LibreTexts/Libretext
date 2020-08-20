@@ -286,17 +286,18 @@ a.toggler.off {
 }
 
 .top-bar {
-    cursor: pointer;
-    top: 0;
-    height: 40px;
-    margin-top: 0;
-    background-color: #E5F5FE;
-    position: fixed;
-    z-index: 10000000000;
-    display: flex;
-    width: 480px;
-    border-right: 1px solid black;
+  cursor: pointer;
+  top: 0;
+  height: 40px;
+  margin-top: 0;
+  background-color: #E5F5FE;
+  position: fixed;
+  z-index: 10000000000;
+  display: flex;
+  width: 480px;
+  border-right: 1px solid black;
 }
+
 .top-bar-unit {
   flex: 1;
   /* margin-left: 10px; */
@@ -488,13 +489,13 @@ a.toggler.off {
 }
 
 @media only screen and (max-width: 600px) {
-  #custom_open, #sidebarDiv{
+  #custom_open, #sidebarDiv {
     display: none;
   }
 }
 
 @media print {
-  #custom_open, #sidebarDiv{
+  #custom_open, #sidebarDiv {
     display: none;
   }
   section.mt-content-container {
@@ -502,7 +503,6 @@ a.toggler.off {
     margin-right: 0px !important;
   }
   section.mt-content-container {
-    
     text-align: justify !important;
   }
 }
