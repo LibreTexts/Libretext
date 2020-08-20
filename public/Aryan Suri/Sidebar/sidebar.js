@@ -55,7 +55,6 @@ async function Sidebar() {
 		$(sidebarDiv).css("display", "none");
 		tabsSidebar = tabsSidebar.join("");
 		$(sidebarDiv).append(tabsSidebar);
-		console.log(tabsSidebar);
 		controlSidebar();
 		switchSidebar();
 		function switchSidebar() {
@@ -184,69 +183,8 @@ async function Sidebar() {
 			if (localStorage.getItem('darkMode') === 'true')
 				$('.elm-skin-container').addClass('darkMode');
             
-            activateBeeLine();
-  function activateBeeLine() {
-    const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
-
-    const doBeeline = function (theme, action) {
-      for (let i = 0; i < beelineELements.length; i++) {
-        const beeline = new BeeLineReader(beelineELements[i], {
-          theme: theme,
-          skipBackgroundColor: true,
-          handleResize: true,
-          skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
-        });
-
-        Cookies.set("beeline", theme, { domain: 'libretexts.org' });
-        if (theme === "off") {
-          beeline.uncolor();
-          if (typeof ga === 'function') {
-            ga('send', 'event', 'Beeline', 'disabled');
-          }
-        }
-        else {
-          beeline.color();
-          if (typeof ga === 'function') {
-            ga('send', 'event', 'Beeline', action, theme);
-          }
-        }
-        const contentContainer = $('.elm-skin-container');
-        if (theme === 'night_blues') {
-          contentContainer.addClass('darkMode');
-          localStorage.setItem('darkMode', true);
-        }
-        else {
-          contentContainer.removeClass('darkMode');
-          localStorage.setItem('darkMode', false);
-        }
-      }
-    };
-
-
-    setBeelineToggles();
-    function setBeelineToggles() {
-      const toggles = $('.BLtoggle');
-
-      if (toggles[0]) {
-        const btns = toggles.find('button, a');
-
-        btns.click(function (e) {
-          if (!e.target.href)
-            e.preventDefault();
-          const theme = $(this).attr("data-color");
-          if (!theme)
-            return;
-          btns.removeClass('active');
-          btns.filter('a[data-color="' + theme + '"]').addClass('active');
-          btns.filter('button[data-color="' + theme + '"]').addClass('active');
-
-          doBeeline(theme, theme);
-        });
-      }
-    }
-
-
-  }
+  
+ 
 
 
 
@@ -565,7 +503,68 @@ async function Sidebar() {
 	}
 }
 
+ function activateBeeLine() {
+    const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
 
+    const doBeeline = function (theme, action) {
+      for (let i = 0; i < beelineELements.length; i++) {
+        const beeline = new BeeLineReader(beelineELements[i], {
+          theme: theme,
+          skipBackgroundColor: true,
+          handleResize: true,
+          skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
+        });
+
+        Cookies.set("beeline", theme, { domain: 'libretexts.org' });
+        if (theme === "off") {
+          beeline.uncolor();
+          if (typeof ga === 'function') {
+            ga('send', 'event', 'Beeline', 'disabled');
+          }
+        }
+        else {
+          beeline.color();
+          if (typeof ga === 'function') {
+            ga('send', 'event', 'Beeline', action, theme);
+          }
+        }
+        const contentContainer = $('.elm-skin-container');
+        if (theme === 'night_blues') {
+          contentContainer.addClass('darkMode');
+          localStorage.setItem('darkMode', true);
+        }
+        else {
+          contentContainer.removeClass('darkMode');
+          localStorage.setItem('darkMode', false);
+        }
+      }
+    };
+
+
+    setBeelineToggles();
+    function setBeelineToggles() {
+      const toggles = $('.BLtoggle');
+
+      if (toggles[0]) {
+        const btns = toggles.find('button, a');
+
+        btns.click(function (e) {
+          if (!e.target.href)
+            e.preventDefault();
+          const theme = $(this).attr("data-color");
+          if (!theme)
+            return;
+          btns.removeClass('active');
+          btns.filter('a[data-color="' + theme + '"]').addClass('active');
+          btns.filter('button[data-color="' + theme + '"]').addClass('active');
+
+          doBeeline(theme, theme);
+        });
+      }
+    }
+
+
+  }
 
 
 class SBconverterCalculator {
