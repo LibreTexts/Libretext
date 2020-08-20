@@ -488,23 +488,13 @@ a.toggler.off {
 }
 
 @media only screen and (max-width: 600px) {
-  #custom_open,
-  #custom_sidebar,
-  #sidebar1,
-  #sidebar2,
-  #sidebar3,
-  #sidebar4 {
+  #custom_open, #sidebarDiv{
     display: none;
   }
 }
 
 @media print {
-  #custom_open,
-  #custom_sidebar,
-  #sidebar1,
-  #sidebar2,
-  #sidebar3,
-  #sidebar4 {
+  #custom_open, #sidebarDiv{
     display: none;
   }
   section.mt-content-container {

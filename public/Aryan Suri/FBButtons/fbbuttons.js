@@ -22,8 +22,6 @@ function fbButtons() {
    $('#fTitle').text($("a.mt-icon-next-article span").first().text());
    $('#bTitle').text($("a.mt-icon-previous-article span").first().text());
 
-
-
    $("#fButton").hover(function () {
       $('#fTitle').fadeIn(200);
    }, function () {
@@ -45,7 +43,5 @@ function fbButtons() {
    } else {
       $(fbDiv).remove();
    }
-
-
-
 }
+
