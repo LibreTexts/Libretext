@@ -5,7 +5,6 @@ if (!window["batchPrint.js"]) {
 	const groups = document.getElementById("groupHolder").innerText;
 	const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g, '\''));
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
-	const targetComputer = 'batch.libretexts.org';
 	let request;
 	let requestJSON;
 	let bookstore = tags.find(elem => elem.startsWith('store:'));
@@ -148,7 +147,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `https://${targetComputer}/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
@@ -180,8 +179,8 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 					return;
 				}
 				batchButton.innerText = "Redownload";
-				window.location = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://${targetComputer}/print/Finished/${out.filename}/Full.pdf`;
+				window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+				window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
 				
 				let tags = document.getElementById('pageTagsHolder').innerText;
 				if (tags.includes('coverpage:yes'))
@@ -197,7 +196,7 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 		if (coverpage) {
 			let [subdomain] = LibreTexts.parseURL();
 			coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
-			return `https://${targetComputer}/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
+			return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
 		}
 		return '#'
 	}
