@@ -39,14 +39,39 @@ class LibreTextsGlossarizer {
         let pluginName = this.pluginName;
         let defaults = this.defaults;
         let getTermCols = this.getTermCols;
-        let chosenSourceID = 0;
+        let retrievedGlossary = [];
         switch ((sourceOption||"").trim().toLowerCase()) {
+            case "iupac gold book":
+                let goldbook = await $.getJSON("https://files.libretexts.org/github/LibreTextsMain/Leo%20Jayachandran/Glossarizer/goldbook_vocab.json");
+                for (let i = 1; i <= 7035; i++) {
+                    if (goldbook.entries[i].definition === null || goldbook.entries[i].term === null || goldbook.entries[i].definition.length == 0) { // If definition is empty skip term
+                        continue;
+                    }
+                    let cleanedDef = "";
+
+                    if (typeof goldbook.entries[i].definition === "object") {
+                        for (let u = 0; u < goldbook.entries[i].definition.length; u++) {
+                            if (goldbook.entries[i].definition[u].length) 
+                                cleanedDef += `<p>${i}. ${goldbook.entries[i].definition}</p>`;
+                        }
+                        if (cleanedDef.length == 0) {
+                            continue;
+                        }
+                    } else {
+                        cleanedDef = goldbook.entries[i].definition.trim();
+                    }
+                    retrievedGlossary.push ({
+                        "term": goldbook.entries[i].term, 
+                        "description": cleanedDef
+                    });
+                }
+                break;
             case "textbook":
             default:
                 const coverPage = await LibreTexts.getCoverpage();
                 const subdomain = window.location.origin.split('/')[2].split('.')[0];
                 let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
-                chosenSourceID = glossaryPage.id;
+                retrievedGlossary = await getGlossaryJSON(glossaryPage.id);
         }
         async function getGlossaryJSON(sourceID) {
             let data = await LibreTexts.authenticatedFetch(sourceID, 'contents?dream.out.format=json').then(response => {
@@ -126,7 +151,6 @@ class LibreTextsGlossarizer {
             }
             return retrievedGlossary;
         }
-        let retrievedGlossary = await getGlossaryJSON(chosenSourceID);
         
         if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
             console.error("incompatible glossary");
@@ -442,14 +466,12 @@ class LibreTextsGlossarizer {
                 target = $(this);
                 let tip = target.attr('title');
                 tooltip = $(`<div id="tooltip${target.text()}" class= "glossarizerTooltip"></div>`);
-
+                let inputs = {"tooltip": tooltip, "target": target, "tip": tip};
                 if (!tip || tip == '')
                     return false;
 
                 target.removeAttr('title');
-                tooltip.css('opacity', 0)
-                    .html(tip)
-                    .appendTo('body');
+                tooltip.html(tip).appendTo('body');
 
                 let init_tooltip = function () {
                     tooltip.css('max-width', "");
@@ -480,65 +502,36 @@ class LibreTextsGlossarizer {
                     } else
                         tooltip.removeClass('top');
 
+
                     tooltip.css({
                             left: pos_left,
-                            top: pos_top
-                        })
-                        .animate({
-                            top: '+=10',
-                            opacity: 1
-                        }, 50);
+                            top: pos_top,
+                        }).fadeIn();
                 };
 
                 init_tooltip();
                 $(window).resize(init_tooltip);
 
 
-                let remove_tooltip = function () {
-                    $(".glossarizerTooltip").animate({
-                        top: '-=10',
-                        opacity: 0
-                    }, 50, function () {
-                        $(`.${defaults.replaceClass}:contains('${$(this).attr("id").substring(7)}')`).attr("title", $(this).html())
-                        $(this).remove();
-                    });
-
-                };
-                if (tooltip.html().includes("<img")) {
-                    $(".glossarizerTooltip img").on("load", function () {
-                        init_tooltip();
-                        target.bind('mouseleave', function () {
-                            setTimeout(function (word) {
-                                if ($(`#tooltip${word}:hover`).length == 0) {
-                                    $("#tooltip" + word).animate({
-                                        top: '-=10',
-                                        opacity: 0
-                                    }, 50, function () {
-                                        $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
-                                        $(this).remove();
-                                    });
-                                }
-                            }, 300, target.html());
-                        });
-                    });
-                } else {
-                    tooltip.bind("mouseleave", remove_tooltip);
+                function remove_tooltip (inputs) {
+                    
+                    inputs.target.attr("title", inputs.tip);
+                    inputs.tooltip.fadeOut();
+                    inputs.tooltip.remove();
 
                 }
+                if (tooltip.html().includes("<img")) {
+                    $(`#tooltip${target.text()} img`).on("load", init_tooltip);
+                } 
 
-                tooltip.bind('click', remove_tooltip);
-                target.bind('mouseleave', function () {
-                    setTimeout(function (word) {
-                        if ($(`#tooltip${word}:hover`).length == 0) {
-                            $("#tooltip" + word).animate({
-                                top: '-=10',
-                                opacity: 0
-                            }, 50, function () {
-                                $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
-                                $(this).remove();
-                            });
+                tooltip.bind("mouseleave", () => {remove_tooltip(inputs);});
+                tooltip.bind('click', () => {remove_tooltip(inputs);});
+                target.bind('mouseleave',  () => {
+                    setTimeout((inputs) => {
+                        if ($(`#tooltip${inputs.target.text()}:hover`).length == 0) {
+                            remove_tooltip(inputs);
                         }
-                    }, 300, target.html())
+                    }, 300, inputs);
                 });
             });
 
