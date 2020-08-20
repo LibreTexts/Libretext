@@ -72,6 +72,7 @@
 }
 
 @media only screen and (max-width: 1350px) {
+
   #fButton, #bButton {
     display: none;
   }
