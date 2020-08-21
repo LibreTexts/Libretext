@@ -1,7 +1,9 @@
 window.addEventListener("load", fbButtons);
 
 function fbButtons() {
-
+   if(window !== window.top) //don't show in iFrame
+      return;
+   
    let fbDiv = document.createElement("div");
    let fbNext = $('.mt-icon-next-article').closest('a').attr('href');
    let fbBack = $('.mt-icon-previous-article').closest('a').attr('href');

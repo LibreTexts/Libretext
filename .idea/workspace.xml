@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Handler for cleanPath ?title=">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_13_2020_10_38_PM__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/elevate.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/elevate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/fancytree.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/fancytree.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/reusableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Remixer/src/reusableFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/copyNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/copyNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Commons" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -315,22 +313,24 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
-      <item itemvalue="Docker.nodePrint Docker" />
-      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
+      <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Commons" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.package" />
+      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.package" />
+        <item itemvalue="Node.js.schedule.js" />
         <item itemvalue="npm.package" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
