@@ -409,7 +409,7 @@ async function Sidebar() {
     </div>-->
 
     <div class="custom_field">
-         <a onclick = "event.preventDefault(); buildattribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
+         <a onclick = "event.preventDefault(); attribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
 
     <div class="custom_field">
