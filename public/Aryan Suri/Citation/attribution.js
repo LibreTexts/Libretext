@@ -1,23 +1,37 @@
 function attribution() {
+    const cc = getCC();
     buildAttribution();
     function getParam() {
         let title = $("#titleHolder").text();
-        title = `"` + title + `"`;
         let author = $("li.mt-author-information a:first").text();
         let url = window.location.href;
+        let titlestr = `"` + title + `"`;
+        let isauthor = Boolean(author);
+        let iscc = Boolean(cc);
+
+
+        try {
+            if (!cc && !author) throw "license or author"
+            if (!cc) throw "license"
+            if (!author) throw "author"
+        } catch (err) {
+            console.log("No " + err);
+        }
 
         let param = {
-            "title": title,
+            "title": titlestr,
             "author": author,
-            "url": url
-
+            "isauthor": isauthor,
+            "url": url,
+            "cc": iscc
         }
+
 
         return param
     }
 
     function buildAttribution() {
-        const cc = getCC();
+
         const param = getParam();
         let attrdiv = document.createElement("div");
         $(attrdiv).attr("id", "SB-PA-AD");
@@ -30,7 +44,6 @@ function attribution() {
                 <div id="attrModalContent" style="cursor: pointer" >
                     
                     <div id="attrHTML">
-                        <p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>
                     </div>
 
 
@@ -43,6 +56,26 @@ function attribution() {
                 </div>
 
             </div>`);
+
+        if (param.cc) {
+
+            if (param.isauthor) {
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
+            } else {
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
+
+            }
+
+        }
+        else {
+
+            if (param.isauthor) {
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is not licensed.  </p> <br/>`);
+            } else {
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is not licensed.  </p> <br/>`);
+
+            }
+        }
 
         const attrCopy = document.getElementById("attr-copy");
         attrCopy.addEventListener("click", () => {
@@ -76,8 +109,6 @@ function attribution() {
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
-
-
 
     }
 }
