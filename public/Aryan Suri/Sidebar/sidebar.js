@@ -130,14 +130,14 @@ async function Sidebar() {
 				}
 			});
 
-			$('#phy_table').click(function () {
-				if ($("#phy_table_put").is(":hidden")) {
+			// $('#phy_table').click(function () {
+			// 	if ($("#phy_table_put").is(":hidden")) {
 
-					$("#phy_table_put").slideDown("slow");
-				} else {
-					$("#phy_table_put").slideUp("slow");
-				}
-			});
+			// 		$("#phy_table_put").slideDown("slow");
+			// 	} else {
+			// 		$("#phy_table_put").slideUp("slow");
+			// 	}
+			// });
 
 
 			$('#conv_table').click(function () {
@@ -317,10 +317,10 @@ async function Sidebar() {
 <a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Thermodynamics_Tables"> Thermodynamics Tables </a>
 
             </div>
-         <a id="phy_table" target="_blank" >Physical Constants</a>
+         <!--<a id="phy_table" target="_blank" >Physical Constants</a>
                 <div  style="display: none;" id="phy_table_put" class="custom_field">
-                   <iframe style="width: 480px;" loading="lazy" src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"></iframe>
-                </div>
+                 <iframe style="width: 480px;" loading="lazy" src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"></iframe>
+                </div>-->
 
         <a id="conversion_table">Conversion Calculator</a>
         <div class="custom_field"  id="conversion_table_put" style="display:none;" >
@@ -409,7 +409,7 @@ async function Sidebar() {
     </div>-->
 
     <div class="custom_field">
-         <a onclick = "event.preventDefault(); buildattribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
+         <a onclick = "event.preventDefault(); attribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
 
     <div class="custom_field">
