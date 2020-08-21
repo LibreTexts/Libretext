@@ -1,51 +1,58 @@
 import React from 'react';
-import ReactCardFlip from 'react-card-flip';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-
-export default class LibreText extends React.Component {
-	constructor() {
-		super();
-		this.state = {isFlipped: true};
-		this.handleClick = this.handleClick.bind(this);
-		
-	}
+export default function LibreText(props) {
+	let isAdmin = document.getElementById('adminHolder').textContent;
 	
-	handleClick(state) {
-		this.setState({isFlipped: !state});
-	}
+	let root = `https://batch.libretexts.org/print/${props.format}/Finished/`;
+	if (props.item.zipFilename)
+		root += props.item.zipFilename.replace('/Full.pdf', '');
 	
-	render() {
-		let isAdmin = document.getElementById('adminHolder').textContent;
-		
-		let root = `https://batch.libretexts.org/print/${this.props.format}/Finished/`;
-		if (this.props.item.zipFilename)
-			root += this.props.item.zipFilename.replace('/Full.pdf', '');
-		
-		let bookstore = this.props.item.tags.find(elem => elem.startsWith('store:'));
-		if (bookstore)
-			bookstore = bookstore.split('store:')[1];
-		
-		return (
-			<div className='Text' onMouseEnter={() => this.handleClick(true)}
-			     onMouseLeave={() => this.handleClick(false)}>
-				<ReactCardFlip isFlipped={this.state.isFlipped}>
-					<div key="back" className='textSide textFront' style={this.borderStripe()}>
-						<div style={{flex: 2}} className='headerFit'>{this.props.item.title}
-						</div>
-						<div style={{flex: 1}}><i>{this.props.item.author || ''}</i>{this.props.item.institution || ''}
-						</div>
-					</div>
-					
-					
-					<div key="front" className='textSide textBack'>
-						<a href={this.props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
+	let bookstore = props.item.tags.find(elem => elem.startsWith('store:'));
+	if (bookstore)
+		bookstore = bookstore.split('store:')[1];
+	
+	return <div className='Text CommonsEntry'>
+		<Card className='textSide'>
+			<img loading={"lazy"} className='coverImage' alt=""
+			     onError={(e) => {
+				     e.target.onerror = null;
+				     e.target.style.display = 'none'
+			     }}
+			     src={`https://${props.item.subdomain}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+			
+			<div className='entryContent'>
+				<CardContent>
+					<Typography className='entryInstitution' gutterBottom>
+						<img src={`https://libretexts.org/img/LibreTexts/glyphs/${props.item.subdomain}.png`} className='libraryIcon' alt=""/>
+						{props.item.institution || ''}
+					</Typography>
+					<Typography className='entryTitle'>
+						{props.item.title}
+					</Typography>
+				</CardContent>
+			</div>
+			<Typography className='entryAuthor'>
+				{props.item.author || ''}
+			</Typography>
+			<CardActions>
+				<Button size="small">Learn More</Button>
+			</CardActions>
+			
+			{/*<div key="front" className='textSide textBac k'>
+						<a href={props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
 						<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
 						   target='_blank'>PDF</a>
 						<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
 						   target='_blank'>LMS</a>
 						{isAdmin ? <a onClick={() => {
 							if (confirm('This will compile all of the pages and will take quite a while. Are you sure?')) {
-								batch(this.props.item.link)
+								batch(props.item.link)
 							}
 						}} href='#' className={'mt-icon-spinner6'}>Compile Full</a> : ''}
 						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
@@ -54,21 +61,7 @@ export default class LibreText extends React.Component {
 							<a href={bookstore} className='mt-icon-cart2' target='_blank'>Buy Paper Copy</a> : ''}
 						<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}
 						   target='_blank'>Print Book Files</a>
-					</div>
-				</ReactCardFlip>
-			</div>
-		)
-	}
-	
-	borderStripe() {
-		let color = '#0a446c';
-		if (this.props.item.tags.includes('luluPro'))
-			color = 'orange';
-		else if (this.props.item.link.includes('/Courses/'))
-			color = 'yellowgreen';
-		else if (this.props.item.link.includes('/Bookshelves/'))
-			color = 'slategrey';
-		
-		return {borderRightColor: color};
-	}
+					</div>*/}
+		</Card>
+	</div>
 }
