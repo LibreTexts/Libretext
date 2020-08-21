@@ -139,23 +139,17 @@ a.toggler.off {
 .custom_sidebar {
   cursor: pointer;
   height: 100%;
-  /* 100% Full-height */
   width: 480px;
   display: block;
-  /* 0 width - change this with JavaScript */
   position: fixed;
-  /* Stay in place */
   z-index: 1000000000;
-  /* Stay on top */
   top: 0;
   left: 0;
   background-color: #ececec;
   margin-top: 40px;
-  /* Black*/
   overflow-x: hidden;
-  /* Disable horizontal scroll */
+  overflow-y: scroll;
   transition: 0s;
-  /* 0.5 second transition effect to slide in the sidebar */
   border-right: 1px solid black;
 }
 
