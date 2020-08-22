@@ -27,7 +27,7 @@ function LibreTextsReuse() {
 		"Espanol": "espanol",
 		"Geology": "geo",
 		"Humanities": "human",
-		"K12 Education":"k12",
+		"K12 Education": "k12",
 		"Mathematics": "math",
 		"Medicine": "med",
 		"Physics": "phys",
@@ -84,6 +84,8 @@ function LibreTextsReuse() {
 	}
 	
 	function parseURL(url = window.location.href) {
+		if (url.includes('?')) //strips any query parameters
+			url = url.split('?')[0];
 		if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
@@ -94,7 +96,7 @@ function LibreTextsReuse() {
 	
 	function cleanPath(path) {
 		path = decodeURIComponent(decodeURIComponent((path)));
-		let front="", back = path;
+		let front = "", back = path;
 		if (path.includes('/'))
 			[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
 		back = back.replace('?title=', '');
@@ -146,6 +148,8 @@ function LibreTextsReuse() {
 				isNumber = true;
 			}
 		}
+		if (path.includes('?'))
+			path = path.split('?')[0];
 		let keys = await getKeys();
 		if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 			api = `/${api}`;

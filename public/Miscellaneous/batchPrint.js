@@ -10,6 +10,7 @@ if (!window["batchPrint.js"]) {
 	let bookstore = tags.find(elem => elem.startsWith('store:'));
 	
 	let fn = () => {
+		const [subdomain, path] = LibreTexts.parseURL();
 		request = new XMLHttpRequest();
 		requestJSON = {
 			root: window.location.href,
@@ -55,6 +56,8 @@ if (!window["batchPrint.js"]) {
 					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
+					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
+
 				</div></div>`;
 			
 			if (downloadEntry) {
@@ -71,7 +74,6 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
 					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
@@ -80,34 +82,37 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 			}
 			
-			//Beeline
-			if (window.beelineEnabled) {
-				innerHTML += `<div class="LTdropdown beeline-toggles" style="float:left; background-color: #d4d4d4; color:black"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
-				innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
-title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
-<img style="margin-right: 5px; width:25px; height: 25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="bright">Bright</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="dark">Dark</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="blues">Blues</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="gray">Gray</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="night_blues">Inverted</a>`;
-				innerHTML += `<a class="btn btn-large active" data-color="off">Off</a>`;
-				innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
-				innerHTML += `</div></div>`;
-			}
-			
-			if (isPro) {
-				innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
-				innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
-				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>Get Citation</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" href='#' class='mt-icon-shuffle'>Unorder Page</a>`;
-				innerHTML += `</div></div>`;
+			if (subdomain === 'chem') {
+				innerHTML += `<div id="sidebarPromotion" style="background-color: #127bc4; color: white; display: flex; align-items: center; padding: 5px;" title="Contains view setting and useful learning resources" onclick="setTimeout(()=>document.getElementById('custom_open').click(),10);">Open New Sidebar ☰</div>`;
 			}
 			else {
+				//Beeline
+				if (window.beelineEnabled) {
+					innerHTML += `<div class="LTdropdown beeline-toggles" style="float:left; background-color: #d4d4d4; color:black"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
+					innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
+title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
+<img style="margin-right: 5px; width:25px; height: 25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;
+					innerHTML += `<a class="btn btn-large" data-color="bright">Bright</a>`;
+					innerHTML += `<a class="btn btn-large" data-color="dark">Dark</a>`;
+					innerHTML += `<a class="btn btn-large" data-color="blues">Blues</a>`;
+					innerHTML += `<a class="btn btn-large" data-color="gray">Gray</a>`;
+					innerHTML += `<a class="btn btn-large" data-color="night_blues">Inverted</a>`;
+					innerHTML += `<a class="btn btn-large active" data-color="off">Off</a>`;
+					innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
+					innerHTML += `</div></div>`;
+				}
 				
+				if (isPro) {
+					innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
+					innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
+					innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
+					innerHTML += `<a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>Get Citation</a>`;
+					innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
+					innerHTML += `<a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" href='#' class='mt-icon-shuffle'>Unorder Page</a>`;
+					innerHTML += `</div></div>`;
+				}
 			}
+			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");

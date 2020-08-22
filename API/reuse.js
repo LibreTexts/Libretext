@@ -65,6 +65,8 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			return false;
 		}
 	}
+	if (path.includes('?'))
+		path = path.split('?')[0];
 	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
 		api = `/${api}`;
 	if (!username) {
@@ -334,6 +336,8 @@ function extractSubdomain(url) {
 }
 
 function parseURL(url) {
+	if (url.includes('?')) //strips any query parameters
+		url = url.split('?')[0];
 	if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
 	}
