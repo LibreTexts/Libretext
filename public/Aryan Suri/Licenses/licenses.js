@@ -107,7 +107,6 @@ function getCC() {
 			console.log("basicuser");
 			if (cc) {
 				localStorage.setItem("cc", cc.label);
-				console.log(cc);
 				switch (cc.label) {
 					case "arr":
 						$('body').bind('copy paste cut', function (e) {
@@ -130,7 +129,6 @@ function getCC() {
 
 	function ccDetector() {
 		const cc = getCC();
-		console.log(cc);
 		if (cc) {
 			$(modalB).show();
 			switch (cc.label) {
