@@ -79,6 +79,7 @@ function getCC() {
 		`);
 
 	function controlCopy() {
+
 		const cc = getCC();
 		const admin = document.getElementById('adminHolder').innerText === 'true';
 		const pro = document.getElementById("proHolder").innerText === 'true';
@@ -89,40 +90,36 @@ function getCC() {
 		else if (pro && (groups.includes('basicuser') || groups.includes('workshop'))) {
 			if (cc) {
 				localStorage.setItem("cc", cc.label);
-				console.log("basicpro");
+				console.log("basicuser");
 				switch (cc.label) {
 					case "arr":
 						$('body').bind('copy paste cut', function (e) {
 							e.preventDefault();
-							arrControl();
+							ccDetector();
 						});
 						break;
 					default: document.addEventListener("copy", ccDetector);
 				}
 			}
 			else {
-				document.addEventListener("copy", noccControl);
+				document.addEventListener("copy", ccDetector);
 			}
 		} else {
-			console.log("basicuser");
 			if (cc) {
 				localStorage.setItem("cc", cc.label);
 				switch (cc.label) {
 					case "arr":
 						$('body').bind('copy paste cut', function (e) {
 							e.preventDefault();
-							arrControl();
+							ccDetector();
 						});
 						break;
 					default: document.addEventListener("copy", ccDetector);
 				}
 			}
 			else {
-				document.addEventListener("copy", noccControl);
+				document.addEventListener("copy", ccDetector);
 			}
-
-
-
 		}
 	}
 
@@ -172,7 +169,7 @@ function getCC() {
 					break;
 				case "arr":
 					modalC.setAttribute("style", "background-color: #f44336;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You are NOT allowed to distribute or remix the content at all.`;
+					modalC.innerHTML = `<span> The license of the content on this page All Rights Reserved and the content is allowed to be used on the LibreTexts platform thanks to the author. Usage off the platform requires explicit permission from the content authors.</span>`;
 
 					break;
 				case "cc-publicdomain":
@@ -180,20 +177,13 @@ function getCC() {
 					break;
 			}
 
+		} else {
+			$(modalB).show();
+			modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`
+
 		}
 	}
 
-	function arrControl() {
-		$(modalB).show();
-		modalC.setAttribute("style", "background-color: #f44336;");
-		modalC.innerHTML = `<span> The license of the content on this page All Rights Reserved and the content is allowed to be used on the LibreTexts platform thanks to the author. Usage off the platform requires explicit permission from the content authors.</span>`;
-	}
-
-	function noccControl() {
-		$(modalB).show();
-		modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`
-
-	}
 
 	function ccPageLabel() {
 		const cc = getCC();
@@ -260,7 +250,6 @@ function getCC() {
 
 	const modalB = document.getElementById("warningModal");
 	const modalC = document.getElementById("warningModalContent");
-	document.body.appendChild(modalB);
 	document.addEventListener('DOMContentLoaded', ccPageLabel);
 	document.addEventListener('DOMContentLoaded', controlCopy);
 })();
