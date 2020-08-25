@@ -62,7 +62,6 @@ function getCC() {
 						};
 					case "arr":
 						return { label: "arr", title: "All Rights Reserved Â©", };
-
 				}
 			}
 		}
@@ -71,7 +70,6 @@ function getCC() {
 }
 
 (function () {
-
 
 	$('body').append(`
                 <div id="warningModal">
@@ -82,38 +80,61 @@ function getCC() {
 
 	function controlCopy() {
 		const cc = getCC();
-		let pro = document.getElementById("proHolder").innerText === 'true';
-		if (!pro) {
+		const admin = document.getElementById('adminHolder').innerText === 'true';
+		const pro = document.getElementById("proHolder").innerText === 'true';
+		const groups = document.getElementById('groupHolder').innerText.toLowerCase();
+
+		if (admin) { console.log("admin") }
+		else if (pro && groups.includes('developer')) { console.log("developer") }
+		else if (pro && (groups.includes('basicuser') || groups.includes('workshop'))) {
 			if (cc) {
-				console.log(cc);
+				localStorage.setItem("cc", cc.label);
+				console.log("basicpro");
 				switch (cc.label) {
-					case "cc-by-nc-sa":
-					case "cc-by-nc":
-					case "cc-by-nc-nd":
 					case "arr":
 						$('body').bind('copy paste cut', function (e) {
 							e.preventDefault();
-							ncControl();
+							arrControl();
 						});
 						break;
 					default: document.addEventListener("copy", ccDetector);
 				}
 			}
 			else {
-				console.log("no cc")
+				document.addEventListener("copy", noccControl);
 			}
-		} else { return null; }
+		} else {
+			console.log("basicuser");
+			if (cc) {
+				localStorage.setItem("cc", cc.label);
+				console.log(cc);
+				switch (cc.label) {
+					case "arr":
+						$('body').bind('copy paste cut', function (e) {
+							e.preventDefault();
+							arrControl();
+						});
+						break;
+					default: document.addEventListener("copy", ccDetector);
+				}
+			}
+			else {
+				document.addEventListener("copy", noccControl);
+			}
+
+
+
+		}
 	}
 
 
 	function ccDetector() {
 		const cc = getCC();
-
 		console.log(cc);
 		if (cc) {
-			// NC CASES NOT NEEDED ANYMORE // 
 			$(modalB).show();
 			switch (cc.label) {
+				// NC INNER HTML CASES NOT NEEDED ANYMORE // 
 				case "cc-BY":
 					modalC.setAttribute("style", "background-color: #aed581;");
 					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
@@ -164,10 +185,16 @@ function getCC() {
 		}
 	}
 
-	function ncControl() {
+	function arrControl() {
 		$(modalB).show();
 		modalC.setAttribute("style", "background-color: #f44336;");
-		modalC.innerHTML = `<span> You cannot copy or paste "NC" (Non Commerical) Content on LibreTexts. <a href='https://creativecommons.org/about/cclicenses/'> Learn more here </a></span>`;
+		modalC.innerHTML = `<span> The license of the content on this page All Rights Reserved and the content is allowed to be used on the LibreTexts platform thanks to the author. Usage off the platform requires explicit permission from the content authors.</span>`;
+	}
+
+	function noccControl() {
+		$(modalB).show();
+		modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`
+
 	}
 
 	function ccPageLabel() {
