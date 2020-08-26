@@ -69,3 +69,4 @@ Temporary Items
 /nodePrint/secrets.tar
 /API/ImportFiles/
 API/out.json
+/API/.env

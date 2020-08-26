@@ -1121,7 +1121,7 @@ puppeteer.launch({
 			if (current.title === 'InfoPage')
 				isNoCache = true;
 			
-			const daysCache = 35;
+			const daysCache = 34;
 			const updateTime = current.modified;
 			/*let allExist = [fs.exists(`./PDF/Letter/${escapedURL}.pdf`),
 				fs.exists(`./PDF/Letter/Margin/${escapedURL}.pdf`),

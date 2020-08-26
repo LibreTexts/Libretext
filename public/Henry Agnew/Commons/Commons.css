@@ -16,7 +16,7 @@
 
 .MuiButtonBase-root {
     padding: 0;
-    margin: 0 10px;
+    /*margin: 0 10px;*/
 }
 
 .mt-label:after, label:after {
@@ -80,7 +80,11 @@ h1, h2, h3, h4, h5, h6 {
     /*box-sizing: border-box;*/
     /*!*padding: 10px;*!*/
     /*font-size: 80%;*/
-    /*box-shadow: 6px 6px 8px 2px #67676754;*/
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
+}
+
+.textSide:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)
 }
 
 .textSide .entryContent {
@@ -162,7 +166,10 @@ h1, h2, h3, h4, h5, h6 {
 .Center {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    background-color: #f3f3f3;
+    padding: 10px;
+    justify-content: space-around;
+    border-radius: 10px;
 }
 
 .CenterContainer {
@@ -182,4 +189,18 @@ h1, h2, h3, h4, h5, h6 {
 .headerFit > div > div {
     height: 100%;
     display: flex;
+}
+
+.orderForm button img {
+    width: 150px;
+}
+.orderForm button:not(.Mui-selected) img {
+    filter:saturate(0);
+}
+.orderForm button.Mui-selected {
+    color: #127bc4;
+    font-weight: bold;
+}
+.orderForm button .MuiToggleButton-label {
+    display: block;
 }

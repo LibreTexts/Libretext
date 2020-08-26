@@ -1,5 +1,5 @@
 import React from 'react';
-import LibreText from "../components/LibreText";
+import LibreText from "../components/LibreText.jsx";
 import ReactDOM from 'react-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -13,6 +13,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -39,6 +40,8 @@ class Commons extends React.Component {
 		if (!subdomains || !subdomains.length) {
 			[subdomains] = LibreTexts.parseURL();
 		}
+		else if (subdomains === 'all')
+			subdomains = Object.values(LibreTexts.libraries);
 		if (!Array.isArray(subdomains))
 			subdomains = [subdomains];
 		//TODO: Finish implementation
@@ -92,7 +95,7 @@ class Commons extends React.Component {
 		this.getEntriesJSON(this.props.data.libraries);
 	}
 	
-	componentDidUpdate(prevProps, prevState, snapshot){
+	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (JSON.stringify(this.state.selectedLibraries) !== JSON.stringify(prevState.selectedLibraries)) {
 			this.getEntriesJSON(this.state.selectedLibraries);
 		}
@@ -212,6 +215,9 @@ class Commons extends React.Component {
 						        onClick={() => this.setState({libraryDialog: true})}>Libraries</Button>
 						{this.state.libraryDialog ?
 							<LibraryDialog {...this.state} updateParent={this.updateParent}/> : null}
+						<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly'}}>
+							{Object.keys(LibreTexts.libraries).map((option) => <Lib key={option} option={option}/>)}
+						</div>
 					</div>
 					<div className={'Center'}>
 						{result}</div>
@@ -283,5 +289,13 @@ function LibraryDialog(props) {
 	</Dialog>
 }
 
+function Lib(props) {
+	const [clicked, setClicked] = React.useState(false);
+	return <IconButton style={{width: 32, height: 32}} onClick={() => setClicked(!clicked)}>
+		<img
+			src={`https://libretexts.org/img/LibreTexts/glyphs${clicked ? '' : '_blue'}/${LibreTexts.libraries[props.option]}.png`}
+			style={{verticalAlign: 'middle'}}/>
+	</IconButton>
+}
 
 ReactDOM.render(<Commons data={document.currentScript.dataset}/>, target);

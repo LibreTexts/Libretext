@@ -1,10 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment=" Updated batchPrint.js with Chapters">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_13_2020_10_38_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_13_2020_10_38_PM__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Added H5P Resizer to CDN">
+      <change afterPath="$PROJECT_DIR$/API/luluCommons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/stripeCommons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/canceled.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/global.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/normalize.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/de.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/fr.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ja.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ms.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/nl.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/success.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/translation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/components/Canceled.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/components/Checkout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/components/Success.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/css/global.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/css/normalize.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/react-cra/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CO.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CW.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/PB.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/SS.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CO.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CW.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/PB.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/SS.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/Lulu.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/LuluStandalone.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Libretext.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_13_2020_10_38_PM_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_13_2020_10_38_PM__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/createBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/createBundle.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +71,8 @@
         <option value="HTTP Request" />
         <option value="package.json" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="README" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -63,10 +115,10 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
+    <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew/Commons" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -83,6 +135,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Victoria Huynh" />
@@ -98,11 +151,11 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Molecules\JSmol\hack-a-mol\gwt\chrome" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -194,7 +247,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Commons">
+  <component name="RunManager" selected="npm.LuluStandalone">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -210,10 +263,16 @@
     <configuration name="import.js" type="NodeJSConfigurationType" application-parameters="80" nameIsGenerated="true" path-to-js-file="import.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
+    <configuration name="luluCommons.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="luluCommons.js" working-dir="$PROJECT_DIR$/API">
+      <method v="2" />
+    </configuration>
     <configuration name="nodePrint" type="NodeJSConfigurationType" application-parameters="80" path-to-js-file="nodePrint.js" working-dir="$PROJECT_DIR$/nodePrint">
       <method v="2" />
     </configuration>
     <configuration name="schedule.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/API/schedule.js" working-dir="$PROJECT_DIR$/API">
+      <method v="2" />
+    </configuration>
+    <configuration name="stripeCommons.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="stripeCommons.js" working-dir="$PROJECT_DIR$/API">
       <method v="2" />
     </configuration>
     <configuration name="nodePrint Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
@@ -268,6 +327,16 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="LuluStandalone" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lulu" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="Remixer" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/public/Henry Agnew/Remixer/package.json" />
       <command value="run" />
@@ -312,24 +381,27 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
+      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
+      <item itemvalue="Node.js.luluCommons.js" />
       <item itemvalue="Node.js.schedule.js" />
-      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Node.js.stripeCommons.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Commons" />
+      <item itemvalue="npm.LuluStandalone" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.package" />
-      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.package" />
-        <item itemvalue="Node.js.schedule.js" />
+        <item itemvalue="Node.js.luluCommons.js" />
+        <item itemvalue="Node.js.stripeCommons.js" />
         <item itemvalue="npm.package" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
@@ -1177,6 +1249,14 @@
       <workItem from="1597711203017" duration="834000" />
       <workItem from="1597800753863" duration="549000" />
       <workItem from="1597981691927" duration="13152000" />
+      <workItem from="1598148476261" duration="860000" />
+      <workItem from="1598156157883" duration="363000" />
+      <workItem from="1598156538899" duration="8877000" />
+      <workItem from="1598166833169" duration="619000" />
+      <workItem from="1598204397150" duration="765000" />
+      <workItem from="1598230326416" duration="10248000" />
+      <workItem from="1598371519623" duration="1521000" />
+      <workItem from="1598386051285" duration="10916000" />
     </task>
     <task id="LOCAL-00230" summary="Reenabled alt-texts for Importer">
       <created>1579233530952</created>
@@ -1576,7 +1656,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Bugfix importer &lt;img&gt;" />
     <MESSAGE value="Fixed copyNavigation.js formatting" />
     <MESSAGE value="Replaced insecure node-static for API" />
     <MESSAGE value="Replaced insecure node-static for Front" />
@@ -1601,7 +1680,8 @@
     <MESSAGE value="Break out activateBeeline() within sidebar.js" />
     <MESSAGE value="Initial NewReactTemplate&#10;&#10;A starting template for new React projects. Involves React Hooks." />
     <MESSAGE value="Handler for cleanPath ?title=" />
-    <option name="LAST_COMMIT_MESSAGE" value="Handler for cleanPath ?title=" />
+    <MESSAGE value="Added H5P Resizer to CDN" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added H5P Resizer to CDN" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1620,23 +1700,23 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
-    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597388487455">
+    <state x="309" y="86" width="1089" height="834" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598394554198">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597388487455" />
-    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595037543255">
+    <state x="309" y="86" width="1089" height="834" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598394554198" />
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598141978442">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595037543255" />
+    <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598141978442" />
     <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1592520407991">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1597800802669">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598400674225">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597444036635" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400674225" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1646,71 +1726,71 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="299" height="533" key="GridCell.Tab.0.bottom" timestamp="1597996619804">
+    <state width="449" height="746" key="GridCell.Tab.0.bottom" timestamp="1598400378398">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="263" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597532815476" />
-    <state width="299" height="533" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597996619804" />
-    <state width="299" height="533" key="GridCell.Tab.0.center" timestamp="1597996619804">
+    <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
+    <state width="449" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400378398" />
+    <state width="449" height="746" key="GridCell.Tab.0.center" timestamp="1598400378397">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="263" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597532815476" />
-    <state width="299" height="533" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597996619804" />
-    <state width="299" height="533" key="GridCell.Tab.0.left" timestamp="1597996619804">
+    <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
+    <state width="449" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400378397" />
+    <state width="449" height="746" key="GridCell.Tab.0.left" timestamp="1598400378397">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="263" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597532815476" />
-    <state width="299" height="533" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597996619804" />
-    <state width="299" height="533" key="GridCell.Tab.0.right" timestamp="1597996619804">
+    <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
+    <state width="449" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400378397" />
+    <state width="449" height="746" key="GridCell.Tab.0.right" timestamp="1598400378397">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="263" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597532815476" />
-    <state width="299" height="533" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597996619804" />
-    <state width="234" height="649" key="GridCell.Tab.1.bottom" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
+    <state width="449" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400378397" />
+    <state width="443" height="746" key="GridCell.Tab.1.bottom" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="234" height="649" key="GridCell.Tab.1.center" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="803" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="443" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.1.center" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="234" height="649" key="GridCell.Tab.1.left" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="803" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="443" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.1.left" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="234" height="649" key="GridCell.Tab.1.right" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="803" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536926" />
+    <state width="443" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.1.right" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628014" />
-    <state width="234" height="649" key="GridCell.Tab.2.bottom" timestamp="1597384124867">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="803" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="443" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.2.bottom" timestamp="1598399370641">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124867" />
-    <state width="559" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="234" height="649" key="GridCell.Tab.2.center" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="443" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370641" />
+    <state width="443" height="746" key="GridCell.Tab.2.center" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="234" height="649" key="GridCell.Tab.2.left" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="443" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.2.left" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state width="234" height="649" key="GridCell.Tab.2.right" timestamp="1597384124866">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="443" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state width="443" height="746" key="GridCell.Tab.2.right" timestamp="1598399370640">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="559" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561628015" />
-    <state x="-1350" y="53" key="RollbackChangesDialog" timestamp="1597513134910">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state width="443" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598399370640" />
+    <state x="633" y="60" key="RollbackChangesDialog" timestamp="1598400671063">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513134910" />
-    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595058066135" />
+    <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400671063" />
     <state x="139" y="67" width="1002" height="707" key="SettingsEditor" timestamp="1596673183706">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1737,6 +1817,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933728997" />
+    <state x="510" y="211" key="run.anything.popup" timestamp="1598249309486">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="510" y="211" key="run.anything.popup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598249309486" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
