@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const {resolve} = require('path');
+const fetch = require("node-fetch");
 // Copy the .env.example in the root into a .env file in this folder
 require('dotenv').config({path: './.env'});
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const {ClientCredentials, ResourceOwnerPassword, AuthorizationCode} = require('simple-oauth2');
 
 app.use(express.static(process.env.STATIC_DIR));
 app.use(
@@ -23,13 +25,9 @@ app.get('/', (req, res) => {
 	res.sendFile(path);
 });
 
-app.get('/config', async (req, res) => {
-	const price = await stripe.prices.retrieve(process.env.PRICE);
-	
+app.get('/stripeInitialize', async (req, res) => {
 	res.send({
 		publicKey: process.env.STRIPE_PUBLISHABLE_KEY,
-		unitAmount: price.unit_amount,
-		currency: price.currency,
 	});
 });
 
@@ -40,10 +38,97 @@ app.get('/checkout-session', async (req, res) => {
 	res.send(session);
 });
 
-app.post('/create-checkout-session', async (req, res) => {
+app.post('/create-lulu-checkout-session', async (req, res) => {
 	const domainURL = process.env.DOMAIN;
+	const {shoppingCart, shippingSpeed} = req.body;
+	let totalQuantity = 0;
 	
-	const {quantity, locale} = req.body;
+	//turn items into lineItems
+	console.log('Hello!');
+	let lineItems = shoppingCart;
+	let costCalculation = lineItems.map((item) => {
+		totalQuantity += item.quantity;
+		return {
+			"page_count": item.metadata.numPages,
+			"pod_package_id": `0850X1100${item.color ? 'FC' : 'BW'}STD${item.hardcover ? 'CW' : 'PB'}060UW444MXX`,
+			"quantity": item.quantity
+		}
+	})
+	let shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
+		headers: {
+			// 'Cache-Control': 'no-cache',
+			'Content-Type': 'application/json'
+		}
+	});
+	costCalculation = await LuluAPI('https://api.sandbox.lulu.com/print-job-cost-calculations/', {
+		method: 'POST',
+		headers: {
+			'Cache-Control': 'no-cache',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			"line_items": costCalculation,
+			"shipping_address": {
+				"city": "Washington",
+				"country_code": "US",
+				"postcode": "20540",
+				"state_code": "DC",
+				"street1": "101 Independence Ave SE"
+			},
+			"shipping_level": shippingSpeed
+		})
+	});
+	costCalculation = await costCalculation.json();
+	console.log(JSON.stringify(costCalculation, null, 2));
+	
+	//TODO: make lineItems dynamic
+	lineItems = lineItems.map((item, index) => {
+		let costCalcItem = costCalculation.line_item_costs[index];
+		const discount = item.metadata.libreNet || false;
+		const price = discount ? costCalcItem.total_cost_incl_tax : costCalcItem.total_cost_excl_discounts;
+		console.log(price);
+		return {
+			price_data: {
+				currency: 'usd',
+				product_data: {
+					name: 'CHEM 300 Beginning Chemistry',
+					metadata: {
+						library: item.metadata.subdomain,
+						pageID: parseInt(item.metadata.id),
+						hardcover: item.hardcover,
+						color: item.color,
+						libreNet: true,
+						numPages: 589,
+					},
+					images: [`https://${item.metadata.subdomain}.libretexts.org/@api/deki/pages/${item.metadata.id}/files/=mindtouch.page%2523thumbnail`]
+				},
+				unit_amount: Math.ceil(price * 100 / item.quantity) //amount in cents
+			},
+			quantity: item.quantity,
+			description: `${item.hardcover ? 'Hardcover' : 'Paperback'},  ${item.color ? 'Color' : 'Black&White'}${discount ? ',  LibreNet bulk discount on quantities >=30' : ''}`
+		}
+	})
+	
+	//process shipping
+	shipping = await (await shipping).json();
+	shipping = shipping.results[0];
+	lineItems.push({
+		price_data: {
+			currency: 'usd',
+			product_data: {
+				name: `Textbook Shipping [${shippingSpeed}]`,
+			},
+			unit_amount:  Math.ceil(costCalculation.shipping_cost.total_cost_incl_tax * 100) //amount in cents
+		},
+		description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days`,
+		quantity: 1,
+	});
+	console.log(JSON.stringify(lineItems, null, 2));
+	/*res.send({
+		lineItems: lineItems,
+	});
+	return*/
+	
 	// Create new Checkout Session for the order
 	// Other optional params include:
 	// [billing_address_collection] - to display billing address details on the page
@@ -53,39 +138,8 @@ app.post('/create-checkout-session', async (req, res) => {
 	const session = await stripe.checkout.sessions.create({
 		payment_method_types: process.env.PAYMENT_METHODS.split(', '),
 		mode: 'payment',
-		line_items: [
-			{
-				price_data: {
-					currency: 'usd',
-					product_data: {
-						name: 'CHEM 300 Beginning Chemistry',
-						metadata: {
-							library: 'chem',
-							pageID: 8787,
-							hardcover: true,
-							color: true,
-							libreNet: true,
-							numPages: 589,
-						},
-						images: ['https://chem.libretexts.org/@api/deki/pages/8787/files/=mindtouch.page%2523thumbnail']
-					},
-					unit_amount: 1936
-				},
-				quantity: quantity,
-				description: 'Paperback,  Black&White'
-			},
-			{
-				price_data: {
-					currency: 'usd',
-					product_data: {
-						name: 'Textbook Shipping [Standard Mail]. Estimated arrival in 12-15 days',
-					},
-					unit_amount: 400
-				},
-				quantity: 1,
-			},
-		],
-		shipping_address_collection: {allowed_countries:['US']},
+		line_items: lineItems,
+		shipping_address_collection: {allowed_countries: ['US']},
 		// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 		success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${domainURL}/canceled.html`,
@@ -135,3 +189,27 @@ app.post('/webhook', async (req, res) => {
 });
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
+
+
+async function LuluAPI(url, options) {
+	const config = {
+		client: {
+			id: 'd0269cd6-e802-4f8a-905c-1204845dbb50',
+			secret: '8ab040ff-97fc-4c9e-b1e8-f38bcdafa88e'
+		},
+		auth: {
+			tokenHost: 'https://api.sandbox.lulu.com',
+			tokenPath: '/auth/realms/glasstree/protocol/openid-connect/token'
+		}
+	};
+	const client = new ClientCredentials(config);
+	let accessToken;
+	try {
+		accessToken = await client.getToken();
+	} catch (error) {
+		console.log('Access Token error', error);
+	}
+	options.headers = options.headers || {};
+	options.headers.Authorization = `Bearer ${accessToken.token.access_token}`;
+	return await fetch(url, options);
+}

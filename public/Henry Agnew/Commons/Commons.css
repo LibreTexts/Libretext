@@ -202,8 +202,9 @@ h1, h2, h3, h4, h5, h6 {
     filter:saturate(0);
 }
 .orderForm button.Mui-selected {
-    color: #127bc4;
+    color: white;
     font-weight: bold;
+    background: #0f67a6;
 }
 .orderForm button .MuiToggleButton-label {
     display: block;

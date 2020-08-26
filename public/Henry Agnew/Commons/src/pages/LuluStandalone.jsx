@@ -8,7 +8,11 @@ import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 const target = document.createElement("div");
@@ -20,8 +24,8 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 const useStyles = makeStyles({
 	flexToggleGroup: {
 		display: 'flex',
-		'& .MuiToggleButtonGroup-grouped':{
-			flex:1
+		'& .MuiToggleButtonGroup-grouped': {
+			flex: 1
 		}
 	},
 });
@@ -32,9 +36,15 @@ function LuluStandalone(props) {
 	const [shippingSpeed, setShippingSpeed] = React.useState('MAIL');
 	const [shippingData, setShippingData] = React.useState([]);
 	const [quantity, setQuantity] = React.useState(1);
+	const [stripe, setStripe] = React.useState();
+	const [isProcessing, setIsProcessing] = React.useState(false);
+	
+	
 	let source = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Commons`
 	let validPrice = shippingData.length;
 	const classes = useStyles();
+	
+	
 	
 	let totalCost = 0.03 * props.item.numPages + 1.69;
 	const colorCost = props.item.numPages * 1.5 / 100;
@@ -42,6 +52,7 @@ function LuluStandalone(props) {
 		totalCost += 7.35
 	if (color)
 		totalCost += colorCost;
+	totalCost *= quantity;
 	if (shippingData.length) {
 		for (const item of shippingData) {
 			if (item.level === shippingSpeed) {
@@ -50,6 +61,19 @@ function LuluStandalone(props) {
 			}
 		}
 	}
+	
+	useEffect(() => {
+		(async function () {
+			try {
+				let pubKey = await fetch(`/stripeInitialize`);
+				pubKey = await pubKey.json()
+				window.config = pubKey;
+				setStripe(Stripe(pubKey.publicKey));
+			} catch (e) {
+				console.error(e)
+			}
+		})();
+	}, []);
 	
 	useEffect(() => {
 		(async function () {
@@ -102,6 +126,28 @@ function LuluStandalone(props) {
 		}
 	}
 	
+	function createCheckoutSession() {
+		setIsProcessing(true);
+		return fetch('/create-lulu-checkout-session', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				shoppingCart: [{
+					metadata: props.item,
+					hardcover: hardcover,
+					color: color,
+					quantity: quantity,
+				}],
+				shippingSpeed: shippingSpeed,
+			}),
+		}).then(function (result) {
+			setIsProcessing(false);
+			return result.json();
+		});
+	}
+	
 	return <Paper className='orderForm'>
 		<div style={{display: "flex", flexWrap: "wrap", padding: 20,}}>
 			<div style={{display: "flex", flexDirection: "column", flex: 1}}>
@@ -114,11 +160,11 @@ function LuluStandalone(props) {
 			</div>
 			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
 				<ToggleButtonGroup className={classes.flexToggleGroup}
-					value={hardcover}
-					exclusive
-					onChange={(e, v) => {
-						if (v !== null) setHardcover(v)
-					}}>
+				                   value={hardcover}
+				                   exclusive
+				                   onChange={(e, v) => {
+					                   if (v !== null) setHardcover(v)
+				                   }}>
 					<ToggleButton value={false} aria-label="paperback cover option">
 						<img src={`${source}/images/PB.webp`}/>
 						<p>Paperback</p>
@@ -168,9 +214,29 @@ function LuluStandalone(props) {
 			</Paper>
 		</div>
 		<p>Finalized prices will be calculated on the next page. These may be slightly different than this estimate.</p>
-		<Button autoFocus color="primary" variant='contained' disabled={!validPrice} style={{width: '100%'}}>
+		<Button autoFocus color="primary" variant='contained' disabled={!validPrice} style={{width: '100%'}}
+		        onClick={() => {
+			        createCheckoutSession().then(function (data) {
+				        if (data && data.sessionId)
+					        stripe.redirectToCheckout({
+						        sessionId: data.sessionId,
+					        })
+						        .then(function (result) {
+							        if (result.error) {
+								        alert(result.error.message);
+							        }
+						        });
+			        });
+		        }}>
 			Buy for ${(totalCost).toFixed(2)}
 		</Button>
+		<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
+			<DialogTitle id="form-dialog-title">Verifying your Shopping Cart
+			</DialogTitle>
+			<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
+				<CircularProgress size={100}/>
+			</DialogContent>
+		</Dialog>
 	</Paper>
 	
 }

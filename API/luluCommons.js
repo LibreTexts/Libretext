@@ -1,4 +1,4 @@
-var fetch = require("node-fetch");
+const fetch = require("node-fetch");
 const {ClientCredentials, ResourceOwnerPassword, AuthorizationCode} = require('simple-oauth2');
 
 
