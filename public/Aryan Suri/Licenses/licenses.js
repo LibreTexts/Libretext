@@ -223,7 +223,7 @@ function getCC() {
 
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
 		if ($(".elm-social-share").length) {
-			let html = '<div class="ssk-group optimize"><div href="" class="ssk ssk-facebook"></div><div href="" class="ssk ssk-twitter"></div><div id="batchPrint"></div>';
+			let html = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
 			if (!isAdmin)
 				html += '<a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
 			else
