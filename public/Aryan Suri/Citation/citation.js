@@ -137,6 +137,7 @@ function getCite(verbose = false) {
     });
     $('#citeText').text(output);
 
+    //TODO: Replace var with let or const
     function namesplitter(name, verbose = false) {
         var rawnames = name;
         var splind = [0];
