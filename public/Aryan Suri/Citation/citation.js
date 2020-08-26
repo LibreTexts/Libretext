@@ -26,7 +26,7 @@ function buildcite() {
             <div id="citeContent">
                  <a id="citeCopy" style="text-decoration: none; color: #666" >Copy Text</a>
                  <a id="citeCopyHTML" style="text-decoration: none; color: #666" >Copy HTML</a>
-                 <a id="citeBIBTEX" style="text-decoration: none; color: #666" >Download Bibtex </a>
+                 <a id="citeBIBTEX" style="text-decoration: none; color: #666" >Download BibTeX</a>
             </div>
        </div>
 </div>
