@@ -5,6 +5,10 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import { makeStyles } from '@material-ui/core/styles';
 
 
 const target = document.createElement("div");
@@ -12,6 +16,15 @@ const target = document.createElement("div");
 target.id = Math.random() * 100;
 // noinspection XHTMLIncompatabilitiesJS
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
+
+const useStyles = makeStyles({
+	flexToggleGroup: {
+		display: 'flex',
+		'& .MuiToggleButtonGroup-grouped':{
+			flex:1
+		}
+	},
+});
 
 function LuluStandalone(props) {
 	const [hardcover, setHardcover] = React.useState(false);
@@ -21,6 +34,7 @@ function LuluStandalone(props) {
 	const [quantity, setQuantity] = React.useState(1);
 	let source = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Commons`
 	let validPrice = shippingData.length;
+	const classes = useStyles();
 	
 	let totalCost = 0.03 * props.item.numPages + 1.69;
 	const colorCost = props.item.numPages * 1.5 / 100;
@@ -29,9 +43,9 @@ function LuluStandalone(props) {
 	if (color)
 		totalCost += colorCost;
 	if (shippingData.length) {
-		for (const item in shippingData) {
+		for (const item of shippingData) {
 			if (item.level === shippingSpeed) {
-				totalCost += item.cost_excl_tax;
+				totalCost += parseFloat(item.cost_excl_tax);
 				break;
 			}
 		}
@@ -62,37 +76,44 @@ function LuluStandalone(props) {
 			</>;
 		else {
 			return <>
-				<h3>Shipping Speed</h3>
 				<ToggleButtonGroup
-				orientation="vertical"
-				value={shippingSpeed}
-				exclusive
-				onChange={(e, v) => {
-					if (v !== null) setShippingSpeed(v)
-				}}>
-				{shippingData.map(item => <ToggleButton key={item.level} value={item.level} aria-label="list">
-					{item.level} {item.total_days_min} {item.total_days_max} ${item.cost_excl_tax}
-				</ToggleButton>)}
-			</ToggleButtonGroup>
-				<p>Shipping currently only available to the continental US (US-48)</p>
+					className={classes.flexToggleGroup}
+					orientation="vertical"
+					value={shippingSpeed}
+					exclusive
+					onChange={(e, v) => {
+						if (v !== null) setShippingSpeed(v)
+					}}>
+					{shippingData.map(item => <ToggleButton key={item.level} value={item.level} aria-label="list"
+					                                        style={{display: "flex", justifyContent: "space-between"}}>
+						{item.level} [{item.total_days_min}-{item.total_days_max} days] ${item.cost_excl_tax}
+					</ToggleButton>)}
+				</ToggleButtonGroup>
 			</>
 		}
 	}
 	
 	function setQuantityInternal(newQuant) {
-		if (newQuant > 0)
+		if (newQuant > 1000)
+			newQuant = 1000;
+		if (newQuant > 0) {
 			setQuantity(newQuant);
-		setShippingData([]);
+			setShippingData([]);
+		}
 	}
 	
 	return <Paper className='orderForm'>
-		<div style={{display: "flex", padding: 10,}}>
-			<div style={{display: "flex", flexDirection: "column"}}>
+		<div style={{display: "flex", flexWrap: "wrap", padding: 20,}}>
+			<div style={{display: "flex", flexDirection: "column", flex: 1}}>
 				<img
 					src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+				<h2>{props.item.title} - Print Edition</h2>
+				<h3><a href={props.item.link}>Link to the always Free Online Edition</a></h3>
+				<h3>Item [{props.item.zipFilename}]. Number of pages: {props.item.numPages}</h3>
+				{/*<p style={{whiteSpace: "pre-wrap"}}>{JSON.stringify(props.item, null, 2)}</p>*/}
 			</div>
 			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
-				<ToggleButtonGroup
+				<ToggleButtonGroup className={classes.flexToggleGroup}
 					value={hardcover}
 					exclusive
 					onChange={(e, v) => {
@@ -108,12 +129,12 @@ function LuluStandalone(props) {
 					</ToggleButton>
 				</ToggleButtonGroup>
 				<ToggleButtonGroup
+					className={classes.flexToggleGroup}
 					value={color}
 					exclusive
 					onChange={(e, v) => {
 						if (v !== null) setColor(v)
-					}}
-					style={{display: 'block'}}>
+					}}>
 					<ToggleButton value={false} aria-label="black and white option">
 						Black and White
 					</ToggleButton>
@@ -121,11 +142,14 @@ function LuluStandalone(props) {
 						Color (+${Math.ceil(colorCost)})
 					</ToggleButton>
 				</ToggleButtonGroup>
-				<div>
-					<Button onClick={() => setQuantityInternal(quantity - 1)}>-</Button>
+				<Divider/>
+				<div style={{display: "flex", justifyContent: 'space-around'}}>
+					<Button onClick={() => setQuantityInternal(quantity - 1)} color='secondary'
+					        variant='contained'><RemoveIcon/></Button>
 					<TextField
-						id="standard-number"
-						label="Number"
+						id="standard-quantity"
+						label="Quantity"
+						// helperText="Quantity limited to 1-1000"
 						type="number"
 						value={quantity}
 						InputLabelProps={{
@@ -133,19 +157,23 @@ function LuluStandalone(props) {
 						}}
 						onChange={(e) => setQuantityInternal(e.target.value)}
 					/>
-					<Button onClick={() => setQuantityInternal(quantity + 1)}>+</Button>
+					<Button onClick={() => setQuantityInternal(quantity + 1)} color='secondary'
+					        variant='contained'><AddIcon/></Button>
 				</div>
+			</Paper>
+			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
+				<h3>Shipping Speed</h3>
 				{renderShipping()}
+				<p>Shipping currently only available to the continental US (US-48)</p>
 			</Paper>
 		</div>
-		<Button autoFocus color="primary" variant='contained' disabled={!validPrice}>
+		<p>Finalized prices will be calculated on the next page. These may be slightly different than this estimate.</p>
+		<Button autoFocus color="primary" variant='contained' disabled={!validPrice} style={{width: '100%'}}>
 			Buy for ${(totalCost).toFixed(2)}
 		</Button>
-		<p>Finalized prices will be calculated on the next page. These may be slightly different than this estimate.</p>
 	</Paper>
 	
 }
-
 
 ReactDOM.render(<LuluStandalone library={'chem'} item={{
 	"zipFilename": "chem-8787",

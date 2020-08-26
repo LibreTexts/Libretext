@@ -37,11 +37,12 @@ class Commons extends React.Component {
 	};
 	
 	async getEntriesJSON(subdomains) {
-		if (!subdomains || !subdomains.length) {
+		if (subdomains === 'all')
+			subdomains = Object.values(LibreTexts.libraries);
+		else if (!subdomains || !subdomains.length) {
 			[subdomains] = LibreTexts.parseURL();
 		}
-		else if (subdomains === 'all')
-			subdomains = Object.values(LibreTexts.libraries);
+		
 		if (!Array.isArray(subdomains))
 			subdomains = [subdomains];
 		//TODO: Finish implementation
@@ -80,8 +81,8 @@ class Commons extends React.Component {
 		}
 		
 		downloads = downloads.filter((text) => text.link && (!text.link.includes('Remixer_University') || text.title === "LibreTexts Construction Guide"));
-		if (!JSON.parse(document.getElementById("proHolder").innerText))
-			downloads = downloads.filter((text) => !text.tags.includes('luluPro'));
+		// if (!JSON.parse(document.getElementById("proHolder").innerText))
+		// 	downloads = downloads.filter((text) => !text.tags.includes('luluPro'));
 		let institutions = new Set(downloads.map(option => {
 			if (option.institution)
 				return option.institution.trim();

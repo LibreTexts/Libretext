@@ -15,7 +15,7 @@
 }
 
 .MuiButtonBase-root {
-    padding: 0;
+    /*padding: 0;*/
     /*margin: 0 10px;*/
 }
 
@@ -29,6 +29,10 @@
 
 .MuiMenuItem-root > div {
     width: 100%;
+}
+
+.MuiDivider-root {
+    margin: 15px 0;
 }
 
 input:focus, input:hover, .no-touch input:hover {
