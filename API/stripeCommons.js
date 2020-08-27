@@ -5,7 +5,9 @@ const fetch = require("node-fetch");
 // Copy the .env.example in the root into a .env file in this folder
 require('dotenv').config({path: './.env'});
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const {ClientCredentials, ResourceOwnerPassword, AuthorizationCode} = require('simple-oauth2');
+const {ClientCredentials} = require('simple-oauth2');
+const basePath = '';
+// const basePath = '/bookstore';
 
 app.use(express.static(process.env.STATIC_DIR));
 app.use(
@@ -20,25 +22,25 @@ app.use(
 	})
 );
 
-app.get('/', (req, res) => {
+app.get(basePath + '/', (req, res) => {
 	const path = resolve(process.env.STATIC_DIR + '/index.html');
 	res.sendFile(path);
 });
 
-app.get('/stripeInitialize', async (req, res) => {
+app.get(basePath + '/stripeInitialize', async (req, res) => {
 	res.send({
 		publicKey: process.env.STRIPE_PUBLISHABLE_KEY,
 	});
 });
 
 // Fetch the Checkout Session to display the JSON result on the success page
-app.get('/checkout-session', async (req, res) => {
+app.get(basePath + '/checkout-session', async (req, res) => {
 	const {sessionId} = req.query;
 	const session = await stripe.checkout.sessions.retrieve(sessionId);
 	res.send(session);
 });
 
-app.post('/create-lulu-checkout-session', async (req, res) => {
+app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	const domainURL = process.env.DOMAIN;
 	const {shoppingCart, shippingSpeed} = req.body;
 	let totalQuantity = 0;
@@ -53,7 +55,7 @@ app.post('/create-lulu-checkout-session', async (req, res) => {
 			"pod_package_id": `0850X1100${item.color ? 'FC' : 'BW'}STD${item.hardcover ? 'CW' : 'PB'}060UW444MXX`,
 			"quantity": item.quantity
 		}
-	})
+	});
 	let shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
 		headers: {
 			// 'Cache-Control': 'no-cache',
@@ -84,23 +86,24 @@ app.post('/create-lulu-checkout-session', async (req, res) => {
 	//TODO: make lineItems dynamic
 	lineItems = lineItems.map((item, index) => {
 		let costCalcItem = costCalculation.line_item_costs[index];
-		const discount = item.metadata.libreNet || false;
+		const discount = item.metadata.libreNet || true;
 		const price = discount ? costCalcItem.total_cost_incl_tax : costCalcItem.total_cost_excl_discounts;
 		console.log(price);
 		return {
 			price_data: {
 				currency: 'usd',
 				product_data: {
-					name: 'CHEM 300 Beginning Chemistry',
+					name: item.metadata.title,
+					images: [`https://${item.metadata.subdomain}.libretexts.org/@api/deki/pages/${item.metadata.id}/files/=mindtouch.page%2523thumbnail`],
 					metadata: {
+						title: item.metadata.title,
 						library: item.metadata.subdomain,
-						pageID: parseInt(item.metadata.id),
+						pageID: item.metadata.id,
 						hardcover: item.hardcover,
 						color: item.color,
 						libreNet: true,
-						numPages: 589,
+						numPages: item.metadata.numPages,
 					},
-					images: [`https://${item.metadata.subdomain}.libretexts.org/@api/deki/pages/${item.metadata.id}/files/=mindtouch.page%2523thumbnail`]
 				},
 				unit_amount: Math.ceil(price * 100 / item.quantity) //amount in cents
 			},
@@ -117,8 +120,9 @@ app.post('/create-lulu-checkout-session', async (req, res) => {
 			currency: 'usd',
 			product_data: {
 				name: `Textbook Shipping [${shippingSpeed}]`,
+				metadata: {shippingSpeed: shippingSpeed},
 			},
-			unit_amount:  Math.ceil(costCalculation.shipping_cost.total_cost_incl_tax * 100) //amount in cents
+			unit_amount: Math.ceil(costCalculation.shipping_cost.total_cost_incl_tax * 100) //amount in cents
 		},
 		description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days`,
 		quantity: 1,
@@ -144,48 +148,10 @@ app.post('/create-lulu-checkout-session', async (req, res) => {
 		success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${domainURL}/canceled.html`,
 	});
-	
+	console.log(session.id);
 	res.send({
 		sessionId: session.id,
 	});
-});
-
-// Webhook handler for asynchronous events.
-app.post('/webhook', async (req, res) => {
-	let data;
-	let eventType;
-	// Check if webhook signing is configured.
-	if (process.env.STRIPE_WEBHOOK_SECRET) {
-		// Retrieve the event by verifying the signature using the raw body and secret.
-		let event;
-		let signature = req.headers['stripe-signature'];
-		
-		try {
-			event = stripe.webhooks.constructEvent(
-				req.rawBody,
-				signature,
-				process.env.STRIPE_WEBHOOK_SECRET
-			);
-		} catch (err) {
-			console.log(`⚠️  Webhook signature verification failed.`);
-			return res.sendStatus(400);
-		}
-		// Extract the object from the event.
-		data = event.data;
-		eventType = event.type;
-	}
-	else {
-		// Webhook signing is recommended, but if the secret is not configured in `config.js`,
-		// retrieve the event data directly from the request body.
-		data = req.body.data;
-		eventType = req.body.type;
-	}
-	
-	if (eventType === 'checkout.session.completed') {
-		console.log(`🔔  Payment received!`);
-	}
-	
-	res.sendStatus(200);
 });
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
@@ -194,8 +160,8 @@ app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 async function LuluAPI(url, options) {
 	const config = {
 		client: {
-			id: 'd0269cd6-e802-4f8a-905c-1204845dbb50',
-			secret: '8ab040ff-97fc-4c9e-b1e8-f38bcdafa88e'
+			id: process.env.LULU_PUBLISHABLE_KEY,
+			secret: process.env.LULU_SECRET_KEY,
 		},
 		auth: {
 			tokenHost: 'https://api.sandbox.lulu.com',

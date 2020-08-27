@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/luluCommons.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/luluCommons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/stripeCommons.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/stripeCommons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/LuluStandalone.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/LuluStandalone.jsx" afterDir="false" />
     </list>
@@ -72,7 +71,7 @@
     <property name="add_unversioned_files" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew/Commons/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -83,12 +82,20 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
     <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons" />
@@ -105,13 +112,6 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -203,7 +203,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.LuluStandalone">
+  <component name="RunManager" selected="Node.js.luluCommons.js">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -349,15 +349,15 @@
       <item itemvalue="Node.js.stripeCommons.js" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Commons" />
-      <item itemvalue="npm.LuluStandalone" />
       <item itemvalue="npm.Importer" />
+      <item itemvalue="npm.LuluStandalone" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.package" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.stripeCommons.js" />
         <item itemvalue="Node.js.luluCommons.js" />
+        <item itemvalue="Node.js.stripeCommons.js" />
         <item itemvalue="npm.package" />
         <item itemvalue="Node.js.schedule.js" />
       </list>
@@ -1213,14 +1213,10 @@
       <workItem from="1598230326416" duration="10248000" />
       <workItem from="1598371519623" duration="1521000" />
       <workItem from="1598386051285" duration="10916000" />
-      <workItem from="1598410753681" duration="13197000" />
-    </task>
-    <task id="LOCAL-00232" summary="Added GetCitationInformation for Nik">
-      <created>1579498109393</created>
-      <option name="number" value="00232" />
-      <option name="presentableId" value="LOCAL-00232" />
-      <option name="project" value="LOCAL" />
-      <updated>1579498109394</updated>
+      <workItem from="1598410753681" duration="15366000" />
+      <workItem from="1598466243043" duration="1691000" />
+      <workItem from="1598476658753" duration="9503000" />
+      <workItem from="1598490052494" duration="7304000" />
     </task>
     <task id="LOCAL-00233" summary="Made transcluded icon on all transcluded:yes pages">
       <created>1579591237229</created>
@@ -1558,7 +1554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598415008616</updated>
     </task>
-    <option name="localTasksCounter" value="281" />
+    <task id="LOCAL-00281" summary="Completed LuluStandalone basic functionality &#10;&#10;Next up is integration with the Lulu API">
+      <created>1598424587083</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1598424587083</updated>
+    </task>
+    <option name="localTasksCounter" value="282" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1613,7 +1616,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Replaced insecure node-static for Front" />
     <MESSAGE value="Allow forking of sections" />
     <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
     <MESSAGE value="Added HEAD to /ping" />
@@ -1638,7 +1640,8 @@
     <MESSAGE value="Added H5P Resizer to CDN" />
     <MESSAGE value="Initial LuluStandalone.jsx" />
     <MESSAGE value="Initial LuluStandalone UI complete&#10;&#10;Next up is integration with Stripe and eventually Lulu APIs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial LuluStandalone UI complete&#10;&#10;Next up is integration with Stripe and eventually Lulu APIs" />
+    <MESSAGE value="Completed LuluStandalone basic functionality &#10;&#10;Next up is integration with the Lulu API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed LuluStandalone basic functionality &#10;&#10;Next up is integration with the Lulu API" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1665,15 +1668,15 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598141978442" />
-    <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1598423293852">
+    <state x="609" y="77" key="#xdebugger.evaluate" timestamp="1598497182667">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598423293852" />
-    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598415006831">
+    <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497182667" />
+    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598424586005">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
-    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598415006831" />
+    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424586005" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1683,89 +1686,89 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="503" height="746" key="GridCell.Tab.0.bottom" timestamp="1598424274368">
+    <state width="701" height="746" key="GridCell.Tab.0.bottom" timestamp="1598498826544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="503" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424274368" />
-    <state width="503" height="746" key="GridCell.Tab.0.center" timestamp="1598424274367">
+    <state width="701" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826544" />
+    <state width="701" height="746" key="GridCell.Tab.0.center" timestamp="1598498826544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="503" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424274367" />
-    <state width="503" height="746" key="GridCell.Tab.0.left" timestamp="1598424274367">
+    <state width="701" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826544" />
+    <state width="701" height="746" key="GridCell.Tab.0.left" timestamp="1598498826544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
-    <state width="503" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424274367" />
-    <state width="503" height="746" key="GridCell.Tab.0.right" timestamp="1598424274368">
+    <state width="701" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826544" />
+    <state width="701" height="746" key="GridCell.Tab.0.right" timestamp="1598498826544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="503" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424274368" />
-    <state width="383" height="746" key="GridCell.Tab.1.bottom" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826544" />
+    <state width="701" height="746" key="GridCell.Tab.1.bottom" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="383" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.1.center" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.1.center" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="383" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.1.left" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.1.left" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536926" />
-    <state width="383" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.1.right" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.1.right" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="383" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.2.bottom" timestamp="1598424273054">
+    <state width="701" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.2.bottom" timestamp="1598498826299">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124867" />
-    <state width="383" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273054" />
-    <state width="383" height="746" key="GridCell.Tab.2.center" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826299" />
+    <state width="701" height="746" key="GridCell.Tab.2.center" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="383" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.2.left" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.2.left" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="383" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
-    <state width="383" height="746" key="GridCell.Tab.2.right" timestamp="1598424273053">
+    <state width="701" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
+    <state width="701" height="746" key="GridCell.Tab.2.right" timestamp="1598498826298">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="383" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424273053" />
+    <state width="701" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598498826298" />
     <state x="633" y="60" key="RollbackChangesDialog" timestamp="1598400671063">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513134910" />
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598400671063" />
-    <state x="374" y="93" width="1002" height="707" key="SettingsEditor" timestamp="1598401965944">
+    <state x="374" y="93" width="1002" height="707" key="SettingsEditor" timestamp="1598489283668">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
-    <state x="374" y="93" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598401965944" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1598415366827">
+    <state x="374" y="93" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598489283668" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1598424588302">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513154661" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598415366827" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598424588302" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1595561233825">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595561233825" />
-    <state x="-1687" y="-18" width="1114" height="662" key="dock-window-1" timestamp="1597994981113">
+    <state x="-1345" y="0" width="975" height="875" key="dock-window-1" timestamp="1598497510352">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1687" y="-18" width="1114" height="662" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1597994981113" />
+    <state x="-1345" y="0" width="975" height="875" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497510352" />
     <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2" timestamp="1594792219967">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1799,7 +1802,7 @@
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
-        <breakpoint enabled="true" type="javascript-exception">
+        <breakpoint type="javascript-exception">
           <properties uncaughtOnly="true" />
         </breakpoint>
       </default-breakpoints>

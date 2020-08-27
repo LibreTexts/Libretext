@@ -13,6 +13,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {ThemeProvider} from "@material-ui/styles";
+import {blue, grey} from "@material-ui/core/colors";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 
 const target = document.createElement("div");
@@ -45,18 +48,19 @@ function LuluStandalone(props) {
 	const classes = useStyles();
 	
 	
-	
-	let totalCost = 0.03 * props.item.numPages + 1.69;
-	const colorCost = props.item.numPages * 1.5 / 100;
+	const taxesMultiplier = 1;
+	const baseCost = (0.03 * props.item.numPages + 1.69) * taxesMultiplier;
+	let totalCost = baseCost;
+	const colorCost = (props.item.numPages * 1.5 / 100) * taxesMultiplier;
 	if (hardcover)
-		totalCost += 7.35
+		totalCost += 7.35 * taxesMultiplier;
 	if (color)
 		totalCost += colorCost;
 	totalCost *= quantity;
 	if (shippingData.length) {
 		for (const item of shippingData) {
 			if (item.level === shippingSpeed) {
-				totalCost += parseFloat(item.cost_excl_tax);
+				totalCost += parseFloat(item.cost_excl_tax) * taxesMultiplier;
 				break;
 			}
 		}
@@ -110,7 +114,8 @@ function LuluStandalone(props) {
 					}}>
 					{shippingData.map(item => <ToggleButton key={item.level} value={item.level} aria-label="list"
 					                                        style={{display: "flex", justifyContent: "space-between"}}>
-						{item.level} [{item.total_days_min}-{item.total_days_max} days] ${item.cost_excl_tax}
+						{item.level} [{item.total_days_min}-{item.total_days_max} days]
+						${item.cost_excl_tax * taxesMultiplier}
 					</ToggleButton>)}
 				</ToggleButtonGroup>
 			</>
@@ -148,7 +153,18 @@ function LuluStandalone(props) {
 		});
 	}
 	
-	return <Paper className='orderForm'>
+	const dark = localStorage.getItem('darkMode') === 'true';
+	const theme = createMuiTheme({
+		palette: {
+			type: dark ? 'dark' : 'light',
+			primary: {main: '#008000'},
+			secondary: blue,
+			default: grey,
+		},
+	});
+	
+	return <ThemeProvider theme={theme}>
+		<Paper className='orderForm'>
 		<div style={{display: "flex", flexWrap: "wrap", padding: 20,}}>
 			<div style={{display: "flex", flexDirection: "column", flex: 1}}>
 				<img
@@ -159,6 +175,7 @@ function LuluStandalone(props) {
 				{/*<p style={{whiteSpace: "pre-wrap"}}>{JSON.stringify(props.item, null, 2)}</p>*/}
 			</div>
 			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
+				<p>Base cost: ${baseCost}</p>
 				<ToggleButtonGroup className={classes.flexToggleGroup}
 				                   value={hardcover}
 				                   exclusive
@@ -214,7 +231,8 @@ function LuluStandalone(props) {
 			</Paper>
 		</div>
 		<p>Finalized prices will be calculated on the next page. These may be slightly different than this estimate.</p>
-		<Button autoFocus color="primary" variant='contained' disabled={!validPrice} style={{width: '100%'}}
+		<Button autoFocus color="primary" variant='contained' disabled={!validPrice}
+		        style={{width: '100%', fontSize: 20}}
 		        onClick={() => {
 			        createCheckoutSession().then(function (data) {
 				        if (data && data.sessionId)
@@ -238,7 +256,7 @@ function LuluStandalone(props) {
 			</DialogContent>
 		</Dialog>
 	</Paper>
-	
+	</ThemeProvider>
 }
 
 ReactDOM.render(<LuluStandalone library={'chem'} item={{
