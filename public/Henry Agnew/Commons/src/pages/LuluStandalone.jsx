@@ -16,6 +16,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import {ThemeProvider} from "@material-ui/styles";
 import {blue, grey} from "@material-ui/core/colors";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
 
 
 const target = document.createElement("div");
@@ -41,6 +43,7 @@ function LuluStandalone(props) {
 	const [quantity, setQuantity] = React.useState(1);
 	const [stripe, setStripe] = React.useState();
 	const [isProcessing, setIsProcessing] = React.useState(false);
+	const [loaderProgress, setLoaderProgress] = React.useState(0);
 	
 	
 	let source = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Commons`
@@ -59,7 +62,7 @@ function LuluStandalone(props) {
 	totalCost *= quantity;
 	if (shippingData.length) {
 		for (const item of shippingData) {
-			if (item.level === shippingSpeed) {
+			if (item.level === shippingSpeed) { //TODO: Tax calculataion seems wonky, double check
 				totalCost += parseFloat(item.cost_excl_tax) * taxesMultiplier;
 				break;
 			}
@@ -97,6 +100,18 @@ function LuluStandalone(props) {
 		})();
 	}, [quantity]);
 	
+	React.useEffect(() => {
+		const timer = setInterval(() => {
+			setLoaderProgress((prevProgress) => {
+				let inc = Math.round(Math.random() * 20);
+				return (prevProgress >= 100 ? 100 : prevProgress + inc)
+			});
+		}, 1200);
+		return () => {
+			clearInterval(timer);
+		};
+	}, []);
+	
 	function renderShipping() {
 		if (!shippingData.length)
 			return <>
@@ -133,6 +148,7 @@ function LuluStandalone(props) {
 	
 	function createCheckoutSession() {
 		setIsProcessing(true);
+		setLoaderProgress(0);
 		return fetch('/create-lulu-checkout-session', {
 			method: 'POST',
 			headers: {
@@ -165,97 +181,98 @@ function LuluStandalone(props) {
 	
 	return <ThemeProvider theme={theme}>
 		<Paper className='orderForm'>
-		<div style={{display: "flex", flexWrap: "wrap", padding: 20,}}>
-			<div style={{display: "flex", flexDirection: "column", flex: 1}}>
-				<img
-					src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
-				<h2>{props.item.title} - Print Edition</h2>
-				<h3><a href={props.item.link}>Link to the always Free Online Edition</a></h3>
-				<h3>Item [{props.item.zipFilename}]. Number of pages: {props.item.numPages}</h3>
-				{/*<p style={{whiteSpace: "pre-wrap"}}>{JSON.stringify(props.item, null, 2)}</p>*/}
-			</div>
-			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
-				<p>Base cost: ${baseCost}</p>
-				<ToggleButtonGroup className={classes.flexToggleGroup}
-				                   value={hardcover}
-				                   exclusive
-				                   onChange={(e, v) => {
-					                   if (v !== null) setHardcover(v)
-				                   }}>
-					<ToggleButton value={false} aria-label="paperback cover option">
-						<img src={`${source}/images/PB.webp`}/>
-						<p>Paperback</p>
-					</ToggleButton>
-					<ToggleButton value={true} aria-label="hardcover option">
-						<img src={`${source}/images/CW.webp`}/>
-						<p>Hardcover (+$7)</p>
-					</ToggleButton>
-				</ToggleButtonGroup>
-				<ToggleButtonGroup
-					className={classes.flexToggleGroup}
-					value={color}
-					exclusive
-					onChange={(e, v) => {
-						if (v !== null) setColor(v)
-					}}>
-					<ToggleButton value={false} aria-label="black and white option">
-						Black and White
-					</ToggleButton>
-					<ToggleButton value={true} aria-label="color option">
-						Color (+${Math.ceil(colorCost)})
-					</ToggleButton>
-				</ToggleButtonGroup>
-				<Divider/>
-				<div style={{display: "flex", justifyContent: 'space-around'}}>
-					<Button onClick={() => setQuantityInternal(quantity - 1)} color='secondary'
-					        variant='contained'><RemoveIcon/></Button>
-					<TextField
-						id="standard-quantity"
-						label="Quantity"
-						// helperText="Quantity limited to 1-1000"
-						type="number"
-						value={quantity}
-						InputLabelProps={{
-							shrink: true,
-						}}
-						onChange={(e) => setQuantityInternal(e.target.value)}
-					/>
-					<Button onClick={() => setQuantityInternal(quantity + 1)} color='secondary'
-					        variant='contained'><AddIcon/></Button>
+			<div style={{display: "flex", flexWrap: "wrap", padding: 20,}}>
+				<div style={{display: "flex", flexDirection: "column", flex: 1}}>
+					<img
+						src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+					<h2>{props.item.title} - Print Edition</h2>
+					<h3><a href={props.item.link}>Link to the always Free Online Edition</a></h3>
+					<h3>Item [{props.item.zipFilename}]. Number of pages: {props.item.numPages}</h3>
+					{/*<p style={{whiteSpace: "pre-wrap"}}>{JSON.stringify(props.item, null, 2)}</p>*/}
 				</div>
-			</Paper>
-			<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
-				<h3>Shipping Speed</h3>
-				{renderShipping()}
-				<p>Shipping currently only available to the continental US (US-48)</p>
-			</Paper>
-		</div>
-		<p>Finalized prices will be calculated on the next page. These may be slightly different than this estimate.</p>
-		<Button autoFocus color="primary" variant='contained' disabled={!validPrice}
-		        style={{width: '100%', fontSize: 20}}
-		        onClick={() => {
-			        createCheckoutSession().then(function (data) {
-				        if (data && data.sessionId)
-					        stripe.redirectToCheckout({
-						        sessionId: data.sessionId,
-					        })
-						        .then(function (result) {
-							        if (result.error) {
-								        alert(result.error.message);
-							        }
-						        });
-			        });
-		        }}>
-			Buy for ${(totalCost).toFixed(2)}
-		</Button>
-		<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
-			<DialogTitle id="form-dialog-title">Verifying your Shopping Cart
-			</DialogTitle>
-			<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
-				<CircularProgress size={100}/>
-			</DialogContent>
-		</Dialog>
-	</Paper>
+				<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
+					<p>Base cost: ${baseCost}</p>
+					<ToggleButtonGroup className={classes.flexToggleGroup}
+					                   value={hardcover}
+					                   exclusive
+					                   onChange={(e, v) => {
+						                   if (v !== null) setHardcover(v)
+					                   }}>
+						<ToggleButton value={false} aria-label="paperback cover option">
+							<img src={`${source}/images/PB.webp`}/>
+							<p>Paperback</p>
+						</ToggleButton>
+						<ToggleButton value={true} aria-label="hardcover option">
+							<img src={`${source}/images/CW.webp`}/>
+							<p>Hardcover (+$7)</p>
+						</ToggleButton>
+					</ToggleButtonGroup>
+					<ToggleButtonGroup
+						className={classes.flexToggleGroup}
+						value={color}
+						exclusive
+						onChange={(e, v) => {
+							if (v !== null) setColor(v)
+						}}>
+						<ToggleButton value={false} aria-label="black and white option">
+							Black and White
+						</ToggleButton>
+						<ToggleButton value={true} aria-label="color option">
+							Color (+${Math.ceil(colorCost)})
+						</ToggleButton>
+					</ToggleButtonGroup>
+					<Divider/>
+					<div style={{display: "flex", justifyContent: 'space-around'}}>
+						<Button onClick={() => setQuantityInternal(quantity - 1)} color='secondary'
+						        variant='contained'><RemoveIcon/></Button>
+						<TextField
+							id="standard-quantity"
+							label="Quantity"
+							// helperText="Quantity limited to 1-1000"
+							type="number"
+							value={quantity}
+							InputLabelProps={{
+								shrink: true,
+							}}
+							onChange={(e) => setQuantityInternal(e.target.value)}
+						/>
+						<Button onClick={() => setQuantityInternal(quantity + 1)} color='secondary'
+						        variant='contained'><AddIcon/></Button>
+					</div>
+				</Paper>
+				<Paper style={{display: "flex", flexDirection: "column", margin: 10, padding: 10}}>
+					<h3>Shipping Speed</h3>
+					{renderShipping()}
+					<p>Shipping currently only available to the continental US (US-48)</p>
+				</Paper>
+			</div>
+			<p>Finalized prices will be calculated on the next page. These may be slightly different than this
+				estimate.</p>
+			<Button autoFocus color="primary" variant='contained' disabled={!validPrice}
+			        style={{width: '100%', fontSize: 20}}
+			        onClick={() => {
+				        createCheckoutSession().then(function (data) {
+					        if (data && data.sessionId)
+						        stripe.redirectToCheckout({
+							        sessionId: data.sessionId,
+						        })
+							        .then(function (result) {
+								        if (result.error) {
+									        alert(result.error.message);
+								        }
+							        });
+				        });
+			        }}>
+				Buy for ${(totalCost).toFixed(2)}
+			</Button>
+			<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">Verifying your Shopping Cart
+				</DialogTitle>
+				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
+					<CircularProgressWithLabel value={loaderProgress} size={100}/>
+				</DialogContent>
+			</Dialog>
+		</Paper>
 	</ThemeProvider>
 }
 
@@ -270,3 +287,26 @@ ReactDOM.render(<LuluStandalone library={'chem'} item={{
 	"numPages": 589,
 	"subdomain": "chem"
 }}/>, target);
+
+
+function CircularProgressWithLabel(props) {
+	return (
+		<Box position="relative" display="inline-flex">
+			<CircularProgress variant="static" {...props} />
+			<Box
+				top={0}
+				left={0}
+				bottom={0}
+				right={0}
+				position="absolute"
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
+			>
+				<Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
+					props.value,
+				)}%`}</Typography>
+			</Box>
+		</Box>
+	);
+}
