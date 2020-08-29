@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors')
 const app = express();
 const {resolve} = require('path');
 const fs = require('fs-extra');
@@ -7,19 +6,21 @@ const fetch = require("node-fetch");
 require('dotenv').config({path: './.env'});
 const bookstoreConfig = require("./bookstoreConfig.json");
 const stripe = require('stripe')(bookstoreConfig.STRIPE_SECRET_KEY);
-const {ClientCredentials} = require('simple-oauth2');
-const basePath = '';
 const taxMultiplier = parseFloat(bookstoreConfig.TAX_MULTIPLIER);
-// const basePath = '/bookstore';
+const {ClientCredentials} = require('simple-oauth2');
+const basePath = '/bookstore';
+let port = 3008;
+if (process.argv.length >= 3 && parseInt(process.argv[2])) {
+	port = parseInt(process.argv[2]);
+}
 
-app.use(cors())
 app.use(express.static(bookstoreConfig.STATIC_DIR));
 app.use(
 	express.json({
 		// We need the raw body to verify webhook signatures.
 		// Let's compute it only when hitting the Stripe webhook endpoint.
 		verify: function (req, res, buf) {
-			if (req.originalUrl.startsWith('/webhook')) {
+			if (req.originalUrl.startsWith(basePath + '/publish-order')) {
 				req.rawBody = buf.toString();
 			}
 		},
@@ -39,37 +40,57 @@ app.get(basePath + '/stripeInitialize', async (req, res) => {
 	});
 });
 
+async function updateOrder(sessionId, forceUpdate = false) {
+	let result = {};
+	let writePath;
+	if (await fs.exists(`./bookstore/complete/${sessionId}.json`)) {
+		writePath = `./bookstore/complete/${sessionId}.json`;
+		result = await fs.readJSON(writePath);
+	}
+	else if (await fs.exists(`./bookstore/pending/${sessionId}.json`)) {
+		writePath = `./bookstore/pending/${sessionId}.json`;
+		result = await fs.readJSON(writePath);
+		forceUpdate = true;
+	}
+	else return null //Not found
+	
+	//update Stripe information
+	// const session = await stripe.checkout.sessions.retrieve(sessionId);
+	
+	//update Lulu information
+	if (forceUpdate) {
+		if (result.luluID) { //fetch live lulu
+			let luluResponse = await LuluAPI(`https://api.sandbox.lulu.com/print-jobs/${result.luluID}/`, {
+				headers: {
+					'Cache-Control': 'no-cache',
+					'Content-Type': 'application/json'
+				}
+			});
+			if (luluResponse.ok) {
+				luluResponse = await luluResponse.json();
+				result.lulu = luluResponse;
+				result.status = luluResponse.status.name;
+				await fs.writeJSON(writePath, result, {spaces: '\t'});
+			}
+			else
+				console.error(JSON.stringify(await luluResponse.json()));
+		}
+		
+		//Maybe add order fulfillment if VERIFIED? May cause signficiant issues if autopay is enabled.
+		
+		//archive order if completed
+		if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED'].includes(result.status)) {
+			console.log(`[Archiving] ${sessionId}`)
+			await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
+		}
+	}
+	return result;
+}
+
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get(basePath + '/get-order', async (req, res) => {
-	const {sessionId} = req.query;
-	// const session = await stripe.checkout.sessions.retrieve(sessionId);
-	let result = {}
-	if (await fs.exists(`./bookstore/pending/${sessionId}.json`))
-		result = {
-			sessionId: sessionId,
-			...(await fs.readJSON(`./bookstore/pending/${sessionId}.json`))
-		}
-	else if (await fs.exists(`./bookstore/complete/${sessionId}.json`))
-		result = {
-			sessionId: sessionId,
-			...(await fs.readJSON(`./bookstore/complete/${sessionId}.json`))
-		}
-	
-	if (result.lulu) { //fetch live lulu
-		let luluResponse = await LuluAPI(`https://api.lulu.com/print-jobs/${result.lulu.id}/`, {
-			headers: {
-				'Cache-Control': 'no-cache',
-				'Content-Type': 'application/json'
-			}
-		});
-		if (luluResponse.ok) {
-			result.lulu = await luluResponse.json();
-			result.status = 
-		}
-		else
-			console.error(JSON.stringify(await luluResponse.json()));
-	}
-	
+	const {sessionId, forceUpdate} = req.query;
+	let result = await updateOrder(sessionId, forceUpdate);
 	res.send(result);
 });
 
@@ -80,7 +101,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	let totalQuantity = 0;
 	
 	//turn items into lineItems
-	console.log('Hello!');
+	// console.log('Hello!');
 	let lineItems = shoppingCart;
 	let costCalculation = lineItems.map((item) => {
 		totalQuantity += item.quantity;
@@ -159,7 +180,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 		description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days`,
 		quantity: 1,
 	});
-	console.log(JSON.stringify(lineItems, null, 2));
+	// console.log(JSON.stringify(lineItems, null, 2));
 	/*res.send({
 		lineItems: lineItems,
 	});
@@ -177,16 +198,16 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 		line_items: lineItems,
 		shipping_address_collection: {allowed_countries: ['US']},
 		// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-		success_url: `${domainURL}/Order_Success?session_id={CHECKOUT_SESSION_ID}`,
+		success_url: `${domainURL}/Order_Success?order={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${domainURL}/Order_Canceled`,
 	});
-	console.log(session.id);
+	// console.log(session.id);
 	res.send({
 		sessionId: session.id,
 	});
 });
 
-app.post('/webhook', async (req, res) => {
+app.post(basePath +'/publish-order', async (req, res) => {
 	let data;
 	let eventType;
 	// Check if webhook signing is configured.
@@ -209,7 +230,7 @@ app.post('/webhook', async (req, res) => {
 		eventType = event.type;
 	}
 	if (eventType && eventType === 'checkout.session.completed') {
-		console.log(`🔔  Payment received!`);
+		// console.log(`🔔  Payment received!`);
 		const session = data.object;
 		// console.log(session);
 		
@@ -220,7 +241,7 @@ app.post('/webhook', async (req, res) => {
 	res.sendStatus(200);
 });
 
-app.listen(80, () => console.log(`Node server listening on port ${80}!`));
+app.listen(port, () => console.log(`Restarted Bookstore on port ${port}`));
 
 // fulfillOrder(' cs_test_5w8WzcdHNZk1x3dknJ8BJemySdSw4SMwQg0YSvLgMy1J9dJ06PG6LbJ4')''
 
@@ -237,6 +258,10 @@ async function fulfillOrder(session) {
 	
 	// console.log("Fulfilling order", JSON.stringify(session, null, 2));
 	let lineItems = session.line_items.data;
+	if(!lineItems || !lineItems.length || !lineItems[0].price.product.metadata.numPages){
+		console.error(`[Invalid Lulu order] ${session.id}`)
+	}
+	
 	let shippingSpeed = lineItems.pop();
 	shippingSpeed = shippingSpeed.price.product.metadata.shippingSpeed || "MAIL";
 	lineItems = lineItems.map(item => {
@@ -258,10 +283,13 @@ async function fulfillOrder(session) {
 		}
 	});
 	await fs.writeJSON(logDestination, {
+		stripeID: session.id,
+		luluID: null,
+		status: 'VERIFIED',
 		stripe: session,
 		lulu: null,
-		status: 'VERIFIED'
 	}, {spaces: '\t'});
+	
 	
 	//send request to the Lulu API
 	const payload = {
@@ -293,15 +321,16 @@ async function fulfillOrder(session) {
 	if (luluResponse.ok) {
 		luluResponse = await luluResponse.json();
 		
-		console.log("Fulfilling order", JSON.stringify(luluResponse, null, 2));
+		console.log(`[Fulfilling order] ${session.id}`);
 		await fs.writeJSON(logDestination, {
+			stripeID: session.id,
+			luluID: luluResponse.id,
+			status: luluResponse.status.name,
 			stripe: session,
 			lulu: luluResponse,
-			status: luluResponse.status.name
 		}, {spaces: '\t'});
 	}
 	else {
-		//TODO: Add better error handling
 		console.error(luluResponse);
 	}
 }

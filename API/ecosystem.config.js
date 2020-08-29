@@ -139,5 +139,22 @@ module.exports = {
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
 
     },
+    {
+      name      : 'bookstore',
+      script    : 'bookstore.js',
+      env: {
+        COMMON_VARIABLE: 'true',
+	  TZ: 'America/Los_Angeles'
+      },
+      env_production : {
+        NODE_ENV: 'production'
+      },
+      cwd	: '/root/api',
+      watch	: "bookstore.js",
+      ignore_watch : ["node_modules","public","Data","epubs"],
+      "cron_restart": "05 00 * * *",
+      "log_date_format"  : "YY/MM/DD HH:mm:ss"
+
+    },
   ],
 };

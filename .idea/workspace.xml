@@ -5,24 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CW.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/PB.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nodePrint/ecosystem.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/standaloneBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/luluCommons.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/stripeCommons.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bookstore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/bookstore.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bookstore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/ecosystem.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CW.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/PB.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/Lulu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/Lulu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/LuluStandalone.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/BookstoreSingle.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/canceled.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/canceled.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/normalize.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/normalize.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/de.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/de.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/fr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ja.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ja.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ms.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ms.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/nl.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/nl.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/translation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/translation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CW.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/CW.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/PB.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/PB.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CO.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/CO.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CW.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/CW.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/PB.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/PB.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/SS.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/SS.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/CO.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/CO.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/CW.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/CW.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/PB.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/PB.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/SS.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/SS.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/BookstoreSingle.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +108,7 @@
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/.env&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/API" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/bookstore/pending" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -108,6 +132,8 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\bookstore\pending" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Bookstore\src\pages" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
@@ -216,7 +242,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.bookstore.js">
+  <component name="RunManager" selected="npm.Commons">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -274,10 +300,10 @@
       <method v="2" />
     </configuration>
     <configuration name="Bookstore" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/public/Henry Agnew/Commons/package.json" />
+      <package-json value="$PROJECT_DIR$/public/Henry Agnew/Bookstore/package.json" />
       <command value="run" />
       <scripts>
-        <script value="bookstore" />
+        <script value="package" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -337,19 +363,19 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
-      <item itemvalue="Node.js.bookstore.js" />
+      <item itemvalue="Docker.nodePrint Docker" />
+      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
+      <item itemvalue="Node.js.bookstore.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
-      <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Bookstore" />
       <item itemvalue="npm.Commons" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
-      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>
@@ -1216,13 +1242,8 @@
       <workItem from="1598548001051" duration="15037000" />
       <workItem from="1598633071074" duration="14787000" />
       <workItem from="1598677218171" duration="1063000" />
-    </task>
-    <task id="LOCAL-00235" summary="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables.">
-      <created>1581375682723</created>
-      <option name="number" value="00235" />
-      <option name="presentableId" value="LOCAL-00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1581375682723</updated>
+      <workItem from="1598679241237" duration="7326000" />
+      <workItem from="1598717127369" duration="5316000" />
     </task>
     <task id="LOCAL-00236" summary="Updated Forker to user authenticatedFetch">
       <created>1581815127393</created>
@@ -1560,7 +1581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598510319036</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="Improved Standalone UI">
+      <created>1598679271156</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1598679271157</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1615,7 +1643,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Added HEAD to /ping" />
     <MESSAGE value="Fixed cross-subdomain cleanPath" />
     <MESSAGE value="Initial BatchMonitor.jsx GUI" />
     <MESSAGE value="Updated Sandboxes for Admin" />
@@ -1640,7 +1667,8 @@
     <MESSAGE value="Completed LuluStandalone basic functionality &#10;&#10;Next up is integration with the Lulu API" />
     <MESSAGE value="Completed basic Lulu API integration" />
     <MESSAGE value="Initial end-to-end functionality completed&#10;&#10;TODO:&#10;-Improve UI&#10;-Verify prices are calculated correctly&#10;-Generalize for arbitrary texts, make sure book is within 32-800 page limit.&#10;-And more!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial end-to-end functionality completed&#10;&#10;TODO:&#10;-Improve UI&#10;-Verify prices are calculated correctly&#10;-Generalize for arbitrary texts, make sure book is within 32-800 page limit.&#10;-And more!" />
+    <MESSAGE value="Improved Standalone UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved Standalone UI" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1659,10 +1687,10 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
-    <state x="309" y="38" width="1089" height="882" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598678404830">
+    <state x="309" y="0" width="1089" height="920" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598731673279">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="309" y="38" width="1089" height="882" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598678404830" />
+    <state x="309" y="0" width="1089" height="920" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598731673279" />
     <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598141978442">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1675,80 +1703,80 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497182667" />
-    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598510317546">
+    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598679268752">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
-    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598510317546" />
+    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598679268752" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1772" y="44" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597383786846" />
     <state x="164" y="73" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1593838628410" />
-    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1595194585696">
+    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1598685716776">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
-    <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="488" height="746" key="GridCell.Tab.0.bottom" timestamp="1598675352900">
+    <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598685716776" />
+    <state width="364" height="746" key="GridCell.Tab.0.bottom" timestamp="1598732811408">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="488" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598675352900" />
-    <state width="488" height="746" key="GridCell.Tab.0.center" timestamp="1598675352900">
+    <state width="364" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
+    <state width="364" height="746" key="GridCell.Tab.0.center" timestamp="1598732811408">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="488" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598675352900" />
-    <state width="488" height="746" key="GridCell.Tab.0.left" timestamp="1598675352899">
+    <state width="364" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
+    <state width="364" height="746" key="GridCell.Tab.0.left" timestamp="1598732811408">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
-    <state width="488" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598675352899" />
-    <state width="488" height="746" key="GridCell.Tab.0.right" timestamp="1598675352900">
+    <state width="364" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
+    <state width="364" height="746" key="GridCell.Tab.0.right" timestamp="1598732811408">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="488" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598675352900" />
-    <state width="467" height="746" key="GridCell.Tab.1.bottom" timestamp="1598565480643">
+    <state width="364" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
+    <state width="467" height="554" key="GridCell.Tab.1.bottom" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="467" height="746" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.1.center" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.1.center" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="467" height="746" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.1.left" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.1.left" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536926" />
-    <state width="467" height="746" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.1.right" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.1.right" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
-    <state width="467" height="746" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.2.bottom" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.2.bottom" timestamp="1598686908570">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124867" />
-    <state width="467" height="746" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.2.center" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908570" />
+    <state width="467" height="554" key="GridCell.Tab.2.center" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="467" height="746" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.2.left" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.2.left" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="467" height="746" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
-    <state width="467" height="746" key="GridCell.Tab.2.right" timestamp="1598565480643">
+    <state width="467" height="554" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
+    <state width="467" height="554" key="GridCell.Tab.2.right" timestamp="1598686908570">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="234" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
-    <state width="467" height="746" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598565480643" />
+    <state width="467" height="554" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908570" />
     <state x="633" y="60" key="RollbackChangesDialog" timestamp="1598595523974">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1768,10 +1796,14 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1552" height="469" key="XDebugger.FullValuePopup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598504702748" />
-    <state x="-1345" y="0" width="975" height="875" key="dock-window-1" timestamp="1598497510352">
+    <state x="490" y="75" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598683552952">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="490" y="75" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598683552952" />
+    <state x="-1483" y="-14" width="995" height="875" maximized="true" key="dock-window-1" timestamp="1598731673650">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1345" y="0" width="975" height="875" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497510352" />
+    <state x="-1483" y="-14" width="995" height="875" maximized="true" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598731673650" />
     <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2" timestamp="1594792219967">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1784,6 +1816,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="510" y="211" key="run.anything.popup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598249309486" />
+    <state x="516" y="195" width="672" height="678" key="search.everywhere.popup" timestamp="1598731484410">
+      <screen x="0" y="0" width="1707" height="920" />
+    </state>
+    <state x="516" y="195" width="672" height="678" key="search.everywhere.popup/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598731484410" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1802,11 +1838,6 @@
           <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
           <line>1143</line>
           <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/API/bookstore.js</url>
-          <line>132</line>
-          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

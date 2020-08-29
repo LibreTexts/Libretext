@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import Lulu from './Lulu.jsx';
 
 export default function LibreText(props) {
 	let root = `https://batch.libretexts.org/print/${props.format}/Finished/`;
@@ -40,8 +39,10 @@ export default function LibreText(props) {
 				{props.item.author || ''}
 			</Typography>
 			<CardActions>
-				<Lulu {...props}/>
-				
+				<a href={`https://chem.libretexts.org/Courses/Remixer_University/Bookstore_Single?${props.item.subdomain}-${props.item.id}`}><Button>Test
+					Buy Book</Button></a>
+				{/*<Lulu {...props}/>*/}
+			
 			</CardActions>
 			{/*<div key="front" className='textSide textBack'>
 						<a href={props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
