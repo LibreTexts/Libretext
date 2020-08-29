@@ -72,16 +72,17 @@ export default function CustomizedDialogs(props) {
 	};
 	return (
 		<div>
-			<Button onClick={handleClickOpen}>[{props.item.numPages}] Buy for
-				${(0.03 * props.item.numPages + 1.69).toFixed(2)}</Button>
+			{/*<Button onClick={handleClickOpen}>[{props.item.numPages}] Buy for
+				${(0.03 * props.item.numPages + 1.69).toFixed(2)}</Button>*/}
+			<Button onClick={handleClickOpen}>[{props.item.numPages}] Learn More</Button>
 			<Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
 				<DialogTitle id="customized-dialog-title" onClose={handleClose}>
 					{props.item.title}
 				</DialogTitle>
-				{/*<DialogContent dividers style={{whiteSpace: 'pre-wrap'}}>
+				<DialogContent dividers style={{whiteSpace: 'pre-wrap'}}>
 					{JSON.stringify(props, null, 2)}
-				</DialogContent>*/}
-				<DialogContent className='orderForm'>
+				</DialogContent>
+				{/*<DialogContent className='orderForm'>
 					<ToggleButtonGroup
 						value={hardcover}
 						exclusive
@@ -111,7 +112,7 @@ export default function CustomizedDialogs(props) {
 							Color (+${Math.ceil(colorCost)})
 						</ToggleButton>
 					</ToggleButtonGroup>
-				</DialogContent>
+				</DialogContent>*/}
 				<DialogActions>
 					<Button autoFocus onClick={handleClose} color="primary">
 						Add to Cart (${(totalCost).toFixed(2)})

@@ -195,17 +195,53 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
 }
 
+.orderForm {
+    background: lightgray;
+}
+
 .orderForm button img {
     width: 150px;
 }
+
 .orderForm button:not(.Mui-selected) img {
-    filter:saturate(0);
+    filter: saturate(0);
 }
+
 .orderForm button.Mui-selected {
     color: white;
     font-weight: bold;
     background: #0f67a6;
 }
+
 .orderForm button .MuiToggleButton-label {
     display: block;
+}
+
+.bookstoreSingle .bookstoreColumn {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    max-width: 270px;
+    justify-content: space-evenly;
+}
+
+.bookstoreSingle h3 {
+    margin-bottom: 5px !important;
+}
+
+.bookstoreSingle p {
+    margin-block-start: 0;
+}
+
+.bookstoreSingle > div:first-child {
+    display: flex;
+    padding: 20px;
+    justify-content: space-evenly;
+}
+@media (max-width: 1000px) {
+    .bookstoreSingle > div:first-child {
+        flex-direction: column;
+        align-items: center;
+    }
 }

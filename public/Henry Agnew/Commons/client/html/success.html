@@ -58,7 +58,7 @@
       var urlParams = new URLSearchParams(window.location.search);
       var sessionId = urlParams.get('session_id');
       if (sessionId) {
-        fetch('/checkout-session?sessionId=' + sessionId)
+        fetch('http://localhost:4242/get-order?sessionId=' + sessionId)
           .then(function (result) {
             return result.json();
           })

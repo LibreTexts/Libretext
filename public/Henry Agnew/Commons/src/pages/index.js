@@ -58,7 +58,7 @@ class Commons extends React.Component {
 				try {
 					let home = await fetch(`https://api.libretexts.org/DownloadsCenter/espanol/home.json`);
 					home = await home.json();
-					home = home.items.map(item => ({...item, subdomain: key}));
+					home = home.items.map(item => ({...item, subdomain: key, location: 'Home'}));
 					downloads = downloads.concat(home);
 				} catch (e) {
 					console.error(e);
@@ -70,8 +70,8 @@ class Commons extends React.Component {
 					let bookshelves = fetch(`https://api.libretexts.org/DownloadsCenter/${key}/Bookshelves.json`);
 					[courses, bookshelves] = await Promise.all([courses, bookshelves]);
 					[courses, bookshelves] = await Promise.all([courses.json(), bookshelves.json()]);
-					courses = courses.items.map(item => ({...item, subdomain: key}));
-					bookshelves = bookshelves.items.map(item => ({...item, subdomain: key}));
+					courses = courses.items.map(item => ({...item, subdomain: key, location: 'Courses'}));
+					bookshelves = bookshelves.items.map(item => ({...item, subdomain: key, location: 'Bookshelves'}));
 					downloads = downloads.concat(courses, bookshelves);
 				} catch (e) {
 					console.error(e);
@@ -292,7 +292,7 @@ function LibraryDialog(props) {
 
 function Lib(props) {
 	const [clicked, setClicked] = React.useState(false);
-	return <IconButton style={{width: 32, height: 32}} onClick={() => setClicked(!clicked)}>
+	return <IconButton style={{width: 32, height: 32, padding:0}} onClick={() => setClicked(!clicked)}>
 		<img
 			src={`https://libretexts.org/img/LibreTexts/glyphs${clicked ? '' : '_blue'}/${LibreTexts.libraries[props.option]}.png`}
 			style={{verticalAlign: 'middle'}}/>

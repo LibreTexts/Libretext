@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "package": "node ../../Miscellaneous/createBundle.js",
-    "lulu": "node ../../Miscellaneous/createBundle.js client/html/luluBundle.js LuluStandalone.jsx"
+    "bookstore": "node ../../Miscellaneous/createBundle.js client/html/luluBundle.js BookstoreSingle.jsx"
   },
   "author": "",
   "license": "ISC",

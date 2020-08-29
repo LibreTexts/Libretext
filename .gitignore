@@ -70,3 +70,4 @@ Temporary Items
 /API/ImportFiles/
 API/out.json
 /API/.env
+/API/bookstoreConfig.json
