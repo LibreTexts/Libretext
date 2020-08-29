@@ -1,4 +1,3 @@
-
 function buildcite() {
 
     let citeDiv = document.createElement("div");

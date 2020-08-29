@@ -1303,7 +1303,7 @@ puppeteer.launch({
 						`<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 						
 						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
+						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
 						'</div>';
 					if ((performance.now() - start) / 1000 > 20)
 						console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
