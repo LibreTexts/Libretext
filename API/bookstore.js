@@ -198,8 +198,8 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 		line_items: lineItems,
 		shipping_address_collection: {allowed_countries: ['US']},
 		// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-		success_url: `${domainURL}/Order_Success?order={CHECKOUT_SESSION_ID}`,
-		cancel_url: `${domainURL}/Order_Canceled`,
+		success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,
+		cancel_url: `${domainURL}/Purchase_Canceled.html`,
 	});
 	// console.log(session.id);
 	res.send({

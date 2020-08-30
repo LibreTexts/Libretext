@@ -5,48 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nodePrint/ecosystem.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/404.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/standaloneBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bookstore.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bookstore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/ecosystem.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/ecosystem.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/Commons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/canceled.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/canceled.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/css/normalize.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/normalize.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/de.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/de.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/fr.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ja.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ja.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/ms.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ms.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/locales/nl.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/nl.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/luluBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/client/html/translation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/translation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/CW.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/CW.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/PB.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/PB.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CO.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/CO.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/CW.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/CW.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/PB.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/PB.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images - Copy/SS.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images - Copy/SS.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/CO.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/CO.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/CW.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/CW.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/PB.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/PB.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/images/images-modified/SS.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/images/images-modified/SS.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/pages/BookstoreSingle.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/canceled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/global.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/normalize.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/de.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ja.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ms.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/nl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/success.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/translation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,13 +101,6 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\bookstore\pending" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Bookstore\src\pages" />
@@ -151,6 +121,13 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -242,7 +219,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Commons">
+  <component name="RunManager" selected="npm.Bookstore">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1243,14 +1220,8 @@
       <workItem from="1598633071074" duration="14787000" />
       <workItem from="1598677218171" duration="1063000" />
       <workItem from="1598679241237" duration="7326000" />
-      <workItem from="1598717127369" duration="5316000" />
-    </task>
-    <task id="LOCAL-00236" summary="Updated Forker to user authenticatedFetch">
-      <created>1581815127393</created>
-      <option name="number" value="00236" />
-      <option name="presentableId" value="LOCAL-00236" />
-      <option name="project" value="LOCAL" />
-      <updated>1581815127395</updated>
+      <workItem from="1598717127369" duration="6174000" />
+      <workItem from="1598806891267" duration="5466000" />
     </task>
     <task id="LOCAL-00237" summary="Refreshed Importer bundle.js">
       <created>1581927586329</created>
@@ -1588,7 +1559,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598679271157</updated>
     </task>
-    <option name="localTasksCounter" value="285" />
+    <task id="LOCAL-00285" summary="Integration added to production servers">
+      <created>1598734565661</created>
+      <option name="number" value="00285" />
+      <option name="presentableId" value="LOCAL-00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1598734565661</updated>
+    </task>
+    <option name="localTasksCounter" value="286" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1643,7 +1621,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Fixed cross-subdomain cleanPath" />
     <MESSAGE value="Initial BatchMonitor.jsx GUI" />
     <MESSAGE value="Updated Sandboxes for Admin" />
     <MESSAGE value="Updated cleanPath to be less aggressive" />
@@ -1668,7 +1645,8 @@
     <MESSAGE value="Completed basic Lulu API integration" />
     <MESSAGE value="Initial end-to-end functionality completed&#10;&#10;TODO:&#10;-Improve UI&#10;-Verify prices are calculated correctly&#10;-Generalize for arbitrary texts, make sure book is within 32-800 page limit.&#10;-And more!" />
     <MESSAGE value="Improved Standalone UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved Standalone UI" />
+    <MESSAGE value="Integration added to production servers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Integration added to production servers" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1703,11 +1681,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497182667" />
-    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598679268752">
+    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598734563430">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
-    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598679268752" />
+    <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598734563430" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
@@ -1717,26 +1695,26 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598685716776" />
-    <state width="364" height="746" key="GridCell.Tab.0.bottom" timestamp="1598732811408">
+    <state width="364" height="554" key="GridCell.Tab.0.bottom" timestamp="1598819070077">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
-    <state width="364" height="746" key="GridCell.Tab.0.center" timestamp="1598732811408">
+    <state width="364" height="554" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070077" />
+    <state width="364" height="554" key="GridCell.Tab.0.center" timestamp="1598819070076">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
-    <state width="364" height="746" key="GridCell.Tab.0.left" timestamp="1598732811408">
+    <state width="364" height="554" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
+    <state width="364" height="554" key="GridCell.Tab.0.left" timestamp="1598819070076">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
-    <state width="364" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
-    <state width="364" height="746" key="GridCell.Tab.0.right" timestamp="1598732811408">
+    <state width="364" height="554" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
+    <state width="364" height="554" key="GridCell.Tab.0.right" timestamp="1598819070076">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598732811408" />
+    <state width="364" height="554" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
     <state width="467" height="554" key="GridCell.Tab.1.bottom" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1787,11 +1765,11 @@
     </state>
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="374" y="93" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598592965179" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1598510320597">
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1598734574870">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513154661" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598510320597" />
+    <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598734574870" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1598504702748">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

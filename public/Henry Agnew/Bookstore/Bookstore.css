@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     margin: 10px;
     padding: 10px;
-    max-width: 270px;
+    /*max-width: 270px;*/
     justify-content: space-evenly;
 }
 
@@ -236,7 +236,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #bookstoreSingle > div:first-child {
     display: flex;
-    padding: 20px;
+    padding: 0 20px;
     justify-content: space-evenly;
 }
 @media (max-width: 1000px) {

@@ -201,6 +201,7 @@ function BookstoreSingle(props) {
 	});
 	
 	return <ThemeProvider theme={theme}>
+		<p>This project is currently in Beta! If you have any issues, please contact the developer at hagnew @ libretexts.org</p>
 		<Paper className='orderForm' id='bookstoreSingle'>
 			<div>
 				<Paper className='bookstoreColumn'>
@@ -241,11 +242,11 @@ function BookstoreSingle(props) {
 						<ToggleButton value={false} aria-label="paperback cover option"
 						              style={{alignItems: 'flex-start'}}>
 							<img src={`${fileSource}/images/PB.jpg`}/>
-							<p>Paperback</p>
+							<div>Paperback</div>
 						</ToggleButton>
 						<ToggleButton value={true} aria-label="hardcover option" style={{alignItems: 'flex-start'}}>
 							<img src={`${fileSource}/images/CW.jpg`}/>
-							<p>Hardcover (+$7)</p>
+							<div>Hardcover (+$8)</div>
 						</ToggleButton>
 					</ToggleButtonGroup>
 					<Divider/>
@@ -260,7 +261,7 @@ function BookstoreSingle(props) {
 							Grayscale pages
 						</ToggleButton>
 						<ToggleButton value={true} aria-label="color option">
-							Full Color pages(+${Math.ceil(colorCost)})
+							Full Color pages (+${Math.ceil(colorCost)})
 						</ToggleButton>
 					</ToggleButtonGroup>
 					<Divider/>
