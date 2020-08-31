@@ -39,7 +39,7 @@ export default function LibreText(props) {
 				{props.item.author || ''}
 			</Typography>
 			<CardActions>
-				<a href={`https://chem.libretexts.org/Courses/Remixer_University/Bookstore_Single?${props.item.subdomain}-${props.item.id}`}><Button>Test
+				<a href={`https://libretexts.org/bookstore/single.html?${props.item.subdomain}-${props.item.id}`}><Button>Test
 					Buy Book</Button></a>
 				{/*<Lulu {...props}/>*/}
 			

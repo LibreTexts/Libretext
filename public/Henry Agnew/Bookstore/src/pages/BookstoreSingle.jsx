@@ -54,7 +54,7 @@ function BookstoreSingle(props) {
 	const classes = useStyles();
 	
 	
-	const taxesMultiplier = 1.1;
+	const taxesMultiplier = 1.2;
 	const baseCost = (0.03 * props.item.numPages + 1.69) * taxesMultiplier; //cost from Lulu API
 	let totalCost = baseCost;
 	const colorCost = (props.item.numPages * 1.5 / 100) * taxesMultiplier; //cost from Lulu API
@@ -270,7 +270,7 @@ function BookstoreSingle(props) {
 				<Paper className='bookstoreColumn'>
 					<h3>Select Shipping Option</h3>
 					{renderShipping()}
-					<p>Shipping currently only available to the continental US (US-48)</p>
+					<p>Shipping currently only available to the continental US (US-48). Contact us at bookstore@libretexts.org for orders outside of this area.</p>
 				</Paper>
 			</div>
 			

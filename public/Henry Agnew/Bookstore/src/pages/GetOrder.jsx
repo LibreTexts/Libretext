@@ -8,6 +8,8 @@ import {grey} from "@material-ui/core/colors";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import Typography from "@material-ui/core/Typography";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 
 const target = document.createElement("div");
@@ -77,7 +79,9 @@ export default function GetOrder(props) {
 		</h1>
 	}
 	else if (!order)
-		return <h1>Fetching Order {orderID}</h1>
+		return <><h1>Fetching Order {orderID}</h1>
+			<Typography variant="h1"><Skeleton animation="wave"/></Typography>
+		</>
 	else {
 		const selected = steps.find(item => item.status === order.status);
 		const selectedIndex = steps.findIndex(item => item.status === order.status);

@@ -7,23 +7,12 @@
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bookstore.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bookstore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/canceled.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/global.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/css/normalize.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/de.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/en.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/fr.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ja.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/ms.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/locales/nl.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/success.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/client/html/translation.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +90,13 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\bookstore\pending" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Bookstore\src\pages" />
@@ -121,13 +117,6 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -1695,26 +1684,26 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598685716776" />
-    <state width="364" height="554" key="GridCell.Tab.0.bottom" timestamp="1598819070077">
+    <state width="407" height="746" key="GridCell.Tab.0.bottom" timestamp="1598839008455">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="554" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070077" />
-    <state width="364" height="554" key="GridCell.Tab.0.center" timestamp="1598819070076">
+    <state width="407" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
+    <state width="407" height="746" key="GridCell.Tab.0.center" timestamp="1598839008455">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="554" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
-    <state width="364" height="554" key="GridCell.Tab.0.left" timestamp="1598819070076">
+    <state width="407" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
+    <state width="407" height="746" key="GridCell.Tab.0.left" timestamp="1598839008454">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
-    <state width="364" height="554" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
-    <state width="364" height="554" key="GridCell.Tab.0.right" timestamp="1598819070076">
+    <state width="407" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008454" />
+    <state width="407" height="746" key="GridCell.Tab.0.right" timestamp="1598839008455">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="364" height="554" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598819070076" />
+    <state width="407" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
     <state width="467" height="554" key="GridCell.Tab.1.bottom" timestamp="1598686908569">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

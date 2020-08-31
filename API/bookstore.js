@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const {resolve} = require('path');
 const fs = require('fs-extra');
+const cors = require('cors');
 const fetch = require("node-fetch");
 require('dotenv').config({path: './.env'});
 const bookstoreConfig = require("./bookstoreConfig.json");
@@ -15,6 +16,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 
 app.use(express.static(bookstoreConfig.STATIC_DIR));
+app.use(cors());
 app.use(
 	express.json({
 		// We need the raw body to verify webhook signatures.
@@ -60,7 +62,7 @@ async function updateOrder(sessionId, forceUpdate = false) {
 	//update Lulu information
 	if (forceUpdate) {
 		if (result.luluID) { //fetch live lulu
-			let luluResponse = await LuluAPI(`https://api.sandbox.lulu.com/print-jobs/${result.luluID}/`, {
+			let luluResponse = await LuluAPI(`https://api.lulu.com/print-jobs/${result.luluID}/`, {
 				headers: {
 					'Cache-Control': 'no-cache',
 					'Content-Type': 'application/json'
@@ -117,7 +119,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 			'Content-Type': 'application/json'
 		}
 	});
-	costCalculation = await LuluAPI('https://api.sandbox.lulu.com/print-job-cost-calculations/', {
+	costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
 		method: 'POST',
 		headers: {
 			'Cache-Control': 'no-cache',
@@ -207,7 +209,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	});
 });
 
-app.post(basePath +'/publish-order', async (req, res) => {
+app.post(basePath + '/publish-order', async (req, res) => {
 	let data;
 	let eventType;
 	// Check if webhook signing is configured.
@@ -258,8 +260,11 @@ async function fulfillOrder(session) {
 	
 	// console.log("Fulfilling order", JSON.stringify(session, null, 2));
 	let lineItems = session.line_items.data;
-	if(!lineItems || !lineItems.length || !lineItems[0].price.product.metadata.numPages){
-		console.error(`[Invalid Lulu order] ${session.id}`)
+	
+	//TODO replace with optional chaining
+	if (!lineItems || !lineItems.length || !lineItems[0].price.product.metadata.numPages) {
+		console.error(`[Invalid Lulu order] ${session.id}`);
+		return;
 	}
 	
 	let shippingSpeed = lineItems.pop();
@@ -293,7 +298,7 @@ async function fulfillOrder(session) {
 	
 	//send request to the Lulu API
 	const payload = {
-		contact_email: bookstoreConfig.DEVELOPER_EMAIL,
+		contact_email: bookstoreConfig.RECEIPT_EMAIL,
 		external_id: session.id,
 		production_delay: 120,
 		line_items: lineItems,
@@ -310,7 +315,7 @@ async function fulfillOrder(session) {
 		},
 		shipping_level: shippingSpeed,
 	}
-	let luluResponse = await LuluAPI('https://api.sandbox.lulu.com/print-jobs/', {
+	let luluResponse = await LuluAPI('https://api.lulu.com/print-jobs/', {
 		method: 'POST',
 		headers: {
 			'Cache-Control': 'no-cache',
@@ -342,7 +347,7 @@ async function LuluAPI(url, options) {
 			secret: bookstoreConfig.LULU_SECRET_KEY,
 		},
 		auth: {
-			tokenHost: 'https://api.sandbox.lulu.com', //TODO: Change to production!
+			tokenHost: 'https://api.lulu.com',
 			tokenPath: '/auth/realms/glasstree/protocol/openid-connect/token'
 		}
 	};
