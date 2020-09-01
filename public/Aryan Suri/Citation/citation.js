@@ -183,7 +183,6 @@ function getCite(verbose = false) {
                 console.log("Family: " + authors[i]['family']);
             }
         }
-        console.log(authors);
         return authors
     }
 
