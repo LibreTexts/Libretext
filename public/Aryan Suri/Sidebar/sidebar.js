@@ -810,9 +810,10 @@ async function TOC() {
 	let content;
 	if (!navigator.webdriver || !window.matchMedia('print').matches) {
 		coverpage = await LibreTexts.getCoverpage();
-		if (coverpage) {
+		if (coverpage)
 			await makeTOC(coverpage, true);
-		}
+		else
+   			await makeTOC('home', true);
 	}
 
 	async function makeTOC(path, isRoot, full) {
