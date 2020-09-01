@@ -9,7 +9,11 @@ function getCC() {
 				let tag = tags[i].split(":")[1];
 				switch (tag) {
 					case "publicdomain":
-						return null /*label: "cc-publicdomain", title: "Public Domain", link: "#"*/;
+						return {
+							label: "cc-publicdomain",
+							title: "Public Domain",
+							link: "#"
+						};
 					case "ccby":
 						return {
 							label: "cc-BY",
@@ -61,75 +65,49 @@ function getCC() {
 							link: "https://www.gnu.org/licenses/fdl-1.3.en.html"
 						};
 					case "arr":
-						return { label: "arr", title: "All Rights Reserved Â©", };
+						return {
+							label: "arr",
+							title: "All Rights Reserved Â©",
+							link: "https://en.wikipedia.org/wiki/All_rights_reserved"
+						};
 				}
 			}
 		}
 	}
-	return null; //not found
-}
+	return {
+		label: "notset",
+		title: "notset",
+		link: "0#"
+	};
+};
 
 (function () {
 
 	$('body').append(`
-                <div id="warningModal">
-					<div id="warningModalContent">  
-                    </div>
-                </div>
-		`);
+		<div id="warningModal">
+			<div id="warningModalContent">  
+			</div>
+		</div>
+    `);
 
-	function controlCopy() {
+	function licenseControl() {
 
 		const cc = getCC();
 		const admin = document.getElementById('adminHolder').innerText === 'true';
 		const pro = document.getElementById("proHolder").innerText === 'true';
 		const groups = document.getElementById('groupHolder').innerText.toLowerCase();
 
-		if (admin) { console.log("admin") }
-		else if (pro && groups.includes('developer')) { console.log("developer") }
-		else if (pro && (groups.includes('basicuser') || groups.includes('workshop'))) {
-			if (cc) {
-				localStorage.setItem("cc", cc.label);
-				console.log("basicuser");
-				switch (cc.label) {
-					case "arr":
-						$('body').bind('copy paste cut', function (e) {
-							e.preventDefault();
-							ccDetector();
-						});
-						break;
-					default: document.addEventListener("copy", ccDetector);
-				}
-			}
-			else {
-				document.addEventListener("copy", ccDetector);
-			}
-		} else {
-			if (cc) {
-				localStorage.setItem("cc", cc.label);
-				switch (cc.label) {
-					case "arr":
-						$('body').bind('copy paste cut', function (e) {
-							e.preventDefault();
-							ccDetector();
-						});
-						break;
-					default: document.addEventListener("copy", ccDetector);
-				}
-			}
-			else {
-				document.addEventListener("copy", ccDetector);
-			}
-		}
+		if (admin) { }
+		else if (pro && groups.includes('developer')) { ccDetect(); }
+		else { ccDetect(); }
+		ccPageLabel();
 	}
 
-
-	function ccDetector() {
+	function ccDetect() {
 		const cc = getCC();
+		ccCompare();
 		if (cc) {
-			$(modalB).show();
 			switch (cc.label) {
-				// NC INNER HTML CASES NOT NEEDED ANYMORE // 
 				case "cc-BY":
 					modalC.setAttribute("style", "background-color: #aed581;");
 					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
@@ -178,13 +156,215 @@ function getCC() {
 			}
 
 		} else {
-			$(modalB).show();
 			modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`
 
+		}
+		document.addEventListener('copy', () => {
+			$(modalB).show();
+			localStorage.setItem("cc", cc.label);
+			console.log(`cc cookie: ${cc.label}`);
+		});
+	}
+
+	function ccCompare() {
+		const cc = getCC();
+		const ccm = {
+			"cc-publicdomain": 1,
+			"cc-BY": 2,
+			"cc-by-sa": 3,
+			"cc-by-nc-sa": 4,
+			"cc-by-nc": 5,
+			"cc-by-nd": 6,
+			"cc-by-nc-nd": 7,
+			"gnu": 8,
+			"gnudsl": 9,
+			"gnufdl": 10,
+			"arr": 11,
+			"notset": 12
+		};
+		const cct = cc.label;
+		const ccs = localStorage.getItem("cc");
+		if (ccm[cct] == 11) { preventCopy(); };
+		if (ccs) {
+			console.log(`#${ccm[ccs]} => #${ccm[cct]}`);
+			switch (ccm[ccs]) {
+				case 1:
+					switch (ccm[cct]) {
+						case 1:
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+						case 8:
+						case 9:
+						case 10:
+							break;
+						case 6:
+						case 7:
+							preventPaste()
+							break;
+						case 11:
+						case 12:
+							console.log("paste w/ warning");
+							break;
+
+					} break;
+				case 2:
+					switch (ccm[cct]) {
+						case 1:
+							console.log("paste and switch ccby");
+							break;
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+							break;
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+							preventPaste()
+							break;
+						case 12:
+							console.log("paste w/ warning");
+							break;
+					} break;
+				case 3:
+					switch (ccm[cct]) {
+						case 1:
+						case 12:
+							console.log("paste n switch");
+							break;
+						case 3:
+							break;
+						case 2:
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+							preventPaste()
+							break;
+					} break;
+				case 4:
+					switch (ccm[cct]) {
+						case 1:
+						case 2:
+						case 5:
+							console.log("paste and switch ccbyncsa");
+							break;
+						case 4:
+						case 8:
+						case 9:
+							break;
+						case 3:
+						case 6:
+						case 7:
+						case 10:
+						case 11: 
+							preventPaste()
+							break;
+						case 12:
+							break;
+					} break;
+				case 5:
+					switch (ccm[cct]) {
+						case 1:
+						case 2:
+							console.log("paste and switch ");
+							break;
+						case 5:
+							break;
+						case 3:
+						case 4:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+							preventPaste()
+							break;
+						case 12:
+							console.log("paste w/ warning");
+							break;
+					} break;
+				case 6:
+				case 7:
+					switch (ccm[cct]) {
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+							preventPaste()
+							break;
+						case 1:
+						case 12:
+							console.log("paste/warn/switch");
+							break;
+					} break;
+				case 11:
+					switch (ccm[cct]) {
+						case 1:
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+						case 12:
+							preventPaste()
+							break;
+					} break;
+			}
+		}
+		function preventPaste() {
+			$('body').bind('paste', function (e) {
+				e.preventDefault();
+				alert("no paste");
+			});
+		}
+
+		function preventCopy() {
+			$('body').bind('copy', function (e) {
+				e.preventDefault();
+			});
 		}
 	}
 
 
+	/* 
+		switch(ccm[cct]) {
+			case 1:
+			case 2: 
+			case 3:
+			case 4:
+			case 5: 
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+		}
+		
+	*/
 	function ccPageLabel() {
 		const cc = getCC();
 		if (cc) {
@@ -222,17 +402,6 @@ function getCC() {
 			pageNumberHolder.style.display = "none";
 
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-		if ($(".elm-social-share").length) {
-			let html = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
-			if (!isAdmin)
-				html += '<a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a></div>';
-			else
-			        html +='</div>';
-			$(".elm-social-share")[0].innerHTML = html;
-			//SocialShareKit.init();
-			window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' };
-		}
-
 
 		if (!isAdmin) {
 			const donor = document.createElement("script");
@@ -249,9 +418,7 @@ function getCC() {
 		}
 	});
 
-
 	const modalB = document.getElementById("warningModal");
 	const modalC = document.getElementById("warningModalContent");
-	document.addEventListener('DOMContentLoaded', ccPageLabel);
-	document.addEventListener('DOMContentLoaded', controlCopy);
-})();
+	document.addEventListener('DOMContentLoaded', licenseControl);
+}());
