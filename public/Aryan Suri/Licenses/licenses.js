@@ -402,7 +402,14 @@ function getCC() {
 			pageNumberHolder.style.display = "none";
 
 		const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-
+		if ($(".elm-social-share").length) {
+			let html = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
+			if (!isAdmin)
+				html += '<a href="https://donorbox.org/libretexts" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a>';
+			$(".elm-social-share")[0].innerHTML = html + '</div>';
+			window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' };
+		}
+		
 		if (!isAdmin) {
 			const donor = document.createElement("script");
 			donor.type = "text/javascript";
