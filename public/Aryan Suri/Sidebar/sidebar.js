@@ -52,16 +52,17 @@ async function Sidebar() {
 		let tabsSidebar = getSidebar();
 		let sidebarDiv = document.createElement("div");
 
-		$("body").append(tabs.open);
+		//$("body").append(tabs.open);
 		$("body").append(sidebarDiv);
 		sidebarDiv.id = "sidebarDiv";
-		$(sidebarDiv).css("display", "none");
+		//$(sidebarDiv).css("display", "none");
 		tabsSidebar = tabsSidebar.join("");
 		$(sidebarDiv).append(tabsSidebar);
 		controlSidebar();
 		switchSidebar();
 
 		function switchSidebar() {
+			$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
 			$("#openContents").click(function (event) {
 				$("#sb2, #sb3, #sb4, #sb5").hide();
 				$("#sb1").show();
@@ -118,7 +119,7 @@ async function Sidebar() {
 
 			$("body").click(function (event) {
 				if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-					$("#sidebarDiv").hide();
+					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
 
 				}
 			});

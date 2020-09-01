@@ -146,7 +146,7 @@ a.toggler.off {
   top: 0;
   left: 0;
   background-color: #ececec;
-  margin-top: 40px;
+  padding-left: 40px;
   overflow-x: hidden;
   overflow-y: scroll;
   transition: 0s;
@@ -282,24 +282,26 @@ a.toggler.off {
 .top-bar {
   cursor: pointer;
   top: 0;
-  height: 40px;
+  width: 40px;
   margin-top: 0;
   background-color: #E5F5FE;
   position: fixed;
   z-index: 10000000000;
   display: flex;
-  width: 480px;
+  flex-direction: column;
+  height: 550px;
   border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .top-bar-unit {
   flex: 1;
-  /* margin-left: 10px; */
   padding: 5px;
   font-size: 10px;
 }
 
 .top-bar .top-bar-unit h5 {
+  transform: rotate(90deg);
   text-align: center !important;
 }
 
