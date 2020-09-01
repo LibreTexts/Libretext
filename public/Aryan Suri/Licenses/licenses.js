@@ -267,7 +267,6 @@ function getCC() {
 						case 7:
 						case 10:
 						case 11:
-							console.log("prev Paste");
 							preventPaste()
 							break;
 						case 12:
