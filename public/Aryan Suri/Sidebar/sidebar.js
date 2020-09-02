@@ -273,78 +273,60 @@
 			return {
 
 				"open": `<button id="custom_open"  >☰</button>`,
-				"headernr": pro ? `<div id="sbHeader" class="top-bar" style="">
-			<div class="top-bar-unit" >
-				<h5 id="openContents">Contents</h5>
-			</div>
-			
-			<div class="top-bar-unit">
-				<h5 id="openControl">Control</h5>
-			</div>  
-			
-			<div class="top-bar-unit">
-				<h5 id="openUsage"  class="">Usage</h5>
-			</div>
-	
-			<div class="top-bar-unit">
-				<h5 id="openDevelopers" class="">Developers</h5>
-			</div>
-	
-		   
-			</div>` : `<div id="sbHeader" class="top-bar" style="">
-			<div class="top-bar-unit" >
-				<h5 id="openContents">Contents</h5>
-			</div>
-		
-			<div class="top-bar-unit">
-				<h5 id="openControl">Control</h5>
-			</div>  
-			
-			<div class="top-bar-unit">
-				<h5 id="openUsage"  class="">Usage</h5>
-			</div>
-	
-			</div>`,
-				"header": pro ? `<div id="sbHeader" class="top-bar" style="">
-        <div class="top-bar-unit" >
-            <h5 id="openContents">Contents</h5>
-        </div>
-    
-        <div class="top-bar-unit">
+				"headernr": pro ? ` <div id="sbHeader" style="">
+				<div style="top: 5px" class="top-bar">
+					<h5  id="openContents">Contents</h5>
+				</div>
+				<div style="top: 190px" class="top-bar">
+					<h5 id="openControl">Control</h5>
+				</div>
+				<div style="top: 280px" class="top-bar">
+					<h5 id="openUsage"  class="">Usage</h5>
+				</div>
+				<div style="top: 370px" class="top-bar">
+					<h5 id="openDevelopers" class="">Developers</h5>
+				</div>
+				</div>`  :  `<div id="sbHeader" style="">
+				<div style="top: 5px" class="top-bar">
+					<h5  id="openContents">Contents</h5>
+				</div>
+				<div style="top: 190px" class="top-bar">
+					<h5 id="openControl">Control</h5>
+				</div>
+				<div style="top: 280px" class="top-bar">
+					<h5 id="openUsage"  class="">Usage</h5>
+				</div>
+				</div>` ,
+				"header": pro ? `<div id="sbHeader" style="">
+        <div id="openContents" style="top: -15px" class="top-bar">
+			<h5  >Contents</h5>
+		</div>
+		<div  id="openResources" style="top: 85px" class="top-bar">
+            <h5 class="">Resources</h5>
+		</div>
+		<div id="openControl" style="top: 185px;" class="top-bar">
+			<h5 >Control</h5>
+		</div>
+		<div  id="openUsage" style="top: 285px;" class="top-bar">
+            <h5 class="">Usage</h5>
+		</div>
+		<div id="openDevelopers" style="top: 385px;" class="top-bar">
+            <h5  class="">Developers</h5>
+		</div>
+        </div>` :  `<div id="sbHeader" style="">
+        <div style="top: 5px" class="top-bar">
+			<h5  id="openContents">Contents</h5>
+		</div>
+		<div style="top: 100px" class="top-bar">
             <h5 id="openResources" class="">Resources</h5>
-        </div>
-
-        <div class="top-bar-unit">
-            <h5 id="openControl">Control</h5>
-        </div>  
-        
-        <div class="top-bar-unit">
+		</div>
+		<div style="top: 190px" class="top-bar">
+			<h5 id="openControl">Control</h5>
+		</div>
+		<div style="top: 280px" class="top-bar">
             <h5 id="openUsage"  class="">Usage</h5>
-        </div>
-
-        <div class="top-bar-unit">
-            <h5 id="openDevelopers" class="">Developers</h5>
-        </div>
-
-       
-        </div>` : ` <div id="sbHeader" class="top-bar" style="">
-        <div class="top-bar-unit" >
-            <h5 id="openContents">Contents</h5>
-        </div>
-    
-        <div class="top-bar-unit">
-            <h5 id="openResources" class="">Resources</h5>
-        </div>
-
-        <div class="top-bar-unit">
-            <h5 id="openControl">Control</h5>
-        </div>  
-        
-        <div class="top-bar-unit">
-            <h5 id="openUsage"  class="">Usage</h5>
-        </div>
-       
-        </div> `,
+		</div>
+        </div>` ,
 				"home": `<div id="sb1" class="custom_sidebar">
 						<div class="custom_field_title"> <h3> Contents </h3> </div>
                         <div  class="" id="custom_target"></div>

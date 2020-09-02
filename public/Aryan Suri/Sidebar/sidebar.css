@@ -254,31 +254,46 @@ a.toggler.off {
   text-decoration: none;
   display: block;
 }
-
+#sbHeader {
+}
 .top-bar {
   cursor: pointer;
   top: 0;
-  width: 30px;
-  padding-top: 5px;
-  background-color: #E5F5FE;
-  position: fixed;
+  left: -72px;
+  width: 80px;
+  padding-left: 5px;
+  background-color: #127bc4;
   z-index: 10000000000;
+  position: fixed;
   display: flex;
-  flex-direction: column;
-  height: 410px;
+  justify-content: center;
+  height: 30px;
   border-right: 1px solid #137ac3;
   border-bottom: 1px solid #137ac3;
+  transition: 1s;
+  transform-origin: right;
+  transform: rotate(-90deg); 
 }
 
+
+.top-bar h5 {
+ 
+  color: #e5e5e5;
+  font-size: 0.9rem !important;
+  font-weight: 300;
+  font-family: Roboto;
+}
+/* 
 .top-bar-unit {
   flex: 1;
 }
 
 .top-bar .top-bar-unit h5 {
   transform: rotate(90deg);
+  color: #e5e5e5;
   font-size: 1rem !important;
   font-weight: 300;
-}
+} */
 
 .custom_sidebar #custom_dropdown-content a {
   color: black;
