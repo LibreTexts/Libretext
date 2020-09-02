@@ -62,7 +62,8 @@ function getParam() {
     let today = new Date();
     let accdate = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
     let title = $("#titleHolder").text();
-    let url = $("meta[property='og:url']").prop('content');
+    let pageID = $("#pageIDHolder").text();
+    let url = `https://chem.libretexts.org/@go/page/${pageID}`;
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text();
     let pageParam = {
