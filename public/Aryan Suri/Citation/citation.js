@@ -8,7 +8,7 @@ function buildcite() {
 <div onclick="hidecite()" id="citeModal">
 
        <div id="citeModalContent" style="cursor: pointer" >
-            <div style= "min-height: 100px;" id="citeHTML">
+            <div id="citeHTML">
                 <p id="citeText"> </p>
             </div>
 
