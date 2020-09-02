@@ -59,13 +59,19 @@ function buildcite() {
     });
 }
 function getParam() {
-    let today = new Date();
-    let accdate = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
+    let parseToday = new Date();
+    let parseDate = new Date($("#modifiedHolder").text());
+    let accdate = [parseToday.getFullYear(), parseToday.getMonth() + 1, parseToday.getDate()];
+    let issdate = [parseDate.getFullYear(), parseDate.getMonth() + 1, parseDate.getDate()];
     let title = $("#titleHolder").text();
     let pageID = $("#pageIDHolder").text();
     let url = `https://chem.libretexts.org/@go/page/${pageID}`;
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text();
+    if (title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/, '')) {
+        title = title.replace(/^[^:]*:/, '');
+        console.log("in match");
+    }
     let pageParam = {
         "type": "webpage",
         "title": title,
@@ -74,6 +80,9 @@ function getParam() {
         },
         "URL": url,
         "author": author,
+        "issued": {
+            "date-parts": [[issdate[0], issdate[1], issdate[2]]]
+        },
         "publisher": publisher
     };
     function namesplitter(name, verbose = false) {

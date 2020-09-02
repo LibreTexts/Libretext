@@ -38,7 +38,7 @@ function buildcite() {
     $('#citeSelect').on('change', function () { getCite() });
     $('#citeBIBTEX').on('click', function () { let citation = getFile('bibtex'); download(`${citation}`, 'bibtex.bbl', 'text/plain') });
     $('#citeRIS').on('click', function () { let citation = getFile('ris'); download(`${citation}`, 'citation.ris', 'text/plain') });
-    
+
     const citeCopy = document.getElementById("citeCopy")!;
     citeCopy.addEventListener("click", function () {
         let text = document.getElementById("citeText")!.innerText;
@@ -65,14 +65,20 @@ function buildcite() {
 }
 function getParam() {
 
-    let today = new Date();
-    let accdate = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
+    let parseToday = new Date();
+    let parseDate: Date = new Date($("#modifiedHolder").text());
+    let accdate = [parseToday.getFullYear(), parseToday.getMonth() + 1, parseToday.getDate()];
+    let issdate = [parseDate.getFullYear(), parseDate.getMonth() + 1, parseDate.getDate()];
     let title = $("#titleHolder").text();
     let pageID = $("#pageIDHolder").text();
     let url = `https://chem.libretexts.org/@go/page/${pageID}`
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text()
-    let pageParam  = {
+    if (title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/, '')) {
+        title = title.replace(/^[^:]*:/, '');
+        console.log("in match")
+    }
+    let pageParam = {
         "type": "webpage",
         "title": title,
         "acsessed": {
@@ -80,6 +86,9 @@ function getParam() {
         },
         "URL": url,
         "author": author,
+        "issued": {
+            "date-parts": [[issdate[0], issdate[1], issdate[2]]]
+        },
         "publisher": publisher
     }
     function namesplitter(name: string, verbose = false) {
@@ -91,7 +100,7 @@ function getParam() {
         var n = 0;
         for (let i = 0; i < spls.length; i++) {
             let finder = spls[i];
-           
+
             while (n < rawnames.length) {
                 let sfield = rawnames.slice(n)
                 if ((sfield.search(finder) != -1)) {
@@ -194,7 +203,7 @@ function getCite(verbose = false) {
     $('#citeText').text(output);
 
 
-    
+
     return pageParam
 };
 
