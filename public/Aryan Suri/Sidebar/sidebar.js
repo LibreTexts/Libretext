@@ -52,10 +52,8 @@ async function Sidebar() {
 		let tabsSidebar = getSidebar();
 		let sidebarDiv = document.createElement("div");
 
-		//$("body").append(tabs.open);
 		$("body").append(sidebarDiv);
 		sidebarDiv.id = "sidebarDiv";
-		//$(sidebarDiv).css("display", "none");
 		tabsSidebar = tabsSidebar.join("");
 		$(sidebarDiv).append(tabsSidebar);
 		controlSidebar();
@@ -66,11 +64,12 @@ async function Sidebar() {
 			$("#openContents").click(function (event) {
 				$("#sb2, #sb3, #sb4, #sb5").hide();
 				$("#sb1").show();
+				$("#sbHeader").hide();
 			});
 			$("#openResources").click(function (event) {
 				$("#sb1, #sb3, #sb4, #sb5").hide();
 				$("#sb2").show();
-
+				$("#sbHeader").hide();
 				//first time setup
 				if (!window.resourcesTabInitialized) {
 					window.resourcesTabInitialized = true;
@@ -93,14 +92,17 @@ async function Sidebar() {
 			$("#openControl").click(function (event) {
 				$("#sb1, #sb2, #sb4, #sb5").hide();
 				$("#sb3").show();
+				$("#sbHeader").hide();
 			});
 			$("#openUsage").click(function (event) {
 				$("#sb1, #sb2, #sb3, #sb5").hide();
 				$("#sb4").show();
+				$("#sbHeader").hide();
 			});
 			$("#openDevelopers").click(function (event) {
 				$("#sb1, #sb2, #sb3, #sb4").hide();
 				$("#sb5").show();
+				$("#sbHeader").hide();
 			});
 
 		}
@@ -356,7 +358,7 @@ async function Sidebar() {
     <div class="custom_field">
         
             <div class="custom_field">
-                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:480px;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
+                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:475px;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
                 </iframe>
             </div>         
         <a id="ref_table" target="_blank" >Reference Tables</a>
