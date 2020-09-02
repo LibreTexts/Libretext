@@ -68,7 +68,7 @@ function getParam() {
     let url = `https://chem.libretexts.org/@go/page/${pageID}`;
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text();
-    if (title.match(/[0-9]+\.[0-9]*?[A-Za-z]+?:/, '')) {
+    if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
         title = title.replace(/^[^:]*:/, '');
         console.log("in match");
     }
