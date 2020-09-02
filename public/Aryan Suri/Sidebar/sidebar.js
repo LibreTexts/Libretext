@@ -1,7 +1,8 @@
+(function(){
 window.addEventListener("DOMContentLoaded", Sidebar);
 
 async function Sidebar() {
-	if (window !== window.top) //don't show in iFrame
+	if (window !== window.top) 
 		return;
 
 	let param = getParam();
@@ -899,3 +900,4 @@ async function TOC() {
 		}
 	}
 }
+})();
