@@ -346,7 +346,7 @@
        
         </div> `,
 				"home": `<div id="sb1" class="custom_sidebar">
-						<div class="custom_field_title"> <h3> Home </h3> </div>
+						<div class="custom_field_title"> <h3> Contents </h3> </div>
                         <div  class="" id="custom_target"></div>
 					</div>`,
 

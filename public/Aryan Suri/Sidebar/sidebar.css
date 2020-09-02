@@ -70,7 +70,8 @@ a.toggler.off {
 }
 
 .custom_field_title {
-  background-color: #E5F5FE
+  background-color: #E5F5FE;
+  border-bottom: 1px solid darkblue;
 }
 .slider_ar {
   -webkit-appearance: none;
@@ -166,7 +167,6 @@ a.toggler.off {
   margin-left: 10px !important;
   margin-top: 5px !important;
   margin-bottom: 2px !important;
-  border-bottom: 1px solid darkblue;
 }
 
 .custom_sidebar #text-align-field span {
