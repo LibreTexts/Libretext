@@ -122,7 +122,7 @@ async function Sidebar() {
 			$("body").click(function (event) {
 				if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
 					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-
+					$("#sbHeader").show();
 				}
 			});
 
@@ -343,18 +343,13 @@ async function Sidebar() {
        
         </div> `,
 			"home": `<div id="sb1" class="custom_sidebar">
+						<div class="custom_field"> <h3> Home </h3> </div>
+                        <div  class="" id="custom_target"></div>
+					</div>`,
 
-                          <div  class="" id="custom_target"></div>
-                    </div>
-
-
-
-
-
-</div>`,
 			"resources": {
 				"chem": ` <div id="sb2"  class="custom_sidebar">
-    
+				<div class="custom_field"> <h3> Resources </h3> </div>
     <div class="custom_field">
         
             <div class="custom_field">
@@ -426,9 +421,9 @@ async function Sidebar() {
 </div> `
 			},
 			"control": ` <div id="sb3"  class="custom_sidebar">
- 
+	<div class="custom_field"> <h3> Control </h3> </div>
     <div style="display: grid;" class="custom_field">
-        <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;border-bottom: 1px solid black !important;">Default Settings</button>
+        <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;">Default Settings</button>
     </div>
     <!--<p class="h_ar">Font Size:</p>
     <div class="custom_field">   
@@ -463,7 +458,7 @@ async function Sidebar() {
    
 </div>`,
 			"usage": `<div id="sb4"  class="custom_sidebar">
- 
+			<div class="custom_field"> <h3> Usage </h3> </div>
     <div class="custom_field">
          <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
@@ -521,7 +516,7 @@ async function Sidebar() {
 
 </div>`,
 			"developers": `<div id="sb5"  class="custom_sidebar">
-
+			<div class="custom_field"> <h3> Developers </h3> </div>
     <div class="custom_field">
         <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
@@ -816,7 +811,7 @@ async function TOC() {
 		if (coverpage)
 			await makeTOC(coverpage, true);
 		else
-   			await makeTOC('home', true);
+			await makeTOC('home', true);
 	}
 
 	async function makeTOC(path, isRoot, full) {

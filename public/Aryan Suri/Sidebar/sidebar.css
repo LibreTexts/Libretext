@@ -18,28 +18,18 @@ a.toggler.off {
 
 #attrModal {
   display: flex;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: none;
-  /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
   justify-content: center;
   align-content: center;
 }
-
-/* Modal Content/Box */
 
 #attrModalContent {
   background-color: #fefefe;
@@ -69,20 +59,6 @@ a.toggler.off {
 
 #attr-copy:hover, #attr-author:hover, #attr-html:hover, #attr-program:hover {
   font-style: italic !important;
-}
-
-.close_ar {
-  margin-top: 0px;
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close_ar:hover, .close_ar:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 .custom_field {
@@ -165,15 +141,12 @@ a.toggler.off {
   color: #E5F5FE;
 }
 
-/* The sidebar links */
-
 .custom_sidebar a, .custom_sidebar b {
   padding: 2px;
   text-decoration: none;
   font-size: 18px;
   color: #595959;
   display: block;
-  /*transition: 0.3s;*/
 }
 
 .custom_sidebar p {
@@ -185,6 +158,13 @@ a.toggler.off {
   color: #595959;
 }
 
+.custom_sidebar h3 {
+  padding: 5px;
+  margin-left: 10px !important;
+  margin-top: 5px !important;
+  margin-bottom: 2px !important;
+}
+
 .custom_sidebar #text-align-field span {
   padding: 5px;
   margin-left: 10px;
@@ -193,8 +173,6 @@ a.toggler.off {
   font-size: 18px;
   color: #595959;
 }
-
-/* When you mouse over the navigation links, change their color */
 
 .custom_sidebar a:hover {
   color: #127bc4;
@@ -212,10 +190,6 @@ a.toggler.off {
   text-align: center;
   margin-left: 6%;
 }
-
-/* Position and style the close button (top right corner) */
-
-/* The button used to open the sidebar */
 
 #custom_open {
   width: 43.333px;
@@ -237,7 +211,6 @@ a.toggler.off {
 }
 
 .custom_dropbtn {
-  /*margin-top: 2px;*/
   margin-left: 10px;
   width: 85%;
   background-color: #30b3f6;
@@ -278,7 +251,6 @@ a.toggler.off {
   display: block;
 }
 
-
 .top-bar {
   cursor: pointer;
   top: 0;
@@ -290,9 +262,9 @@ a.toggler.off {
   display: flex;
   flex-direction: column;
   height: 410px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-right: 1px solid #137ac3;
 }
+
 .top-bar-unit {
   flex: 1;
 }
