@@ -39,6 +39,6 @@
     max-width: 30%;
 }
 
-#citeCopy:hover, #citeCopyHTML:hover, #citeBIBTEX:hover {
+#citeCopy:hover, #citeCopyHTML:hover, #citeBIBTEX:hover, #citeRIS:hover {
     font-style: italic !important;
 }
