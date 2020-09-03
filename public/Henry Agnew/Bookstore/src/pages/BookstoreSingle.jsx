@@ -208,6 +208,8 @@ function BookstoreSingle(props) {
 					<h3>{props.item.title}</h3>
 					<img
 						src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+					<p>{props.item.author}</p>
+					<p>{props.item.institution}</p>
 					<p>Bookstore Identifier: {props.item.zipFilename}</p>
 					<p>Number of pages: {props.item.numPages}</p>
 					<Divider/>

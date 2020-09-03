@@ -4,6 +4,9 @@ const {resolve} = require('path');
 const fs = require('fs-extra');
 const cors = require('cors');
 const fetch = require("node-fetch");
+const readline = require('readline');
+const {google} = require('googleapis');
+const mailComposer = require('nodemailer/lib/mail-composer');
 require('dotenv').config({path: './.env'});
 const bookstoreConfig = require("./bookstoreConfig.json");
 const stripe = require('stripe')(bookstoreConfig.STRIPE_SECRET_KEY);
@@ -245,7 +248,7 @@ app.post(basePath + '/publish-order', async (req, res) => {
 
 app.listen(port, () => console.log(`Restarted Bookstore on port ${port}`));
 
-// fulfillOrder(' cs_test_5w8WzcdHNZk1x3dknJ8BJemySdSw4SMwQg0YSvLgMy1J9dJ06PG6LbJ4')''
+// fulfillOrder('cs_live_8oBYmoc2yxZCSNWcYt33J52t3OXtkSDwLgnmtRdXOpfAPNZMWi9PBB7i')
 
 async function fulfillOrder(session) {
 	await fs.ensureDir('./bookstore/pending');
@@ -294,9 +297,9 @@ async function fulfillOrder(session) {
 		stripe: session,
 		lulu: null,
 	}, {spaces: '\t'});
-	
-	
-	//send request to the Lulu API
+
+
+//send request to the Lulu API
 	const payload = {
 		contact_email: bookstoreConfig.RECEIPT_EMAIL,
 		external_id: session.id,
@@ -315,6 +318,7 @@ async function fulfillOrder(session) {
 		},
 		shipping_level: shippingSpeed,
 	}
+	
 	let luluResponse = await LuluAPI('https://api.lulu.com/print-jobs/', {
 		method: 'POST',
 		headers: {
@@ -334,6 +338,8 @@ async function fulfillOrder(session) {
 			stripe: session,
 			lulu: luluResponse,
 		}, {spaces: '\t'});
+		
+		sendLuluReceipt(payload, luluResponse);
 	}
 	else {
 		console.error(luluResponse);
@@ -361,4 +367,174 @@ async function LuluAPI(url, options) {
 	options.headers = options.headers || {};
 	options.headers.Authorization = `Bearer ${accessToken.token.access_token}`;
 	return await fetch(url, options);
+}
+
+function sendLuluReceipt(payload, luluResponse) {
+	const to = payload.shipping_address.email;
+	const sub = 'Thank you for your order from the LibreTexts Bookstore!';
+
+// If modifying these scopes, delete token.json.
+	const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
+// The file token.json stores the user's access and refresh tokens, and is
+// created automatically when the authorization flow completes for the first
+// time.
+	const TOKEN_PATH = './bookstore/token.json';
+
+// Load client secrets from a local file.
+	fs.readFile('bookstoreConfig.json', (err, content) => {
+		if (err) return console.log('Error loading client secret file:', err);
+		// Authorize a client with credentials, then call the Gmail API.
+		authorize(JSON.parse(content).GMAIL, (auth) => {
+			const email = new CreateMail(auth, to, sub, message);
+			email.makeBody();
+		});
+	});
+	
+	/**
+	 * Create an OAuth2 client with the given credentials, and then execute the
+	 * given callback function.
+	 * @param {Object} credentials The authorization client credentials.
+	 * @param {function} callback The callback to call with the authorized client.
+	 */
+	function authorize(credentials, callback) {
+		const {client_secret, client_id, redirect_uris} = credentials.installed;
+		const oAuth2Client = new google.auth.OAuth2(
+			client_id, client_secret, redirect_uris[0]);
+		
+		// Check if we have previously stored a token.
+		fs.readFile(TOKEN_PATH, (err, token) => {
+			if (err) return getNewToken(oAuth2Client, callback);
+			oAuth2Client.setCredentials(JSON.parse(token));
+			callback(oAuth2Client);
+		});
+	}
+	
+	/**
+	 * Get and store new token after prompting for user authorization, and then
+	 * execute the given callback with the authorized OAuth2 client.
+	 * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+	 * @param {getEventsCallback} callback The callback for the authorized client.
+	 */
+	function getNewToken(oAuth2Client, callback) {
+		const authUrl = oAuth2Client.generateAuthUrl({
+			access_type: 'offline',
+			scope: SCOPES,
+		});
+		console.log('Authorize this app by visiting this url:', authUrl);
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+		});
+		rl.question('Enter the code from that page here: ', (code) => {
+			rl.close();
+			oAuth2Client.getToken(code, (err, token) => {
+				if (err) return console.error('Error retrieving access token', err);
+				oAuth2Client.setCredentials(token);
+				// Store the token to disk for later program executions
+				fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+					if (err) return console.error(err);
+					console.log('Token stored to', TOKEN_PATH);
+				});
+				callback(oAuth2Client);
+			});
+		});
+	}
+	
+	/**
+	 * Sends a test email using the user's account.
+	 *
+	 * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+	 */
+		
+		
+		//creation of message from payload and line_items
+	const message = `<h1>Thank you for your order from the LibreTexts bookstore!</h1>
+<p>This email is confirmation that your payment has been approved and that the printer has received your order.</p>
+<p> You can view the live status of your order on this page:
+<a href="https://libretexts.org/bookstore/Order_Success.html?order=${payload.external_id}">https://libretexts.org/bookstore/Order_Success.html?order=${payload.external_id}</a></p>
+<table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+<thead><tr>
+<th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+</tr></thead>
+<tbody>
+${payload.line_items.map(item => `<tr>
+        <td>
+        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+        </td>
+        <td>
+        <p>Shipping to <u>${payload.shipping_address.city}, ${payload.shipping_address.state_code}</u> via <i>${payload.shipping_level}</i></p>
+        </td>
+        <td>
+        <p>Estimated arrival from <b>${luluResponse.estimated_shipping_dates.arrival_min}</b> to ${luluResponse.estimated_shipping_dates.arrival_max}</p>
+        </td>
+</tr>`)}
+</tbody>
+</table>
+
+<br/>
+<p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
+<p>Please remember to include your order identifier [${payload.external_id}].</p>
+<h3>Enjoy your purchase!</h3>
+<img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
+	
+	
+	class CreateMail {
+		constructor(auth, to, sub, body) {
+			this.me = bookstoreConfig.RECEIPT_EMAIL;
+			this.auth = auth;
+			this.to = to;
+			this.sub = sub;
+			this.body = body;
+			this.gmail = google.gmail({version: 'v1', auth});
+			
+		}
+		
+		//Creates the mail body and encodes it to base64 format.
+		makeBody() {
+			
+			let mail;
+			//Mail Body is created.
+			mail = new mailComposer({
+				to: this.to,
+				from: 'LibreTexts Bookstore <bookstore@libretexts.org>',
+				html: this.body,
+				subject: this.sub,
+				textEncoding: "base64"
+			});
+			
+			//Compiles and encodes the mail.
+			mail.compile().build((err, msg) => {
+				if (err) {
+					return console.log('Error compiling email ' + error);
+				}
+				
+				const encodedMessage = Buffer.from(msg)
+					.toString('base64')
+					.replace(/\+/g, '-')
+					.replace(/\//g, '_')
+					.replace(/=+$/, '');
+				
+				this.sendMail(encodedMessage);
+				
+			});
+		}
+		
+		//Send the message to specified receiver.
+		sendMail(encodedMessage) {
+			this.gmail.users.messages.send({
+				userId: this.me,
+				resource: {
+					raw: encodedMessage,
+				}
+			}, (err, result) => {
+				if (err) {
+					return console.log('NODEMAILER - The API returned an error: ' + err);
+				}
+				
+				// console.log("NODEMAILER - Sending email reply from server:", result.data);
+			});
+		}
+	}
 }

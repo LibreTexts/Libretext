@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Integration added to production servers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/bookstore.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/bookstore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/Bookstore.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/getOrderBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/build/standaloneBundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/BookstoreSingle.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Bookstore/src/pages/GetOrder.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Commons/src/components/LibreText.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,13 +90,6 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
-      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Downloads Center" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\bookstore\pending" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Bookstore\src\pages" />
@@ -117,6 +110,13 @@
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\Import_IMATHAS" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Leo Jayachandran\Dynamic Index" />
       <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\JSON" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\API\bookstore" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images\images-modified" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Henry Agnew\Commons\images" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Miscellaneous" />
+      <recent name="C:\Users\Henry\Desktop\rogramming\Libretext\public\Students\Henry Agnew\BeeLine" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -208,7 +208,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Bookstore">
+  <component name="RunManager" selected="Node.js.bookstore.js">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1211,6 +1211,7 @@
       <workItem from="1598679241237" duration="7326000" />
       <workItem from="1598717127369" duration="6174000" />
       <workItem from="1598806891267" duration="5466000" />
+      <workItem from="1599100785483" duration="9722000" />
     </task>
     <task id="LOCAL-00237" summary="Refreshed Importer bundle.js">
       <created>1581927586329</created>
@@ -1654,9 +1655,10 @@
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
     <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
-    <state x="309" y="0" width="1089" height="920" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598731673279">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1642" y="0" width="1089" height="920" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599112125087">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
+    <state x="-1642" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599112125087" />
     <state x="309" y="0" width="1089" height="920" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598731673279" />
     <state x="603" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598141978442">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1670,10 +1672,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598497182667" />
-    <state x="466" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598734563430">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1599116551923">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
+    <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599116551923" />
     <state x="466" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598734563430" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
@@ -1684,65 +1686,65 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598685716776" />
-    <state width="407" height="746" key="GridCell.Tab.0.bottom" timestamp="1598839008455">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="372" height="649" key="GridCell.Tab.0.bottom" timestamp="1599116254452">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="407" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
-    <state width="407" height="746" key="GridCell.Tab.0.center" timestamp="1598839008455">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="372" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599116254452" />
+    <state width="29" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599113139431" />
+    <state width="372" height="649" key="GridCell.Tab.0.center" timestamp="1599116254452">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="407" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
-    <state width="407" height="746" key="GridCell.Tab.0.left" timestamp="1598839008454">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="372" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599116254452" />
+    <state width="29" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599113139430" />
+    <state width="372" height="649" key="GridCell.Tab.0.left" timestamp="1599116254452">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542777" />
-    <state width="407" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008454" />
-    <state width="407" height="746" key="GridCell.Tab.0.right" timestamp="1598839008455">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="372" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599116254452" />
+    <state width="29" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599113139430" />
+    <state width="372" height="649" key="GridCell.Tab.0.right" timestamp="1599116254452">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148542778" />
-    <state width="407" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598839008455" />
-    <state width="467" height="554" key="GridCell.Tab.1.bottom" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="372" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599116254452" />
+    <state width="29" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599113139430" />
+    <state width="468" height="649" key="GridCell.Tab.1.bottom" timestamp="1599115953349">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="468" height="649" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953349" />
     <state width="467" height="554" key="GridCell.Tab.1.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.1.center" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.1.center" timestamp="1599115953349">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="468" height="649" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953349" />
     <state width="467" height="554" key="GridCell.Tab.1.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.1.left" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.1.left" timestamp="1599115953349">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536926" />
+    <state width="468" height="649" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953349" />
     <state width="467" height="554" key="GridCell.Tab.1.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.1.right" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.1.right" timestamp="1599115953349">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="803" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1598148536927" />
+    <state width="468" height="649" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953349" />
     <state width="467" height="554" key="GridCell.Tab.1.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.2.bottom" timestamp="1598686908570">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.2.bottom" timestamp="1599115953351">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124867" />
+    <state width="468" height="649" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953351" />
     <state width="467" height="554" key="GridCell.Tab.2.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908570" />
-    <state width="467" height="554" key="GridCell.Tab.2.center" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.2.center" timestamp="1599115953350">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="468" height="649" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953350" />
     <state width="467" height="554" key="GridCell.Tab.2.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.2.left" timestamp="1598686908569">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.2.left" timestamp="1599115953349">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="468" height="649" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953349" />
     <state width="467" height="554" key="GridCell.Tab.2.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908569" />
-    <state width="467" height="554" key="GridCell.Tab.2.right" timestamp="1598686908570">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="468" height="649" key="GridCell.Tab.2.right" timestamp="1599115953350">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="234" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597384124866" />
+    <state width="468" height="649" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599115953350" />
     <state width="467" height="554" key="GridCell.Tab.2.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598686908570" />
     <state x="633" y="60" key="RollbackChangesDialog" timestamp="1598595523974">
       <screen x="0" y="0" width="1707" height="920" />
@@ -1767,13 +1769,14 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="490" y="75" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598683552952" />
-    <state x="-1483" y="-14" width="995" height="875" maximized="true" key="dock-window-1" timestamp="1598731673650">
+    <state x="-1478" y="-18" width="830" height="875" maximized="true" key="dock-window-1" timestamp="1599113010166">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state x="-1483" y="-14" width="995" height="875" maximized="true" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598731673650" />
-    <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2" timestamp="1594792219967">
-      <screen x="-1920" y="0" width="1536" height="816" />
+    <state x="-1478" y="-18" width="830" height="875" maximized="true" key="dock-window-1/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599113010166" />
+    <state x="495" y="-17" width="573" height="778" maximized="true" key="dock-window-2" timestamp="1599114102342">
+      <screen x="0" y="0" width="1707" height="920" />
     </state>
+    <state x="495" y="-17" width="573" height="778" maximized="true" key="dock-window-2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1599114102342" />
     <state x="-1642" y="-16" width="1162" height="612" maximized="true" key="dock-window-2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594792219967" />
     <state x="739" y="112" width="448" height="699" key="ftp.server.browser" timestamp="1594933728997">
       <screen x="0" y="0" width="1707" height="920" />
