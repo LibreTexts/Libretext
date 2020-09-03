@@ -101,9 +101,10 @@ function attribution() {
             document.body.removeChild(elem);
         });
     }
-    function hideattr() {
-        if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
-            $("#SB-PC-AD").remove();
-        }
+
+}
+function hideattr() {
+    if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
+        $("#SB-PA-AD").remove();
     }
 }
