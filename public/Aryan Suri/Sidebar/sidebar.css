@@ -16,42 +16,6 @@ a.toggler.off {
   border-right-width: 230px;
 }
 
-#attrModal {
-  display: flex;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: none;
-  /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-  justify-content: center;
-  align-content: center;
-}
-
-/* Modal Content/Box */
-
-#attrModalContent {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40vw;
-  margin-left: 520px;
-  z-index: 30000001;
-  top: calc(50% - 137px);
-  position: absolute;
-  border-radius: 10px;
-}
 
 #attr-copy, #attr-author, #attr-html, #attr-program {
   color: #666;
