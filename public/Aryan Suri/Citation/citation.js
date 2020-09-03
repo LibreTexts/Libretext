@@ -5,10 +5,15 @@ function buildcite() {
     $('body').append(citeDiv);
     $(citeDiv).html(`
 
-<div onclick="hidecite()" id="citeModal">
+<div onclick="hidecite()" class="asModal">
 
+<<<<<<< HEAD
        <div id="citeModalContent" style="cursor: pointer" >
             <div id="citeHTML">
+=======
+       <div class="asModalContent" style="cursor: pointer" >
+            <div style= "min-height: 100px;" id="citeHTML">
+>>>>>>> 9eb6f1b8... @css @js removed black bg, added regex to attr
                 <p id="citeText"> </p>
             </div>
 
@@ -220,7 +225,7 @@ function getFile(type) {
 }
 ;
 function hidecite() {
-    if (!$(event.target).closest('#citeModalContent').length && !$(event.target).is('#citeModalContent')) {
+    if (!$(event.target).closest('.asModal').length && !$(event.target).is('.asModalContent')) {
         $("#SB-PC-AD").remove();
     }
 }

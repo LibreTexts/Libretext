@@ -6,9 +6,9 @@ function buildcite() {
 
     $(citeDiv).html(`
 
-<div onclick="hidecite()" id="citeModal">
+<div onclick="hidecite()" class="asModal">
 
-       <div id="citeModalContent" style="cursor: pointer" >
+       <div class="asModalContent" style="cursor: pointer" >
             <div style= "min-height: 100px;" id="citeHTML">
                 <p id="citeText"> </p>
             </div>
@@ -234,9 +234,12 @@ function getFile(type: string) {
     return output
 };
 
+
+
+
 function hidecite() {
 
-    if (!$(event!.target!).closest('#citeModalContent').length && !$(event!.target!).is('#citeModalContent')) {
+    if (!$(event!.target!).closest('.asModal').length && !$(event!.target!).is('.asModalContent')) {
         $("#SB-PC-AD").remove();
     }
 

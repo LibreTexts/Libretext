@@ -9,7 +9,7 @@ function attribution() {
         if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
             title = title.replace(/^[^:]*:/, '');
         }
-        let titlestr = `"` + title + `"`;
+        let titlestr = `"${title}"`;
         let isauthor = Boolean(author);
         let iscc = Boolean(cc);
         try {
@@ -36,12 +36,12 @@ function attribution() {
         const param = getParam();
         let attrdiv = document.createElement("div");
         $(attrdiv).attr("id", "SB-PA-AD");
-        document.body.appendChild(attrdiv);
+        $("body").append(attrdiv);
         $(attrdiv).html(`
 
-            <div onclick="hideattr()" id="attrModal">
+            <div onclick="hideattr()" class="asModal">
 
-                <div id="attrModalContent" style="cursor: pointer" >
+                <div class="asModalContent" style="cursor: pointer" >
                     
                     <div id="attrHTML">
                     </div>
@@ -99,10 +99,5 @@ function attribution() {
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
-    }
-}
-function hideattr() {
-    if (!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
-        $("#SB-PA-AD").remove();
     }
 }
