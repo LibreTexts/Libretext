@@ -41,7 +41,8 @@
 			let article = $("#pageTagsHolder").text().includes('"article:topic"');
 			let [library] = LibreTexts.parseURL();
 			let pro = document.getElementById("proHolder").innerText === 'true';
-			let addPanels = true;
+			let addPanels = localStorage.getItem("addPanels");
+			addPanels = JSON.parse(addPanels) === true;
 			let param = {
 				"type": article,
 				"library": library,
@@ -147,7 +148,6 @@
 			function controlSidebar() {
 				window.addEventListener('click', function (event) {
 					if (event.target == document.getElementById("custom_open")) {
-						console.log("gere")
 						$("#sb2, #sb3, #sb4, #sb5").hide();
 						$("#sb1, #sbHeader").show("slide");
 					}
@@ -270,7 +270,6 @@
 
 
 					localStorage.setItem('page_width', initial_data);
-					console.log("change" + localStorage.getItem('page_width'));
 				});
 
 				$('a.toggler').click(function () {
@@ -643,6 +642,12 @@
 
 	}
 
+	function savePanel(_input){
+
+		localStorage.setItem("addPanels", _input);
+		location.reload();
+	}
+
 	class SBconverterCalculator {
 		constructor() {
 			this.property = new Array();
@@ -919,4 +924,5 @@
 			}
 		}
 	}
+
 
