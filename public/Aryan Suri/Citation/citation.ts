@@ -7,7 +7,6 @@ function buildcite() {
     $(citeDiv).html(`
 
 <div onclick="hidecite()" id="asModal">
-
        <div id="asModalContent" style="cursor: pointer" >
             <div  id="citeHTML">
                 <p id="citeText"> </p>

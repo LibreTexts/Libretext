@@ -101,7 +101,7 @@ function attribution() {
         });
     }
     function hideattr() {
-        if (!$(event.target).closest('#aMC').length && !$(event.target).is('#aMC')) {
+        if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
             $("#SB-PC-AD").remove();
         }
     }
