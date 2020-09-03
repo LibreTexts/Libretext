@@ -80,70 +80,119 @@
 			switchSidebar(param.tabs);
 			function switchSidebar(tabs) {
 				if(tabs){
-				$("#sbHeader").click(function (event){
-					$("#sbHeader").hide();
-				});
-				$("body").click(function (event) {
-					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-						$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
-						$("#sbHeader").show(300);
-					}
-				});
+							$("#sbHeader").click(function (){
+								$("#sbHeader").hide();
+							});
+
+							$("#openContents").hover(function () {
+								$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
+								$("#sb1").show("slide");
+							}
+							);
+							$("#openResources").hover(function () {
+								$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
+								$("#sb2").show("slide");
+			
+								if (!window.resourcesTabInitialized) {
+									window.resourcesTabInitialized = true;
+									delete document.getElementById('pubchemWidget').iFrameResizer
+									delete document.getElementById('physicalConstantsWidget').iFrameResizer
+									$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
+									iFrameResize({
+										warningTimeout: 0,
+										scrolling: 'omit',
+										checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
+									}, '#pubchemWidget');
+									$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
+									iFrameResize({
+										warningTimeout: 0,
+										scrolling: 'omit',
+										checkOrigin: ["https://chem.libretexts.org"]
+									}, '#physicalConstantsWidget');
+								}
+							});
+							$("#openControl").hover(function () {
+								$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
+								$("#sb3").show("slide");
+							});
+							$("#openUsage").hover(function () {
+								$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
+								$("#sb4").show("slide");
+							});
+							$("#openDevelopers").hover(function () {
+								$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
+								$("#sb5").show("slide");
+							});
+							$("#openLibreverse").hover(function () {
+								$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
+								$("#sb6").show("slide");
+							});
+
+							$("body").click(function (event) {
+								if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+									$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+								}
+							});
 				} else {
 					
-			$("body").click(function (event) {
-				if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-					$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
 
-				}
-			});
-			$("#sbHeader").click(function (event){
-				$("#sbHeader").hide();
-				$("#sbHeader").show("slide");
-			});
-				}
-				$("#openContents").click(function (event) {
-					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
-					$("#sb1").show("slide");
-				});
-				$("#openResources").click(function (event) {
-					$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
-					$("#sb2").show("slide");
+							$("#sbHeader").click(function (event){
+								$("#sbHeader").hide();
+								$("#sbHeader").show();
+							});
 
-					if (!window.resourcesTabInitialized) {
-						window.resourcesTabInitialized = true;
-						delete document.getElementById('pubchemWidget').iFrameResizer
-						delete document.getElementById('physicalConstantsWidget').iFrameResizer
-						$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
-						iFrameResize({
-							warningTimeout: 0,
-							scrolling: 'omit',
-							checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
-						}, '#pubchemWidget');
-						$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
-						iFrameResize({
-							warningTimeout: 0,
-							scrolling: 'omit',
-							checkOrigin: ["https://chem.libretexts.org"]
-						}, '#physicalConstantsWidget');
-					}
-				});
-				$("#openControl").click(function (event) {
-					$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
-					$("#sb3").show("slide");
-				});
-				$("#openUsage").click(function (event) {
-					$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
-					$("#sb4").show("slide");
-				});
-				$("#openDevelopers").click(function (event) {
-					$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
-					$("#sb5").show("slide");
-				});
-				$("#openLibreverse").click(function (event) {
-					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-					$("#sb6").show("slide");
-				});
+							$("#openContents").click(function (event) {
+								$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
+								$("#sb1").show();
+							});
+							$("#openResources").click(function (event) {
+								$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
+								$("#sb2").show();
+			
+								if (!window.resourcesTabInitialized) {
+									window.resourcesTabInitialized = true;
+									delete document.getElementById('pubchemWidget').iFrameResizer
+									delete document.getElementById('physicalConstantsWidget').iFrameResizer
+									$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
+									iFrameResize({
+										warningTimeout: 0,
+										scrolling: 'omit',
+										checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
+									}, '#pubchemWidget');
+									$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
+									iFrameResize({
+										warningTimeout: 0,
+										scrolling: 'omit',
+										checkOrigin: ["https://chem.libretexts.org"]
+									}, '#physicalConstantsWidget');
+								}
+							});
+							$("#openControl").click(function (event) {
+								$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
+								$("#sb3").show();
+							});
+							$("#openUsage").click(function (event) {
+								$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
+								$("#sb4").show();
+							});
+							$("#openDevelopers").click(function (event) {
+								$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
+								$("#sb5").show();
+							});
+							$("#openLibreverse").click(function (event) {
+								$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
+								$("#sb6").show();
+							});
+							$("body").click(function (event) {
+
+								if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+									$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+
+
+								}
+							});
+				}
+				
 			}
 
 			function controlSidebar() {
