@@ -66,12 +66,12 @@
 				$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
 				$("#openContents").click(function (event) {
 					$("#sb2, #sb3, #sb4, #sb5").hide();
-					$("#sb1").show();
+					$("#sb1").show("slide");
 					$("#sbHeader").hide();
 				});
 				$("#openResources").click(function (event) {
 					$("#sb1, #sb3, #sb4, #sb5").hide();
-					$("#sb2").show();
+					$("#sb2").show("slide");
 					$("#sbHeader").hide();
 					//first time setup
 					if (!window.resourcesTabInitialized) {
@@ -94,17 +94,17 @@
 				});
 				$("#openControl").click(function (event) {
 					$("#sb1, #sb2, #sb4, #sb5").hide();
-					$("#sb3").show();
+					$("#sb3").show("slide");
 					$("#sbHeader").hide();
 				});
 				$("#openUsage").click(function (event) {
 					$("#sb1, #sb2, #sb3, #sb5").hide();
-					$("#sb4").show();
+					$("#sb4").show("slide");
 					$("#sbHeader").hide();
 				});
 				$("#openDevelopers").click(function (event) {
 					$("#sb1, #sb2, #sb3, #sb4").hide();
-					$("#sb5").show();
+					$("#sb5").show("slide");
 					$("#sbHeader").hide();
 				});
 
@@ -112,20 +112,10 @@
 
 			function controlSidebar() {
 
-				window.addEventListener('click', function (event) {
-					if (event.target == document.getElementById("custom_open")) {
-
-						$("#sidebarDiv").show();
-						$("#sb2, #sb3, #sb4, #sb5").hide();
-						$("#sb1").show();
-					}
-				});
-
-
 				$("body").click(function (event) {
 					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-						$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-						$("#sbHeader").show();
+						$("#sb1, #sb2, #sb3, #sb4, #sb5").hide("slide");
+						$("#sbHeader").show(300);
 					}
 				});
 
