@@ -69,7 +69,7 @@ function attribution() {
                 $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.  </p> <br/>`);
             }
             else {
-                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is not licensed.  </p> <br/>`);
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.  </p> <br/>`);
             }
         }
         const attrCopy = document.getElementById("attr-copy");
