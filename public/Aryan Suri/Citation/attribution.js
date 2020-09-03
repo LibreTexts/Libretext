@@ -39,9 +39,9 @@ function attribution() {
         $("body").append(attrdiv);
         $(attrdiv).html(`
 
-            <div onclick="hideattr()" class="asModal">
+            <div onclick="hideattr()" id="attrModal">
 
-                <div class="asModalContent" style="cursor: pointer" >
+                <div id="attrModalContent" style="cursor: pointer" >
                     
                     <div id="attrHTML">
                     </div>
@@ -99,5 +99,10 @@ function attribution() {
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
+    }
+    function hideattr() {
+        if (!$(event.target).closest('#aMC').length && !$(event.target).is('#aMC')) {
+            $("#SB-PC-AD").remove();
+        }
     }
 }

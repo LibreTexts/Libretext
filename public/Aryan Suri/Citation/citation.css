@@ -1,4 +1,4 @@
-.asModal {
+#asModal {
     display: flex;
     position: fixed;
     z-index: 1;
@@ -12,7 +12,7 @@
     align-content: center;
 }
 
-.asModalContent {
+#asModalContent {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
@@ -24,7 +24,7 @@
     border-radius: 10px;
 }
 
-/* 
+
 #attrModal {
     display: flex;
     position: fixed;
@@ -50,7 +50,7 @@
     top: calc(50% - 137px);
     position: absolute;
     border-radius: 10px;
-  } */
+  } 
   
 #citeContent {
     margin-top: 10px;
