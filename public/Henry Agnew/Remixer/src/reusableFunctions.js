@@ -66,8 +66,6 @@ function userPermissions(full) {
 		permission = "Admin";
 	else if (isPro && groups.includes('developer'))
 		permission = 'Developer';
-	/*else if (isPro && (groups.includes('faculty') || groups.includes('contributor')))
-		permission = 'Faculty';*/
 	else if (isPro && (groups.includes('basicuser') || groups.includes('workshop')))
 		permission = 'Basic';
 	
