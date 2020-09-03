@@ -76,7 +76,6 @@ function getParam() {
     let publisher = $("li.mt-author-companyname a:first").text()
     if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
         title = title.replace(/^[^:]*:/, '');
-        console.log("in match")
     }
     let pageParam = {
         "type": "webpage",

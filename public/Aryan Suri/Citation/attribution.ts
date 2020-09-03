@@ -1,4 +1,3 @@
-"use strict";
 function attribution() {
     const cc = getCC();
     buildAttribution();
@@ -12,31 +11,35 @@ function attribution() {
         let titlestr = `"` + title + `"`;
         let isauthor = Boolean(author);
         let iscc = Boolean(cc);
+
+
         try {
-            if (!cc && !author)
-                throw "license or author";
-            if (!cc)
-                throw "license";
-            if (!author)
-                throw "author";
-        }
-        catch (err) {
+            if (!cc && !author) throw "license or author"
+            if (!cc) throw "license"
+            if (!author) throw "author"
+        } catch (err) {
             console.log("No " + err);
         }
+
         let param = {
             "title": titlestr,
             "author": author,
             "isauthor": isauthor,
             "url": url,
             "cc": iscc
-        };
-        return param;
+        }
+
+
+        return param
     }
+
     function buildAttribution() {
+
         const param = getParam();
         let attrdiv = document.createElement("div");
         $(attrdiv).attr("id", "SB-PA-AD");
         document.body.appendChild(attrdiv);
+
         $(attrdiv).html(`
 
             <div onclick="hideattr()" id="attrModal">
@@ -56,53 +59,66 @@ function attribution() {
                 </div>
 
             </div>`);
+
         if (param.cc) {
+
             if (param.isauthor) {
                 $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
-            }
-            else {
+            } else {
                 $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
+
             }
+
         }
         else {
+
             if (param.isauthor) {
                 $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is not licensed.  </p> <br/>`);
-            }
-            else {
+            } else {
                 $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is not licensed.  </p> <br/>`);
+
             }
         }
-        const attrCopy = document.getElementById("attr-copy");
+
+        const attrCopy = document.getElementById("attr-copy")!;
         attrCopy.addEventListener("click", () => {
-            let text = document.getElementById("attr-text").innerText;
+            let text = document.getElementById("attr-text")!.innerText;
             let elem = document.createElement("textarea");
             document.body.appendChild(elem);
             elem.value = text;
             elem.select();
+
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
+
         //AUTHOR LINKS
-        const attrAuthor = $("li.mt-author-information a:first").attr('href');
+        const attrAuthor = $("li.mt-author-information a:first").attr('href')!;
         $("#attr-author").attr("href", attrAuthor);
         $("#attr-author-link").attr("href", attrAuthor);
-        const attrProgram = $("li.mt-author-companyname a:first").attr('href');
+
+        const attrProgram = $("li.mt-author-companyname a:first").attr('href')!;
         $("#attr-program").attr("href", attrProgram);
+
         //COPY THE HTML
-        const attrHTMLCopy = document.getElementById("attr-html");
+        const attrHTMLCopy = document.getElementById("attr-html")!;
         attrHTMLCopy.addEventListener("click", () => {
             let text = $("#attr-text").html();
             let elem = document.createElement("textarea");
             document.body.appendChild(elem);
             elem.value = text;
             elem.select();
+
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
+
     }
 }
+
 function hideattr() {
-    if (!$(event.target).closest('#aM-c').length && !$(event.target).is('#aM-c')) {
+
+    if (!$(event!.target!).closest('#aM-c').length && !$(event!.target!).is('#aM-c')) {
         $("#SB-PA-AD").remove();
     }
 }
