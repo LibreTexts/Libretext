@@ -1,4 +1,4 @@
-(function () {
+
 	window.addEventListener("DOMContentLoaded", Sidebar);
 
 
@@ -869,4 +869,4 @@
 			}
 		}
 	}
-})();
+
