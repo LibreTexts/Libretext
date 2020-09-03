@@ -7,7 +7,7 @@
 			return;
 
 		let param = getParam();
-		let tabs = getData(param.pro);
+		let tabs = getData(param.pro, param.tabs);
 		buildSidebar();
 		activateBeeLine();
 		TOC();
@@ -19,7 +19,7 @@
 			if (param.pro) {
 				switch (param.library) {
 					case "chem":
-						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers]
+						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 					default:
 						return [tabs.headernr, tabs.home, tabs.control, tabs.usage, tabs.developers]
 				}
@@ -41,11 +41,12 @@
 			let article = $("#pageTagsHolder").text().includes('"article:topic"');
 			let [library] = LibreTexts.parseURL();
 			let pro = document.getElementById("proHolder").innerText === 'true';
-
+			let addPanels = true;
 			let param = {
 				"type": article,
 				"library": library,
-				"pro": pro
+				"pro": pro,
+				"tabs": addPanels
 			}
 
 			return param
@@ -55,25 +56,58 @@
 		function buildSidebar() {
 			let tabsSidebar = getSidebar();
 			let sidebarDiv = document.createElement("div");
-
+			
 			$("body").append(sidebarDiv);
 			sidebarDiv.id = "sidebarDiv";
 			tabsSidebar = tabsSidebar.join("");
 			$(sidebarDiv).append(tabsSidebar);
+			if(param.tabs){
+				$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+				$("#sbHeader").switchClass("top-bar", "sbHeader");
+				$("#openContents").switchClass("top-bar-unit", "top-tabs");
+				$("#openResources").switchClass("top-bar-unit", "top-tabs");
+				$("#openControl").switchClass("top-bar-unit", "top-tabs");
+				$("#openUsage").switchClass("top-bar-unit", "top-tabs");
+				$("#openDevelopers").switchClass("top-bar-unit", "top-tabs");
+				$("#openLibreverse").switchClass("top-bar-unit", "top-tabs");
+			} else {
+				$("body").append(tabs.open);
+				$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+			}
 			controlSidebar();
-			switchSidebar();
-			function switchSidebar() {
-				$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-				$("#openContents").click(function (event) {
-					$("#sb2, #sb3, #sb4, #sb5").hide();
-					$("#sb1").show("slide");
+			switchSidebar(param.tabs);
+			function switchSidebar(tabs) {
+				if(tabs){
+				$("#sbHeader").click(function (event){
 					$("#sbHeader").hide();
 				});
+				$("body").click(function (event) {
+					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+						$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+						$("#sbHeader").show(300);
+					}
+				});
+				} else {
+					
+			$("body").click(function (event) {
+				if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+					$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+
+				}
+			});
+			$("#sbHeader").click(function (event){
+				$("#sbHeader").hide();
+				$("#sbHeader").show("slide");
+			});
+				}
+				$("#openContents").click(function (event) {
+					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
+					$("#sb1").show("slide");
+				});
 				$("#openResources").click(function (event) {
-					$("#sb1, #sb3, #sb4, #sb5").hide();
+					$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
 					$("#sb2").show("slide");
-					$("#sbHeader").hide();
-					//first time setup
+
 					if (!window.resourcesTabInitialized) {
 						window.resourcesTabInitialized = true;
 						delete document.getElementById('pubchemWidget').iFrameResizer
@@ -93,31 +127,32 @@
 					}
 				});
 				$("#openControl").click(function (event) {
-					$("#sb1, #sb2, #sb4, #sb5").hide();
+					$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
 					$("#sb3").show("slide");
-					$("#sbHeader").hide();
 				});
 				$("#openUsage").click(function (event) {
-					$("#sb1, #sb2, #sb3, #sb5").hide();
+					$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
 					$("#sb4").show("slide");
-					$("#sbHeader").hide();
 				});
 				$("#openDevelopers").click(function (event) {
-					$("#sb1, #sb2, #sb3, #sb4").hide();
+					$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
 					$("#sb5").show("slide");
-					$("#sbHeader").hide();
 				});
-
+				$("#openLibreverse").click(function (event) {
+					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
+					$("#sb6").show("slide");
+				});
 			}
 
 			function controlSidebar() {
-
-				$("body").click(function (event) {
-					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-						$("#sb1, #sb2, #sb3, #sb4, #sb5").hide("slide");
-						$("#sbHeader").show(300);
+				window.addEventListener('click', function (event) {
+					if (event.target == document.getElementById("custom_open")) {
+						console.log("gere")
+						$("#sb2, #sb3, #sb4, #sb5").hide();
+						$("#sb1, #sbHeader").show("slide");
 					}
 				});
+
 
 				$('#per_table').click(function () {
 					if ($("#iFrameResizer0").is(":hidden")) {
@@ -257,7 +292,7 @@
 		}
 
 
-		function getData(pro) {
+		function getData(pro, tabs) {
 
 
 			return {
@@ -287,21 +322,25 @@
 					<h5 id="openUsage"  class="">Usage</h5>
 				</div>
 				</div>` ,
-				"header": pro ? `<div id="sbHeader" style="">
-        <div id="openContents" style="top: -15px" class="top-bar">
+				"header": pro ? `<div id="sbHeader" class="top-bar" style="">
+        <div id="openContents"  class="top-bar-unit">
 			<h5  >Contents</h5>
 		</div>
-		<div  id="openResources" style="top: 85px" class="top-bar">
+		<div  id="openResources" class="top-bar-unit">
             <h5 class="">Resources</h5>
 		</div>
-		<div id="openControl" style="top: 185px;" class="top-bar">
+		<div id="openControl"  class="top-bar-unit">
 			<h5 >Control</h5>
 		</div>
-		<div  id="openUsage" style="top: 285px;" class="top-bar">
+		<div  id="openUsage"  class="top-bar-unit">
             <h5 class="">Usage</h5>
 		</div>
-		<div id="openDevelopers" style="top: 385px;" class="top-bar">
+		<div id="openDevelopers"  class="top-bar-unit">
             <h5  class="">Developers</h5>
+		</div>
+
+		<div id="openLibreverse"  class="top-bar-unit">
+            <h5  class="">LibreVerse</h5>
 		</div>
         </div>` :  `<div id="sbHeader" style="">
         <div style="top: 5px" class="top-bar">
@@ -451,24 +490,7 @@
     </div>
 
     <div class="custom_field">
-            <a id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries</a>
-      
-            <div id="library-guide-put" class="custom_field" style="display: none; background-color: white ">                
-
-              <a href="https://bio.libretexts.org">Biology</a>
-<a href="https://biz.libretexts.org">Business</a>
-<a href="https://chem.libretexts.org">Chemistry</a>
-<a href="https://eng.libretexts.org">Engineering</a>
-<a href="https://espanol.libretexts.org">Espanol</a>
-<a href="https://geo.libretexts.org">Geography</a>
-<a href="https://human.libretexts.org">Humanities</a>
-<a href="https://math.libretexts.org">Mathematics</a>
-<a href="https://med.libretexts.org">Medicine</a>
-<a href="https://phys.libretexts.org">Physics</a>
-<a href="https://socialsci.libretexts.org">Social Sciences</a>
-<a href="https://stats.libretexts.org">Statistics</a>
-<a href="https://workforce.libretexts.org">Workforce</a>
-            </div>  
+            
     </div>
 
     <div class="custom_field">
@@ -521,7 +543,35 @@
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 
     </div>
-</div>`
+</div>`,
+				"libreverse": `<div id="sb6"  class="custom_sidebar">
+				<div class="custom_field_title"> <h3> LibreVerse </h3> 
+				</div>
+				<div class="custom_field">
+				<a id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries</a>
+      
+				<div id="library-guide-put" class="custom_field" style="display: none; background-color: white ">                
+	
+					<a href="https://bio.libretexts.org">Biology</a>
+					<a href="https://biz.libretexts.org">Business</a>
+					<a href="https://chem.libretexts.org">Chemistry</a>
+					<a href="https://eng.libretexts.org">Engineering</a>
+					<a href="https://espanol.libretexts.org">Espanol</a>
+					<a href="https://geo.libretexts.org">Geography</a>
+					<a href="https://human.libretexts.org">Humanities</a>
+					<a href="https://math.libretexts.org">Mathematics</a>
+					<a href="https://med.libretexts.org">Medicine</a>
+					<a href="https://phys.libretexts.org">Physics</a>
+					<a href="https://socialsci.libretexts.org">Social Sciences</a>
+					<a href="https://stats.libretexts.org">Statistics</a>
+					<a href="https://workforce.libretexts.org">Workforce</a>
+					
+				</div>  
+				
+				
+				
+				</div>
+				</div>`
 
 
 			}
