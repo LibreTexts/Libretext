@@ -44,7 +44,7 @@ a.toggler.off {
 
 .custom_field_title {
   background-color: #E5F5FE;
-  border-bottom: 1px solid darkblue;
+  border-bottom: 1px solid #127bc4;
 }
 .slider_ar {
   -webkit-appearance: none;
@@ -91,17 +91,16 @@ a.toggler.off {
 
 .custom_sidebar {
   cursor: pointer;
-  height: 100%;
-  width: 480px;
   display: block;
   position: fixed;
-  z-index: 1000000000;
   top: 0;
   left: 0;
-  background-color: #ececec;
-  overflow-x: hidden;
+  height: 100%;
+  width: 480px;
+  z-index: 1000000000;
+  overflow-x: auto;
   overflow-y: auto;
-  transition: 0s;
+  background-color: #ececec;
   border-right: 1px solid black;
 }
 
@@ -180,7 +179,7 @@ a.toggler.off {
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 30000001
+  z-index: 30000;
 }
 
 .openbtn:hover {
@@ -234,9 +233,9 @@ a.toggler.off {
     position: fixed;
     top: 0px;
     left: 0px;
-    height: 500px;
+    height: 575px;
     width: 25px;
-    z-index: 3000;
+    z-index: 30000;
 }
 
 
@@ -259,7 +258,7 @@ a.toggler.off {
 	font-family: Roboto;
 	transform: rotate(90deg);
 	transform-origin: center;
-	margin-left: -55px !important;
+	margin-left: -65px !important;
 }
 
 .top-tabs + .top-tabs {
@@ -281,13 +280,18 @@ a.toggler.off {
 
 .top-bar-unit {
   flex: 1;
-  /* margin-left: 10px; */
+  flex-shrink: inherit;
   padding: 5px;
   font-size: 10px;
+  border-right: 1px solid #127bc4;
+}
+.top-bar-unit:last-child {
+  border-right: none;
 }
 
 .top-bar .top-bar-unit h5 {
   text-align: center !important;
+  font-size: 0.9rem !important;
 }
 .custom_sidebar #custom_dropdown-content a {
   color: black;

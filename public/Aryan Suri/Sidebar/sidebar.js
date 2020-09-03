@@ -11,7 +11,7 @@
 		buildSidebar();
 		activateBeeLine();
 		TOC();
-		if (false) {
+		if (param.ccalc) {
 			SBCC = new SBconverterCalculator();
 		}
 
@@ -41,13 +41,14 @@
 			let article = $("#pageTagsHolder").text().includes('"article:topic"');
 			let [library] = LibreTexts.parseURL();
 			let pro = document.getElementById("proHolder").innerText === 'true';
-			let addPanels = localStorage.getItem("addPanels");
-			addPanels = JSON.parse(addPanels) === true;
+			let tabs = JSON.parse(localStorage.getItem("addPanels")) === true;
+			let ccalc = true;
 			let param = {
 				"type": article,
 				"library": library,
 				"pro": pro,
-				"tabs": addPanels
+				"tabs": tabs,
+				"ccalc": ccalc
 			}
 
 			return param
@@ -329,10 +330,10 @@
             <h5 class="">Resources</h5>
 		</div>
 		<div id="openControl"  class="top-bar-unit">
-			<h5 >Control</h5>
+			<h5 >Customize</h5>
 		</div>
 		<div  id="openUsage"  class="top-bar-unit">
-            <h5 class="">Usage</h5>
+            <h5 class="">Applications</h5>
 		</div>
 		<div id="openDevelopers"  class="top-bar-unit">
             <h5  class="">Developers</h5>
@@ -454,7 +455,11 @@
     <div class="custom_field"> 
         <a id="toggler-text" href="#0" class="toggler">Full</a>
     </div>
-   
+   <p class="h_ar">Default Layout:</p>
+   <div class="custom_field">
+	   <button onclick="savePanel(true)">Side Panels</button>		
+	   <button onclick="savePanel(false)">Default Button</button>		
+	</div>
    <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
 
