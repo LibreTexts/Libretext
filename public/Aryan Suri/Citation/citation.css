@@ -52,7 +52,7 @@
     border-radius: 10px;
   } 
   
-#citeContent {
+#citeContent, #attr-links {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;

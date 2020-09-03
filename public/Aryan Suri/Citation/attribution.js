@@ -5,11 +5,12 @@ function attribution() {
     function getParam() {
         let title = $("#titleHolder").text();
         let author = $("li.mt-author-information a:first").text();
-        let url = window.location.href;
         if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
             title = title.replace(/^[^:]*:/, '');
         }
         let titlestr = `"${title}"`;
+        let pageID = $("#pageIDHolder").text();
+        let url = `https://chem.libretexts.org/@go/page/${pageID}`;
         let isauthor = Boolean(author);
         let iscc = Boolean(cc);
         try {
@@ -48,10 +49,10 @@ function attribution() {
 
 
                     <div id="attr-links">
-                        <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Text</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a id="attr-author" style="text-decoration: none; color: #666"> Affiliation's Page</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a id="attr-program" style="text-decoration: none; color: #666"> Program's Page</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Text</a>
+                        <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>
+                        <a id="attr-author" style="text-decoration: none; color: #666"> Affiliation's Page</a>
+                        <a id="attr-program" style="text-decoration: none; color: #666"> Program's Page</a>
                     </div>
                 </div>
 
