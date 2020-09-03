@@ -258,7 +258,7 @@ a.toggler.off {
 	font-family: Roboto;
 	transform: rotate(90deg);
 	transform-origin: center;
-	margin-left: -65px !important;
+	margin-left: -5em !important;
 }
 
 .top-tabs + .top-tabs {

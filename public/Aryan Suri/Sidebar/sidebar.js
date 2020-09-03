@@ -298,28 +298,39 @@
 			return {
 
 				"open": `<button id="custom_open"  >☰</button>`,
-				"headernr": pro ? ` <div id="sbHeader" style="">
-				<div style="top: 5px" class="top-bar">
-					<h5  id="openContents">Contents</h5>
+				"headernr": pro ? `<div id="sbHeader" class="top-bar" style="">
+				<div id="openContents"  class="top-bar-unit">
+					<h5  >Contents</h5>
 				</div>
-				<div style="top: 190px" class="top-bar">
-					<h5 id="openControl">Control</h5>
+
+				<div id="openControl"  class="top-bar-unit">
+					<h5 >Customize</h5>
 				</div>
-				<div style="top: 280px" class="top-bar">
-					<h5 id="openUsage"  class="">Usage</h5>
+				<div  id="openUsage"  class="top-bar-unit">
+					<h5 class="">Applications</h5>
 				</div>
-				<div style="top: 370px" class="top-bar">
-					<h5 id="openDevelopers" class="">Developers</h5>
+				<div id="openDevelopers"  class="top-bar-unit">
+					<h5  class="">Developers</h5>
 				</div>
-				</div>`  :  `<div id="sbHeader" style="">
-				<div style="top: 5px" class="top-bar">
-					<h5  id="openContents">Contents</h5>
+		
+				<div id="openLibreverse"  class="top-bar-unit">
+					<h5  class="">LibreVerse</h5>
 				</div>
-				<div style="top: 190px" class="top-bar">
-					<h5 id="openControl">Control</h5>
+				</div>`  : `<div id="sbHeader" class="top-bar" style="">
+				<div id="openContents"  class="top-bar-unit">
+					<h5  >Contents</h5>
 				</div>
-				<div style="top: 280px" class="top-bar">
-					<h5 id="openUsage"  class="">Usage</h5>
+
+				<div id="openControl"  class="top-bar-unit">
+					<h5 >Customize</h5>
+				</div>
+
+				<div  id="openUsage"  class="top-bar-unit">
+					<h5 class="">Applications</h5>
+				</div>
+		
+				<div id="openLibreverse"  class="top-bar-unit">
+					<h5  class="">LibreVerse</h5>
 				</div>
 				</div>` ,
 				"header": pro ? `<div id="sbHeader" class="top-bar" style="">
@@ -342,18 +353,22 @@
 		<div id="openLibreverse"  class="top-bar-unit">
             <h5  class="">LibreVerse</h5>
 		</div>
-        </div>` :  `<div id="sbHeader" style="">
-        <div style="top: 5px" class="top-bar">
-			<h5  id="openContents">Contents</h5>
+        </div>` :  `<div id="sbHeader" class="top-bar" style="">
+        <div id="openContents"  class="top-bar-unit">
+			<h5  >Contents</h5>
 		</div>
-		<div style="top: 100px" class="top-bar">
-            <h5 id="openResources" class="">Resources</h5>
+		<div  id="openResources" class="top-bar-unit">
+            <h5 class="">Resources</h5>
 		</div>
-		<div style="top: 190px" class="top-bar">
-			<h5 id="openControl">Control</h5>
+		<div id="openControl"  class="top-bar-unit">
+			<h5 >Customize</h5>
 		</div>
-		<div style="top: 280px" class="top-bar">
-            <h5 id="openUsage"  class="">Usage</h5>
+		<div  id="openUsage"  class="top-bar-unit">
+            <h5 class="">Applications</h5>
+		</div>
+
+		<div id="openLibreverse"  class="top-bar-unit">
+            <h5  class="">LibreVerse</h5>
 		</div>
         </div>` ,
 				"home": `<div id="sb1" class="custom_sidebar">
@@ -456,7 +471,7 @@
         <a id="toggler-text" href="#0" class="toggler">Full</a>
     </div>
    <p class="h_ar">Default Layout:</p>
-   <div class="custom_field">
+   <div style="margin-left: 10px;" class="custom_field">
 	   <button onclick="savePanel(true)">Side Panels</button>		
 	   <button onclick="savePanel(false)">Default Button</button>		
 	</div>
