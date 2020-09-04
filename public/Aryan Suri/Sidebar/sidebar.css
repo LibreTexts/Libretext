@@ -252,13 +252,12 @@ a.toggler.off {
 .top-tabs {
 	cursor: pointer;
 	background-color: #127bc4;
-	border-bottom: 1px solid #137ac3;
 	transform-origin: right;
 	flex: 1;
 }
 .top-tabs h5 {
 	color: white;
-	font-size: 0.9rem !important;
+	font-size: 1rem !important;
 	font-weight: 300;
 	font-family: Roboto;
 	transform: rotate(90deg);
@@ -266,9 +265,7 @@ a.toggler.off {
   width: auto;
 }
 
-.top-tabs + .top-tabs {
-  /*margin-top: 5px;*/
-}
+
 .top-tabs:first-child{
   padding-top: 20px;
 }
@@ -277,7 +274,7 @@ a.toggler.off {
   top: 0;
   height: 40px;
   margin-top: 0;
-  background-color: #E5F5FE;
+  background-color: #127bc4;
   position: fixed;
   z-index: 10000000000;
   display: flex;
@@ -289,16 +286,16 @@ a.toggler.off {
   flex: 1;
   flex-shrink: inherit;
   padding: 5px;
-  font-size: 10px;
-  border-right: 1px solid #127bc4;
 }
 .top-bar-unit:last-child {
   border-right: none;
 }
 
 .top-bar .top-bar-unit h5 {
-  text-align: center !important;
-  font-size: 0.9rem !important;
+	color: white;
+	font-size: 0.96rem !important;
+	font-weight: 300;
+	font-family: Roboto;
 }
 .custom_sidebar #custom_dropdown-content a {
   color: black;
@@ -343,6 +340,9 @@ a.toggler.off {
   padding: 10px;
 }
 
+.padLeft {
+  padding-left: 37vw;
+}
 .custom_sidebar #custom_target h6 {
   padding: 2px;
   text-decoration: none;

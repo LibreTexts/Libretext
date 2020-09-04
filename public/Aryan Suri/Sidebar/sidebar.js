@@ -21,7 +21,7 @@
 					case "chem":
 						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 					default:
-						return [tabs.headernr, tabs.home, tabs.control, tabs.usage, tabs.developers]
+						return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers]
 				}
 			}
 
@@ -31,7 +31,7 @@
 					case "chem":
 						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage]
 					default:
-						return [tabs.headernr, tabs.home, tabs.control, tabs.usage]
+						return [tabs.header, tabs.home,tabs.resources["default"], tabs.control, tabs.usage]
 				}
 			}
 		}
@@ -139,16 +139,16 @@
 				} else {
 					
 
-							$("#sbHeader").click(function (event){
+							$("#sbHeader").click(function (){
 								$("#sbHeader").hide();
 								$("#sbHeader").show();
 							});
 
-							$("#openContents").click(function (event) {
+							$("#openContents").click(function () {
 								$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
 								$("#sb1").show();
 							});
-							$("#openResources").click(function (event) {
+							$("#openResources").click(function () {
 								$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
 								$("#sb2").show();
 			
@@ -170,19 +170,19 @@
 									}, '#physicalConstantsWidget');
 								}
 							});
-							$("#openControl").click(function (event) {
+							$("#openControl").click(function () {
 								$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
 								$("#sb3").show();
 							});
-							$("#openUsage").click(function (event) {
+							$("#openUsage").click(function () {
 								$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
 								$("#sb4").show();
 							});
-							$("#openDevelopers").click(function (event) {
+							$("#openDevelopers").click(function () {
 								$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
 								$("#sb5").show();
 							});
-							$("#openLibreverse").click(function (event) {
+							$("#openLibreverse").click(function () {
 								$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
 								$("#sb6").show();
 							});
@@ -350,41 +350,7 @@
 			return {
 
 				"open": `<button id="custom_open"  >☰</button>`,
-				"headernr": pro ? `<div id="sbHeader" class="top-bar" style="">
-				<div id="openContents"  class="top-bar-unit">
-					<h5  >Contents</h5>
-				</div>
 
-				<div id="openControl"  class="top-bar-unit">
-					<h5 >Customize</h5>
-				</div>
-				<div  id="openUsage"  class="top-bar-unit">
-					<h5 class="">Applications</h5>
-				</div>
-				<div id="openDevelopers"  class="top-bar-unit">
-					<h5  class="">Developers</h5>
-				</div>
-		
-				<div id="openLibreverse"  class="top-bar-unit">
-					<h5  class="">LibreVerse</h5>
-				</div>
-				</div>`  : `<div id="sbHeader" class="top-bar" style="">
-				<div id="openContents"  class="top-bar-unit">
-					<h5  >Contents</h5>
-				</div>
-
-				<div id="openControl"  class="top-bar-unit">
-					<h5 >Customize</h5>
-				</div>
-
-				<div  id="openUsage"  class="top-bar-unit">
-					<h5 class="">Applications</h5>
-				</div>
-		
-				<div id="openLibreverse"  class="top-bar-unit">
-					<h5  class="">LibreVerse</h5>
-				</div>
-				</div>` ,
 				"header": pro ? `<div id="sbHeader" class="top-bar" style="">
         <div id="openContents"  class="top-bar-unit">
 			<h5  >Contents</h5>
@@ -396,7 +362,7 @@
 			<h5 >Customize</h5>
 		</div>
 		<div  id="openUsage"  class="top-bar-unit">
-            <h5 class="">Applications</h5>
+            <h5 class="">Application</h5>
 		</div>
 		<div id="openDevelopers"  class="top-bar-unit">
             <h5  class="">Developers</h5>
@@ -424,13 +390,12 @@
 		</div>
         </div>` ,
 				"home": `<div id="sb1" class="custom_sidebar">
-						<div class="custom_field_title"> <h3> Contents </h3> </div>
+
                         <div  class="" id="custom_target"></div>
 					</div>`,
 
 				"resources": {
 					"chem": ` <div id="sb2"  class="custom_sidebar">
-				<div class="custom_field_tile"> <h3> Resources </h3> </div>
     <div class="custom_field">
         
             <div class="custom_field">
@@ -499,10 +464,75 @@
         </div>
     </div>
     
-</div> `
+</div> `,
+					"default": ` <div id="sb2"  class="custom_sidebar">
+					<div class="custom_field">
+        
+						<a id="ref_table" target="_blank" >Reference Tables</a>
+							<div id="ref_table_put" class="custom_field" style="display: none; background-color: white ">                
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Acid-Base_Indicators"> Acid-Base Indicators</a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Analytic References </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Atomic and Molecular properties </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Bulk_Properties"> Bulk properties </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Electrochemistry_Tables"> Electrochemistry Tables </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Equilibrium_Constants"> Equilibirum Constants </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Group_Theory_Tables"> Group Theory Tables </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Mathematical_Functions"> Mathematical Functions </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Nuclear_Tables"> Nuclear Tables </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Solvents"> Solvents </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Spectroscopic_Parameters"> Spectroscopic Parameters </a>
+				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Thermodynamics_Tables"> Thermodynamics Tables </a>
+				
+							</div>
+						 <a id="phy_table" target="_blank" >Physical Constants</a>
+								<div  style="display: none;" id="phy_table_put" class="custom_field">
+								   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
+								</div>
+				
+						<a id="conversion_table">Conversion Calculator</a>
+						<div class="custom_field"  id="conversion_table_put" style="display:none;" >
+				
+									<div class="converter-wrapper">
+				  
+				
+				  <form name="property_form">
+					<span>
+					  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
+					  </select>
+					</span>
+				  </form>
+				
+				  <div class="converter-side-a">
+					<form name="form_A" onSubmit="return false">
+					  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
+					  <span>
+						<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
+						</select>
+					  </span>
+					</form>
+				  </div> <!-- /converter-side-a -->
+				  
+				 <div class="converter-equals">
+				   <p style="margin: 10px;">=</p>
+				 </div> <!-- /converter-side-a -->
+				
+				  <div class="converter-side-b">
+					<form name="form_B" onSubmit="return false">
+					  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
+					  <span>
+						<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
+						</select>
+					  </span>
+					</form>
+				  </div> <!-- /converter-side-b -->
+				</div><!-- /converter-wrapper -->
+				
+						</div>
+					</div>
+					
+				</div> `
 				},
 				"control": ` <div id="sb3"  class="custom_sidebar">
-	<div class="custom_field_title"> <h3> Control </h3> </div>
     <div style="display: grid;" class="custom_field">
        
     </div>
@@ -513,7 +543,10 @@
 
 
     
-    </div>-->
+	</div>-->
+	<div class="custom_field">
+		<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
+	</div>
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
   <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
@@ -524,8 +557,9 @@
     </div>
    <p class="h_ar">Sidebar Layout:</p>
    <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
-	   <button id="tabsTrue" onclick="savePanel(true)">Side Panels</button>		
-	   <button id="tabsFalse" onclick="savePanel(false)">Default Button</button>		
+	   <button id="tabsTrue" onclick="savePanel(true)">Side View </button>		
+	   <button id="tabsFalse" onclick="savePanel(false)">Compressed View</button>
+	   <button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>		
 	</div>
    <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
@@ -536,7 +570,7 @@
                 <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
                 <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
 				<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
-				<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
+				
                 </div></div>
      </div>
 
@@ -544,7 +578,6 @@
    
 </div>`,
 				"usage": `<div id="sb4"  class="custom_sidebar">
-			<div class="custom_field_title"> <h3> Usage </h3> </div>
     <div class="custom_field">
          <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
@@ -585,7 +618,7 @@
 
 </div>`,
 				"developers": `<div id="sb5"  class="custom_sidebar">
-			<div class="custom_field_title"> <h3> Developers </h3> </div>
+
     <div class="custom_field">
         <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
@@ -617,7 +650,7 @@
     </div>
 </div>`,
 				"libreverse": `<div id="sb6"  class="custom_sidebar">
-				<div class="custom_field_title"> <h3> LibreVerse </h3> 
+
 				</div>
 				<div class="custom_field">
 				<a id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries</a>
@@ -721,6 +754,10 @@
 		location.reload();
 	}
 
+	function splitPanel(){
+
+		document.getElementById("pageText").classList.toggle("padLeft");
+	}
 	class SBconverterCalculator {
 		constructor() {
 			this.property = new Array();
