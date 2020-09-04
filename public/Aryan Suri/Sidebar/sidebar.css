@@ -95,7 +95,7 @@ a.toggler.off {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
   width: 480px;
   z-index: 29999;
   overflow-x: auto;
@@ -184,7 +184,7 @@ a.toggler.off {
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 30000;
+  z-index: 29998;
 }
 
 .openbtn:hover {
@@ -283,7 +283,6 @@ a.toggler.off {
   display: flex;
   width: 480px;
   border-right: 1px solid black;
-  border-bottom: 1px solid #127bc4;
 }
 
 .top-bar-unit {
