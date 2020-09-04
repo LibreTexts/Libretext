@@ -11,7 +11,7 @@
   position: fixed;
   top: calc(50% - 10px);
   right: 15px;
-  z-index: 30000001;
+  z-index: 29998;
   transition: opacity 0.2s;
   opacity: 0.5;
 }
@@ -37,7 +37,7 @@
   border-radius: 5px;
   position: fixed;
   top: calc(50% - 10px);
-  z-index: 30000001;
+  z-index: 29998;
   display: none;
 }
 

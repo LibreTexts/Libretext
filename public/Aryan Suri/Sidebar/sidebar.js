@@ -38,13 +38,13 @@
 
 		function getParam() {
 
-			let article = $("#pageTagsHolder").text().includes('"article:topic"');
+			let type = $("#pageTagsHolder").text().includes('"article:topic"');
 			let [library] = LibreTexts.parseURL();
 			let pro = document.getElementById("proHolder").innerText === 'true';
 			let tabs = JSON.parse(localStorage.getItem("addPanels")) === true;
 			let ccalc = true;
 			let param = {
-				"type": article,
+				"type": type,
 				"library": library,
 				"pro": pro,
 				"tabs": tabs,
@@ -72,26 +72,29 @@
 				$("#openUsage").switchClass("top-bar-unit", "top-tabs");
 				$("#openDevelopers").switchClass("top-bar-unit", "top-tabs");
 				$("#openLibreverse").switchClass("top-bar-unit", "top-tabs");
+				$("#tabsTrue").addClass("simHover");
+				$(".custom_sidebar").addClass("cspLeft");
 			} else {
 				$("body").append(tabs.open);
 				$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+				$("#tabsFalse").addClass("simHover");
 			}
 			controlSidebar();
 			switchSidebar(param.tabs);
 			function switchSidebar(tabs) {
 				if(tabs){
-							$("#sbHeader").click(function (){
-								$("#sbHeader").hide();
-							});
+							// $("#sbHeader").click(function (){
+							// 	$("#sbHeader").hide();
+							// });
 
-							$("#openContents").hover(function () {
+							$("#openContents").click(function () {
 								$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
-								$("#sb1").show("slide");
+								$("#sb1").toggle("slide");
 							}
 							);
-							$("#openResources").hover(function () {
+							$("#openResources").click(function () {
 								$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
-								$("#sb2").show("slide");
+								$("#sb2").toggle("slide");
 			
 								if (!window.resourcesTabInitialized) {
 									window.resourcesTabInitialized = true;
@@ -111,21 +114,21 @@
 									}, '#physicalConstantsWidget');
 								}
 							});
-							$("#openControl").hover(function () {
+							$("#openControl").click(function () {
 								$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
-								$("#sb3").show("slide");
+								$("#sb3").toggle("slide");
 							});
-							$("#openUsage").hover(function () {
+							$("#openUsage").click(function () {
 								$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
-								$("#sb4").show("slide");
+								$("#sb4").toggle("slide");
 							});
-							$("#openDevelopers").hover(function () {
+							$("#openDevelopers").click(function () {
 								$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
-								$("#sb5").show("slide");
+								$("#sb5").toggle("slide");
 							});
-							$("#openLibreverse").hover(function () {
+							$("#openLibreverse").click(function () {
 								$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-								$("#sb6").show("slide");
+								$("#sb6").toggle("slide");
 							});
 
 							$("body").click(function (event) {
@@ -431,7 +434,7 @@
     <div class="custom_field">
         
             <div class="custom_field">
-                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:475px;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
+                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:100%; height: 400px; overflow: auto;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
                 </iframe>
             </div>         
         <a id="ref_table" target="_blank" >Reference Tables</a>
@@ -501,7 +504,7 @@
 				"control": ` <div id="sb3"  class="custom_sidebar">
 	<div class="custom_field_title"> <h3> Control </h3> </div>
     <div style="display: grid;" class="custom_field">
-        <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;">Default Settings</button>
+       
     </div>
     <!--<p class="h_ar">Font Size:</p>
     <div class="custom_field">   
@@ -519,10 +522,10 @@
     <div class="custom_field"> 
         <a id="toggler-text" href="#0" class="toggler">Full</a>
     </div>
-   <p class="h_ar">Default Layout:</p>
-   <div style="margin-left: 10px;" class="custom_field">
-	   <button onclick="savePanel(true)">Side Panels</button>		
-	   <button onclick="savePanel(false)">Default Button</button>		
+   <p class="h_ar">Sidebar Layout:</p>
+   <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
+	   <button id="tabsTrue" onclick="savePanel(true)">Side Panels</button>		
+	   <button id="tabsFalse" onclick="savePanel(false)">Default Button</button>		
 	</div>
    <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
@@ -532,7 +535,8 @@
                 <a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>
                 <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
                 <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
-                <a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
+				<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
+				<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
                 </div></div>
      </div>
 

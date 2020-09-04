@@ -97,11 +97,16 @@ a.toggler.off {
   left: 0;
   height: 100%;
   width: 480px;
-  z-index: 1000000000;
+  z-index: 29999;
   overflow-x: auto;
   overflow-y: auto;
   background-color: #ececec;
   border-right: 1px solid black;
+}
+
+.cspLeft {
+  padding-left: 25px;
+  width: 35vw !important;
 }
 
 .custom_sidebar .custom_close {
@@ -120,7 +125,7 @@ a.toggler.off {
 .custom_sidebar a, .custom_sidebar b {
   padding: 2px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.1rem;
   color: #595959;
   display: block;
 }
@@ -227,13 +232,18 @@ a.toggler.off {
   display: block;
 }
 
+#sbLayout {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .sbHeader {
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0px;
     left: 0px;
-    height: 575px;
+    height: 100vh;
     width: 25px;
     z-index: 30000;
 }
@@ -241,15 +251,10 @@ a.toggler.off {
 
 .top-tabs {
 	cursor: pointer;
-	top: 0;
 	background-color: #127bc4;
-	display: flex;
-	justify-content: center;
-	border-right: 1px solid #137ac3;
 	border-bottom: 1px solid #137ac3;
 	transform-origin: right;
 	flex: 1;
-	text-align: center;
 }
 .top-tabs h5 {
 	color: white;
@@ -257,14 +262,16 @@ a.toggler.off {
 	font-weight: 300;
 	font-family: Roboto;
 	transform: rotate(90deg);
-	transform-origin: center;
-	margin-left: -5em !important;
+  transform-origin: center;
+  width: auto;
 }
 
 .top-tabs + .top-tabs {
-  margin-top: 5px;
+  /*margin-top: 5px;*/
 }
-
+.top-tabs:first-child{
+  padding-top: 20px;
+}
 .top-bar {
   cursor: pointer;
   top: 0;
@@ -276,6 +283,7 @@ a.toggler.off {
   display: flex;
   width: 480px;
   border-right: 1px solid black;
+  border-bottom: 1px solid #127bc4;
 }
 
 .top-bar-unit {
@@ -305,6 +313,15 @@ a.toggler.off {
   background-color: #E6E6E6;
   padding: 28px;
   margin-top: 10px;
+}
+
+.simHover {
+    background: #bcbcbc;
+    border: 1px solid #30b3f6;
+    box-shadow: 0 0 .3em rgba(48,179,246,.5);
+    color: #000;
+    outline: 0;
+  
 }
 
 .custom_dropdown-content a:hover {
