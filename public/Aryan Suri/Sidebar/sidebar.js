@@ -21,7 +21,7 @@
 					case "chem":
 						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 					default:
-						return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers]
+						return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 				}
 			}
 
@@ -29,25 +29,40 @@
 
 				switch (param.library) {
 					case "chem":
-						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage]
+						return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.libreverse]
 					default:
-						return [tabs.header, tabs.home,tabs.resources["default"], tabs.control, tabs.usage]
+						return [tabs.header, tabs.home,tabs.resources["default"], tabs.control, tabs.usage, tabs.libreverse]
 				}
 			}
 		}
 
 		function getParam() {
 
-			let type = $("#pageTagsHolder").text().includes('"article:topic"');
-			let [library] = LibreTexts.parseURL();
-			let pro = document.getElementById("proHolder").innerText === 'true';
-			let tabs = JSON.parse(localStorage.getItem("addPanels")) === true;
+
+			const type = $("#pageTagsHolder").text().includes('"article:topic"');
+			const [library] = LibreTexts.parseURL();
+			const admin = document.getElementById('adminHolder').innerText === 'true';
+			const pro = document.getElementById("proHolder").innerText === 'true';
+			let sidepanel = localStorage.getItem("sidepanel");
+			let tab;
+			if(sidepanel === null) {
+				console.log(`sidepanel  null, ${sidepanel}`)
+				if (admin) {  tab = true; }
+				else if (pro) {tab = true;}
+				else { tab = false; }
+			} else {
+				console.log(`sidepanel not null, ${sidepanel}`)
+				tab = JSON.parse(sidepanel) === true;
+			}
+
+			
+			
 			let ccalc = true;
 			let param = {
 				"type": type,
 				"library": library,
 				"pro": pro,
-				"tabs": tabs,
+				"tabs": tab,
 				"ccalc": ccalc
 			}
 
@@ -533,20 +548,19 @@
 				</div> `
 				},
 				"control": ` <div id="sb3"  class="custom_sidebar">
-    <div style="display: grid;" class="custom_field">
-       
-    </div>
-    <!--<p class="h_ar">Font Size:</p>
+
+	<div class="custom_field">
+	<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
+	</div>
+    <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
         <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size"> 
 
 
     
-	</div>-->
-	<div class="custom_field">
-		<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
 	</div>
+
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
   <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
@@ -651,12 +665,10 @@
 </div>`,
 				"libreverse": `<div id="sb6"  class="custom_sidebar">
 
-				</div>
+
 				<div class="custom_field">
-				<a id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries</a>
-      
-				<div id="library-guide-put" class="custom_field" style="display: none; background-color: white ">                
-	
+				<p class="h_ar" id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries:</p>
+				<div style="margin-left: 10px;">
 					<a href="https://bio.libretexts.org">Biology</a>
 					<a href="https://biz.libretexts.org">Business</a>
 					<a href="https://chem.libretexts.org">Chemistry</a>
@@ -670,10 +682,7 @@
 					<a href="https://socialsci.libretexts.org">Social Sciences</a>
 					<a href="https://stats.libretexts.org">Statistics</a>
 					<a href="https://workforce.libretexts.org">Workforce</a>
-					
-				</div>  
-				
-				
+				</div>
 				
 				</div>
 				</div>`
@@ -750,13 +759,12 @@
 
 	function savePanel(_input){
 
-		localStorage.setItem("addPanels", _input);
+		localStorage.setItem("sidepanel", _input);
 		location.reload();
 	}
 
 	function splitPanel(){
-
-		document.getElementById("pageText").classList.toggle("padLeft");
+		$("section.mt-content-container").toggleClass("padLeft");
 	}
 	class SBconverterCalculator {
 		constructor() {

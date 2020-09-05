@@ -102,10 +102,12 @@ a.toggler.off {
   overflow-y: auto;
   background-color: #ececec;
   border-right: 1px solid black;
+  padding-top: 40px;
 }
 
 .cspLeft {
   padding-left: 25px;
+  padding-top: 0px;
   width: 35vw !important;
 }
 
@@ -293,7 +295,7 @@ a.toggler.off {
 
 .top-bar .top-bar-unit h5 {
 	color: white;
-	font-size: 0.96rem !important;
+	font-size: 0.9rem !important;
 	font-weight: 300;
 	font-family: Roboto;
 }
