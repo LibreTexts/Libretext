@@ -96,19 +96,19 @@ a.toggler.off {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 480px;
+  width: 35vw;
   z-index: 29999;
   overflow-x: auto;
   overflow-y: auto;
   background-color: #ececec;
   border-right: 1px solid black;
-  padding-top: 40px;
+
 }
 
 .cspLeft {
   padding-left: 25px;
   padding-top: 0px;
-  width: 35vw !important;
+
 }
 
 .custom_sidebar .custom_close {
@@ -274,13 +274,13 @@ a.toggler.off {
 .top-bar {
   cursor: pointer;
   top: 0;
-  height: 40px;
   margin-top: 0;
   background-color: #127bc4;
   position: fixed;
-  z-index: 10000000000;
+  z-index: 30000;
   display: flex;
-  width: 480px;
+  flex-wrap: wrap;
+  width: 35vw;
   border-right: 1px solid black;
 }
 

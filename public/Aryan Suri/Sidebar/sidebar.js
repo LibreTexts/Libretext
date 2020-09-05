@@ -93,6 +93,15 @@
 				$("body").append(tabs.open);
 				$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
 				$("#tabsFalse").addClass("simHover");
+
+				$("#sbHeader").switchClass("top-bar", "sbHeader");
+				$("#openContents").switchClass("top-bar-unit", "top-tabs");
+				$("#openResources").switchClass("top-bar-unit", "top-tabs");
+				$("#openControl").switchClass("top-bar-unit", "top-tabs");
+				$("#openUsage").switchClass("top-bar-unit", "top-tabs");
+				$("#openDevelopers").switchClass("top-bar-unit", "top-tabs");
+				$("#openLibreverse").switchClass("top-bar-unit", "top-tabs");
+				$(".custom_sidebar").addClass("cspLeft");
 			}
 			controlSidebar();
 			switchSidebar(param.tabs);
@@ -154,10 +163,6 @@
 				} else {
 					
 
-							$("#sbHeader").click(function (){
-								$("#sbHeader").hide();
-								$("#sbHeader").show();
-							});
 
 							$("#openContents").click(function () {
 								$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
@@ -379,13 +384,15 @@
 		<div  id="openUsage"  class="top-bar-unit">
             <h5 class="">Application</h5>
 		</div>
-		<div id="openDevelopers"  class="top-bar-unit">
-            <h5  class="">Developers</h5>
-		</div>
 
 		<div id="openLibreverse"  class="top-bar-unit">
             <h5  class="">LibreVerse</h5>
 		</div>
+
+		<div id="openDevelopers"  class="top-bar-unit">
+			<h5  class="">Developers</h5>
+		</div>
+		
         </div>` :  `<div id="sbHeader" class="top-bar" style="">
         <div id="openContents"  class="top-bar-unit">
 			<h5  >Contents</h5>
