@@ -142,18 +142,19 @@ function LibreTextsReuse() {
 				[, path] = parseURL(path);
 			}
 			if (!isNaN(path)) { //if using pageIDs
-				path = parseInt(path);
 				isNumber = true;
 			}
 			if (path === 'home') { //if at root page
 				isNumber = true;
 			}
 		}
-		if (path.includes('?'))
-			path = path.split('?')[0];
+		if (api) { //query parameter checking
+			if (!arbitraryPage && path && path.includes('?')) //isolated path should not have query parameters
+				path = path.split('?')[0];
+			if (!api.startsWith('?')) //allows for    pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+				api = `/${api}`;
+		}
 		let keys = await getKeys();
-		if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
-			api = `/${api}`;
 		let headers = options.headers || {};
 		subdomain = subdomain || current;
 		let token = keys[subdomain];
