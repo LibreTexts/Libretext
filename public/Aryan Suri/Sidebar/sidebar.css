@@ -16,23 +16,6 @@ a.toggler.off {
   border-right-width: 230px;
 }
 
-#attr-copy, #attr-author, #attr-html, #attr-program {
-  color: #666;
-  text-decoration: none;
-  transition: 1s;
-}
-
-#attr-text a {
-  color: #0645AD;
-}
-
-#attr-text a:hover {
-  font-style: italic !important;
-}
-
-#attr-copy:hover, #attr-author:hover, #attr-html:hover, #attr-program:hover {
-  font-style: italic !important;
-}
 
 .custom_field {
   margin: 0 auto;
@@ -97,7 +80,7 @@ a.toggler.off {
   left: 0;
   height: 100vh;
   width: 35vw;
-  z-index: 29999;
+  z-index: 30000002;
   overflow-x: auto;
   overflow-y: auto;
   background-color: #ececec;
@@ -247,7 +230,7 @@ a.toggler.off {
     left: 0px;
     height: 100vh;
     width: 25px;
-    z-index: 30000;
+    z-index: 30000003;
 }
 
 
