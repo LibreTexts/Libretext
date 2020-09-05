@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Handler for cleanPath ?title=">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/TOC.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/TOC.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1179,6 +1181,7 @@
       <workItem from="1598069056819" duration="365000" />
       <workItem from="1598991759319" duration="669000" />
       <workItem from="1598992634045" duration="613000" />
+      <workItem from="1599326274978" duration="870000" />
     </task>
     <task id="LOCAL-00231" summary="Installed Beeline kill switch">
       <created>1579237961643</created>
