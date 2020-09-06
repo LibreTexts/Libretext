@@ -10,7 +10,8 @@
 		let tabs = getData(param.pro, param.tabs);
 		buildSidebar();
 		activateBeeLine();
-		TOC();
+		LibreTexts.TOC(null, "#custom_target");
+		LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
 		if (param.ccalc) {
 			SBCC = new SBconverterCalculator();
 		}
@@ -648,22 +649,8 @@
         <a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
       
             <div id="construction-guide-put" class="custom_field" style="display: none; background-color: white ">                
-
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/01%3A_LibreTexts_Fundamentals">Libretexts Fundamentals</a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/02%3A_A_Framework_for_Designing_Online_Texts"> Online Texts </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/03%3A_Basic_Editing"> Basic Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/04%3A_Advanced_Editing"> Advanced Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/05%3A_Interactive_Elements">Interactive Elements </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/06%3A_Contributing%2C_Harvesting%2C_and_Curating_Content"> Curating Content </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/07%3A_Remixing_Existing_Content"> Removing Content </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/08%3A_Disseminating_Texts_and_Course_Shells"> Course Shells </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/01%3A_LibreTexts_Fundamentals">Libretexts Fundamentals</a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/02%3A_A_Framework_for_Designing_Online_Texts"> Online Texts </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/03%3A_Basic_Editing"> Basic Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/04%3A_Advanced_Editing"> Advanced Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/05%3A_Interactive_Elements">Interactive Elements </a>
-
-         </div>        
+				
+	         </div>        
 
 <a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
@@ -952,102 +939,6 @@
 		$('section.mt-content-container p').css("text-align", "justify");
 	};
 
-	async function TOC() {
-		let coverpage;
-		let coverTitle;
-		let content;
-		if (!navigator.webdriver || !window.matchMedia('print').matches) {
-			coverpage = await LibreTexts.getCoverpage();
-			if (coverpage)
-				await makeTOC(coverpage, true);
-			else
-				await makeTOC('home', true);
-		}
 
-		async function makeTOC(path, isRoot, full) {
-			const origin = window.location.origin;
-			path = path.replace(origin + "/", "");
-			//get coverpage title & subpages;
-			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
-
-
-			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-			response = await response.json();
-			info = await info;
-			info = await info.json();
-			coverTitle = info.title;
-			return await subpageCallback(response, isRoot);
-
-			async function subpageCallback(info, isRoot) {
-				let subpageArray = info["page.subpage"];
-				const result = [];
-				const promiseArray = [];
-				if (!subpageArray)
-					return false;
-
-				if (!subpageArray.length) {
-					subpageArray = [subpageArray];
-				}
-				for (let i = 0; i < subpageArray.length; i++) {
-					promiseArray[i] = subpage(subpageArray[i], i);
-				}
-
-				async function subpage(subpage, index) {
-					let url = subpage["uri.ui"];
-					let path = subpage.path["#text"];
-					let currentPage = url === window.location.href;
-					const hasChildren = subpage["@subpages"] === "true";
-					let defaultOpen = window.location.href.includes(url) && !currentPage;
-					let children = hasChildren ? undefined : [];
-					if (hasChildren && (full || defaultOpen)) { //recurse down
-						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-						children = await children.json();
-						children = await
-							subpageCallback(children, false);
-					}
-					result[index] = {
-						title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
-						url: url,
-						selected: currentPage,
-						expanded: defaultOpen,
-						children: children,
-						lazy: !full
-					};
-				}
-
-				await Promise.all(promiseArray);
-				if (isRoot) {
-					content = result;
-
-					initializeFancyTree();
-				}
-				return result;
-			}
-
-			function initializeFancyTree() {
-				const target = $("#custom_target");
-				if (content) {
-					const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
-					button.text("Contents");
-					button.attr('id', "TOCbutton");
-					button.attr('title', "Expand/Contract Table of Contents");
-					button.addClass("toc-button");
-					target.addClass("toc-hierarchy");
-					// target.removeClass("elm-hierarchy mt-hierarchy");
-					target.innerHTML = "";
-					target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
-					target.fancytree({
-						source: content,
-						lazyLoad: function (event, data) {
-							const dfd = new $.Deferred();
-							let node = data.node;
-							data.result = dfd.promise();
-							makeTOC(node.data.url).then((result) => dfd.resolve(result));
-						}
-					})
-				}
-			}
-		}
-	}
 
 
