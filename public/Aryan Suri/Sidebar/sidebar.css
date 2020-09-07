@@ -85,14 +85,9 @@ a.toggler.off {
   overflow-y: auto;
   background-color: #ececec;
   border-right: 1px solid black;
-
-}
-
-.cspLeft {
   padding-left: 25px;
-  padding-top: 0px;
-
 }
+
 
 .custom_sidebar .custom_close {
   position: absolute;
@@ -254,39 +249,6 @@ a.toggler.off {
 
 .top-tabs:first-child{
   padding-top: 20px;
-}
-.top-bar {
-  cursor: pointer;
-  top: 0;
-  margin-top: 0;
-  background-color: #127bc4;
-
-  position: fixed;
-  z-index: 30000;
-  display: flex;
-
-  flex-wrap: wrap;
-  width: 35vw;
-
-  border-right: 1px solid black;
-}
-
-.top-bar-unit {
-  flex: 1;
-
-  flex-shrink: inherit;
-  padding: 5px;
-}
-.top-bar-unit:last-child {
-  border-right: none;
-}
-
-.top-bar .top-bar-unit h5 {
-	color: white;
-	font-size: 0.9rem !important;
-	font-weight: 300;
-	font-family: Roboto;
-
 }
 .custom_sidebar #custom_dropdown-content a {
   color: black;

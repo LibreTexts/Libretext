@@ -78,41 +78,25 @@ async function Sidebar() {
 		let sidebarDiv = document.createElement("div");
 
 		$("body").append(sidebarDiv);
+
 		sidebarDiv.id = "sidebarDiv";
 		tabsSidebar = tabsSidebar.join("");
+
 		$(sidebarDiv).append(tabsSidebar);
-		if (param.tabs) {
-			$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
-			$("#sbHeader").switchClass("top-bar", "sbHeader");
-			$("#openContents").switchClass("top-bar-unit", "top-tabs");
-			$("#openResources").switchClass("top-bar-unit", "top-tabs");
-			$("#openControl").switchClass("top-bar-unit", "top-tabs");
-			$("#openUsage").switchClass("top-bar-unit", "top-tabs");
-			$("#openDevelopers").switchClass("top-bar-unit", "top-tabs");
-			$("#openLibreverse").switchClass("top-bar-unit", "top-tabs");
-			$("#tabsTrue").addClass("simHover");
-			$(".custom_sidebar").addClass("cspLeft");
+		$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+
+		if (param.tabs) {		
+			$("#tabsTrue").addClass("simHover");			
 		} else {
 			$("body").append(tabs.open);
-			$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+			$("#sbHeader").hide();
 			$("#tabsFalse").addClass("simHover");
 
-			$("#sbHeader").switchClass("top-bar", "sbHeader");
-			$("#openContents").switchClass("top-bar-unit", "top-tabs");
-			$("#openResources").switchClass("top-bar-unit", "top-tabs");
-			$("#openControl").switchClass("top-bar-unit", "top-tabs");
-			$("#openUsage").switchClass("top-bar-unit", "top-tabs");
-			$("#openDevelopers").switchClass("top-bar-unit", "top-tabs");
-			$("#openLibreverse").switchClass("top-bar-unit", "top-tabs");
-			$(".custom_sidebar").addClass("cspLeft");
 		}
 		controlSidebar();
 		switchSidebar(param.tabs);
 		function switchSidebar(tabs) {
 			if (tabs) {
-				// $("#sbHeader").click(function (){
-				// 	$("#sbHeader").hide();
-				// });
 
 				$("#openContents").click(function () {
 					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
@@ -374,43 +358,43 @@ async function Sidebar() {
 
 			"open": `<button id="custom_open"  >☰</button>`,
 
-			"header": pro ? `<div id="sbHeader" class="top-bar" style="">
-        <div id="openContents"  class="top-bar-unit">
+			"header": pro ? `<div id="sbHeader" class="sbHeader" style="">
+        <div id="openContents"  class="top-tabs">
 			<h5  >Contents</h5>
 		</div>
-		<div  id="openResources" class="top-bar-unit">
+		<div  id="openResources" class="top-tabs">
             <h5 class="">Resources</h5>
 		</div>
-		<div id="openControl"  class="top-bar-unit">
+		<div id="openControl"  class="top-tabs">
 			<h5 >Customize</h5>
 		</div>
-		<div  id="openUsage"  class="top-bar-unit">
+		<div  id="openUsage"  class="top-tabs">
             <h5 class="">Application</h5>
 		</div>
 
-		<div id="openLibreverse"  class="top-bar-unit">
+		<div id="openLibreverse"  class="top-tabs">
             <h5  class="">LibreVerse</h5>
 		</div>
 
-		<div id="openDevelopers"  class="top-bar-unit">
+		<div id="openDevelopers"  class="top-tabs">
 			<h5  class="">Developers</h5>
 		</div>
 		
-        </div>` : `<div id="sbHeader" class="top-bar" style="">
-        <div id="openContents"  class="top-bar-unit">
+        </div>` : `<div id="sbHeader" class="sbHeader" style="">
+        <div id="openContents"  class="top-tabs">
 			<h5  >Contents</h5>
 		</div>
-		<div  id="openResources" class="top-bar-unit">
+		<div  id="openResources" class="top-tabs">
             <h5 class="">Resources</h5>
 		</div>
-		<div id="openControl"  class="top-bar-unit">
+		<div id="openControl"  class="top-tabs">
 			<h5 >Customize</h5>
 		</div>
-		<div  id="openUsage"  class="top-bar-unit">
+		<div  id="openUsage"  class="top-tabs">
             <h5 class="">Applications</h5>
 		</div>
 
-		<div id="openLibreverse"  class="top-bar-unit">
+		<div id="openLibreverse"  class="top-tabs">
             <h5  class="">LibreVerse</h5>
 		</div>
         </div>` ,
@@ -583,7 +567,7 @@ async function Sidebar() {
    <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
 	   <button id="tabsTrue" onclick="savePanel(true)">Side View </button>		
 	   <button id="tabsFalse" onclick="savePanel(false)">Compressed View</button>
-	   <button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>		
+	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->		
 	</div>
    <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
     <div class="BLtoggle" id="doBeeLine">
