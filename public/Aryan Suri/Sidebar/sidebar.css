@@ -217,6 +217,7 @@ a.toggler.off {
   display: block;
 }
 
+
 #sbLayout {
   display: flex;
   justify-content: space-evenly;
@@ -259,16 +260,20 @@ a.toggler.off {
   top: 0;
   margin-top: 0;
   background-color: #127bc4;
+
   position: fixed;
   z-index: 30000;
   display: flex;
+
   flex-wrap: wrap;
   width: 35vw;
+
   border-right: 1px solid black;
 }
 
 .top-bar-unit {
   flex: 1;
+
   flex-shrink: inherit;
   padding: 5px;
 }
@@ -281,6 +286,7 @@ a.toggler.off {
 	font-size: 0.9rem !important;
 	font-weight: 300;
 	font-family: Roboto;
+
 }
 .custom_sidebar #custom_dropdown-content a {
   color: black;
@@ -365,11 +371,7 @@ a.toggler.off {
   color: #ffffff;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-
-/*                                                                    UNIT COVERTER CODE                        */
 
 .converter-wrapper {
   margin: 0 auto;

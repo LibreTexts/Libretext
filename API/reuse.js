@@ -54,7 +54,6 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 	}
 	else {
 		if (!isNaN(path)) {
-			path = parseInt(path);
 			isNumber = true;
 		}
 		if (path === 'home') {
@@ -65,10 +64,12 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			return false;
 		}
 	}
-	if (path.includes('?'))
-		path = path.split('?')[0];
-	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
-		api = `/${api}`;
+	if (api) { //query parameter checking
+		if (!arbitraryPage && path && path.includes('?')) //isolated path should not have query parameters
+			path = path.split('?')[0];
+		if (!api.startsWith('?')) //allows for    pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+			api = `/${api}`;
+	}
 	if (!username) {
 		options = optionsMerge({
 			'X-Requested-With': 'XMLHttpRequest',
@@ -348,7 +349,7 @@ function parseURL(url) {
 
 function cleanPath(path) {
 	path = decodeURIComponent(decodeURIComponent((path)));
-	let front="", back = path;
+	let front = "", back = path;
 	if (path.includes('/'))
 		[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
 	front = front.replace('?title=', '');

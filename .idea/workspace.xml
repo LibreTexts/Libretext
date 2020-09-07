@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Handler for cleanPath ?title=">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Bugfix authenticatedFetch queryparams in path&#10;&#10;For arbitrary-page calls, the query parameters are part of the path and must be handled accordingly. Therefore, the query parameter filterer only fires if `!api`.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/batchPrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/reuse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="LuluCommons" />
+        <entry key="$PROJECT_DIR$" value="Remixer_v2.0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -1179,6 +1180,7 @@
       <workItem from="1598069056819" duration="365000" />
       <workItem from="1598991759319" duration="669000" />
       <workItem from="1598992634045" duration="613000" />
+      <workItem from="1599326274978" duration="870000" />
     </task>
     <task id="LOCAL-00231" summary="Installed Beeline kill switch">
       <created>1579237961643</created>
@@ -1634,11 +1636,11 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="609" y="77" key="#xdebugger.evaluate/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1592520407991" />
-    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1598028519440">
+    <state x="627" y="0" width="972" height="816" key="CommitChangelistDialog2" timestamp="1599328733645">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="-1574" y="0" width="972" height="816" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597800802669" />
-    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1598028519440" />
+    <state x="627" y="0" width="1009" height="920" key="CommitChangelistDialog2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599328733645" />
     <state x="-1772" y="44" key="DiffContextDialog" timestamp="1597383786846">
       <screen x="-1920" y="0" width="1536" height="816" />
     </state>
