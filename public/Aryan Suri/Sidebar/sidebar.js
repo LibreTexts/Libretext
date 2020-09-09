@@ -16,6 +16,7 @@ async function Sidebar() {
 	activateBeeLine();
 	LibreTexts.TOC(null, "#custom_target");
 	LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
+	LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put")
 	if (param.ccalc) {
 		SBCC = new SBconverterCalculator();
 	}
@@ -229,7 +230,7 @@ async function Sidebar() {
 			$('#gloss_table').click(function () {
 				if ($("#gloss_table_put").is(":hidden")) {
 
-					$("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary #a9abfa27-98d2-c6fa-0c61-a753f2b8dcb1");
+					$("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
 					$("#gloss_table_put").slideDown("slow");
 				}
 				else {
@@ -238,12 +239,12 @@ async function Sidebar() {
 			});
 
 			$('#ref_table').click(function () {
-				if ($("#ref_table_put").is(":hidden")) {
+				if ($("#ref-table-put").is(":hidden")) {
 
-					$("#ref_table_put").slideDown("slow");
+					$("#ref-table-put").slideDown("slow");
 				}
 				else {
-					$("#ref_table_put").slideUp("slow");
+					$("#ref-table-put").slideUp("slow");
 				}
 			});
 
@@ -413,19 +414,7 @@ async function Sidebar() {
                 </iframe>
             </div>         
         <a id="ref_table" target="_blank" >Reference Tables</a>
-            <div id="ref_table_put" class="custom_field" style="display: none; background-color: white ">                
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Acid-Base_Indicators"> Acid-Base Indicators</a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Analytic References </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Atomic and Molecular properties </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Bulk_Properties"> Bulk properties </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Electrochemistry_Tables"> Electrochemistry Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Equilibrium_Constants"> Equilibirum Constants </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Group_Theory_Tables"> Group Theory Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Mathematical_Functions"> Mathematical Functions </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Nuclear_Tables"> Nuclear Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Solvents"> Solvents </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Spectroscopic_Parameters"> Spectroscopic Parameters </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Thermodynamics_Tables"> Thermodynamics Tables </a>
+            <div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
 
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
@@ -479,19 +468,8 @@ async function Sidebar() {
 					<div class="custom_field">
         
 						<a id="ref_table" target="_blank" >Reference Tables</a>
-							<div id="ref_table_put" class="custom_field" style="display: none; background-color: white ">                
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Acid-Base_Indicators"> Acid-Base Indicators</a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Analytic References </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Atomic and Molecular properties </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Bulk_Properties"> Bulk properties </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Electrochemistry_Tables"> Electrochemistry Tables </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Equilibrium_Constants"> Equilibirum Constants </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Group_Theory_Tables"> Group Theory Tables </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Mathematical_Functions"> Mathematical Functions </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Nuclear_Tables"> Nuclear Tables </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Solvents"> Solvents </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Spectroscopic_Parameters"> Spectroscopic Parameters </a>
-				<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Thermodynamics_Tables"> Thermodynamics Tables </a>
+							<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
+			
 				
 							</div>
 						 <a id="phy_table" target="_blank" >Physical Constants</a>
