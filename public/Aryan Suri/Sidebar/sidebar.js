@@ -51,9 +51,10 @@ async function Sidebar() {
 		let sidepanel = sessionStorage.getItem("sidepanel");
 		let tab;
 		if (sidepanel === null) {
-			if (admin) { tab = true; }
-			else if (pro) { tab = true; }
-			else { tab = false; }
+			// if (admin) { tab = true; }
+			// else if (pro) { tab = true; }
+			// else { tab = false; }
+			tab = true;
 		} else {
 			tab = JSON.parse(sidepanel) === true;
 		}
@@ -153,11 +154,11 @@ async function Sidebar() {
 
 				$("#openContents").click(function () {
 					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
-					$("#sb1").show();
+					$("#sb1").toggle();
 				});
 				$("#openResources").click(function () {
 					$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
-					$("#sb2").show();
+					$("#sb2").toggle();
 
 					if (!window.resourcesTabInitialized) {
 						window.resourcesTabInitialized = true;
@@ -179,19 +180,19 @@ async function Sidebar() {
 				});
 				$("#openControl").click(function () {
 					$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
-					$("#sb3").show();
+					$("#sb3").toggle();
 				});
 				$("#openUsage").click(function () {
 					$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
-					$("#sb4").show();
+					$("#sb4").toggle();
 				});
 				$("#openDevelopers").click(function () {
 					$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
-					$("#sb5").show();
+					$("#sb5").toggle();
 				});
 				$("#openLibreverse").click(function () {
 					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
-					$("#sb6").show();
+					$("#sb6").toggle();
 				});
 				$("body").click(function (event) {
 
@@ -366,7 +367,7 @@ async function Sidebar() {
             <h5 class="">Resources</h5>
 		</div>
 		<div id="openControl"  class="top-tabs">
-			<h5 >Customize</h5>
+			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
             <h5 class="">Application</h5>
@@ -388,7 +389,7 @@ async function Sidebar() {
             <h5 class="">Resources</h5>
 		</div>
 		<div id="openControl"  class="top-tabs">
-			<h5 >Customize</h5>
+			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
             <h5 class="">Applications</h5>
