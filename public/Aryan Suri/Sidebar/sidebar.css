@@ -437,10 +437,18 @@ a.toggler.off {
   padding-left: 10px;
 }
 
-@media only screen and (max-width: 600px) {
-  #custom_open, #sidebarDiv {
-    display: none;
+@media only screen and (max-width: 1335px) {
+  #elm-main-content {
+    padding-left: 30px !important;
   }
+}
+
+
+@media only screen and (max-width: 415px) {
+  .custom_sidebar{
+    width: 100vw;
+  }
+
 }
 
 @media print {
