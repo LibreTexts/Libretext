@@ -119,12 +119,12 @@ if (!window["batchPrint.js"]) {
 	}
 	
 	// noinspection ES6ConvertVarToLetConst
-	var batch = (target) => {
+	var batch = (target, additionalParameters = '') => {
 		if (window["batchComplete"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache${additionalParameters}` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
@@ -155,14 +155,15 @@ if (!window["batchPrint.js"]) {
 					alert(out.text);
 					return;
 				}
-				batchButton.innerText = "Redownload";
-				window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-				
-				let tags = document.getElementById('pageTagsHolder').innerText;
-				if (tags.includes('coverpage:yes'))
-					setTimeout(() => window.location.reload(), 5000);
-				
+				if(out.filename) {
+					batchButton.innerText = "Redownload";
+					window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+					window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+					
+					let tags = document.getElementById('pageTagsHolder').innerText;
+					if (tags.includes('coverpage:yes'))
+						setTimeout(() => window.location.reload(), 5000);
+				}
 			}
 		}
 		
