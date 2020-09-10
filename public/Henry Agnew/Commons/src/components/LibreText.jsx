@@ -4,11 +4,9 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import LearnMore from "./LearnMore.jsx";
 
 export default function LibreText(props) {
-	let root = `https://batch.libretexts.org/print/${props.format}/Finished/`;
-	if (props.item.zipFilename)
-		root += props.item.zipFilename.replace('/Full.pdf', '');
 	
 	let bookstore = props.item.tags.find(elem => elem.startsWith('store:'));
 	if (bookstore)
@@ -39,29 +37,9 @@ export default function LibreText(props) {
 				{props.item.author || ''}
 			</Typography>
 			<CardActions>
-				<a href={`https://libretexts.org/bookstore/single.html?${props.item.subdomain}-${props.item.id}`}><Button>Test
-					Buy Book</Button></a>
-				{/*<Lulu {...props}/>*/}
+				<LearnMore {...props}/>
 			
 			</CardActions>
-			{/*<div key="front" className='textSide textBack'>
-						<a href={props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
-						<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
-						   target='_blank'>PDF</a>
-						<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
-						   target='_blank'>LMS</a>
-						{isAdmin ? <a onClick={() => {
-							if (confirm('This will compile all of the pages and will take quite a while. Are you sure?')) {
-								batch(props.item.link)
-							}
-						}} href='#' className={'mt-icon-spinner6'}>Compile Full</a> : ''}
-						<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
-						   target='_blank'>Individual ZIP</a>
-						{bookstore ?
-							<a href={bookstore} className='mt-icon-cart2' target='_blank'>Buy Paper Copy</a> : ''}
-						<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}
-						   target='_blank'>Print Book Files</a>
-					</div>*/}
 		</Card>
 	</div>
 }
