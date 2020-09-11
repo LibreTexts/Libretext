@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Bugfix authenticatedFetch queryparams in path&#10;&#10;For arbitrary-page calls, the query parameters are part of the path and must be handled accordingly. Therefore, the query parameter filterer only fires if `!api`.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Miscellaneous/reuse.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -308,19 +311,19 @@
     </configuration>
     <list>
       <item itemvalue="Attach to Node.js/Chrome.Remote Debug" />
-      <item itemvalue="Docker.nodePrint Docker" />
-      <item itemvalue="Mocha.nodePrintTest" />
       <item itemvalue="Node.js.bot.js" />
       <item itemvalue="Node.js.elevate" />
       <item itemvalue="Node.js.endpoint.js" />
       <item itemvalue="Node.js.import.js" />
       <item itemvalue="Node.js.nodePrint" />
       <item itemvalue="Node.js.schedule.js" />
+      <item itemvalue="Docker.nodePrint Docker" />
       <item itemvalue="npm.API Dashboard" />
       <item itemvalue="npm.Commons" />
       <item itemvalue="npm.Importer" />
       <item itemvalue="npm.Remixer" />
       <item itemvalue="npm.package" />
+      <item itemvalue="Mocha.nodePrintTest" />
     </list>
     <recent_temporary>
       <list>

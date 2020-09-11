@@ -107,7 +107,7 @@ function LibreTextsReuse() {
 		}
 		front = front.replace('?title=', '');
 		back = back.replace('?title=', '');
-		back = back.replace('//','_');
+		back = back.replace('//', '_');
 		back = back.replace(/%/g, '_');
 		back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
 		back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
@@ -249,17 +249,13 @@ function LibreTextsReuse() {
 		return result;
 	}
 	
-	async function getSubpages(rootURL, username) {
-		let origin = rootURL.split("/")[2].split(".");
-		const subdomain = origin[0];
+	async function getSubpages(rootURL, options = {}) {
+		const [subdomain, path] = LibreTexts.parseURL(rootURL);
 		
-		origin = rootURL.split("/").splice(0, 3).join('/');
-		let path = rootURL.split('/').splice(3).join('/');
-		
-		let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', username, subdomain);
+		let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 		pages = await pages.json();
 		
-		let info = await authenticatedFetch(path, 'info?dream.out.format=json', username, subdomain);
+		let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 		info = await info.json();
 		return {
 			title: info.title,
@@ -279,17 +275,20 @@ function LibreTextsReuse() {
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren) { //recurse down
-					children = await authenticatedFetch(id, 'subpages?limit=all&dream.out.format=json', username, subdomain);
+					children = await authenticatedFetch(id, 'subpages?limit=all&dream.out.format=json', subdomain);
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
-				result[index] = {
+				let temp = {
 					title: subpage.title,
 					url: url,
 					children: children,
 					id: id,
 					relativePath: url.replace(rootURL, '')
 				};
+				if (options.getAPI)
+					temp = await LibreTexts.getAPI(temp, options.getAPI.contents);
+				result[index] = temp;
 			}
 			
 			if (subpageArray && subpageArray.length) {
