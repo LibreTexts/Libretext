@@ -615,6 +615,7 @@ class LibreTextsGlossarizer {
             };
             //Get cells in the 3 columns
             let cols = this.getTermCols(tableRows[r]);
+            if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
             if (cols["source"].length) {
                 cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
             }
