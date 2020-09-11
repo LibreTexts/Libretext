@@ -348,13 +348,20 @@ function parseURL(url) {
 }
 
 function cleanPath(path) {
-	path = decodeURIComponent(decodeURIComponent((path)));
 	let front = "", back = path;
 	if (path.includes('/'))
-		[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
+		[, front, back] = path.match(/(^.*[^\/]\/)([^\/].*?$)/); //only modifying page, not whole path
+	try {
+		back = decodeURIComponent(back);
+		back = decodeURIComponent(back);
+	} catch (error) {
+		// console.error(path, error);
+	}
 	front = front.replace('?title=', '');
 	back = back.replace('?title=', '');
-	back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	back = back.replace('//','_');
+	back = back.replace(/%/g, '_');
+	back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
 	back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
 	return front + back;
 }

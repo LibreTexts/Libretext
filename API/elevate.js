@@ -176,8 +176,7 @@ async function cleanPath(req, res) {
 	body.subdomain = body.pageSubdomain || body.subdomain;
 	let page = await LibreTexts.authenticatedFetch(body.pageID, '?dream.out.format=json', body.subdomain, 'LibreBot');
 	page = await page.json();
-	let path = page['uri.ui'];
-	[, path] = LibreTexts.parseURL(path);
+	let path = page.path["#text"];
 	let originalPath = path;
 	path = LibreTexts.cleanPath(path);
 	if (path && (originalPath !== path || body.force)) {

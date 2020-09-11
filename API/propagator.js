@@ -43,7 +43,7 @@ function handler(request, response) {
 					let input = JSON.parse(body);
 					let {username, url} = input;
 					const Ssubdomain = url.split("/")[2].split(".")[0];
-					let path = url.split("/").slice(3).join("/");
+					let [,path] = LibreTexts.parseURL(url);
 					let {content, tags, properties} = await getContent();
 					
 					let otherArray = Object.values(LibreTexts.libraries);
