@@ -186,6 +186,7 @@ class LibreTextsGlossarizer {
             console.error("incompatible glossary");
             return;
         }
+        retrievedGlossary.sort((a,b) => {return b.term.length - a.term.length}) //sort from longest term to shortest term
 
         /**
          * Plugin Name: Glossarizer
