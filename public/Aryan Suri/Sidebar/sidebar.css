@@ -110,6 +110,13 @@ a.toggler.off {
   display: block;
 }
 
+
+
+.custom_sidebar .toc-hierarchy a {
+  display: inline !important;
+  margin-left: 10px !important;
+}
+
 .custom_sidebar p {
   padding: 5px;
   margin-left: 10px;
@@ -119,12 +126,7 @@ a.toggler.off {
   color: #595959;
 }
 
-.custom_sidebar h3 {
-  padding: 5px;
-  margin-left: 10px !important;
-  margin-top: 5px !important;
-  margin-bottom: 2px !important;
-}
+
 
 .custom_sidebar #text-align-field span {
   padding: 5px;
@@ -304,7 +306,7 @@ a.toggler.off {
   display: block;
 }
 
-#dark-light:hover {
+#dark-light{
   background-color: #252525;
   color: #ffffff;
 }
@@ -313,22 +315,22 @@ a.toggler.off {
   margin-left: 35px;
 }
 
-#SB_Bright:hover {
+#SB_Bright{
   background-image: linear-gradient(90deg, #0000F4, #000000, #E93323);
   color: #ffffff;
 }
 
-#SB_Blues:hover {
+#SB_Blues {
   background-image: linear-gradient(90deg, #0000f1, #000000, #891bd5);
   color: #ffffff;
 }
 
-#SB_Inverted:hover {
+#SB_Inverted {
   background-image: linear-gradient(90deg, #56aaff, #ffffff, #9e8dfc);
   color: #383838;
 }
 
-#SB_Grays:hover {
+#SB_Grays {
   background-image: linear-gradient(90deg, #7d7d7d, #000000, #7d7d7d);
   color: #ffffff;
 }

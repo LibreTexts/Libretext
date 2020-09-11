@@ -51,6 +51,7 @@ async function Sidebar() {
 		const pro = document.getElementById("proHolder").innerText === 'true';
 		let sidepanel = sessionStorage.getItem("sidepanel");
 		let tab;
+		let ccalc = true;
 		if (sidepanel === null) {
 			// if (admin) { tab = true; }
 			// else if (pro) { tab = true; }
@@ -60,9 +61,6 @@ async function Sidebar() {
 			tab = JSON.parse(sidepanel) === true;
 		}
 
-
-
-		let ccalc = true;
 		let param = {
 			"type": type,
 			"library": library,
@@ -72,7 +70,6 @@ async function Sidebar() {
 		}
 
 		return param
-
 	}
 
 	function buildSidebar() {
@@ -548,17 +545,21 @@ async function Sidebar() {
 	   <button id="tabsFalse" onclick="savePanel(false)">Compressed View</button>
 	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->		
 	</div>
-   <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
-    <div class="BLtoggle" id="doBeeLine">
+	<div class="custom_field">
+   <h3 style="font-size: 1.8rem !important;">
+   <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">
+	BeeLine Reader </h3>
+	<p> BeeLine Reader uses subtle color gradients to help you read quicker and more efficiently. <a style="color: #30b3f6; display: unset; margin:0;" href="http://www.beelinereader.com/education/?utm_source=libretexts"> Learn more. </a> </p>
+		   
 
-<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
-      <a id="SB_Inverted" class="btn btn-large" data-color="night_blues">Inverted</a>
-                <a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>
-                <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
-                <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
+	</div>
+    <div class="BLtoggle" id="doBeeLine">
+      			<a id="SB_Inverted" class="btn btn-large active" data-color="night_blues">Inverted</a>
+                <a id="SB_Bright" class="btn btn-large active" data-color="dark">Bright</a>
+                <a id="SB_Blues" class="btn btn-large active" data-color="blues">Blues</a>
+				<a id="SB_Grays" class="btn btn-large active" data-color="gray">Grays</a>
+				<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
 				<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
-				
-                </div></div>
      </div>
 
 
