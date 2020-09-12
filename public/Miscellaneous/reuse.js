@@ -424,6 +424,10 @@ function LibreTextsReuse() {
 			if (coverpage) {
 				await makeTOC(coverpage, true);
 			}
+			else{
+				const [subdomain] = LibreTexts.parseURL();
+				await makeTOC(`https://${subdomain}.libretexts.org/home`, true);
+			}
 		}
 		
 		async function makeTOC(path, isRoot, full) {
