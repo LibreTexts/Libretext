@@ -98,7 +98,7 @@ function getCC() {
 		const groups = document.getElementById('groupHolder').innerText.toLowerCase();
 
 		if (admin) { }
-		else if (pro && groups.includes('developer')) { ccDetect(); }
+		else if (pro && groups.includes('developer')) { }
 		else { ccDetect(); }
 		ccPageLabel();
 	}

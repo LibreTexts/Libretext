@@ -1,23 +1,33 @@
+
 window.addEventListener("DOMContentLoaded", Sidebar);
 
+
 async function Sidebar() {
-	if (window !== window.top) //don't show in iFrame
+	localStorage.removeItem("font_size");
+	localStorage.removeItem("page_width");
+	localStorage.removeItem("sidepanel");
+
+	if (window !== window.top)
 		return;
 
 	let param = getParam();
-	let tabs = getData(param.pro);
-	let sidebar = buildSidebar();
-	TOC();
-	SBCC = new SBconverterCalculator();
-
+	let tabs = getData(param.pro, param.tabs);
+	buildSidebar();
+	activateBeeLine();
+	LibreTexts.TOC(null, "#custom_target");
+	LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
+	LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put")
+	if (param.ccalc) {
+		SBCC = new SBconverterCalculator();
+	}
 
 	function getSidebar() {
 		if (param.pro) {
 			switch (param.library) {
 				case "chem":
-					return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers]
+					return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 				default:
-					return [tabs.headernr, tabs.home, tabs.control, tabs.usage, tabs.developers]
+					return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers, tabs.libreverse]
 			}
 		}
 
@@ -25,103 +35,183 @@ async function Sidebar() {
 
 			switch (param.library) {
 				case "chem":
-					return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage]
+					return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.libreverse]
 				default:
-					return [tabs.headernr, tabs.home, tabs.control, tabs.usage]
+					return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.libreverse]
 			}
 		}
 	}
 
 	function getParam() {
 
-		let article = $("#pageTagsHolder").text().includes('"article:topic"');
-		let [library] = LibreTexts.parseURL();
-		let pro = document.getElementById("proHolder").innerText === 'true';
+
+		const type = $("#pageTagsHolder").text().includes('"article:topic"');
+		const [library] = LibreTexts.parseURL();
+		const admin = document.getElementById('adminHolder').innerText === 'true';
+		const pro = document.getElementById("proHolder").innerText === 'true';
+		let sidepanel = sessionStorage.getItem("sidepanel");
+		let tab;
+		let ccalc = true;
+		if (sidepanel === null) {
+			// if (admin) { tab = true; }
+			// else if (pro) { tab = true; }
+			// else { tab = false; }
+			tab = true;
+		} else {
+			tab = JSON.parse(sidepanel) === true;
+		}
 
 		let param = {
-			"type": article,
+			"type": type,
 			"library": library,
-			"pro": pro
+			"pro": pro,
+			"tabs": tab,
+			"ccalc": ccalc
 		}
 
 		return param
-
 	}
 
 	function buildSidebar() {
 		let tabsSidebar = getSidebar();
 		let sidebarDiv = document.createElement("div");
 
-		$("body").append(tabs.open);
 		$("body").append(sidebarDiv);
+
 		sidebarDiv.id = "sidebarDiv";
-		$(sidebarDiv).css("display", "none");
 		tabsSidebar = tabsSidebar.join("");
+
 		$(sidebarDiv).append(tabsSidebar);
+		$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
+
+		if (param.tabs) {		
+			$("#tabsTrue").addClass("simHover");			
+		} else {
+			$("body").append(tabs.open);
+			$("#sbHeader").hide();
+			$("#tabsFalse").addClass("simHover");
+
+		}
 		controlSidebar();
-		switchSidebar();
+		switchSidebar(param.tabs);
+		function switchSidebar(tabs) {
+			if (tabs) {
 
-		function switchSidebar() {
-			$("#openContents").click(function (event) {
-				$("#sb2, #sb3, #sb4, #sb5").hide();
-				$("#sb1").show();
-			});
-			$("#openResources").click(function (event) {
-				$("#sb1, #sb3, #sb4, #sb5").hide();
-				$("#sb2").show();
-
-				//first time setup
-				if (!window.resourcesTabInitialized) {
-					window.resourcesTabInitialized = true;
-					delete document.getElementById('pubchemWidget').iFrameResizer
-					delete document.getElementById('physicalConstantsWidget').iFrameResizer
-					$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
-					iFrameResize({
-						warningTimeout: 0,
-						scrolling: 'omit',
-						checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
-					}, '#pubchemWidget');
-					$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
-					iFrameResize({
-						warningTimeout: 0,
-						scrolling: 'omit',
-						checkOrigin: ["https://chem.libretexts.org"]
-					}, '#physicalConstantsWidget');
+				$("#openContents").click(function () {
+					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
+					$("#sb1").toggle("slide");
 				}
-			});
-			$("#openControl").click(function (event) {
-				$("#sb1, #sb2, #sb4, #sb5").hide();
-				$("#sb3").show();
-			});
-			$("#openUsage").click(function (event) {
-				$("#sb1, #sb2, #sb3, #sb5").hide();
-				$("#sb4").show();
-			});
-			$("#openDevelopers").click(function (event) {
-				$("#sb1, #sb2, #sb3, #sb4").hide();
-				$("#sb5").show();
-			});
+				);
+				$("#openResources").click(function () {
+					$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
+					$("#sb2").toggle("slide");
+
+					if (!window.resourcesTabInitialized) {
+						window.resourcesTabInitialized = true;
+						delete document.getElementById('pubchemWidget').iFrameResizer
+						delete document.getElementById('physicalConstantsWidget').iFrameResizer
+						$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
+						iFrameResize({
+							warningTimeout: 0,
+							scrolling: 'omit',
+							checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
+						}, '#pubchemWidget');
+						$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
+						iFrameResize({
+							warningTimeout: 0,
+							scrolling: 'omit',
+							checkOrigin: ["https://chem.libretexts.org"]
+						}, '#physicalConstantsWidget');
+					}
+				});
+				$("#openControl").click(function () {
+					$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
+					$("#sb3").toggle("slide");
+				});
+				$("#openUsage").click(function () {
+					$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
+					$("#sb4").toggle("slide");
+				});
+				$("#openDevelopers").click(function () {
+					$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
+					$("#sb5").toggle("slide");
+				});
+				$("#openLibreverse").click(function () {
+					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
+					$("#sb6").toggle("slide");
+				});
+
+				$("body").click(function (event) {
+					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+						$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+					}
+				});
+			} else {
+
+
+
+				$("#openContents").click(function () {
+					$("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
+					$("#sb1").toggle();
+				});
+				$("#openResources").click(function () {
+					$("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
+					$("#sb2").toggle();
+
+					if (!window.resourcesTabInitialized) {
+						window.resourcesTabInitialized = true;
+						delete document.getElementById('pubchemWidget').iFrameResizer
+						delete document.getElementById('physicalConstantsWidget').iFrameResizer
+						$('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
+						iFrameResize({
+							warningTimeout: 0,
+							scrolling: 'omit',
+							checkOrigin: ["https://pubchem.ncbi.nlm.nih.gov"]
+						}, '#pubchemWidget');
+						$('#physicalConstantsWidget').attr('src', "https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView")
+						iFrameResize({
+							warningTimeout: 0,
+							scrolling: 'omit',
+							checkOrigin: ["https://chem.libretexts.org"]
+						}, '#physicalConstantsWidget');
+					}
+				});
+				$("#openControl").click(function () {
+					$("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
+					$("#sb3").toggle();
+				});
+				$("#openUsage").click(function () {
+					$("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
+					$("#sb4").toggle();
+				});
+				$("#openDevelopers").click(function () {
+					$("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
+					$("#sb5").toggle();
+				});
+				$("#openLibreverse").click(function () {
+					$("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
+					$("#sb6").toggle();
+				});
+				$("body").click(function (event) {
+
+					if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+						$("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
+
+
+					}
+				});
+			}
 
 		}
 
 		function controlSidebar() {
-
 			window.addEventListener('click', function (event) {
 				if (event.target == document.getElementById("custom_open")) {
-
-					$("#sidebarDiv").show();
 					$("#sb2, #sb3, #sb4, #sb5").hide();
-					$("#sb1").show();
+					$("#sb1, #sbHeader").show("slide");
 				}
 			});
 
-
-			$("body").click(function (event) {
-				if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
-					$("#sidebarDiv").hide();
-
-				}
-			});
 
 			$('#per_table').click(function () {
 				if ($("#iFrameResizer0").is(":hidden")) {
@@ -137,7 +227,7 @@ async function Sidebar() {
 			$('#gloss_table').click(function () {
 				if ($("#gloss_table_put").is(":hidden")) {
 
-					$("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary #a9abfa27-98d2-c6fa-0c61-a753f2b8dcb1");
+					$("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
 					$("#gloss_table_put").slideDown("slow");
 				}
 				else {
@@ -146,12 +236,12 @@ async function Sidebar() {
 			});
 
 			$('#ref_table').click(function () {
-				if ($("#ref_table_put").is(":hidden")) {
+				if ($("#ref-table-put").is(":hidden")) {
 
-					$("#ref_table_put").slideDown("slow");
+					$("#ref-table-put").slideDown("slow");
 				}
 				else {
-					$("#ref_table_put").slideUp("slow");
+					$("#ref-table-put").slideUp("slow");
 				}
 			});
 
@@ -224,7 +314,7 @@ async function Sidebar() {
 
 				//LOG SIZE VALUE AFTER INPUT DATA
 
-				localStorage.setItem('font_size', initial_data);
+				sessionStorage.setItem('font_size', initial_data);
 
 
 			});
@@ -238,8 +328,7 @@ async function Sidebar() {
 				$("#slider-page-width").val(initial_data);
 
 
-				localStorage.setItem('page_width', initial_data);
-				console.log("change" + localStorage.getItem('page_width'));
+				sessionStorage.setItem('page_width', initial_data);
 			});
 
 			$('a.toggler').click(function () {
@@ -261,117 +350,68 @@ async function Sidebar() {
 	}
 
 
-	function getData(pro) {
+	function getData(pro, tabs) {
 
 
 		return {
 
 			"open": `<button id="custom_open"  >☰</button>`,
-			"headernr": pro ? `<div id="sbHeader" class="top-bar" style="">
-			<div class="top-bar-unit" >
-				<h5 id="openContents">Contents</h5>
-			</div>
-			
-			<div class="top-bar-unit">
-				<h5 id="openControl">Control</h5>
-			</div>  
-			
-			<div class="top-bar-unit">
-				<h5 id="openUsage"  class="">Usage</h5>
-			</div>
-	
-			<div class="top-bar-unit">
-				<h5 id="openDevelopers" class="">Developers</h5>
-			</div>
-	
-		   
-			</div>` : `<div id="sbHeader" class="top-bar" style="">
-			<div class="top-bar-unit" >
-				<h5 id="openContents">Contents</h5>
-			</div>
+
+			"header": pro ? `<div id="sbHeader" class="sbHeader" style="">
+        <div id="openContents"  class="top-tabs">
+			<h5  >Contents</h5>
+		</div>
+		<div  id="openResources" class="top-tabs">
+            <h5 class="">Resources</h5>
+		</div>
+		<div id="openControl"  class="top-tabs">
+			<h5 >Readability</h5>
+		</div>
+		<div  id="openUsage"  class="top-tabs">
+            <h5 class="">Application</h5>
+		</div>
+
+		<div id="openLibreverse"  class="top-tabs">
+            <h5  class="">LibreVerse</h5>
+		</div>
+
+		<div id="openDevelopers"  class="top-tabs">
+			<h5  class="">Developers</h5>
+		</div>
 		
-			<div class="top-bar-unit">
-				<h5 id="openControl">Control</h5>
-			</div>  
-			
-			<div class="top-bar-unit">
-				<h5 id="openUsage"  class="">Usage</h5>
-			</div>
-	
-			</div>`,
-			"header": pro ? `<div id="sbHeader" class="top-bar" style="">
-        <div class="top-bar-unit" >
-            <h5 id="openContents">Contents</h5>
-        </div>
-    
-        <div class="top-bar-unit">
-            <h5 id="openResources" class="">Resources</h5>
-        </div>
+        </div>` : `<div id="sbHeader" class="sbHeader" style="">
+        <div id="openContents"  class="top-tabs">
+			<h5  >Contents</h5>
+		</div>
+		<div  id="openResources" class="top-tabs">
+            <h5 class="">Resources</h5>
+		</div>
+		<div id="openControl"  class="top-tabs">
+			<h5 >Readability</h5>
+		</div>
+		<div  id="openUsage"  class="top-tabs">
+            <h5 class="">Applications</h5>
+		</div>
 
-        <div class="top-bar-unit">
-            <h5 id="openControl">Control</h5>
-        </div>  
-        
-        <div class="top-bar-unit">
-            <h5 id="openUsage"  class="">Usage</h5>
-        </div>
-
-        <div class="top-bar-unit">
-            <h5 id="openDevelopers" class="">Developers</h5>
-        </div>
-
-       
-        </div>` : ` <div id="sbHeader" class="top-bar" style="">
-        <div class="top-bar-unit" >
-            <h5 id="openContents">Contents</h5>
-        </div>
-    
-        <div class="top-bar-unit">
-            <h5 id="openResources" class="">Resources</h5>
-        </div>
-
-        <div class="top-bar-unit">
-            <h5 id="openControl">Control</h5>
-        </div>  
-        
-        <div class="top-bar-unit">
-            <h5 id="openUsage"  class="">Usage</h5>
-        </div>
-       
-        </div> `,
+		<div id="openLibreverse"  class="top-tabs">
+            <h5  class="">LibreVerse</h5>
+		</div>
+        </div>` ,
 			"home": `<div id="sb1" class="custom_sidebar">
 
-                          <div  class="" id="custom_target"></div>
-                    </div>
+                        <div  class="" id="custom_target"></div>
+					</div>`,
 
-
-
-
-
-</div>`,
 			"resources": {
 				"chem": ` <div id="sb2"  class="custom_sidebar">
-    
     <div class="custom_field">
         
             <div class="custom_field">
-                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:480px;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
+                <iframe class="pubchem-widget" id="pubchemWidget" style=" width:100%; height: 400px; overflow: auto;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
                 </iframe>
             </div>         
         <a id="ref_table" target="_blank" >Reference Tables</a>
-            <div id="ref_table_put" class="custom_field" style="display: none; background-color: white ">                
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Acid-Base_Indicators"> Acid-Base Indicators</a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Analytic References </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Analytic_References"> Atomic and Molecular properties </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Bulk_Properties"> Bulk properties </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Electrochemistry_Tables"> Electrochemistry Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Equilibrium_Constants"> Equilibirum Constants </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Group_Theory_Tables"> Group Theory Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Mathematical_Functions"> Mathematical Functions </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Nuclear_Tables"> Nuclear Tables </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Solvents"> Solvents </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Spectroscopic_Parameters"> Spectroscopic Parameters </a>
-<a href="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Reference_Tables/Thermodynamics_Tables"> Thermodynamics Tables </a>
+            <div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
 
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
@@ -420,21 +460,77 @@ async function Sidebar() {
         </div>
     </div>
     
-</div> `
+</div> `,
+				"default": ` <div id="sb2"  class="custom_sidebar">
+					<div class="custom_field">
+        
+						<a id="ref_table" target="_blank" >Reference Tables</a>
+							<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
+			
+				
+							</div>
+						 <a id="phy_table" target="_blank" >Physical Constants</a>
+								<div  style="display: none;" id="phy_table_put" class="custom_field">
+								   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
+								</div>
+				
+						<a id="conversion_table">Conversion Calculator</a>
+						<div class="custom_field"  id="conversion_table_put" style="display:none;" >
+				
+									<div class="converter-wrapper">
+				  
+				
+				  <form name="property_form">
+					<span>
+					  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
+					  </select>
+					</span>
+				  </form>
+				
+				  <div class="converter-side-a">
+					<form name="form_A" onSubmit="return false">
+					  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
+					  <span>
+						<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
+						</select>
+					  </span>
+					</form>
+				  </div> <!-- /converter-side-a -->
+				  
+				 <div class="converter-equals">
+				   <p style="margin: 10px;">=</p>
+				 </div> <!-- /converter-side-a -->
+				
+				  <div class="converter-side-b">
+					<form name="form_B" onSubmit="return false">
+					  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
+					  <span>
+						<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
+						</select>
+					  </span>
+					</form>
+				  </div> <!-- /converter-side-b -->
+				</div><!-- /converter-wrapper -->
+				
+						</div>
+					</div>
+					
+				</div> `
 			},
 			"control": ` <div id="sb3"  class="custom_sidebar">
- 
-    <div style="display: grid;" class="custom_field">
-        <button onclick="rtdefault()" class="btn btn-large" style="border-radius: 0px;border: none;border-bottom: 1px solid black !important;">Default Settings</button>
-    </div>
-    <!--<p class="h_ar">Font Size:</p>
+
+	<div class="custom_field">
+	<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
+	</div>
+    <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
         <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size"> 
 
 
     
-    </div>-->
+	</div>
+
     <p class="h_ar">Page Width:</p>
 <div class="custom_field">   
   <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
@@ -443,24 +539,33 @@ async function Sidebar() {
     <div class="custom_field"> 
         <a id="toggler-text" href="#0" class="toggler">Full</a>
     </div>
-   
-   <p class="h_ar">Beeline Modes <a style="display:inline;" href="http://www.beelinereader.com/education/?utm_source=libretexts"><img style="position: absolute; margin-left: 5px; margin-top: 4px; width:20px; height: 20px;" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"></a></p>
-    <div class="BLtoggle" id="doBeeLine">
+   <p class="h_ar">Sidebar Layout:</p>
+   <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
+	   <button id="tabsTrue" onclick="savePanel(true)">Side View </button>		
+	   <button id="tabsFalse" onclick="savePanel(false)">Compressed View</button>
+	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->		
+	</div>
+	<div class="custom_field">
+   <h3 style="font-size: 1.8rem !important;">
+   <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">
+	BeeLine Reader </h3>
+	<p> BeeLine Reader uses subtle color gradients to help you read quicker and more efficiently. <a style="color: #30b3f6; display: unset; margin:0;" href="http://www.beelinereader.com/education/?utm_source=libretexts"> Learn more. </a> </p>
+		   
 
-<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
-      <a id="SB_Inverted" class="btn btn-large" data-color="night_blues">Inverted</a>
-                <a id="SB_Bright" class="btn btn-large" data-color="dark">Bright</a>
-                <a id="SB_Blues" class="btn btn-large" data-color="blues">Blues</a>
-                <a id="SB_Grays" class="btn btn-large" data-color="gray">Grays</a>
-                <a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
-                </div></div>
+	</div>
+    <div class="BLtoggle" id="doBeeLine">
+      			<a id="SB_Inverted" class="btn btn-large active" data-color="night_blues">Inverted</a>
+                <a id="SB_Bright" class="btn btn-large active" data-color="dark">Bright</a>
+                <a id="SB_Blues" class="btn btn-large active" data-color="blues">Blues</a>
+				<a id="SB_Grays" class="btn btn-large active" data-color="gray">Grays</a>
+				<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
+				<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
      </div>
 
 
    
 </div>`,
 			"usage": `<div id="sb4"  class="custom_sidebar">
- 
     <div class="custom_field">
          <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
@@ -478,24 +583,7 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
-            <a id="library-guide"  target="_blank" rel="internal" class="mt-icon-book">&nbsp;Libraries</a>
-      
-            <div id="library-guide-put" class="custom_field" style="display: none; background-color: white ">                
-
-              <a href="https://bio.libretexts.org">Biology</a>
-<a href="https://biz.libretexts.org">Business</a>
-<a href="https://chem.libretexts.org">Chemistry</a>
-<a href="https://eng.libretexts.org">Engineering</a>
-<a href="https://espanol.libretexts.org">Espanol</a>
-<a href="https://geo.libretexts.org">Geography</a>
-<a href="https://human.libretexts.org">Humanities</a>
-<a href="https://math.libretexts.org">Mathematics</a>
-<a href="https://med.libretexts.org">Medicine</a>
-<a href="https://phys.libretexts.org">Physics</a>
-<a href="https://socialsci.libretexts.org">Social Sciences</a>
-<a href="https://stats.libretexts.org">Statistics</a>
-<a href="https://workforce.libretexts.org">Workforce</a>
-            </div>  
+            
     </div>
 
     <div class="custom_field">
@@ -527,28 +615,31 @@ async function Sidebar() {
         <a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
       
             <div id="construction-guide-put" class="custom_field" style="display: none; background-color: white ">                
+				
+	         </div>        
 
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/01%3A_LibreTexts_Fundamentals">Libretexts Fundamentals</a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/02%3A_A_Framework_for_Designing_Online_Texts"> Online Texts </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/03%3A_Basic_Editing"> Basic Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/04%3A_Advanced_Editing"> Advanced Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/05%3A_Interactive_Elements">Interactive Elements </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/06%3A_Contributing%2C_Harvesting%2C_and_Curating_Content"> Curating Content </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/07%3A_Remixing_Existing_Content"> Removing Content </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/08%3A_Disseminating_Texts_and_Course_Shells"> Course Shells </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/01%3A_LibreTexts_Fundamentals">Libretexts Fundamentals</a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/02%3A_A_Framework_for_Designing_Online_Texts"> Online Texts </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/03%3A_Basic_Editing"> Basic Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/04%3A_Advanced_Editing"> Advanced Editing </a>
-<a href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide/05%3A_Interactive_Elements">Interactive Elements </a>
-
-         </div>        
-
-<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
+		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
+		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+		<a href="https://h5p.libretexts.org/" class="mt-icon-article"> H5P Server</a>
+		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
+		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
+		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
 
-    </div>
-</div>`
+
+		</div>
+</div>`,
+			"libreverse": `<div id="sb6"  class="custom_sidebar">
+
+
+				<div class="custom_field">
+				<div style="display: flex; flex-direction: column; margin-left: 10px;">
+					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
+					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
+				</div>
+				
+				</div>
+				</div>`
 
 
 		}
@@ -568,7 +659,7 @@ function activateBeeLine() {
 				skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
 			});
 
-			Cookies.set("beeline", theme, { domain: 'libretexts.org' });
+			localStorage.setItem("beeline", theme, { domain: 'libretexts.org' });
 			if (theme === "off") {
 				beeline.uncolor();
 				if (typeof ga === 'function') {
@@ -620,7 +711,15 @@ function activateBeeLine() {
 
 }
 
+function savePanel(_input) {
 
+	sessionStorage.setItem("sidepanel", _input);
+	location.reload();
+}
+
+function splitPanel() {
+	$("section.mt-content-container").toggleClass("padLeft");
+}
 class SBconverterCalculator {
 	constructor() {
 		this.property = new Array();
@@ -683,9 +782,6 @@ class SBconverterCalculator {
 		this.unit[13] = new Array("Newton/sq.meter", "Atmosphere (normal)", "Atmosphere (techinical)", "Bar", "Centimeter mercury(cmHg)", "Centimeter water (4'C)", "Decibar", "Kgr force/sq.centimeter", "Kgr force/sq.meter", "Kip/square inch", "Millibar", "Millimeter mercury(mmHg)", "Pascal (Pa)", "Kilopascal (kPa)", "Megapascal (Mpa)", "Poundal/sq.foot", "Pound-force/sq.foot", "Pound-force/sq.inch (psi)", "Torr (mmHg,0'C)");
 		this.factor[13] = new Array(1, 101325, 98066.5, 100000, 1333.22, 98.0638, 10000, 98066.5, 9.80665, 6894757, 100, 133.3224, 1, 1000, 1000000, 47.88026, 47.88026, 6894.757, 133.322);
 
-		// !!! Caution: Temperature requires an increment as well as a multiplying this.factor
-		// !!! and that's why it's handled differently
-		// !!! Be VERY careful in how you change this behavior
 		this.property[14] = "Temperature";
 		this.unit[14] = new Array("Degrees Celsius ('C)", "Degrees Fahrenheit ('F)", "Degrees Kelvin ('K)", "Degrees Rankine ('R)");
 		this.factor[14] = new Array(1, 0.555555555555, 1, 0.555555555555);
@@ -790,8 +886,7 @@ class SBconverterCalculator {
 		targetForm.unit_input.value = result;
 	}
 
-};
-
+}
 
 function rtdefault() {
 	$('section.mt-content-container p').css("font-size", 1.1 + "rem");
@@ -800,103 +895,10 @@ function rtdefault() {
 	$("#toggler-text").attr("class", "toggler");
 	$('section.mt-content-container').css("margin-left", 0 + "px");
 	$('section.mt-content-container').css("margin-right", 0 + "px");
-	localStorage.setItem('page_width', 0);
+	sessionStorage.setItem('page_width', 0);
 	$('section.mt-content-container p').css("text-align", "justify");
 };
 
-async function TOC() {
-	let coverpage;
-	let coverTitle;
-	let content;
-	if (!navigator.webdriver || !window.matchMedia('print').matches) {
-		coverpage = await LibreTexts.getCoverpage();
-		if (coverpage) {
-			await makeTOC(coverpage, true);
-		}
-	}
-
-	async function makeTOC(path, isRoot, full) {
-		const origin = window.location.origin;
-		path = path.replace(origin + "/", "");
-		//get coverpage title & subpages;
-		let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
 
 
-		let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-		response = await response.json();
-		info = await info;
-		info = await info.json();
-		coverTitle = info.title;
-		return await subpageCallback(response, isRoot);
 
-		async function subpageCallback(info, isRoot) {
-			let subpageArray = info["page.subpage"];
-			const result = [];
-			const promiseArray = [];
-			if (!subpageArray)
-				return false;
-
-			if (!subpageArray.length) {
-				subpageArray = [subpageArray];
-			}
-			for (let i = 0; i < subpageArray.length; i++) {
-				promiseArray[i] = subpage(subpageArray[i], i);
-			}
-
-			async function subpage(subpage, index) {
-				let url = subpage["uri.ui"];
-				let path = subpage.path["#text"];
-				let currentPage = url === window.location.href;
-				const hasChildren = subpage["@subpages"] === "true";
-				let defaultOpen = window.location.href.includes(url) && !currentPage;
-				let children = hasChildren ? undefined : [];
-				if (hasChildren && (full || defaultOpen)) { //recurse down
-					children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
-					children = await children.json();
-					children = await
-						subpageCallback(children, false);
-				}
-				result[index] = {
-					title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
-					url: url,
-					selected: currentPage,
-					expanded: defaultOpen,
-					children: children,
-					lazy: !full
-				};
-			}
-
-			await Promise.all(promiseArray);
-			if (isRoot) {
-				content = result;
-
-				initializeFancyTree();
-			}
-			return result;
-		}
-
-		function initializeFancyTree() {
-			const target = $("#custom_target");
-			if (content) {
-				const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
-				button.text("Contents");
-				button.attr('id', "TOCbutton");
-				button.attr('title', "Expand/Contract Table of Contents");
-				button.addClass("toc-button");
-				target.addClass("toc-hierarchy");
-				// target.removeClass("elm-hierarchy mt-hierarchy");
-				target.innerHTML = "";
-				target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
-				target.fancytree({
-					source: content,
-					lazyLoad: function (event, data) {
-						const dfd = new $.Deferred();
-						let node = data.node;
-						data.result = dfd.promise();
-						makeTOC(node.data.url).then((result) => dfd.resolve(result));
-					}
-				})
-			}
-		}
-	}
-}

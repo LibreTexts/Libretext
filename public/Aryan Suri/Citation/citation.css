@@ -17,8 +17,8 @@
     padding: 20px;
     border: 1px solid #888;
     width: 40vw;
-    margin-left: 520px;
     z-index: 30000001;
+    margin-left: 0px;
     top: calc(50% - 150px);
     position: absolute;
     border-radius: 10px;
@@ -44,8 +44,8 @@
     padding: 20px;
     border: 1px solid #888;
     width: 40vw;
-    margin-left: 520px;
     z-index: 30000001;
+    margin-left: 0;
     top: calc(50% - 137px);
     position: absolute;
     border-radius: 10px;
