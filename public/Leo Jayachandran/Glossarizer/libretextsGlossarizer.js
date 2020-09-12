@@ -16,12 +16,27 @@ class LibreTextsGlossarizer {
         };
 
     }
+    isArticleTopicPage() {
+        return document.getElementById('pageTagsHolder').innerText.includes(`"article:topic"`);
+    }
+    removeGlossary() {
+        let pluginName = this.pluginName;
+        let defaults = this.defaults;
+        $('.mt-content-container').removeData('plugin_' + pluginName);
+
+        /* Remove wrapping tag */
+        $('.mt-content-container').find(defaults.replaceClass).each(function () {
+            let $this = $(this),
+                text = $this.text()
+
+            $this.replaceWith(text);
+        });
+    }
     getTermCols(rowText) { // tableRows[r]
         let cols = {};
         let colStart = [
             ['<td data-th="Word' + '(s)">', "word"],
             ['<td data-th="Definition">', "definition"],
-            ['<td data-th="Exclusions">', "exclusion"],
             ['<td data-th="Image">', "image"],
             ['<td data-th="Caption">', "caption"],
             ['<td data-th="Link">', "link"],
@@ -36,17 +51,65 @@ class LibreTextsGlossarizer {
         return cols;
     }
     async makeGlossary(sourceOption) {
+        if (!this.isArticleTopicPage()) { //If article isn't a topic page, don't do anything
+            return;
+        }
         let pluginName = this.pluginName;
         let defaults = this.defaults;
         let getTermCols = this.getTermCols;
-        let chosenSourceID = 0;
-        switch ((sourceOption||"").trim().toLowerCase()) {
-            case "textbook":
+        this.removeGlossary();
+        let retrievedGlossary = [];
+        switch ((sourceOption || "").trim().toLowerCase()) {
+            case "iupac gold book":
+                let goldbook = await $.getJSON("https://files.libretexts.org/github/LibreTextsMain/Leo%20Jayachandran/Glossarizer/goldbook_vocab.json");
+                for (let i = 1; i <= 7035; i++) {
+                    if (goldbook.entries[i].definition === null || goldbook.entries[i].term === null || goldbook.entries[i].definition.length == 0) { // If definition is empty skip term
+                        continue;
+                    }
+                    let breakingTerms = ["Br&#xF8;nsted relation", "<i>", "<em>", "→"];
+                    for (let u = 0; u < breakingTerms.length; u++) {
+                        if (goldbook.entries[i].term.includes(breakingTerms[u])) {
+                            continue;
+                        }
+                    }
+                    let cleanedDef = "";
+
+                    if (typeof goldbook.entries[i].definition === "object") {
+                        for (let u = 0; u < goldbook.entries[i].definition.length; u++) {
+                            if (goldbook.entries[i].definition[u].length)
+                                cleanedDef += `<p>${i}. ${goldbook.entries[i].definition}</p>`;
+                        }
+                        if (cleanedDef.length == 0) {
+                            continue;
+                        }
+                    } else {
+                        cleanedDef = goldbook.entries[i].definition.trim();
+                    }
+                    retrievedGlossary.push({
+                        "term": goldbook.entries[i].term,
+                        "description": cleanedDef
+                    });
+
+                }
+                break;
+            case "ichem":
+                let ichemPage = 278612;
+                retrievedGlossary = await getGlossaryJSON(ichemPage);
+                break;
+            case "achem":
+                let achemPage = 278614;
+                retrievedGlossary = await getGlossaryJSON(achemPage);
+                break;
+            case "ochem":
+                let ochemPage = 278613;
+                retrievedGlossary = await getGlossaryJSON(ochemPage);
+                break;
+            case "textbook": //The textbook should be the default option
             default:
                 const coverPage = await LibreTexts.getCoverpage();
                 const subdomain = window.location.origin.split('/')[2].split('.')[0];
                 let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
-                chosenSourceID = glossaryPage.id;
+                retrievedGlossary = await getGlossaryJSON(glossaryPage.id);
         }
         async function getGlossaryJSON(sourceID) {
             let data = await LibreTexts.authenticatedFetch(sourceID, 'contents?dream.out.format=json').then(response => {
@@ -92,15 +155,7 @@ class LibreTextsGlossarizer {
                 };
                 //Get data from the columns in the row
                 let cols = getTermCols(tableRows[r]);
-                //Generate the description
-                let exclusions;
-                if (cols["exclusion"].length) {
-                    exclusions = ", " + (cols["exclusion"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim().split(",")
-                        .map((val) => " !" + val.trim()).toString().trim());
-                } else {
-                    exclusions = "";
-                }
-                newTerm["term"] = (cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim() + exclusions).trim();
+                newTerm["term"] = cols["word"].substring(1).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
 
                 //Make Description
                 if (cols["link"].length) {
@@ -126,12 +181,12 @@ class LibreTextsGlossarizer {
             }
             return retrievedGlossary;
         }
-        let retrievedGlossary = await getGlossaryJSON(chosenSourceID);
-        
+
         if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
             console.error("incompatible glossary");
             return;
         }
+        retrievedGlossary.sort((a,b) => {return b.term.length - a.term.length}) //sort from longest term to shortest term
 
         /**
          * Plugin Name: Glossarizer
@@ -442,14 +497,16 @@ class LibreTextsGlossarizer {
                 target = $(this);
                 let tip = target.attr('title');
                 tooltip = $(`<div id="tooltip${target.text()}" class= "glossarizerTooltip"></div>`);
-
+                let inputs = {
+                    "tooltip": tooltip,
+                    "target": target,
+                    "tip": tip
+                };
                 if (!tip || tip == '')
                     return false;
 
                 target.removeAttr('title');
-                tooltip.css('opacity', 0)
-                    .html(tip)
-                    .appendTo('body');
+                tooltip.html(tip).appendTo('body');
 
                 let init_tooltip = function () {
                     tooltip.css('max-width', "");
@@ -471,7 +528,7 @@ class LibreTextsGlossarizer {
                         tooltip.addClass('right');
                     } else
                         tooltip.removeClass('right');
-                    
+
                     let pos_top = target.offset().top - tooltip.outerHeight() - 20;
 
                     if (pos_top < 0) {
@@ -480,65 +537,40 @@ class LibreTextsGlossarizer {
                     } else
                         tooltip.removeClass('top');
 
+
                     tooltip.css({
-                            left: pos_left,
-                            top: pos_top
-                        })
-                        .animate({
-                            top: '+=10',
-                            opacity: 1
-                        }, 50);
+                        left: pos_left,
+                        top: pos_top,
+                    }).fadeIn();
                 };
 
                 init_tooltip();
                 $(window).resize(init_tooltip);
 
 
-                let remove_tooltip = function () {
-                    $(".glossarizerTooltip").animate({
-                        top: '-=10',
-                        opacity: 0
-                    }, 50, function () {
-                        $(`.${defaults.replaceClass}:contains('${$(this).attr("id").substring(7)}')`).attr("title", $(this).html())
-                        $(this).remove();
-                    });
+                function remove_tooltip(inputs) {
 
-                };
-                if (tooltip.html().includes("<img")) {
-                    $(".glossarizerTooltip img").on("load", function () {
-                        init_tooltip();
-                        target.bind('mouseleave', function () {
-                            setTimeout(function (word) {
-                                if ($(`#tooltip${word}:hover`).length == 0) {
-                                    $("#tooltip" + word).animate({
-                                        top: '-=10',
-                                        opacity: 0
-                                    }, 50, function () {
-                                        $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
-                                        $(this).remove();
-                                    });
-                                }
-                            }, 300, target.html());
-                        });
-                    });
-                } else {
-                    tooltip.bind("mouseleave", remove_tooltip);
+                    inputs.target.attr("title", inputs.tip);
+                    inputs.tooltip.fadeOut();
+                    inputs.tooltip.remove();
 
                 }
+                if (tooltip.html().includes("<img")) {
+                    $(`#tooltip${target.text()} img`).on("load", init_tooltip);
+                }
 
-                tooltip.bind('click', remove_tooltip);
-                target.bind('mouseleave', function () {
-                    setTimeout(function (word) {
-                        if ($(`#tooltip${word}:hover`).length == 0) {
-                            $("#tooltip" + word).animate({
-                                top: '-=10',
-                                opacity: 0
-                            }, 50, function () {
-                                $(`.${defaults.replaceClass}:contains('${word}')`).attr("title", $(this).html())
-                                $(this).remove();
-                            });
+                tooltip.bind("mouseleave", () => {
+                    remove_tooltip(inputs);
+                });
+                tooltip.bind('click', () => {
+                    remove_tooltip(inputs);
+                });
+                target.bind('mouseleave', () => {
+                    setTimeout((inputs) => {
+                        if ($(`#tooltip${inputs.target.text()}:hover`).length == 0) {
+                            remove_tooltip(inputs);
                         }
-                    }, 300, target.html())
+                    }, 300, inputs);
                 });
             });
 
@@ -559,19 +591,6 @@ class LibreTextsGlossarizer {
 
         });
 
-    }
-    removeGlossary() {
-        let pluginName = this.pluginName;
-        let defaults = this.defaults;
-        $('.mt-content-container').removeData('plugin_' + pluginName);
-
-        /* Remove wrapping tag */
-        $('.mt-content-container').find(defaults.replaceClass).each(function () {
-            let $this = $(this),
-                text = $this.text()
-
-            $this.replaceWith(text);
-        });
     }
 
     buildBackMatter() {
@@ -596,6 +615,7 @@ class LibreTextsGlossarizer {
             };
             //Get cells in the 3 columns
             let cols = this.getTermCols(tableRows[r]);
+            if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
             if (cols["source"].length) {
                 cols["definition"] = cols["definition"].trim() + ` [Source: ${cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim()}]`;
             }
@@ -612,7 +632,7 @@ class LibreTextsGlossarizer {
             glossaryList.push(newTerm);
         }
         glossaryList.sort((a, b) => {
-            return (a["term"] < b["term"]) ? -1 : 1
+            return (a["term"].replace(/<.*?>/g, "").toLowerCase() < b["term"].replace(/<.*?>/g, "").toLowerCase()) ? -1 : 1;
         });
         let glossaryText = "";
         glossaryList.map((currentValue) => {
