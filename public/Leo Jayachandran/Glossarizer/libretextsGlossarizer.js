@@ -632,7 +632,7 @@ class LibreTextsGlossarizer {
             glossaryList.push(newTerm);
         }
         glossaryList.sort((a, b) => {
-            return (a["term"] < b["term"]) ? -1 : 1
+            return (a["term"].replace(/<.*?>/g, "").toLowerCase() < b["term"].replace(/<.*?>/g, "").toLowerCase()) ? -1 : 1;
         });
         let glossaryText = "";
         glossaryList.map((currentValue) => {
