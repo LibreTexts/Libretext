@@ -115,12 +115,12 @@ function attribution() {
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
-
     }
+}
     function hideattr() {
 
         if (!$(event!.target!).closest('#attrModalContent').length && !$(event!.target!).is('#attrModalContent')) {
-            $("#SB-PC-AD").remove();
+            $("#SB-PA-AD").remove();
         }
     
     

@@ -214,7 +214,9 @@ a.toggler.off {
   display: block;
 }
 
-
+.custom_sidebar h3 {
+  font-size: 1.8rem !important;
+}
 #sbLayout {
   display: flex;
   justify-content: space-evenly;

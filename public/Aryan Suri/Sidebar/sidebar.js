@@ -43,9 +43,6 @@ async function Sidebar() {
         let tab;
         let ccalc = true;
         if (sidepanel === null) {
-            // if (admin) { tab = true; }
-            // else if (pro) { tab = true; }
-            // else { tab = false; }
             tab = true;
         }
         else {
@@ -501,6 +498,9 @@ async function Sidebar() {
          <a onclick = "event.preventDefault(); attribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
 
+	<div class="custom_field">
+		<a onclick = "event.preventDefault(); bookmarkpage()" href='#' class='mt-icon-quote'>&nbsp;Bookmark WIP</a>
+	</div>
     <div class="custom_field">
         <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
     </div>
@@ -533,18 +533,13 @@ async function Sidebar() {
 
 </div>`,
             "developers": `<div id="sb5"  class="custom_sidebar">
-
-    <div class="custom_field">
+	<div class="custom_field">
+		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
+		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div> 
         <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
-        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
-        <a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
-      
-            <div id="construction-guide-put" class="custom_field" style="display: none; background-color: white ">                
-				
-	         </div>        
-
+        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>       
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
@@ -552,10 +547,8 @@ async function Sidebar() {
 		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
 		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
 		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
-
-
-		</div>
-</div>`,
+	</div>
+	</div>`,
             "libreverse": `<div id="sb6"  class="custom_sidebar">
 
 
