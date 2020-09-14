@@ -15,11 +15,12 @@ async function Sidebar() {
 	let tabs = getData(param.pro, param.tabs);
 	buildSidebar();
 	activateBeeLine();
+	createBookmarks();
 	LibreTexts.TOC(null, "#custom_target");
 	LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
 	LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put")
 	if (param.ccalc) {
-		SBCC = new SBconverterCalculator();
+		const SBCC = new SBconverterCalculator();
 	}
 
 	function getSidebar() {
@@ -48,8 +49,8 @@ async function Sidebar() {
 
 		const type = $("#pageTagsHolder").text().includes('"article:topic"');
 		const [library]: string = LibreTexts.parseURL();
-		const admin = document.getElementById('adminHolder')!.innerText === 'true';
 		const pro = document.getElementById("proHolder")!.innerText === 'true';
+		const title = document.getElementById("titleHolder")?.innerText;
 		let sidepanel = sessionStorage.getItem("sidepanel");
 		let tab;
 		let ccalc = true;
@@ -64,7 +65,8 @@ async function Sidebar() {
 			"library": library,
 			"pro": pro,
 			"tabs": tab,
-			"ccalc": ccalc
+			"ccalc": ccalc,
+			"title": title
 		}
 
 		return param
@@ -82,8 +84,8 @@ async function Sidebar() {
 		$(sidebarDiv).append(tabsSidebar);
 		$("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
 
-		if (param.tabs) {		
-			$("#tabsTrue").addClass("simHover");			
+		if (param.tabs) {
+			$("#tabsTrue").addClass("simHover");
 		} else {
 			$("body").append(tabs.open);
 			$("#sbHeader").hide();
@@ -460,59 +462,57 @@ async function Sidebar() {
     
 </div> `,
 				"default": ` <div id="sb2"  class="custom_sidebar">
-					<div class="custom_field">
-        
-					<a id="ref_table" target="_blank" >Reference Tables</a>
-					<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
-		
-					</div>
-				 <a id="phy_table" target="_blank" >Physical Constants</a>
-						<div  style="display: none;" id="phy_table_put" class="custom_field">
-						   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
-						</div>
-		
-				<a id="conversion_table">Conversion Calculator</a>
-				<div class="custom_field"  id="conversion_table_put" style="display:none;" >
-		
-							<div class="converter-wrapper">
-		  
-		
-		  <form name="property_form">
-			<span>
-			  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-			  </select>
-			</span>
-		  </form>
-		
-		  <div class="converter-side-a">
-			<form name="form_A" onSubmit="return false">
-			  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-			  <span>
-				<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-				</select>
-			  </span>
-			</form>
-		  </div> <!-- /converter-side-a -->
-		  
-		 <div class="converter-equals">
-		   <p style="margin: 10px;">=</p>
-		 </div> <!-- /converter-side-a -->
-		
-		  <div class="converter-side-b">
-			<form name="form_B" onSubmit="return false">
-			  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-			  <span>
-				<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-				</select>
-			  </span>
-			</form>
-		  </div> <!-- /converter-side-b -->
-		</div><!-- /converter-wrapper -->
-		
-				</div>
+<div class="custom_field">       
+	<a id="ref_table" target="_blank" >Reference Tables</a>
+		<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
+
+		</div>
+	 <a id="phy_table" target="_blank" >Physical Constants</a>
+			<div  style="display: none;" id="phy_table_put" class="custom_field">
+			   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
 			</div>
-			
-		</div>`
+
+	<a id="conversion_table">Conversion Calculator</a>
+	<div class="custom_field"  id="conversion_table_put" style="display:none;" >
+
+				<div class="converter-wrapper">
+
+<form name="property_form">
+<span>
+  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
+  </select>
+</span>
+</form>
+
+<div class="converter-side-a">
+<form name="form_A" onSubmit="return false">
+  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
+  <span>
+	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
+	</select>
+  </span>
+</form>
+</div> <!-- /converter-side-a -->
+
+<div class="converter-equals">
+<p style="margin: 10px;">=</p>
+</div> <!-- /converter-side-a -->
+
+<div class="converter-side-b">
+<form name="form_B" onSubmit="return false">
+  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
+  <span>
+	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
+	</select>
+  </span>
+</form>
+</div> <!-- /converter-side-b -->
+</div><!-- /converter-wrapper -->
+
+	</div>
+</div>
+
+</div> `
 			},
 			"control": ` <div id="sb3"  class="custom_sidebar">
 
@@ -543,10 +543,10 @@ async function Sidebar() {
 	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->		
 	</div>
 	<div class="custom_field">
-   <h3 style="font-size: 1.8rem !important;">
+   <h3>
    <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">
 	BeeLine Reader </h3>
-	<p> BeeLine Reader uses subtle color gradients to help you read quicker and more efficiently. <a style="color: #30b3f6; display: unset; margin:0;" href="http://www.beelinereader.com/education/?utm_source=libretexts"> Learn more. </a> </p>
+	<p> BeeLine Reader uses subtle color gradients to help you read more quickly and efficiently. Choose a color scheme below, or click here to <a style="color: #30b3f6; display: unset; margin:0;" href="http://www.beelinereader.com/education/?utm_source=libretexts"> learn more. </a> </p>
 		   
 
 	</div>
@@ -572,8 +572,12 @@ async function Sidebar() {
     </div>
 
 	<div class="custom_field">
-		<a onclick = "event.preventDefault(); bookmarkpage()" href='#' class='mt-icon-quote'>&nbsp;Bookmark WIP</a>
+		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-quote'>&nbsp;Save Bookmark</a>
+			<div id="bm-list">
+
+			</div>
 	</div>
+
     <div class="custom_field">
         <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
     </div>
@@ -601,12 +605,12 @@ async function Sidebar() {
     <div class="custom_field">
         <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
     </div>
-
+		
 
 
 </div>`,
-			"developers": 
-	`<div id="sb5"  class="custom_sidebar">
+			"developers":
+				`<div id="sb5"  class="custom_sidebar">
 	<div class="custom_field">
 		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
 		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div> 
@@ -639,6 +643,8 @@ async function Sidebar() {
 		}
 
 	}
+
+
 }
 
 function activateBeeLine() {
@@ -715,10 +721,10 @@ function splitPanel() {
 	$("section.mt-content-container").toggleClass("padLeft");
 }
 class SBconverterCalculator {
-    property: any[];
-    unit: any[];
-    factor: any[];
-    tempIncrement: number[];
+	property: any[];
+	unit: any[];
+	factor: any[];
+	tempIncrement: number[];
 	constructor() {
 		this.property = new Array();
 		this.unit = new Array();
@@ -897,6 +903,27 @@ function rtdefault() {
 	$('section.mt-content-container p').css("text-align", "justify");
 };
 
+function saveBookmark() {
+	const TITLE: string = document.getElementById("titleHolder")!.innerText;
+	const URL = window.location.href;
+	if (URL) {
+		sessionStorage.setItem("Title", TITLE)
+		sessionStorage.setItem("Bookmark", URL)
 
+		createBookmarks();
 
+	} else {
+		console.log("Bookmark created already!")
+	}
+}
 
+function createBookmarks() {
+	const LI = document.createElement("li");
+	const URL = sessionStorage.getItem("Bookmark");
+	const TITLE = sessionStorage.getItem("Title");
+
+	let INNER = `<div> <p>Bookmark: <a style="display: unset;" href="${URL}"> ${TITLE}</a></p></div>`;
+	LI.innerHTML = INNER;
+
+	URL ? document.querySelector("#bm-list")?.appendChild(LI) : console.log("No bookmarks");
+}
