@@ -13,6 +13,8 @@ const stripe = require('stripe')(bookstoreConfig.STRIPE_SECRET_KEY);
 const taxMultiplier = parseFloat(bookstoreConfig.TAX_MULTIPLIER);
 const {ClientCredentials} = require('simple-oauth2');
 const basePath = '/bookstore';
+
+const TOKEN_PATH = './bookstore/token.json';
 let port = 3008;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 	port = parseInt(process.argv[2]);
@@ -44,6 +46,15 @@ app.get(basePath + '/stripeInitialize', async (req, res) => {
 		publicKey: bookstoreConfig.STRIPE_PUBLISHABLE_KEY,
 	});
 });
+
+(async function updatePending() { //on reboot, check all pending orders
+	let files = await fs.readdir('./bookstore/pending');
+	files = files.map(item => {
+		item = item.replace('.json', '');
+		return updateOrder(item, true)
+	});
+	files = await Promise.all(files);
+})()
 
 async function updateOrder(sessionId, forceUpdate = false) {
 	let result = {};
@@ -85,7 +96,8 @@ async function updateOrder(sessionId, forceUpdate = false) {
 		
 		//archive order if completed
 		if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED'].includes(result.status)) {
-			console.log(`[Archiving] ${sessionId}`)
+			console.log(`[Archiving] ${sessionId}`);
+			await sendShippingEmail(result);
 			await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
 		}
 	}
@@ -324,7 +336,7 @@ async function fulfillOrder(session, sendEmailOnly) {
 	
 	let luluResponse;
 	if (sendEmailOnly) {
-		sendLuluReceipt(payload, {id: sendEmailOnly});
+		sendLuluReceiptEmail(payload, {id: sendEmailOnly});
 		return;
 	}
 	
@@ -348,7 +360,7 @@ async function fulfillOrder(session, sendEmailOnly) {
 			lulu: luluResponse,
 		}, {spaces: '\t'});
 		
-		sendLuluReceipt(payload, luluResponse);
+		sendLuluReceiptEmail(payload, luluResponse);
 	}
 	else {
 		console.error(luluResponse);
@@ -378,16 +390,12 @@ async function LuluAPI(url, options) {
 	return await fetch(url, options);
 }
 
-function sendLuluReceipt(payload, luluResponse) {
+function sendLuluReceiptEmail(payload, luluResponse) {
 	const to = payload.shipping_address.email;
 	const sub = 'Thank you for your order from the LibreTexts Bookstore!';
 
 // If modifying these scopes, delete token.json.
 	const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
-// The file token.json stores the user's access and refresh tokens, and is
-// created automatically when the authorization flow completes for the first
-// time.
-	const TOKEN_PATH = './bookstore/token.json';
 
 // Load client secrets from a local file.
 	fs.readFile('bookstoreConfig.json', async (err, content) => {
@@ -404,7 +412,7 @@ function sendLuluReceipt(payload, luluResponse) {
 			if (luluResponse.ok) {
 				luluResponse = await luluResponse.json();
 			}
-			else{
+			else {
 				console.error(await luluResponse.json());
 			}
 			
@@ -422,19 +430,23 @@ function sendLuluReceipt(payload, luluResponse) {
 <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
 </tr></thead>
 <tbody>
-${payload.line_items.map(item => `<tr>
+${payload.line_items.map(item => {
+				const [lib, pageID] = item.external_id.split('-');
+				return `<tr>
+		<td>
+		<img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+		</td>
         <td>
         <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
         <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
         <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
         </td>
-        <td>
+        <td style="text-align: right">
         <p>Shipping to <u>${payload.shipping_address.city}, ${payload.shipping_address.state_code}</u> via <i>${payload.shipping_level}</i></p>
-        </td>
-        <td>
         <p>Estimated arrival from <b>${luluResponse?.estimated_shipping_dates?.arrival_min}</b> to ${luluResponse?.estimated_shipping_dates?.arrival_max}</p>
         </td>
-</tr>`)}
+</tr>`
+			})}
 </tbody>
 </table>
 
@@ -449,25 +461,78 @@ ${payload.line_items.map(item => `<tr>
 			email.makeBody();
 		});
 	});
-	
-	/**
-	 * Create an OAuth2 client with the given credentials, and then execute the
-	 * given callback function.
-	 * @param {Object} credentials The authorization client credentials.
-	 * @param {function} callback The callback to call with the authorized client.
-	 */
-	function authorize(credentials, callback) {
-		const {client_secret, client_id, redirect_uris} = credentials.installed;
-		const oAuth2Client = new google.auth.OAuth2(
-			client_id, client_secret, redirect_uris[0]);
+}
+
+function sendShippingEmail(payload) {
+	const to = payload.lulu.shipping_address.email;
+	const sub = 'Your order from the LibreTexts Bookstore has shipped.';
+
+// If modifying these scopes, delete token.json.
+	const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
+
+// Load client secrets from a local file.
+	fs.readFile('bookstoreConfig.json', async (err, content) => {
+		if (err) return console.log('Error loading client secret file:', err);
 		
-		// Check if we have previously stored a token.
-		fs.readFile(TOKEN_PATH, (err, token) => {
-			if (err) return getNewToken(oAuth2Client, callback);
-			oAuth2Client.setCredentials(JSON.parse(token));
-			callback(oAuth2Client);
+		// Authorize a client with credentials, then call the Gmail API.
+		authorize(JSON.parse(content).GMAIL, (auth) => {
+			
+			//creation of message from payload and line_items
+			const message = `<h1>Your order from the LibreTexts Bookstore has shipped.</h1>
+<p>This email is confirmation that your order has been printed and shipped.</p>
+<table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+<thead><tr>
+<th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+</tr></thead>
+<tbody>
+${payload.lulu?.line_items.map(item => {
+				const [lib, pageID] = item.external_id.split('-');
+				return `<tr>
+		<td>
+		<img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+		</td>
+        <td>
+        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+        </td>
+        <td style="text-align: right">
+        <p>Shipping to <u>${payload.lulu.shipping_address.city}, ${payload.lulu.shipping_address.state_code}</u> via <i>${payload.lulu.shipping_option_level}</i></p>
+        <p>Estimated arrival from <b>${payload.lulu?.estimated_shipping_dates?.arrival_min}</b> to ${payload.lulu?.estimated_shipping_dates?.arrival_max}</p>
+        <p>Tracking link for <a href=${item.tracking_urls?.[0]}>${item?.tracking_id}</a></p>
+        </td>
+</tr>`
+			})}
+</tbody>
+</table>
+<br/>
+<p> You can also review the status of your order on this page:
+<a href="https://libretexts.org/bookstore/Order_Success.html?order=${payload.stripeID}">https://libretexts.org/bookstore/Order_Success.html?order=${payload.stripeID}</a></p>
+<br/>
+<p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
+<p>Please remember to include your order identifier [${payload.stripeID}].</p>
+<h3>Enjoy your purchase!</h3>
+<img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
+			
+			
+			const email = new CreateMail(auth, to, sub, message);
+			email.makeBody();
 		});
-	}
+	});
+}
+
+function authorize(credentials, callback) {
+	const {client_secret, client_id, redirect_uris} = credentials.installed;
+	const oAuth2Client = new google.auth.OAuth2(
+		client_id, client_secret, redirect_uris[0]);
+	
+	// Check if we have previously stored a token.
+	fs.readFile(TOKEN_PATH, (err, token) => {
+		if (err) return getNewToken(oAuth2Client, callback);
+		oAuth2Client.setCredentials(JSON.parse(token));
+		callback(oAuth2Client);
+	});
+	
 	
 	/**
 	 * Get and store new token after prompting for user authorization, and then
@@ -499,15 +564,8 @@ ${payload.line_items.map(item => `<tr>
 			});
 		});
 	}
-	
-	/**
-	 * Sends a test email using the user's account.
-	 *
-	 * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-	 */
-		
-
 }
+
 
 class CreateMail {
 	constructor(auth, to, sub, body) {
@@ -546,7 +604,7 @@ class CreateMail {
 				.replace(/=+$/, '');
 			
 			this.sendMail(encodedMessage);
-			console.log(`Sent ${this.to} receipt`);
+			console.log(`Sent ${this.to} ${this.sub}`);
 		});
 	}
 	
