@@ -1,5 +1,3 @@
-const LibreTexts = LibreTextsReuse();
-
 //Plugins to the Editor are registered onto this object for later activation
 const LibreEditor = {
 	registerAll: (config) => {
@@ -17,6 +15,8 @@ const LibreEditor = {
 		}
 	}
 };
+
+const LibreTexts = LibreTextsReuse();
 
 function LibreTextsReuse() {
 	const libraries = {
@@ -127,7 +127,7 @@ function LibreTextsReuse() {
 			path: path,
 			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
 		};
-		payload = {...payload, ...options};
+		payload = Object.assign({}, payload, options);
 		
 		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
 			method: method,
@@ -424,7 +424,7 @@ function LibreTextsReuse() {
 			if (coverpage) {
 				await makeTOC(coverpage, true);
 			}
-			else{
+			else {
 				const [subdomain] = LibreTexts.parseURL();
 				await makeTOC(`https://${subdomain}.libretexts.org/home`, true);
 			}

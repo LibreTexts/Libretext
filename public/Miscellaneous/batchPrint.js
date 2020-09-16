@@ -82,9 +82,6 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 			}
 			
-			innerHTML += `<div id="sidebarPromotion" style="background-color: #127bc4; color: white; display: flex; align-items: center; padding: 5px;" title="Contains view setting and useful learning resources" onclick="setTimeout(()=>document.getElementById('custom_open').click(),10);">Open New Sidebar ☰</div>`;
-			
-			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");
