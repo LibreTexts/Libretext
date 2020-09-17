@@ -10,6 +10,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Typography from "@material-ui/core/Typography";
 import Skeleton from "@material-ui/lab/Skeleton";
+import {Divider} from "@material-ui/core";
 
 
 const target = document.createElement("div");
@@ -74,6 +75,64 @@ export default function GetOrder(props) {
 			default: grey,
 		},
 	});
+	
+	function renderListItems() {
+		let trackingURLS = [];
+		return <>
+			<table className="items" style={{width: '100%', borderSpacing: 0, borderCollapse: 'collapse'}}>
+				<thead>
+				<tr>
+					<th colSpan={3} style={{
+						fontFamily: '"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif',
+						backgroundColor: '#f8f8f8',
+						borderRadius: '0px 0px 0px 0px',
+						border: 'solid 0px #eaecec',
+						padding: '12px',
+						color: '#325f74',
+						fontSize: '18px',
+						fontWeight: 'bold',
+						borderBottom: 'solid 2px #eaecec'
+					}}>Products
+						Ordered
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				{order?.lulu?.line_items.map((item, index) => {
+					const [lib, pageID] = item.external_id.split('-');
+					if (item?.tracking_id)
+						trackingURLS.push(item?.tracking_id)
+					return <tr key={index}>
+						<td>
+							<img
+								src={`https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail`}
+								style={{height: 150, width: 150, objectFit: 'contain'}}/>
+						</td>
+						<td>
+							<p className="item-qty" style={{margin: 0}}>Quantity: {item.quantity}</p>
+							<h3 className="product-name-custom"
+							    style={{margin: 0, color: "#0080ac", fontWeight: "bold"}}>{item.title}</h3>
+							<p className="sku-custom" style={{marginTop: 0, marginBottom: '0px'}}>
+								<em>{item.external_id}</em></p>
+						</td>
+						<td style={{textAlign: "right"}}>
+							<p>Shipping to <u>{order?.lulu.shipping_address.city},
+								{order?.lulu.shipping_address.state_code}</u> via <i>{order?.lulu.shipping_level}</i>
+							</p>
+							<p>Estimated arrival
+								from <b>{order?.lulu?.estimated_shipping_dates?.arrival_min}</b> to {order?.lulu?.estimated_shipping_dates?.arrival_max}
+							</p>
+						</td>
+					</tr>
+				})}
+				</tbody>
+			</table>
+			<Divider/>
+			{order?.status === "SHIPPED" ? <iframe style={{width: '100%', height: 750}}
+			                                       src={`https://t.17track.net/en#nums=${trackingURLS.join()}`}/> : null}
+		</>;
+	}
+	
 	if (!orderID) {
 		return <h1>No order ID found. Please add ?order=[[[orderID]]] to the url to pull up your order.
 		</h1>
@@ -96,20 +155,35 @@ export default function GetOrder(props) {
 			</ThemeProvider>
 		else
 			return <ThemeProvider theme={theme}>
-				<Paper id='GetOrder'>
-					<Stepper activeStep={selectedIndex} alternativeLabel>
-						{steps.map((item) => {
-							let label = item.name || item.status;
-							label = label.replace(/_/g, ' ');
-							return <Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
-						})}
-					</Stepper>
-					<h2>{selected.message || order.lulu.status.message}</h2>
+				<Paper id='GetOrder' style={{padding: 20}}>
+					<div style={{overflowX: "auto"}}>
+						
+						<h1>Order {order.stripeID}</h1>
+						<Stepper activeStep={selectedIndex} alternativeLabel>
+							{steps.map((item) => {
+								let label = item.name || item.status;
+								label = label.replace(/_/g, ' ');
+								return <Step key={label}>
+									<StepLabel>{label}</StepLabel>
+								</Step>
+							})}
+						</Stepper>
+						<h2>{selected.message || order.lulu.status.message}</h2>
+					</div>
+					<Divider/>
+					{renderListItems()}
 					<pre>
-				{JSON.stringify(order, null, 2)}
+				{/*{JSON.stringify(order, null, 2)}*/}
 			</pre>
+					<p>If you encounter any issues with your order, don't hesitate contact us at <a
+						className='normalLink'
+						href={`mailto:bookstore@libretexts.org?subject=Bookstore Order [${order.stripeID}]`}>bookstore@libretexts.org</a>.
+					</p>
+					<p>Please remember to include your order identifier [{order.stripeID}].</p>
+					<h3>Enjoy your purchase!</h3>
+					<img
+						src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png"
+						alt="LibreTexts" className="linkIcon" title="LibreTexts Bookstore" width="350" height="124"/>
 				</Paper>
 			</ThemeProvider>
 	}

@@ -1,3 +1,11 @@
+.orderSuccess > .container > .row > div {
+    width: 100%;
+}
+
+div#missionContent {
+    margin-top: 70px;
+}
+
 .Text {
     width: 220px;
     height: 220px;
