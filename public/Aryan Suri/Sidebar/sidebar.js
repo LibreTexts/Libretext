@@ -7,7 +7,7 @@ async function Sidebar() {
     if (window !== window.top)
         return;
     let param = getParam();
-    let tabs = getData(param.pro, param.tabs);
+    let tabs = getData(param.pro);
     buildSidebar();
     activateBeeLine();
     createBookmarks();
@@ -490,14 +490,6 @@ async function Sidebar() {
    
 </div>`,
             "usage": `<div id="sb4"  class="custom_sidebar">
-    <div class="custom_field">
-         <a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>&nbsp;Get Page Citation</a>
-    </div>
-
-    <div class="custom_field">
-         <a onclick = "event.preventDefault(); attribution()" href='#' class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
-    </div>
-
 	<div class="custom_field">
 		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-quote'>&nbsp;Save Bookmark</a>
 			<div id="bm-list">
