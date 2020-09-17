@@ -337,7 +337,9 @@ a.toggler.off {
   color: #ffffff;
 }
 
-
+#bm-list {
+  list-style: none;
+}
 
 .converter-wrapper {
   margin: 0 auto;

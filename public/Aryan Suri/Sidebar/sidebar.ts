@@ -898,14 +898,13 @@ function rtdefault() {
 function saveBookmark() {
 	const TITLE: string = document.getElementById("titleHolder")!.innerText;
 	const URL = window.location.href;
-	if (URL) {
+	const CHECK = sessionStorage.getItem("Bookmark");
+	if (CHECK == null) {
 		sessionStorage.setItem("Title", TITLE)
 		sessionStorage.setItem("Bookmark", URL)
-
 		createBookmarks();
-
 	} else {
-		console.log("Bookmark created already!")
+		console.log("one bookmark");
 	}
 }
 
