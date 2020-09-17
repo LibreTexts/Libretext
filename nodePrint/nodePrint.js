@@ -1617,16 +1617,23 @@ puppeteer.launch({
 							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
 						});
-						
-						let dynamicGlossary = await authenticatedFetch('https://chem.libretexts.org/@api/deki/pages/279134/contents?dream.out.format=json&mode=edit', null, null, 'LibreBot');
-						dynamicGlossary = await dynamicGlossary.json();
-						dynamicGlossary  = dynamicGlossary?.body?.[0];
-						//Create Glossary Needs to be enabled
-						await authenticatedFetch(`${path}/${text}_Matter/20:Glossary`, `contents?${matterMode}&title=Glossary&dream.out.format=json`, current.subdomain, 'LibreBot', {
-							method: "POST",
-							body: dynamicGlossary +
-								"\n<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
-						});
+						try {
+							let dynamicGlossary = await authenticatedFetch('https://chem.libretexts.org/@api/deki/pages/279134/contents?dream.out.format=json&mode=edit', null, null, 'LibreBot');
+							dynamicGlossary = await dynamicGlossary.json();
+							if (dynamicGlossary && dynamicGlossary.body) {
+								// dynamicGlossary = dynamicGlossary?.body?.[0]; //needs 14.x LTS
+								
+								dynamicGlossary = dynamicGlossary.body[0];
+								if (dynamicGlossary)
+									await authenticatedFetch(`${path}/${text}_Matter/20:Glossary`, `contents?${matterMode}&title=Glossary&dream.out.format=json`, current.subdomain, 'LibreBot', {
+										method: "POST",
+										body: dynamicGlossary +
+											"\n<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
+									});
+							}
+						} catch (e) {
+							console.error('Glossary Error',e);
+						}
 					}
 				}
 				

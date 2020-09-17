@@ -195,7 +195,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="Mocha.nodePrintTest">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1669,26 +1669,26 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="205" height="601" key="GridCell.Tab.0.bottom" timestamp="1600323941539">
+    <state width="600" height="565" key="GridCell.Tab.0.bottom" timestamp="1600362471305">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="453" height="510" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440415" />
-    <state width="205" height="601" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600323941539" />
-    <state width="205" height="601" key="GridCell.Tab.0.center" timestamp="1600323941539">
+    <state width="600" height="565" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600362471305" />
+    <state width="600" height="565" key="GridCell.Tab.0.center" timestamp="1600362471304">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="453" height="510" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440413" />
-    <state width="205" height="601" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600323941539" />
-    <state width="205" height="601" key="GridCell.Tab.0.left" timestamp="1600323941539">
+    <state width="600" height="565" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600362471304" />
+    <state width="600" height="565" key="GridCell.Tab.0.left" timestamp="1600362471304">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="453" height="510" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440413" />
-    <state width="205" height="601" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600323941539" />
-    <state width="205" height="601" key="GridCell.Tab.0.right" timestamp="1600323941539">
+    <state width="600" height="565" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600362471304" />
+    <state width="600" height="565" key="GridCell.Tab.0.right" timestamp="1600362471304">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="453" height="510" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440415" />
-    <state width="205" height="601" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600323941539" />
+    <state width="600" height="565" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600362471304" />
     <state width="205" height="601" key="GridCell.Tab.1.bottom" timestamp="1600323941539">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
