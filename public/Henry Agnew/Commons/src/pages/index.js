@@ -1,6 +1,8 @@
 import React from 'react';
 import LibreText from "../components/LibreText.jsx";
 import ReactDOM from 'react-dom';
+import {createMuiTheme} from '@material-ui/core/styles';
+import {blue, grey} from "@material-ui/core/colors";
 import Skeleton from '@material-ui/lab/Skeleton';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
@@ -14,6 +16,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+import {ThemeProvider} from "@material-ui/styles";
+import TablePagination from "@material-ui/core/TablePagination";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -28,7 +32,9 @@ class Commons extends React.Component {
 		this.state = {
 			downloads: [],
 			institutions: [],
-			selectedInstitution: this.props.data.inst || ''
+			selectedInstitution: this.props.data.inst || '',
+			page: 0,
+			numEntries: 10,
 		}
 	}
 	
@@ -103,6 +109,15 @@ class Commons extends React.Component {
 	}
 	
 	render() {
+		const dark = localStorage.getItem('darkMode') === 'true';
+		const theme = createMuiTheme({
+			palette: {
+				type: dark ? 'dark' : 'light',
+				primary: blue,
+				secondary: {main: '#008000'},
+				default: grey,
+			},
+		});
 		let result;
 		if (!this.state.downloads.length) {
 			result = [...Array(20)].map((item, index) =>
@@ -171,12 +186,21 @@ class Commons extends React.Component {
 				else
 					titleError = true; //don't make any changes if failed
 			}
+			let updateSearchQuery = (key) => (event, newValue) =>{
+				this.setState({[key]:newValue,
+				page: 0});
+			}
 			
 			//transform entries into React elements
+			const firstIndex = this.state.numEntries * this.state.page;
+			const lastIndex = firstIndex + this.state.numEntries;
+			const totalCount = result.length;
+			result = result.slice(firstIndex, lastIndex);
+			
 			result = result.map((item, index) => <LibreText key={index} item={item}
 			                                                format={this.state.format}/>);
 			
-			return <>
+			return <ThemeProvider theme={theme}>
 				{/*backgroundColor: '#0f67a6'*/}
 				<div className={'CenterContainer'}>
 					<div style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -187,7 +211,7 @@ class Commons extends React.Component {
 							options={this.state.institutions}
 							value={this.state.selectedInstitution || null}
 							renderInput={(params) => <TextField {...params} label="Institution" variant="filled"/>}
-							onChange={(event, newValue) => this.setState({selectedInstitution: newValue})}
+							onChange={updateSearchQuery('selectedInstitution')}
 						/>
 						<Autocomplete
 							id="author-demo"
@@ -197,7 +221,7 @@ class Commons extends React.Component {
 							value={this.state.selectedAuthor || null}
 							renderInput={(params) => <TextField {...params} label="Authors" variant="filled"
 							                                    error={authorError}/>}
-							onChange={(event, newValue) => this.setState({selectedAuthor: newValue})}
+							onChange={updateSearchQuery('selectedAuthor')}
 						/>
 						<Autocomplete
 							id="title-demo"
@@ -210,7 +234,7 @@ class Commons extends React.Component {
 							value={this.state.selectedTitle || []}
 							renderInput={(params) => <TextField {...params} label="Title or Tag" variant="filled"
 							                                    error={titleError}/>}
-							onChange={(event, newValue) => this.setState({selectedTitle: newValue})}
+							onChange={updateSearchQuery('selectedTitle')}
 						/>
 						<Button variant="contained"
 						        onClick={() => this.setState({libraryDialog: true})}>Libraries</Button>
@@ -219,11 +243,29 @@ class Commons extends React.Component {
 						<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly'}}>
 							{Object.keys(LibreTexts.libraries).map((option) => <Lib key={option} option={option}/>)}
 						</div>
+						<TablePagination
+							component="div"
+							count={totalCount}
+							page={this.state.page}
+							onChangePage={(e, number) => this.setState({page: number})}
+							rowsPerPage={this.state.numEntries}
+							labelRowsPerPage='Number of Entries'
+							onChangeRowsPerPage={(e) => this.setState({numEntries: parseInt(e.target.value)})}
+						/>
 					</div>
 					<div className={'Center'}>
 						{result}</div>
+					<TablePagination
+						component="div"
+						count={totalCount}
+						page={this.state.page}
+						onChangePage={(e, number) => this.setState({page: number})}
+						rowsPerPage={this.state.numEntries}
+						labelRowsPerPage='Number of Entries'
+						onChangeRowsPerPage={(e, number) => this.setState({numEntries: parseInt(e.target.value)})}
+					/>
 				</div>
-			</>
+			</ThemeProvider>
 		}
 	}
 }
@@ -292,7 +334,7 @@ function LibraryDialog(props) {
 
 function Lib(props) {
 	const [clicked, setClicked] = React.useState(false);
-	return <IconButton style={{width: 32, height: 32, padding:0}} onClick={() => setClicked(!clicked)}>
+	return <IconButton style={{width: 32, height: 32, padding: 0}} onClick={() => setClicked(!clicked)}>
 		<img
 			src={`https://libretexts.org/img/LibreTexts/glyphs${clicked ? '' : '_blue'}/${LibreTexts.libraries[props.option]}.png`}
 			style={{verticalAlign: 'middle'}}/>

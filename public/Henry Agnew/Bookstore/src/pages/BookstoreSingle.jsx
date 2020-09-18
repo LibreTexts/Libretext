@@ -201,7 +201,6 @@ function BookstoreSingle(props) {
 	});
 	
 	return <ThemeProvider theme={theme}>
-		<p>This project is currently in Beta! If you have any issues, please contact the developer at hagnew @ libretexts.org</p>
 		<Paper className='orderForm' id='bookstoreSingle'>
 			<div>
 				<Paper className='bookstoreColumn'>
@@ -272,7 +271,7 @@ function BookstoreSingle(props) {
 				<Paper className='bookstoreColumn'>
 					<h3>Select Shipping Option</h3>
 					{renderShipping()}
-					<p>Shipping currently only available to the continental US (US-48). Contact us at bookstore@libretexts.org for orders outside of this area.</p>
+					<p>Shipping prices are calculated for within the continental US (US-48). Contact us at bookstore@libretexts.org for orders outside of this area.</p>
 				</Paper>
 			</div>
 			
