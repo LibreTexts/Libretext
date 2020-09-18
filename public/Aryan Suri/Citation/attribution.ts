@@ -39,9 +39,12 @@ function attribution() {
     function buildAttribution() {
 
         const param = getParam();
-        let attrdiv = document.createElement("div");
+        const attrdiv = document.createElement("div");
+        const sidebar = document.getElementById("sidebarDiv");
+    
+        sidebar?.style.display === "none";
         $(attrdiv).attr("id", "SB-PA-AD");
-        $("body").append(attrdiv);
+        document.body.append(attrdiv);
 
         $(attrdiv).html(`
 
@@ -115,14 +118,14 @@ function attribution() {
             document.execCommand("copy");
             document.body.removeChild(elem);
         });
-
     }
+}
     function hideattr() {
 
         if (!$(event!.target!).closest('#attrModalContent').length && !$(event!.target!).is('#attrModalContent')) {
-            $("#SB-PC-AD").remove();
+            $("#SB-PA-AD").remove();
         }
     
     
     }
-}
+

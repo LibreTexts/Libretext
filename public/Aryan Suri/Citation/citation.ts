@@ -1,8 +1,12 @@
 
 function buildcite() {
-    let citeDiv = document.createElement("div");
-    $(citeDiv).attr("id", "SB-PC-AD");
-    $('body').append(citeDiv);
+    const sidebar = document.getElementById("sidebarDiv");
+    const citeDiv = document.createElement("div");
+
+    sidebar?.style.display === "none";
+    citeDiv.id = "SB-PC-AD";
+    document.body.append(citeDiv);
+
 
     $(citeDiv).html(`
 

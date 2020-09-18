@@ -35,9 +35,11 @@ function attribution() {
     }
     function buildAttribution() {
         const param = getParam();
-        let attrdiv = document.createElement("div");
+        const attrdiv = document.createElement("div");
+        const sidebar = document.getElementById("sidebarDiv");
+        sidebar?.style.display === "none";
         $(attrdiv).attr("id", "SB-PA-AD");
-        $("body").append(attrdiv);
+        document.body.append(attrdiv);
         $(attrdiv).html(`
 
             <div onclick="hideattr()" id="attrModal">
@@ -101,7 +103,6 @@ function attribution() {
             document.body.removeChild(elem);
         });
     }
-
 }
 function hideattr() {
     if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
