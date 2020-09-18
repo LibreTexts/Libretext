@@ -2,8 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Libretext.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Libretext.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/nodePrint.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/nodePrint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/LIBRARIES.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/LIBRARIES_BACKUP.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/QUESTIONS.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/imas_libraries.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/imas_library_items.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/imathas_imas_questionset.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/importIMATHAS.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Import_IMATHAS/sitemap.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/import.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/import.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/src/components/Importer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/src/components/Importer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +83,7 @@
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.11.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.10.3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/ImportFiles" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -195,7 +211,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.nodePrint">
+  <component name="RunManager" selected="npm.Importer">
     <configuration name="Remote Debug" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" host="test.libretexts.org" port="4000">
       <method v="2" />
     </configuration>
@@ -1669,26 +1685,26 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
-    <state width="553" height="601" key="GridCell.Tab.0.bottom" timestamp="1600397940288">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="423" height="649" key="GridCell.Tab.0.bottom" timestamp="1600448928369">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="453" height="510" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440415" />
-    <state width="553" height="601" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600397940288" />
-    <state width="553" height="601" key="GridCell.Tab.0.center" timestamp="1600397940288">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="423" height="649" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600448928369" />
+    <state width="423" height="746" key="GridCell.Tab.0.bottom/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600448629820" />
+    <state width="423" height="649" key="GridCell.Tab.0.center" timestamp="1600448928369">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="453" height="510" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440413" />
-    <state width="553" height="601" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600397940288" />
-    <state width="553" height="601" key="GridCell.Tab.0.left" timestamp="1600397940288">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="423" height="649" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600448928369" />
+    <state width="423" height="746" key="GridCell.Tab.0.center/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600448629820" />
+    <state width="423" height="649" key="GridCell.Tab.0.left" timestamp="1600448928369">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="453" height="510" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440413" />
-    <state width="553" height="601" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600397940288" />
-    <state width="553" height="601" key="GridCell.Tab.0.right" timestamp="1600397940288">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="423" height="649" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600448928369" />
+    <state width="423" height="746" key="GridCell.Tab.0.left/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600448629820" />
+    <state width="423" height="649" key="GridCell.Tab.0.right" timestamp="1600448928369">
+      <screen x="-1920" y="0" width="1536" height="816" />
     </state>
-    <state width="453" height="510" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600322440415" />
-    <state width="553" height="601" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600397940288" />
+    <state width="423" height="649" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1600448928369" />
+    <state width="423" height="746" key="GridCell.Tab.0.right/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1600448629820" />
     <state width="553" height="601" key="GridCell.Tab.1.bottom" timestamp="1600397939848">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1779,14 +1795,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/API/import.js</url>
-          <line>704</line>
+          <line>708</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/nodePrint/nodePrint.js</url>
-          <line>1624</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "filenamify": "^2.1.0",
     "finalhandler": "^1.1.2",
+    "find-remove": "^2.0.1",
     "fs-extra": "^7.0.1",
     "he": "^1.2.0",
     "md5": "^2.3.0",

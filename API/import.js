@@ -4,6 +4,7 @@ const EPub = require("epub");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
 const io = require('socket.io')(server, {path: '/import/ws'});
+const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
 const {performance} = require('perf_hooks');
 const fetch = require("node-fetch");
@@ -24,9 +25,12 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
-// fs.emptyDir('ImportFiles');
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
+findRemoveSync('./ImportFiles', {
+	age: {seconds: 30 * 8.64e+4},
+	files: "*.*",
+});
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -701,7 +705,7 @@ async function processEPUB(data, socket) {
 			}
 			try {
 				path = isSimple || !filteredChapters[chapterNumber - 1] ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
-			}catch (e) {
+			} catch (e) {
 				console.error(e);
 			}
 			//remove extraneous link tags
