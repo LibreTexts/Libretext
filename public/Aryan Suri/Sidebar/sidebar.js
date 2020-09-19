@@ -1,5 +1,5 @@
 "use strict";
-window.addEventListener("DOMContentLoaded", Sidebar);
+window.addEventListener("load", Sidebar);
 async function Sidebar() {
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
@@ -90,6 +90,7 @@ async function Sidebar() {
                         window.resourcesTabInitialized = true;
                         delete document.getElementById('pubchemWidget').iFrameResizer;
                         delete document.getElementById('physicalConstantsWidget').iFrameResizer;
+                        delete document.getElementById('desmosWidget').iFrameResizer;
                         $('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
                         iFrameResize({
                             warningTimeout: 0,
@@ -102,6 +103,12 @@ async function Sidebar() {
                             scrolling: 'omit',
                             checkOrigin: ["https://chem.libretexts.org"]
                         }, '#physicalConstantsWidget');
+                        $('#desmosWidget').attr('src', "https://www.desmos.com/scientific");
+                        iFrameResize({
+                            warningTimeout: 0,
+                            scrolling: 'omit',
+                            checkOrigin: ["https://desmos.com"]
+                        }, '#desmosWidget');
                     }
                 });
                 $("#openControl").click(function () {
@@ -213,6 +220,14 @@ async function Sidebar() {
                 }
                 else {
                     $("#phy_table_put").slideUp("slow");
+                }
+            });
+            $('#DesmosWidget').on("click", function () {
+                if ($("#desmosW").is(":hidden")) {
+                    $("#desmosW").slideDown("slow");
+                }
+                else {
+                    $("#desmosW").slideUp("slow");
                 }
             });
             $('#conv_table').click(function () {
@@ -343,9 +358,12 @@ async function Sidebar() {
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
                 <div  style="display: none;" id="phy_table_put" class="custom_field">
-                   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
+                   <iframe style="width: 100%;" id="physicalConstantsWidget" loading="lazy"></iframe>
                 </div>
-
+		<a id="DesmosWidget" target="_blank">Scientific Calculator</a>
+				<div id="desmosW" style="display:none;">
+					<iframe id="desmosWidget" style=" width:100%; height: 400px; overflow: auto;"></iframe>
+				</div>
         <a id="conversion_table">Conversion Calculator</a>
         <div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
