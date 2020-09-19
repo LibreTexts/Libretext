@@ -584,7 +584,7 @@ async function Sidebar() {
 </div>`,
 			"usage": `<div id="sb4"  class="custom_sidebar">
 	<div class="custom_field">
-		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-quote'>&nbsp;Save Bookmark</a>
+		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
 			<div id="bm-list">
 
 			</div>
@@ -923,9 +923,7 @@ function saveBookmark() {
 		sessionStorage.setItem("Title", TITLE)
 		sessionStorage.setItem("Bookmark", URL)
 		createBookmarks();
-	} else {
-		console.log("one bookmark");
-	}
+	} 
 }
 
 function createBookmarks() {
@@ -933,8 +931,10 @@ function createBookmarks() {
 	const URL = sessionStorage.getItem("Bookmark");
 	const TITLE = sessionStorage.getItem("Title");
 
-	let INNER = `<div> <p>Bookmark: <a style="display: unset;" href="${URL}"> ${TITLE}</a></p></div>`;
+	let INNER = `<div> <p><a style="display: unset;" href="${URL}"> ${TITLE}</a></p></div>`;
 	LI.innerHTML = INNER;
 
-	URL ? document.querySelector("#bm-list")?.appendChild(LI) : console.log("No bookmarks");
+	if(URL) {
+		document.querySelector("#bm-list")?.appendChild(LI);
+	} 
 }
