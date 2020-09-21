@@ -1622,7 +1622,7 @@ puppeteer.launch({
 							dynamicGlossary = await dynamicGlossary.json();
 							if (dynamicGlossary && dynamicGlossary.body) {
 								dynamicGlossary = dynamicGlossary.body;
-								await authenticatedFetch(`${path}/${text}_Matter/20:Glossary`, `contents?${matterMode}&title=Glossary&dream.out.format=json`, current.subdomain, 'LibreBot', {
+								await authenticatedFetch(`${path}/${text}_Matter/20:_Glossary`, `contents?${matterMode}&title=Glossary&dream.out.format=json`, current.subdomain, 'LibreBot', {
 									method: "POST",
 									body: dynamicGlossary +
 										"\n<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"

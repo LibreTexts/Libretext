@@ -7,7 +7,7 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('store:'));
+	let bookstore = tags.find(elem => elem.startsWith('bookstore:'));
 	
 	let fn = () => {
 		const [subdomain, path] = LibreTexts.parseURL();
@@ -61,8 +61,6 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 			
 			if (downloadEntry) {
-				if (bookstore)
-					bookstore = bookstore.split('store:')[1];
 				
 				
 				let root = `https://batch.libretexts.org/print/Finished/`;
@@ -76,7 +74,7 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Import into LMS</a>
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
-					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
+					<a href='https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
