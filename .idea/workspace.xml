@@ -19,11 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="added todos. Removable bookmark.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.ts" afterDir="false" />
     </list>
@@ -1216,14 +1213,7 @@
       <workItem from="1600481370967" duration="1203000" />
       <workItem from="1600482589035" duration="41000" />
       <workItem from="1600657419904" duration="65000" />
-      <workItem from="1600706913300" duration="1516000" />
-    </task>
-    <task id="LOCAL-00234" summary="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers">
-      <created>1579937519672</created>
-      <option name="number" value="00234" />
-      <option name="presentableId" value="LOCAL-00234" />
-      <option name="project" value="LOCAL" />
-      <updated>1579937519672</updated>
+      <workItem from="1600706913300" duration="3410000" />
     </task>
     <task id="LOCAL-00235" summary="Compile button mac/safari fix&#10;&#10;Fixed issue due to how safari scopes variables.">
       <created>1581375682723</created>
@@ -1561,7 +1551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599802784869</updated>
     </task>
-    <option name="localTasksCounter" value="283" />
+    <task id="LOCAL-00283" summary="added todos. Removable bookmark.">
+      <created>1600708529180</created>
+      <option name="number" value="00283" />
+      <option name="presentableId" value="LOCAL-00283" />
+      <option name="project" value="LOCAL" />
+      <updated>1600708529180</updated>
+    </task>
+    <option name="localTasksCounter" value="284" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1621,7 +1618,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Replaced insecure node-static for Front" />
     <MESSAGE value="Allow forking of sections" />
     <MESSAGE value="JSON-ified libraries&#10;&#10;Allows library object in reuse.js to be parsed as if it was JSON" />
     <MESSAGE value="Added HEAD to /ping" />
@@ -1646,7 +1642,8 @@
     <MESSAGE value="Attempting to handle Front/Back Matter" />
     <MESSAGE value="Attempting to handle Front/Back Matter&#10;&#10;Signed-off-by: Henry Agnew &lt;henryd.agnew@gmail.com&gt;" />
     <MESSAGE value="Bugfix getSubpages in reuse.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix getSubpages in reuse.js" />
+    <MESSAGE value="added todos. Removable bookmark." />
+    <option name="LAST_COMMIT_MESSAGE" value="added todos. Removable bookmark." />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="120" key="#Deployment" timestamp="1594933732591">
@@ -1763,11 +1760,12 @@
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="139" y="67" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1596673183706" />
     <state x="280" y="105" key="SettingsEditor/0.0.3440.1440@0.0.3440.1440" timestamp="1600708158182" />
-    <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1599802786511">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="899" y="294" key="Vcs.Push.Dialog.v2" timestamp="1600708540962">
+      <screen x="0" y="0" width="3440" height="1440" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513154661" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599802786511" />
+    <state x="899" y="294" key="Vcs.Push.Dialog.v2/0.0.3440.1440@0.0.3440.1440" timestamp="1600708540962" />
     <state width="1552" height="469" key="XDebugger.FullValuePopup" timestamp="1599452464033">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

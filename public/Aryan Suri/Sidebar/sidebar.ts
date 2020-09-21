@@ -900,12 +900,12 @@ function rtdefault() {
 };
 
 function saveBookmark() {
-    const TITLE: string = document.getElementById("titleHolder")!.innerText;
+    const TITLE = document.getElementById("titleHolder")!.innerText;
     const URL = window.location.href;
     const CHECK = sessionStorage.getItem("Bookmark");
     if (CHECK == null) {
-        sessionStorage.setItem("Title", TITLE)
-        sessionStorage.setItem("Bookmark", URL)
+        sessionStorage.setItem("Title", TITLE);
+        sessionStorage.setItem("Bookmark", URL);
         createBookmarks();
     }
 }
@@ -914,15 +914,15 @@ function createBookmarks() {
     const LI = document.createElement("li");
     const URL = sessionStorage.getItem("Bookmark");
     const TITLE = sessionStorage.getItem("Title");
-
-    let INNER = `<div id="bookmarkNode"> <p><a style="display: unset;" href="${URL}"> ${TITLE}</a></p></div>`;
-    LI.innerHTML = INNER;
-
+    LI.id = "sbBookmark"
+    LI.innerHTML = `<div > <p><a style="display: unset;" href="${URL}"> ${TITLE}</a><a id="removeBookmark" style="display: unset;" href="#0" onclick="removeBookmarks()">| Remove</a> </p></div>`;
     if (URL) {
         document.querySelector("#bm-list")?.appendChild(LI);
     }
+}
 
-    document.querySelector("#bookmarkNode")?.addEventListener("click", () => {
-        document.querySelector("#bm-list")?.removeChild(LI);
-    })
+function removeBookmarks() {
+    document.querySelector("#bm-list")?.removeChild(document.querySelector("#sbBookmark")!);
+    sessionStorage.removeItem("Title");
+    sessionStorage.removeItem("Bookmark");
 }
