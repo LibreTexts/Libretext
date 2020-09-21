@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/portals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodePrint/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodePrint/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/API Dashboard/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Henry Agnew/Importer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/Henry Agnew/Importer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/FBButtons/fbbuttons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Sidebar/sidebar.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +77,10 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="TODO_SCOPE" value="Project Files" />
+    <property name="ToolWindowFile Transfer.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
@@ -73,9 +88,9 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/API/authenBrowser.json&#10;true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="12.12.53" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/Henry Agnew" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.18.3" />
+    <property name="javascript.nodejs.core.library.typings.version" value="12.12.62" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
@@ -86,9 +101,10 @@
     <property name="nodejs_package_manager_path" value="$USER_HOME$/AppData/Roaming/npm/node_modules/npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
-    <property name="ts.external.directory.path" value="C:\Users\Henry\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\192.6262.59\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/Miscellaneous/form.js" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -1197,6 +1213,10 @@
       <workItem from="1599592791829" duration="1197000" />
       <workItem from="1599677419290" duration="2416000" />
       <workItem from="1599803983934" duration="708000" />
+      <workItem from="1600481370967" duration="1203000" />
+      <workItem from="1600482589035" duration="41000" />
+      <workItem from="1600657419904" duration="65000" />
+      <workItem from="1600706913300" duration="1516000" />
     </task>
     <task id="LOCAL-00234" summary="Added Upgrade Containers to API Dashboard&#10;&#10;Converts to the new content containers">
       <created>1579937519672</created>
@@ -1663,10 +1683,11 @@
     </state>
     <state x="-1772" y="44" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597383786846" />
     <state x="164" y="73" key="DiffContextDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599453632563" />
-    <state x="634" y="215" key="FileChooserDialogImpl" timestamp="1595194585696">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="1278" y="337" key="FileChooserDialogImpl" timestamp="1600708155589">
+      <screen x="0" y="0" width="3440" height="1440" />
     </state>
     <state x="634" y="215" key="FileChooserDialogImpl/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1595194585696" />
+    <state x="1278" y="337" key="FileChooserDialogImpl/0.0.3440.1440@0.0.3440.1440" timestamp="1600708155589" />
     <state width="503" height="471" key="GridCell.Tab.0.bottom" timestamp="1599804719192">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1736,11 +1757,12 @@
     </state>
     <state x="-1350" y="53" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513134910" />
     <state x="633" y="60" key="RollbackChangesDialog/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599367769467" />
-    <state x="139" y="67" width="1002" height="707" key="SettingsEditor" timestamp="1596673183706">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="280" y="105" width="1002" height="707" key="SettingsEditor" timestamp="1600708158182">
+      <screen x="0" y="0" width="3440" height="1440" />
     </state>
     <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
     <state x="139" y="67" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1596673183706" />
+    <state x="280" y="105" key="SettingsEditor/0.0.3440.1440@0.0.3440.1440" timestamp="1600708158182" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2" timestamp="1599802786511">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1762,6 +1784,10 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="739" y="112" width="448" height="699" key="ftp.server.browser/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1594933728997" />
+    <state x="1047" y="511" key="scopes" timestamp="1600482523357">
+      <screen x="0" y="0" width="3440" height="1440" />
+    </state>
+    <state x="1047" y="511" key="scopes/0.0.3440.1440@0.0.3440.1440" timestamp="1600482523357" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1783,20 +1809,5 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
