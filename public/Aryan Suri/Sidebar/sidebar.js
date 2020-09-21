@@ -1,5 +1,5 @@
 "use strict";
-window.addEventListener("DOMContentLoaded", Sidebar);
+window.addEventListener("load", Sidebar);
 async function Sidebar() {
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
