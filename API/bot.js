@@ -230,8 +230,12 @@ async function jobHandler(jobType, input, socket) {
 					if (result !== content)
 						result = tidy(result); //{indent:'auto','indent-spaces':4}
 					break;
+				case 'addPageIdentifierClass':
+					// if (result !== content)
+					result = await addPageIdentifierClass(input.subdomain, path, result);
+					break;
 			}
-			if (result && result !== lastResult)
+			if (result && result !== lastResult && comment)
 				console.log(comment);
 			result = result || lastResult;
 		}
@@ -520,7 +524,12 @@ async function foreignImage(input, content, path) {
 				}
 				//upload image
 				let foreignImage = await response.blob();
-				let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
+				
+				//if content disposition header, use this for the filename
+				let contentDisposition = response?.headers?.get('content-disposition');
+				contentDisposition = contentDisposition?.match(/(?<=attachment; filename=").*?(?=")/)?.[0];
+				
+				let filename = contentDisposition || url.match(/(?<=\/)[^/]*?(?=$)/)[0];
 				response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
 					method: 'PUT',
 					body: foreignImage,
@@ -585,7 +594,7 @@ async function convertContainers(input, content) {
 	});
 	result = $.html();
 	// console.log(result);
-	await fs.writeFile('test.html', result);
+	// await fs.writeFile('test.html', result);
 	
 	return [result, count];
 	
@@ -601,6 +610,20 @@ async function convertContainers(input, content) {
 				return type;
 		}
 	}
+}
+
+async function addPageIdentifierClass(subdomain, path, content) {
+	const $ = cheerio.load(content);
+	
+	let result = '';
+	let current = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${path}`, false, 'LibreBot');
+	$('p:not(.mt-script-comment), :header, td').addClass(`${subdomain}-${current.id}`);
+	
+	result = $.html();
+	// console.log(result);
+	// await fs.writeFile('test.html', result);
+	
+	return result;
 }
 
 //Helper Logging functions
