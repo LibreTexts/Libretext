@@ -12,8 +12,11 @@ class LibreTextsGlossarizer {
             /* Replace only once in a TextNode */
             replaceClass: 'glossarizer_replaced',
             caseSensitive: false,
-            exactMatch: false
+            exactMatch: true
         };
+        if (typeof(localStorage.glossarizerType) == "undefined" || localStorage.getItem("glossaryType") === null) {
+            localStorage.setItem("glossarizerType", "textbook");
+        }
 
     }
     isArticleTopicPage() {
@@ -31,6 +34,7 @@ class LibreTextsGlossarizer {
 
             $this.replaceWith(text);
         });
+        localStorage.setItem("glossarizerType", "none");
     }
     getTermCols(rowText) { // tableRows[r]
         let cols = {};
@@ -60,7 +64,10 @@ class LibreTextsGlossarizer {
         this.removeGlossary();
         let retrievedGlossary = [];
         switch ((sourceOption || "").trim().toLowerCase()) {
+            case "none":
+                return;
             case "iupac gold book":
+                localStorage.setItem("glossarizerType", "iupac gold book");
                 let goldbook = await $.getJSON("https://files.libretexts.org/github/LibreTextsMain/Leo%20Jayachandran/Glossarizer/goldbook_vocab.json");
                 for (let i = 1; i <= 7035; i++) {
                     if (goldbook.entries[i].definition === null || goldbook.entries[i].term === null || goldbook.entries[i].definition.length == 0) { // If definition is empty skip term
@@ -93,19 +100,23 @@ class LibreTextsGlossarizer {
                 }
                 break;
             case "ichem":
+                localStorage.setItem("glossarizerType", "ichem");
                 let ichemPage = 278612;
                 retrievedGlossary = await getGlossaryJSON(ichemPage);
                 break;
             case "achem":
+                localStorage.setItem("glossarizerType", "achem");
                 let achemPage = 278614;
                 retrievedGlossary = await getGlossaryJSON(achemPage);
                 break;
             case "ochem":
+                localStorage.setItem("glossarizerType", "ochem");
                 let ochemPage = 278613;
                 retrievedGlossary = await getGlossaryJSON(ochemPage);
                 break;
             case "textbook": //The textbook should be the default option
             default:
+                localStorage.setItem("glossarizerType", "textbook");
                 const coverPage = await LibreTexts.getCoverpage();
                 const subdomain = window.location.origin.split('/')[2].split('.')[0];
                 let glossaryPage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPage}/zz%3A_Back_Matter/20%3A_Glossary`);
@@ -177,7 +188,17 @@ class LibreTextsGlossarizer {
                 newTerm["description"] = cols["definition"];
 
                 //Add new term
-                retrievedGlossary.push(newTerm);
+               if (newTerm["term"].split(",")) { //If more than 1 word is used for the term then split them up in the glossary element
+                let terms  = newTerm["term"].split(",");
+                for (let t = 0; t < terms.length; t++) {
+                    if (terms[t].trim() === "" || terms[t].includes("!")) {
+                        continue;
+                    }
+                    retrievedGlossary.push({"term": terms[t], "description": newTerm["description"]});
+                }
+                } else {
+                    retrievedGlossary.push(newTerm);
+                }
             }
             return retrievedGlossary;
         }
@@ -281,7 +302,7 @@ class LibreTextsGlossarizer {
 
                 for (let i = 0; i < this.glossary.length; i++) {
                     if (this.options.exactMatch) {
-                        if (this.glossary[i].term == this.clean(term)) {
+                        if (this.glossary[i].term.toLowerCase() == this.clean(term).toLowerCase()) {
                             return this.glossary[i].description.replace(/\"/gi, '&quot;')
                         }
                     } else {
@@ -644,3 +665,8 @@ class LibreTextsGlossarizer {
 
     }
 }
+
+
+//Self Initialize
+let libretextGlossary = new LibreTextsGlossarizer();
+libretextGlossary.makeGlossary();
