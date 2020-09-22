@@ -14,7 +14,7 @@ async function Sidebar() {
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
-    if (param.ccalc) {
+    if (param.calc) {
         const SBCC = new SBconverterCalculator();
     }
     function getSidebar() {
@@ -42,7 +42,7 @@ async function Sidebar() {
         const title = document.getElementById("titleHolder")?.innerText;
         let sidepanel = sessionStorage.getItem("sidepanel");
         let tab;
-        let ccalc = true;
+        let calculators = true;
         if (sidepanel === null) {
             tab = true;
         }
@@ -54,7 +54,7 @@ async function Sidebar() {
             "library": library,
             "pro": pro,
             "tabs": tab,
-            "ccalc": ccalc,
+            "calc": calculators,
             "title": title
         };
         return param;
@@ -83,7 +83,7 @@ async function Sidebar() {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle("slide");
                 });
-                $("#openResources").click(function () {
+                $("#openResources").on("click", function () {
                     $("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb2").toggle("slide");
                     if (!window.resourcesTabInitialized) {
@@ -111,34 +111,35 @@ async function Sidebar() {
                         }, '#desmosWidget');
                     }
                 });
-                $("#openControl").click(function () {
+                $("#openControl").on("click", function () {
                     $("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
                     $("#sb3").toggle("slide");
                 });
-                $("#openUsage").click(function () {
+                $("#openUsage").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
                     $("#sb4").toggle("slide");
                 });
-                $("#openDevelopers").click(function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
                     $("#sb5").toggle("slide");
                 });
-                $("#openLibreverse").click(function () {
+                $("#openLibreverse").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
                     $("#sb6").toggle("slide");
                 });
-                $("body").click(function (event) {
+                $("body").on("click", function (event) {
                     if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+                        // @ts-ignore Slide is usable on hide()
                         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
             }
             else {
-                $("#openContents").click(function () {
+                $("#openContents").on("click", function () {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle();
                 });
-                $("#openResources").click(function () {
+                $("#openResources").on("click", function () {
                     $("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb2").toggle();
                     if (!window.resourcesTabInitialized) {
@@ -159,24 +160,25 @@ async function Sidebar() {
                         }, '#physicalConstantsWidget');
                     }
                 });
-                $("#openControl").click(function () {
+                $("#openControl").on("click", function () {
                     $("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
                     $("#sb3").toggle();
                 });
-                $("#openUsage").click(function () {
+                $("#openUsage").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
                     $("#sb4").toggle();
                 });
-                $("#openDevelopers").click(function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
                     $("#sb5").toggle();
                 });
-                $("#openLibreverse").click(function () {
+                $("#openLibreverse").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
                     $("#sb6").toggle();
                 });
-                $("body").click(function (event) {
+                $("body").on("click", function (event) {
                     if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+                        // @ts-ignore slide is usable here.
                         $("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
@@ -189,7 +191,7 @@ async function Sidebar() {
                     $("#sb1, #sbHeader").show("slide");
                 }
             });
-            $('#per_table').click(function () {
+            $('#per_table').on("click", function () {
                 if ($("#iFrameResizer0").is(":hidden")) {
                     $("#iFrameResizer0").slideDown("slow");
                 }
@@ -197,7 +199,7 @@ async function Sidebar() {
                     $("#iFrameResizer0").slideUp("slow");
                 }
             });
-            $('#gloss_table').click(function () {
+            $('#gloss_table').on("click", function () {
                 if ($("#gloss_table_put").is(":hidden")) {
                     $("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
                     $("#gloss_table_put").slideDown("slow");
@@ -206,7 +208,7 @@ async function Sidebar() {
                     $("#gloss_table_put").slideUp("slow");
                 }
             });
-            $('#ref_table').click(function () {
+            $('#ref_table').on("click", function () {
                 if ($("#ref-table-put").is(":hidden")) {
                     $("#ref-table-put").slideDown("slow");
                 }
@@ -214,7 +216,7 @@ async function Sidebar() {
                     $("#ref-table-put").slideUp("slow");
                 }
             });
-            $('#phy_table').click(function () {
+            $('#phy_table').on("click", function () {
                 if ($("#phy_table_put").is(":hidden")) {
                     $("#phy_table_put").slideDown("slow");
                 }
@@ -230,7 +232,7 @@ async function Sidebar() {
                     $("#desmosW").slideUp("slow");
                 }
             });
-            $('#conv_table').click(function () {
+            $('#conv_table').on("click", function () {
                 if ($("#conv_table_put").is(":hidden")) {
                     $("#conv_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
                     $("#conv_table_put").slideDown("slow");
@@ -239,7 +241,7 @@ async function Sidebar() {
                     $("#conv_table_put").slideUp("slow");
                 }
             });
-            $('#conversion_table').click(function () {
+            $('#conversion_table').on("click", function () {
                 if ($("#conversion_table_put").is(":hidden")) {
                     $("#conversion_table_put").slideDown("slow");
                 }
@@ -247,7 +249,7 @@ async function Sidebar() {
                     $("#conversion_table_put").slideUp("slow");
                 }
             });
-            $('#construction-guide').click(function () {
+            $('#construction-guide').on("click", function () {
                 if ($("#construction-guide-put").is(":hidden")) {
                     $("#construction-guide-put").slideDown("slow");
                 }
@@ -255,7 +257,7 @@ async function Sidebar() {
                     $("#construction-guide-put").slideUp("slow");
                 }
             });
-            $('#library-guide').click(function () {
+            $('#library-guide').on("click", function () {
                 if ($("#library-guide-put").is(":hidden")) {
                     $("#library-guide-put").slideDown("slow");
                 }
@@ -282,7 +284,7 @@ async function Sidebar() {
                 $("#slider-page-width").val(initial_data);
                 sessionStorage.setItem('page_width', initial_data);
             });
-            $('a.toggler').click(function () {
+            $('a.toggler').on("click", function () {
                 $(this).toggleClass('off');
                 if ($('#toggler-text').text() === 'Full') {
                     $('#toggler-text').text('Left');
@@ -616,7 +618,7 @@ function activateBeeLine() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
             const btns = toggles.find('button, a');
-            btns.click(function (e) {
+            btns.on("click", function (e) {
                 if (!e.target.href)
                     e.preventDefault();
                 const theme = $(this).attr("data-color");
