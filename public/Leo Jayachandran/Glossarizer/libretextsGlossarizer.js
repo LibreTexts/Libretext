@@ -54,10 +54,11 @@ class LibreTextsGlossarizer {
         }
         return cols;
     }
-    async makeGlossary(sourceOption) {
+    async makeGlossary(inputSourceOption) {
         if (!this.isArticleTopicPage()) { //If article isn't a topic page, don't do anything
             return;
         }
+        let sourceOption = inputSourceOption || localStorage.getItem("glossarizerType");
         let pluginName = this.pluginName;
         let defaults = this.defaults;
         let getTermCols = this.getTermCols;
