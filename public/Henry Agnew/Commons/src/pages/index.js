@@ -177,8 +177,8 @@ class Commons extends React.Component {
 			if (selectedTitle && selectedTitle.length) { //title and tag filter
 				let temp = [];
 				for (let item of result)
-					if ((item.title && selectedTitle.includes(item.title))
-						|| (item.tags && item.tags.some(r => selectedTitle.includes(r)))) {
+					if (selectedTitle.some(t => item?.title?.toLowerCase()?.includes(t?.toLowerCase())
+						|| item?.tags.some(tag =>tag.includes(t?.toLowerCase())))) { //nested some()
 						temp.push(item); //matching title or tag
 					}
 				if (temp.length)
@@ -186,9 +186,11 @@ class Commons extends React.Component {
 				else
 					titleError = true; //don't make any changes if failed
 			}
-			let updateSearchQuery = (key) => (event, newValue) =>{
-				this.setState({[key]:newValue,
-				page: 0});
+			let updateSearchQuery = (key) => (event, newValue) => {
+				this.setState({
+					[key]: newValue,
+					page: 0
+				});
 			}
 			
 			//transform entries into React elements
@@ -240,7 +242,7 @@ class Commons extends React.Component {
 						        onClick={() => this.setState({libraryDialog: true})}>Libraries</Button>
 						{this.state.libraryDialog ?
 							<LibraryDialog {...this.state} updateParent={this.updateParent}/> : null}
-						<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly'}}>
+						<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly', flexWrap:"wrap"}}>
 							{Object.keys(LibreTexts.libraries).map((option) => <Lib key={option} option={option}/>)}
 						</div>
 						<TablePagination

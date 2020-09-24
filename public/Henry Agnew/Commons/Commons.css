@@ -197,7 +197,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
 }
 
-.orderForm {
+/*.orderForm {
     background: lightgray;
 }
 
@@ -217,4 +217,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .orderForm button .MuiToggleButton-label {
     display: block;
+}*/
+
+@media (max-width: 500px){
+    #Commons-Learn-More .MuiDialogContent-root{
+        flex-wrap: wrap;
+    }
 }
