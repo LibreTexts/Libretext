@@ -796,7 +796,7 @@ function createBookmarks() {
     const URL = sessionStorage.getItem("Bookmark");
     const TITLE = sessionStorage.getItem("Title");
     LI.id = "sbBookmark";
-    LI.innerHTML = `<div > <p><a style="display: unset;" href="${URL}"> ${TITLE}</a><a id="removeBookmark" style="display: unset;" href="#0" onclick="removeBookmarks()">| Remove</a> </p></div>`;
+    LI.innerHTML = `<div > <p><a style="display: unset;" href="${URL}"> ${TITLE}</a><a id="removeBookmark" style="display: unset;" onclick="removeBookmarks()">| Remove</a> </p></div>`;
     if (URL) {
         document.querySelector("#bm-list")?.appendChild(LI);
     }
