@@ -14,7 +14,7 @@ class LibreTextsGlossarizer {
             caseSensitive: false,
             exactMatch: true
         };
-        if (typeof(localStorage.glossarizerType) == "undefined" || localStorage.getItem("glossaryType") === null) {
+        if (typeof(localStorage.glossarizerType) == "undefined" || !localStorage.getItem("glossarizerType")) {
             localStorage.setItem("glossarizerType", "textbook");
         }
 
@@ -669,5 +669,7 @@ class LibreTextsGlossarizer {
 
 
 //Self Initialize
-let libretextGlossary = new LibreTextsGlossarizer();
-libretextGlossary.makeGlossary();
+let libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
+window.addEventListener('load', ()=>{
+    libretextGlossary.makeGlossary();
+});
