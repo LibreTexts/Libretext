@@ -430,14 +430,13 @@ function LibreTextsReuse() {
 			}
 		}
 		
-		async function makeTOC(path, isRoot, full) {
-			const origin = window.location.origin;
-			path = path.replace(origin + "/", "");
+		async function makeTOC(url, isRoot, full) {
+			const [subdomain, path] = LibreTexts.parseURL(url);
 			//get coverpage title & subpages;
-			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
+			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 			
 			
-			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 			response = await response.json();
 			info = await info;
 			info = await info.json();
@@ -466,7 +465,7 @@ function LibreTextsReuse() {
 					let defaultOpen = window.location.href.includes(url) && !currentPage;
 					let children = hasChildren ? undefined : [];
 					if (hasChildren && (full || defaultOpen)) { //recurse down
-						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 						children = await children.json();
 						children = await
 							subpageCallback(children, false);
@@ -501,7 +500,7 @@ function LibreTextsReuse() {
 					target.addClass("toc-hierarchy");
 					// target.removeClass("elm-hierarchy mt-hierarchy");
 					target.innerHTML = "";
-					target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
+					target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
 					target.fancytree({
 						source: content,
 						lazyLoad: function (event, data) {
