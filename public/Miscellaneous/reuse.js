@@ -37,6 +37,7 @@ function LibreTextsReuse() {
 	};
 	
 	return {
+		debug: {},
 		authenticatedFetch: authenticatedFetch,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
