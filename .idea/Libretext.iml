@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/API/BotLogs" />
       <excludeFolder url="file://$MODULE_DIR$/API/ImportFiles" />
       <excludeFolder url="file://$MODULE_DIR$/API/analyticsData" />
+      <excludeFolder url="file://$MODULE_DIR$/API/bookstore" />
       <excludeFolder url="file://$MODULE_DIR$/API/public/Hierarchy" />
       <excludeFolder url="file://$MODULE_DIR$/Kubeconfig/cache" />
       <excludeFolder url="file://$MODULE_DIR$/Kubeconfig/http-cache" />

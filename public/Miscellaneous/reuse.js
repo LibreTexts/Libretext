@@ -391,7 +391,7 @@ function LibreTextsReuse() {
 		LibreTexts.authenticatedFetch(window.location.href, 'contents?mode=edit').then(async (data) => console.log(await data.text()))
 	}
 	
-	async function getCoverpage(url = window.location.href) {
+	async function getCoverpage(url = window.location.href) { //returns path to coverpage
 		if (typeof getCoverpage.coverpage === 'undefined') {
 			const urlArray = url.replace("?action=edit", "").split("/");
 			for (let i = urlArray.length; i > 3; i--) {
@@ -415,17 +415,19 @@ function LibreTextsReuse() {
 		return getCoverpage.coverpage;
 	}
 	
-	async function TOC(coverpage, targetElement = ".elm-hierarchy.mt-hierarchy") {
+	async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
 		let coverTitle;
 		let content;
+		const [subdomain] = LibreTexts.parseURL();
 		if (!navigator.webdriver || !window.matchMedia('print').matches) {
-			if (!coverpage || typeof coverpage !== 'string' || !coverpage.startsWith('https://'))
-				coverpage = await LibreTexts.getCoverpage();
-			if (coverpage) {
-				await makeTOC(coverpage, true);
+			if (!coverpageUrl || typeof coverpageUrl !== 'string' || !coverpageUrl.startsWith('https://')) {
+				coverpageUrl = await LibreTexts.getCoverpage(); //returns path
+				coverpageUrl = `https://${subdomain}.libretexts.org/${coverpageUrl}`;
+			}
+			if (coverpageUrl) {
+				await makeTOC(coverpageUrl, true);
 			}
 			else {
-				const [subdomain] = LibreTexts.parseURL();
 				await makeTOC(`https://${subdomain}.libretexts.org/home`, true);
 			}
 		}
