@@ -1,7 +1,8 @@
 
 function attribution() {
     const cc = getCC();
-
+    const sidebar = document.getElementById("sidebarDiv")!;
+    sidebar.style.display = "none";
     buildAttribution();
     function getParam() {
         let title = $("#titleHolder").text();

@@ -510,6 +510,12 @@ async function Sidebar() {
    
 </div>`,
             "usage": `<div id="sb4"  class="custom_sidebar">
+    <div class="custom_field">
+        <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class='mt-icon-quote'>&nbsp;Get Page Citation</a>
+        </div>
+    <div class="custom_field">
+        <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
+    </div>
 	<div class="custom_field">
 		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
 			<div id="bm-list">
