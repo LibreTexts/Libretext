@@ -2,7 +2,7 @@
 function buildcite() {
     const sidebar = document.getElementById("sidebarDiv");
     const citeDiv = document.createElement("div");
-    sidebar?.style.display === "none";
+    sidebar.style.display = "none";
     citeDiv.id = "SB-PC-AD";
     document.body.append(citeDiv);
     $(citeDiv).html(`
