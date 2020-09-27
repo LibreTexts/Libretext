@@ -617,7 +617,7 @@ async function addPageIdentifierClass(subdomain, path, content) {
 	
 	let result = '';
 	let current = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${path}`, false, 'LibreBot');
-	$('p:not(.mt-script-comment), :header, td').addClass(`${subdomain}-${current.id}`);
+	$('p:not(.mt-script-comment), :header, td').addClass(`lt-${subdomain}-${current.id}`);
 	
 	result = $.html();
 	// console.log(result);
