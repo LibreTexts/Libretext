@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<script>LibreTexts = {active: {}}</script>
+<script src="prod.js">old</script>
+
+<script> //debug or new
+	//Self Initialize
+	async function hello() {
+		return 'Debug';
+	}
+	
+	libretextGlossary = {two:2}; // Needs to be accessible to the sidebar buttons
+	window.addEventListener('load', async () => {
+		console.log('event-debug');
+		if (libretextGlossary && !LibreTexts.active.glossarizer) {
+			LibreTexts.active.glossarizer = true;
+			console.log(libretextGlossary);
+			console.log(await hello())
+		}
+	});
+</script>
+
+</body>
+</html>
