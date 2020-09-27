@@ -1,4 +1,9 @@
-window.addEventListener("load", Sidebar);
+window.addEventListener("load", () => {
+	if (Sidebar && !LibreTexts.active.sidebar) {
+		LibreTexts.active.sidebar = true;
+		Sidebar();
+	}
+});
 
 async function Sidebar() {
     localStorage.removeItem("font_size");
