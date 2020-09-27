@@ -1,4 +1,4 @@
-class LibreTextsGlossarizer {
+LibreTextsGlossarizer = class {
     constructor() {
         this.pluginName = 'glossarizer';
         this.defaults = {
@@ -667,12 +667,10 @@ class LibreTextsGlossarizer {
     }
 }
 
-//enable debug mode
-LibreTexts.debug.glossarizer = true;
-
 //Self Initialize
-let libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
+libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
 window.addEventListener('load', () => {
-    if (!LibreTexts.debug.glossarizer) //TODO: modify check somehow so that it only activates in production
+    if (libretextGlossary && !LibreTexts.active.glossarizer)
+        LibreTexts.active.glossarizer = true;
         libretextGlossary.makeGlossary();
 });
