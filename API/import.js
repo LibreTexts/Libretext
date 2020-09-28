@@ -25,6 +25,7 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 }
 server.listen(port);
 const now1 = new Date();
+// fs.emptyDir('ImportFiles');
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 findRemoveSync('./ImportFiles', {
@@ -114,6 +115,7 @@ async function downloadFile(data, socket) {
 	}
 	
 	if (data.url.includes('dropbox.com')) {
+		data.url = data.url.replace('?dl=0', '');
 		response = await fetch(data.url + '?dl=1', {mode: "HEAD"});
 		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('attachment'))
 			data.url = data.url + '?dl=1';
@@ -137,7 +139,7 @@ async function downloadFile(data, socket) {
 	}
 	const contentLength = +response.headers.get('Content-Length');
 	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
-		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?="$)/)[0];
+		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
 	
 	// Step 3: read the data
 	let receivedLength = 0; // received that many bytes at the moment
@@ -386,18 +388,27 @@ async function processCommonCartridge(data, socket) {
 				}
 				else {
 					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
-					let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
+					let currentPath = decodeURIComponent(`${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0]);
+					const webResourcesExists = await fs.exists(`${rootPath}/web_resources`);
 					
 					contents = await uploadImages(contents, path, imageProcessor, data);
 					
 					async function imageProcessor(imagePath) {
-						let filename = decodeURIComponent(imagePath).replace('$IMS-CC-FILEBASE$', '');
+						let filename = decodeURIComponent(imagePath).replace('$IMS-CC-FILEBASE$/', '');
 						if (filename.startsWith('../')) {
-							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
-							filename = filename.match(/(?<=\.\.\/).*/)[0];
+							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)?.[0];
+							filename = filename.match(/(?<=\.\.\/).*/)?.[0];
 						}
-						let okay = filename && await fs.exists(currentPath + filename);
-						return [filename, okay ? await fs.readFile(currentPath + filename) : false, currentPath + filename];
+						filename = filename.match(/^.*?(?=\?.*?$)/)?.[0] || filename;
+						filename = LibreTexts.decodeHTML(filename);
+						let completePath = currentPath + filename
+						let okay = filename && await fs.exists(completePath);
+						if (!okay && filename && webResourcesExists) { //try again in webResources
+							completePath = `${rootPath}/web_resources/${filename}`
+							// console.log(`Grabbing ${completePath}`);
+							okay = await fs.exists(completePath);
+						}
+						return [filename, okay ? await fs.readFile(completePath) : false, completePath];
 					}
 					
 					
@@ -627,7 +638,7 @@ async function processEPUB(data, socket) {
 	}
 	
 	async function processChapters(onlinePath, chapters) {
-		await async.mapLimit(chapters, 2, processChapter);
+		await async.mapLimit(chapters, 1, processChapter);
 		
 		async function processChapter(chapter) {
 			let title = chapter.title;
@@ -683,7 +694,7 @@ async function processEPUB(data, socket) {
 	async function processPages(pageArray, onlinePath, filteredChapters) {
 		let isSimple = filteredChapters === null;
 		let untitled = 0;
-		return await async.mapLimit(pageArray, 2, processPage);
+		return await async.mapLimit(pageArray, 1, processPage);
 		
 		async function processPage(page) {
 			epub.getChapterRaw = util.promisify(epub.getChapterRaw);
