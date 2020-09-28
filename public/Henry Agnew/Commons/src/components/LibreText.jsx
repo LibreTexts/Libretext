@@ -69,7 +69,8 @@ export default function LibreText(props) {
 		const summary = pageData?.properties?.find(item => item.name === "mindtouch.page#overview")?.value;
 		
 		useEffect(() => {
-			LibreTexts.TOC(props.item.link, "#Commons-TOC");
+			if (open)
+				LibreTexts.TOC(props.item.link, "#Commons-TOC");
 		}, []);
 		
 		return (
