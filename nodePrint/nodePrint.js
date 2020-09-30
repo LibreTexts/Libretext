@@ -2194,6 +2194,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 		
 		if (map.length) { //process map into a tree
 			map.sort();
+			map = map.map(item => item.replace('http://', 'https://'));
 			const start = performance.now();
 			let lastNode;
 			
