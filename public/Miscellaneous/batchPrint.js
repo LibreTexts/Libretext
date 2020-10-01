@@ -174,5 +174,5 @@ if (!window["batchPrint.js"]) {
 		return '#'
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }
