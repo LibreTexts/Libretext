@@ -129,7 +129,7 @@ if (!window["analytics.js"]) {
 		
 		function getGroup() {
 			let groups = document.getElementById('groupHolder').innerText;
-			let classArray = ['Chem2BH-W20', 'KU110'];
+			let classArray = ['Chem-110A-F20'];
 			let result = [];
 /*			if (window.location.href.includes('Facciotti') && document.getElementsByClassName('nb_sidebar').length) {
 				result.push('Bis2AFacciotti');
