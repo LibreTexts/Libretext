@@ -106,15 +106,15 @@ export default function LibreText(props) {
 							</Typography>
 						</div>
 						<div key="front" className='textBack'>
-							<a href={props.item.link} className={'mt-icon-hyperlink'} target='_blank'>Online</a>
+							<a href={props.item.link} className={'mt-icon-hyperlink'} target='_blank'>View Online</a>
 							<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
-							   target='_blank'>PDF</a>
+							   target='_blank'>Download PDF</a>
 							<a href={`${root}/LibreText.imscc`} className={'mt-icon-graduation'}
 							   target='_blank'>LMS</a>
 							<a href={`${root}/Individual.zip`} className={'mt-icon-file-zip'}
 							   target='_blank'>Individual ZIP</a>
 							<a href={`https://libretexts.org/bookstore/single.html?${props.item.subdomain}-${props.item.id}`}
-							   className='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>
+							   className='mt-icon-cart2' target='_blank'>Buy Print Copy</a>
 							<a href={`${root}/Publication.zip`} className={'mt-icon-book3'}
 							   target='_blank'>Print Book Files</a>
 						</div>
@@ -147,12 +147,25 @@ export default function LibreText(props) {
 							<AccordionSummary
 								expandIcon={<ExpandMoreIcon/>}
 								aria-controls="panel3a-content">
+								<Typography>Book Preview</Typography>
+							</AccordionSummary>
+							<AccordionDetails style={{overflowX: "auto"}}>
+								<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
+								   target='_blank'>Download Full PDF
+								<iframe src={`${root}/Full.pdf?view=true`} height={500}/>
+								</a>
+							</AccordionDetails>
+						</Accordion>
+						{/*<Accordion>
+							<AccordionSummary
+								expandIcon={<ExpandMoreIcon/>}
+								aria-controls="panel3a-content">
 								<Typography>More Details</Typography>
 							</AccordionSummary>
 							<AccordionDetails style={{overflowX: "auto"}}>
 								{JSON.stringify(pageData, null, 2)}
 							</AccordionDetails>
-						</Accordion>
+						</Accordion>*/}
 					</div>
 				</DialogContent>
 				<DialogActions>

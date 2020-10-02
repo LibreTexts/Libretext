@@ -72,3 +72,5 @@ API/out.json
 /API/.env
 /API/bookstoreConfig.json
 /API/bookstore/
+/.idea/deployment.xml
+/.idea/workspace.xml
