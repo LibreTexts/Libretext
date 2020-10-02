@@ -53,12 +53,12 @@ puppeteer.launch({
 		await storage.init();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF/Letter/Margin');
-		fs.ensureDir('./PDF/A4/Margin');
+		// fs.ensureDir('./PDF/A4/Margin');
 		
 		// 'TOC',
 		['order', 'Cover', 'libretexts'].forEach(path => { //clean on restart
 			fs.emptyDir(`./PDF/Letter/${path}`);
-			fs.remove(`./PDF/A4/${path}`);
+			// fs.remove(`./PDF/A4/${path}`);
 		});
 		
 		let working = {};
@@ -262,9 +262,14 @@ puppeteer.launch({
 			else if (url.startsWith('/Finished/')) {
 				url = url.split('/Finished/')[1];
 				url = decodeURIComponent(url);
+				let forceView = false;
+				if (url.includes('?view=true')) {
+					url = url.replace('?view=true', '');
+					forceView = true;
+				}
 				if (await fs.exists(`./PDF/${size}/Finished/${url}`)) {
 					staticFileServer.serveFile(`../PDF/${size}/Finished/${url}`, 200, {
-						'Content-Disposition': 'attachment',
+						'Content-Disposition': forceView ? '' : 'attachment',
 						'cache-control': 'no-cache'
 					}, request, response);
 					try {
@@ -1150,9 +1155,8 @@ puppeteer.launch({
 			else if (!isNoCache && allExist && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
 				// 8.64e+7 ms/day
 				console.log(`CACHE  ${ip} ${url}`);
-				if (ip.startsWith('<<Batch ')) {
-					await sleep(800);
-				}
+				await sleep(ip.startsWith('<<Batch ') ? 800 : 200);
+				
 				return {filename: escapedURL + '.pdf'};
 			}
 			else if (!isNoCache && working[escapedURL]) { //another thread is already working
@@ -1806,6 +1810,7 @@ puppeteer.launch({
 					if (files && files.length > 2) {
 						await merge(files, `./PDF/Letter/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
 						// await merge(filesA4, `./PDF/A4/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
+						await merge(files.slice(0, 10), `./PDF/Letter/Finished/${zipFilename}/Preview.pdf`, {maxBuffer: 1024 * 10000000});
 						files.shift();
 						// filesA4.shift();
 						await merge(files, `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
@@ -1813,7 +1818,7 @@ puppeteer.launch({
 					}
 					else {
 						await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
-						await fs.copy(files[0], `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`);
+						await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
 						// await fs.copy(filesA4[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
 						// await fs.copy(filesA4[0], `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`);
 					}
@@ -1904,8 +1909,8 @@ puppeteer.launch({
 					await async.mapLimit(originalFiles, 10, async (filename) => {
 						await fs.remove(`./PDF/Letter/${filename}`);
 						await fs.remove(`./PDF/Letter/Margin/${filename}`);
-						await fs.remove(`./PDF/A4/${filename}`);
-						await fs.remove(`./PDF/A4/Margin/${filename}`);
+						// await fs.remove(`./PDF/A4/${filename}`);
+						// await fs.remove(`./PDF/A4/Margin/${filename}`);
 					});
 					console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
 				}
