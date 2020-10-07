@@ -60,13 +60,11 @@ if (!window["batchPrint.js"]) {
 
 				</div></div>`;
 			
-			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div>`;
-			
 			if (downloadEntry) {
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
-				innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div></div>';
+				innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
 				innerHTML += `<div class="LTdropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
@@ -79,6 +77,8 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
+			
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
