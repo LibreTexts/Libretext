@@ -28,7 +28,7 @@ class LibreTextsGlossarizer {
         $('.mt-content-container').removeData('plugin_' + pluginName);
 
         /* Remove wrapping tag */
-        $('.mt-content-container').find(defaults.replaceClass).each(function () {
+        $('.' + defaults.replaceClass).each(function () {
             let $this = $(this),
                 text = $this.text()
 
