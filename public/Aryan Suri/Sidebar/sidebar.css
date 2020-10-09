@@ -484,3 +484,6 @@ a.toggler.off {
   .glossaryLabel:after {
     content: none;
   }
+  #glossarizerOptions form {
+      text-indent: 2em;
+  }
