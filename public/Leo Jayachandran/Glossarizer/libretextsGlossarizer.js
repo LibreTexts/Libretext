@@ -28,7 +28,7 @@ class LibreTextsGlossarizer {
         $('.mt-content-container').removeData('plugin_' + pluginName);
 
         /* Remove wrapping tag */
-        $('.mt-content-container').find(defaults.replaceClass).each(function () {
+        $('.' + defaults.replaceClass).each(function () {
             let $this = $(this),
                 text = $this.text()
 
@@ -661,7 +661,8 @@ class LibreTextsGlossarizer {
             glossaryText += '<p class="glossaryElement">' + currentValue["term"] + " | " + currentValue["description"] + "</p>";
         });
 
-        $(document.currentScript).after(`<div id = "visibleGlossary">${glossaryText}</div>`);
+        $glossaryTable.after(`<div id = "visibleGlossary">${glossaryText}</div>`);
+
 
 
     }
