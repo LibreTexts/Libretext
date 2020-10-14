@@ -24,7 +24,7 @@ let times = Object.keys(schedule);
 for (let i = 0; i < times.length; i++) {
 	scheduler.scheduleJob(times[i], () => {
 		
-		const nocache = now1.getDate() <= 7;//beginning of month
+		const nocache = false;//beginning of month
 		try {
 			console.log(`Running Refresh ${nocache ? 'no-cache' : ''} for ${schedule[times[i]]}`);
 			fetch(`https://batch.libretexts.org/print/Refresh`, {

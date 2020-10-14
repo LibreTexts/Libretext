@@ -10,8 +10,8 @@
   border-radius: 50%;
   position: fixed;
   top: calc(50% - 10px);
-  right: 15px;
-  z-index: 30000001;
+  right: 30px;
+  z-index: 29998;
   transition: opacity 0.2s;
   opacity: 0.5;
 }
@@ -37,12 +37,12 @@
   border-radius: 5px;
   position: fixed;
   top: calc(50% - 10px);
-  z-index: 30000001;
+  z-index: 29998;
   display: none;
 }
 
 #fTitle {
-  right: 60px;
+  right: 75px;
 }
 
 #bButton {
@@ -57,14 +57,14 @@
   border-radius: 50%;
   position: fixed;
   top: calc(50% - 10px);
-  left: 15px;
+  left: 30px;
   z-index: 30000001;
   transition: opacity 0.2s;
   opacity: 0.5;
 }
 
 #bTitle {
-  left: 60px;
+  left: 75px;
 }
 
 #fButton:hover, #bButton:hover {

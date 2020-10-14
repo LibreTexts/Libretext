@@ -54,7 +54,6 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 	}
 	else {
 		if (!isNaN(path)) {
-			path = parseInt(path);
 			isNumber = true;
 		}
 		if (path === 'home') {
@@ -65,8 +64,12 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
 			return false;
 		}
 	}
-	if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
-		api = `/${api}`;
+	if (api) { //query parameter checking
+		if (!arbitraryPage && path && path.includes('?')) //isolated path should not have query parameters
+			path = path.split('?')[0];
+		if (!api.startsWith('?')) //allows for    pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+			api = `/${api}`;
+	}
 	if (!username) {
 		options = optionsMerge({
 			'X-Requested-With': 'XMLHttpRequest',
@@ -334,6 +337,8 @@ function extractSubdomain(url) {
 }
 
 function parseURL(url) {
+	if (url.includes('?')) //strips any query parameters
+		url = url.split('?')[0];
 	if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 		return [url.match(/(?<=https?:\/\/).*?(?=\.)/)[0], url.match(/(?<=https?:\/\/.*?\/).*/)[0]]
 	}
@@ -343,13 +348,20 @@ function parseURL(url) {
 }
 
 function cleanPath(path) {
-	path = decodeURIComponent(decodeURIComponent((path)));
-	let front="", back = path;
+	let front = "", back = path;
 	if (path.includes('/'))
-		[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
+		[, front, back] = path.match(/(^.*[^\/]\/)([^\/].*?$)/); //only modifying page, not whole path
+	try {
+		back = decodeURIComponent(back);
+		back = decodeURIComponent(back);
+	} catch (error) {
+		// console.error(path, error);
+	}
 	front = front.replace('?title=', '');
 	back = back.replace('?title=', '');
-	back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	back = back.replace('//','_');
+	back = back.replace(/%/g, '_');
+	back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
 	back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
 	return front + back;
 }

@@ -69,8 +69,8 @@ Temporary Items
 /nodePrint/secrets.tar
 /API/ImportFiles/
 API/out.json
-/API/.env
 /API/bookstoreConfig.json
 /API/bookstore/
+.idea/workspace.xml
 /.idea/deployment.xml
-/.idea/workspace.xml
+/API/JWT/

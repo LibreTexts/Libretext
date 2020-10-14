@@ -53,12 +53,12 @@ puppeteer.launch({
 		await storage.init();
 		console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
 		fs.ensureDir('./PDF/Letter/Margin');
-		fs.ensureDir('./PDF/A4/Margin');
+		// fs.ensureDir('./PDF/A4/Margin');
 		
 		// 'TOC',
 		['order', 'Cover', 'libretexts'].forEach(path => { //clean on restart
 			fs.emptyDir(`./PDF/Letter/${path}`);
-			fs.remove(`./PDF/A4/${path}`);
+			// fs.remove(`./PDF/A4/${path}`);
 		});
 		
 		let working = {};
@@ -167,7 +167,7 @@ puppeteer.launch({
 						let finished = await getLibretext(url, response, params);
 						let [subdomain, path] = parseURL(url);
 						
-						if (finished && finished.tags&& finished.tags.includes("coverpage:yes"))
+						if (finished && finished.tags && finished.tags.includes("coverpage:yes"))
 							await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
 								method: 'PUT',
 								body: JSON.stringify({
@@ -262,15 +262,20 @@ puppeteer.launch({
 			else if (url.startsWith('/Finished/')) {
 				url = url.split('/Finished/')[1];
 				url = decodeURIComponent(url);
+				let forceView = false;
+				if (url.includes('?view=true')) {
+					url = url.replace('?view=true', '');
+					forceView = true;
+				}
 				if (await fs.exists(`./PDF/${size}/Finished/${url}`)) {
 					staticFileServer.serveFile(`../PDF/${size}/Finished/${url}`, 200, {
-						'Content-Disposition': 'attachment',
+						'Content-Disposition': forceView ? '' : 'attachment',
 						'cache-control': 'no-cache'
 					}, request, response);
 					try {
 						let count = await storage.getItem('downloadCount') || 0;
 						await storage.setItem('downloadCount', count + 1);
-					}catch (e) {
+					} catch (e) {
 					
 					}
 					let now2 = new Date();
@@ -729,7 +734,7 @@ puppeteer.launch({
 			// await fs.ensureDir('./PDF/A4/Margin/TOC');
 			console.log('Starting TOC');
 			const start = performance.now();
-			current = await getAPI(current, true);
+			current = await getAPI(current, {getContents: true});
 			if (!current.subpages)
 				current.subpages = (await getSubpages(current)).subpages;
 			let escapedURL = `${current.subdomain}-${current.id}`;
@@ -1150,9 +1155,8 @@ puppeteer.launch({
 			else if (!isNoCache && allExist && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
 				// 8.64e+7 ms/day
 				console.log(`CACHE  ${ip} ${url}`);
-				if (ip.startsWith('<<Batch ')) {
-					await sleep(800);
-				}
+				await sleep(ip.startsWith('<<Batch ') ? 800 : 200);
+				
 				return {filename: escapedURL + '.pdf'};
 			}
 			else if (!isNoCache && working[escapedURL]) { //another thread is already working
@@ -1303,7 +1307,7 @@ puppeteer.launch({
 						`<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
 						
 						`<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
+						`<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
 						'</div>';
 					if ((performance.now() - start) / 1000 > 20)
 						console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
@@ -1430,8 +1434,10 @@ puppeteer.launch({
 		}
 		
 		async function getLibretext(current, response, options) {
+			const matterMode = options.createMatterOnly ? 'edittime=now' : 'abort=exists';
 			let refreshOnly = options.refreshOnly;
 			let isNoCache = options['no-cache'] || options.nocache;
+			const APIoptions = options.createMatterOnly ? {username: 'LibreBot'} : undefined;
 			
 			let heartbeat, altID;
 			if (typeof current === 'string') {
@@ -1444,9 +1450,9 @@ puppeteer.launch({
 							eta: `Calculating number of pages...\nTime elapsed: ${++count} seconds`,
 						}) + "\r\n")
 				}, 1000);
-				current = await getSubpages(current);
+				current = await getSubpages(current, APIoptions);
 			}
-			current = await getAPI(current);
+			current = await getAPI(current, APIoptions);
 			if (current.modified === 'restricted') {
 				if (response && !response.finished)
 					response.write(JSON.stringify({
@@ -1510,12 +1516,12 @@ puppeteer.launch({
 				let miniIndex = 1;
 				let title = text;
 				text = `${(text === 'Front' ? '00' : 'zz')}:_${text}`;
-				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&abort=exists&dream.out.format=json`, current.subdomain, 'LibreBot', {
+				let createMatter = await authenticatedFetch(`${path}/${text}_Matter`, `contents?title=${title} Matter&${matterMode}&dream.out.format=json`, current.subdomain, 'LibreBot', {
 					method: "POST",
 					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`
 				});
 				// console.log(createMatter = await createMatter.json());
-				if (createMatter.ok) { //Add properties if it is new
+				if (matterMode || createMatter.ok) { //Add properties if it is new
 					await Promise.all([putProperty("mindtouch.idf#guideDisplay", "single"),
 						putProperty('mindtouch.page#welcomeHidden', true),
 						putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]")]);
@@ -1589,7 +1595,7 @@ puppeteer.launch({
 						
 						//Create TitlePage
 						let QRoptions = {errorCorrectionLevel: 'L', margin: 2, scale: 2};
-						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, 'contents?abort=exists&title=TitlePage&dream.out.format=json', current.subdomain, 'LibreBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/01:_TitlePage`, `contents?${matterMode}&title=TitlePage&dream.out.format=json`, current.subdomain, 'LibreBot', {
 							method: "POST",
 							body: `<div style="height:95vh; display:flex; flex-direction: column; position: relative; align-items: center">
 <div style=" display:flex; flex:1; flex-direction: column; justify-content: center">
@@ -1602,7 +1608,7 @@ puppeteer.launch({
 						});
 						
 						//Create InfoPage
-						await authenticatedFetch(`${path}/${text}_Matter/02:_InfoPage`, 'contents?abort=exists&title=InfoPage&dream.out.format=json', current.subdomain, 'LibreBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/02:_InfoPage`, `contents?${matterMode}&title=InfoPage&dream.out.format=json`, current.subdomain, 'LibreBot', {
 							method: "POST",
 							body: "<p class=\"mt-script-comment\">Cross Library Transclusion</p><pre class=\"script\">template('CrossTransclude/Web',{'Library':'chem','PageID':170365});</pre>" +
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header-title</a></p>"
@@ -1610,18 +1616,25 @@ puppeteer.launch({
 					}
 					else if (text.includes('Back')) {
 						//Create Index
-						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, 'contents?abort=exists&title=Index&dream.out.format=json', current.subdomain, 'LibreBot', {
+						await authenticatedFetch(`${path}/${text}_Matter/10:_Index`, `contents?${matterMode}&title=Index&dream.out.format=json`, current.subdomain, 'LibreBot', {
 							method: "POST",
 							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
 								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
 						});
-						
-						//Create Glossary Needs to be enabled
-						/*await authenticatedFetch(`${path}/${text}_Matter/20:Glossary`, 'contents?abort=exists&title=Glossary&dream.out.format=json', current.subdomain, 'LibreBot', {
-							method: "POST",
-							body: "<p class=\"mt-script-comment\">Dynamic Index</p><pre class=\"script\">template('DynamicIndex');</pre>" +
-								"<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
-						});*/
+						try {
+							let dynamicGlossary = await authenticatedFetch('https://chem.libretexts.org/@api/deki/pages/279134/contents?dream.out.format=json&mode=edit', null, null, 'LibreBot');
+							dynamicGlossary = await dynamicGlossary.json();
+							if (dynamicGlossary && dynamicGlossary.body) {
+								dynamicGlossary = dynamicGlossary.body;
+								await authenticatedFetch(`${path}/${text}_Matter/20:_Glossary`, `contents?${matterMode}&title=Glossary&dream.out.format=json`, current.subdomain, 'LibreBot', {
+									method: "POST",
+									body: dynamicGlossary +
+										"\n<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">showtoc:no</a><a href=\"#\">printoptions:no-header</a><a href=\"#\">columns:three</a></p>"
+								});
+							}
+						} catch (e) {
+							console.error('Glossary Error', e);
+						}
 					}
 				}
 				
@@ -1668,6 +1681,11 @@ puppeteer.launch({
 			
 			urlArray = urlArray.concat(await getMatter('Back'));
 			urlArray.reverse();
+			
+			if (options.createMatterOnly) {
+				await getTOC(current);
+				return null; //done creating matter, exit immediately.
+			}
 			
 			if (heartbeat)
 				clearInterval(heartbeat);
@@ -1792,6 +1810,7 @@ puppeteer.launch({
 					if (files && files.length > 2) {
 						await merge(files, `./PDF/Letter/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
 						// await merge(filesA4, `./PDF/A4/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
+						await merge(files.slice(0, 10), `./PDF/Letter/Finished/${zipFilename}/Preview.pdf`, {maxBuffer: 1024 * 10000000});
 						files.shift();
 						// filesA4.shift();
 						await merge(files, `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
@@ -1799,7 +1818,7 @@ puppeteer.launch({
 					}
 					else {
 						await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
-						await fs.copy(files[0], `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`);
+						await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
 						// await fs.copy(filesA4[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
 						// await fs.copy(filesA4[0], `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`);
 					}
@@ -1890,8 +1909,8 @@ puppeteer.launch({
 					await async.mapLimit(originalFiles, 10, async (filename) => {
 						await fs.remove(`./PDF/Letter/${filename}`);
 						await fs.remove(`./PDF/Letter/Margin/${filename}`);
-						await fs.remove(`./PDF/A4/${filename}`);
-						await fs.remove(`./PDF/A4/Margin/${filename}`);
+						// await fs.remove(`./PDF/A4/${filename}`);
+						// await fs.remove(`./PDF/A4/Margin/${filename}`);
 					});
 					console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
 				}
@@ -2031,7 +2050,7 @@ async function getSubpages(rootURL, options = {}) {
 	let path = rootURL.split('/').splice(3).join('/');
 	options['depth'] = 0;
 	
-	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
+	let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain, options.username);
 	pages = await pages.json();
 	
 	let result = {
@@ -2040,7 +2059,7 @@ async function getSubpages(rootURL, options = {}) {
 		subpages: options.subpages || await subpageCallback(pages, options)
 	};
 	if (options.getAPI)
-		result = await getAPI(result);
+		result = await getAPI(result, {getContents: options.getContents, username: options.username});
 	
 	return result;
 	
@@ -2180,6 +2199,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 		
 		if (map.length) { //process map into a tree
 			map.sort();
+			map = map.map(item => item.replace('http://', 'https://'));
 			const start = performance.now();
 			let lastNode;
 			
@@ -2255,8 +2275,8 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
 	
 }
 
-async function getAPI(page, getContents) {
-	if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
+async function getAPI(page, options = {getContents: false, username: null}) {
+	if (page.title && page.properties && page.id && page.tags && (!options.getContents || page.content))
 		return page;
 	else if (typeof page === 'string')
 		page = {
@@ -2265,7 +2285,7 @@ async function getAPI(page, getContents) {
 	page.url = page.url.replace('?contentOnly', '');
 	let [subdomain, path] = parseURL(page.url);
 	// console.log(page.url);
-	let response = await authenticatedFetch(path, `?dream.out.format=json${getContents ? '&include=contents' : ''}`, subdomain, path.startsWith('Sandboxes') ? 'LibreBot' : '');
+	let response = await authenticatedFetch(path, `?dream.out.format=json${options.getContents ? '&include=contents' : ''}`, subdomain, options.username || path.startsWith('Sandboxes') ? 'LibreBot' : '');
 	if (response.ok) {
 		response = await response.json();
 		let {properties, tags} = response;

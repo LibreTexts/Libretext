@@ -7,9 +7,10 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('store:'));
+	let bookstore = tags.find(elem => elem.startsWith('bookstore:'));
 	
 	let fn = () => {
+		const [subdomain, path] = LibreTexts.parseURL();
 		request = new XMLHttpRequest();
 		requestJSON = {
 			root: window.location.href,
@@ -55,13 +56,11 @@ if (!window["batchPrint.js"]) {
 					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
+					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
+
 				</div></div>`;
 			
 			if (downloadEntry) {
-				if (bookstore)
-					bookstore = bookstore.split('store:')[1];
-				
-				
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
@@ -71,43 +70,16 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
 					   target='_blank'>Import into LMS</a>
-					${batchAccess ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
-					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
+					<a href='https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
 			
-			//Beeline
-			if (window.beelineEnabled) {
-				innerHTML += `<div class="LTdropdown beeline-toggles" style="float:left; background-color: #d4d4d4; color:black"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div><div class="LTdropdown-content" style="right: 0">`;
-				innerHTML += `<a class="btn btn-large" style="display: flex" href="http://www.beelinereader.com/education/?utm_source=libretexts" target="_blank"
-title="BeeLine helps you read on screen more easily by using a color gradient that pulls your eyes through the text. Try out the color schemes to find your favorite to use on LibreTexts. Be sure to check out BeeLine's apps and plugins, so you can read PDFs, Kindle books, and websites more easily!">
-<img style="margin-right: 5px; width:25px; height: 25px" src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">About BeeLine</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="bright">Bright</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="dark">Dark</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="blues">Blues</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="gray">Gray</a>`;
-				innerHTML += `<a class="btn btn-large" data-color="night_blues">Inverted</a>`;
-				innerHTML += `<a class="btn btn-large active" data-color="off">Off</a>`;
-				innerHTML += `<a class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode Toggle</a>`;
-				innerHTML += `</div></div>`;
-			}
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
-			if (isPro) {
-				innerHTML += `<div class="LTdropdown"  style="float:left; background-color: darkorange"><div class="dropbtn" title="Developers Menu"><span>Developers</span></div><div class="LTdropdown-content" style="right: 0">`;
-				innerHTML += `<a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>Get Cover</a>`;
-				innerHTML += `<a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="notSS mt-icon-edit-page" target="_blank">Get Contents</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); buildcite()" href='#' class='mt-icon-quote'>Get Citation</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>Reveal Answers</a>`;
-				innerHTML += `<a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" href='#' class='mt-icon-shuffle'>Unorder Page</a>`;
-				innerHTML += `</div></div>`;
-			}
-			else {
-				
-			}
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
 			let getTOCLink = document.getElementById("getTOCLink");
@@ -142,12 +114,12 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 	}
 	
 	// noinspection ES6ConvertVarToLetConst
-	var batch = (target) => {
+	var batch = (target, additionalParameters = '') => {
 		if (window["batchComplete"]) {
 			window.location = window["batchComplete"];
 		}
 		else {
-			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache` : window.location.href}`, true); //async get
+			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache${additionalParameters}` : window.location.href}`, true); //async get
 			request.addEventListener("progress", receive);
 			request.addEventListener("load", download);
 			request.send();
@@ -178,14 +150,15 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 					alert(out.text);
 					return;
 				}
-				batchButton.innerText = "Redownload";
-				window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-				window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-				
-				let tags = document.getElementById('pageTagsHolder').innerText;
-				if (tags.includes('coverpage:yes'))
-					setTimeout(() => window.location.reload(), 5000);
-				
+				if(out.filename) {
+					batchButton.innerText = "Redownload";
+					window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+					window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+					
+					let tags = document.getElementById('pageTagsHolder').innerText;
+					if (tags.includes('coverpage:yes'))
+						setTimeout(() => window.location.reload(), 5000);
+				}
 			}
 		}
 		
@@ -201,5 +174,5 @@ title="BeeLine helps you read on screen more easily by using a color gradient th
 		return '#'
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }

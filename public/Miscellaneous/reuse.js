@@ -1,5 +1,3 @@
-const LibreTexts = LibreTextsReuse();
-
 //Plugins to the Editor are registered onto this object for later activation
 const LibreEditor = {
 	registerAll: (config) => {
@@ -18,6 +16,8 @@ const LibreEditor = {
 	}
 };
 
+const LibreTexts = LibreTextsReuse();
+
 function LibreTextsReuse() {
 	const libraries = {
 		"Biology": "bio",
@@ -27,7 +27,7 @@ function LibreTextsReuse() {
 		"Espanol": "espanol",
 		"Geology": "geo",
 		"Humanities": "human",
-		"K12 Education":"k12",
+		"K12 Education": "k12",
 		"Mathematics": "math",
 		"Medicine": "med",
 		"Physics": "phys",
@@ -37,6 +37,8 @@ function LibreTextsReuse() {
 	};
 	
 	return {
+		active: {},
+		debug: {},
 		authenticatedFetch: authenticatedFetch,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
@@ -54,6 +56,7 @@ function LibreTextsReuse() {
 		getAPI: getAPI,
 		getCurrentContents: getCurrentContents,
 		getCoverpage: getCoverpage,
+		TOC: TOC,
 		libraries: libraries,
 	};
 	
@@ -84,6 +87,8 @@ function LibreTextsReuse() {
 	}
 	
 	function parseURL(url = window.location.href) {
+		if (url.includes('?')) //strips any query parameters
+			url = url.split('?')[0];
 		if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
 			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
@@ -93,12 +98,20 @@ function LibreTextsReuse() {
 	}
 	
 	function cleanPath(path) {
-		path = decodeURIComponent(decodeURIComponent((path)));
-		let front="", back = path;
+		let front = "", back = path;
 		if (path.includes('/'))
-			[, front, back] = path.match(/(^.*\/)([^\/]*?$)/); //only modifying page, not whole path
+			[, front, back] = path.match(/(^.*[^\/]\/)([^\/].*?$)/); //only modifying page, not whole path
+		try {
+			back = decodeURIComponent(back);
+			back = decodeURIComponent(back);
+		} catch (error) {
+			// console.error(path, error.message);
+		}
+		front = front.replace('?title=', '');
 		back = back.replace('?title=', '');
-		back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+		back = back.replace('//', '_');
+		back = back.replace(/%/g, '_');
+		back = back.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
 		back = back.replace(/[^A-Za-z0-9()_ :%\-.'@\/]/g, '');
 		return front + back;
 	}
@@ -116,7 +129,7 @@ function LibreTextsReuse() {
 			path: path,
 			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
 		};
-		payload = {...payload, ...options};
+		payload = Object.assign({}, payload, options);
 		
 		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
 			method: method,
@@ -139,16 +152,19 @@ function LibreTextsReuse() {
 				[, path] = parseURL(path);
 			}
 			if (!isNaN(path)) { //if using pageIDs
-				path = parseInt(path);
 				isNumber = true;
 			}
 			if (path === 'home') { //if at root page
 				isNumber = true;
 			}
 		}
+		if (api) { //query parameter checking
+			if (!arbitraryPage && path && path.includes('?')) //isolated path should not have query parameters
+				path = path.split('?')[0];
+			if (!api.startsWith('?')) //allows for    pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
+				api = `/${api}`;
+		}
 		let keys = await getKeys();
-		if (api && !api.startsWith('?')) //allows for pages/{pageid} (GET) https://success.mindtouch.com/Integrations/API/API_calls/pages/pages%2F%2F%7Bpageid%7D_(GET)
-			api = `/${api}`;
 		let headers = options.headers || {};
 		subdomain = subdomain || current;
 		let token = keys[subdomain];
@@ -235,17 +251,13 @@ function LibreTextsReuse() {
 		return result;
 	}
 	
-	async function getSubpages(rootURL, username) {
-		let origin = rootURL.split("/")[2].split(".");
-		const subdomain = origin[0];
+	async function getSubpages(rootURL, options = {}) {
+		const [subdomain, path] = LibreTexts.parseURL(rootURL);
 		
-		origin = rootURL.split("/").splice(0, 3).join('/');
-		let path = rootURL.split('/').splice(3).join('/');
-		
-		let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', username, subdomain);
+		let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
 		pages = await pages.json();
 		
-		let info = await authenticatedFetch(path, 'info?dream.out.format=json', username, subdomain);
+		let info = await authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 		info = await info.json();
 		return {
 			title: info.title,
@@ -265,17 +277,20 @@ function LibreTextsReuse() {
 				const hasChildren = subpage["@subpages"] === "true";
 				let children = hasChildren ? undefined : [];
 				if (hasChildren) { //recurse down
-					children = await authenticatedFetch(id, 'subpages?limit=all&dream.out.format=json', username, subdomain);
+					children = await authenticatedFetch(id, 'subpages?limit=all&dream.out.format=json', subdomain);
 					children = await children.json();
 					children = await subpageCallback(children, false);
 				}
-				result[index] = {
+				let temp = {
 					title: subpage.title,
 					url: url,
 					children: children,
 					id: id,
 					relativePath: url.replace(rootURL, '')
 				};
+				if (options.getAPI)
+					temp = await LibreTexts.getAPI(temp, options.getAPI.contents);
+				result[index] = temp;
 			}
 			
 			if (subpageArray && subpageArray.length) {
@@ -378,7 +393,7 @@ function LibreTextsReuse() {
 		LibreTexts.authenticatedFetch(window.location.href, 'contents?mode=edit').then(async (data) => console.log(await data.text()))
 	}
 	
-	async function getCoverpage(url = window.location.href) {
+	async function getCoverpage(url = window.location.href) { //returns path to coverpage
 		if (typeof getCoverpage.coverpage === 'undefined') {
 			const urlArray = url.replace("?action=edit", "").split("/");
 			for (let i = urlArray.length; i > 3; i--) {
@@ -400,6 +415,108 @@ function LibreTextsReuse() {
 			}
 		}
 		return getCoverpage.coverpage;
+	}
+	
+	async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
+		let coverTitle;
+		let content;
+		const [subdomain] = LibreTexts.parseURL();
+		if (!navigator.webdriver || !window.matchMedia('print').matches) {
+			if (!coverpageUrl || typeof coverpageUrl !== 'string' || !coverpageUrl.startsWith('https://')) {
+				coverpageUrl = await LibreTexts.getCoverpage(); //returns path
+				coverpageUrl = `https://${subdomain}.libretexts.org/${coverpageUrl}`;
+			}
+			if (coverpageUrl) {
+				await makeTOC(coverpageUrl, true);
+			}
+			else {
+				await makeTOC(`https://${subdomain}.libretexts.org/home`, true);
+			}
+		}
+		
+		async function makeTOC(url, isRoot, full) {
+			const [subdomain, path] = LibreTexts.parseURL(url);
+			//get coverpage title & subpages;
+			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
+			
+			
+			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+			response = await response.json();
+			info = await info;
+			info = await info.json();
+			coverTitle = info.title;
+			return await subpageCallback(response, isRoot);
+			
+			async function subpageCallback(info, isRoot) {
+				let subpageArray = info["page.subpage"];
+				const result = [];
+				const promiseArray = [];
+				if (!subpageArray)
+					return false;
+				
+				if (!subpageArray.length) {
+					subpageArray = [subpageArray];
+				}
+				for (let i = 0; i < subpageArray.length; i++) {
+					promiseArray[i] = subpage(subpageArray[i], i);
+				}
+				
+				async function subpage(subpage, index) {
+					let url = subpage["uri.ui"];
+					let path = subpage.path["#text"];
+					let currentPage = url === window.location.href;
+					const hasChildren = subpage["@subpages"] === "true";
+					let defaultOpen = window.location.href.includes(url) && !currentPage;
+					let children = hasChildren ? undefined : [];
+					if (hasChildren && (full || defaultOpen)) { //recurse down
+						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+						children = await children.json();
+						children = await
+							subpageCallback(children, false);
+					}
+					result[index] = {
+						title: currentPage ? subpage.title : `<a href="${url}">${subpage.title}</a>`,
+						url: url,
+						selected: currentPage,
+						expanded: defaultOpen,
+						children: children,
+						lazy: !full
+					};
+				}
+				
+				await Promise.all(promiseArray);
+				if (isRoot) {
+					content = result;
+					// console.log(content);
+					initializeFancyTree();
+				}
+				return result;
+			}
+			
+			function initializeFancyTree() {
+				const target = $(targetElement);
+				if (content) {
+					const button = $(".elm-hierarchy-trigger.mt-hierarchy-trigger");
+					button.text("Contents");
+					button.attr('id', "TOCbutton");
+					button.attr('title', "Expand/Contract Table of Contents");
+					button.addClass("toc-button");
+					target.addClass("toc-hierarchy");
+					// target.removeClass("elm-hierarchy mt-hierarchy");
+					target.innerHTML = "";
+					target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
+					target.fancytree({
+						source: content,
+						lazyLoad: function (event, data) {
+							const dfd = new $.Deferred();
+							let node = data.node;
+							data.result = dfd.promise();
+							makeTOC(node.data.url).then((result) => dfd.resolve(result));
+						}
+					})
+				}
+			}
+		}
 	}
 	
 }

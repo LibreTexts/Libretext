@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/API/BotLogs" />
       <excludeFolder url="file://$MODULE_DIR$/API/ImportFiles" />
+      <excludeFolder url="file://$MODULE_DIR$/API/JWT" />
       <excludeFolder url="file://$MODULE_DIR$/API/analyticsData" />
       <excludeFolder url="file://$MODULE_DIR$/API/bookstore" />
       <excludeFolder url="file://$MODULE_DIR$/API/public/Hierarchy" />
@@ -24,6 +25,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="R User Library" level="project" />
     <orderEntry type="library" name="R Skeletons" level="application" />
-    <orderEntry type="library" name="Commons" level="application" />
+    <orderEntry type="library" name="@types/find-remove" level="application" />
   </component>
 </module>

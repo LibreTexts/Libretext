@@ -34,8 +34,9 @@ async function handler(request, response) {
 		const staticFileServer = nodeStatic('node_modules/socket.io-client/dist', {fallthrough: false});
 		request.url = 'socket.io.js';
 		staticFileServer(request, response, finalhandler(request, response));
-		} else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
-			responseError('Unauthorized', 401);
+	}
+	else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
+		responseError('Unauthorized', 401);
 	}
 	else if (url.startsWith('/Logs/')) {
 		const staticFileServer = nodeStatic('BotLogs', {fallthrough: false});
@@ -100,6 +101,9 @@ async function jobHandler(jobType, input, socket) {
 	}
 	
 	function parallelCount() {
+		if (input.root.endsWith('.libretexts.org') || input.root.endsWith('.libretexts.org/'))
+			return 2;
+		
 		switch (jobType) {
 			case 'foreignImage':
 				return 2;

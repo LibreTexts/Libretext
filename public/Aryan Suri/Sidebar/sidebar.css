@@ -16,81 +16,17 @@ a.toggler.off {
   border-right-width: 230px;
 }
 
-#attrModal {
-  display: flex;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: none;
-  /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-  justify-content: center;
-  align-content: center;
-}
-
-/* Modal Content/Box */
-
-#attrModalContent {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40vw;
-  margin-left: 520px;
-  z-index: 30000001;
-  top: calc(50% - 137px);
-  position: absolute;
-  border-radius: 10px;
-}
-
-#attr-copy, #attr-author, #attr-html, #attr-program {
-  color: #666;
-  text-decoration: none;
-  transition: 1s;
-}
-
-#attr-text a {
-  color: #0645AD;
-}
-
-#attr-text a:hover {
-  font-style: italic !important;
-}
-
-#attr-copy:hover, #attr-author:hover, #attr-html:hover, #attr-program:hover {
-  font-style: italic !important;
-}
-
-.close_ar {
-  margin-top: 0px;
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close_ar:hover, .close_ar:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .custom_field {
   margin: 0 auto;
 }
 
 .custom_field a {
   margin: 10px;
+}
+
+.custom_field_title {
+  background-color: #E5F5FE;
+  border-bottom: 1px solid #127bc4;
 }
 
 .slider_ar {
@@ -138,25 +74,18 @@ a.toggler.off {
 
 .custom_sidebar {
   cursor: pointer;
-  height: 100%;
-  /* 100% Full-height */
-  width: 480px;
   display: block;
-  /* 0 width - change this with JavaScript */
   position: fixed;
-  /* Stay in place */
-  z-index: 1000000000;
-  /* Stay on top */
   top: 0;
   left: 0;
+  height: 100vh;
+  width: 35vw;
+  z-index: 30000002;
+  overflow-x: auto;
+  overflow-y: auto;
   background-color: #ececec;
-  margin-top: 40px;
-  /* Black*/
-  overflow-x: hidden;
-  /* Disable horizontal scroll */
-  transition: 0s;
-  /* 0.5 second transition effect to slide in the sidebar */
   border-right: 1px solid black;
+  padding-left: 25px;
 }
 
 .custom_sidebar .custom_close {
@@ -172,15 +101,17 @@ a.toggler.off {
   color: #E5F5FE;
 }
 
-/* The sidebar links */
-
 .custom_sidebar a, .custom_sidebar b {
   padding: 2px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.1rem;
   color: #595959;
   display: block;
-  /*transition: 0.3s;*/
+}
+
+.custom_sidebar .toc-hierarchy a {
+  display: inline !important;
+  margin-left: 10px !important;
 }
 
 .custom_sidebar p {
@@ -201,8 +132,6 @@ a.toggler.off {
   color: #595959;
 }
 
-/* When you mouse over the navigation links, change their color */
-
 .custom_sidebar a:hover {
   color: #127bc4;
 }
@@ -220,10 +149,6 @@ a.toggler.off {
   margin-left: 6%;
 }
 
-/* Position and style the close button (top right corner) */
-
-/* The button used to open the sidebar */
-
 #custom_open {
   width: 43.333px;
   height: 43.333px;
@@ -236,7 +161,7 @@ a.toggler.off {
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 30000001
+  z-index: 29998;
 }
 
 .openbtn:hover {
@@ -244,7 +169,6 @@ a.toggler.off {
 }
 
 .custom_dropbtn {
-  /*margin-top: 2px;*/
   margin-left: 10px;
   width: 85%;
   background-color: #30b3f6;
@@ -285,28 +209,45 @@ a.toggler.off {
   display: block;
 }
 
-.top-bar {
-  cursor: pointer;
-  top: 0;
-  height: 40px;
-  margin-top: 0;
-  background-color: #E5F5FE;
-  position: fixed;
-  z-index: 10000000000;
+.custom_sidebar h3 {
+  font-size: 1.8rem !important;
+}
+
+#sbLayout {
   display: flex;
-  width: 480px;
-  border-right: 1px solid black;
+  justify-content: space-evenly;
 }
 
-.top-bar-unit {
+.sbHeader {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 25px;
+  z-index: 30000003;
+}
+
+.top-tabs {
+  cursor: pointer;
+  background-color: #127bc4;
+  transform-origin: right;
   flex: 1;
-  /* margin-left: 10px; */
-  padding: 5px;
-  font-size: 10px;
 }
 
-.top-bar .top-bar-unit h5 {
-  text-align: center !important;
+.top-tabs h5 {
+  color: white;
+  font-size: 1rem !important;
+  font-weight: 300;
+  font-family: Roboto;
+  transform: rotate(90deg);
+  transform-origin: center;
+  width: auto;
+}
+
+.top-tabs:first-child {
+  padding-top: 20px;
 }
 
 .custom_sidebar #custom_dropdown-content a {
@@ -321,6 +262,14 @@ a.toggler.off {
   background-color: #E6E6E6;
   padding: 28px;
   margin-top: 10px;
+}
+
+.simHover {
+  background: #bcbcbc;
+  border: 1px solid #30b3f6;
+  box-shadow: 0 0 .3em rgba(48, 179, 246, .5);
+  color: #000;
+  outline: 0;
 }
 
 .custom_dropdown-content a:hover {
@@ -343,6 +292,10 @@ a.toggler.off {
   padding: 10px;
 }
 
+.padLeft {
+  padding-left: 37vw;
+}
+
 .custom_sidebar #custom_target h6 {
   padding: 2px;
   text-decoration: none;
@@ -351,7 +304,7 @@ a.toggler.off {
   display: block;
 }
 
-#dark-light:hover {
+#dark-light {
   background-color: #252525;
   color: #ffffff;
 }
@@ -360,31 +313,29 @@ a.toggler.off {
   margin-left: 35px;
 }
 
-#SB_Bright:hover {
+#SB_Bright {
   background-image: linear-gradient(90deg, #0000F4, #000000, #E93323);
   color: #ffffff;
 }
 
-#SB_Blues:hover {
+#SB_Blues {
   background-image: linear-gradient(90deg, #0000f1, #000000, #891bd5);
   color: #ffffff;
 }
 
-#SB_Inverted:hover {
+#SB_Inverted {
   background-image: linear-gradient(90deg, #56aaff, #ffffff, #9e8dfc);
   color: #383838;
 }
 
-#SB_Grays:hover {
+#SB_Grays {
   background-image: linear-gradient(90deg, #7d7d7d, #000000, #7d7d7d);
   color: #ffffff;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-
-/*                                                                    UNIT COVERTER CODE                        */
+#bm-list {
+  list-style: none;
+}
 
 .converter-wrapper {
   margin: 0 auto;
@@ -488,9 +439,29 @@ a.toggler.off {
   padding-left: 10px;
 }
 
-@media only screen and (max-width: 600px) {
-  #custom_open, #sidebarDiv {
-    display: none;
+@media only screen and (max-width: 1335px) {
+  #elm-main-content {
+    padding-left: 30px !important;
+  }
+}
+
+@media only screen and (max-width: 415px) {
+  .custom_sidebar {
+    width: 100vw;
+    padding-left: 0;
+    padding-top: 25px;
+  }
+  .sbHeader {
+    flex-direction: row;
+    height: 25px;
+    width: 100vw;
+  }
+  .top-tabs:first-child {
+    padding-top: 0;
+  }
+  .top-tabs h5 {
+    font-size: 0.7rem !important;
+    transform: none;
   }
 }
 
@@ -506,3 +477,13 @@ a.toggler.off {
     text-align: justify !important;
   }
 }
+/*Prevent Mindtouch changes to glossary label*/
+  .glossaryLabel {
+    display: inline;
+  }
+  .glossaryLabel:after {
+    content: none;
+  }
+  #glossarizerOptions form {
+      text-indent: 2em;
+  }
