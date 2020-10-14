@@ -242,9 +242,9 @@ class Commons extends React.Component {
 						        onClick={() => this.setState({libraryDialog: true})}>Libraries</Button>
 						{this.state.libraryDialog ?
 							<LibraryDialog {...this.state} updateParent={this.updateParent}/> : null}
-						<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly', flexWrap:"wrap"}}>
+						{/*<div style={{width: '100%', padding: 10, display: 'flex', justifyContent: 'space-evenly', flexWrap:"wrap"}}>
 							{Object.keys(LibreTexts.libraries).map((option) => <Lib key={option} option={option}/>)}
-						</div>
+						</div>*/}
 						<TablePagination
 							component="div"
 							count={totalCount}

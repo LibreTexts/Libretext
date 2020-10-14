@@ -85,7 +85,7 @@ export default function LibreText(props) {
 					               overflowY: "auto",
 					               justifyContent: 'space-around'
 				               }}>
-					<Card style={{padding: 10, minWidth: '33%', overflowX: "auto"}}>
+					<Card style={{padding: 10, minWidth: '33%', overflow: "auto"}}>
 						<div>
 							<Typography className='entryInstitution' gutterBottom>
 								<img
