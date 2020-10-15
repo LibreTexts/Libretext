@@ -10,6 +10,7 @@
     "colors": "^1.4.0",
     "console-timestamp": "^0.3.0",
     "convert-excel-to-json": "^1.7.0",
+    "cookie": "^0.4.1",
     "cors": "^2.8.5",
     "deepcopy": "^1.0.1",
     "diff": "^4.0.2",

@@ -1,7 +1,9 @@
 const http = require('http');
 const httpCasClient = require('http-cas-client');
 const jose = require('jose');
-const {readFileSync} = require('fs')
+const {readFileSync} = require('fs');
+const cookie = require('cookie');
+
 const {
 	JWE,   // JSON Web Encryption (JWE)
 	JWK,   // JSON Web Key (JWK)
@@ -32,19 +34,22 @@ http.createServer(async (req, res) => {
 	}
 	
 	const {principal, ticket} = req;
-	if(!principal)
+	if (!principal)
 		return res.end();
-	console.log(principal);
-	
+	const cookies = cookie.parse(req.headers.cookie);
+	const redirect = cookies?.api_redirect || undefined;
 	const payload = {
 		user: principal.user,
 		name: principal.name || principal.firstName,
+		email: principal?.attributes?.email,
+		redirect: redirect
 	}
 	
 	const token = JWT.sign(payload, key, {issuer: serviceName})
-	res.writeHead(200, {
-		'Set-Cookie': `overlayJWT=${token}; Domain=libretexts.org; secure`,
-		'Content-Type': 'text/plain'
+	res.writeHead(redirect? 302: 200, {
+		'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure`, `api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`],
+		'Content-Type': 'text/plain',
+		'Location': redirect,
 	});
 	res.end(JSON.stringify(principal, null, 2));
 }).listen(3009);
