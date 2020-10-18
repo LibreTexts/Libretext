@@ -157,7 +157,7 @@ export default function GetOrder(props) {
 			return <ThemeProvider theme={theme}>
 				<Paper id='GetOrder' style={{padding: 20}}>
 					<div style={{overflowX: "auto"}}>
-						
+						{order.stripeID.startsWith('cs_test')?<h1 style={{color:'orange'}}>BETA ORDER</h1>:null}
 						<h1>Order {order.stripeID}</h1>
 						<Stepper activeStep={selectedIndex} alternativeLabel>
 							{steps.map((item) => {

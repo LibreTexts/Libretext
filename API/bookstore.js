@@ -10,6 +10,7 @@ const mailComposer = require('nodemailer/lib/mail-composer');
 require('dotenv').config({path: './.env'});
 const bookstoreConfig = require("./bookstoreConfig.json");
 const stripe = require('stripe')(bookstoreConfig.STRIPE_SECRET_KEY);
+stripe.beta = require('stripe')(bookstoreConfig.BETA.STRIPE_SECRET_KEY);
 const taxMultiplier = parseFloat(bookstoreConfig.TAX_MULTIPLIER);
 const {ClientCredentials} = require('simple-oauth2');
 const basePath = '/bookstore';
@@ -22,12 +23,20 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 
 app.use(express.static(bookstoreConfig.STATIC_DIR));
 app.use(cors());
+app.use(function (req, res, next) {
+	if (req.url.includes('/beta/')) {
+		console.log(req.url);
+		req.url = req.url.replace('/beta/', '/');
+		req.query.beta = true;
+	}
+	next();
+})
 app.use(
 	express.json({
 		// We need the raw body to verify webhook signatures.
 		// Let's compute it only when hitting the Stripe webhook endpoint.
 		verify: function (req, res, buf) {
-			if (req.originalUrl.startsWith(basePath + '/publish-order')) {
+			if (req.url.startsWith(basePath + '/publish-order')) {
 				req.rawBody = buf.toString();
 			}
 		},
@@ -43,7 +52,7 @@ app.get(basePath + '/', (req, res) => {
 //send public key to client
 app.get(basePath + '/stripeInitialize', async (req, res) => {
 	res.send({
-		publicKey: bookstoreConfig.STRIPE_PUBLISHABLE_KEY,
+		publicKey: req.query.beta ? bookstoreConfig.BETA.STRIPE_PUBLISHABLE_KEY : bookstoreConfig.STRIPE_PUBLISHABLE_KEY,
 	});
 });
 
@@ -56,7 +65,7 @@ app.get(basePath + '/stripeInitialize', async (req, res) => {
 	files = await Promise.all(files);
 })()
 
-async function updateOrder(sessionId, forceUpdate = false) {
+async function updateOrder(sessionId, forceUpdate = false, beta = false) {
 	let result = {};
 	let writePath;
 	if (await fs.exists(`./bookstore/complete/${sessionId}.json`)) {
@@ -77,11 +86,12 @@ async function updateOrder(sessionId, forceUpdate = false) {
 	if (forceUpdate) {
 		if (result.luluID) { //fetch live lulu
 			let luluResponse = await LuluAPI(`https://api.lulu.com/print-jobs/${result.luluID}/`, {
-				headers: {
-					'Cache-Control': 'no-cache',
-					'Content-Type': 'application/json'
-				}
-			});
+					headers: {
+						'Cache-Control': 'no-cache',
+						'Content-Type': 'application/json'
+					},
+				},
+				result.beta || beta);
 			if (luluResponse.ok) {
 				luluResponse = await luluResponse.json();
 				result.lulu = luluResponse;
@@ -92,7 +102,6 @@ async function updateOrder(sessionId, forceUpdate = false) {
 				console.error(JSON.stringify(await luluResponse.json()));
 		}
 		
-		//Maybe add order fulfillment if VERIFIED? May cause signficiant issues if autopay is enabled.
 		
 		//archive order if completed
 		if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED'].includes(result.status)) {
@@ -107,14 +116,15 @@ async function updateOrder(sessionId, forceUpdate = false) {
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get(basePath + '/get-order', async (req, res) => {
 	const {sessionId, forceUpdate} = req.query;
-	let result = await updateOrder(sessionId, forceUpdate);
+	let result = await updateOrder(sessionId, forceUpdate, req.query.beta);
 	res.send(result);
 });
 
 //send LibreTexts info to Stripe
 app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	const domainURL = bookstoreConfig.DOMAIN;
-	const {shoppingCart, shippingSpeed} = req.body;
+	const {shoppingCart, shippingSpeed, shippingLocation = 'US'} = req.body;
+	const beta = req.query.beta;
 	let totalQuantity = 0;
 	
 	//turn items into lineItems
@@ -128,30 +138,63 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 			"quantity": item.quantity
 		}
 	});
-	let shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
-		headers: {
-			// 'Cache-Control': 'no-cache',
-			'Content-Type': 'application/json'
-		}
-	});
-	costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
-		method: 'POST',
-		headers: {
-			'Cache-Control': 'no-cache',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			"line_items": costCalculation,
-			"shipping_address": {
-				"city": "Davis",
-				"country_code": "US",
-				"postcode": "95616",
-				"state_code": "CA",
-				"street1": "One Shields Avenue"
-			},
-			"shipping_level": shippingSpeed
-		})
-	});
+	let shipping;
+	switch (shippingLocation) {
+		default:
+		case "US":
+			shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
+				headers: {
+					// 'Cache-Control': 'no-cache',
+					'Content-Type': 'application/json'
+				}
+			});
+			costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
+				method: 'POST',
+				headers: {
+					'Cache-Control': 'no-cache',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					"line_items": costCalculation,
+					"shipping_address": {
+						"city": "Davis",
+						"country_code": "US",
+						"postcode": "95616",
+						"state_code": "CA",
+						"street1": "One Shields Avenue"
+					},
+					"shipping_level": shippingSpeed
+				})
+			});
+			break;
+		case "CA":
+			shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
+				headers: {
+					// 'Cache-Control': 'no-cache',
+					'Content-Type': 'application/json'
+				}
+			});
+			costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
+				method: 'POST',
+				headers: {
+					'Cache-Control': 'no-cache',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					"line_items": costCalculation,
+					"shipping_address": {
+						"city": "Athabasca",
+						"country_code": "CA",
+						"postcode": "T9S 3A3",
+						"state_code": "AB",
+						"street1": "1 University Dr, Athabasca"
+					},
+					"shipping_level": shippingSpeed
+				})
+			});
+			break;
+	}
+	
 	costCalculation = await costCalculation.json();
 	// console.log(JSON.stringify(costCalculation, null, 2));
 	
@@ -209,11 +252,11 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	// [customer] - if you have an existing Stripe Customer ID
 	// [customer_email] - lets you prefill the email input in the Checkout page
 	// For full details see https://stripe.com/docs/api/checkout/sessions/create
-	const session = await stripe.checkout.sessions.create({
+	const session = await (beta ? stripe.beta : stripe).checkout.sessions.create({
 		payment_method_types: bookstoreConfig.PAYMENT_METHODS.split(', '),
 		mode: 'payment',
 		line_items: lineItems,
-		shipping_address_collection: {allowed_countries: ['US']},
+		shipping_address_collection: {allowed_countries: [shippingLocation]},
 		// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 		success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${domainURL}/Purchase_Canceled.html`,
@@ -237,7 +280,7 @@ app.post(basePath + '/publish-order', async (req, res) => {
 			event = stripe.webhooks.constructEvent(
 				req.rawBody,
 				signature,
-				bookstoreConfig.STRIPE_WEBHOOK_SECRET
+				req.query.beta ? bookstoreConfig.BETA.STRIPE_WEBHOOK_SECRET : bookstoreConfig.STRIPE_WEBHOOK_SECRET
 			);
 		} catch (err) {
 			console.log(`⚠️  Webhook signature verification failed.`);
@@ -252,7 +295,10 @@ app.post(basePath + '/publish-order', async (req, res) => {
 		// console.log(session);
 		
 		// Fulfill the purchase...
-		fulfillOrder(session.id).then();
+		/*if (req.query.beta)
+			console.log(`🔔  Payment received! ${JSON.stringify(session, null, 2)}`);
+		else*/
+		fulfillOrder(session.id, req.query.beta).then();
 	}
 	
 	res.sendStatus(200);
@@ -262,13 +308,13 @@ app.listen(port, () => console.log(`Restarted Bookstore on port ${port}`));
 
 // fulfillOrder('sessionID');
 
-async function fulfillOrder(session, sendEmailOnly) {
+async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live order to Lulu
 	//sendEmailOnly is an optional luluID for resending receipts
 	
 	await fs.ensureDir('./bookstore/pending');
 	await fs.ensureDir('./bookstore/complete');
 	const logDestination = `./bookstore/pending/${session}.json`;
-	session = await stripe.checkout.sessions.retrieve(
+	session = await (beta ? stripe.beta : stripe).checkout.sessions.retrieve(
 		session,
 		{
 			expand: ['line_items', 'line_items.data.price.product', 'customer'],
@@ -308,6 +354,7 @@ async function fulfillOrder(session, sendEmailOnly) {
 		await fs.writeJSON(logDestination, {
 			stripeID: session.id,
 			luluID: null,
+			beta: beta,
 			status: 'VERIFIED',
 			stripe: session,
 			lulu: null,
@@ -341,13 +388,14 @@ async function fulfillOrder(session, sendEmailOnly) {
 	}
 	
 	luluResponse = await LuluAPI('https://api.lulu.com/print-jobs/', {
-		method: 'POST',
-		headers: {
-			'Cache-Control': 'no-cache',
-			'Content-Type': 'application/json'
+			method: 'POST',
+			headers: {
+				'Cache-Control': 'no-cache',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload),
 		},
-		body: JSON.stringify(payload)
-	});
+		beta);
 	if (luluResponse.ok) {
 		luluResponse = await luluResponse.json();
 		
@@ -355,26 +403,27 @@ async function fulfillOrder(session, sendEmailOnly) {
 		await fs.writeJSON(logDestination, {
 			stripeID: session.id,
 			luluID: luluResponse.id,
+			beta: beta,
 			status: luluResponse.status.name,
 			stripe: session,
 			lulu: luluResponse,
 		}, {spaces: '\t'});
 		
-		sendLuluReceiptEmail(payload, luluResponse);
+		sendLuluReceiptEmail(payload, luluResponse, beta);
 	}
 	else {
 		console.error(luluResponse);
 	}
 }
 
-async function LuluAPI(url, options) {
+async function LuluAPI(url, options, beta) {
 	const config = {
 		client: {
-			id: bookstoreConfig.LULU_PUBLISHABLE_KEY,
-			secret: bookstoreConfig.LULU_SECRET_KEY,
+			id: beta ? bookstoreConfig.BETA.LULU_PUBLISHABLE_KEY : bookstoreConfig.LULU_PUBLISHABLE_KEY,
+			secret: beta ? bookstoreConfig.BETA.LULU_SECRET_KEY : bookstoreConfig.LULU_SECRET_KEY,
 		},
 		auth: {
-			tokenHost: 'https://api.lulu.com',
+			tokenHost: `https://api.${beta ? 'sandbox.' : ''}lulu.com`,
 			tokenPath: '/auth/realms/glasstree/protocol/openid-connect/token'
 		}
 	};
@@ -387,12 +436,15 @@ async function LuluAPI(url, options) {
 	}
 	options.headers = options.headers || {};
 	options.headers.Authorization = `Bearer ${accessToken.token.access_token}`;
+	
+	if (beta)
+		url = url.replace('https://api.lulu.com', 'https://api.sandbox.lulu.com');
 	return await fetch(url, options);
 }
 
-function sendLuluReceiptEmail(payload, luluResponse) {
+function sendLuluReceiptEmail(payload, luluResponse, beta = false) {
 	const to = payload.shipping_address.email;
-	const sub = 'Thank you for your order from the LibreTexts Bookstore!';
+	const sub = `Thank you for your ${beta?'BETA ':null}order from the LibreTexts Bookstore!`;
 
 // If modifying these scopes, delete token.json.
 	const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];

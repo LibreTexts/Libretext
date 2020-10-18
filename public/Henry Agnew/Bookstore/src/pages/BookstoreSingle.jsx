@@ -18,6 +18,13 @@ import {grey} from "@material-ui/core/colors";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import {
+	IconFlagUS,
+	IconFlagCA,
+} from 'material-ui-flags';
 
 
 const target = document.createElement("div");
@@ -25,7 +32,6 @@ const target = document.createElement("div");
 target.id = Math.random() * 100;
 // noinspection XHTMLIncompatabilitiesJS
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
-
 
 
 const useStyles = makeStyles({
@@ -42,6 +48,7 @@ function BookstoreSingle(props) {
 	const [color, setColor] = React.useState(false);
 	const [shippingSpeed, setShippingSpeed] = React.useState('MAIL');
 	const [shippingData, setShippingData] = React.useState([]);
+	const [shippingLocation, setShippingLocation] = React.useState('US');
 	const [quantity, setQuantity] = React.useState(1);
 	const [stripe, setStripe] = React.useState();
 	const [isProcessing, setIsProcessing] = React.useState(false);
@@ -49,7 +56,7 @@ function BookstoreSingle(props) {
 	
 	
 	const fileSource = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore`;
-	const APIendpoint = `https://api.libretexts.org/bookstore`
+	const APIendpoint = `https://api.libretexts.org/bookstore${window.location.href.includes('/beta/') ? '/beta' : null}`
 	let validPrice = shippingData.length;
 	const classes = useStyles();
 	
@@ -89,7 +96,16 @@ function BookstoreSingle(props) {
 	useEffect(() => {
 		(async function () {
 			try {
-				let shipping = await fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${quantity}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
+				let shipping;
+				switch (shippingLocation) {
+					case "CA":
+						shipping = 'iso_country_code=CA';
+						break;
+					case "US":
+					default:
+						shipping = 'iso_country_code=US&state_code=US-CA';
+				}
+				shipping = await fetch(`https://api.lulu.com/print-shipping-options?${shipping}&quantity=${quantity}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
 					headers: {
 						// 'Cache-Control': 'no-cache',
 						'Content-Type': 'application/json'
@@ -102,7 +118,7 @@ function BookstoreSingle(props) {
 				console.error(e)
 			}
 		})();
-	}, [quantity]);
+	}, [quantity, shippingLocation]);
 	
 	React.useEffect(() => {
 		const timer = setInterval(() => {
@@ -170,7 +186,7 @@ function BookstoreSingle(props) {
 	function createCheckoutSession() {
 		setIsProcessing(true);
 		setLoaderProgress(0);
-		return fetch(APIendpoint+'/create-lulu-checkout-session', {
+		return fetch(APIendpoint + '/create-lulu-checkout-session', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -183,6 +199,7 @@ function BookstoreSingle(props) {
 					quantity: quantity,
 				}],
 				shippingSpeed: shippingSpeed,
+				shippingLocation: shippingLocation
 			}),
 		}).then(function (result) {
 			setIsProcessing(false);
@@ -199,6 +216,11 @@ function BookstoreSingle(props) {
 			default: grey,
 		},
 	});
+	
+	function renderShippingLocation() {
+		return <Select value={shippingLocation} onChange={(event) => setShippingLocation(event.target.value)}><MenuItem
+			value={'US'}><IconFlagUS />United States</MenuItem><MenuItem value={'CA'}><IconFlagCA />Canada</MenuItem></Select>
+	}
 	
 	return <ThemeProvider theme={theme}>
 		<Paper className='orderForm' id='bookstoreSingle'>
@@ -269,9 +291,13 @@ function BookstoreSingle(props) {
 					<p>Subtotal: ${bookCost.toFixed(2)} x {quantity} = ${(bookCost * quantity).toFixed(2)}</p>
 				</Paper>
 				<Paper className='bookstoreColumn'>
-					<h3>Select Shipping Option</h3>
+					<div style={{display: "flex", justifyContent: "space-between"}}>
+						<h3>Select Shipping Option</h3>{renderShippingLocation()}
+					</div>
 					{renderShipping()}
-					<p>Shipping prices are calculated for within the continental US (US-48). Contact us at bookstore@libretexts.org for orders outside of this area.</p>
+					<p>Shipping prices are calculated for
+					   within {shippingLocation === "CA" ? 'Canada' : 'the continental US (US-48)'}. Contact us at
+					   bookstore@libretexts.org for orders outside of this area.</p>
 				</Paper>
 			</div>
 			
@@ -292,8 +318,10 @@ function BookstoreSingle(props) {
 			        }}>
 				Buy Print Copy for ${(totalCost).toFixed(2)}
 			</Button>
-			<p style={{margin: '0 5%'}}>Final prices on the next page may be slightly
-				different than this	estimate due to localized printing costs.</p>
+			<p style={{margin: '0 5%'}}>Final prices on the next page may be slightly different than this estimate due
+			                            to localized printing costs. <Tooltip
+					title={`Version ${new Date("REPLACEWITHDATE")}`}><span> Coded with ❤</span></Tooltip></p>
+			
 			<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Verifying your Shopping Cart
 				</DialogTitle>
