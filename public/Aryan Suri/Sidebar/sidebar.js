@@ -14,9 +14,6 @@ async function Sidebar() {
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
-    if (param.calc) {
-        const SBCC = new SBconverterCalculator();
-    }
     function getSidebar() {
         if (param.pro) {
             switch (param.library) {
@@ -315,7 +312,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Application</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -337,7 +334,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Applications</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -369,42 +366,7 @@ async function Sidebar() {
 					<iframe id="desmosWidget" style=" width:100%; height: 400px; overflow: auto;"></iframe>
 				</div>
         <a id="conversion_table">Conversion Calculator</a>
-        <div class="custom_field"  id="conversion_table_put" style="display:none;" >
-
-                    <div class="converter-wrapper">
-  
-
-  <form name="property_form">
-    <span>
-      <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-      </select>
-    </span>
-  </form>
-
-  <div class="converter-side-a">
-    <form name="form_A" onSubmit="return false">
-      <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-a -->
-  
- <div class="converter-equals">
-   <p style="margin: 10px;">=</p>
- </div> <!-- /converter-side-a -->
-
-  <div class="converter-side-b">
-    <form name="form_B" onSubmit="return false">
-      <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
+ 
 
         </div>
     </div>
@@ -422,41 +384,7 @@ async function Sidebar() {
 			</div>
 
 	<a id="conversion_table">Conversion Calculator</a>
-	<div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
-				<div class="converter-wrapper">
-
-<form name="property_form">
-<span>
-  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-  </select>
-</span>
-</form>
-
-<div class="converter-side-a">
-<form name="form_A" onSubmit="return false">
-  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-equals">
-<p style="margin: 10px;">=</p>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-side-b">
-<form name="form_B" onSubmit="return false">
-  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
 
 	</div>
 </div>
@@ -546,21 +474,7 @@ async function Sidebar() {
             
     </div>
 
-    <div class="custom_field">
-        <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
-    </div>
-
-    <div class="custom_field">
-        <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
-    </div>
-
-    <div class="custom_field">
-        <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
-    </div>
-
-    <div class="custom_field">
-        <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
-    </div>
+ 
 		
 
 
@@ -590,9 +504,23 @@ async function Sidebar() {
 					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
 					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
 				</div>
-				
-				</div>
-				</div>`
+				 <div class="custom_field">
+                    <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
+                </div>
+			</div>
+		</div>`
         };
     }
 }
