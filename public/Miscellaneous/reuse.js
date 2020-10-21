@@ -1,5 +1,3 @@
-const LibreTexts = LibreTextsReuse();
-
 //Plugins to the Editor are registered onto this object for later activation
 const LibreEditor = {
 	registerAll: (config) => {
@@ -17,6 +15,8 @@ const LibreEditor = {
 		}
 	}
 };
+
+const LibreTexts = LibreTextsReuse();
 
 function LibreTextsReuse() {
 	const libraries = {
@@ -37,6 +37,8 @@ function LibreTextsReuse() {
 	};
 	
 	return {
+		active: {},
+		debug: {},
 		authenticatedFetch: authenticatedFetch,
 		// clarifySubdomain: clarifySubdomain,
 		encodeHTML: encodeHTML,
@@ -127,7 +129,7 @@ function LibreTextsReuse() {
 			path: path,
 			seatedCheck: Number(document.getElementById('seatedCheck').innerText),
 		};
-		payload = {...payload, ...options};
+		payload = Object.assign({}, payload, options);
 		
 		return await fetch(`https://api.libretexts.org/elevate/${api}`, {
 			method: method,
@@ -391,7 +393,7 @@ function LibreTextsReuse() {
 		LibreTexts.authenticatedFetch(window.location.href, 'contents?mode=edit').then(async (data) => console.log(await data.text()))
 	}
 	
-	async function getCoverpage(url = window.location.href) {
+	async function getCoverpage(url = window.location.href) { //returns path to coverpage
 		if (typeof getCoverpage.coverpage === 'undefined') {
 			const urlArray = url.replace("?action=edit", "").split("/");
 			for (let i = urlArray.length; i > 3; i--) {
@@ -415,25 +417,30 @@ function LibreTextsReuse() {
 		return getCoverpage.coverpage;
 	}
 	
-	async function TOC(coverpage, targetElement = ".elm-hierarchy.mt-hierarchy") {
+	async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
 		let coverTitle;
 		let content;
+		const [subdomain] = LibreTexts.parseURL();
 		if (!navigator.webdriver || !window.matchMedia('print').matches) {
-			if (!coverpage || typeof coverpage !== 'string' || !coverpage.startsWith('https://'))
-				coverpage = await LibreTexts.getCoverpage();
-			if (coverpage) {
-				await makeTOC(coverpage, true);
+			if (!coverpageUrl || typeof coverpageUrl !== 'string' || !coverpageUrl.startsWith('https://')) {
+				coverpageUrl = await LibreTexts.getCoverpage(); //returns path
+				coverpageUrl = `https://${subdomain}.libretexts.org/${coverpageUrl}`;
+			}
+			if (coverpageUrl) {
+				await makeTOC(coverpageUrl, true);
+			}
+			else {
+				await makeTOC(`https://${subdomain}.libretexts.org/home`, true);
 			}
 		}
 		
-		async function makeTOC(path, isRoot, full) {
-			const origin = window.location.origin;
-			path = path.replace(origin + "/", "");
+		async function makeTOC(url, isRoot, full) {
+			const [subdomain, path] = LibreTexts.parseURL(url);
 			//get coverpage title & subpages;
-			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json');
+			let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
 			
 			
-			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+			let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 			response = await response.json();
 			info = await info;
 			info = await info.json();
@@ -462,7 +469,7 @@ function LibreTextsReuse() {
 					let defaultOpen = window.location.href.includes(url) && !currentPage;
 					let children = hasChildren ? undefined : [];
 					if (hasChildren && (full || defaultOpen)) { //recurse down
-						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json');
+						children = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
 						children = await children.json();
 						children = await
 							subpageCallback(children, false);
@@ -497,7 +504,7 @@ function LibreTextsReuse() {
 					target.addClass("toc-hierarchy");
 					// target.removeClass("elm-hierarchy mt-hierarchy");
 					target.innerHTML = "";
-					target.prepend(`<a href="${origin + "/" + path}"><h6>${coverTitle}</h6></a>`);
+					target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
 					target.fancytree({
 						source: content,
 						lazyLoad: function (event, data) {

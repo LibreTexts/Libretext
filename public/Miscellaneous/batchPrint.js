@@ -7,7 +7,7 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('store:'));
+	let bookstore = tags.find(elem => elem.startsWith('bookstore:'));
 	
 	let fn = () => {
 		const [subdomain, path] = LibreTexts.parseURL();
@@ -61,10 +61,6 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 			
 			if (downloadEntry) {
-				if (bookstore)
-					bookstore = bookstore.split('store:')[1];
-				
-				
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
@@ -76,14 +72,13 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Import into LMS</a>
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
-					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
+					<a href='https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
 			
-			innerHTML += `<div id="sidebarPromotion" style="background-color: #127bc4; color: white; display: flex; align-items: center; padding: 5px;" title="Contains view setting and useful learning resources" onclick="setTimeout(()=>document.getElementById('custom_open').click(),10);">Open New Sidebar ☰</div>`;
-			
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
@@ -179,5 +174,5 @@ if (!window["batchPrint.js"]) {
 		return '#'
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }
