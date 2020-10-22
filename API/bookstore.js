@@ -444,7 +444,7 @@ async function LuluAPI(url, options, beta) {
 
 function sendLuluReceiptEmail(payload, luluResponse, beta = false) {
 	const to = payload.shipping_address.email;
-	const sub = `Thank you for your ${beta?'BETA ':null}order from the LibreTexts Bookstore!`;
+	const sub = `Thank you for your ${beta ? 'BETA ' : ''}order from the LibreTexts Bookstore!`;
 
 // If modifying these scopes, delete token.json.
 	const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];

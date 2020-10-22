@@ -56,7 +56,7 @@ function BookstoreSingle(props) {
 	
 	
 	const fileSource = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore`;
-	const APIendpoint = `https://api.libretexts.org/bookstore${window.location.href.includes('/beta/') ? '/beta' : null}`
+	const APIendpoint = `https://api.libretexts.org/bookstore${window.location.href.includes('/beta/') ? '/beta' : ''}`
 	let validPrice = shippingData.length;
 	const classes = useStyles();
 	
