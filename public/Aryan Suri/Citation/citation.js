@@ -224,6 +224,6 @@ function hidecite() {
     if (!$(event.target).closest('#asModalContent').length && !$(event.target).is('#asModalContent')) {
         $("#SB-PC-AD").remove();
         const sidebar = document.getElementById("sidebarDiv");
-        sidebar.style.display = "none";
+        sidebar.style.display = "block";
     }
 }
