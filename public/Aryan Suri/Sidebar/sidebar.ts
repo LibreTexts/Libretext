@@ -438,7 +438,7 @@ async function Sidebar() {
                 </div>
 		<a id="DesmosWidget" target="_blank">Scientific Calculator</a>
 				<div id="desmosW" style="display:none;">
-					<iframe id="desmosWidget" style=" width:100%; height: 400px; overflow: auto;"></iframe>
+					<iframe id="desmosWidget" style=" width:95%; height: 400px; overflow: auto;"></iframe>
 				</div>
         <a id="conversion_table">Conversion Calculator</a>
  
