@@ -446,6 +446,9 @@ a.toggler.off {
 }
 
 @media only screen and (max-width: 415px) {
+  #elm-main-content {
+    padding-left: 0 !important;
+  }
   .custom_sidebar {
     width: 100vw;
     padding-left: 0;

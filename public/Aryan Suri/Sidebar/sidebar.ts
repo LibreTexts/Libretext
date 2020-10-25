@@ -1,12 +1,25 @@
-window.addEventListener("load", Sidebar);
+window.addEventListener("load", () => {
+    if (Sidebar && !LibreTexts.active.sidebar) {
+        LibreTexts.active.sidebar = true;
+        Sidebar();
+    }
+});
+
+activateBeeLine();
 
 async function Sidebar() {
     readability()
     function readability() {
+
+
         $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
         $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
         $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
         $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align"));
+
+        $("#size").val(sessionStorage.getItem("font_size"));
+        $("#slider-page-width").val(sessionStorage.getItem("page_width"));
+        $("#toggler-text").attr("class", "toggler");
     }
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
@@ -18,7 +31,6 @@ async function Sidebar() {
     let param = getParam();
     let tabs = getData(param.pro);
     buildSidebar();
-    activateBeeLine();
     createBookmarks();
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
@@ -831,13 +843,17 @@ class SBconverterCalculator {
 
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
+    $('section.mt-content-container').css("margin-left", 0 + "px");
+    $('section.mt-content-container').css("margin-right", 0 + "px");
+    $('section.mt-content-container p').css("text-align", "justify");
+
     $("#size").val("1.1");
     $("#slider-page-width").val("0");
     $("#toggler-text").attr("class", "toggler");
-    $('section.mt-content-container').css("margin-left", 0 + "px");
-    $('section.mt-content-container').css("margin-right", 0 + "px");
+
     sessionStorage.setItem('page_width', '0');
-    $('section.mt-content-container p').css("text-align", "justify");
+    sessionStorage.setItem('text_align', "Justify");
+    sessionStorage.setItem('font_size', '1.1');
 };
 
 function saveBookmark() {
