@@ -1,6 +1,13 @@
 window.addEventListener("load", Sidebar);
 
 async function Sidebar() {
+    readability()
+    function readability() {
+        $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
+        $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align"));
+    }
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
     localStorage.removeItem("sidepanel");
@@ -53,7 +60,7 @@ async function Sidebar() {
             tab = JSON.parse(sidepanel) === true;
         }
 
-        let param = {
+        return {
             "type": type,
             "library": library,
             "pro": pro,
@@ -61,8 +68,6 @@ async function Sidebar() {
             "calc": calculators,
             "title": title
         }
-
-        return param
     }
 
     function buildSidebar() {
@@ -306,9 +311,9 @@ async function Sidebar() {
                 $('.elm-skin-container').addClass('darkMode');
 
 
-            $("#size").change(function () {
+            $("#size").on("change",function () {
 
-                var initial_data = $(this).val();
+                const initial_data = $(this).val();
 
 
                 //CHANGE CSS TO SIZE FUNC VALUE
@@ -322,7 +327,7 @@ async function Sidebar() {
 
             });
 
-            $("#slider-page-width").change(function () {
+            $("#slider-page-width").on("change",function () {
                 var initial_data = $(this).val();
 
                 $('section.mt-content-container').css("margin-left", initial_data + "px");
@@ -339,9 +344,11 @@ async function Sidebar() {
                 if ($('#toggler-text').text() === 'Full') {
                     $('#toggler-text').text('Left');
                     $('section.mt-content-container p').css("text-align", "Left");
+                    sessionStorage.setItem('text_align', "Left")
                 } else if ($('#toggler-text').text() === 'Left') {
                     $('#toggler-text').text('Full');
                     $('section.mt-content-container p').css("text-align", "justify");
+                    sessionStorage.setItem('text_align', "Justify")
                 } else {
 
                 }
@@ -455,7 +462,7 @@ async function Sidebar() {
     <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
-        <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size"> 
+        <input class="slider_ar" type="range" min=".4" max="1.8" value="" step=".1" id="size"> 
 
 
     
@@ -636,8 +643,6 @@ function activateBeeLine() {
             });
         }
     }
-
-
 }
 
 function savePanel(_input: string) {
