@@ -589,6 +589,7 @@ function savePanel(_input) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
+//TODO Fix the bug where SBCC is scoped incorrectly and cannot work
 class SBconverterCalculator {
     constructor() {
         this.property = new Array();
