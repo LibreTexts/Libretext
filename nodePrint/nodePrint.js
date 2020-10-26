@@ -405,6 +405,7 @@ puppeteer.launch({
 									identifier: md5(keys[subdomain]),
 									content: {
 										timestamp: new Date(),
+										numItems: finished.length,
 										items: finished
 									}
 								}),
