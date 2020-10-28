@@ -167,7 +167,8 @@ puppeteer.launch({
 						let finished = await getLibretext(url, response, params);
 						let [subdomain, path] = parseURL(url);
 						
-						if (finished && finished.tags && finished.tags.includes("coverpage:yes"))
+						if (finished && finished.tags && finished.tags.includes("coverpage:yes")) {
+							// console.log(JSON.stringify(finished, null, 2));
 							await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
 								method: 'PUT',
 								body: JSON.stringify({
@@ -180,7 +181,7 @@ puppeteer.launch({
 									origin: 'print.libretexts.org'
 								}
 							});
-						
+						}
 						response.end();
 					}
 					else {
@@ -1480,12 +1481,12 @@ puppeteer.launch({
 				content.tags = current.tags.concat(content.tags);
 				content.properties = current.properties.concat(content.properties);
 				altID = current.id; //save current.id and keep as id
-				current = content;
+				current = {...content};
 				current.id = altID;
 				altID = content.id; //save content.id as altID
 			}
 			await getInformation(current);
-			const topPage = current;
+			const topPage = {...current};
 			
 			if (!current.subpages || !current.subpages.length) {
 				if (response && !response.finished)
@@ -1939,7 +1940,7 @@ puppeteer.launch({
 			return {
 				zipFilename: zipFilename,
 				title: current.title,
-				id: current.id,
+				id: topPage.id,
 				altID: altID,
 				author: current.name,
 				institution: current.companyname,
