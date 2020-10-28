@@ -212,6 +212,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 						title: item.metadata.title,
 						library: item.metadata.subdomain,
 						pageID: item.metadata.id,
+						zipFilename: item.metadata.zipFilename,
 						hardcover: item.hardcover,
 						color: item.color,
 						libreNet: true,
@@ -339,9 +340,10 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
 		}
 	})
 	lineItems = lineItems.map((item) => {
-		const line_item_PDF = `${bookstoreConfig.PDF_ROOT}/${item.library}-${item.pageID}/Publication`; //web location of PDF files
+		const itemID = item.zipFilename || `${item.library}-${item.pageID}`;
+		const line_item_PDF = `${bookstoreConfig.PDF_ROOT}/${itemID}/Publication`; //web location of PDF files
 		return {
-			external_id: `${item.library}-${item.pageID}`,
+			external_id: itemID,
 			title: item.title.replace(/\n/g, ' '),
 			cover: `${line_item_PDF}/Cover_${item.hardcover === 'true' ? 'Casewrap' : 'PerfectBound'}.pdf`,
 			interior: `${line_item_PDF}/Content.pdf`,
