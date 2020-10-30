@@ -14,9 +14,6 @@ async function Sidebar() {
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
-    if (param.ccalc) {
-        const SBCC = new SBconverterCalculator();
-    }
     function getSidebar() {
         if (param.pro) {
             switch (param.library) {
@@ -42,7 +39,7 @@ async function Sidebar() {
         const title = document.getElementById("titleHolder")?.innerText;
         let sidepanel = sessionStorage.getItem("sidepanel");
         let tab;
-        let ccalc = true;
+        let calculators = true;
         if (sidepanel === null) {
             tab = true;
         }
@@ -54,7 +51,7 @@ async function Sidebar() {
             "library": library,
             "pro": pro,
             "tabs": tab,
-            "ccalc": ccalc,
+            "calc": calculators,
             "title": title
         };
         return param;
@@ -79,17 +76,18 @@ async function Sidebar() {
         switchSidebar(param.tabs);
         function switchSidebar(tabs) {
             if (tabs) {
-                $("#openContents").click(function () {
+                $("#openContents").on("click", function () {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle("slide");
                 });
-                $("#openResources").click(function () {
+                $("#openResources").on("click", function () {
                     $("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb2").toggle("slide");
                     if (!window.resourcesTabInitialized) {
                         window.resourcesTabInitialized = true;
                         delete document.getElementById('pubchemWidget').iFrameResizer;
                         delete document.getElementById('physicalConstantsWidget').iFrameResizer;
+                        delete document.getElementById('desmosWidget').iFrameResizer;
                         $('#pubchemWidget').attr('src', "https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true");
                         iFrameResize({
                             warningTimeout: 0,
@@ -102,36 +100,43 @@ async function Sidebar() {
                             scrolling: 'omit',
                             checkOrigin: ["https://chem.libretexts.org"]
                         }, '#physicalConstantsWidget');
+                        $('#desmosWidget').attr('src', "https://www.desmos.com/scientific");
+                        iFrameResize({
+                            warningTimeout: 0,
+                            scrolling: 'omit',
+                            checkOrigin: ["https://desmos.com"]
+                        }, '#desmosWidget');
                     }
                 });
-                $("#openControl").click(function () {
+                $("#openControl").on("click", function () {
                     $("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
                     $("#sb3").toggle("slide");
                 });
-                $("#openUsage").click(function () {
+                $("#openUsage").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
                     $("#sb4").toggle("slide");
                 });
-                $("#openDevelopers").click(function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
                     $("#sb5").toggle("slide");
                 });
-                $("#openLibreverse").click(function () {
+                $("#openLibreverse").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
                     $("#sb6").toggle("slide");
                 });
-                $("body").click(function (event) {
+                $("body").on("click", function (event) {
                     if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+                        // @ts-ignore Slide is usable on hide()
                         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
             }
             else {
-                $("#openContents").click(function () {
+                $("#openContents").on("click", function () {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle();
                 });
-                $("#openResources").click(function () {
+                $("#openResources").on("click", function () {
                     $("#sb1, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb2").toggle();
                     if (!window.resourcesTabInitialized) {
@@ -152,24 +157,25 @@ async function Sidebar() {
                         }, '#physicalConstantsWidget');
                     }
                 });
-                $("#openControl").click(function () {
+                $("#openControl").on("click", function () {
                     $("#sb1, #sb2, #sb4, #sb5, #sb6").hide();
                     $("#sb3").toggle();
                 });
-                $("#openUsage").click(function () {
+                $("#openUsage").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6").hide();
                     $("#sb4").toggle();
                 });
-                $("#openDevelopers").click(function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4,#sb6").hide();
                     $("#sb5").toggle();
                 });
-                $("#openLibreverse").click(function () {
+                $("#openLibreverse").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5").hide();
                     $("#sb6").toggle();
                 });
-                $("body").click(function (event) {
+                $("body").on("click", function (event) {
                     if (!$(event.target).closest('#sidebarDiv').length && !$(event.target).is('#sidebarDiv')) {
+                        // @ts-ignore slide is usable here.
                         $("#sbHeader, #sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
@@ -182,7 +188,7 @@ async function Sidebar() {
                     $("#sb1, #sbHeader").show("slide");
                 }
             });
-            $('#per_table').click(function () {
+            $('#per_table').on("click", function () {
                 if ($("#iFrameResizer0").is(":hidden")) {
                     $("#iFrameResizer0").slideDown("slow");
                 }
@@ -190,7 +196,7 @@ async function Sidebar() {
                     $("#iFrameResizer0").slideUp("slow");
                 }
             });
-            $('#gloss_table').click(function () {
+            $('#gloss_table').on("click", function () {
                 if ($("#gloss_table_put").is(":hidden")) {
                     $("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
                     $("#gloss_table_put").slideDown("slow");
@@ -199,7 +205,7 @@ async function Sidebar() {
                     $("#gloss_table_put").slideUp("slow");
                 }
             });
-            $('#ref_table').click(function () {
+            $('#ref_table').on("click", function () {
                 if ($("#ref-table-put").is(":hidden")) {
                     $("#ref-table-put").slideDown("slow");
                 }
@@ -207,7 +213,7 @@ async function Sidebar() {
                     $("#ref-table-put").slideUp("slow");
                 }
             });
-            $('#phy_table').click(function () {
+            $('#phy_table').on("click", function () {
                 if ($("#phy_table_put").is(":hidden")) {
                     $("#phy_table_put").slideDown("slow");
                 }
@@ -215,7 +221,15 @@ async function Sidebar() {
                     $("#phy_table_put").slideUp("slow");
                 }
             });
-            $('#conv_table').click(function () {
+            $('#DesmosWidget').on("click", function () {
+                if ($("#desmosW").is(":hidden")) {
+                    $("#desmosW").slideDown("slow");
+                }
+                else {
+                    $("#desmosW").slideUp("slow");
+                }
+            });
+            $('#conv_table').on("click", function () {
                 if ($("#conv_table_put").is(":hidden")) {
                     $("#conv_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
                     $("#conv_table_put").slideDown("slow");
@@ -224,7 +238,7 @@ async function Sidebar() {
                     $("#conv_table_put").slideUp("slow");
                 }
             });
-            $('#conversion_table').click(function () {
+            $('#conversion_table').on("click", function () {
                 if ($("#conversion_table_put").is(":hidden")) {
                     $("#conversion_table_put").slideDown("slow");
                 }
@@ -232,7 +246,7 @@ async function Sidebar() {
                     $("#conversion_table_put").slideUp("slow");
                 }
             });
-            $('#construction-guide').click(function () {
+            $('#construction-guide').on("click", function () {
                 if ($("#construction-guide-put").is(":hidden")) {
                     $("#construction-guide-put").slideDown("slow");
                 }
@@ -240,7 +254,7 @@ async function Sidebar() {
                     $("#construction-guide-put").slideUp("slow");
                 }
             });
-            $('#library-guide').click(function () {
+            $('#library-guide').on("click", function () {
                 if ($("#library-guide-put").is(":hidden")) {
                     $("#library-guide-put").slideDown("slow");
                 }
@@ -267,7 +281,7 @@ async function Sidebar() {
                 $("#slider-page-width").val(initial_data);
                 sessionStorage.setItem('page_width', initial_data);
             });
-            $('a.toggler').click(function () {
+            $('a.toggler').on("click", function () {
                 $(this).toggleClass('off');
                 if ($('#toggler-text').text() === 'Full') {
                     $('#toggler-text').text('Left');
@@ -281,6 +295,8 @@ async function Sidebar() {
                 }
             });
         }
+	//Set initial value for glossary options
+        document.getElementById("glossarizerOptions"+localStorage.getItem("glossarizerType")).checked=true;
     }
     function getData(pro) {
         return {
@@ -296,7 +312,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Application</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -318,7 +334,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Applications</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -343,46 +359,14 @@ async function Sidebar() {
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
                 <div  style="display: none;" id="phy_table_put" class="custom_field">
-                   <iframe style="width: 480px;" id="physicalConstantsWidget" loading="lazy"></iframe>
+                   <iframe style="width: 100%;" id="physicalConstantsWidget" loading="lazy"></iframe>
                 </div>
-
+		<a id="DesmosWidget" target="_blank">Scientific Calculator</a>
+				<div id="desmosW" style="display:none;">
+					<iframe id="desmosWidget" style=" width:100%; height: 400px; overflow: auto;"></iframe>
+				</div>
         <a id="conversion_table">Conversion Calculator</a>
-        <div class="custom_field"  id="conversion_table_put" style="display:none;" >
-
-                    <div class="converter-wrapper">
-  
-
-  <form name="property_form">
-    <span>
-      <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-      </select>
-    </span>
-  </form>
-
-  <div class="converter-side-a">
-    <form name="form_A" onSubmit="return false">
-      <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-a -->
-  
- <div class="converter-equals">
-   <p style="margin: 10px;">=</p>
- </div> <!-- /converter-side-a -->
-
-  <div class="converter-side-b">
-    <form name="form_B" onSubmit="return false">
-      <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
+ 
 
         </div>
     </div>
@@ -400,41 +384,7 @@ async function Sidebar() {
 			</div>
 
 	<a id="conversion_table">Conversion Calculator</a>
-	<div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
-				<div class="converter-wrapper">
-
-<form name="property_form">
-<span>
-  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-  </select>
-</span>
-</form>
-
-<div class="converter-side-a">
-<form name="form_A" onSubmit="return false">
-  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-equals">
-<p style="margin: 10px;">=</p>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-side-b">
-<form name="form_B" onSubmit="return false">
-  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
 
 	</div>
 </div>
@@ -490,12 +440,27 @@ async function Sidebar() {
    
 </div>`,
             "usage": `<div id="sb4"  class="custom_sidebar">
+    <div class="custom_field">
+        <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class='mt-icon-quote'>&nbsp;Get Page Citation</a>
+        </div>
+    <div class="custom_field">
+        <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
+    </div>
 	<div class="custom_field">
-		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-quote'>&nbsp;Save Bookmark</a>
+		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
 			<div id="bm-list">
 
 			</div>
 	</div>
+	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary:</p>
+		<form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
+		    <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
+		    <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
+		    <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
+		    <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p>
+		    <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
+		</form>
+    	</div>
 
     <div class="custom_field">
         <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
@@ -509,21 +474,7 @@ async function Sidebar() {
             
     </div>
 
-    <div class="custom_field">
-        <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
-    </div>
-
-    <div class="custom_field">
-        <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
-    </div>
-
-    <div class="custom_field">
-        <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
-    </div>
-
-    <div class="custom_field">
-        <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
-    </div>
+ 
 		
 
 
@@ -553,9 +504,23 @@ async function Sidebar() {
 					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
 					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
 				</div>
-				
-				</div>
-				</div>`
+				 <div class="custom_field">
+                    <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
+                </div>
+			</div>
+		</div>`
         };
     }
 }
@@ -598,7 +563,7 @@ function activateBeeLine() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
             const btns = toggles.find('button, a');
-            btns.click(function (e) {
+            btns.on("click", function (e) {
                 if (!e.target.href)
                     e.preventDefault();
                 const theme = $(this).attr("data-color");
@@ -770,15 +735,19 @@ function saveBookmark() {
         sessionStorage.setItem("Bookmark", URL);
         createBookmarks();
     }
-    else {
-        console.log("one bookmark");
-    }
 }
 function createBookmarks() {
     const LI = document.createElement("li");
     const URL = sessionStorage.getItem("Bookmark");
     const TITLE = sessionStorage.getItem("Title");
-    let INNER = `<div> <p>Bookmark: <a style="display: unset;" href="${URL}"> ${TITLE}</a></p></div>`;
-    LI.innerHTML = INNER;
-    URL ? document.querySelector("#bm-list")?.appendChild(LI) : console.log("No bookmarks");
+    LI.id = "sbBookmark";
+    LI.innerHTML = `<div > <p><a style="display: unset;" href="${URL}"> ${TITLE}</a><a id="removeBookmark" style="display: unset;" onclick="removeBookmarks()">| Remove</a> </p></div>`;
+    if (URL) {
+        document.querySelector("#bm-list")?.appendChild(LI);
+    }
+}
+function removeBookmarks() {
+    document.querySelector("#bm-list")?.removeChild(document.querySelector("#sbBookmark"));
+    sessionStorage.removeItem("Title");
+    sessionStorage.removeItem("Bookmark");
 }

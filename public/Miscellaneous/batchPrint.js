@@ -61,8 +61,6 @@ if (!window["batchPrint.js"]) {
 				</div></div>`;
 			
 			if (downloadEntry) {
-				
-				
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
@@ -79,6 +77,8 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
+			
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
@@ -174,5 +174,5 @@ if (!window["batchPrint.js"]) {
 		return '#'
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }

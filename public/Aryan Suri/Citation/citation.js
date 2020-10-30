@@ -2,7 +2,7 @@
 function buildcite() {
     const sidebar = document.getElementById("sidebarDiv");
     const citeDiv = document.createElement("div");
-    sidebar?.style.display === "none";
+    sidebar.style.display = "none";
     citeDiv.id = "SB-PC-AD";
     document.body.append(citeDiv);
     $(citeDiv).html(`
@@ -223,5 +223,7 @@ function getFile(type) {
 function hidecite() {
     if (!$(event.target).closest('#asModalContent').length && !$(event.target).is('#asModalContent')) {
         $("#SB-PC-AD").remove();
+        const sidebar = document.getElementById("sidebarDiv");
+        sidebar.style.display = "block";
     }
 }
