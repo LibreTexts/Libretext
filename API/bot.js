@@ -617,7 +617,7 @@ async function addPageIdentifierClass(subdomain, path, content) {
 	
 	let result = '';
 	let current = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${path}`, false, 'LibreBot');
-	$('p:not(.mt-script-comment), :header, td').addClass(`lt-${subdomain}-${current.id}`);
+	$('p:not(.mt-script-comment), :header, td, li').addClass(`lt-${subdomain}-${current.id}`);
 	
 	result = $.html();
 	// console.log(result);
@@ -704,5 +704,4 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		search = search.replace(/\\\*!/g, ".*?"); //wildcard multi
 	  }
 	  let temp = target.replace(new RegExp(search, 'g'), replacement);*/
-	
 };

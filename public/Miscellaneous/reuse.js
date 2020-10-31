@@ -90,7 +90,10 @@ function LibreTextsReuse() {
 		if (url.includes('?')) //strips any query parameters
 			url = url.split('?')[0];
 		if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
-			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
+			if (url.includes('libretexts.org/@go/page'))
+				return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/@go\/page\/)(.*)/)[2]]
+			else
+				return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
 		else {
 			return [];
