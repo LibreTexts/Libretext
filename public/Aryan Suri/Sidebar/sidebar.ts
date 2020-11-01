@@ -5,7 +5,6 @@ window.addEventListener("load", () => {
     }
 });
 
-activateBeeLine();
 
 async function Sidebar() {
     readability()
