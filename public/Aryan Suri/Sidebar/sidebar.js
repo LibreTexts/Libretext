@@ -461,6 +461,13 @@ async function Sidebar() {
     <div class="custom_field">
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
+    <div class="custom_field">
+        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle LibreLens</a>
+			<div id="librelens-list">
+
+
+			</div>
+    </div>
 	<div class="custom_field">
 		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
 			<div id="bm-list">
@@ -600,7 +607,7 @@ function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
 //TODO Fix the bug where SBCC is scoped incorrectly and cannot work
-class SBconverterCalculator {
+SBconverterCalculator = class {
     constructor() {
         this.property = new Array();
         this.unit = new Array();
@@ -730,7 +737,7 @@ class SBconverterCalculator {
         // Ta-da! All that's left is to update the target input box:
         targetForm.unit_input.value = result;
     }
-}
+};
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
     $('section.mt-content-container').css("margin-left", 0 + "px");
