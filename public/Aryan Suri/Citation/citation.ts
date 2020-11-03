@@ -84,7 +84,7 @@ function getParam() {
     let pageParam = {
         "type": "webpage",
         "title": title,
-        "acsessed": {
+        "accessed": {
             "date-parts": [[accdate[0], accdate[1], accdate[2]]]
         },
         "URL": url,
