@@ -191,7 +191,7 @@ function getCite(verbose = false) {
 
     // Generate citation in desired format. //
 
-    const Cite = require('citation-js');
+    const Cite = CitRequire('citation-js');
     Cite.plugins.config.get('csl').templates.add(mlaname, mlatemplate);
     Cite.plugins.config.get('csl').templates.add(acsname, acstemplate);
     Cite.plugins.config.get('csl').templates.add(chicagoname, chicagotemplate);
@@ -233,7 +233,7 @@ function download(data: any, filename: string, type: string) {
 function getFile(type: string) {
     let pageParam = getParam();
     type = type;
-    const CiteB = require('citation-js');
+    const CiteB = CitRequire('citation-js');
     let citeobject = new CiteB(pageParam);
     let output = citeobject.format(type);
     return output
