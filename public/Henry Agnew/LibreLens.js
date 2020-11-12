@@ -37,9 +37,6 @@
 						const button = document.getElementById('librelens-button');
 						button.classList.toggle("mt-icon-eye");
 						button.classList.toggle("mt-icon-eye-blocked");
-						const button1 = document.getElementById('librelens-button-2');
-						button1.classList.toggle("mt-icon-eye");
-						button1.classList.toggle("mt-icon-eye-blocked");
 						
 						if (activated) {
 							LibreTexts.active.libreLens.tippyInstances = LibreTexts.active.libreLens.tippyInstances.concat(tippy(`.${cls}`, {
@@ -108,7 +105,7 @@
 				}
 				LibreTexts.active.libreLens.active = false;
 			}
-			LibreTexts.active.libreLens();
+			// LibreTexts.active.libreLens();
 			
 		}
 	)

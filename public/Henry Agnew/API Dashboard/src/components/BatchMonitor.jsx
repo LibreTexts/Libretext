@@ -36,7 +36,8 @@ export default function BatchMonitor(props) {
 					try {
 						let home = await fetch(`https://api.libretexts.org/DownloadsCenter/espanol/home.json`);
 						home = await home.json();
-						result[key].home = <Tooltip title={`Number of items: ${home.items.length}`}>{processTime(home)}</Tooltip>;
+						result[key].home =
+							<Tooltip title={`Number of items: ${home.items.length}`}>{processTime(home)}</Tooltip>;
 					} catch (e) {
 						console.error(e);
 						result[key].home = false;
@@ -47,10 +48,21 @@ export default function BatchMonitor(props) {
 						let courses = fetch(`https://api.libretexts.org/DownloadsCenter/${key}/Courses.json`);
 						let bookshelves = fetch(`https://api.libretexts.org/DownloadsCenter/${key}/Bookshelves.json`);
 						[courses, bookshelves] = await Promise.all([courses, bookshelves]);
-						[courses, bookshelves] = await Promise.all([courses.json(), bookshelves.json()]);
-						result[key].courses = <Tooltip title={`Number of items: ${courses.items.length}`}>{processTime(courses)}</Tooltip>;
-						result[key].bookshelves = <Tooltip title={`Number of items: ${bookshelves.items.length}`}>{processTime(bookshelves)}</Tooltip>;
+						if (courses.ok) {
+							courses = await courses.json();
+							result[key].courses = <Tooltip
+								title={`Number of items: ${courses.items.length}`}>{processTime(courses)}</Tooltip>;
+						}
+						else
+							result[key].courses = false;
 						
+						if (bookshelves.ok) {
+							bookshelves = await bookshelves.json();
+							result[key].bookshelves = <Tooltip
+								title={`Number of items: ${bookshelves.items.length}`}>{processTime(bookshelves)}</Tooltip>;
+						}
+						else
+							result[key].bookshelves = false;
 						
 					} catch (e) {
 						console.error(e);
