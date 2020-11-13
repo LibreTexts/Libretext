@@ -27,7 +27,7 @@ window.addEventListener('load', async () => {
 		if (login) {
 			// $("#title").append('<button id="cas-test" onclick="logoutCAS()">Logout</button>');
 			$target.replaceWith(`<li><a class="icon-SSO sso-user" title="Single Sign-On" onclick="logoutCAS()">${payload.name}</a></li>`)
-			$('.elm-header-user-nav').css('background-color', 'grey');
+			$('.elm-header-user-nav').css('background-color', '#0f67a6');
 			$('.elm-header-user-nav .mt-user-menu > li > a').css('color', 'white');
 			// $content.before(`<p>Thank you ${login} for authenticating with LibreTexts SSO!</p>`);
 			return;

@@ -1,24 +1,37 @@
 if (!window["analytics.js"]) {
 	window["analytics.js"] = true;
-	ay();
-	
-	function ay() {
+	(function () {
 		const ua = navigator.userAgent.toLowerCase();
 		const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
 		const sessionID = '_' + Math.random().toString(36).substr(2, 9);
 		const root = "api.libretexts.org";
+		let pubKey = '';
+		let login = '';
 		// const root = "home.miniland1333.com";
 		
+		window.addEventListener('DOMContentLoaded', () => $(".mt-content-container").hide());
 		
-		window.addEventListener('load', function () {
+		window.addEventListener('load', async function () {
+			login = await getLogin();
+			const $content = $(".mt-content-container");
+			
+			if (login) {
+				$content.before(`<p>Thank you ${login} for authenticating with the LibreTexts SSO!</p>`);
+				$(".mt-content-container").show()
+			}
+			else { //invalid session, user must log in
+				$content.before(`<p>Content is hidden. Please log in with your SSO or LibreTexts account</p>`);
+				return;
+			}
+			
 			if (sessionStorage.getItem('ay')) {
 				console.log("LAL");
 				track()
 			}
 			else {
-				fetch(`https://${root}/ay/ping`).then((response) => {
+				fetch(`https://${root}/ay/ping`).then(async (response) => {
 					if (response.ok) {
-						console.log("LA");
+						console.log("LA"); //check if endpoint is ready to receive
 						sessionStorage.setItem('ay', 'true');
 						track();
 					}
@@ -28,6 +41,49 @@ if (!window["analytics.js"]) {
 				});
 			}
 		});
+		
+		async function getLogin() {
+			let payload = Cookies.get();
+			const $content = $(".mt-content-container");
+			let login = document.getElementById('emailHolder').innerText; //Mindtouch Login
+			if (login) {
+				$content.before(`<p>libreTextsLogin AY: ${login}</p>`);
+				return login;
+			}
+			
+			if (payload && payload.overlayJWT) { //cas-overlayJWT login
+				payload = payload.overlayJWT;
+				
+				let pubKey = await fetch('https://api.libretexts.org/cas-bridge/public');
+				pubKey = await pubKey.text();
+				try {
+					login = KJUR.jws.JWS.verify(payload, pubKey, ["PS256"]);
+					if (login) {
+						payload = KJUR.jws.JWS.parse(payload).payloadObj;
+						login = payload.email || payload.user;
+						console.log(login, payload);
+						return login;
+					}
+				} catch (e) {
+					console.error(e);
+				}
+			}
+			
+			if (!login) { //nb handling
+				
+				let cookies = document.cookie.split('; ');
+				let nbUser = cookies.find(function (element) {
+					return element.startsWith('userinfo=') && element.includes('email');
+				});
+				
+				if (nbUser) {
+					nbUser = decodeURIComponent(decodeURIComponent(nbUser.replace('userinfo=', '')));
+					nbUser = JSON.parse(nbUser);
+					return nbUser.email;
+				}
+			}
+			
+		}
 		
 		function track() {
 			report('accessed');
@@ -124,29 +180,15 @@ if (!window["analytics.js"]) {
 		}
 		
 		function report(verb, object, extra) {
-			navigator.sendBeacon(`https://${root}/ay/receive`, getBody(verb, object, extra));
+			// navigator.sendBeacon(`https://${root}/ay/receive`, getBody(verb, object, extra));
+			console.log(verb, object, extra);
 		}
 		
-		function getGroup() {
-			let groups = document.getElementById('groupHolder').innerText;
-			let classArray = ['Chem-110A-F20'];
-			let result = [];
-/*			if (window.location.href.includes('Facciotti') && document.getElementsByClassName('nb_sidebar').length) {
-				result.push('Bis2AFacciotti');
-			}*/
+		function getCoverpage() {
+			const [subdomain] = LibreTexts.parseURL();
 			
-			for (let i = 0; i < classArray.length; i++) {
-				if (groups.includes(classArray[i])) {
-					result.push(classArray[i]);
-				}
-			}
 			
-			if (!result.length)
-				return undefined;
-			else if (result.length === 1)
-				return result[0];
-			else
-				return result;
+			return `${subdomain}-${pageID}`;
 		}
 		
 		function getBody(verb, object, extra) {
@@ -160,55 +202,12 @@ if (!window["analytics.js"]) {
 			
 			function getActor() {
 				let library = window.location.host.split('.')[0];
-				let userID;
-				switch (library) {
-					case 'bio':
-						//nb handling
-						let cookies = document.cookie.split('; ');
-						let nbUser = cookies.find(function (element) {
-							return element.startsWith('userinfo=') &&  element.includes('email');
-						});
-						
-						if (nbUser) {
-							nbUser = decodeURIComponent(decodeURIComponent(nbUser.replace('userinfo=', '')));
-							nbUser = JSON.parse(nbUser);
-							userID = md5(nbUser.email);
-						}
-						else {
-							userID = 'unknown'
-						}
-						return {
-							courseName: getGroup(),
-							library: library,
-							id: userID,
-							platform: platform,
-						};
-					case 'webwork':
-						let url = window.location.href;
-						userID = url.match(/user=[A-Za-z]*/);
-						if (userID) {
-							userID = userID[0];
-							userID = userID.replace('user=', '');
-							console.log(userID);
-						}
-						else {
-							userID = 'unknown'
-						}
-						return {
-							courseName: getGroup(),
-							library: library,
-							id: userID,
-							platform: platform,
-						};
-					default:
-						userID = document.getElementById("userIDHolder").innerText;
-						return {
-							courseName: getGroup(),
-							library: library,
-							id: userID,
-							platform: platform
-						};
-				}
+				return {
+					courseName: getCoverpage(),
+					library: library,
+					id: login,
+					platform: platform
+				};
 			}
 			
 			function getVerb(verb) {
@@ -274,5 +273,5 @@ if (!window["analytics.js"]) {
 				return result;
 			}
 		}
-	}
+	})()
 }
