@@ -27,6 +27,8 @@ const authenBrowser = require('./authenBrowser.json');
 let Gbrowser;
 let Gserver;
 let keys;
+const maxAge = 100; // in days
+const maxFreshAge = 60; // in days
 
 puppeteer.launch({
 	args: [
@@ -70,7 +72,7 @@ puppeteer.launch({
 		if (kubernetesServiceHost) {
 			console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
 		}
-		const numThreads = kubernetesServiceHost ? 10 : 3;
+		const numThreads = kubernetesServiceHost ? 6 : 3;
 		const concurrentTexts = 2;
 		
 		Gbrowser = browser;
@@ -345,8 +347,8 @@ puppeteer.launch({
 							response.write(`${(++count)}s\r\n`.padStart(5, ' '))
 					}, 1000);*/
 					findRemoveSync('./PDF', {
-						age: {seconds: 60 * 8.64e+4},
-						dir: "*",
+						age: {seconds: maxAge * 8.64e+4},
+						// dir: "*",
 						files: "*.*",
 					});
 					
@@ -1128,7 +1130,7 @@ puppeteer.launch({
 			if (current.title === 'InfoPage')
 				isNoCache = true;
 			
-			const daysCache = 35;
+			
 			const updateTime = current.modified;
 			/*let allExist = [fs.exists(`./PDF/Letter/${escapedURL}.pdf`),
 				fs.exists(`./PDF/Letter/Margin/${escapedURL}.pdf`),
@@ -1154,20 +1156,25 @@ puppeteer.launch({
 				console.error(`PRIVA  ${ip} ${url}`);
 				return {filename: 'restricted'};
 			}
-			else if (!isNoCache && allExist && !err && stats.mtime > updateTime && Date.now() - stats.mtime < daysCache * 8.64e+7) { //file is up to date
+			
+			//variable in which recompiling becomes more probable as file ages. Caps at maxAge
+			let randomCache = Math.random() * 2; //0 to 2
+			randomCache = (Date.now() - stats?.mtime) > (randomCache + 0.2) * (maxFreshAge * 8.64e+7);
+			
+			if (!isNoCache && allExist && !err && stats.mtime > updateTime && !randomCache) { //file is up to date
 				// 8.64e+7 ms/day
 				console.log(`CACHE  ${ip} ${url}`);
-				await sleep(ip.startsWith('<<Batch ') ? 800 : 200);
+				await sleep(ip.startsWith('<<Batch ') ? 1000 : 500);
 				
 				return {filename: escapedURL + '.pdf'};
 			}
-			else if (!isNoCache && working[escapedURL]) { //another thread is already working
+/*			else if (!isNoCache && working[escapedURL]) { //another thread is already working
 				eventEmitter.on(escapedURL, () => {
 					console.log(`DUPE   ${ip} ${url}`);
 					// staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
 				});
 				return false;
-			}
+			}*/
 			
 			const start = performance.now();
 			console.log(`NEW    ${ip} ${url}`);
@@ -1757,7 +1764,7 @@ puppeteer.launch({
 					count++;
 					eta.iterate();
 					
-					if (filename !== 'restricted' && !refreshOnly) {
+					if (filename && filename !== 'restricted' && !refreshOnly) {
 						title = filenamify(title);
 						
 						await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/libretexts/${zipFilename}/${title}.pdf`);
@@ -1872,7 +1879,7 @@ puppeteer.launch({
 				}
 				//save log of private pages
 				if (privatePages.length) {
-					await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages);
+					await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
 					// await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages);
 				}
 				
