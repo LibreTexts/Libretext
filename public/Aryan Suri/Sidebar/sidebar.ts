@@ -16,9 +16,6 @@ async function Sidebar() {
         $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
         $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align"));
 
-        $("#size").val(sessionStorage.getItem("font_size"));
-        $("#slider-page-width").val(sessionStorage.getItem("page_width"));
-        $("#toggler-text").attr("class", "toggler");
     }
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
@@ -65,6 +62,7 @@ async function Sidebar() {
         let sidepanel = sessionStorage.getItem("sidepanel");
         let tab;
         let calculators = true;
+
         if (sidepanel === null) {
             tab = true;
         } else {
@@ -370,6 +368,7 @@ async function Sidebar() {
 
 
     function getData(pro: boolean) {
+
         return {
 
             "open": `<button id="custom_open"  >☰</button>`,
@@ -440,7 +439,39 @@ async function Sidebar() {
 					<iframe id="desmosWidget" style=" width:95%; height: 400px; overflow: auto;"></iframe>
 				</div>
         <a id="conversion_table">Conversion Calculator</a>
- 
+            <div class="converter-wrapper">
+
+              <form name="property_form">
+                <span>
+                  <select class="select-property" name="the_menu" size=1 onChange="CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_A.unit_menu); CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_B.unit_menu)">
+                  </select>
+                </span>
+              </form>
+            
+              <div class="converter-side-a">
+                <form name="form_A" onSubmit="return false">
+                  <input type="text" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="CONVERSION_CALCULATOR.CalculateUnit(document.form_A, document.form_B)">
+                  <span>
+                    <select name="unit_menu" onChange="CONVERSION_CALCULATOR.CalculateUnit(document.form_B, document.form_A)">
+                    </select>
+                  </span>
+                </form>
+              </div> <!-- /converter-side-a -->
+              
+             <div class="converter-equals">
+               <p>=</p>
+             </div> <!-- /converter-side-a -->
+            
+              <div class="converter-side-b">
+                <form name="form_B" onSubmit="return false">
+                  <input type="text" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="CONVERSION_CALCULATOR.CalculateUnit(document.form_B, document.form_A)">
+                  <span>
+                    <select name="unit_menu" onChange="CONVERSION_CALCULATOR.CalculateUnit(document.form_A, document.form_B)">
+                    </select>
+                  </span>
+                </form>
+              </div> <!-- /converter-side-b -->
+            </div><!-- /converter-wrapper -->
 
         </div>
     </div>
@@ -665,8 +696,8 @@ function savePanel(_input: string) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
-//TODO Fix the bug where SBCC is scoped incorrectly and cannot work
-class SBconverterCalculator {
+
+var CONVERSION_CALCULATOR = new class {
     property: any[];
     unit: any[];
     factor: any[];
