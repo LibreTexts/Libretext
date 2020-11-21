@@ -9,22 +9,14 @@ window.addEventListener("load", () => {
     }
 });
 async function Sidebar() {
-    readability();
-    function readability() {
-        $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
-        $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
-        $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
-        $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align"));
-    }
-    localStorage.removeItem("font_size");
-    localStorage.removeItem("page_width");
-    localStorage.removeItem("sidepanel");
+
     if (window !== window.top)
         return;
     let param = getParam();
     let tabs = getData(param.pro);
     buildSidebar();
-
+    createBookmarks();
+    readability();
     CONVERSION_CALCULATOR = new class {
         constructor() {
             this.property = new Array();
@@ -157,7 +149,18 @@ async function Sidebar() {
         }
     };
 
-    createBookmarks();
+    function readability() {
+        $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
+        $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align")!);
+
+        $("#size").val(parseFloat(sessionStorage.getItem("font_size")!));
+        $("#slider-page-width").val(parseFloat(sessionStorage.getItem("page_width")!));
+        //$("#toggler-text").val(parseFloat(sessionStorage.getItem("font_size")!));
+
+    }
+
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
