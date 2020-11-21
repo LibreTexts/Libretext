@@ -1,7 +1,5 @@
 "use strict";
 var CONVERSION_CALCULATOR;
-
-
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
@@ -24,7 +22,6 @@ async function Sidebar() {
     let param = getParam();
     let tabs = getData(param.pro);
     buildSidebar();
-    
     CONVERSION_CALCULATOR = new class {
         constructor() {
             this.property = new Array();
@@ -156,7 +153,6 @@ async function Sidebar() {
             targetForm.unit_input.value = result;
         }
     };
-    
     createBookmarks();
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
@@ -786,7 +782,6 @@ function savePanel(_input) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
-
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
     $('section.mt-content-container').css("margin-left", 0 + "px");
