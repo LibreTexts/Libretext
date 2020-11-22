@@ -635,12 +635,12 @@ async function Sidebar() {
 
 	</div>
     <div class="BLtoggle" id="doBeeLine">
-      			<a id="SB_Inverted" class="btn btn-large active" data-color="night_blues">Inverted</a>
-                <a id="SB_Bright" class="btn btn-large active" data-color="dark">Bright</a>
-                <a id="SB_Blues" class="btn btn-large active" data-color="blues">Blues</a>
-				<a id="SB_Grays" class="btn btn-large active" data-color="gray">Grays</a>
+      			<a id="SB_Inverted" class="btn btn-large active" data-color="night_blues" >Inverted</a>
+                <a id="SB_Bright" class="btn btn-large active" data-color="dark" >Bright</a>
+                <a id="SB_Blues" class="btn btn-large active" data-color="blues" >Blues</a>
+				<a id="SB_Grays" class="btn btn-large active" data-color="gray" >Grays</a>
 				<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
-				<a id="SB_Off" class="btn btn-large active" data-color="off">Off</a>
+				<a id="SB_Off" class="btn btn-large active" data-color="off" >Off</a>
      </div>
 
 
@@ -724,7 +724,7 @@ async function Sidebar() {
 }
 function activateBeeLine() {
     const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
-    const doBeeline = function (theme, action) {
+    let doBeeline = function (theme, action) {
         for (let i = 0; i < beelineELements.length; i++) {
             const beeline = new BeeLineReader(beelineELements[i], {
                 theme: theme,
@@ -733,7 +733,7 @@ function activateBeeLine() {
                 skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
             });
             localStorage.setItem("beeline", theme);
-            if (theme === "off") {
+            if (theme === "off" || theme === undefined) {
                 beeline.uncolor();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', 'disabled');
@@ -761,10 +761,12 @@ function activateBeeLine() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
             const btns = toggles.find('button, a');
+            doBeeline(localStorage.getItem("beeline"), localStorage.getItem("beeline"));
             btns.on("click", function (e) {
                 if (!e.target.href)
                     e.preventDefault();
                 const theme = $(this).attr("data-color");
+                localStorage.setItem('beeline', theme);
                 if (!theme)
                     return;
                 btns.removeClass('active');
