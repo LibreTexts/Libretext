@@ -25,10 +25,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="removed actv beeline">
+    <list default="true" id="6234252c-9e85-4088-acf5-35befc8b8147" name="Default Changelist" comment="Fixed val sliders">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Citation/citation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Citation/citation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Aryan Suri/Citation/citation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/public/Aryan Suri/Citation/citation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1234,35 +1232,10 @@
       <workItem from="1603560212144" duration="2000" />
       <workItem from="1603646293301" duration="4627000" />
       <workItem from="1603669457390" duration="1021000" />
-      <workItem from="1604257275409" duration="1111000" />
-    </task>
-    <task id="LOCAL-00246" summary="Bugfix dynamicIndexMaker.js authentication">
-      <created>1585260235337</created>
-      <option name="number" value="00246" />
-      <option name="presentableId" value="LOCAL-00246" />
-      <option name="project" value="LOCAL" />
-      <updated>1585260235337</updated>
-    </task>
-    <task id="LOCAL-00247" summary="Updated licenses.js">
-      <created>1585333709699</created>
-      <option name="number" value="00247" />
-      <option name="presentableId" value="LOCAL-00247" />
-      <option name="project" value="LOCAL" />
-      <updated>1585333709699</updated>
-    </task>
-    <task id="LOCAL-00248" summary="Developer menu buildcite()">
-      <created>1586127016421</created>
-      <option name="number" value="00248" />
-      <option name="presentableId" value="LOCAL-00248" />
-      <option name="project" value="LOCAL" />
-      <updated>1586127016422</updated>
-    </task>
-    <task id="LOCAL-00249" summary="author bar multi-library">
-      <created>1586212627897</created>
-      <option name="number" value="00249" />
-      <option name="presentableId" value="LOCAL-00249" />
-      <option name="project" value="LOCAL" />
-      <updated>1586212627897</updated>
+      <workItem from="1604257275409" duration="1454000" />
+      <workItem from="1605981840342" duration="2727000" />
+      <workItem from="1605994539567" duration="2816000" />
+      <workItem from="1606011247542" duration="764000" />
     </task>
     <task id="LOCAL-00250" summary="Updated dark mode">
       <created>1586215253028</created>
@@ -1579,7 +1552,35 @@
       <option name="project" value="LOCAL" />
       <updated>1604257399311</updated>
     </task>
-    <option name="localTasksCounter" value="295" />
+    <task id="LOCAL-00295" summary="fixed the type that was ingrnoring date accessed for citation">
+      <created>1604258608546</created>
+      <option name="number" value="00295" />
+      <option name="presentableId" value="LOCAL-00295" />
+      <option name="project" value="LOCAL" />
+      <updated>1604258608546</updated>
+    </task>
+    <task id="LOCAL-00296" summary="Fixed conversion calculator bug">
+      <created>1605996147476</created>
+      <option name="number" value="00296" />
+      <option name="presentableId" value="LOCAL-00296" />
+      <option name="project" value="LOCAL" />
+      <updated>1605996147476</updated>
+    </task>
+    <task id="LOCAL-00297" summary="Fixed conversion calculator bug">
+      <created>1605996202474</created>
+      <option name="number" value="00297" />
+      <option name="presentableId" value="LOCAL-00297" />
+      <option name="project" value="LOCAL" />
+      <updated>1605996202474</updated>
+    </task>
+    <task id="LOCAL-00298" summary="Fixed val sliders">
+      <created>1605997075296</created>
+      <option name="number" value="00298" />
+      <option name="presentableId" value="LOCAL-00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1605997075296</updated>
+    </task>
+    <option name="localTasksCounter" value="299" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1651,9 +1652,6 @@
       <path value="$PROJECT_DIR$/public/Jupyter/Hub/r" />
       <path value="$PROJECT_DIR$/API/mathbook" />
     </ignored-roots>
-    <MESSAGE value="Updated cleanPath whitelist" />
-    <MESSAGE value="Reduced PDFMerger.js memory usage" />
-    <MESSAGE value="Forker changed from Cross-Library to LibreBot" />
     <MESSAGE value="seatedCheck for sendAPI" />
     <MESSAGE value=" Updated batchPrint.js with Chapters" />
     <MESSAGE value="Moved &amp; consolidated createBundle.js to /Miscellaneous.&#10;&#10;Now we can all share the createBundle.js code to compile React." />
@@ -1676,17 +1674,12 @@
     <MESSAGE value="reduced calculator width" />
     <MESSAGE value="comments" />
     <MESSAGE value="removed actv beeline" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed actv beeline" />
+    <MESSAGE value="fixed the type that was ingrnoring date accessed for citation" />
+    <MESSAGE value="Fixed conversion calculator bug" />
+    <MESSAGE value="Fixed val sliders" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed val sliders" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1525" y="90" key="#Inspections" timestamp="1595998124965">
-      <screen x="-1920" y="0" width="1536" height="816" />
-    </state>
-    <state x="-1525" y="90" key="#Inspections/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1595998124965" />
-    <state x="-1333" y="51" key="#Menus_and_Toolbars" timestamp="1596173889071">
-      <screen x="-1920" y="0" width="1536" height="816" />
-    </state>
-    <state x="-1333" y="51" key="#Menus_and_Toolbars/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596173889071" />
     <state x="309" y="110" width="1089" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599371526528">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -1779,15 +1772,13 @@
     <state x="1059" y="110" width="1002" height="707" key="SettingsEditor" timestamp="1600801268890">
       <screen x="0" y="0" width="3440" height="1440" />
     </state>
-    <state x="-1643" y="53" width="1002" height="707" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1596171181463" />
-    <state x="139" y="67" width="1113" height="710" key="SettingsEditor/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1596673183706" />
     <state x="1059" y="110" key="SettingsEditor/0.0.3440.1440@0.0.3440.1440" timestamp="1600801268890" />
-    <state x="719" y="235" key="Vcs.Push.Dialog.v2" timestamp="1604257405496">
+    <state x="719" y="235" key="Vcs.Push.Dialog.v2" timestamp="1605997078951">
       <screen x="0" y="0" width="2752" height="1152" />
     </state>
     <state x="-1519" y="167" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@-1920.0.1536.816" timestamp="1597513154661" />
     <state x="446" y="188" key="Vcs.Push.Dialog.v2/-1920.0.1536.816/0.0.1707.920@0.0.1707.920" timestamp="1599802786511" />
-    <state x="719" y="235" key="Vcs.Push.Dialog.v2/0.0.2752.1152@0.0.2752.1152" timestamp="1604257405496" />
+    <state x="719" y="235" key="Vcs.Push.Dialog.v2/0.0.2752.1152@0.0.2752.1152" timestamp="1605997078951" />
     <state x="899" y="294" key="Vcs.Push.Dialog.v2/0.0.3440.1440@0.0.3440.1440" timestamp="1601236246328" />
     <state x="2100" y="374" key="VcsDiffUtil.ChangesDialog" timestamp="1601084324501">
       <screen x="0" y="0" width="3440" height="1440" />
