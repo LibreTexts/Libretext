@@ -21,10 +21,9 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import {
-	IconFlagUS,
-	IconFlagCA,
-} from 'material-ui-flags';
+import {IconFlagCA, IconFlagUS,} from 'material-ui-flags';
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
 const target = document.createElement("div");
@@ -46,6 +45,7 @@ const useStyles = makeStyles({
 function BookstoreSingle(props) {
 	const [hardcover, setHardcover] = React.useState(false);
 	const [color, setColor] = React.useState(false);
+	const [shippingSurcharge, setShippingSurcharge] = React.useState(false);
 	const [shippingSpeed, setShippingSpeed] = React.useState('MAIL');
 	const [shippingData, setShippingData] = React.useState([]);
 	const [shippingLocation, setShippingLocation] = React.useState('US');
@@ -62,6 +62,7 @@ function BookstoreSingle(props) {
 	
 	
 	const taxesMultiplier = 1.2;
+	const HI_AK_surcharge = {name: 'Hawaii/Alaska', price: 4};
 	const baseCost = (0.03 * props.item.numPages + 1.69) * taxesMultiplier; //cost from Lulu API
 	let totalCost = baseCost;
 	const colorCost = (props.item.numPages * 1.5 / 100) * taxesMultiplier; //cost from Lulu API
@@ -79,6 +80,7 @@ function BookstoreSingle(props) {
 			}
 		}
 	}
+	totalCost += shippingSurcharge?.price || 0;
 	
 	useEffect(() => {
 		(async function () {
@@ -114,6 +116,7 @@ function BookstoreSingle(props) {
 				shipping = await shipping.json()
 				shipping = shipping.results.sort((a, b) => b.cost_excl_tax - a.cost_excl_tax);
 				setShippingData(shipping)
+				setShippingSurcharge(false);
 			} catch (e) {
 				console.error(e)
 			}
@@ -164,8 +167,8 @@ function BookstoreSingle(props) {
 							                     display: "flex",
 							                     justifyContent: "space-between"
 						                     }}>
-							[Arrives
-							in {item.total_days_min}-{item.total_days_max} days] <b>${(item.cost_excl_tax * taxesMultiplier).toFixed(2)}</b>
+							[Arrives in {item.total_days_min}-{item.total_days_max} days] <b>
+							${(item.cost_excl_tax * taxesMultiplier + (shippingSurcharge?.price || 0)).toFixed(2)}</b>
 							&nbsp;<i>{localLevel}</i>
 						</ToggleButton>
 					})}
@@ -199,7 +202,8 @@ function BookstoreSingle(props) {
 					quantity: quantity,
 				}],
 				shippingSpeed: shippingSpeed,
-				shippingLocation: shippingLocation
+				shippingLocation: shippingLocation,
+				shippingSurcharge: shippingSurcharge
 			}),
 		}).then(function (result) {
 			setIsProcessing(false);
@@ -218,8 +222,10 @@ function BookstoreSingle(props) {
 	});
 	
 	function renderShippingLocation() {
-		return <Select value={shippingLocation} onChange={(event) => setShippingLocation(event.target.value)}><MenuItem
-			value={'US'}><IconFlagUS />United States</MenuItem><MenuItem value={'CA'}><IconFlagCA />Canada</MenuItem></Select>
+		return <Select value={shippingLocation} onChange={(event) => setShippingLocation(event.target.value)}>
+			<MenuItem value={'US'}><IconFlagUS/>United States</MenuItem>
+			<MenuItem value={'CA'}><IconFlagCA/>Canada</MenuItem>
+		</Select>
 	}
 	
 	return <ThemeProvider theme={theme}>
@@ -294,9 +300,16 @@ function BookstoreSingle(props) {
 					<div style={{display: "flex", justifyContent: "space-between"}}>
 						<h3>Select Shipping Option</h3>{renderShippingLocation()}
 					</div>
+					{shippingLocation === "US" ?
+						<FormControlLabel
+							value="end"
+							control={<Checkbox color="secondary" checked={Boolean(shippingSurcharge)} onChange={
+								() => setShippingSurcharge(shippingSurcharge ? false : HI_AK_surcharge)
+							}/>}
+							label={`Hawaii/Alaska surcharge $${HI_AK_surcharge?.price}`}/> : null}
 					{renderShipping()}
 					<p>Shipping prices are calculated for
-					   within {shippingLocation === "CA" ? 'Canada' : 'the continental US (US-48)'}. Contact us at
+					   within {shippingLocation === "CA" ? 'Canada' : 'the United States'}. Contact us at
 					   bookstore@libretexts.org for orders outside of this area.</p>
 				</Paper>
 			</div>

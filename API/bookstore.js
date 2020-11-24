@@ -123,7 +123,7 @@ app.get(basePath + '/get-order', async (req, res) => {
 //send LibreTexts info to Stripe
 app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 	const domainURL = bookstoreConfig.DOMAIN;
-	const {shoppingCart, shippingSpeed, shippingLocation = 'US'} = req.body;
+	const {shoppingCart, shippingSpeed, shippingLocation = 'US', shippingSurcharge = false} = req.body;
 	const beta = req.query.beta;
 	let totalQuantity = 0;
 	
@@ -236,11 +236,12 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 				name: `Textbook Shipping [${shippingSpeed}]`,
 				metadata: {shippingSpeed: shippingSpeed},
 			},
-			unit_amount: Math.ceil(costCalculation.shipping_cost.total_cost_excl_tax * 100 * taxMultiplier) //amount in cents
+			unit_amount: Math.ceil(costCalculation.shipping_cost.total_cost_excl_tax * 100 * taxMultiplier) + (shippingSurcharge ? shippingSurcharge.price * 100 : 0) //amount in cents
 		},
-		description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days`,
+		description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days. ${shippingSurcharge ? `Includes ${shippingSurcharge.name} surcharge` : ''}`,
 		quantity: 1,
 	});
+	
 	// console.log(JSON.stringify(lineItems, null, 2));
 	/*res.send({
 		lineItems: lineItems,
@@ -261,6 +262,9 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 		// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 		success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${domainURL}/Purchase_Canceled.html`,
+		metadata: {
+			sessionType: 'create-lulu-checkout-session'
+		}
 	});
 	// console.log(session.id);
 	res.send({
@@ -296,9 +300,9 @@ app.post(basePath + '/publish-order', async (req, res) => {
 		// console.log(session);
 		
 		// Fulfill the purchase...
-		/*if (req.query.beta)
-			console.log(`🔔  Payment received! ${JSON.stringify(session, null, 2)}`);
-		else*/
+		if (req.query.beta)
+			console.log(`🔔 BETA Payment received! ${session.id}`);
+		//else
 		fulfillOrder(session.id, req.query.beta).then();
 	}
 	
@@ -333,6 +337,7 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
 	
 	let shippingSpeed = lineItems.pop();
 	shippingSpeed = shippingSpeed.price.product.metadata.shippingSpeed || "MAIL";
+	lineItems = lineItems.filter(item => item?.price?.product?.metadata?.pageID);
 	lineItems = lineItems.map(item => {
 		return {
 			quantity: item.quantity,
