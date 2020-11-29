@@ -39,6 +39,7 @@ let LibreTextsFunctions = {
 	parseURL: parseURL,
 	cleanPath: cleanPath,
 	getAPI: getAPI,
+	sleep: sleep,
 	libraries: libraries,
 };
 
@@ -446,6 +447,10 @@ async function getAPI(page, getContents, username = undefined) {
 		page.error = error;
 	}
 	return page;
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = LibreTextsFunctions;
