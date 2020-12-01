@@ -13,6 +13,8 @@ const stripe = require('stripe')(bookstoreConfig.STRIPE_SECRET_KEY);
 const taxMultiplier = parseFloat(bookstoreConfig.TAX_MULTIPLIER);
 const {ClientCredentials} = require('simple-oauth2');
 const basePath = '/bookstore';
+fs.ensureDir('./bookstore/pending');
+fs.ensureDir('./bookstore/complete');
 
 const TOKEN_PATH = './bookstore/token.json';
 let port = 3008;
@@ -223,6 +225,16 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
 		sessionId: session.id,
 	});
 });
+
+app.post(basePath + '/retryOrder/:orderID', async (req, res) => {
+	const orderID = req.params?.orderID
+	if (orderID) {
+		console.log(`Retrying ${orderID}`);
+		res.status(200).send(`Retrying ${orderID}`);
+		await fulfillOrder(orderID)
+	}
+	else return res.status(400).send(`No OrderID!`)
+})
 
 app.post(basePath + '/publish-order', async (req, res) => {
 	let data;

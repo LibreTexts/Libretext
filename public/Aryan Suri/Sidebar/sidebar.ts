@@ -1,6 +1,25 @@
-window.addEventListener("load", Sidebar);
+window.addEventListener("load", () => {
+    if (Sidebar && !LibreTexts.active.sidebar) {
+        LibreTexts.active.sidebar = true;
+        Sidebar();
+    }
+});
+
 
 async function Sidebar() {
+    readability()
+    function readability() {
+
+
+        $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
+        $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
+        $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align"));
+
+        $("#size").val(sessionStorage.getItem("font_size"));
+        $("#slider-page-width").val(sessionStorage.getItem("page_width"));
+        $("#toggler-text").attr("class", "toggler");
+    }
     localStorage.removeItem("font_size");
     localStorage.removeItem("page_width");
     localStorage.removeItem("sidepanel");
@@ -11,14 +30,11 @@ async function Sidebar() {
     let param = getParam();
     let tabs = getData(param.pro);
     buildSidebar();
-    activateBeeLine();
     createBookmarks();
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put")
-    if (param.calc) {
-        const SBCC = new SBconverterCalculator();
-    }
+
 
     function getSidebar() {
         if (param.pro) {
@@ -55,7 +71,7 @@ async function Sidebar() {
             tab = JSON.parse(sidepanel) === true;
         }
 
-        let param = {
+        return {
             "type": type,
             "library": library,
             "pro": pro,
@@ -63,8 +79,6 @@ async function Sidebar() {
             "calc": calculators,
             "title": title
         }
-
-        return param
     }
 
     function buildSidebar() {
@@ -308,9 +322,9 @@ async function Sidebar() {
                 $('.elm-skin-container').addClass('darkMode');
 
 
-            $("#size").change(function () {
+            $("#size").on("change",function () {
 
-                var initial_data = $(this).val();
+                const initial_data = $(this).val();
 
 
                 //CHANGE CSS TO SIZE FUNC VALUE
@@ -324,7 +338,7 @@ async function Sidebar() {
 
             });
 
-            $("#slider-page-width").change(function () {
+            $("#slider-page-width").on("change",function () {
                 var initial_data = $(this).val();
 
                 $('section.mt-content-container').css("margin-left", initial_data + "px");
@@ -341,9 +355,11 @@ async function Sidebar() {
                 if ($('#toggler-text').text() === 'Full') {
                     $('#toggler-text').text('Left');
                     $('section.mt-content-container p').css("text-align", "Left");
+                    sessionStorage.setItem('text_align', "Left")
                 } else if ($('#toggler-text').text() === 'Left') {
                     $('#toggler-text').text('Full');
                     $('section.mt-content-container p').css("text-align", "justify");
+                    sessionStorage.setItem('text_align', "Justify")
                 } else {
 
                 }
@@ -354,8 +370,6 @@ async function Sidebar() {
 
 
     function getData(pro: boolean) {
-
-
         return {
 
             "open": `<button id="custom_open"  >☰</button>`,
@@ -371,7 +385,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Application</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -393,7 +407,7 @@ async function Sidebar() {
 			<h5 >Readability</h5>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Applications</h5>
+            <h5 class="">Tools</h5>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
@@ -423,45 +437,10 @@ async function Sidebar() {
                 </div>
 		<a id="DesmosWidget" target="_blank">Scientific Calculator</a>
 				<div id="desmosW" style="display:none;">
-					<iframe id="desmosWidget" style=" width:100%; height: 400px; overflow: auto;"></iframe>
+					<iframe id="desmosWidget" style=" width:95%; height: 400px; overflow: auto;"></iframe>
 				</div>
         <a id="conversion_table">Conversion Calculator</a>
-        <div class="custom_field"  id="conversion_table_put" style="display:none;" >
-
-                    <div class="converter-wrapper">
-  
-
-  <form name="property_form">
-    <span>
-      <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-      </select>
-    </span>
-  </form>
-
-  <div class="converter-side-a">
-    <form name="form_A" onSubmit="return false">
-      <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-a -->
-  
- <div class="converter-equals">
-   <p style="margin: 10px;">=</p>
- </div> <!-- /converter-side-a -->
-
-  <div class="converter-side-b">
-    <form name="form_B" onSubmit="return false">
-      <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-      <span>
-        <select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-        </select>
-      </span>
-    </form>
-  </div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
+ 
 
         </div>
     </div>
@@ -479,41 +458,7 @@ async function Sidebar() {
 			</div>
 
 	<a id="conversion_table">Conversion Calculator</a>
-	<div class="custom_field"  id="conversion_table_put" style="display:none;" >
 
-				<div class="converter-wrapper">
-
-<form name="property_form">
-<span>
-  <select class="select-property" name="the_menu" size=1 onChange="SBCC.UpdateUnitMenu(this, document.form_A.unit_menu); SBCC.UpdateUnitMenu(this, document.form_B.unit_menu)">
-  </select>
-</span>
-</form>
-
-<div class="converter-side-a">
-<form name="form_A" onSubmit="return false">
-  <input type="number" id="numbersonly" class="numbersonly" name="unit_input" maxlength="20" value="0" onKeyUp="SBCC.CalculateUnit(document.form_A, document.form_B)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_B, document.form_A)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-equals">
-<p style="margin: 10px;">=</p>
-</div> <!-- /converter-side-a -->
-
-<div class="converter-side-b">
-<form name="form_B" onSubmit="return false">
-  <input type="number" class="numbersonly" name="unit_input" maxlength="20" value="0" onkeyup="SBCC.CalculateUnit(document.form_B, document.form_A)">
-  <span>
-	<select name="unit_menu" onChange="SBCC.CalculateUnit(document.form_A, document.form_B)">
-	</select>
-  </span>
-</form>
-</div> <!-- /converter-side-b -->
-</div><!-- /converter-wrapper -->
 
 	</div>
 </div>
@@ -528,7 +473,7 @@ async function Sidebar() {
     <p class="h_ar">Font Size:</p>
     <div class="custom_field">   
        
-        <input class="slider_ar" type="range" min=".4" max="1.8" value="1.1" step=".1" id="size"> 
+        <input class="slider_ar" type="range" min=".4" max="1.8" value="" step=".1" id="size"> 
 
 
     
@@ -575,6 +520,13 @@ async function Sidebar() {
     <div class="custom_field">
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
+    <div class="custom_field">
+        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle LibreLens</a>
+			<div id="librelens-list">
+
+
+			</div>
+    </div>
 	<div class="custom_field">
 		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
 			<div id="bm-list">
@@ -594,21 +546,7 @@ async function Sidebar() {
             
     </div>
 
-    <div class="custom_field">
-        <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
-    </div>
-
-    <div class="custom_field">
-        <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
-    </div>
-
-    <div class="custom_field">
-        <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
-    </div>
-
-    <div class="custom_field">
-        <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
-    </div>
+ 
 		
 
 
@@ -639,9 +577,23 @@ async function Sidebar() {
 					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
 					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
 				</div>
-				
-				</div>
-				</div>`
+				 <div class="custom_field">
+                    <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg" rel="external nofollow" target="_blank" class="link-https">YouTube Channel</a>
+                </div>
+            
+                <div class="custom_field">
+                    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
+                </div>
+			</div>
+		</div>`
 
 
         }
@@ -709,8 +661,6 @@ function activateBeeLine() {
             });
         }
     }
-
-
 }
 
 function savePanel(_input: string) {
@@ -722,8 +672,8 @@ function savePanel(_input: string) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
-
-class SBconverterCalculator {
+//TODO Fix the bug where SBCC is scoped incorrectly and cannot work
+SBconverterCalculator = class {
     property: any[];
     unit: any[];
     factor: any[];
@@ -896,15 +846,20 @@ class SBconverterCalculator {
 
 }
 
+
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
+    $('section.mt-content-container').css("margin-left", 0 + "px");
+    $('section.mt-content-container').css("margin-right", 0 + "px");
+    $('section.mt-content-container p').css("text-align", "justify");
+
     $("#size").val("1.1");
     $("#slider-page-width").val("0");
     $("#toggler-text").attr("class", "toggler");
-    $('section.mt-content-container').css("margin-left", 0 + "px");
-    $('section.mt-content-container').css("margin-right", 0 + "px");
+
     sessionStorage.setItem('page_width', '0');
-    $('section.mt-content-container p').css("text-align", "justify");
+    sessionStorage.setItem('text_align', "Justify");
+    sessionStorage.setItem('font_size', '1.1');
 };
 
 function saveBookmark() {

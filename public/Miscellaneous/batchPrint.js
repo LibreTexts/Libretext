@@ -7,7 +7,6 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('bookstore:'));
 	
 	let fn = () => {
 		const [subdomain, path] = LibreTexts.parseURL();
@@ -53,8 +52,8 @@ if (!window["batchPrint.js"]) {
 			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
 			innerHTML += `<div class="LTdropdown-content">
 					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>
-					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
+					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
 					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 

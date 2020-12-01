@@ -90,7 +90,10 @@ function LibreTextsReuse() {
 		if (url.includes('?')) //strips any query parameters
 			url = url.split('?')[0];
 		if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
-			return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
+			if (url.includes('libretexts.org/@go/page'))
+				return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/@go\/page\/)(.*)/)[2]]
+			else
+				return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
 		}
 		else {
 			return [];
@@ -398,6 +401,8 @@ function LibreTextsReuse() {
 			const urlArray = url.replace("?action=edit", "").split("/");
 			for (let i = urlArray.length; i > 3; i--) {
 				let path = urlArray.slice(3, i).join("/");
+				if (!path)
+					break;
 				let response = await LibreTexts.authenticatedFetch(path, 'tags?dream.out.format=json');
 				let tags = await response.json();
 				if (tags.tag) {
@@ -424,7 +429,8 @@ function LibreTextsReuse() {
 		if (!navigator.webdriver || !window.matchMedia('print').matches) {
 			if (!coverpageUrl || typeof coverpageUrl !== 'string' || !coverpageUrl.startsWith('https://')) {
 				coverpageUrl = await LibreTexts.getCoverpage(); //returns path
-				coverpageUrl = `https://${subdomain}.libretexts.org/${coverpageUrl}`;
+				if (coverpageUrl)
+					coverpageUrl = `https://${subdomain}.libretexts.org/${coverpageUrl}`;
 			}
 			if (coverpageUrl) {
 				await makeTOC(coverpageUrl, true);
