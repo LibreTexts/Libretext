@@ -43,7 +43,7 @@ puppeteer.launch({
         const localServer = http.createServer(handler);
         const staticFileServer = new nodeStatic.Server('./public');
         let port = 3001;
-        /*keys = await fetch('https://files.libretexts.org/authenBrowser.json', {headers: {origin: 'print.libretexts.org'}});
+        /*keys = await fetch('https://cdn.libretexts.net/authenBrowser.json', {headers: {origin: 'print.libretexts.org'}});
         keys = await keys.json();*/
         keys = authenBrowser;
         server.listen(port);
