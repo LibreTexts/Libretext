@@ -242,12 +242,12 @@ async function processCommonCartridge(data, socket) {
 		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-		}, data.subdomain);
+		});
 		onlinePath += `/${data.filename}`;
 		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
-		}, data.subdomain);
+		});
 		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
 		
 		//parse imsmanifest.xml
@@ -309,7 +309,7 @@ async function processCommonCartridge(data, socket) {
 		await Working.authenticatedFetch(path, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-		}, data.subdomain);
+		});
 		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
 		
 		for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
@@ -375,14 +375,14 @@ async function processCommonCartridge(data, socket) {
 				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
 					method: "POST",
 					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a>${convertedType}</p>`,
-				}, data.subdomain);
+				});
 				await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
 			}
 			else if (page.type === 'guide') {
 				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
 					method: "POST",
 					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${convertedType}</p>`,
-				}, data.subdomain);
+				});
 				await Promise.all(
 					[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
 						Working.putProperty('mindtouch.page#welcomeHidden', true, path),

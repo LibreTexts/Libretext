@@ -69,7 +69,7 @@ class LibreTextsGlossarizer {
                 return;
             case "iupac gold book":
                 localStorage.setItem("glossarizerType", "iupac gold book");
-                let goldbook = await $.getJSON("https://files.libretexts.org/github/LibreTextsMain/Leo%20Jayachandran/Glossarizer/goldbook_vocab.json");
+                let goldbook = await $.getJSON("https://cdn.libretexts.net/github/LibreTextsMain/Leo%20Jayachandran/Glossarizer/goldbook_vocab.json");
                 for (let i = 1; i <= 7035; i++) {
                     if (goldbook.entries[i].definition === null || goldbook.entries[i].term === null || goldbook.entries[i].definition.length == 0) { // If definition is empty skip term
                         continue;
