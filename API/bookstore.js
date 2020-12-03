@@ -196,11 +196,11 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     }
     
     costCalculation = await costCalculation.json();
-    // console.log(JSON.stringify(costCalculation, null, 2));
+    console.log(JSON.stringify(costCalculation, null, 2));
     
     lineItems = lineItems.map((item, index) => {
         let costCalcItem = costCalculation.line_item_costs[index];
-        const discount = item.metadata.libreNet || true;
+        const discount = false; //item.metadata.libreNet ||
         const price = (discount ? costCalcItem.total_cost_excl_tax : costCalcItem.total_cost_excl_discounts) * taxMultiplier;
         return {
             price_data: {
@@ -215,7 +215,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
                         zipFilename: item.metadata.zipFilename,
                         hardcover: item.hardcover,
                         color: item.color,
-                        libreNet: true,
+                        libreNet: false,
                         numPages: item.metadata.numPages,
                     },
                 },
