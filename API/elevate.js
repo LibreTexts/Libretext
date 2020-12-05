@@ -45,7 +45,7 @@ async function createSandbox(req, res) {
 		
 		//add thumbnail
 		if (typeof createSandbox.image === 'undefined') {
-			let image = 'https://files.libretexts.org/DefaultImages/sandbox.jpg';
+			let image = 'https://cdn.libretexts.net/DefaultImages/sandbox.jpg';
 			image = await fetch(image);
 			image = await image.blob();
 			createSandbox.image = image;

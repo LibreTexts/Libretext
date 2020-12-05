@@ -4,6 +4,7 @@ const EPub = require("epub");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
 const io = require('socket.io')(server, {path: '/import/ws'});
+const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
 const {performance} = require('perf_hooks');
 const fetch = require("node-fetch");
@@ -27,6 +28,10 @@ const now1 = new Date();
 // fs.emptyDir('ImportFiles');
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
+findRemoveSync('./ImportFiles', {
+	age: {seconds: 30 * 8.64e+4},
+	files: "*.*",
+});
 
 function handler(request, response) {
 	const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -110,6 +115,7 @@ async function downloadFile(data, socket) {
 	}
 	
 	if (data.url.includes('dropbox.com')) {
+		data.url = data.url.replace('?dl=0', '');
 		response = await fetch(data.url + '?dl=1', {mode: "HEAD"});
 		if (response.ok && response.headers.get('content-disposition') && response.headers.get('content-disposition').includes('attachment'))
 			data.url = data.url + '?dl=1';
@@ -133,7 +139,7 @@ async function downloadFile(data, socket) {
 	}
 	const contentLength = +response.headers.get('Content-Length');
 	if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
-		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?="$)/)[0];
+		data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
 	
 	// Step 3: read the data
 	let receivedLength = 0; // received that many bytes at the moment
@@ -206,6 +212,14 @@ async function listFiles(data, socket) {
 }, {emit: (a, b) => console.error(b)});*/
 
 async function processCommonCartridge(data, socket) {
+	const types = {
+		"associatedcontent/imscc_xmlv1p2/learning-application-resource": "content",
+		"imsdt_xmlv1p2": "discussion",
+		"imswl_xmlv1p2": "link",
+		"imsqti_xmlv1p2/imscc_xmlv1p2/assessment": "assessment",
+		"imsqti_xmlv1p2/imscc_xmlv1p2/question-bank": "quiz",
+		"webcontent": "content",
+	};
 	try {
 		zipLocal.unzip = util.promisify(zipLocal.unzip);
 		let unzipped = await zipLocal.unzip(data.path);
@@ -228,12 +242,12 @@ async function processCommonCartridge(data, socket) {
 		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-		}, data.subdomain);
+		});
 		onlinePath += `/${data.filename}`;
 		await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
 			method: "POST",
 			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
-		}, data.subdomain);
+		});
 		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
 		
 		//parse imsmanifest.xml
@@ -249,6 +263,7 @@ async function processCommonCartridge(data, socket) {
 					name: elem.attributes.identifier,
 					file: elem.elements.find(elem => elem.name === 'file').attributes.href,
 					type: elem.attributes.type,
+					convertedType: elem.attributes?.intendeduse || types[elem.attributes.type]
 				};
 				temp[elem.attributes.identifier] = item;
 				
@@ -285,7 +300,7 @@ async function processCommonCartridge(data, socket) {
 		
 		//process content pages
 		for (let i = 0; i < organization.length; i++) {
-			await processPage(organization[i], rootPath, onlinePath, i);
+			// await processPage(organization[i], rootPath, onlinePath, i);
 		}
 		
 		
@@ -293,12 +308,10 @@ async function processCommonCartridge(data, socket) {
 		let path = `${onlinePath}/Resources`;
 		await Working.authenticatedFetch(path, "contents?abort=exists", {
 			method: "POST",
-			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
-		}, data.subdomain);
-		await Promise.all(
-			[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
-				Working.putProperty('mindtouch.page#welcomeHidden', true, path),
-				Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+			body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
+		});
+		await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+		
 		for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
 			socket.emit('progress', {
 				percentage: key,
@@ -357,18 +370,19 @@ async function processCommonCartridge(data, socket) {
 		async function processPage(page, rootPath, onlinePath, index) {
 			let safeTitle = encodeURIComponent(page.title);
 			let path = `${onlinePath}/${("" + index).padStart(2, "0")}: ${page.title.replace(/[?/&]/g, '_')}`;
+			const convertedType = page?.href?.convertedType ? `<a href=\"#\">lms:${page?.href?.convertedType}</a>` : "";
 			if (page.type === 'category') {
 				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
 					method: "POST",
-					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-				}, data.subdomain);
+					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a>${convertedType}</p>`,
+				});
 				await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
 			}
 			else if (page.type === 'guide') {
 				await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
 					method: "POST",
-					body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
-				}, data.subdomain);
+					body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${convertedType}</p>`,
+				});
 				await Promise.all(
 					[Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
 						Working.putProperty('mindtouch.page#welcomeHidden', true, path),
@@ -382,24 +396,39 @@ async function processCommonCartridge(data, socket) {
 				}
 				else {
 					let contents = await fs.readFile(`${rootPath}/${page.href.file}`, 'utf8');
-					let currentPath = `${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0];
+					let currentPath = decodeURIComponent(`${rootPath}/${page.href.file}`.match(/^.*\/(?=.*?$)/)[0]);
+					const webResourcesExists = await fs.exists(`${rootPath}/web_resources`);
+					if (contents.includes('<text texttype="text/html">')) {
+						let inner = contents.match(/(?<=<text texttype="text\/html">)[\s\S]*?(?=<\/text>)/)?.[0];
+						if (inner) {
+							contents = LibreTexts.decodeHTML(inner);
+						}
+					}
 					
 					contents = await uploadImages(contents, path, imageProcessor, data);
 					
 					async function imageProcessor(imagePath) {
-						let filename = decodeURIComponent(imagePath).replace('$IMS-CC-FILEBASE$', '');
+						let filename = decodeURIComponent(imagePath).replace(/\$IMS-CC-FILEBASE\$\/?/, '');
 						if (filename.startsWith('../')) {
-							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
-							filename = filename.match(/(?<=\.\.\/).*/)[0];
+							currentPath = currentPath.match(/.*\/(?=.*?\/$)/)?.[0];
+							filename = filename.match(/(?<=\.\.\/).*/)?.[0];
 						}
-						let okay = filename && await fs.exists(currentPath + filename);
-						return [filename, okay ? await fs.readFile(currentPath + filename) : false, currentPath + filename];
+						filename = filename.match(/^.*?(?=\?.*?$)/)?.[0] || filename;
+						filename = LibreTexts.decodeHTML(filename);
+						let completePath = currentPath + filename
+						let okay = filename && await fs.exists(completePath);
+						if (!okay && filename && webResourcesExists) { //try again in webResources
+							completePath = `${rootPath}/web_resources/${filename}`
+							// console.log(`Grabbing ${completePath}`);
+							okay = await fs.exists(completePath);
+						}
+						return [filename, okay ? await fs.readFile(completePath) : false, completePath];
 					}
 					
 					
 					let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
 						method: 'POST',
-						body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+						body: contents + `<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a>${convertedType}</p>`
 					});
 					if (!response.ok) {
 						let error = await response.text();
@@ -411,20 +440,24 @@ async function processCommonCartridge(data, socket) {
 			}
 			
 			//report page upload
-			console.log(page.type, page.title);
-			let entry = {
-				title: page.title,
-				type: page.type,
-				url: `https://${data.subdomain}.libretexts.org/${path}`,
-			};
-			backlog.push(entry);
-			log.push(entry);
-			eta.iterate();
-			socket.emit('progress', {
-				percentage: `${parseFloat(log.length / totalPages * 100).toFixed(1)}%`,
-				pages: `${log.length} / ${totalPages} pages processed`,
-				eta: eta.format("{{etah}}"),
-			});
+			if (!page.suppressLogs) {
+				console.log(page.type, page.title);
+				let entry = {
+					title: page.title,
+					type: page.type,
+					url: `https://${data.subdomain}.libretexts.org/${path}`,
+				};
+				backlog.push(entry);
+				log.push(entry);
+				eta.iterate();
+				socket.emit('progress', {
+					percentage: `${parseFloat(log.length / totalPages * 100).toFixed(1)}%`,
+					pages: `${log.length} / ${totalPages} pages processed`,
+					eta: eta.format("{{etah}}"),
+				});
+			}
+			
+			await LibreTexts.sleep(500);
 			
 			//recurse down
 			if (page.type !== 'topic') {
@@ -442,9 +475,11 @@ async function processCommonCartridge(data, socket) {
 			let title = onlinePath.match(/(?<=\/)[^\/]*?$/)[0].replace(/\*\*\*/g, '/');
 			onlinePath = onlinePath.replace(/\*\*\*/g, '_');
 			
+			const convertedType = title ? `<a href=\"#\">lms:${types[title]}</a>` : "";
 			for (let i = 0; i < resources.length; i++) {
 				try {
-					let filename = decodeURIComponent(resources[i].file).replace('$IMS-CC-FILEBASE$', '');
+					const currentResource = resources[i];
+					let filename = decodeURIComponent(currentResource.file).replace(/\$IMS-CC-FILEBASE\$\/?/, '');
 					let currentPath = rootPath;
 					if (filename.startsWith('../')) {
 						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];
@@ -453,6 +488,17 @@ async function processCommonCartridge(data, socket) {
 					if (await fs.exists(currentPath + '/' + filename)) {
 						let file = await fs.readFile(currentPath + '/' + filename);
 						filename = filename.match(/(?<=\/)[^\/]*?$/)[0];
+						
+						
+						if (currentResource && (currentResource.file.endsWith('.html') || currentResource.file.endsWith('.xml')) && ['assignment', 'assessment', 'discussion'].includes(currentResource.convertedType)) {
+							await processPage({
+								title: filename,
+								href: currentResource,
+								type: 'topic',
+								suppressLogs: true
+							}, rootPath, onlinePath, i);
+						}
+						
 						let response = await Working.authenticatedFetch(onlinePath, `files/${encodeURIComponent(encodeURIComponent(filename))}?dream.out.format=json`, {
 							method: 'PUT',
 							body: file,
@@ -474,15 +520,21 @@ async function processCommonCartridge(data, socket) {
 				
 				}
 			}
-			if (!entries.length)
+			if (!socket || !entries.length) //early exit
 				return false;
-			let contents = entries.map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
 			
+			
+			let contents = entries.filter(elem => elem.id).map(elem => `<a href='/@api/deki/files/${elem.id}'>${elem.title}</a>`).join();
 			
 			let response = await Working.authenticatedFetch(onlinePath, `contents?edittime=now&title=${encodeURIComponent(title)}&dream.out.format=json`, {
 				method: 'POST',
-				body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+				body: `<p>{{template.ShowOrg()}}</p>${contents}<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${convertedType}</p>`,
 			});
+			await Promise.all(
+				[Working.putProperty("mindtouch.idf#guideDisplay", "single", onlinePath),
+					Working.putProperty('mindtouch.page#welcomeHidden', true, onlinePath),
+					Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", onlinePath)]);
+			
 			if (!response.ok) {
 				let error = await response.text();
 				console.error(error);
@@ -623,7 +675,7 @@ async function processEPUB(data, socket) {
 	}
 	
 	async function processChapters(onlinePath, chapters) {
-		await async.mapLimit(chapters, 2, processChapter);
+		await async.mapLimit(chapters, 1, processChapter);
 		
 		async function processChapter(chapter) {
 			let title = chapter.title;
@@ -679,7 +731,7 @@ async function processEPUB(data, socket) {
 	async function processPages(pageArray, onlinePath, filteredChapters) {
 		let isSimple = filteredChapters === null;
 		let untitled = 0;
-		return await async.mapLimit(pageArray, 2, processPage);
+		return await async.mapLimit(pageArray, 1, processPage);
 		
 		async function processPage(page) {
 			epub.getChapterRaw = util.promisify(epub.getChapterRaw);
@@ -701,7 +753,7 @@ async function processEPUB(data, socket) {
 			}
 			try {
 				path = isSimple || !filteredChapters[chapterNumber - 1] ? `${onlinePath}/${path}` : `${onlinePath}/${filteredChapters[chapterNumber - 1].padded}/${path}`;
-			}catch (e) {
+			} catch (e) {
 				console.error(e);
 			}
 			//remove extraneous link tags
@@ -1052,7 +1104,7 @@ async function processPretext(data, socket) {
 			
 			for (let i = 0; i < resources.length; i++) {
 				try {
-					let filename = decodeURIComponent(resources[i].file).replace('$IMS-CC-FILEBASE$', '');
+					let filename = decodeURIComponent(resources[i].file).replace(/\$IMS-CC-FILEBASE\$\/?/, '');
 					let currentPath = rootPath;
 					if (filename.startsWith('../')) {
 						currentPath = currentPath.match(/.*\/(?=.*?\/$)/)[0];

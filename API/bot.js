@@ -34,8 +34,9 @@ async function handler(request, response) {
 		const staticFileServer = nodeStatic('node_modules/socket.io-client/dist', {fallthrough: false});
 		request.url = 'socket.io.js';
 		staticFileServer(request, response, finalhandler(request, response));
-		} else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
-			responseError('Unauthorized', 401);
+	}
+	else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
+		responseError('Unauthorized', 401);
 	}
 	else if (url.startsWith('/Logs/')) {
 		const staticFileServer = nodeStatic('BotLogs', {fallthrough: false});
@@ -100,6 +101,9 @@ async function jobHandler(jobType, input, socket) {
 	}
 	
 	function parallelCount() {
+		if (input.root.endsWith('.libretexts.org') || input.root.endsWith('.libretexts.org/'))
+			return 2;
+		
 		switch (jobType) {
 			case 'foreignImage':
 				return 2;
@@ -226,8 +230,12 @@ async function jobHandler(jobType, input, socket) {
 					if (result !== content)
 						result = tidy(result); //{indent:'auto','indent-spaces':4}
 					break;
+				case 'addPageIdentifierClass':
+					// if (result !== content)
+					result = await addPageIdentifierClass(input.subdomain, path, result);
+					break;
 			}
-			if (result && result !== lastResult)
+			if (result && result !== lastResult && comment)
 				console.log(comment);
 			result = result || lastResult;
 		}
@@ -516,7 +524,12 @@ async function foreignImage(input, content, path) {
 				}
 				//upload image
 				let foreignImage = await response.blob();
-				let filename = url.match(/(?<=\/)[^/]*?(?=$)/)[0];
+				
+				//if content disposition header, use this for the filename
+				let contentDisposition = response?.headers?.get('content-disposition');
+				contentDisposition = contentDisposition?.match(/(?<=attachment; filename=").*?(?=")/)?.[0];
+				
+				let filename = contentDisposition || url.match(/(?<=\/)[^/]*?(?=$)/)[0];
 				response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
 					method: 'PUT',
 					body: foreignImage,
@@ -581,7 +594,7 @@ async function convertContainers(input, content) {
 	});
 	result = $.html();
 	// console.log(result);
-	await fs.writeFile('test.html', result);
+	// await fs.writeFile('test.html', result);
 	
 	return [result, count];
 	
@@ -597,6 +610,20 @@ async function convertContainers(input, content) {
 				return type;
 		}
 	}
+}
+
+async function addPageIdentifierClass(subdomain, path, content) {
+	const $ = cheerio.load(content);
+	
+	let result = '';
+	let current = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${path}`, false, 'LibreBot');
+	$('p:not(.mt-script-comment), :header, td, li').addClass(`lt-${subdomain}-${current.id}`);
+	
+	result = $.html();
+	// console.log(result);
+	// await fs.writeFile('test.html', result);
+	
+	return result;
 }
 
 //Helper Logging functions
@@ -677,5 +704,4 @@ String.prototype.replaceAll = function (search, replacement, input) {
 		search = search.replace(/\\\*!/g, ".*?"); //wildcard multi
 	  }
 	  let temp = target.replace(new RegExp(search, 'g'), replacement);*/
-	
 };

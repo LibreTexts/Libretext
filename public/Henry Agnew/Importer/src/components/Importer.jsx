@@ -109,7 +109,7 @@ export default function Importer(props) {
 				</div>
 				<div>
 					<h4>Step 2: Select file to process.</h4>
-					Uploaded Files are flushed nightly!
+					Uploaded Files are now flushed monthly!
 					<select onChange={(event) => setFile(event.target.value)} value={file}>
 						<option disabled value=''>Upload{files.length ? ' or Select' : ''} a file</option>
 						{files.map(file => <option key={file}>{file}</option>)}</select>

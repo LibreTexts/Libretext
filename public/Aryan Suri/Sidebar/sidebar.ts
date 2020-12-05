@@ -664,8 +664,10 @@ async function Sidebar() {
     </div>
     <div class="custom_field">
         <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle LibreLens</a>
-        <div id="librelens-list">
-        </div>
+			<div id="librelens-list">
+
+
+			</div>
     </div>
 	<div class="custom_field">
 		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
@@ -810,6 +812,7 @@ function savePanel(_input: string) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
+
 
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");

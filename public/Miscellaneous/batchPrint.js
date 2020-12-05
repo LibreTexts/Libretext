@@ -7,7 +7,6 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('store:'));
 	
 	let fn = () => {
 		const [subdomain, path] = LibreTexts.parseURL();
@@ -53,18 +52,14 @@ if (!window["batchPrint.js"]) {
 			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
 			innerHTML += `<div class="LTdropdown-content">
 					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>
-					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
+					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
 					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 
 				</div></div>`;
 			
 			if (downloadEntry) {
-				if (bookstore)
-					bookstore = bookstore.split('store:')[1];
-				
-				
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
@@ -76,14 +71,13 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Import into LMS</a>
 					<a href='${root}/Individual.zip' class='mt-icon-file-zip'
 					   target='_blank'>Individual ZIP</a>
-					${bookstore ? `<a href='${bookstore}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>` : ''}
+					<a href='https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}' class='mt-icon-cart2' target='_blank'>Buy Paper Copy</a>
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
 			
-			innerHTML += `<div id="sidebarPromotion" style="background-color: #127bc4; color: white; display: flex; align-items: center; padding: 5px;" title="Contains view setting and useful learning resources" onclick="setTimeout(()=>document.getElementById('custom_open').click(),10);">Open New Sidebar ☰</div>`;
-			
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
@@ -179,5 +173,5 @@ if (!window["batchPrint.js"]) {
 		return '#'
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }

@@ -481,3 +481,13 @@ a.toggler.off {
     text-align: justify !important;
   }
 }
+/*Prevent Mindtouch changes to glossary label*/
+  .glossaryLabel {
+    display: inline;
+  }
+  .glossaryLabel:after {
+    content: none;
+  }
+  #glossarizerOptions form {
+      text-indent: 2em;
+  }
