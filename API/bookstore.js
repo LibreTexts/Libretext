@@ -196,7 +196,8 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     }
     
     costCalculation = await costCalculation.json();
-    console.log(JSON.stringify(costCalculation, null, 2));
+    if (beta)
+        console.log(JSON.stringify(costCalculation, null, 2));
     
     lineItems = lineItems.map((item, index) => {
         let costCalcItem = costCalculation.line_item_costs[index];

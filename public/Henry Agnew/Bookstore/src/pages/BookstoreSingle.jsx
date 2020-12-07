@@ -332,7 +332,7 @@ function BookstoreSingle(props) {
 				Buy Print Copy for ${(totalCost).toFixed(2)}
 			</Button>
 			<p style={{margin: '0 5%'}}>Final prices on the next page may be slightly different than this estimate due
-			                            to localized printing costs. <Tooltip
+			                            to localized printing costs and included calculated sales tax. <Tooltip
 					title={`Version ${new Date("REPLACEWITHDATE")}`}><span> Coded with ❤</span></Tooltip></p>
 			
 			<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
