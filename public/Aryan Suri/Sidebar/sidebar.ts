@@ -1,7 +1,8 @@
 "use strict";
 var CONVERSION_CALCULATOR;
-
-
+if (localStorage.getItem("beeline") === null) {
+    localStorage.setItem("beeline", "off");
+}
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
@@ -759,8 +760,7 @@ function activateBeeLine() {
                 skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
             });
             localStorage.setItem("beeline", theme);
-
-            if (theme === "off" || theme === undefined ) {
+            if (theme === "off") {
                 beeline.uncolor();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', 'disabled');

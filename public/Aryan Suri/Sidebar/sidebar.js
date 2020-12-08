@@ -1,5 +1,8 @@
 "use strict";
 var CONVERSION_CALCULATOR;
+if (localStorage.getItem("beeline") === null) {
+    localStorage.setItem("beeline", "off");
+}
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
@@ -439,10 +442,8 @@ async function Sidebar() {
                 }
             });
         }
-
-	//Set initial value for glossary options
-        document.getElementById("glossarizerOptions"+localStorage.getItem("glossarizerType")).checked=true;
-
+        //Set initial value for glossary options
+        document.getElementById("glossarizerOptions" + localStorage.getItem("glossarizerType")).checked = true;
     }
     function getData(pro) {
         return {
@@ -671,14 +672,14 @@ async function Sidebar() {
 			</div>
 	</div>
 	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary</p>
-		<form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
-		    <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
-		    <!-- <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
-		    <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
-		    <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
-		    <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
-		</form>
-    	</div>
+        <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
+            <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
+            <!-- <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
+                <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
+                <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
+            <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
+        </form>
+    </div>
 
     <div class="custom_field">
         <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
@@ -753,7 +754,7 @@ function activateBeeLine() {
                 skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
             });
             localStorage.setItem("beeline", theme);
-            if (theme === "off" || theme === undefined) {
+            if (theme === "off") {
                 beeline.uncolor();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', 'disabled');
@@ -804,7 +805,6 @@ function savePanel(_input) {
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
-
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
     $('section.mt-content-container').css("margin-left", 0 + "px");
