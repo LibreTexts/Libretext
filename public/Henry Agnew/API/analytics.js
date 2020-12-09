@@ -4,9 +4,9 @@ if (!window["analytics.js"]) {
         const ua = navigator.userAgent.toLowerCase();
         const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
         const sessionID = '_' + Math.random().toString(36).substr(2, 9);
-        const root = "api.libretexts.org";
+        // const root = "api.libretexts.org";
         let login = '';
-        // const root = "home.miniland1333.com"
+        const root = "home.miniland1333.com"
         
         window.addEventListener('DOMContentLoaded', () => $(".mt-content-container").hide());
         
@@ -179,9 +179,10 @@ if (!window["analytics.js"]) {
         }
         
         async function report(verb, object, extra) {
-            // navigator.sendBeacon(`https://${root}/ay/receive`, await getBody(verb, object, extra));
+            const body = await getBody(verb, object, extra);
+            console.log(body);
+            navigator.sendBeacon(`https://${root}/ay/receive`, body);
             // console.log(verb, object, extra);
-            console.log(await getBody(verb, object, extra));
         }
         
         async function getCoverpage() {

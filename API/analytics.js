@@ -4,11 +4,11 @@ const secure = require('./secure.json');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-app.use(express.json())
+app.use(cors());
+app.use(express.text());
 
 //middleware configuration and initialization
 const basePath = '/ay'
-// app.use(cors);
 app.use(express.static('analyticsSecure'));
 let port = 3004;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -19,14 +19,14 @@ app.listen(port, () => {
     console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get(basePath + '/ping', (req, res) => {
+    res.send('PONG');
 });
 
 app.post(basePath + '/receive', (req, res) => {
-    
-    
-    res.send(req.body);
+    res.send('Done');
+    // res.status(200).end();
+    console.log(req.body);
 });
 
 app.put(basePath + '/secureAccess/:library([a-z]+)-:bookId(\\d+)', (req, res) => {
