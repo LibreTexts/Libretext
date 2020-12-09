@@ -134,21 +134,21 @@ if (!window["analytics.js"]) {
             });
             
             //Time on page handling
-            window.addEventListener('pagehide', function () {
+            window.addEventListener('pagehide', async function () {
+                report('left', 'page', {
+                    type: 'pagehide'
+                });
                 if (isSafari) { //workaround due to pagehide asynchronous http request bug in safari
                     $.ajax({
                         type: "POST",
                         async: false,
                         url: `https://${root}/ay/receive`,
-                        data: getBody('left', 'page', {
+                        data: await getBody('left', 'page', {
                             type: 'ajax'
                         }),
                         timeout: 5000
                     });
                 }
-                report('left', 'page', {
-                    type: 'pagehide'
-                });
             });
             //Backup event for time on page
             window.addEventListener('beforeunload', function () {
@@ -198,7 +198,7 @@ if (!window["analytics.js"]) {
             return `${subdomain}-${coverpage.id}`;
         }
         
-        async  function getBody(verb, object, extra) {
+        async function getBody(verb, object, extra) {
             let result = {
                 actor: await getActor(),
                 verb: verb,
