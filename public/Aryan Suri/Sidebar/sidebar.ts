@@ -1,6 +1,6 @@
 "use strict";
 var CONVERSION_CALCULATOR;
-if (localStorage.getItem("beeline") === null) {
+if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
     localStorage.setItem("beeline", "off");
 }
 window.addEventListener("load", () => {
