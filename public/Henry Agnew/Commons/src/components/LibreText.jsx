@@ -152,7 +152,7 @@ export default function LibreText(props) {
 							<AccordionDetails style={{overflowX: "auto"}}>
 								<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
 								   target='_blank'>Download Full PDF
-								<iframe src={`${root}/Full.pdf?view=true`} height={500}/>
+								<iframe src={`${root}/Preview.pdf?view=true`} height={500}/>
 								</a>
 							</AccordionDetails>
 						</Accordion>
