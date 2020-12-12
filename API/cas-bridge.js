@@ -50,18 +50,26 @@ http.createServer(async (req, res) => {
     const {principal, ticket} = req;
     if (!principal)
         return res.end();
+    
+    //principal pruning
+    delete principal?.attributes?.id_token
+    delete principal?.attributes?.access_token
+    delete principal?.attributes?.refresh_token
+    delete principal?.attributes?.aio
+    
+    
     const cookies = cookie.parse(req.headers.cookie);
     const redirect = cookies?.api_redirect || undefined;
     // console.log(JSON.stringify(principal, null, 2));
     const payload = {
-        user: principal.user,
-        name: principal?.attributes.name || `${principal?.attributes.firstName} ${principal?.attributes.family_name || principal?.attributes.lastName}`,
-        email: principal?.attributes?.email,
+        user: principal?.user || principal?.attributes?.upn,
+        name: principal?.attributes.name || `${principal?.attributes?.firstName || principal?.attributes?.given_name} ${principal?.attributes?.family_name || principal?.attributes?.lastName}`,
+        email: principal?.attributes?.email || principal?.attributes?.upn,
         redirect: redirect,
         attributes: principal?.attributes, //TODO: Disable for staging
     }
-    
-    const token = JWT.sign(payload, key, {issuer: serviceName})
+    const token = JWT.sign(payload, key, {issuer: serviceName});
+    // console.log(payload, token);
     res.writeHead(redirect ? 302 : 200, {
         'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure`, `api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`],
         'Content-Type': 'text/plain',
