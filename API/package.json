@@ -38,7 +38,7 @@
     "simple-oauth2": "^4.2.0",
     "sleep-promise": "^8.0.1",
     "socket.io": "^2.3.0",
-    "stripe": "^8.126.0",
+    "stripe": "^8.128.0",
     "tidy-html5": "^0.1.1",
     "xml-js": "^1.6.11",
     "zip-local": "^0.3.4"
