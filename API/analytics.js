@@ -59,6 +59,7 @@ app.post(basePath + '/receive', async (req, res) => {
         if (!courseName) {
             await fs.ensureDir(`./analyticsData/General/${datePath}`);
             await fs.appendFile(`./analyticsData/General/${datePath}/${user}.txt`, body + "\n");
+            await fs.appendFile(`./analyticsData/General/${user}.txt`, body + "\n");
         }
         else {
             if (!Array.isArray(courseName))
@@ -66,6 +67,7 @@ app.post(basePath + '/receive', async (req, res) => {
             for (let i = 0; i < courseName.length; i++) {
                 await fs.ensureDir(`./analyticsData/${courseName[i]}/${datePath}`);
                 await fs.appendFile(`./analyticsData/${courseName[i]}/${datePath}/${user}.txt`, body + "\n");
+                await fs.appendFile(`./analyticsData/${courseName[i]}/${user}.txt`, body + "\n");
             }
         }
     } catch (e) {
