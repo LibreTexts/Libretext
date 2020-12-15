@@ -70,8 +70,10 @@ http.createServer(async (req, res) => {
     }
     const token = JWT.sign(payload, key, {issuer: serviceName});
     // console.log(payload, token);
+    
+    //`api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`
     res.writeHead(redirect ? 302 : 200, {
-        'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure`, `api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`],
+        'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure; Max-Age=600000`],
         'Content-Type': 'text/plain',
         'Location': redirect,
     });
