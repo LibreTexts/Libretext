@@ -186,7 +186,10 @@ async function Sidebar() {
         let sidepanel = sessionStorage.getItem("sidepanel");
         let tab;
         let calculators = true;
-        if (sidepanel === null) {
+        if (window.innerWidth <= 450) {
+            tab = false;
+        }
+        else if (sidepanel === null) {
             tab = true;
         }
         else {
