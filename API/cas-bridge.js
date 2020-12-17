@@ -59,12 +59,12 @@ http.createServer(async (req, res) => {
     
     
     const cookies = cookie.parse(req.headers.cookie);
-    const redirect = cookies?.api_redirect || undefined;
-    // console.log(JSON.stringify(principal, null, 2));
+    const redirect = cookies?.api_redirect?.replace(/#$/,'') || undefined;
+    console.log(JSON.stringify(principal, null, 2));
     const payload = {
-        user: principal?.user || principal?.attributes?.upn,
+        user: principal?.user,
         name: principal?.attributes.name || `${principal?.attributes?.firstName || principal?.attributes?.given_name} ${principal?.attributes?.family_name || principal?.attributes?.lastName}`,
-        email: principal?.attributes?.email || principal?.attributes?.upn,
+        email: principal?.attributes?.principalID,
         redirect: redirect,
         attributes: principal?.attributes, //TODO: Disable for staging
     }

@@ -1,25 +1,32 @@
 if (!window["analytics.js"]) {
     window["analytics.js"] = true;
     (function () {
+        let isUserAutomated = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+        
+        if (navigator.webdriver || isUserAutomated || window.matchMedia('print').matches)
+            return; //exit if not client-facing
+        
         const ua = navigator.userAgent.toLowerCase();
         const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
         const sessionID = '_' + Math.random().toString(36).substr(2, 9);
-        // const root = "api.libretexts.org";
+        const $content = $(".mt-content-container");
+        const root = "api.libretexts.org";
         let login = '';
-        const root = "home.miniland1333.com"
+        // const root = "home.miniland1333.com"
         
-        window.addEventListener('DOMContentLoaded', () => $(".mt-content-container").hide());
+        window.addEventListener('DOMContentLoaded', () => $content.hide());
         
         window.addEventListener('load', async function () {
             login = await getLogin();
-            const $content = $(".mt-content-container");
-            
+            const pageTitle = $("#deki-page-title, #title").last();
             if (login) {
-                $content.before(`<p>Thank you ${login} for authenticating with the LibreTexts SSO!</p>`);
-                $(".mt-content-container").show()
+                // $content.before(`<p>Thank you ${login} for authenticating with the LibreTexts SSO!</p>`);
+                $content.show()
+                pageTitle.prepend(`<a class="icon-SSO" title="Logged in with SSO as ${login}" style="color:green"></a>`);
             }
             else { //invalid session, user must log in
-                $content.before(`<p>Content is hidden. Please log in with your SSO or LibreTexts account</p>`);
+                pageTitle.prepend(`<a class="icon-SSO" title="Single Sign-On" onclick="loginCAS()" style="color:red"/>`);
+                $content.before(`<div style="font-size: x-large">Content is hidden. Please log in with <a class="icon-SSO" title="Single Sign-On" onclick="loginCAS()"/> or your LibreLogin.</div>`);
                 return;
             }
             
@@ -43,10 +50,10 @@ if (!window["analytics.js"]) {
         
         async function getLogin() {
             let payload = Cookies.get();
-            const $content = $(".mt-content-container");
             let login = document.getElementById('emailHolder').innerText; //Mindtouch Login
             if (login) {
-                $content.before(`<p>libreTextsLogin AY: ${login}</p>`);
+                // const $content = $(".mt-content-container");
+                // $content.before(`<p>libreTextsLogin AY: ${login}</p>`);
                 return login;
             }
             
@@ -180,7 +187,7 @@ if (!window["analytics.js"]) {
         
         async function report(verb, object, extra) {
             const body = await getBody(verb, object, extra);
-            console.log(body);
+            // console.log(body);
             navigator.sendBeacon(`https://${root}/ay/receive`, body);
             // console.log(verb, object, extra);
         }

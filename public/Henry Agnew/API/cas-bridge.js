@@ -1,7 +1,6 @@
-window.addEventListener('load', async () => {
+window.addEventListener('DOMContentLoaded', async () => {
 	let login = document.getElementById('emailHolder').innerText;
 	let payload = Cookies.get();
-	const $content = $(".mt-content-container");
 	const $target = $('.mt-user-quick-login');
 	
 	if (login) {
