@@ -19,14 +19,19 @@ if (!window["analytics.js"]) {
         window.addEventListener('load', async function () {
             login = await getLogin();
             const pageTitle = $("#deki-page-title, #title").last();
-            if (login) {
+            if (login && login.user) {
+                if (!login.educational) {
+                    pageTitle.prepend(`<a class="icon-SSO" title="Single Sign-On" onclick="logoutCAS(true)" style="color:red"/>`);
+                    $content.before(`<div style="font-size: x-large">Access Denied: ${login.user} is not part of an institution. Please log in with your institutional <a class="icon-SSO" title="Single Sign-On Logout" onclick="logoutCAS(true)"/> or your LibreLogin.</div>`);
+                    return;
+                }
                 // $content.before(`<p>Thank you ${login} for authenticating with the LibreTexts SSO!</p>`);
                 $content.show()
-                pageTitle.prepend(`<a class="icon-SSO" title="Logged in with SSO as ${login}" style="color:green"></a>`);
+                pageTitle.prepend(`<a class="icon-SSO" title="Logged in with SSO as ${login.user}" style="color:green"></a>`);
             }
             else { //invalid session, user must log in
                 pageTitle.prepend(`<a class="icon-SSO" title="Single Sign-On" onclick="loginCAS()" style="color:red"/>`);
-                $content.before(`<div style="font-size: x-large">Content is hidden. Please log in with <a class="icon-SSO" title="Single Sign-On" onclick="loginCAS()"/> or your LibreLogin.</div>`);
+                $content.before(`<div style="font-size: x-large">Content is hidden. Please log in with your institutional <a class="icon-SSO" title="Single Sign-On" onclick="loginCAS()"/> or your LibreLogin.</div>`);
                 return;
             }
             
@@ -54,7 +59,7 @@ if (!window["analytics.js"]) {
             if (login) {
                 // const $content = $(".mt-content-container");
                 // $content.before(`<p>libreTextsLogin AY: ${login}</p>`);
-                return login;
+                return {user: login, educational: true};
             }
             
             if (payload && payload.overlayJWT) { //cas-overlayJWT login
@@ -66,9 +71,8 @@ if (!window["analytics.js"]) {
                     login = KJUR.jws.JWS.verify(payload, pubKey, ["PS256"]);
                     if (login) {
                         payload = KJUR.jws.JWS.parse(payload).payloadObj;
-                        login = payload.email || payload.user;
-                        console.log(login, payload);
-                        return login;
+                        console.log(payload.user, payload);
+                        return payload;
                     }
                 } catch (e) {
                     console.error(e);

@@ -59,9 +59,10 @@ http.createServer(async (req, res) => {
     
     
     const cookies = cookie.parse(req.headers.cookie);
-    const redirect = cookies?.api_redirect?.replace(/#$/,'') || undefined;
+    const redirect = cookies?.api_redirect?.replace(/#$/, '') || undefined;
     console.log(JSON.stringify(principal, null, 2));
     const payload = {
+        educational: /(?<=.*?)@.*?\.edu/.test(principal?.user || principal?.attributes?.principalID),
         user: principal?.user,
         name: principal?.attributes.name || `${principal?.attributes?.firstName || principal?.attributes?.given_name} ${principal?.attributes?.family_name || principal?.attributes?.lastName}`,
         email: principal?.attributes?.principalID,

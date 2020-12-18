@@ -10,7 +10,7 @@ app.use(express.text());
 
 //middleware configuration and initialization
 const basePath = '/ay';
-app.use(express.static('analyticsSecure'));
+// app.use(express.static('analyticsSecure'));
 let port = 3004;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
     port = parseInt(process.argv[2]);
@@ -155,7 +155,7 @@ async function secureAccess(courseName) {
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}`);
     console.log(`Secure Access ${courseName} ${ip}`);
     
-    req.write(`secureAccess-${courseName}.zip`)
+    res.sendFile(`./analyticsSecure/secureAccess-${courseName}.zip`)
 }
 
 async function createLinker(courseName) {
