@@ -259,6 +259,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         payment_method_types: bookstoreConfig.PAYMENT_METHODS.split(', '),
         mode: 'payment',
         line_items: lineItems,
+        billing_address_collection: 'required',
         shipping_address_collection: {allowed_countries: [shippingLocation]},
         // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
         success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,

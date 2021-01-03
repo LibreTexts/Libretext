@@ -24,6 +24,9 @@ import Select from "@material-ui/core/Select";
 import {IconFlagCA, IconFlagUS,} from 'material-ui-flags';
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {FormControl, FormGroup, FormHelperText, FormLabel, LinearProgress} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
 
 
 const target = document.createElement("div");
@@ -52,7 +55,16 @@ function BookstoreSingle(props) {
 	const [quantity, setQuantity] = React.useState(1);
 	const [stripe, setStripe] = React.useState();
 	const [isProcessing, setIsProcessing] = React.useState(false);
-	const [loaderProgress, setLoaderProgress] = React.useState(0);
+	const [dialogState, setDialogState] = React.useState({
+		one: false,
+		two: false,
+		three: false,
+		backend: false,
+	});
+	
+	const handleDialogChange = (event) => {
+		setDialogState({ ...dialogState, [event.target.name]: event.target.checked});
+	};
 	
 	
 	const fileSource = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore`;
@@ -123,17 +135,6 @@ function BookstoreSingle(props) {
 		})();
 	}, [quantity, shippingLocation]);
 	
-	React.useEffect(() => {
-		const timer = setInterval(() => {
-			setLoaderProgress((prevProgress) => {
-				let inc = Math.round(Math.random() * 20);
-				return (prevProgress >= 100 ? 100 : prevProgress + inc)
-			});
-		}, 1200);
-		return () => {
-			clearInterval(timer);
-		};
-	}, []);
 	
 	function renderShipping() {
 		if (!shippingData.length)
@@ -187,8 +188,13 @@ function BookstoreSingle(props) {
 	}
 	
 	function createCheckoutSession() {
+		setDialogState({
+			one: false,
+			two: false,
+			three: false,
+			backend: false,
+		});
 		setIsProcessing(true);
-		setLoaderProgress(0);
 		return fetch(APIendpoint + '/create-lulu-checkout-session', {
 			method: 'POST',
 			headers: {
@@ -205,9 +211,10 @@ function BookstoreSingle(props) {
 				shippingLocation: shippingLocation,
 				shippingSurcharge: shippingSurcharge
 			}),
-		}).then(function (result) {
-			setIsProcessing(false);
-			return result.json();
+		}).then(async function (result) {
+			result = await result.json()
+            setDialogState({ ...dialogState, backend: result });
+			return result;
 		});
 	}
 	
@@ -316,30 +323,54 @@ function BookstoreSingle(props) {
 			
 			<Button autoFocus color="primary" variant='contained' disabled={!validPrice}
 			        style={{width: '80%', fontSize: 20, margin: '1% 10%'}}
-			        onClick={() => {
-				        createCheckoutSession().then(function (data) {
-					        if (data && data.sessionId)
-						        stripe.redirectToCheckout({
-							        sessionId: data.sessionId,
-						        })
-							        .then(function (result) {
-								        if (result.error) {
-									        alert(result.error.message);
-								        }
-							        });
-				        });
-			        }}>
-				Buy Print Copy for ${(totalCost).toFixed(2)}
+			        onClick={() => {createCheckoutSession()}}>
+				Checkout Print Copy for ${(totalCost).toFixed(2)}
 			</Button>
 			<p style={{margin: '0 5%'}}>Final prices on the next page may be slightly different than this estimate due
 			                            to localized printing costs and included calculated sales tax. <Tooltip
 					title={`Version ${new Date("REPLACEWITHDATE")}`}><span> Coded with ❤</span></Tooltip></p>
 			
-			<Dialog open={isProcessing} aria-labelledby="form-dialog-title">
-				<DialogTitle id="form-dialog-title">Verifying your Shopping Cart
+			<Dialog open={isProcessing} onClose={()=>setIsProcessing(false)} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title" style={{background: "#127bc4", color: "white",}}>You are now leaving LibreTexts.org for Stripe Checkout
+					<IconButton aria-label="close" style={{right: 1, position: "absolute", top: 1, color: "white",}} onClick={()=>setIsProcessing(false)}>
+						<CloseIcon />
+					</IconButton>
 				</DialogTitle>
-				<DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
-					<CircularProgressWithLabel value={loaderProgress} size={100}/>
+				<DialogContent style={{display: 'flex', flexDirection:'column', justifyContent: 'center', padding: 20}}>
+					<FormControl component="fieldset">
+						<FormLabel component="legend">Acknowledge all of the terms below</FormLabel>
+						<FormGroup>
+							<FormControlLabel
+								control={<Checkbox checked={dialogState.one} onChange={handleDialogChange} name="one" style={{marginBottom:30}} />}
+								label="Please ensure all fields on the next page are correct before submitting your order! Since payment and printing are automatically handled by third-parties Stripe and Lulu respectively, LibreTexts is unable to modify your order once submitted."
+							/>
+							<FormControlLabel
+								control={<Checkbox checked={dialogState.two} onChange={handleDialogChange} name="two" style={{marginBottom:30}} />}
+								label='If your shipping and billing addresses are different, on the next page make sure to uncheck "Billing address is same as shipping".'
+							/>
+							<FormControlLabel
+								control={<Checkbox checked={dialogState.three} onChange={handleDialogChange} name="three" style={{marginBottom:30}} />}
+								label="If you have any questions, please contact us at bookstore@libretexts.org before finalizing your order."
+							/>
+						</FormGroup>
+					</FormControl>
+					{!dialogState.backend && <LinearProgress/>}
+					<Button autoFocus color="primary" variant='contained' disabled={!Object.values(dialogState).every(e=>e)}
+					        style={{width: '80%', fontSize: 20, margin: '1% 10%'}}
+					        onClick={() =>  {
+					            const data = dialogState.backend;
+							        if (data && data.sessionId)
+								        stripe.redirectToCheckout({
+									        sessionId: data.sessionId,
+								        })
+									        .then(function (result) {
+										        if (result.error) {
+											        alert(result.error.message);
+										        }
+									        });
+						        }}>
+						Proceed to Stripe Checkout
+					</Button>
 				</DialogContent>
 			</Dialog>
 		</Paper>
@@ -420,26 +451,3 @@ function BookstoreWrapper() {
 }
 
 ReactDOM.render(<BookstoreWrapper/>, target);
-
-
-function CircularProgressWithLabel(props) {
-	return (
-		<Box position="relative" display="inline-flex">
-			<CircularProgress variant="static" {...props} />
-			<Box
-				top={0}
-				left={0}
-				bottom={0}
-				right={0}
-				position="absolute"
-				display="flex"
-				alignItems="center"
-				justifyContent="center"
-			>
-				<Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
-					props.value,
-				)}%`}</Typography>
-			</Box>
-		</Box>
-	);
-}
