@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', async () => {
     let login = document.getElementById('emailHolder').innerText;
     let payload = Cookies.get();
+    if (window.location.href.endsWith('#'))
+        history.replaceState("", document.title, window.location.pathname + window.location.search);
     const $target = $('.mt-user-quick-login');
     
     if (login) {
