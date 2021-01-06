@@ -38,7 +38,7 @@ app.post(basePath + '/receive', async (req, res) => {
         let event = JSON.parse(body);
         let courseName = event.actor.courseName;
         
-        let user = event.actor.id;
+        let user = event.actor.id.user || event.actor.id;
         if (!courseName || !user)
             return false;
         
@@ -158,14 +158,22 @@ async function secureAccess(courseName) {
     res.sendFile(`./analyticsSecure/secureAccess-${courseName}.zip`)
 }
 
+//createLinker('chem-2737')
+
 async function createLinker(courseName) {
     let students = await fs.readdir(`./analyticsData/ay-${courseName}`, {withFileTypes: true});
-    
-    const decipher = crypto.createDecipheriv('aes-256-cbc', secure.analyticsSecure, Buffer.from(secure.analyticsSecure, 'hex'));
-    
-    let user2 = decipher.update(Buffer.from(user, 'hex'))
-    user2 += decipher.final('utf8');
-    
-    console.log(user, user2);
-    
+    let output = '';
+    for (const studentsKey of students) {
+        if (studentsKey.isFile()) {
+            const user = studentsKey.name.replace('.txt', '');
+            
+            const decipher = crypto.createDecipheriv('aes-256-cbc', secure.analyticsSecure, Buffer.from(secure.analyticsSecure, 'hex'));
+            let user2 = decipher.update(Buffer.from(user, 'hex'))
+            user2 += decipher.final('utf8');
+            
+            console.log(user2);
+            output +=`${user}, ${user2}\n`;
+        }
+    }
+    // console.log(output);
 }

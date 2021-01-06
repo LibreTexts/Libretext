@@ -89,7 +89,7 @@ if (!window["analytics.js"]) {
                 if (nbUser) {
                     nbUser = decodeURIComponent(decodeURIComponent(nbUser.replace('userinfo=', '')));
                     nbUser = JSON.parse(nbUser);
-                    return nbUser.email;
+                    return {user: nbUser.email, educational: true};
                 }
             }
             

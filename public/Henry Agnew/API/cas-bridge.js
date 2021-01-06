@@ -28,9 +28,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (login) {
             // $("#title").append('<button id="cas-test" onclick="logoutCAS()">Logout</button>');
             $target.replaceWith(`<li><a class="icon-SSO sso-user" title="Single Sign-On Logout" onclick="logoutCAS(event)">${payload.name}</a></li>`)
-            $('.elm-header-user-nav').css('background-color', '#0f67a6');
-            $('.elm-header-user-nav .mt-user-menu > li > a').css('color', 'white');
+            $('.elm-header-user-nav').addClass('authenticated-sso');
             // $content.before(`<p>Thank you ${login} for authenticating with LibreTexts SSO!</p>`);
+            
+            if (window.location.href.includes('dev.libretexts.org') || window.location.href.includes('k12.libretexts.org')) {
+                const $instructor = $('.mt-icon-quick-sign-in');
+                const loginLink = document.getElementById('ssoHolder').innerText;
+                $instructor.replaceWith(`<a id="SSOInstructorIcon" class="mt-icon-quick-sign-in mt-dropdown-link mt-toggle-right" href="${loginLink}" title="Instructor Mode">Instructor Mode</a>`)
+
+            }
             return;
         }
     }
