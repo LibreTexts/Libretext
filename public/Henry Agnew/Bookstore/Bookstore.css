@@ -233,10 +233,12 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 450px;
     justify-content: space-evenly;
 }
+
 #bookstoreSingle .bookstoreColumn img {
     object-fit: contain;
 }
-#bookstoreSingle .bookstoreColumn  {
+
+#bookstoreSingle .bookstoreColumn {
     margin-bottom: 0;
 }
 
@@ -248,11 +250,20 @@ h1, h2, h3, h4, h5, h6 {
     margin-block-start: 0;
 }
 
+#bookstore-dialog h2 {
+    color: white;
+}
+
+#bookstore-dialog .MuiFormControlLabel-root {
+    margin-bottom: 2rem;
+}
+
 #bookstoreSingle > div:first-child {
     display: flex;
     padding: 0 20px;
     justify-content: space-evenly;
 }
+
 @media (max-width: 1000px) {
     #bookstoreSingle > div:first-child {
         flex-direction: column;

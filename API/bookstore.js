@@ -106,7 +106,10 @@ async function updateOrder(sessionId, forceUpdate = false, beta = false) {
         //archive order if completed
         if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED'].includes(result.status)) {
             console.log(`[Archiving] ${sessionId}`);
-            await sendShippingEmail(result);
+            if (result.status === 'REJECTED')
+                await sendRejectedEmail(result);
+            else
+                await sendShippingEmail(result);
             await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
         }
     }
@@ -428,6 +431,7 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             stripe: session,
             lulu: luluResponse,
         }, {spaces: '\t'});
+        await fs.remove(`./bookstore/completed/${session}.json`);
         
         sendLuluReceiptEmail(payload, luluResponse, beta);
     }
@@ -526,6 +530,59 @@ ${payload.line_items.map(item => {
 <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
 <p>Please remember to include your order identifier [${payload.external_id}].</p>
 <h3>Enjoy your purchase!</h3>
+<img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
+            
+            
+            const email = new CreateMail(auth, to, sub, message);
+            email.makeBody();
+        });
+    });
+}
+
+function sendRejectedEmail(payload) {
+    const to = [payload.lulu.shipping_address.email, 'bookstore@libretexts.org'];
+    const sub = 'Your order from the LibreTexts Bookstore has encountered an error.';
+
+// If modifying these scopes, delete token.json.
+    const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
+
+// Load client secrets from a local file.
+    fs.readFile('bookstoreConfig.json', async (err, content) => {
+        if (err) return console.log('Error loading client secret file:', err);
+        
+        // Authorize a client with credentials, then call the Gmail API.
+        authorize(JSON.parse(content).GMAIL, (auth) => {
+            
+            //creation of message from payload and line_items
+            const message = `<h1>Your order from the LibreTexts Bookstore has encountered an error.</h1>
+<p>This email is an automated alert that your order has encountered an error.</p>
+<table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+<thead><tr>
+<th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+</tr></thead>
+<tbody>
+${payload.lulu?.line_items.map(item => {
+                const [lib, pageID] = item.external_id.split('-');
+                return `<tr>
+		<td>
+		<img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+		</td>
+        <td>
+        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+        </td>
+        <td style="text-align: right">
+        <p>Status:</p>
+        <p>${item.status.name}</p>
+        <p>${JSON.stringify(item.status.messages)}</p>
+        </td>
+</tr>`
+            })}
+</tbody>
+</table>
+<br/>
+<p>This email is also being sent to bookstore@libretexts.org, who will respond to this issue as soon as possible.</p>
 <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
             
             
