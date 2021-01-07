@@ -681,7 +681,7 @@ async function addPageIdentifierClass(subdomain, path, content) {
 async function logStart(input, isDisabled) {
     let timestamp = new Date();
     input.timestamp = timestamp.toUTCString();
-    let ID = '' + Math.random().toString(36).substr(2, 9);
+    let ID = '' + Math.random().toString(36).substr(2);
     if (!isDisabled) {
         await fs.ensureDir(`BotLogs/Working/${input.user}`);
         await fs.writeJSON(`BotLogs/Working/${input.user}/${ID}.json`, input);
