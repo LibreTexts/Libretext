@@ -727,20 +727,22 @@ String.prototype.replaceAll = function (search, replacement, input) {
     regex = new RegExp(search, 'gm');
     let temp = target.replace(regex, replacement);
     // console.log(b4, search);
-    try {
-        search = LibreTexts.encodeHTML(search);
-        regex = new RegExp(search, 'gm');
-        temp = temp.replace(regex, replacement);
-    } catch (e) {
-    
-    }
-    try {
-        search = LibreTexts.encodeHTML(search);
-        regex = new RegExp(search, 'gm');
-        temp = temp.replace(regex, replacement);
-    } catch (e) {
-    
-    }
+    if (temp === target)
+        try {
+            search = LibreTexts.encodeHTML(search);
+            regex = new RegExp(search, 'gm');
+            temp = temp.replace(regex, replacement);
+        } catch (e) {
+        
+        }
+    if (temp === target)
+        try {
+            search = LibreTexts.encodeHTML(search);
+            regex = new RegExp(search, 'gm');
+            temp = temp.replace(regex, replacement);
+        } catch (e) {
+        
+        }
     return temp;
     
     /*	if (input.newlines) {
