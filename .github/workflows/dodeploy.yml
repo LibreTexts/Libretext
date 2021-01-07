@@ -13,7 +13,7 @@ jobs:
     - name: Sending to DigitalOcean
       uses: LibreTexts/do-space-sync-action@master
       with:
-        args: --acl public-read --cache-control "public,max-age=604800"
+        args: --acl public-read
       env:
         SOURCE_DIR: './public'
         DEST_DIR: 'github/LibreTextsMain'
