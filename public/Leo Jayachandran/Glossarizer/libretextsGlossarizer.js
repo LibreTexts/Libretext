@@ -303,7 +303,7 @@ class LibreTextsGlossarizer {
 
                 for (let i = 0; i < this.glossary.length; i++) {
                     if (this.options.exactMatch) {
-                        if (this.glossary[i].term.toLowerCase() == this.clean(term).toLowerCase()) {
+                        if (this.glossary[i].term == term.toLowerCase()) {
                             return this.glossary[i].description.replace(/\"/gi, '&quot;')
                         }
                     } else {
