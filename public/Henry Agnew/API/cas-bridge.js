@@ -31,12 +31,12 @@ window.addEventListener('DOMContentLoaded', async () => {
             $('.elm-header-user-nav').addClass('authenticated-sso');
             // $content.before(`<p>Thank you ${login} for authenticating with LibreTexts SSO!</p>`);
             
-            if (window.location.href.includes('dev.libretexts.org') || window.location.href.includes('k12.libretexts.org')) {
+            // if (window.location.href.includes('dev.libretexts.org') || window.location.href.includes('k12.libretexts.org')) {
                 const $instructor = $('.mt-icon-quick-sign-in');
                 const loginLink = document.getElementById('ssoHolder').innerText;
                 $instructor.replaceWith(`<a id="SSOInstructorIcon" class="mt-icon-quick-sign-in mt-dropdown-link mt-toggle-right" href="${loginLink}" title="Instructor Mode">Instructor Mode</a>`)
 
-            }
+            // }
             return;
         }
     }
