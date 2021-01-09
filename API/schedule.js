@@ -34,17 +34,17 @@ for (const library in schedule) {
         scheduler.scheduleJob(time, () => {
             const nocache = false;//beginning of month
             try {
-                console.log(`Running Refresh ${nocache ? 'no-cache' : ''} for ${library}`);
+                console.log(`Running Refresh ${nocache ? 'no-cache' : ''} for ${library}/${target}`);
                 fetch(`https://batch.libretexts.org/print/Refresh`, {
                     method: 'PUT',
                     body: JSON.stringify({
-                        "libraries": {library: {[target]: true}},
+                        "libraries": {[library]: {[target]: true}},
                         "nocache": nocache
                     }),
                     headers: {origin: 'https://api.libretexts.org'}
                 });
             } catch (e) {
-                console.error(`FAILED Refresh ${nocache ? 'no-cache' : ''} for ${library}`);
+                console.error(`FAILED Refresh ${nocache ? 'no-cache' : ''} for ${library}/${target}`);
                 console.error(e);
             }
         });

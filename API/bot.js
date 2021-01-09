@@ -40,7 +40,7 @@ async function handler(request, response) {
     }
     else if (url.startsWith('/Logs/')) {
         const staticFileServer = nodeStatic('BotLogs', {fallthrough: false});
-        request.url = request.url.replace('Logs/', '');
+        request.url = request.url.replace('bot/Logs/', '');
         staticFileServer(request, response, finalhandler(request, response));
     }
     else {
@@ -358,70 +358,6 @@ async function revert(input, socket) {
     await fs.writeJSON(`BotLogs/Completed/${input.user}/${input.ID}.json`, job);
     socket.emit('revertDone', {ID: input.ID, status: job.status, count: job.pages.length});
 }
-
-/*rollback({
-    "user": "admin",
-    "subdomain": "math",
-    "ID": "mftp57vy6",
-    "jobType": "headerFix",
-    "params": {
-        "root": "https://math.libretexts.org"
-    }
-})
-
-async function rollback(input, socket) {
-    if (!input.ID || !input.user)
-        socket.emit('Body missing parameters');
-    console.log(`Rollback of [${input.ID}] from (${input.user})`);
-    input.jobType = 'rollback';
-    let ID = await logStart(input);
-    // socket.emit('rollbackID', ID);
-    let count = 0;
-    if (!await fs.exists(`BotLogs/Completed/${input.user}/${input.ID}.json`)) {
-        socket.emit('errorMessage', `JobID ${input.ID} is not valid for user ${input.user}.`);
-        console.error(`JobID ${input.ID} is not valid for user ${input.user}.`);
-        return false;
-    }
-    let job = await fs.readJSON(`BotLogs/Completed/${input.user}/${input.ID}.json`);
-    
-    await async.mapLimit(job.pages, 5, async (page) => {
-        let content = await LibreTexts.authenticatedFetch(page.path, 'info?dream.out.format=json', job.subdomain, input.user);
-        if (!content.ok) {
-            console.error('Could not get page info from ' + page.path);
-            return false;
-        }
-        content = await content.json();
-        page.headRevision = content['@revision'];
-        
-        let response = await LibreTexts.authenticatedFetch(page.path, `revert?fromrevision=-1&dream.out.format=json`, job.subdomain, input.user, {
-            method: 'POST',
-        });
-        console.log(page.url)
-        if (!response.ok) {
-            let error = await response.text();
-            console.error('errorMessage', error);
-        }
-        /!*    }
-            else { //Page Conflict
-              console.error(`Page Conflict ${page.path}`);
-            }*!/
-    });
-    
-    let timestamp = new Date();
-    job.status = 'rolled-back';
-    job.reverted = timestamp.toUTCString();
-    await fs.writeJSON(`BotLogs/Completed/${input.user}/${input.ID}.json`, job);
-    
-    let result = {
-        user: input.user,
-        subdomain: job.subdomain,
-        ID: ID,
-        jobType: input.jobType,
-        revertID: input.ID,
-    };
-    await logCompleted(result);
-    // socket.emit('rollbackDone', ID);
-}*/
 
 //Operator Functions
 async function findReplace(input, content) {
