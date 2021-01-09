@@ -1,20 +1,22 @@
 if (!window["analytics.js"]) {
     window["analytics.js"] = true;
     (function () {
-        let isUserAutomated = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
-        
-        if (navigator.webdriver || isUserAutomated || window.matchMedia('print').matches)
-            return; //exit if not client-facing
-        
         const ua = navigator.userAgent.toLowerCase();
+        let isUserAutomated = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
         const isSafari = ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
         const sessionID = '_' + Math.random().toString(36).substr(2, 9);
         const $content = $(".mt-content-container");
         const root = "api.libretexts.org";
+        let coverpage;
         let login = '';
         // const root = "home.miniland1333.com"
-        
-        window.addEventListener('DOMContentLoaded', () => $content.hide());
+    
+    
+    
+        if (navigator.webdriver || isUserAutomated || window.matchMedia('print').matches) {
+            $content.show();
+            return; //exit if not client-facing
+        }
         
         window.addEventListener('load', async function () {
             login = await getLogin();
@@ -198,15 +200,15 @@ if (!window["analytics.js"]) {
         
         async function getCoverpage() {
             const [subdomain] = LibreTexts.parseURL();
-            
-            let coverpage = await LibreTexts.getCoverpage()
             if (!coverpage) {
-                alert('No coverpage found! Aborting');
-                return null;
+                coverpage = await LibreTexts.getCoverpage();
+                if (!coverpage) {
+                    alert('No coverpage found! Aborting');
+                    return null;
+                }
+                
+                coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
             }
-            
-            coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`)
-            
             return `${subdomain}-${coverpage.id}`;
         }
         
