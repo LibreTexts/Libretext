@@ -27,6 +27,8 @@
 .glossaryTerm {
     font-weight: bold;
 }
-.glossaryElement {
-    margin-bottom: 1em;
+
+p.glossaryElement {
+    font-size: 1.0rem;
+    margin: 0.5rem 0 1em;
 }
