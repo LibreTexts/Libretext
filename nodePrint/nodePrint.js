@@ -1768,7 +1768,7 @@ puppeteer.launch({
                     
                     if (filename && filename !== 'restricted' && !refreshOnly) {
                         title = filenamify(title);
-                        
+                        originalFiles.push(filename);
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/libretexts/${zipFilename}/${title}.pdf`);
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
                         
@@ -2149,7 +2149,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
     
     let full = await getSitemap();
     if (path) {
-        for (let i = 0; i < full.subpages.length; i++) {
+        for (let i = 0; i < full?.subpages?.length; i++) {
             if (full.subpages[i].url === rootURL)
                 return full.subpages[i];
         }

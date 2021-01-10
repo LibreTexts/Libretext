@@ -340,7 +340,7 @@ function PublishSubPanel(props) {
 							/>}
 						label="Show Failed"/>*/}
 					
-					<h6><a href={finished} target='_blank'>Your new Text is available here</a></h6>
+					<h6><a href={finished} target='_blank'>Your new Text will be available here</a></h6>
 					<Tooltip title='Download Progress Log'
 					         onClick={saveLog}><IconButton><Archive/></IconButton></Tooltip><br/>
 					{'Basic' === props.permission ? <h6>
