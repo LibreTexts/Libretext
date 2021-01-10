@@ -171,7 +171,7 @@ class LibreTextsGlossarizer {
                 };
                 //Get data from the columns in the row
                 let cols = getTermCols(tableRows[r]);
-                newTerm["term"] = cols["word"].substring(0).toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
+                newTerm["term"] = cols["word"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
 
                 //Make Description
                 if (cols["link"].length) {
@@ -263,8 +263,8 @@ class LibreTextsGlossarizer {
 
             /* Fetch glossary JSON */
             //Trim the content to remove the example table
-
-            base.glossary = retrievedGlossary.slice(0);
+            //Shallow Copy
+            base.glossary = [...retrievedGlossary];
 
             if (!base.glossary.length || base.glossary.length == 0) return;
             /**
@@ -563,7 +563,7 @@ class LibreTextsGlossarizer {
             } else {
                 newTerm["description"] = `<span class = "glossaryDefinition">${cols["definition"].trim()}</span>`;
             }
-            let currentTerm = cols["word"].substring(0).split(",")[0].trim();
+            let currentTerm = cols["word"].split(",")[0].trim();
             newTerm["term"] = `<span class = "glossaryTerm">${currentTerm}</span>`;
             glossaryList.push(newTerm);
         }
