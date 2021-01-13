@@ -17,7 +17,7 @@ export default function Importer(props) {
 	const user = document.getElementById('usernameHolder').innerText;
 	
 	useEffect(() => { //setup websocket
-		let socket = io(props.devMode ? 'https://home.miniland1333.com/' : 'https://api.libretexts.org/', {path: '/import/ws'});
+		let socket = io(props.devMode || 'https://api.libretexts.org/', {path: '/import/ws'});
 		socket.emitWait = async function (eventName, args) {
 			return new Promise((resolve, reject) => {
 				this.emit(eventName, args, (data) => resolve(data));
@@ -293,6 +293,8 @@ export default function Importer(props) {
 				return 'Excel to LibreMap';
 			case "pdf":
 				return 'PDF';
+			case "cnx":
+				return 'CNX';
 			case "pretext":
 				return 'PreTeXt';
 			default:
@@ -309,6 +311,7 @@ export default function Importer(props) {
 			case 'libremap':
 				return [".xlsx"];
 			case "pretext":
+			case "cnx":
 				return [".zip"];
 			default:
 				return [];
