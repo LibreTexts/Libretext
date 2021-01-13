@@ -626,7 +626,7 @@ async function Sidebar() {
 </div>
    <p class="h_ar">Text Align:</p>
     <div class="custom_field"> 
-        <a id="toggler-text" href="#0" class="toggler">Full</a>
+        <a id="toggler-text" href="#0" class="toggler off">Left</a>
     </div>
    <p class="h_ar">Sidebar Layout:</p>
    <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
