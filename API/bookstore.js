@@ -393,13 +393,13 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
         shipping_address: {
             "city": session.shipping.address.city,
             "country_code": session.shipping.address.country,
-            "name": session.shipping.name?.slice(0, 36),
+            "name": session.shipping.name?.slice(0, 35),
             // "phone_number": "844-212-0689",
             "email": session.customer.email,
             "postcode": session.shipping.address.postal_code,
             "state_code": session.shipping.address.state,
-            "street1": session.shipping.address.line1,
-            "street2": session.shipping.address.line2,
+            "street1": session.shipping.address.line1?.slice(0, 30),
+            "street2": session.shipping.address.line2?.slice(0, 30),
         },
         shipping_level: shippingSpeed,
     }
@@ -436,7 +436,19 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
         sendLuluReceiptEmail(payload, luluResponse, beta);
     }
     else {
-        console.error(await luluResponse.text());
+        luluResponse = await luluResponse.json()
+        console.error(JSON.stringify(luluResponse));
+        if (!luluResponse.shipping_address)
+            luluResponse.shipping_address = {}
+        luluResponse.shipping_address.email = session.customer.email;
+        
+        const result = {
+            stripeID: session.id,
+            luluID: luluResponse.id,
+            beta: beta,
+            lulu: luluResponse,
+        }
+        await sendRejectedEmail(result);
     }
 }
 
@@ -541,7 +553,7 @@ ${payload.line_items.map(item => {
 
 function sendRejectedEmail(payload) {
     const to = [payload.lulu.shipping_address.email, 'bookstore@libretexts.org'];
-    const sub = 'Your order from the LibreTexts Bookstore has encountered an error.';
+    const sub = `Your order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore has encountered an error.`;
 
 // If modifying these scopes, delete token.json.
     const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
@@ -554,14 +566,14 @@ function sendRejectedEmail(payload) {
         authorize(JSON.parse(content).GMAIL, (auth) => {
             
             //creation of message from payload and line_items
-            const message = `<h1>Your order from the LibreTexts Bookstore has encountered an error.</h1>
+            const message = `<h1>Your order from the ${payload.beta ? 'BETA ' : ''} LibreTexts Bookstore has encountered an error.</h1>
 <p>This email is an automated alert that your order has encountered an error.</p>
 <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
 <thead><tr>
 <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
 </tr></thead>
 <tbody>
-${payload.lulu?.line_items.map(item => {
+${payload.lulu?.line_items?.map(item => {
                 const [lib, pageID] = item.external_id.split('-');
                 return `<tr>
 		<td>
@@ -578,11 +590,12 @@ ${payload.lulu?.line_items.map(item => {
         <p>${JSON.stringify(item.status.messages)}</p>
         </td>
 </tr>`
-            })}
+            }) || "Error, cannot list items"}
 </tbody>
 </table>
 <br/>
-<p>This email is also being sent to bookstore@libretexts.org, who will respond to this issue as soon as possible.</p>
+<p><b>This email is also being sent to bookstore@libretexts.org, who will respond to this issue as soon as possible.</b></p>
+<p>${JSON.stringify(payload)}</p>
 <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
             
             
