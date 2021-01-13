@@ -62,6 +62,7 @@ class Dashboard extends React.Component {
 				</div>
 			</div>
 			{this.getPanel()}
+			{/*<span>Version REPLACEWITHDATE</span>*/}
 		</div>
 	}
 	

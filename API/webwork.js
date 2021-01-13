@@ -107,7 +107,7 @@ template('WebWork/Activity',{'Problem':'Library/${problem.path_id}/${problem.fil
 		
 		if (type !== 'topic') {
 			if (typeof createStructure.image === 'undefined') {
-				let image = 'https://files.libretexts.org/DefaultImages/default.png';
+				let image = 'https://cdn.libretexts.net/DefaultImages/default.png';
 				image = await fetch(image);
 				image = await image.blob();
 				createStructure.image = image;

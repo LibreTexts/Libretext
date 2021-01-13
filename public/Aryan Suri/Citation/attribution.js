@@ -109,5 +109,7 @@ function attribution() {
 function hideattr() {
     if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
         $("#SB-PA-AD").remove();
+        const sidebar = document.getElementById("sidebarDiv");
+        sidebar.style.display = "block";
     }
 }

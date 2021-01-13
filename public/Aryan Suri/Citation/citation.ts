@@ -84,7 +84,7 @@ function getParam() {
     let pageParam = {
         "type": "webpage",
         "title": title,
-        "acsessed": {
+        "accessed": {
             "date-parts": [[accdate[0], accdate[1], accdate[2]]]
         },
         "URL": url,
@@ -191,7 +191,7 @@ function getCite(verbose = false) {
 
     // Generate citation in desired format. //
 
-    const Cite = require('citation-js');
+    const Cite = CitRequire('citation-js');
     Cite.plugins.config.get('csl').templates.add(mlaname, mlatemplate);
     Cite.plugins.config.get('csl').templates.add(acsname, acstemplate);
     Cite.plugins.config.get('csl').templates.add(chicagoname, chicagotemplate);
@@ -233,7 +233,7 @@ function download(data: any, filename: string, type: string) {
 function getFile(type: string) {
     let pageParam = getParam();
     type = type;
-    const CiteB = require('citation-js');
+    const CiteB = CitRequire('citation-js');
     let citeobject = new CiteB(pageParam);
     let output = citeobject.format(type);
     return output
@@ -243,6 +243,8 @@ function hidecite() {
 
     if (!$(event!.target!).closest('#asModalContent').length && !$(event!.target!).is('#asModalContent')) {
         $("#SB-PC-AD").remove();
+        const sidebar = document.getElementById("sidebarDiv")!;
+        sidebar.style.display = "block";
     }
 
 
