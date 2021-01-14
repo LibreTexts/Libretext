@@ -311,12 +311,13 @@ function BookstoreSingle(props) {
                         <h3>Select Shipping Option</h3>{renderShippingLocation()}
                     </div>
                     {shippingLocation === "US" ?
+                        <Tooltip title='If you live in Hawaii/Alaska, you must enable this surcharge to cover higher delivery costs.'>
                         <FormControlLabel
                             value="end"
                             control={<Checkbox color="secondary" checked={Boolean(shippingSurcharge)} onChange={
                                 () => setShippingSurcharge(shippingSurcharge ? false : HI_AK_surcharge)
                             }/>}
-                            label={`Hawaii/Alaska surcharge $${HI_AK_surcharge?.price}`}/> : null}
+                            label={`Hawaii/Alaska delivery surcharge $${HI_AK_surcharge?.price}`}/></Tooltip> : null}
                     {renderShipping()}
                     <p>Shipping prices are calculated for
                        within {shippingLocation === "CA" ? 'Canada' : 'the United States'}. Contact us at
@@ -352,17 +353,17 @@ function BookstoreSingle(props) {
                             <FormControlLabel
                                 control={<Checkbox checked={dialogState.one} onChange={handleDialogChange} name="one"
                                                    style={{marginBottom: 30}}/>}
-                                label="Please ensure all fields on the next page are correct before submitting your order! LibreTexts is unable to modify your order once submitted, as payment and printing are automatically handled by third-parties Stripe and Lulu respectively."
+                                label="Please ensure all fields on the next page are correct before submitting your order! Once paid, ALL ORDERS ARE FINAL, as the third-party Lulu will immediately begin to process your order."
                             />
                             <FormControlLabel
                                 control={<Checkbox checked={dialogState.two} onChange={handleDialogChange} name="two"
                                                    style={{marginBottom: 30}}/>}
-                                label='Please ensure both your shipping and billing addresses are correct! If your shipping and billing addresses are different, on the next page make sure to uncheck "Billing address is same as shipping".'
+                                label='Please double-check to ensure your email, shipping and billing addresses on the next page are correct! Otherwise, we may be unable to contact you or deliver your order. If your shipping and billing addresses are different, on the next page make sure to uncheck "Billing address is same as shipping".'
                             />
                             <FormControlLabel
                                 control={<Checkbox checked={dialogState.three} onChange={handleDialogChange}
                                                    name="three" style={{marginBottom: 30}}/>}
-                                label="If you have any questions, please contact us at bookstore@libretexts.org *before* finalizing your order. Once submitted, all orders are final!"
+                                label="If you have any questions, please contact us at bookstore@libretexts.org before finalizing your order. Again, once submitted ALL ORDERS ARE FINAL!"
                             />
                         </FormGroup>
                     </FormControl>
