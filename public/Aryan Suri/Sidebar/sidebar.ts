@@ -458,24 +458,24 @@ async function Sidebar() {
             "open": `<button id="custom_open"  >☰</button>`,
             "header": pro ? `<div id="sbHeader" class="sbHeader" style="">
         <div id="openContents"  class="top-tabs">
-			<h5  >Contents</h5>
+			<div class="top-tab"> Contents </div>
 		</div>
 		<div  id="openResources" class="top-tabs">
-            <h5 class="">Resources</h5>
+            <div class="top-tab"> Resources </div>
 		</div>
 		<div id="openControl"  class="top-tabs">
-			<h5 >Readability</h5>
+			<div class="top-tab"> Readability </div>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Tools</h5>
+            <div class="top-tab"> Tools </div>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
-            <h5  class="">LibreVerse</h5>
+            <div class="top-tab"> LibreVerse </div>
 		</div>
 
 		<div id="openDevelopers"  class="top-tabs">
-			<h5  class="">Developers</h5>
+			<div class="top-tab"> Developers </div>
 		</div>
 		
         </div>` : `<div id="sbHeader" class="sbHeader" style="">
@@ -631,7 +631,7 @@ async function Sidebar() {
 </div>
    <p class="h_ar">Text Align:</p>
     <div class="custom_field"> 
-        <a id="toggler-text" href="#0" class="toggler">Full</a>
+        <a id="toggler-text" href="#0" class="toggler off">Left</a>
     </div>
    <p class="h_ar">Sidebar Layout:</p>
    <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
