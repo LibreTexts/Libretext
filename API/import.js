@@ -1,15 +1,11 @@
 const http = require('http');
 const timestamp = require("console-timestamp");
 const EPub = require("epub");
-const filenamify = require('filenamify');
 const server = http.createServer();
 const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
-const {performance} = require('perf_hooks');
 const fetch = require("node-fetch");
-const download = require('download');
 const async = require('async');
-const md5 = require('md5');
 const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
@@ -171,10 +167,10 @@ async function listFiles(data, socket) {
     }
 }
 
-/*processPretext({
-	path: './ImportFiles/hdagnew@ucdavis.edu/pretext/aata-master.zip',
-	user: 'hdagnew@ucdavis.edu',
-	subdomain: 'chem'
+/*processCNX({
+	path: './ImportFiles/asuri@ucdavis.edu/cnx/cnx.zip',
+	user: 'asuri@ucdavis.edu',
+	subdomain: 'dev'
 }, {emit: (a, b) => console.error(b)});*/
 
 async function processCommonCartridge(data, socket) {
