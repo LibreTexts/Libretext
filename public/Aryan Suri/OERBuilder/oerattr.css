@@ -23,3 +23,7 @@
     position: absolute;
     border-radius: 10px;
 }
+
+#OERCONTENT input {
+    margin: 5px;
+}
