@@ -463,7 +463,7 @@ a.toggler.off {
   .top-tabs:first-child {
     padding-top: 0;
   }
-  .top-tabs h5 {
+  .top-tab  {
     font-size: 0.7rem !important;
     transform: none;
   }
