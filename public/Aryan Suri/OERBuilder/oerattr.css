@@ -24,6 +24,14 @@
     border-radius: 10px;
 }
 
-#OERCONTENT input {
+#OERCONTENT input, select, h3 {
     margin: 5px;
+}
+
+#OEROUTPUT {
+    margin: 10px;
+}
+
+#OEROUTPUT a {
+    font-size: 1.1rem;
 }
