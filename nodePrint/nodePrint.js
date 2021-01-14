@@ -55,12 +55,10 @@ puppeteer.launch({
         await storage.init();
         console.log("Restarted " + timestamp('MM/DD hh:mm', now1) + " Port:" + port);
         fs.ensureDir('./PDF/Letter/Margin');
-        // fs.ensureDir('./PDF/A4/Margin');
         
         // 'TOC',
         ['order', 'Cover', 'libretexts'].forEach(path => { //clean on restart
             fs.emptyDir(`./PDF/Letter/${path}`);
-            // fs.remove(`./PDF/A4/${path}`);
         });
         
         let working = {};
@@ -89,7 +87,6 @@ puppeteer.launch({
             url = url.replace("Letter/", "");
             if (url.startsWith('/A4')) {
                 url = url.split('/A4')[1];
-                // size = 'A4'
             }
             
             if (request.headers.host === 'home.miniland1333.com' && request.method === 'OPTIONS') { //options checking
@@ -554,7 +551,6 @@ puppeteer.launch({
         async function getCover(current, numPages, options = {}) {
             current = await getAPI(current);
             await fs.ensureDir(`./PDF/Letter/Cover`);
-            // await fs.ensureDir(`./PDF/A4/Cover`);
             
             if (!options.thin && (numPages < 32 && options.hasExtraPadding && !options.isHardcover) || (numPages < 24 && options.hasExtraPadding && options.isHardcover))
                 return false;
@@ -734,8 +730,6 @@ puppeteer.launch({
         async function getTOC(current, isHTML) {
             // await fs.ensureDir('./PDF/Letter/TOC');
             await fs.ensureDir('./PDF/Letter/Margin/TOC');
-            // await fs.ensureDir('./PDF/A4/TOC');
-            // await fs.ensureDir('./PDF/A4/Margin/TOC');
             console.log('Starting TOC');
             const start = performance.now();
             current = await getAPI(current, {getContents: true});
@@ -904,33 +898,6 @@ puppeteer.launch({
                 `<div><div class="date"/></div>` +
                 '</div>';
             
-            /*await page.pdf({ //Letter
-                path: `./PDF/Letter/TOC/${escapedURL}.pdf`,
-                displayHeaderFooter: true,
-                headerTemplate: css + style1,
-                footerTemplate: css + style2,
-                printBackground: true,
-                margin: {
-                    top: "90px",
-                    bottom: "60px",
-                    right: "0.75in",
-                    left: "0.75in",
-                }
-            });
-            await page.pdf({ //A4
-                path: `./PDF/A4/TOC/${escapedURL}.pdf`,
-                displayHeaderFooter: true,
-                headerTemplate: css + style1,
-                footerTemplate: css + style2,
-                printBackground: true,
-                format: 'A4',
-                margin: {
-                    top: "90px",
-                    bottom: "60px",
-                    right: "0.75in",
-                    left: "0.75in",
-                }
-            });*/
             await page.pdf({ //Lulu Letter
                 path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
                 displayHeaderFooter: true,
@@ -944,20 +911,6 @@ puppeteer.launch({
                     left: "0.75in",
                 }
             });
-            /*await page.pdf({ //Lulu A4
-                path: `./PDF/A4/Margin/TOC/${escapedURL}.pdf`,
-                displayHeaderFooter: true,
-                headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
-                printBackground: true,
-                format: 'A4',
-                margin: {
-                    top: "1in",
-                    bottom: ".75in",
-                    right: "0.75in",
-                    left: "0.75in",
-                }
-            });*/
             const end = performance.now();
             let time = end - start;
             time /= 100;
@@ -1325,34 +1278,6 @@ puppeteer.launch({
                             await page.addStyleTag({content: `.mt-content-container {font-size: 93%}`});
                         }
                         
-                        /*await page.pdf({ //Letter
-                            path: `./PDF/Letter/${PDFname}.pdf`,
-                            displayHeaderFooter: showHeaders,
-                            headerTemplate: css + style1,
-                            footerTemplate: css + style2,
-                            printBackground: true,
-                            margin: {
-                                top: "90px",
-                                bottom: "60px",
-                                right: "0.75in",
-                                left: "0.75in",
-                            }
-                        });*/
-                        // console.log(`1 ${(performance.now()-start)/1000}`);
-                        /*await page.pdf({ //A4
-                            path: `./PDF/A4/${PDFname}.pdf`,
-                            displayHeaderFooter: showHeaders,
-                            headerTemplate: css + style1,
-                            footerTemplate: css + style2,
-                            printBackground: true,
-                            format: 'A4',
-                            margin: {
-                                top: "90px",
-                                bottom: "60px",
-                                right: "0.75in",
-                                left: "0.75in",
-                            }
-                        });*/
                         // console.log(`2 ${(performance.now()-start)/1000}`);
                         await page.pdf({ //Letter Margin
                             path: `./PDF/Letter/Margin/${PDFname}.pdf`,
@@ -1373,26 +1298,6 @@ puppeteer.launch({
                             }
                         });
                         // console.log(`3 ${(performance.now()-start)/1000}`);
-                        /*if (!compile)
-                            await page.pdf({ //A4 Margin
-                                path: `./PDF/A4/Margin/${PDFname}.pdf`,
-                                displayHeaderFooter: showHeaders,
-                                headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                                footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
-                                printBackground: true,
-                                format: 'A4',
-                                margin: showHeaders ? {
-                                    top: "1in",
-                                    bottom: ".75in",
-                                    right: "0.75in",
-                                    left: "0.75in",
-                                } : {
-                                    top: "0.5in",
-                                    bottom: "0.5in",
-                                    right: "0.75in",
-                                    left: "0.75in",
-                                }
-                            });*/
                     } catch (e) {
                         // console.error(e);
                     }
@@ -1512,7 +1417,7 @@ puppeteer.launch({
             let privatePages = [];
             
             //Try to get special files
-            let totalIndex = 1;
+            let totalIndex = 0;
             let uploadedTOC = false;
             let frontArray = await getMatter('Front');
             let TOCIndex = ++totalIndex;
@@ -1676,11 +1581,6 @@ puppeteer.launch({
                 await fs.ensureDir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
             await fs.emptyDir(`./PDF/Letter/order/${thinName}/`);
             
-            // await fs.emptyDir(`./PDF/A4/libretexts/${zipFilename}`);
-            // await fs.emptyDir(`./PDF/A4/Finished/${zipFilename}`);
-            // await fs.ensureDir(`./PDF/A4/Finished/${zipFilename}/Publication`);
-            // await fs.emptyDir(`./PDF/A4/order/${thinName}/`);
-            
             let urlArray = [current];
             urlArray = urlArray.concat(addLinks(current.subpages));
             urlArray = urlArray.map((item, index) => {
@@ -1772,8 +1672,6 @@ puppeteer.launch({
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/libretexts/${zipFilename}/${title}.pdf`);
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
                         
-                        // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/libretexts/${zipFilename}/${title}.pdf`);
-                        // await fs.copy(`./PDF/A4/Margin/${filename}`, `./PDF/A4/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
                     }
                     else
                         privatePages.push(page.url);
@@ -1796,16 +1694,11 @@ puppeteer.launch({
                 await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/libretexts/${zipFilename}/${filenamify('00000:A Cover.pdf')}`);
                 await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
                 
-                // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/libretexts/${zipFilename}/${filenamify('00000:A Cover.pdf')}`);
-                // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/order/${thinName}/${`0`.padStart(3, '0')}.pdf`);
                 
                 if (hasCoverpage) {
-                    let dest = await getThinCC(current, `./PDF/Letter/Finished/${zipFilename}/LibreText.imscc`);
-                    // if (dest)
-                    // await fs.copy(`./PDF/Letter/Finished/${zipFilename}/LibreText.imscc`, `./PDF/A4/Finished/${zipFilename}/LibreText.imscc`);
+                    await getThinCC(current, `./PDF/Letter/Finished/${zipFilename}/LibreText.imscc`);
                 }
                 let files = (await fs.readdir(`./PDF/Letter/order/${thinName}`)).map((file) => `./PDF/Letter/order/${thinName}/${file}`);
-                // let filesA4 = (await fs.readdir(`./PDF/A4/order/${thinName}`)).map((file) => `./PDF/A4/order/${thinName}/${file}`);
                 console.log(`Merging${options.index ? ` [${options.index}]` : ''}`);
                 if (response && !response.finished) {
                     let count = 0;
@@ -1821,21 +1714,16 @@ puppeteer.launch({
                 try {
                     if (files && files.length > 2) {
                         await merge(files, `./PDF/Letter/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
-                        // await merge(filesA4, `./PDF/A4/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
                         if (hasCoverpage) {
                             await merge(files.slice(0, 10), `./PDF/Letter/Finished/${zipFilename}/Preview.pdf`, {maxBuffer: 1024 * 10000000});
                             files.shift();
-                            // filesA4.shift();
                             await merge(files, `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
-                            // await merge(filesA4, `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
                         }
                     }
                     else {
                         await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
                         if (hasCoverpage) {
                             await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
-                            // await fs.copy(filesA4[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
-                            // await fs.copy(filesA4[0], `./PDF/A4/Finished/${zipFilename}/Publication/Content.pdf`);
                         }
                     }
                     console.log(`Done Merging${options.index ? ` [${options.index}]` : ''}`);
@@ -1853,16 +1741,13 @@ puppeteer.launch({
                     console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
                     filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
                     await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
-                    // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
                     if (lulu.numpages >= 32) {
                         filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
                         await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
-                        // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
                     }
                     else {
                         let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
                         await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
-                        // await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
                     }
                     if (lulu.numpages >= 24) {
                         filename = `Cover/${await getCover(current, lulu.numpages, {
@@ -1870,52 +1755,40 @@ puppeteer.launch({
                             isHardcover: true
                         })}.pdf`;
                         await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
-                        // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
                     }
                     else {
                         let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
                         await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
-                        // await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
                     }
                     filename = `Cover/${await getCover(current, lulu.numpages, {
                         hasExtraPadding: true,
                         thin: true
                     })}.pdf`;
                     await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
-                    // await fs.copy(`./PDF/A4/${filename}`, `./PDF/A4/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
                 }
                 //save log of private pages
                 if (hasCoverpage && privatePages.length) {
                     await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
-                    // await fs.writeFile(`./PDF/A4/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages);
                 }
                 
                 //creating zip files
                 if (hasCoverpage) {
                     console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
                     let individualZIP = new JSZip();
-                    // let individualZIPA4 = new JSZip();
                     let PublicationZIP = new JSZip();
-                    // let PublicationZIPA4 = new JSZip();
                     files = await fs.readdir('./PDF/Letter/libretexts/' + zipFilename);
-                    // filesA4 = await fs.readdir('./PDF/A4/libretexts/' + zipFilename);
                     for (let i = 0; i < files.length; i++) {
                         individualZIP.file(files[i], await fs.readFile(`./PDF/Letter/libretexts/${zipFilename}/${files[i]}`));
-                        // individualZIPA4.file(filesA4[i], await fs.readFile(`./PDF/A4/libretexts/${zipFilename}/${filesA4[i]}`));
                     }
                     files = await fs.readdir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
-                    // filesA4 = await fs.readdir(`./PDF/A4/Finished/${zipFilename}/Publication`);
                     for (let i = 0; i < files.length; i++) {
                         PublicationZIP.file(files[i], await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/${files[i]}`));
-                        // PublicationZIPA4.file(filesA4[i], await fs.readFile(`./PDF/A4/Finished/${zipFilename}/Publication/${filesA4[i]}`));
                     }
                     
                     
                     await saveAs(individualZIP, `./PDF/Letter/Finished/${zipFilename}/Individual.zip`);
-                    // await saveAs(individualZIPA4, `./PDF/A4/Finished/${zipFilename}/Individual.zip`);
                     await saveAs(PublicationZIP, `./PDF/Letter/Finished/${zipFilename}/Publication.zip`);
                     
-                    // await saveAs(PublicationZIPA4, `./PDF/A4/Finished/${zipFilename}/Publication.zip`);
                     
                     async function saveAs(zip, destination) {
                         let result = await zip.generateAsync({type: "nodebuffer"});
@@ -1927,8 +1800,6 @@ puppeteer.launch({
                         await async.mapLimit(originalFiles, 10, async (filename) => {
                             await fs.remove(`./PDF/Letter/${filename}`);
                             await fs.remove(`./PDF/Letter/Margin/${filename}`);
-                            // await fs.remove(`./PDF/A4/${filename}`);
-                            // await fs.remove(`./PDF/A4/Margin/${filename}`);
                         });
                         console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
                     }
@@ -1949,10 +1820,8 @@ puppeteer.launch({
                     timeTaken: time
                 }));
             // cleanup
-            await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
-            // await fs.emptyDir(`./PDF/A4/libretexts/${zipFilename}`);
-            await fs.remove(`./PDF/Letter/order/${thinName}`);
-            // await fs.remove(`./PDF/A4/order/${thinName}`);
+            // await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
+            // await fs.remove(`./PDF/Letter/order/${thinName}`);
             
             return {
                 zipFilename: zipFilename,
