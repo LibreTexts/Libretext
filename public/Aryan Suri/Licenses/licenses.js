@@ -106,6 +106,7 @@ function getCC() {
 	function ccDetect() {
 		const cc = getCC();
 		ccCompare();
+		console.log(cc.label);
 		if (cc) {
 			switch (cc.label) {
 				case "cc-BY":
@@ -150,13 +151,14 @@ function getCC() {
 					modalC.innerHTML = `<span> The license of the content on this page All Rights Reserved and the content is allowed to be used on the LibreTexts platform thanks to the author. Usage off the platform requires explicit permission from the content authors.</span>`;
 
 					break;
+				case "notset":
+					modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`;
+
+					break;
 				case "cc-publicdomain":
 					return null;
 					break;
 			}
-
-		} else {
-			modalC.innerHTML = `<span> The license of the content on this page is unselected. Please review the Contributors and Attributions section or the content author(s) for clarification of the applicable license(s). </span>`
 
 		}
 		document.addEventListener('copy', () => {
