@@ -475,20 +475,20 @@ async function Sidebar() {
 		
         </div>` : `<div id="sbHeader" class="sbHeader" style="">
         <div id="openContents"  class="top-tabs">
-			<h5  >Contents</h5>
+			<div class="top-tab">Contents</div>
 		</div>
 		<div  id="openResources" class="top-tabs">
-            <h5 class="">Resources</h5>
+            <div class="top-tab">Resources</div>
 		</div>
 		<div id="openControl"  class="top-tabs">
-			<h5 >Readability</h5>
+			<div class="top-tab">Readability</div>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Tools</h5>
+            <div class="top-tab">Tools</div>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
-            <h5  class="">LibreVerse</h5>
+            <div class="top-tab">LibreVerse</div>
 		</div>
         </div>`,
             "home": `<div id="sb1" class="custom_sidebar">
