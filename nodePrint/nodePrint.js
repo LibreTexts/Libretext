@@ -1424,7 +1424,7 @@ puppeteer.launch({
             
             async function getMatter(text) {
                 if (!hasCoverpage) {
-                    console.log(`Skipping ${text} matter`);
+                    console.log(`Skipping ${text} matter. No coverpage`);
                     return [];
                 }
                 let path = current.url.split('/').splice(3).join('/');
