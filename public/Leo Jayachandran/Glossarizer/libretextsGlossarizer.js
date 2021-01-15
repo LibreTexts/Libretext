@@ -39,21 +39,21 @@ class LibreTextsGlossarizer {
     getTermCols(rowText) { // tableRows[r]
         let cols = {};
         let colStart = [
-            [/(?<=\<td data-th="Word\(s\)"\>)(.|\s)*?(?=\<\/td>)/, "word"],
-            [/(?<=\<td data-th="Definition"\>)(.|\s)*?(?=\<\/td>)/, "definition"],
-            [/(?<=\<td data-th="Image"\>)(.|\s)*?(?=\<\/td>)/, "image"],
-            [/(?<=\<td data-th="Caption"\>)(.|\s)*?(?=\<\/td>)/, "caption"],
-            [/(?<=\<td data-th="Link"\>)(.|\s)*?(?=\<\/td>)/, "link"],
-            [/(?<=\<td data-th="Source"\>)(.|\s)*?(?=\<\/td>)/, "source"],
-            [/(?<=\<td data-th="Source License"\>)(.|\s)*?(?=\<\/td>)/, "license"],
-            [/(?<=\<td data-th="Author URL"\>)(.|\s)*?(?=\<\/td>)/, "sourceURL"],
+            [/(\<td data-th="Word\(s\)"\>)((.|\s)*?)(?=\<\/td>)/, "word"],
+            [/(\<td data-th="Definition"\>)((.|\s)*?)(?=\<\/td>)/, "definition"],
+            [/(\<td data-th="Image"\>)((.|\s)*?)(?=\<\/td>)/, "image"],
+            [/(\<td data-th="Caption"\>)((.|\s)*?)(?=\<\/td>)/, "caption"],
+            [/(\<td data-th="Link"\>)((.|\s)*?)(?=\<\/td>)/, "link"],
+            [/(\<td data-th="Source"\>)((.|\s)*?)(?=\<\/td>)/, "source"],
+            [/(\<td data-th="Source License"\>)((.|\s)*?)(?=\<\/td>)/, "license"],
+            [/(\<td data-th="Author URL"\>)((.|\s)*?)(?=\<\/td>)/, "sourceURL"],
         ];
         for (let t = 0; t < colStart.length; t++) {
             let tag = colStart[t][0];
             //Test if tag exists
             if (tag.test(rowText)) {
                 //Add contents if applicable
-                cols[colStart[t][1]] = tag.exec(rowText)[0].trim();
+                cols[colStart[t][1]] = tag.exec(rowText)[2].trim();
             }
         }
         return cols;
