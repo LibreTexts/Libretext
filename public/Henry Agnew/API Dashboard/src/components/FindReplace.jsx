@@ -1,6 +1,6 @@
 import React from 'react';
 import Toggle from 'react-toggle';
-import {FixedSizeList as List} from "react-window";
+import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
 
@@ -258,11 +258,11 @@ export default class FindReplace extends React.Component {
                     <div id="results">
                         <AutoSizer disableHeight={true}>
                             {({height, width}) => (
-                                <List
+                                <FixedSizeList
                                     className="List"
-                                    height={Math.min(this.state.results.length * 40, 400)}
+                                    height={380}
                                     itemCount={this.state.results.length}
-                                    itemSize={15}
+                                    itemSize={20}
                                     width={width}
                                 >
                                     {({index, style}) => {
@@ -271,7 +271,7 @@ export default class FindReplace extends React.Component {
                                                     key={this.state.results.length - index}>{this.state.results.length - index} {this.state.findOnly ? 'Found ' : 'Modified '}
                                             <a target='_blank' href={page.url}>{page.path}</a></div>
                                     }}
-                                </List>
+                                </FixedSizeList>
                             )}
                         </AutoSizer>
                     </div>
