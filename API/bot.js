@@ -89,7 +89,7 @@ async function jobHandler(jobType, input, socket) {
     function getParameters() {
         switch (jobType) {
             case 'findReplace':
-                return {root: input.root, user: input.user, find: input.find};
+                return {root: input.root, user: input.user, find: input.find, replace: input.replace};
             case 'deadLinks':
             case 'headerFix':
             case 'foreignImage':

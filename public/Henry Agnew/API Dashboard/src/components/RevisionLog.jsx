@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import TablePagination from '@material-ui/core/TablePagination';
-import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
+import {Accordion, AccordionDetails, AccordionSummary, Divider, TextField} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Skeleton from "@material-ui/lab/Skeleton";
 import {FixedSizeList} from "react-window";
@@ -9,17 +9,22 @@ import Button from "@material-ui/core/Button";
 
 export default function RevisionLog() {
     // const user = document.getElementById('usernameHolder').textContent;
-    const user = 'admin';
+    const [user, setUser] = React.useState('admin');
     const [fetchResult, setFetchResult] = React.useState([]);
+    const [searchId, setSearchId] = React.useState('');
     
     useEffect(() => {
         (async function () {
             let response = await fetch(`https://api.libretexts.org/bot/Logs/Users/${user}.csv`);
+            if (!response.ok) {
+                setFetchResult([]);
+                return false;
+            }
             response = await response.text()
             response = response.split(',')
             setFetchResult(response);
         })();
-    }, [])
+    }, [user])
     
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -44,7 +49,11 @@ export default function RevisionLog() {
     return <div id="RevisionLog">
         <div className="topPanel">
             <div className="Center">
-                <div>SEARCH</div>
+                <div style={{display: 'flex'}}>
+                    <TextField label="Username" variant="filled" error={!totalCount} value={user}/>
+                    <TextField label="BOT ID (optional)" variant="filled" error={!totalCount}/>
+                    <Button color="primary" variant="contained">SEARCH</Button>
+                </div>
                 <TablePagination
                     component="div"
                     count={totalCount}
@@ -71,21 +80,7 @@ function RevisionEntry(props) {
     const [expanded, setExpanded] = React.useState(false);
     const [fetchResult, setFetchResult] = React.useState(false);
     useEffect(() => {
-        (async function () {
-            let response = await fetch(`https://api.libretexts.org/bot/Logs/Completed/${props.user}/${props.item}.json`);
-            if(response.ok) {
-                response = await response.json()
-    
-                //data processing zone
-                if (response?.params?.multi?.body)
-                    delete response.params.multi.body
-                if (!response?.pages?.length)
-                    response.pages = []
-                // response.pages = response.pages.map(item => item.url);
-    
-                setFetchResult(response);
-            }
-        })()
+        fetchJob();
     }, [props, expanded])
     
     function getColor(status) {
@@ -99,8 +94,29 @@ function RevisionEntry(props) {
         }
     }
     
+    async function fetchJob() {
+        let response = await fetch(`https://api.libretexts.org/bot/Logs/Completed/${props.user}/${props.item}.json`);
+        if (response.ok) {
+            response = await response.json()
+            
+            //data processing zone
+            if (response?.params?.multi?.body)
+                delete response.params.multi.body
+            if (!response?.pages?.length)
+                response.pages = []
+            // response.pages = response.pages.map(item => item.url);
+            
+            setFetchResult(response);
+        }
+    }
+    
     let skele = <Skeleton variant="text" animation="wave" width={100}
-                          style={{display: 'inline-block'}}/>;
+                          style={{display: 'inline-block'}}/>; //placeholder while loading
+    function revertHandler() {
+        
+        fetchJob();
+    }
+    
     return <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
         <AccordionSummary
             expandIcon={<ExpandMoreIcon/>}
@@ -116,7 +132,7 @@ function RevisionEntry(props) {
                     <td>{fetchResult?.status || skele}</td>
                 </tr>
                 <tr>
-                    <td>{fetchResult?.timestamp || skele}</td>
+                    <td>{fetchResult?.timestamp ? new Date(fetchResult?.timestamp).toLocaleString() : skele}</td>
                     <td>Library: {fetchResult?.subdomain || skele} <img
                         src={`https://libretexts.org/img/LibreTexts/glyphs/${fetchResult?.subdomain}.png`}
                         style={{verticalAlign: 'middle'}}/></td>
@@ -125,11 +141,21 @@ function RevisionEntry(props) {
                 </tbody>
             </table>
         </AccordionSummary>
-        {fetchResult && <AccordionDetails style={{whiteSpace: 'pre-wrap', display: 'block'}}>
-            {/*<div>
-                {fetchResult && JSON.stringify(fetchResult, null, 2)}
-                <Button>Revert</Button>
-            </div>*/}
+        {fetchResult && <AccordionDetails style={{whiteSpace: 'pre-wrap', flexDirection: 'column'}}>
+            <Divider/>
+            <div>
+                <h3>Job Parameters</h3>
+                {/*{fetchResult && JSON.stringify(fetchResult, null, 2)}*/}
+                <div>Last
+                     Action: {fetchResult?.lastAction ? new Date(fetchResult?.lastAction).toLocaleString() : 'None'}
+                    <Button color="primary" variant="contained"
+                            onClick={revertHandler}>{fetchResult?.status === 'reverted' ? 'Restore' : 'Revert'}</Button>
+                </div>
+                
+                <div>{JSON.stringify(fetchResult?.params, null, 2) || skele}</div>
+            </div>
+            <Divider/>
+            <h3>Affected pages ({fetchResult?.pages?.length})</h3>
             <AutoSizer disableHeight={true}>
                 {({height, width}) => (
                     <FixedSizeList
@@ -141,7 +167,8 @@ function RevisionEntry(props) {
                     >
                         {({index, style}) => {
                             let page = fetchResult.pages[index];
-                            return <div style={{...style, width:'unset'}} key={index}><a target='_blank' href={page.url}>{page.path}</a>
+                            return <div style={{...style, width: 'unset'}} key={index}><a target='_blank'
+                                                                                          href={page.url}>{page.path}</a>
                             </div>
                         }}
                     </FixedSizeList>
