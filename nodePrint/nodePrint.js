@@ -356,16 +356,22 @@ puppeteer.launch({
                             console.log(`Starting Refresh ${subdomain} ${path} ${ip}`);
                             let all = await getSubpagesFull(`https://${subdomain}.libretexts.org/${path}`);
                             let texts = [];
-                            let standalone = [];
                             let finished = [];
                             console.log(`Sorting ${subdomain} ${path} ${ip}`);
+                            let sortCounter = 0;
                             await sort(all);
                             
                             async function sort(current) {
                                 current = await getAPI(current);
+                                if (++sortCounter % 100 === 0)
+                                    console.log(sortCounter, current.url)
                                 for (let i = 0; i < current.subpages.length; i++) {
                                     let page = current.subpages[i];
                                     page = await getAPI(page);
+                                    await sleep(100);
+                                    if (++sortCounter % 100 === 0)
+                                        console.log(sortCounter, page.url)
+                                    
                                     if (page.modified === 'restricted')
                                         continue;
                                     if (page.title === 'Remixer University')
@@ -374,10 +380,12 @@ puppeteer.launch({
                                     if (page.tags.includes('coverpage:yes')) {
                                         texts.push(page);
                                     }
+                                    else if (page.tags.includes('coverpage:toc')) {
+                                        //do nothing
+                                    }
                                     else {
-                                        standalone.push(page.url);
                                         if (page.tags.includes('article:topic-category') && page.subpages)
-                                            await sort(page);
+                                            await sort(page); //recurse down
                                     }
                                 }
                             }
