@@ -541,6 +541,7 @@ ${payload.line_items.map(item => {
 <br/>
 <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
 <p>Please remember to include your order identifier [${payload.external_id}].</p>
+<p>Do note that orders are printed on-demand, and as such you order has already been finalized.</p>
 <h3>Enjoy your purchase!</h3>
 <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
             
