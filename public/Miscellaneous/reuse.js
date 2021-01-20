@@ -515,7 +515,7 @@ function LibreTextsReuse() {
                     target.addClass("toc-hierarchy");
                     // target.removeClass("elm-hierarchy mt-hierarchy");
                     target.innerHTML = "";
-                    target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
+                    target.prepend(`<a href="${url}"><b>${coverTitle}</b></a>`);
                     target.fancytree({
                         source: content,
                         lazyLoad: function (event, data) {
