@@ -1,10 +1,10 @@
+const express = require('express');
+const app = express();
 const http = require('http');
 const timestamp = require('console-timestamp');
-const server = http.createServer(handler);
+const server = http.Server(app);
 const io = require('socket.io')(server, {path: '/bot/ws'});
 const cheerio = require('cheerio');
-const nodeStatic = require('serve-static');
-const finalhandler = require('finalhandler');
 const fs = require('fs-extra');
 const fetch = require('node-fetch');
 const jsdiff = require('diff');
@@ -12,48 +12,51 @@ require('colors');
 const async = require('async');
 const LibreTexts = require('./reuse.js');
 const tidy = require("tidy-html5").tidy_html5;
+const basePath = '/bot';
 let port = 3006;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
     port = parseInt(process.argv[2]);
 }
-server.listen(port);
 const now1 = new Date();
 fs.emptyDir('BotLogs/Working');
 fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
-console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
+server.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} on port ${port}`));
 
-async function handler(request, response) {
-    const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
-    let url = request.url;
-    url = url.replace('bot/', '');
-    url = LibreTexts.clarifySubdomain(url);
-    
-    if (url.startsWith('/websocketclient')) {
-        //Serve client socket.io Javascript file
-        const staticFileServer = nodeStatic('node_modules/socket.io-client/dist', {fallthrough: false});
-        request.url = 'socket.io.js';
-        staticFileServer(request, response, finalhandler(request, response));
+app.use((req, res, next) => {
+    if (!req.get('Referer')?.endsWith('libretexts.org/')) {
+        res.status(401);
+        next(`Unauthorized ${req.get('x-forwarded-for')}`)
     }
-    else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
-        responseError('Unauthorized', 401);
+    next()
+})
+
+app.use(express.json());
+
+app.get(basePath + '/websocketclient', (req, res) => {
+    res.sendFile('node_modules/socket.io-client/dist/socket.io.js', {root: '.'})
+})
+
+app.use(basePath + '/Logs/', express.static('BotLogs'))
+
+app.post(basePath + '/revert', (req, res) => {
+    console.log(req.body);
+    // res.write(JSON.stringify(req.body));
+    // res.end();
+    const responseSocket = {
+        emit: (type = "", message = "") => {
+            let result = {type: type}
+            if (typeof message === 'object')
+                result = {...result, ...message}
+            else
+                result.message = message
+            res.write(JSON.stringify(result))
+        }
     }
-    else if (url.startsWith('/Logs/')) {
-        const staticFileServer = nodeStatic('BotLogs', {fallthrough: false});
-        request.url = request.url.replace('bot/Logs/', '');
-        staticFileServer(request, response, finalhandler(request, response));
-    }
-    else {
-        responseError('Action not found', 400);
-    }
-    
-    function responseError(message, status) {
-        //else fall through to error
-        response.writeHead(status ? status : 400, {'Content-Type': 'text/html'});
-        response.write(('Bad Request\n' + (message ? message : url)));
-        response.end();
-    }
-}
+    revert(req.body, responseSocket).then(() => {
+        res.end()
+    })
+})
 
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
@@ -309,8 +312,10 @@ async function jobHandler(jobType, input, socket) {
 }
 
 async function revert(input, socket) {
-    if (!input.ID || !input.user)
+    if (!input.ID || !input.user) {
         socket.emit('Body missing parameters');
+        return false;
+    }
     
     if (!await fs.exists(`BotLogs/Completed/${input.user}/${input.ID}.json`)) {
         socket.emit('errorMessage', `JobID ${input.ID} is not valid for user ${input.user}.`);

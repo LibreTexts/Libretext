@@ -138,9 +138,7 @@ export default class FindReplace extends React.Component {
     revert() {
         let id = this.state.ID;
         if (!id) {
-            id = prompt('Please enter in the id of the revision you would like to revert');
-            if (!id)
-                return false;
+            id = alert('No id. Use the Revision Log mode instead.');
         }
         let request = {
             user: this.state.user,
@@ -200,7 +198,7 @@ export default class FindReplace extends React.Component {
                                }}/>
                         <div>
                             <button onClick={() => this.verifyRequest()}>Verify Request</button>
-                            <button onClick={() => this.revert()}>Revert/Restore Request {this.state.ID}</button>
+                            <button onClick={() => this.revert()} disabled={!this.state.ID}>Revert/Restore Request {this.state.ID}</button>
                         </div>
                     </div>
                     <div>

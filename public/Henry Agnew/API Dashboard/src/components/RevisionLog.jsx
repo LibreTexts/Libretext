@@ -8,8 +8,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import Button from "@material-ui/core/Button";
 
 export default function RevisionLog() {
-    // const user = document.getElementById('usernameHolder').textContent;
-    const [user, setUser] = React.useState('admin');
+    const [user, setUser] = React.useState(document.getElementById('usernameHolder').textContent);
     const [fetchResult, setFetchResult] = React.useState([]);
     const [searchId, setSearchId] = React.useState('');
     
@@ -17,17 +16,24 @@ export default function RevisionLog() {
         (async function () {
             let response = await fetch(`https://api.libretexts.org/bot/Logs/Users/${user}.csv`);
             if (!response.ok) {
+                alert(`User ${user} not found`);
                 setFetchResult([]);
                 return false;
             }
             response = await response.text()
             response = response.split(',')
             setFetchResult(response);
-        })();
+        })()
     }, [user])
     
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    
+    
+    function search() {
+        setSearchId(document.getElementById('revisionID').value);
+        setUser(document.getElementById('revisionUsername').value);
+    }
     
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -37,10 +43,14 @@ export default function RevisionLog() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+    
+    
     let result = [...fetchResult].reverse();
+    if (searchId)
+        result = result.filter(item => item === searchId)
     const firstIndex = rowsPerPage * page;
     const lastIndex = firstIndex + rowsPerPage;
-    const totalCount = fetchResult.length;
+    const totalCount = result.length;
     result = result.slice(firstIndex, lastIndex);
     result = result.filter((item) => item);
     
@@ -50,9 +60,10 @@ export default function RevisionLog() {
         <div className="topPanel">
             <div className="Center">
                 <div style={{display: 'flex'}}>
-                    <TextField label="Username" variant="filled" error={!totalCount} value={user}/>
-                    <TextField label="BOT ID (optional)" variant="filled" error={!totalCount}/>
-                    <Button color="primary" variant="contained">SEARCH</Button>
+                    <TextField id='revisionUsername' label="Username" variant="filled" error={!totalCount}
+                               defaultValue={user}/>
+                    <TextField id='revisionID' label="BOT ID (optional)" variant="filled" error={!totalCount}/>
+                    <Button color="primary" variant="contained" onClick={search}>SEARCH</Button>
                 </div>
                 <TablePagination
                     component="div"
@@ -79,9 +90,26 @@ export default function RevisionLog() {
 function RevisionEntry(props) {
     const [expanded, setExpanded] = React.useState(false);
     const [fetchResult, setFetchResult] = React.useState(false);
+    
     useEffect(() => {
         fetchJob();
     }, [props, expanded])
+    
+    /*    useEffect(() =>{
+            const socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
+    
+            socket.on('revertDone', (data) => {
+                alert(`${data.status} ${data.count} pages of [JOB ${data.ID}]`);
+                fetchJob();
+            });
+            socket.on('confirmRestore', (data) => {
+                const response = confirm(`This request has been previously reverted. Would you like to restore this request?\nIf you make a mistake, you can always re-revert.`);
+                if (response) {
+                    socket.emit('revert', {...data, restore: true});
+                }
+            });
+            setSocket(socket);
+        },[])*/
     
     function getColor(status) {
         switch (status) {
@@ -112,10 +140,6 @@ function RevisionEntry(props) {
     
     let skele = <Skeleton variant="text" animation="wave" width={100}
                           style={{display: 'inline-block'}}/>; //placeholder while loading
-    function revertHandler() {
-        
-        fetchJob();
-    }
     
     return <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
         <AccordionSummary
@@ -148,8 +172,8 @@ function RevisionEntry(props) {
                 {/*{fetchResult && JSON.stringify(fetchResult, null, 2)}*/}
                 <div>Last
                      Action: {fetchResult?.lastAction ? new Date(fetchResult?.lastAction).toLocaleString() : 'None'}
-                    <Button color="primary" variant="contained"
-                            onClick={revertHandler}>{fetchResult?.status === 'reverted' ? 'Restore' : 'Revert'}</Button>
+                    <RevertButton id={props.item} user={props.user} currentStatus={fetchResult?.status}
+                                  callback={fetchJob}/>
                 </div>
                 
                 <div>{JSON.stringify(fetchResult?.params, null, 2) || skele}</div>
@@ -176,4 +200,31 @@ function RevisionEntry(props) {
             </AutoSizer>
         </AccordionDetails>}
     </Accordion>
+}
+
+export function RevertButton(props) {
+    async function revertHandler() {
+        let doRestore = false;
+        if (props.currentStatus === 'reverted') {
+            doRestore = confirm(`This request has been previously reverted. Would you like to restore this request?\nIf you make a mistake, you can always re-revert.`);
+            if (!doRestore)
+                return false;
+        }
+        let request = {
+            user: props.user,
+            ID: props.id,
+            restore: doRestore
+        };
+        let response = await fetch(`https://api.libretexts.org/bot/revert`, {
+            method: 'POST',
+            headers: {"content-type": 'application/json'},
+            body: JSON.stringify(request)
+        });
+        alert(await response.text())
+        if (props.callback)
+            props.callback();
+    }
+    
+    return <Button color="primary" variant="contained" disabled={!props?.id}
+                   onClick={revertHandler}>{props?.currentStatus === 'reverted' ? 'Restore' : 'Revert'}</Button>
 }
