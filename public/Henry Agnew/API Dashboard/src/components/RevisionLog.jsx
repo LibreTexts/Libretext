@@ -157,9 +157,10 @@ function RevisionEntry(props) {
                 </tr>
                 <tr>
                     <td>{fetchResult?.timestamp ? new Date(fetchResult?.timestamp).toLocaleString() : skele}</td>
-                    <td>Library: {fetchResult?.subdomain || skele} <img
+                    <td>Library: {fetchResult?.subdomain ?
+                        <>{fetchResult?.subdomain}<img
                         src={`https://libretexts.org/img/LibreTexts/glyphs/${fetchResult?.subdomain}.png`}
-                        style={{verticalAlign: 'middle'}}/></td>
+                        style={{verticalAlign: 'middle'}}/></> : skele} </td>
                     <td>Pages: {fetchResult?.pages?.length ?? skele}</td>
                 </tr>
                 </tbody>
@@ -203,15 +204,22 @@ function RevisionEntry(props) {
 }
 
 export function RevertButton(props) {
+    const [currentStatus, setCurrentStatus] = React.useState(props.currentStatus)
+    
+    useEffect(() => {
+        setCurrentStatus(props.currentStatus)
+    }, [props.currentStatus])
+    
     async function revertHandler() {
         let doRestore = false;
-        if (props.currentStatus === 'reverted') {
+        
+        if (currentStatus === 'reverted') {
             doRestore = confirm(`This request has been previously reverted. Would you like to restore this request?\nIf you make a mistake, you can always re-revert.`);
             if (!doRestore)
                 return false;
         }
         let request = {
-            user: props.user,
+            user: props.user || document.getElementById('usernameHolder').textContent,
             ID: props.id,
             restore: doRestore
         };
@@ -220,11 +228,18 @@ export function RevertButton(props) {
             headers: {"content-type": 'application/json'},
             body: JSON.stringify(request)
         });
-        alert(await response.text())
-        if (props.callback)
-            props.callback();
+        response = await response.json()
+        alert(JSON.stringify(response, null, 2))
+        if (!props?.currentStatus) { //extract state from response
+            if (response.type === 'revertDone') {
+                setCurrentStatus(response.status)
+            }
+            
+            if (props.callback)
+                props.callback();
+        }
     }
     
-    return <Button color="primary" variant="contained" disabled={!props?.id}
-                   onClick={revertHandler}>{props?.currentStatus === 'reverted' ? 'Restore' : 'Revert'}</Button>
+    return <Button color="secondary" variant="contained" disabled={!props?.id}
+                   onClick={revertHandler}>{currentStatus === 'reverted' ? 'Restore' : 'Revert'}</Button>
 }

@@ -41,6 +41,7 @@
 
 #RevisionLog .MuiAccordionSummary-content {
     justify-content: space-between;
+    user-select: text;
 }
 
 .topPanel {

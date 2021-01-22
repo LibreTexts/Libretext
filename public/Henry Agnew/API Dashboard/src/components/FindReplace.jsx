@@ -2,6 +2,7 @@ import React from 'react';
 import Toggle from 'react-toggle';
 import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import {RevertButton} from "./RevisionLog.jsx";
 
 
 export default class FindReplace extends React.Component {
@@ -52,16 +53,6 @@ export default class FindReplace extends React.Component {
                 case 'done':
                     this.setState({status: 'done', ID: data.ID, time: -1, results: data.log});
                     break;
-            }
-        });
-        this.socket.on('revertDone', (data) => {
-            alert(`${data.status} ${data.count} pages of [JOB ${data.ID}]`);
-            this.setState({status: data.status});
-        });
-        this.socket.on('confirmRestore', (data) => {
-            const response = confirm(`This request has been previously reverted. Would you like to restore this request?\nIf you make a mistake, you can always re-revert.`);
-            if (response) {
-                this.socket.emit('revert', {...data, restore: true});
             }
         });
         this.socket.on('Body missing parameters', (data) => {
@@ -135,19 +126,6 @@ export default class FindReplace extends React.Component {
         this.socket.emit('findReplace', request);
     }
     
-    revert() {
-        let id = this.state.ID;
-        if (!id) {
-            id = alert('No id. Use the Revision Log mode instead.');
-        }
-        let request = {
-            user: this.state.user,
-            ID: id,
-        };
-        this.socket.emit('revert', request);
-        this.setState({ID: id});
-    }
-    
     getStatus() {
         switch (this.state.status) {
             case 'getSubpages':
@@ -169,10 +147,6 @@ export default class FindReplace extends React.Component {
                 </div>;
             case 'done':
                 return <p className="status" style={{backgroundColor: 'green'}}>Complete!</p>;
-            case 'reverted':
-                return <p className="status" style={{backgroundColor: 'grey'}}>Reverted {this.state.ID}</p>;
-            case 'restored':
-                return <p className="status" style={{backgroundColor: 'pink'}}>Restored {this.state.ID}</p>;
             default:
                 return null;
         }
@@ -198,7 +172,7 @@ export default class FindReplace extends React.Component {
                                }}/>
                         <div>
                             <button onClick={() => this.verifyRequest()}>Verify Request</button>
-                            <button onClick={() => this.revert()} disabled={!this.state.ID}>Revert/Restore Request {this.state.ID}</button>
+                            <RevertButton id={this.state.ID}/>
                         </div>
                     </div>
                     <div>
