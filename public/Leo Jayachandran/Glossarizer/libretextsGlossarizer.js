@@ -174,23 +174,23 @@ class LibreTextsGlossarizer {
                 newTerm["term"] = cols["word"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
 
                 //Make Description
-                if (cols["link"].length) {
+                if (cols["link"]?.length) {
                     let aTagStart = 'href="';
                     let aTagEnd = '">';
                     let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
                     cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
                 }
-                if (cols["image"].length) {
+                if (cols["image"]?.length) {
                     cols["definition"] += `<div class='imageContainer'>${cols["image"]}</div>`;
                 }
-                if (cols["caption"].length) {
+                if (cols["caption"]?.length) {
                     cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
                 }
                 let termSource = "";
-                if (cols["license"].length) {
+                if (cols["license"]?.length) {
                     termSource += cols["license"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
                 }
-                if (cols["source"].length) {
+                if (cols["source"]?.length) {
                     termSource += (termSource.length ? "; " : "") + cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
                 }
                 /*if (cols["sourceURL"].length) { //Need to make source URL work (Check for whether a tag is present, or else use text as url)
