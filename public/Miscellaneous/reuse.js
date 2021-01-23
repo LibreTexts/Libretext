@@ -57,6 +57,7 @@ function LibreTextsReuse() {
         getCurrentContents: getCurrentContents,
         getCoverpage: getCoverpage,
         TOC: TOC,
+        sleep: sleep,
         libraries: libraries,
     };
     
@@ -530,5 +531,8 @@ function LibreTextsReuse() {
         }
     }
     
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
 
