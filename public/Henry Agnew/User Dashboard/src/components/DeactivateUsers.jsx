@@ -30,7 +30,7 @@ export default function DeactivateUsers(props) {
                 }
                 item.id = item['@id'];
             });
-            response = response.filter(item => new Date() - new Date(item['date.lastlogin']) > 3.154e+10) //older than 1 year
+            response = response.filter(item => new Date() - new Date(item['date.lastlogin']) > 6.307e+10) //older than 2 years
             response = response.sort((a, b) => new Date(a['date.lastlogin']) - new Date(b['date.lastlogin']));
             setTotal(response.length);
             setUsers(response);
@@ -45,32 +45,32 @@ export default function DeactivateUsers(props) {
         const workingArray = JSON.parse(JSON.stringify(users));
         for (const currentUser of fullArray) {
             const id = currentUser['@id'];
- /*           await fetch(`https://${subdomain}.libretexts.org/@api/deki/users/${id}`, {
+            await fetch(`https://${subdomain}.libretexts.org/@api/deki/users/${id}`, {
                 method: 'PUT',
                 headers: {'content-type': 'application/xml; charset=utf-8'},
                 body: `<user><status>inactive</status></user>`
-            })*/
+            })
             workingArray.shift()
             setUsers([...workingArray]);
             console.log(`Deactivated ${id}`)
-            await LibreTexts.sleep(100);
+            await LibreTexts.sleep(50);
         }
     }
     
     function getProgress() {
         if (!users?.length)
-            return <div>Retrieving users<br/><LinearProgress color="primary"/></div>;
+            return <div>Retrieving users for {subdomain}<br/><LinearProgress color="primary"/></div>;
         else {
             const percent = (total - users.length) / total * 100;
-            return <div><LinearProgress color="secondary" variant="determinate"
-                                                         value={percent}/>{Math.trunc(percent)}%</div>
+            return <div>{subdomain} {Math.trunc(percent)}%<LinearProgress color="secondary" variant="determinate"
+                                                                          value={percent}/></div>
         }
     }
     
     return (
         <div id="BatchMonitor">
             <div className="topPanel">
-                <div>This tool is used to deactivate all counts that have been unused for over a year. Accounts will be
+                <div>This tool is used to deactivate all counts that have been unused for over two years. Accounts will be
                      moved from active to inactive status, but will not be deleted.
                     <Button onClick={purgeUsers} color="secondary"
                             variant="contained">DEACTIVATE {users.length} accounts</Button></div>
