@@ -1127,12 +1127,15 @@ class RemixerPanel extends React.Component {
     }
     
     getSelectOptions() {
-        let current = window.location.origin.split('/')[2].split('.')[0];
+        let [current] = LibreTexts.parseURL();
         let libraries = LibreTexts.libraries;
         let result = [];
+        
         Object.keys(libraries).map(function (key, index) {
             result.push(<option value={libraries[key]} key={key}>{key}</option>);
         });
+        if (!Object.keys(libraries).includes(current)) //for new libraries
+            result.unshift(<option value={current} key={current}>{current}</option>);
         return result;
     }
     
