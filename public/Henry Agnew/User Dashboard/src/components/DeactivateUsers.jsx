@@ -68,7 +68,7 @@ export default function DeactivateUsers(props) {
     }
     
     return (
-        <div id="BatchMonitor">
+        <div id="Deactivate">
             <div className="topPanel">
                 <div>This tool is used to deactivate all counts that have been unused for over two years. Accounts will be
                      moved from active to inactive status, but will not be deleted.

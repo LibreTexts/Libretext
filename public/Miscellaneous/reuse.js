@@ -128,8 +128,7 @@ function LibreTextsReuse() {
         
         let [current, path] = LibreTexts.parseURL();
         let payload = {
-            username: document.getElementById('usernameHolder').innerText,
-            id: document.getElementById('userIDHolder').innerText,
+            globalSettings: JSON.parse(document.getElementById('mt-global-settings').innerText),
             subdomain: current,
             token: (await getKeys())[current],
             path: path,
