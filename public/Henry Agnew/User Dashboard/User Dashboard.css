@@ -20,10 +20,12 @@
 	border-radius: 10px;
 	color: white;
 	background-color: #127bc4;
-	/*display: flex;*/
-	/*align-items: center;*/
-	/*margin: 10px 0;*/
-	/*padding: 10px;*/
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	margin: 10px 0;
+	padding: 0 10px;
 }
 
 .navigationBar select, .navigationBar > option {
@@ -38,6 +40,10 @@
 
 .MuiTooltip-tooltip {
 	font-size: 0.8rem;
+}
+
+.MuiTabs-root {
+	flex: 1;
 }
 
 .MuiMenuItem-root > div {

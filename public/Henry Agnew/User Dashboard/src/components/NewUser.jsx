@@ -28,9 +28,16 @@ export default function NewUser(props) {
         
         async function getLibraryUser() {
             //TODO: bounce off of elevate
-            let libraryUsers = await LibreTexts.authenticatedFetch(`https://${props.subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(user.username))}?dream.out.format=json`)
+    
+            let libraryUsers = await LibreTexts.sendAPI('manageUser/get', {
+                payload: {
+                    subdomain: props.subdomain, ...user
+                }
+            });
+            
+            // let libraryUsers = await LibreTexts.authenticatedFetch(`https://${props.subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(user.username))}?dream.out.format=json`)
             if (!libraryUsers.ok) {
-                console.error(await libraryUsers.text())
+                // console.error(await libraryUsers.text())
                 setLibraryUser(null);
                 return;
             }

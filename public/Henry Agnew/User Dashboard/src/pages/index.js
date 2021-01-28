@@ -40,14 +40,14 @@ export default function Dashboard() {
     return <div className={'CenterContainer'}>
         {/*variant="fullWidth"*/}
         <AppBar position="static" className="navigationBar">
-            <Tabs value={value} onChange={handleChange}>
+            <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+                <Info/>
+            </Tooltip>
+            <Tabs value={value} onChange={handleChange} variant="fullWidth">
                 <Tab label="Create/Modify Accounts" {...a11yProps(0)} />
                 <Tab label="Get Group Users" {...a11yProps(1)} />
                 <Tab label="Deactivate Accounts" {...a11yProps(2)} />
             </Tabs>
-            <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
-                <Info/>
-            </Tooltip>
         </AppBar>
         {getComponent()}
     </div>
