@@ -39,14 +39,14 @@ LibreTextsGlossarizer = class {
     getTermCols(rowText) { // tableRows[r]
         let cols = {};
         let colStart = [
-            [/(\<td data-th="Word\(s\)"\>)((.|\s)*?)(?=\<\/td>)/, "word"],
-            [/(\<td data-th="Definition"\>)((.|\s)*?)(?=\<\/td>)/, "definition"],
-            [/(\<td data-th="Image"\>)((.|\s)*?)(?=\<\/td>)/, "image"],
-            [/(\<td data-th="Caption"\>)((.|\s)*?)(?=\<\/td>)/, "caption"],
-            [/(\<td data-th="Link"\>)((.|\s)*?)(?=\<\/td>)/, "link"],
-            [/(\<td data-th="Source"\>)((.|\s)*?)(?=\<\/td>)/, "source"],
-            [/(\<td data-th="Source License"\>)((.|\s)*?)(?=\<\/td>)/, "license"],
-            [/(\<td data-th="Author URL"\>)((.|\s)*?)(?=\<\/td>)/, "sourceURL"],
+            [/(\<td[^\>]*?data-th="Word\(s\)"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "word"],
+            [/(\<td[^\>]*?data-th="Definition"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "definition"],
+            [/(\<td[^\>]*?data-th="Image"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "image"],
+            [/(\<td[^\>]*?data-th="Caption"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "caption"],
+            [/(\<td[^\>]*?data-th="Link"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "link"],
+            [/(\<td[^\>]*?data-th="Source"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "source"],
+            [/(\<td[^\>]*?data-th="Source License"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "license"],
+            [/(\<td[^\>]*?data-th="Author URL"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "sourceURL"],
         ];
         for (let t = 0; t < colStart.length; t++) {
             let tag = colStart[t][0];
@@ -545,17 +545,17 @@ LibreTextsGlossarizer = class {
             let cols = this.getTermCols(tableRows[r]);
             if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
             let termSource = "";
-            if (cols["license"].length) {
+            if (cols["license"]?.length) {
                 termSource += cols["license"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
             }
-            if (cols["source"].length) {
+            if (cols["source"]?.length) {
                 termSource += (termSource.length ? "; " : "") + cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
             }
             
-            if (termSource.length) {
+            if (termSource?.length) {
                 cols["definition"] = cols["definition"].trim() + ` [${termSource}]`;
             }
-            if (cols["link"].length) {
+            if (cols["link"]?.length) {
                 let aTagStart = 'href="';
                 let aTagEnd = '">';
                 let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
@@ -578,8 +578,10 @@ LibreTextsGlossarizer = class {
         $glossaryTable.after(`<div id = "visibleGlossary">${glossaryText}</div>`);
 
 
+
     }
 }
+
 
 //Self Initialize
 libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
