@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<script>LibreTexts = {active: {}}</script>
+<script src="class-prod.js"></script>
+<script>
+	//Self Initialize
+	glossarizer = class {
+		static hello() {
+			return 'Debug';
+		}
+	}
+	
+	libretextGlossary = {two: 2}; // Needs to be accessible to the sidebar buttons
+	window.addEventListener('load', () => {
+		if (!LibreTexts.active.glossarizer) {
+			LibreTexts.active.glossarizer = true;
+			console.log(libretextGlossary);
+			console.log(glossarizer.hello());
+		}
+	});
+</script>
+</body>
+</html>

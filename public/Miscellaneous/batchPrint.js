@@ -7,7 +7,6 @@ if (!window["batchPrint.js"]) {
 	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
 	let request;
 	let requestJSON;
-	let bookstore = tags.find(elem => elem.startsWith('bookstore:'));
 	
 	let fn = () => {
 		const [subdomain, path] = LibreTexts.parseURL();
@@ -46,23 +45,22 @@ if (!window["batchPrint.js"]) {
 				
 				let id = document.getElementById('pageIDHolder').innerText;
 				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
-				if (!isPro && downloadEntry.tags.includes('luluPro'))
+				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')))
 					downloadEntry = false;
 			}
 			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
 			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
+			const fullBook = await getBook();
 			innerHTML += `<div class="LTdropdown-content">
-					<a href="${await getBook()}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>
-					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
+					${fullBook ? `<a href="${fullBook}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>`:''}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
+					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
 					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 
 				</div></div>`;
 			
 			if (downloadEntry) {
-				
-				
 				let root = `https://batch.libretexts.org/print/Finished/`;
 				if (downloadEntry.zipFilename)
 					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
@@ -79,6 +77,8 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
+			
+			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;
@@ -171,8 +171,8 @@ if (!window["batchPrint.js"]) {
 			coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
 			return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
 		}
-		return '#'
+		return false;
 	}
 	
-	document.addEventListener('DOMContentLoaded', fn);
+	window.addEventListener('load', fn);
 }

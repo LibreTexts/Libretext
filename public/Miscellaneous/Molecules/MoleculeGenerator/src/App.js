@@ -117,7 +117,7 @@ export default class App extends Component {
 							{this.generateMolecule()}
 						</div>
 						<div id="copy" data-clipboard-text={this.generateMolecule()}
-						     onClick={() => alert("Copied!\nPaste into a Dekiscript block and enable the correct tag.")}
+						     onClick={() => alert("Copied!\nPaste into a Dekiscript block to add this molecule.")}
 						     style={{
 							     backgroundColor: this.getColor(),
 							     padding: 5,
@@ -174,12 +174,10 @@ export default class App extends Component {
 		}
 
 		switch (this.state.type) {
-			case "3Dmol":
-				return "//Make sure to tag the \"Embed 3Dmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<div class=\"viewer_3Dmoljs\" ('data-id')=\"=1YCR\" ('data-select1')=\"chain:A\" ('data-select2')=\"chain:B\" ('data-style1')=\"cartoon:color=spectrum\" ('data-style2')=\"stick\" ('data-surface1')=\"opacity:.7;color:white\" style=\"height: 400px; width: 400px;\"></div>";
 			case "GLmol":
-				return "//Make sure to tag the \"Embed GLmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=(GLmolPath) " + generateOptions(this.state.options, GLoptions) + "></script>";
+				return "<script type=\"text/javascript\" src=(GLmolPath) " + generateOptions(this.state.options, GLoptions) + "></script>";
 			case "JSmol":
-				return "//Make sure to tag the \"Embed JSmol\" tag to \"yes\"  under 'Page settings' at top of page to work\n" + "<script type=\"text/javascript\" src=(JSmolPath) ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
+				return "<script type=\"text/javascript\" src=(JSmolPath) ('data-id')=\"=1blu\" ('data-cartoon')=\"true\"></script>";
 		}
 	}
 
@@ -188,20 +186,6 @@ export default class App extends Component {
 
 		console.log(this.state.type);
 		switch (this.state.type) {
-			case "3Dmol":
-				sampleContent = document.createElement("div");
-				sampleContent.classList.add("viewer_3Dmoljs");
-
-				sampleContent.dataset.id = "=1YCR";
-				sampleContent.dataset.select1 = "chain:A";
-				sampleContent.dataset.select2 = "chain:B";
-				sampleContent.dataset.style1 = "cartoon:color=spectrum";
-				sampleContent.dataset.style2 = "stick";
-				sampleContent.dataset.surface1 = "opacity:.7;color:white";
-
-				sampleContent.style.height = "400px";
-				sampleContent.style.width = "400px";
-				break;
 			case "GLmol":
 				sampleContent.src = this.state.path + "/Molecules/GLmol/js/GLWrapper.js";
 				sampleContent = this.processDataset(this.state.options, GLoptions, sampleContent);
@@ -216,13 +200,7 @@ export default class App extends Component {
 		const sample = document.getElementById("sample");
 		sample.innerHTML = "";
 		sample.appendChild(sampleContent);
-
-
-		switch (this.state.type) {
-			case "3Dmol":
-				$3Dmol.autoload();
-				break;
-		}
+		
 	}
 
 	processDataset(options, allowedOptions, sampleContent) {
