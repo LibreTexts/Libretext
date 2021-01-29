@@ -8,13 +8,26 @@ import Table from "@material-ui/core/Table";
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
+import {Switch, TextField} from "@material-ui/core";
+import PresentToAll from "@material-ui/icons/PresentToAll";
+import useKeypress from 'react-use-keypress';
+import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import SystemUpdateAlt from "@material-ui/icons/SystemUpdateAlt";
+import AddCircle from "@material-ui/icons/AddCircle";
 
 
 export default function NewUser(props) {
     const [user, setUser] = React.useState({username: 'hdagnew@ucdavis.edu'});
+    const [ready, setReady] = React.useState(false);
+    
+    useKeypress('Enter', () => {
+        // Do something when the user has pressed the Enter key
+        search();
+    });
     
     function createTable() {
-        return Object.entries(LibreTexts.libraries).map(([name, subdomain]) => <RenderRow key={subdomain} subdomain={subdomain}
+        return Object.entries(LibreTexts.libraries).map(([name, subdomain]) => <RenderRow key={subdomain}
+                                                                                          subdomain={subdomain}
                                                                                           libraryname={name}
                                                                                           user={user}/>)
     }
@@ -24,70 +37,126 @@ export default function NewUser(props) {
         
         useEffect(() => {
             getLibraryUser();
-        },[])
+        }, [])
         
         async function getLibraryUser() {
-            //TODO: bounce off of elevate
-    
             let libraryUsers = await LibreTexts.sendAPI('manageUser/get', {
                 payload: {
                     subdomain: props.subdomain, ...user
                 }
             });
             
-            // let libraryUsers = await LibreTexts.authenticatedFetch(`https://${props.subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(user.username))}?dream.out.format=json`)
             if (!libraryUsers.ok) {
-                // console.error(await libraryUsers.text())
                 setLibraryUser(null);
                 return;
             }
-            setLibraryUser(await libraryUsers.json());
+            let result = await libraryUsers.json();
+            let groups = result.groups;
+            if (groups.group) {
+                groups = groups.group.length ? groups.group : [groups.group];
+                groups = groups.map((prop) => prop['groupname']);
+            }
+            else groups = []
+            if (result?.['permissions.user']?.role?.['#text'] === 'Admin')
+                groups.push('Admin')
+            
+            result.groups = groups;
+            
+            setLibraryUser(result);
         }
         
-        let skele = <Skeleton variant="text" animation="wave" width={100}
-                              style={{display: 'inline-block'}}/>;
-        let item;
+        let innerCells;
         switch (libraryUser) {
             case undefined:
-                item = skele;
+                innerCells = <TableCell colSpan={8}>{<Skeleton variant="text" animation="wave"/>}</TableCell>;
                 break;
             case null:
-                item = <Button>Create</Button>;
+                innerCells =
+                    <TableCell colSpan={8}>
+                        <Button variant="contained" color="primary" disabled={!ready} startIcon={<AddCircle/>}
+                                style={{width: '100%'}} onClick={() => CreateUser(props.subdomain)}>Create New
+                                                                                                    Account</Button></TableCell>;
                 break;
             default:
-                item = libraryUser['@id'];
+                innerCells = <>
+                    <TableCell>{libraryUser?.['@id']}</TableCell>
+                    <TableCell>{libraryUser?.username}</TableCell>
+                    <TableCell>{libraryUser?.email}</TableCell>
+                    <TableCell>{libraryUser?.fullname}</TableCell>
+                    {/*<TableCell><Switch checked={libraryUser?.status === 'active'}/></TableCell>*/}
+                    <TableCell><Switch checked={libraryUser?.['service.authentication']?.['@id'] === '3'}/></TableCell>
+                    <TableCell>{JSON.stringify(libraryUser?.groups)}</TableCell>
+                    <TableCell>{libraryUser &&
+                    <Button variant="contained" startIcon={<PresentToAll/>}>Reuse</Button>}
+                    </TableCell><TableCell>{libraryUser &&
+                <Button variant="contained" disabled={!ready} color="primary"
+                        startIcon={<SystemUpdateAlt/>}>Apply</Button>}</TableCell>
+                </>
         }
         
         return <TableRow>
-            <TableCell><img src={`https://libretexts.org/img/LibreTexts/glyphs/${props.subdomain}.png`}
-                            style={{verticalAlign: 'middle'}}/></TableCell>
+            <TableCell>
+                <img src={`https://libretexts.org/img/LibreTexts/glyphs/${props.subdomain}.png`}
+                     style={{verticalAlign: 'middle'}}/></TableCell>
             <TableCell>{props.libraryname}</TableCell>
-            <TableCell>{item}</TableCell>
+            {innerCells}
         </TableRow>
     }
     
     async function CreateUser(subdomain) {
-        await LibreTexts.sendAPI('createUser', {
-            payload: {
-                subdomain, ...user
-            }
-        });
+        prompt(`Please type "${subdomain}" to create the user ${user.username}`)
+        /*        await LibreTexts.sendAPI('manageUser/create', {
+                    payload: {
+                        subdomain, ...user
+                    }
+                });*/
     }
     
-    return (
-        <div id="ManageUsers">
-            <div className="topPanel">
-                <TableContainer size="small" component={Paper}>
-                    <Table size="small" style={{display: 'inline-table'}}>
-                        <TableHead><TableRow>
-                            <TableCell/>
-                            <TableCell>Library</TableCell>
-                            <TableCell>SSO</TableCell>
-                        </TableRow></TableHead>
-                        <TableBody>{createTable()}</TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+    function search() {
+        let value = document.getElementById('dashboardUsername').value;
+        if (value) {
+            setUser({...user, username: value});
+        }
+    }
+    
+    return <div id="ManageUsers">
+        <div className="topPanel">
+            <TextField id='dashboardUsername' label="Username" variant="filled"/>
+            <Button color="primary" variant="contained" onClick={search}>SEARCH</Button>
+            <ToggleButtonGroup
+                value={'admin'}
+                exclusive
+                // onChange={handleAlignment}
+                aria-label="text alignment"
+            >
+                <ToggleButton value="viewer">
+                    Viewer
+                </ToggleButton>
+                <ToggleButton value="developer">
+                    Developer
+                </ToggleButton>
+                <ToggleButton disabled value="admin">
+                    Admin
+                </ToggleButton>
+            </ToggleButtonGroup>
+            <TableContainer size="small" component={Paper} style={{maxHeight: '70vh'}}>
+                <Table stickyHeader size="small" style={{display: 'inline-table'}}>
+                    <TableHead><TableRow>
+                        <TableCell/>
+                        <TableCell>Library</TableCell>
+                        <TableCell>ID</TableCell>
+                        {/*<TableCell>Active</TableCell>*/}
+                        <TableCell>Username</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Display Name</TableCell>
+                        <TableCell>SSO</TableCell>
+                        <TableCell>Groups</TableCell>
+                        <TableCell>Reuse Settings</TableCell>
+                        <TableCell>Apply Settings</TableCell>
+                    </TableRow></TableHead>
+                    <TableBody>{createTable()}</TableBody>
+                </Table>
+            </TableContainer>
         </div>
-    )
+    </div>
 }

@@ -33,7 +33,8 @@ function LibreTextsReuse() {
         "Physics": "phys",
         "Social Sciences": "socialsci",
         "Statistics": "stats",
-        "Workforce": "workforce"
+        "Workforce": "workforce",
+        "Query":"query"
     };
     
     return {

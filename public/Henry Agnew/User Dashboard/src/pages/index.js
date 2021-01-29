@@ -5,6 +5,7 @@ import Info from "@material-ui/icons/Info";
 import {AppBar, Tooltip} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import NewUser from "../components/NewUser.jsx";
 
 const target = document.createElement("div");
@@ -14,6 +15,18 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 export default function Dashboard() {
     const [value, setValue] = React.useState(0);
+    const prefersDarkMode = localStorage.getItem('darkMode') === 'true';
+    // || useMediaQuery('(prefers-color-scheme: dark)')
+    
+    const theme = React.useMemo(
+        () =>
+            createMuiTheme({
+                palette: {
+                    type: prefersDarkMode ? 'dark' : 'light',
+                },
+            }),
+        [prefersDarkMode],
+    );
     
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -37,20 +50,22 @@ export default function Dashboard() {
         }
     }
     
-    return <div className={'CenterContainer'}>
-        {/*variant="fullWidth"*/}
-        <AppBar position="static" className="navigationBar">
-            <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
-                <Info/>
-            </Tooltip>
-            <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                <Tab label="Create/Modify Accounts" {...a11yProps(0)} />
-                <Tab label="Get Group Users" {...a11yProps(1)} />
-                <Tab label="Deactivate Accounts" {...a11yProps(2)} />
-            </Tabs>
-        </AppBar>
-        {getComponent()}
-    </div>
+    return <ThemeProvider theme={theme}>
+        <div className={'CenterContainer'}>
+            {/*variant="fullWidth"*/}
+            <AppBar position="static" className="navigationBar">
+                <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+                    <Info/>
+                </Tooltip>
+                <Tabs value={value} onChange={handleChange} variant="fullWidth">
+                    <Tab label="Create/Modify Accounts" {...a11yProps(0)} />
+                    <Tab label="Get Group Users" {...a11yProps(1)} />
+                    <Tab label="Deactivate Accounts" {...a11yProps(2)} />
+                </Tabs>
+            </AppBar>
+            {getComponent()}
+        </div>
+    </ThemeProvider>
 }
 
 ReactDOM.render(<Dashboard/>, target);

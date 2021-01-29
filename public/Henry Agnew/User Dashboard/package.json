@@ -16,6 +16,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-toggle": "^4.1.1",
+    "react-use-keypress": "^1.2.0",
     "react-virtualized-auto-sizer": "^1.0.4",
     "react-window": "^1.8.6"
   },
