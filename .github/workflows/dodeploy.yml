@@ -24,7 +24,7 @@ jobs:
     - name: Wait / Sleep
   # You may pin to the exact commit or the version.
   # uses: jakejarvis/wait-action@17bc522f2e14945ea2a05bfc72b6cb9e18a066e3
-      uses: jakejarvis/wait-action@v0.1.0
+      uses: kibertoad/wait-action@1.0.1
       with:
         time: '2m'
     - name: Cloudflare Purge Cache
