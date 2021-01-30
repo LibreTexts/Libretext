@@ -501,6 +501,7 @@ LibreTextsGlossarizer = class {
                           return title;
                         },
                         allowHTML: true,
+                        interactive : true,
                         delay: [1000, null],
                         popperOptions: {
                             modifiers: [
