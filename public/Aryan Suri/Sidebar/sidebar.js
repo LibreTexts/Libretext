@@ -770,13 +770,11 @@ function activateBeeLine() {
                 }
             }
             const contentContainer = $('.elm-skin-container');
-            if (theme === 'night_blues') {
+            if (theme === 'night_blues' || localStorage.getItem('darkMode') === 'true') {
                 contentContainer.addClass('darkMode');
-                localStorage.setItem('darkMode', 'true');
             }
             else {
                 contentContainer.removeClass('darkMode');
-                localStorage.setItem('darkMode', 'false');
             }
         }
     };
@@ -790,9 +788,15 @@ function activateBeeLine() {
                 if (!e.target.href)
                     e.preventDefault();
                 const theme = $(this).attr("data-color");
-                localStorage.setItem('beeline', theme);
                 if (!theme)
                     return;
+                localStorage.setItem('beeline', theme);
+                if (theme === 'night_blues') {
+                    localStorage.setItem('darkMode', 'true');
+                }
+                else {
+                    localStorage.setItem('darkMode', 'false');
+                }    
                 btns.removeClass('active');
                 btns.filter('a[data-color="' + theme + '"]').addClass('active');
                 btns.filter('button[data-color="' + theme + '"]').addClass('active');
