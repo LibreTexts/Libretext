@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DeactivateUsers from "../components/DeactivateUsers.jsx";
 import Info from "@material-ui/icons/Info";
-import {AppBar, Tooltip} from "@material-ui/core";
+import {AppBar, Switch, Tooltip} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
@@ -44,14 +44,14 @@ export default function Dashboard() {
             case 0:
                 return <NewUser/>;
             case 1:
-                return null;
+                return <Switch/>;
             case 2:
                 return <DeactivateUsers/>;
         }
     }
     
     return <ThemeProvider theme={theme}>
-        <div className={'CenterContainer'}>
+        <div id="UserDashboard" className={'CenterContainer'}>
             {/*variant="fullWidth"*/}
             <AppBar position="static" className="navigationBar">
                 <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
