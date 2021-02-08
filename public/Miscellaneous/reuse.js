@@ -33,7 +33,8 @@ function LibreTextsReuse() {
         "Physics": "phys",
         "Social Sciences": "socialsci",
         "Statistics": "stats",
-        "Workforce": "workforce"
+        "Workforce": "workforce",
+        "Query":"query"
     };
     
     return {
@@ -57,6 +58,7 @@ function LibreTextsReuse() {
         getCurrentContents: getCurrentContents,
         getCoverpage: getCoverpage,
         TOC: TOC,
+        sleep: sleep,
         libraries: libraries,
     };
     
@@ -127,8 +129,7 @@ function LibreTextsReuse() {
         
         let [current, path] = LibreTexts.parseURL();
         let payload = {
-            username: document.getElementById('usernameHolder').innerText,
-            id: document.getElementById('userIDHolder').innerText,
+            globalSettings: JSON.parse(document.getElementById('mt-global-settings').innerText),
             subdomain: current,
             token: (await getKeys())[current],
             path: path,
@@ -451,7 +452,7 @@ function LibreTextsReuse() {
             let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
             
             
-            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json&limit=all', subdomain);
             response = await response.json();
             info = await info;
             info = await info.json();
@@ -530,5 +531,8 @@ function LibreTextsReuse() {
         }
     }
     
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
 
