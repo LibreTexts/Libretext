@@ -502,7 +502,7 @@ LibreTextsGlossarizer = class {
                         },
                         allowHTML: true,
                         interactive : true,
-                        delay: [1000, null],
+                        delay: [500, null],
                         popperOptions: {
                             modifiers: [
                                 {
