@@ -311,13 +311,14 @@ function BookstoreSingle(props) {
                         <h3>Select Shipping Option</h3>{renderShippingLocation()}
                     </div>
                     {shippingLocation === "US" ?
-                        <Tooltip title='If you live in Hawaii/Alaska, you must enable this surcharge to cover higher delivery costs.'>
-                        <FormControlLabel
-                            value="end"
-                            control={<Checkbox color="secondary" checked={Boolean(shippingSurcharge)} onChange={
-                                () => setShippingSurcharge(shippingSurcharge ? false : HI_AK_surcharge)
-                            }/>}
-                            label={`Hawaii/Alaska delivery surcharge $${HI_AK_surcharge?.price}`}/></Tooltip> : null}
+                        <Tooltip
+                            title='If you live in Hawaii/Alaska, you must enable this surcharge to cover higher delivery costs.'>
+                            <FormControlLabel
+                                value="end"
+                                control={<Checkbox color="secondary" checked={Boolean(shippingSurcharge)} onChange={
+                                    () => setShippingSurcharge(shippingSurcharge ? false : HI_AK_surcharge)
+                                }/>}
+                                label={`Hawaii/Alaska delivery surcharge $${HI_AK_surcharge?.price}`}/></Tooltip> : null}
                     {renderShipping()}
                     <p>Shipping prices are calculated for
                        within {shippingLocation === "CA" ? 'Canada' : 'the United States'}. Contact us at
@@ -452,7 +453,9 @@ function BookstoreWrapper() {
         return <h1>Bookstore error. Item not found in the LibreTexts Commons. Please use a valid buy-book link.</h1>
     else if (library && item) {
         const numPages = parseInt(item.numPages);
-        if (numPages < 32)
+        if (!numPages)
+            return <h1>Bookstore error. Book has {item.numPages} pages and does not appear to be valid.</h1>
+        else if (numPages < 32)
             return <h1>Bookstore error. Book has less than 32 pages and is too small to print.</h1>
         else if (numPages > 800)
             return <h1>Bookstore error. Book has more than 800 pages and is too big to print.</h1>
