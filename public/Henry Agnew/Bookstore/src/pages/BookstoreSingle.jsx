@@ -454,7 +454,7 @@ function BookstoreWrapper() {
     else if (library && item) {
         const numPages = parseInt(item.numPages);
         if (!numPages)
-            return <h1>Bookstore error. Book has {item.numPages} pages and does not appear to be valid.</h1>
+            return <h1>Bookstore error. Book has an invalid number of pages.</h1>
         else if (numPages < 32)
             return <h1>Bookstore error. Book has less than 32 pages and is too small to print.</h1>
         else if (numPages > 800)

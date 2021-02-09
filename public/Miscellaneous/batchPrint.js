@@ -45,7 +45,7 @@ if (!window["batchPrint.js"]) {
 				
 				let id = document.getElementById('pageIDHolder').innerText;
 				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
-				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')))
+				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')) || downloadEntry.failed)
 					downloadEntry = false;
 			}
 			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
