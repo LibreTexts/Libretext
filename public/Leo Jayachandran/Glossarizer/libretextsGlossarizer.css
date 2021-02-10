@@ -20,6 +20,9 @@
     z-index: 991;
     border: 2px solid #30b3f6;
 }
+[data-tippy-root] {
+    display: inline;
+}
 
 .glossaryTable {
     display: none;
