@@ -490,19 +490,21 @@ async function foreignImage(input, content, path) {
                     }), seconds * 1000);
                     let result;
                     try {
-                        result = await fetch(url);
+                        result = await fetch(url); //bad google drawings are still getting through
+                        resolve(result);
                     } catch (e) {
+                        failed = true;
                         reject(e);
                         // console.error(e);
                     }
                     clearTimeout(timeout);
-                    resolve(result);
                 });
             } catch (e) {
                 failed = true;
                 response = e;
                 // console.error(e);
             }
+            console.log(url, response.status)
             if (!failed && response.ok && response.status < 400) {
                 if (input.findOnly) {
                     result = 'findOnly';
@@ -517,6 +519,7 @@ async function foreignImage(input, content, path) {
                 contentDisposition = contentDisposition?.match(/(?<=attachment; filename=").*?(?=")/)?.[0];
                 
                 let filename = contentDisposition || url.match(/(?<=\/)[^/]*?(?=$)/)[0];
+                filename = LibreTexts.cleanPath(filename);
                 response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
                     method: 'PUT',
                     body: foreignImage,
@@ -535,12 +538,13 @@ async function foreignImage(input, content, path) {
                 result = result.replace(image, newImage);
                 count++;
             }
-            /*				else if (response.code)
-                      console.log(`Dead ${response.code}! ${url}`);
-                    else if (response.status)
-                      console.log(`Dead ${response.status}! ${url}`);
-                    else
-                      console.log(`Dead ${response}! ${url}`);*/
+    
+            /*else if (response.code)
+                console.log(`Dead ${response.code}! ${url}`);
+            else if (response.status)
+                console.log(`Dead ${response.status}! ${url}`);
+            else
+                console.log(`Dead ${response}! ${url}`);*/
         }
     });
     return [result, count];

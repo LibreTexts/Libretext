@@ -1723,10 +1723,10 @@ puppeteer.launch({
                         }
                         await merge(mergeFiles, `../../Finished/${zipFilename}/Full.pdf`, opts);
                         if (hasCoverpage) {
-                            await merge(mergeFiles.slice(0, 10), `../../PDF/Letter/Finished/${zipFilename}/Preview.pdf`, opts);
+                            await merge(mergeFiles.slice(0, 10), `../../Finished/${zipFilename}/Preview.pdf`, opts);
                             mergeFiles.shift();
                             files.shift();
-                            await merge(mergeFiles, `../../PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, opts);
+                            await merge(mergeFiles, `../../Finished/${zipFilename}/Publication/Content.pdf`, opts);
                         }
                     }
                     else {
