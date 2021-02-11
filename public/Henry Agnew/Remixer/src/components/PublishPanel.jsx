@@ -80,6 +80,8 @@ export default function PublishPanel(props) {
 			if (!page.sourceURL)
 				copyMode = 'blank'; //pages without a source are blank
 			page.copyMode = copyMode;
+			if(!page.tags)
+				page.tags = [];
 			
 			if (props.mode === 'Remix') {
 				if (objectResult[copyMode])
@@ -787,7 +789,7 @@ function PublishSubPanel(props) {
 					
 					//Thumbnail
 					let files = source.files || [], image;
-					if (page.files.find(file => file.filename === 'mindtouch.page#thumbnail')) {
+					if (page?.files?.find(file => file.filename === 'mindtouch.page#thumbnail')) {
 						//skip if already has thumbnail
 					}
 					if ((files.find(file => file.filename === 'mindtouch.page#thumbnail' || file.filename === 'mindtouch.page%23thumbnail')))
