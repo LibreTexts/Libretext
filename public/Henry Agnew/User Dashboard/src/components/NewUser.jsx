@@ -8,17 +8,33 @@ import Table from "@material-ui/core/Table";
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
-import {Divider, MenuItem, Select, Switch, TextField} from "@material-ui/core";
+import {Divider, Switch, TextField} from "@material-ui/core";
 import PresentToAll from "@material-ui/icons/PresentToAll";
 import useKeypress from 'react-use-keypress';
 import {Autocomplete} from "@material-ui/lab";
 import SystemUpdateAlt from "@material-ui/icons/SystemUpdateAlt";
 import AddCircle from "@material-ui/icons/AddCircle";
 import Chip from "@material-ui/core/Chip";
+import * as PropTypes from "prop-types";
 
 
+class GroupsIO extends React.Component {
+    render() {
+        return null;
+    }
+}
+
+GroupsIO.propTypes = {
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        groups: PropTypes.any,
+        email: PropTypes.string,
+        sso: PropTypes.bool,
+        username: PropTypes.string
+    })
+};
 export default function NewUser() {
-    const [user, setUser] = React.useState({username: 'hdagnew@ucdavis.edu', role: 'viewer'});
+    const [user, setUser] = React.useState({username: '', email: '', name: '', sso: false, groups: []});
     const libraries = Object.entries(LibreTexts.libraries);
     
     useKeypress('Enter', () => {
@@ -27,9 +43,54 @@ export default function NewUser() {
     });
     
     function setUserValue(event, key) {
-        user[key] = key === 'sso' ? event?.target?.checked : event?.target?.value;
-        console.log(key, user[key], user);
+        //groups handling
+        if (key === 'groups') {
+            let groups = event.newValue;
+            let currentValue = event?.target?.value || event?.target?.innerText;
+            groups.delete = function (target) {
+                const index = this.findIndex((e) => e === target)
+                if (index >= 0)
+                    this.splice(index, 1);
+            }
+            
+            //currentValue replaces existing value
+            if (currentValue === 'Admin') {
+                groups.delete('Developer')
+                groups.delete('BasicUser')
+            }
+            else if (currentValue === 'Developer') {
+                groups.delete('Admin')
+                groups.delete('BasicUser')
+            }
+            else if (currentValue === 'BasicUser') {
+                groups.delete('Admin')
+                groups.delete('Developer')
+            }
+            
+            //prevent conflicting values
+            if (groups.includes('Admin')) {
+                groups.delete('Developer')
+                groups.delete('BasicUser')
+            }
+            else if (groups.includes('Developer')) {
+                groups.delete('BasicUser')
+            }
+            
+            groups.sort();
+            user[key] = groups;
+        }
+        else
+            user[key] = key === 'sso' ? event?.target?.checked : event?.target?.value;
+        
+        // console.log(key, user[key], user);
         setUser({...user});
+    }
+    
+    function reuse(input) {
+        // console.log(input)
+        const copy = JSON.parse(JSON.stringify(input));
+        delete copy?.id;
+        setUser(copy);
     }
     
     function search() {
@@ -38,22 +99,25 @@ export default function NewUser() {
         console.log(value.split('\t'));
         
         value = value?.split('\t');
-        if (value?.length && !value[0].includes('@')) { //remove timestamp if present
+        if (value?.length > 1 && !value[0].includes('@')) { //remove timestamp if present
             value.shift();
         }
+        const isEmail = value[0].includes('@') ? value[0] : '';
         
-        if (value?.[0]?.includes?.('@')) { //if first item is an email
-            if (value.length === 1) { //only email
-                setUser({...user, username: value[0], email: value[0]})
+        if (value) { //if first item is an email
+            if (value?.[0]?.startsWith('admin')) {
+                alert('User Admin is restricted.');
+            }
+            else if (value.length === 1) { //only email
+                setUser({...user, username: value[0], email: isEmail})
             }
             else {
                 setUser({
                     ...user,
                     username: value[0],
-                    email: value[0],
+                    email: isEmail,
                     name: value?.[1],
                     sso: false,
-                    role: 'viewer',
                     groups: []
                 })
             }
@@ -78,10 +142,9 @@ export default function NewUser() {
                         <TableCell>Email</TableCell>
                         <TableCell>Display Name</TableCell>
                         <TableCell>SSO</TableCell>
-                        <TableCell>Role</TableCell>
                         <TableCell>Groups</TableCell>
                     </TableRow></TableHead>
-                    <TableBody>
+                    <TableBody><TableRow>
                         <TableCell>
                             <TextField id='dashboardUsername' label="Username" variant="filled" onPaste={trimEntry}/>
                             <Button color="primary" variant="contained" onClick={search}>SEARCH</Button>
@@ -93,18 +156,16 @@ export default function NewUser() {
                                               onChange={(e) => setUserValue(e, 'name')}/></TableCell>
                         <TableCell><Switch checked={Boolean(user?.sso)}
                                            onChange={(e) => setUserValue(e, 'sso')}/></TableCell>
-                        <TableCell><Select value={user?.role} onChange={(e) => setUserValue(e, 'role')}>
-                            <MenuItem value="admin">Admin</MenuItem>
-                            <MenuItem value="developer">Developer</MenuItem>
-                            <MenuItem value="viewer">Viewer</MenuItem>
-                            ))}
-                        </Select></TableCell>
                         <TableCell>
                             <Autocomplete
                                 multiple
                                 id="tags-filled"
-                                options={[]}
-                                onChange={(e) => setUserValue(e, 'groups')}
+                                options={['Developer', 'BasicUser']}
+                                value={user?.groups || []}
+                                onChange={(e, newValue) => {
+                                    e.newValue = newValue;
+                                    setUserValue(e, 'groups');
+                                }}
                                 freeSolo
                                 renderTags={(value, getTagProps) =>
                                     value.map((option, index) => (
@@ -114,7 +175,7 @@ export default function NewUser() {
                                 renderInput={(params) => (
                                     <TextField {...params} variant="filled" label="Groups" placeholder="Group names"/>
                                 )}
-                            /></TableCell>
+                            /></TableCell></TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -135,9 +196,10 @@ export default function NewUser() {
                         <TableCell>Apply Settings</TableCell>
                     </TableRow></TableHead>
                     <TableBody>
-                        {libraries.map(([name, subdomain]) =>
-                            <RenderRow key={subdomain} subdomain={subdomain} libraryname={name}
-                                       user={user}/>)}</TableBody>
+                        <GroupsIO user={user}/>
+                        {libraries.map(([libraryname, subdomain]) =>
+                            <RenderRow key={subdomain} subdomain={subdomain} libraryname={libraryname}
+                                       user={user} reuse={reuse}/>)}</TableBody>
                 </Table>
             </TableContainer>
         </div>
@@ -146,48 +208,65 @@ export default function NewUser() {
 
 function RenderRow(props) {
     const [libraryUser, setLibraryUser] = React.useState();
-    // const [ready, setReady] = React.useState(false);
     
-    const ready = props?.user?.email === libraryUser?.email;
+    let ready = props?.user?.username && props?.user?.email;
     
     useEffect(() => {
         getLibraryUser();
     }, [props.user.username])
     
     async function getLibraryUser() {
+        if (!props?.user?.username) {
+            setLibraryUser(null);
+            return;
+        }
+        
         setLibraryUser(undefined);
         let libraryUsers = await LibreTexts.sendAPI('manageUser/get', {
             payload: {
                 subdomain: props.subdomain, ...props.user
             }
         });
-        
         if (!libraryUsers.ok) {
             setLibraryUser(null);
             return;
         }
+        
         let result = await libraryUsers.json();
-        let groups = result.groups;
-        if (groups.group) {
-            groups = groups.group.length ? groups.group : [groups.group];
-            groups = groups.map((prop) => prop['groupname']);
-        }
-        else groups = []
+        let groups = result.groups.map((prop) => prop.name);
         if (result?.['permissions.user']?.role?.['#text'] === 'Admin')
             groups.push('Admin')
+        groups.sort();
         
-        result.groups = groups;
-        
-        setLibraryUser(result);
+        setLibraryUser({
+            id: result?.id,
+            username: result.username,
+            email: result.email,
+            name: result.fullname,
+            sso: result['service.authentication']?.['@id'] === '3',
+            groups: groups,
+        });
     }
     
-    async function CreateUser(subdomain) {
-        prompt(`Please type "${subdomain}" to create the user ${props.user.username}`)
-        /*        await LibreTexts.sendAPI('manageUser/create', {
-                    payload: {
-                        subdomain, ...user
-                    }
-                });*/
+    async function manageUser(alreadyExists) {
+        const subdomain = props.subdomain;
+        
+        if (!ready) {
+            alert("This is an error! Please alert the developer as you should not be see seeing this.");
+            return false;
+        }
+        const approve = alreadyExists === true || subdomain === prompt(`Please type "${subdomain}" to create the user ${props.user.username}`).trim()
+        if (approve) {
+            await LibreTexts.sendAPI('manageUser/create', {
+                payload: {
+                    subdomain, ...props.user
+                }
+            });
+            getLibraryUser();
+        }
+        else {
+            alert('Failed to create. Try again!')
+        }
     }
     
     let innerCells;
@@ -199,21 +278,25 @@ function RenderRow(props) {
             innerCells =
                 <TableCell colSpan={8}>
                     <Button variant="contained" color="primary" disabled={!ready} startIcon={<AddCircle/>}
-                            style={{width: '100%'}} onClick={() => CreateUser(props.subdomain)}>Create New
-                                                                                                Account</Button></TableCell>;
+                            style={{width: '100%'}} onClick={manageUser}>Create New
+                                                                         Account</Button></TableCell>;
             break;
         default:
+            const copy = {...libraryUser};
+            delete copy?.id;
+            ready = ready && JSON.stringify(copy) !== JSON.stringify(props?.user)
             innerCells = <>
-                <TableCell>{libraryUser?.['@id']}</TableCell>
+                <TableCell>{libraryUser?.id}</TableCell>
                 <TableCell>{libraryUser?.username}</TableCell>
                 <TableCell>{libraryUser?.email}</TableCell>
-                <TableCell>{libraryUser?.fullname}</TableCell>
+                <TableCell>{libraryUser?.name}</TableCell>
                 {/*<TableCell><Switch checked={libraryUser?.status === 'active'}/></TableCell>*/}
-                <TableCell><Switch checked={libraryUser?.['service.authentication']?.['@id'] === '3'}/></TableCell>
+                <TableCell><Switch checked={libraryUser?.sso}/></TableCell>
                 <TableCell>{JSON.stringify(libraryUser?.groups)}</TableCell>
-                <TableCell><Button variant="contained" startIcon={<PresentToAll/>}>Reuse</Button></TableCell>
+                <TableCell><Button variant="contained" startIcon={<PresentToAll/>}
+                                   onClick={() => props.reuse(libraryUser)}>Reuse</Button></TableCell>
                 <TableCell>
-                    <Button variant="contained" disabled={!ready} color="primary"
+                    <Button variant="contained" disabled={!ready} color="primary" onClick={() => manageUser(true)}
                             startIcon={<SystemUpdateAlt/>}>Apply</Button>
                 </TableCell>
             </>

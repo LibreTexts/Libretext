@@ -7,6 +7,7 @@ app.use(check);
 const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
 const fs = require('fs-extra');
+
 const md5 = require('md5');
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
@@ -379,40 +380,72 @@ async function manageUser(req, res) {
     const body = req.body;
     const payload = body.payload;
     
+    const libraryGroups = await getGroups(payload.subdomain);
+    const libraryGroupsMap = {};
+    for (const group of libraryGroups)
+        libraryGroupsMap[group.name] = group.id;
     
-    const libraryGroups = await getGroups(body.subdomain);
-    let groups = payload?.groups?.map((name) => {
-        const match = libraryGroups.find((e) => e.name === name);
-        return `<group id="${match?.id}"/>`;
-    })
-    let response;
-    switch(req.params.method){
-        case 'get':
-            response = await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(payload.username))}?dream.out.format=json`, null, null, body.user.username)
-            break;
-        case 'create':
-            response = await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users?dream.out.format=json`, null, null, body.user.username, {
-                method: 'POST',
-                headers: {'content-type': 'application/xml; charset=utf-8'},
-                body: `<user>
-    <username>${payload.email}</username>
+    let user = await LibreTexts.getUser(payload.username, payload.subdomain);
+    if (req.params.method === 'get') {
+        
+        res.status(user ? 200 : 404);
+        res.send(JSON.stringify(user));
+        return;
+    }
+    
+    
+    //update user properties
+    const role = payload.groups.includes('Admin') ? 'Admin' : 'Viewer';
+    // if (req.params.method === 'modify') {
+    const response = await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users?dream.out.format=json`, null, null, body.user.username, {
+        method: 'POST',
+        headers: {'content-type': 'application/xml; charset=utf-8'},
+        body: `<user ${user ? `id="${user.id}"` : ''}>
+    <username>${payload.username}</username>
     <email>${payload.email}</email>
     <fullname>${payload.name}</fullname>
     <license.seat>true</license.seat>
-    <status>${payload.status}</status>
-    <service.authentication id="${payload.authenticationId}" />
+    <status>active</status>
+    <service.authentication id="${payload.sso ? 3 : 1}" />
     <permissions.user>
-        <role>${payload.role}</role>
+        <role>${role}</role>
     </permissions.user>
-    <groups>
-        ${groups}
-    </groups>
     </user>`
+    });
+    
+    user = await LibreTexts.getUser(payload.username, payload.subdomain);
+    user.groups = user.groups.map(g => g.name);
+    
+    // console.log(user.groups, payload.groups);
+    
+    //check for differences in groups
+    const addGroups = payload.groups.filter(g => !user.groups.includes(g));
+    const removeGroups = user.groups.filter(g => !payload.groups.includes(g));
+    
+    // console.log(addGroups, removeGroups);
+    console.log(libraryGroupsMap);
+    
+    //add user to groups
+    for (const group of addGroups) {
+        if (libraryGroupsMap[group])
+            await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/groups/${libraryGroupsMap[group]}/users`,
+                null, null, body.user.username, {
+                method: 'POST',
+                headers: {'content-type': 'application/xml; charset=utf-8'},
+                body: `<users><user id="${user.id}"/></users>`
             })
-            break;
-        case 'modify':
-            break;
     }
+    
+    //remove user from groups
+    for (const group of removeGroups) {
+        if (libraryGroupsMap[group])
+            await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/groups/${libraryGroupsMap[group]}/users/${user.id}`,
+                null, null, body.user.username, {
+                method: 'DELETE',
+            })
+        //.then(async data =>console.log(await data.text()))
+    }
+    
     res.status(response.status);
     res.send(await response.text());
 }
