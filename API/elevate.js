@@ -25,6 +25,7 @@ app.put(`${prefix}/createSandbox`, createSandbox);
 app.put(`${prefix}/cleanPath`, cleanPath);
 app.put(`${prefix}/fork`, fork);
 app.put(`${prefix}/manageUser/:method`, manageUser);
+app.put(`${prefix}/getUsers/:group.:format`, getUsersInGroup);
 app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
 
@@ -430,10 +431,10 @@ async function manageUser(req, res) {
         if (libraryGroupsMap[group])
             await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/groups/${libraryGroupsMap[group]}/users`,
                 null, null, body.user.username, {
-                method: 'POST',
-                headers: {'content-type': 'application/xml; charset=utf-8'},
-                body: `<users><user id="${user.id}"/></users>`
-            })
+                    method: 'POST',
+                    headers: {'content-type': 'application/xml; charset=utf-8'},
+                    body: `<users><user id="${user.id}"/></users>`
+                })
     }
     
     //remove user from groups
@@ -441,8 +442,8 @@ async function manageUser(req, res) {
         if (libraryGroupsMap[group])
             await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/groups/${libraryGroupsMap[group]}/users/${user.id}`,
                 null, null, body.user.username, {
-                method: 'DELETE',
-            })
+                    method: 'DELETE',
+                })
         //.then(async data =>console.log(await data.text()))
     }
     
@@ -450,47 +451,77 @@ async function manageUser(req, res) {
     res.send(await response.text());
 }
 
-
-async function getUsersInGroup(groupName) {
+async function getUsersInGroup(req, res) {
     let result = [];
-    const libraries = Object.values(LibreTexts.libraries);
-    for (const subdomain of libraries) {
-        const groups = await getGroups(subdomain);
-        // console.log(subdomain, groups)
-        let targetGroup = groups.find((e) => e.name === groupName);
+    let subdomains = Object.values(LibreTexts.libraries);
+    let libraries = {};
+    const inputGroup = req?.params?.group;
+    
+    for (const subdomain of subdomains) {
+        let groups = await getGroups(subdomain);
+        let targetGroup = groups.find((e) => e.name === inputGroup);
         if (targetGroup) {
-            targetGroup = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/groups/${targetGroup.id}/users?dream.out.format=json`, null, null, 'admin').then(async res => (await res.json()).user);
-            result = targetGroup.map(item => {
-                return {
-                    subdomain,
-                    id: item['@id'],
-                    email: item.email,
-                    fullname: item.fullname,
-                    nickname: item.nick,
-                    username: item.username,
-                    group: groupName
-                }
-            })
+            libraries[subdomain] = LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/groups/${targetGroup.id}/users?dream.out.format=json`, null, null, 'admin');
+        }
+        else {
+            libraries[subdomain] = false;
         }
     }
-    // await fs.writeJSON('allUsers.json',result)
     
-    //convert to CSV
-    let keys = Object.keys(result[0])
-    let CSV = keys.join(',') + '\n';
-    const columnDelimiter = ',';
-    result.forEach(item => {
-        let ctr = 0
-        keys.forEach(key => {
-            if (ctr > 0) {
-                CSV += columnDelimiter
-            }
-            
-            CSV += typeof item[key] === "string" && item[key].includes(columnDelimiter) ? `"${item[key]}"` : item[key]
-            ctr++
+    
+    for (const subdomain in libraries) {
+        // console.log(subdomain, groups)
+        if (!libraries[subdomain])
+            continue;
+        
+        let targetGroup = await libraries[subdomain];
+        targetGroup = (await targetGroup.json()).user;
+        
+        
+        if (targetGroup) {
+            if (!targetGroup.length)
+                targetGroup = [targetGroup];
+            result = result.concat(targetGroup.map(item => {
+                return {
+                    group: inputGroup,
+                    subdomain,
+                    // id: item['@id'],
+                    username: item.username,
+                    email: item.email,
+                    fullname: item.fullname,
+                }
+            }));
+        }
+    }
+    
+    // console.log(req?.params.format);
+    if (req?.params.format === 'json') {
+        // await fs.writeJSON('allUsers.json', result);
+        res.type('json');
+        res.send(JSON.stringify(result));
+        return;
+    }
+    else if (req?.params.format === 'csv') {
+        //convert to CSV
+        let keys = Object.keys(result[0]);
+        let CSV = keys.join(',') + '\n';
+        const columnDelimiter = ',';
+        result.forEach(item => {
+            let ctr = 0
+            keys.forEach(key => {
+                if (ctr > 0) {
+                    CSV += columnDelimiter;
+                }
+                
+                CSV += typeof item[key] === "string" && item[key].includes(columnDelimiter) ? `"${item[key]}"` : item[key];
+                ctr++;
+            })
+            CSV += '\n';
         })
-        CSV += '\n'
-    })
-    // await fs.writeFile('allUsers.csv',CSV)
-    return {JSON: result, CSV};
+        
+        // await fs.writeFile('allUsers.csv', CSV)
+        res.type('text/csv');
+        res.send(CSV);
+    }
+    console.log('done');
 }
