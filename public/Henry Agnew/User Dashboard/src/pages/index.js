@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DeactivateUsers from "../components/DeactivateUsers.jsx";
 import Info from "@material-ui/icons/Info";
 import {AppBar, Switch, Tooltip} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import NewUser from "../components/NewUser.jsx";
+import GetGroupUsers from "../components/GetGroupUsers.jsx";
+import DeactivateUsers from "../components/DeactivateUsers.jsx";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -44,7 +45,7 @@ export default function Dashboard() {
             case 0:
                 return <NewUser/>;
             case 1:
-                return <Switch/>;
+                return <GetGroupUsers/>;
             case 2:
                 return <DeactivateUsers/>;
         }
