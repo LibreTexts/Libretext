@@ -9,7 +9,6 @@ window.addEventListener("load", () => {
         Sidebar();
     }
 });
-
 async function Sidebar() {
     if (window !== window.top)
         return;
@@ -89,14 +88,12 @@ async function Sidebar() {
             this.UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
             this.UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu);
         }
-        
         UpdateUnitMenu(propMenu, unitMenu) {
             // Updates the units displayed in the unitMenu according to the selection of this.property in the propMenu.
             var i;
             i = propMenu.selectedIndex;
             this.FillMenuWithArray(unitMenu, this.unit[i]);
         }
-        
         FillMenuWithArray(myMenu, myArray) {
             // Fills the options of myMenu with the elements of myArray.
             // !CAUTION!: It replaces the elements, so old ones will be deleted.
@@ -106,7 +103,6 @@ async function Sidebar() {
                 myMenu.options[i].text = myArray[i];
             }
         }
-        
         CalculateUnit(sourceForm, targetForm) {
             // A simple wrapper function to validate input before making the conversion
             var sourceValue = sourceForm.unit_input.value;
@@ -118,7 +114,6 @@ async function Sidebar() {
                 this.ConvertFromTo(sourceForm, targetForm);
             }
         }
-        
         ConvertFromTo(sourceForm, targetForm) {
             // Converts the contents of the sourceForm input box to the units specified in the targetForm this.unit menu and puts the result in the targetForm input box.In other words, this is the heart of the whole script...
             var propIndex;
@@ -153,7 +148,6 @@ async function Sidebar() {
             targetForm.unit_input.value = result;
         }
     };
-    
     function readability() {
         $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
         $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
@@ -163,11 +157,9 @@ async function Sidebar() {
         $("#slider-page-width").val(parseFloat(sessionStorage.getItem("page_width")));
         //$("#toggler-text").val(parseFloat(sessionStorage.getItem("font_size")!));
     }
-    
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
-    
     function getSidebar() {
         if (param.pro) {
             switch (param.library) {
@@ -186,7 +178,6 @@ async function Sidebar() {
             }
         }
     }
-    
     function getParam() {
         var _a;
         const type = $("#pageTagsHolder").text().includes('"article:topic"');
@@ -214,7 +205,6 @@ async function Sidebar() {
             "title": title
         };
     }
-    
     function buildSidebar() {
         let tabsSidebar = getSidebar();
         let sidebarDiv = document.createElement("div");
@@ -233,7 +223,6 @@ async function Sidebar() {
         }
         controlSidebar();
         switchSidebar(param.tabs);
-        
         function switchSidebar(tabs) {
             if (tabs) {
                 $("#openContents").on("click", function () {
@@ -341,7 +330,6 @@ async function Sidebar() {
                 });
             }
         }
-        
         function controlSidebar() {
             window.addEventListener('click', function (event) {
                 if (event.target == document.getElementById("custom_open")) {
@@ -458,11 +446,9 @@ async function Sidebar() {
                 }
             });
         }
-        
         //Set initial value for glossary options
         document.getElementById("glossarizerOptions" + localStorage.getItem("glossarizerType")).checked = true;
     }
-    
     function getData(pro) {
         return {
             "open": `<button id="custom_open"  >☰</button>`,
@@ -761,14 +747,13 @@ async function Sidebar() {
         };
     }
 }
-
 function activateBeeLine() {
     const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
     let doBeeline = function (theme, action) {
         for (let i = 0; i < beelineELements.length; i++) {
             let beeline = beelineELements[i].beeline;
             if (beeline) {
-                beeline.setOptions({theme: theme});
+                beeline.setOptions({ theme: theme });
             }
             else {
                 beeline = new BeeLineReader(beelineELements[i], {
@@ -802,7 +787,6 @@ function activateBeeLine() {
         }
     };
     setBeelineToggles();
-    
     function setBeelineToggles() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
@@ -829,16 +813,13 @@ function activateBeeLine() {
         }
     }
 }
-
 function savePanel(_input) {
     sessionStorage.setItem("sidepanel", _input);
     location.reload();
 }
-
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
-
 function rtdefault() {
     $('section.mt-content-container p').css("font-size", 1.1 + "rem");
     $('section.mt-content-container').css("margin-left", 0 + "px");
@@ -852,7 +833,6 @@ function rtdefault() {
     sessionStorage.setItem('font_size', '1.1');
 }
 ;
-
 function saveBookmark() {
     const TITLE = document.getElementById("titleHolder").innerText;
     const URL = window.location.href;
@@ -863,7 +843,6 @@ function saveBookmark() {
         createBookmarks();
     }
 }
-
 function createBookmarks() {
     var _a;
     const LI = document.createElement("li");
@@ -875,7 +854,6 @@ function createBookmarks() {
         (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.appendChild(LI);
     }
 }
-
 function removeBookmarks() {
     var _a;
     (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.removeChild(document.querySelector("#sbBookmark"));
