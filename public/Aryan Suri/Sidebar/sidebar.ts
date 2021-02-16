@@ -179,7 +179,8 @@ async function Sidebar() {
                 default:
                     return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers, tabs.libreverse];
             }
-        } else {
+        }
+        else {
             switch (param.library) {
                 case "chem":
                     return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.libreverse];
@@ -199,9 +200,11 @@ async function Sidebar() {
         let calculators = true;
         if (window.innerWidth <= 450) {
             tab = false;
-        } else if (sidepanel === null) {
+        }
+        else if (sidepanel === null) {
             tab = true;
-        } else {
+        }
+        else {
             tab = JSON.parse(sidepanel) === true;
         }
         return {
@@ -224,7 +227,8 @@ async function Sidebar() {
         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
         if (param.tabs) {
             $("#tabsTrue").addClass("simHover");
-        } else {
+        }
+        else {
             $("body").append(tabs.open);
             $("#sbHeader").hide();
             $("#tabsFalse").addClass("simHover");
@@ -288,7 +292,8 @@ async function Sidebar() {
                         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
-            } else {
+            }
+            else {
                 $("#openContents").on("click", function () {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle();
@@ -349,7 +354,8 @@ async function Sidebar() {
             $('#per_table').on("click", function () {
                 if ($("#iFrameResizer0").is(":hidden")) {
                     $("#iFrameResizer0").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#iFrameResizer0").slideUp("slow");
                 }
             });
@@ -357,28 +363,32 @@ async function Sidebar() {
                 if ($("#gloss_table_put").is(":hidden")) {
                     $("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
                     $("#gloss_table_put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#gloss_table_put").slideUp("slow");
                 }
             });
             $('#ref_table').on("click", function () {
                 if ($("#ref-table-put").is(":hidden")) {
                     $("#ref-table-put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#ref-table-put").slideUp("slow");
                 }
             });
             $('#phy_table').on("click", function () {
                 if ($("#phy_table_put").is(":hidden")) {
                     $("#phy_table_put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#phy_table_put").slideUp("slow");
                 }
             });
             $('#DesmosWidget').on("click", function () {
                 if ($("#desmosW").is(":hidden")) {
                     $("#desmosW").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#desmosW").slideUp("slow");
                 }
             });
@@ -386,28 +396,32 @@ async function Sidebar() {
                 if ($("#conv_table_put").is(":hidden")) {
                     $("#conv_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
                     $("#conv_table_put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#conv_table_put").slideUp("slow");
                 }
             });
             $('#conversion_table').on("click", function () {
                 if ($("#conversion_table_put").is(":hidden")) {
                     $("#conversion_table_put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#conversion_table_put").slideUp("slow");
                 }
             });
             $('#construction-guide').on("click", function () {
                 if ($("#construction-guide-put").is(":hidden")) {
                     $("#construction-guide-put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#construction-guide-put").slideUp("slow");
                 }
             });
             $('#library-guide').on("click", function () {
                 if ($("#library-guide-put").is(":hidden")) {
                     $("#library-guide-put").slideDown("slow");
-                } else {
+                }
+                else {
                     $("#library-guide-put").slideUp("slow");
                 }
             });
@@ -436,11 +450,13 @@ async function Sidebar() {
                     $('#toggler-text').text('Left');
                     $('section.mt-content-container p').css("text-align", "Left");
                     sessionStorage.setItem('text_align', "Left");
-                } else if ($('#toggler-text').text() === 'Left') {
+                }
+                else if ($('#toggler-text').text() === 'Left') {
                     $('#toggler-text').text('Full');
                     $('section.mt-content-container p').css("text-align", "justify");
                     sessionStorage.setItem('text_align', "Justify");
-                } else {
+                }
+                else {
                 }
             });
         }
@@ -755,7 +771,8 @@ function activateBeeLine() {
             let beeline = beelineELements[i].beeline;
             if (beeline) {
                 beeline.setOptions({theme: theme});
-            } else {
+            }
+            else {
                 beeline = new BeeLineReader(beelineELements[i], {
                     theme: theme,
                     skipBackgroundColor: true,
@@ -770,7 +787,8 @@ function activateBeeLine() {
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', 'disabled');
                 }
-            } else {
+            }
+            else {
                 beeline.color();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', action, theme);
@@ -779,7 +797,8 @@ function activateBeeLine() {
             const contentContainer = $('.elm-skin-container');
             if (theme === 'night_blues' || localStorage.getItem('darkMode')) {
                 contentContainer.addClass('darkMode');
-            } else {
+            }
+            else {
                 contentContainer.removeClass('darkMode');
             }
         }
@@ -800,7 +819,8 @@ function activateBeeLine() {
                 localStorage.setItem('beeline', theme!)
                 if (theme === 'night_blues') {
                     localStorage.setItem('darkMode', 'true');
-                } else {
+                }
+                else {
                     localStorage.setItem('darkMode', 'false');
                 }
                 btns.removeClass('active');
