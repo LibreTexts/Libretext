@@ -9,8 +9,9 @@ window.addEventListener("load", () => {
         Sidebar();
     }
 });
-async function Sidebar() {
 
+async function Sidebar() {
+    
     if (window !== window.top)
         return;
     let param = getParam();
@@ -89,12 +90,14 @@ async function Sidebar() {
             this.UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
             this.UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu);
         }
+        
         UpdateUnitMenu(propMenu, unitMenu) {
             // Updates the units displayed in the unitMenu according to the selection of this.property in the propMenu.
             var i;
             i = propMenu.selectedIndex;
             this.FillMenuWithArray(unitMenu, this.unit[i]);
         }
+        
         FillMenuWithArray(myMenu, myArray) {
             // Fills the options of myMenu with the elements of myArray.
             // !CAUTION!: It replaces the elements, so old ones will be deleted.
@@ -104,6 +107,7 @@ async function Sidebar() {
                 myMenu.options[i].text = myArray[i];
             }
         }
+        
         CalculateUnit(sourceForm, targetForm) {
             // A simple wrapper function to validate input before making the conversion
             var sourceValue = sourceForm.unit_input.value;
@@ -115,6 +119,7 @@ async function Sidebar() {
                 this.ConvertFromTo(sourceForm, targetForm);
             }
         }
+        
         ConvertFromTo(sourceForm, targetForm) {
             // Converts the contents of the sourceForm input box to the units specified in the targetForm this.unit menu and puts the result in the targetForm input box.In other words, this is the heart of the whole script...
             var propIndex;
@@ -149,22 +154,23 @@ async function Sidebar() {
             targetForm.unit_input.value = result;
         }
     };
-
+    
     function readability() {
         $('section.mt-content-container p').css("font-size", sessionStorage.getItem("font_size") + "rem");
         $('section.mt-content-container').css("margin-left", sessionStorage.getItem("page_width") + "px");
         $('section.mt-content-container').css("margin-right", sessionStorage.getItem("page_width") + "px");
         $('section.mt-content-container p').css("text-align", sessionStorage.getItem("text_align")!);
-
+        
         $("#size").val(parseFloat(sessionStorage.getItem("font_size")!));
         $("#slider-page-width").val(parseFloat(sessionStorage.getItem("page_width")!));
         //$("#toggler-text").val(parseFloat(sessionStorage.getItem("font_size")!));
-
+        
     }
-
+    
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
+    
     function getSidebar() {
         if (param.pro) {
             switch (param.library) {
@@ -173,8 +179,7 @@ async function Sidebar() {
                 default:
                     return [tabs.header, tabs.home, tabs.resources["default"], tabs.control, tabs.usage, tabs.developers, tabs.libreverse];
             }
-        }
-        else {
+        } else {
             switch (param.library) {
                 case "chem":
                     return [tabs.header, tabs.home, tabs.resources[param.library], tabs.control, tabs.usage, tabs.libreverse];
@@ -183,6 +188,7 @@ async function Sidebar() {
             }
         }
     }
+    
     function getParam() {
         const type = $("#pageTagsHolder").text().includes('"article:topic"');
         const [library] = LibreTexts.parseURL();
@@ -193,11 +199,9 @@ async function Sidebar() {
         let calculators = true;
         if (window.innerWidth <= 450) {
             tab = false;
-        }
-        else if (sidepanel === null) {
+        } else if (sidepanel === null) {
             tab = true;
-        }
-        else {
+        } else {
             tab = JSON.parse(sidepanel) === true;
         }
         return {
@@ -209,6 +213,7 @@ async function Sidebar() {
             "title": title
         };
     }
+    
     function buildSidebar() {
         let tabsSidebar = getSidebar();
         let sidebarDiv = document.createElement("div");
@@ -219,14 +224,14 @@ async function Sidebar() {
         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
         if (param.tabs) {
             $("#tabsTrue").addClass("simHover");
-        }
-        else {
+        } else {
             $("body").append(tabs.open);
             $("#sbHeader").hide();
             $("#tabsFalse").addClass("simHover");
         }
         controlSidebar();
         switchSidebar(param.tabs);
+        
         function switchSidebar(tabs) {
             if (tabs) {
                 $("#openContents").on("click", function () {
@@ -283,8 +288,7 @@ async function Sidebar() {
                         $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide("slide");
                     }
                 });
-            }
-            else {
+            } else {
                 $("#openContents").on("click", function () {
                     $("#sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb1").toggle();
@@ -334,6 +338,7 @@ async function Sidebar() {
                 });
             }
         }
+        
         function controlSidebar() {
             window.addEventListener('click', function (event) {
                 if (event.target == document.getElementById("custom_open")) {
@@ -344,8 +349,7 @@ async function Sidebar() {
             $('#per_table').on("click", function () {
                 if ($("#iFrameResizer0").is(":hidden")) {
                     $("#iFrameResizer0").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#iFrameResizer0").slideUp("slow");
                 }
             });
@@ -353,32 +357,28 @@ async function Sidebar() {
                 if ($("#gloss_table_put").is(":hidden")) {
                     $("#gloss_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Organic_Chemistry_Glossary");
                     $("#gloss_table_put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#gloss_table_put").slideUp("slow");
                 }
             });
             $('#ref_table').on("click", function () {
                 if ($("#ref-table-put").is(":hidden")) {
                     $("#ref-table-put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#ref-table-put").slideUp("slow");
                 }
             });
             $('#phy_table').on("click", function () {
                 if ($("#phy_table_put").is(":hidden")) {
                     $("#phy_table_put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#phy_table_put").slideUp("slow");
                 }
             });
             $('#DesmosWidget').on("click", function () {
                 if ($("#desmosW").is(":hidden")) {
                     $("#desmosW").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#desmosW").slideUp("slow");
                 }
             });
@@ -386,32 +386,28 @@ async function Sidebar() {
                 if ($("#conv_table_put").is(":hidden")) {
                     $("#conv_table_put").load("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions #pageText");
                     $("#conv_table_put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#conv_table_put").slideUp("slow");
                 }
             });
             $('#conversion_table').on("click", function () {
                 if ($("#conversion_table_put").is(":hidden")) {
                     $("#conversion_table_put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#conversion_table_put").slideUp("slow");
                 }
             });
             $('#construction-guide').on("click", function () {
                 if ($("#construction-guide-put").is(":hidden")) {
                     $("#construction-guide-put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#construction-guide-put").slideUp("slow");
                 }
             });
             $('#library-guide').on("click", function () {
                 if ($("#library-guide-put").is(":hidden")) {
                     $("#library-guide-put").slideDown("slow");
-                }
-                else {
+                } else {
                     $("#library-guide-put").slideUp("slow");
                 }
             });
@@ -440,19 +436,19 @@ async function Sidebar() {
                     $('#toggler-text').text('Left');
                     $('section.mt-content-container p').css("text-align", "Left");
                     sessionStorage.setItem('text_align', "Left");
-                }
-                else if ($('#toggler-text').text() === 'Left') {
+                } else if ($('#toggler-text').text() === 'Left') {
                     $('#toggler-text').text('Full');
                     $('section.mt-content-container p').css("text-align", "justify");
                     sessionStorage.setItem('text_align', "Justify");
-                }
-                else {
+                } else {
                 }
             });
         }
+        
         //Set initial value for glossary options
-        document.getElementById("glossarizerOptions"+localStorage.getItem("glossarizerType")).checked=true;
+        document.getElementById("glossarizerOptions" + localStorage.getItem("glossarizerType")).checked = true;
     }
+    
     function getData(pro) {
         return {
             "open": `<button id="custom_open"  >☰</button>`,
@@ -480,20 +476,20 @@ async function Sidebar() {
 		
         </div>` : `<div id="sbHeader" class="sbHeader" style="">
         <div id="openContents"  class="top-tabs">
-			<h5  >Contents</h5>
+			<div class="top-tab">Contents</div>
 		</div>
 		<div  id="openResources" class="top-tabs">
-            <h5 class="">Resources</h5>
+            <div class="top-tab">Resources</div>
 		</div>
 		<div id="openControl"  class="top-tabs">
-			<h5 >Readability</h5>
+			<div class="top-tab">Readability</div>
 		</div>
 		<div  id="openUsage"  class="top-tabs">
-            <h5 class="">Tools</h5>
+            <div class="top-tab">Tools</div>
 		</div>
 
 		<div id="openLibreverse"  class="top-tabs">
-            <h5  class="">LibreVerse</h5>
+            <div class="top-tab">LibreVerse</div>
 		</div>
         </div>`,
             "home": `<div id="sb1" class="custom_sidebar">
@@ -507,9 +503,9 @@ async function Sidebar() {
             <div class="custom_field">
                 <iframe class="pubchem-widget" id="pubchemWidget" style=" width:100%; height: 400px; overflow: auto;" alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number." style="border: 0px; width: 100%; height: 506px; overflow: auto;">
                 </iframe>
-            </div>         
+            </div>
         <a id="ref_table" target="_blank" >Reference Tables</a>
-            <div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
+            <div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">
 
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
@@ -560,9 +556,9 @@ async function Sidebar() {
     
 </div> `,
                 "default": ` <div id="sb2"  class="custom_sidebar">
-<div class="custom_field">       
+<div class="custom_field">
 	<a id="ref_table" target="_blank" >Reference Tables</a>
-		<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">                
+		<div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">
 
 		</div>
 	 <a id="phy_table" target="_blank" >Physical Constants</a>
@@ -617,39 +613,39 @@ async function Sidebar() {
 	<a onclick="rtdefault()" class="btn btn-large" >Default Settings</a>
 	</div>
     <p class="h_ar">Font Size:</p>
-    <div class="custom_field">   
+    <div class="custom_field">
        
-        <input class="slider_ar" type="range" min=".4" max="1.8" value="" step=".1" id="size"> 
+        <input class="slider_ar" type="range" min=".4" max="1.8" value="" step=".1" id="size">
 
 
     
 	</div>
 
     <p class="h_ar">Page Width:</p>
-<div class="custom_field">   
+<div class="custom_field">
   <input class="slider_ar" type="range" min="0" max="450" value="0" step ="10" id="slider-page-width">
 </div>
    <p class="h_ar">Text Align:</p>
-    <div class="custom_field"> 
+    <div class="custom_field">
         <a id="toggler-text" href="#0" class="toggler off">Left</a>
     </div>
    <p class="h_ar">Sidebar Layout:</p>
    <div style="margin-left: 10px;" id="sbLayout" class="custom_field">
-	   <button id="tabsTrue" onclick="savePanel(true)">Side View </button>		
+	   <button id="tabsTrue" onclick="savePanel(true)">Side View </button>
 	   <button id="tabsFalse" onclick="savePanel(false)">Compressed View</button>
-	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->		
+	   <!--<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>-->
 	</div>
 	<div class="custom_field">
    <h3>
    <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png">
 	BeeLine Reader </h3>
 	<p> BeeLine Reader uses subtle color gradients to help you read more quickly and efficiently. Choose a color scheme below, or click here to <a style="color: #30b3f6; display: unset; margin:0;" href="http://www.beelinereader.com/education/?utm_source=libretexts"> learn more. </a> </p>
-		   
+	
 
 	</div>
     <div class="BLtoggle" id="doBeeLine">
       			<a id="SB_Inverted" class="btn btn-large active" data-color="night_blues" >Inverted</a>
-                <a id="SB_Bright" class="btn btn-large active" data-color="dark" >Bright</a>
+                <a id="SB_Bright" class="btn btn-large active" data-color="bright" >Bright</a>
                 <a id="SB_Blues" class="btn btn-large active" data-color="blues" >Blues</a>
 				<a id="SB_Grays" class="btn btn-large active" data-color="gray" >Grays</a>
 				<a id ="dark-light" class="btn btn-large" onclick="$('.elm-skin-container').toggleClass('darkMode'); localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true')">Dark Mode</a>
@@ -698,7 +694,7 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
-            
+    
     </div>
 
  
@@ -709,11 +705,11 @@ async function Sidebar() {
             "developers": `<div id="sb5"  class="custom_sidebar">
 	<div class="custom_field">
 		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
-		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div> 
+		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div>
         <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
-        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>       
+        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
@@ -728,15 +724,15 @@ async function Sidebar() {
 
 				<div class="custom_field">
 				<div style="display: flex; flex-direction: column; margin-left: 10px;">
-					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
-					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
+					<ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
+					<ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" ><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
 				</div>
 				 <div class="custom_field">
                     <a title="https://groups.io/g/LibreNet-Commons/topics" href="https://groups.io/g/LibreNet-Commons/topics" rel="external nofollow" target="_blank" class="link-https">LibreNet Commons</a>
                 </div>
             
                 <div class="custom_field">
-                    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>   
+                    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>
                 </div>
             
                 <div class="custom_field">
@@ -756,37 +752,40 @@ function activateBeeLine() {
     const beelineELements = document.querySelectorAll(".mt-content-container p:not(.boxtitle)");
     let doBeeline = function (theme, action) {
         for (let i = 0; i < beelineELements.length; i++) {
-            const beeline = new BeeLineReader(beelineELements[i], {
-                theme: theme,
-                skipBackgroundColor: true,
-                handleResize: true,
-                skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
-            });
+            let beeline = beelineELements[i].beeline;
+            if (beeline) {
+                beeline.setOptions({theme: theme});
+            } else {
+                beeline = new BeeLineReader(beelineELements[i], {
+                    theme: theme,
+                    skipBackgroundColor: true,
+                    handleResize: true,
+                    skipTags: ['svg', 'h1', 'h3', 'h3', 'h4', 'h3', 'style', 'script', 'blockquote']
+                });
+                beelineELements[i].beeline = beeline;
+            }
             localStorage.setItem("beeline", theme);
             if (theme === "off") {
                 beeline.uncolor();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', 'disabled');
                 }
-            }
-            else {
+            } else {
                 beeline.color();
                 if (typeof ga === 'function') {
                     ga('send', 'event', 'Beeline', action, theme);
                 }
             }
             const contentContainer = $('.elm-skin-container');
-            if (theme === 'night_blues') {
+            if (theme === 'night_blues' || localStorage.getItem('darkMode')) {
                 contentContainer.addClass('darkMode');
-                localStorage.setItem('darkMode', 'true');
-            }
-            else {
+            } else {
                 contentContainer.removeClass('darkMode');
-                localStorage.setItem('darkMode', 'false');
             }
         }
     };
     setBeelineToggles();
+    
     function setBeelineToggles() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
@@ -796,9 +795,14 @@ function activateBeeLine() {
                 if (!e.target.href)
                     e.preventDefault();
                 const theme = $(this).attr("data-color");
-                localStorage.setItem('beeline', theme!)
                 if (!theme)
                     return;
+                localStorage.setItem('beeline', theme!)
+                if (theme === 'night_blues') {
+                    localStorage.setItem('darkMode', 'true');
+                } else {
+                    localStorage.setItem('darkMode', 'false');
+                }
                 btns.removeClass('active');
                 btns.filter('a[data-color="' + theme + '"]').addClass('active');
                 btns.filter('button[data-color="' + theme + '"]').addClass('active');
@@ -812,6 +816,7 @@ function savePanel(_input: string) {
     sessionStorage.setItem("sidepanel", _input);
     location.reload();
 }
+
 function splitPanel() {
     $("section.mt-content-container").toggleClass("padLeft");
 }
@@ -830,6 +835,7 @@ function rtdefault() {
     sessionStorage.setItem('font_size', '1.1');
 }
 ;
+
 function saveBookmark() {
     const TITLE = document.getElementById("titleHolder").innerText;
     const URL = window.location.href;
@@ -840,6 +846,7 @@ function saveBookmark() {
         createBookmarks();
     }
 }
+
 function createBookmarks() {
     const LI = document.createElement("li");
     const URL = sessionStorage.getItem("Bookmark");
@@ -850,6 +857,7 @@ function createBookmarks() {
         document.querySelector("#bm-list")?.appendChild(LI);
     }
 }
+
 function removeBookmarks() {
     document.querySelector("#bm-list")?.removeChild(document.querySelector("#sbBookmark"));
     sessionStorage.removeItem("Title");
