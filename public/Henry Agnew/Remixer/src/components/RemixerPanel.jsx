@@ -893,7 +893,7 @@ class RemixerPanel extends React.Component {
         
         let processNode = (node, sharedIndex, level, parent = {data: {}}) => {
             node.title = node.title.replace(/&amp;|&/g, 'and').trim();
-            let chapter = parent.chapter || 1;
+            let chapter = parent.chapter ?? 1;
             node.depth = level;
             
             //handling Front/Back matter organization
