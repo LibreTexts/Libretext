@@ -587,7 +587,8 @@ LibreTextsGlossarizer = class {
 //Self Initialize
 libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
 window.addEventListener('load', () => {
-    if (libretextGlossary && !LibreTexts.active.glossarizer)
+    if (libretextGlossary && !LibreTexts.active.glossarizer) {
         LibreTexts.active.glossarizer = true;
         libretextGlossary.makeGlossary();
+    }
 });
