@@ -25,7 +25,7 @@ function LibreTextsReuse() {
         "Chemistry": "chem",
         "Engineering": "eng",
         "Espanol": "espanol",
-        "Geology": "geo",
+        "Geosciences": "geo",
         "Humanities": "human",
         "K12 Education": "k12",
         "Mathematics": "math",
