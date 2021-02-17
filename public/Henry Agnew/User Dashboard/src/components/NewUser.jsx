@@ -8,33 +8,20 @@ import Table from "@material-ui/core/Table";
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
-import {Divider, Switch, TextField} from "@material-ui/core";
+import {Divider, Switch, TextField, Tooltip} from "@material-ui/core";
 import PresentToAll from "@material-ui/icons/PresentToAll";
 import useKeypress from 'react-use-keypress';
 import {Autocomplete} from "@material-ui/lab";
 import SystemUpdateAlt from "@material-ui/icons/SystemUpdateAlt";
 import AddCircle from "@material-ui/icons/AddCircle";
 import Chip from "@material-ui/core/Chip";
-import * as PropTypes from "prop-types";
+import {useSnackbar} from 'notistack';
 
 
-class GroupsIO extends React.Component {
-    render() {
-        return null;
-    }
-}
-
-GroupsIO.propTypes = {
-    user: PropTypes.shape({
-        name: PropTypes.string,
-        groups: PropTypes.any,
-        email: PropTypes.string,
-        sso: PropTypes.bool,
-        username: PropTypes.string
-    })
-};
 export default function NewUser() {
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const [user, setUser] = React.useState({username: '', email: '', name: '', sso: false, groups: []});
+    const [selectedLibrary, setSelectedLibrary] = React.useState('');
     const libraries = Object.entries(LibreTexts.libraries);
     
     useKeypress('Enter', () => {
@@ -112,6 +99,25 @@ export default function NewUser() {
                 setUser({...user, username: value[0], email: isEmail})
             }
             else {
+                const selected = LibreTexts.libraries[value?.[4]];
+                if (selected) {
+                    setSelectedLibrary(selected);
+                    enqueueSnackbar(`Instructor requested an account on ${value?.[4]}`,
+                        {
+                            variant: 'warning',
+                            persist: true,
+                            anchorOrigin: {
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            },
+                            action: (key) => <Button onClick={() => {
+                                closeSnackbar(key);
+                                setSelectedLibrary('');
+                            }}>Dismiss</Button>
+                        })
+                }
+                
+                
                 setUser({
                     ...user,
                     username: value[0],
@@ -146,8 +152,13 @@ export default function NewUser() {
                     </TableRow></TableHead>
                     <TableBody><TableRow>
                         <TableCell>
-                            <TextField id='dashboardUsername' label="Username" variant="filled" onPaste={trimEntry}/>
-                            <Button color="primary" variant="contained" onClick={search}>SEARCH</Button>
+                            <Tooltip title="You can also paste in a row from the Instructor Signup sheet">
+                                <TextField id='dashboardUsername' label="Username" variant="filled"
+                                           onPaste={trimEntry}/>
+                            </Tooltip>
+                            <Tooltip title="Shortcut: Enter key">
+                                <Button color="primary" variant="contained" onClick={search}>SEARCH</Button>
+                            </Tooltip>
                         </TableCell>
                         <TableCell/>
                         <TableCell><TextField label="Email" variant="filled" value={user.email}
@@ -196,10 +207,9 @@ export default function NewUser() {
                         <TableCell>Apply Settings</TableCell>
                     </TableRow></TableHead>
                     <TableBody>
-                        <GroupsIO user={user}/>
-                        {libraries.map(([libraryname, subdomain]) =>
-                            <RenderRow key={subdomain} subdomain={subdomain} libraryname={libraryname}
-                                       user={user} reuse={reuse}/>)}</TableBody>
+                        {libraries.map(([libraryName, subdomain]) =>
+                            <RenderRow key={subdomain} subdomain={subdomain} libraryname={libraryName}
+                                       user={user} reuse={reuse} selectedLibrary={selectedLibrary}/>)}</TableBody>
                 </Table>
             </TableContainer>
         </div>
@@ -210,6 +220,9 @@ function RenderRow(props) {
     const [libraryUser, setLibraryUser] = React.useState();
     
     let ready = props?.user?.username && props?.user?.email;
+    
+    if (props.selectedLibrary)
+        ready = ready && props.selectedLibrary === props.subdomain;
     
     useEffect(() => {
         getLibraryUser();

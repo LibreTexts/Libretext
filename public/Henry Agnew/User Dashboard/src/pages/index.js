@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {SnackbarProvider} from 'notistack';
 import Info from "@material-ui/icons/Info";
-import {AppBar, Switch, Tooltip} from "@material-ui/core";
+import {AppBar, Tooltip} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
@@ -10,6 +11,8 @@ import GetGroupUsers from "../components/GetGroupUsers.jsx";
 import DeactivateUsers from "../components/DeactivateUsers.jsx";
 
 const target = document.createElement("div");
+
+
 // noinspection JSValidateTypes
 target.id = Math.random() * 100;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
@@ -52,20 +55,22 @@ export default function Dashboard() {
     }
     
     return <ThemeProvider theme={theme}>
-        <div id="UserDashboard" className={'CenterContainer'}>
-            {/*variant="fullWidth"*/}
-            <AppBar position="static" className="navigationBar">
-                <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
-                    <Info/>
-                </Tooltip>
-                <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                    <Tab label="Create/Modify Accounts" {...a11yProps(0)} />
-                    <Tab label="Get Group Users" {...a11yProps(1)} />
-                    <Tab label="Deactivate Accounts" {...a11yProps(2)} />
-                </Tabs>
-            </AppBar>
-            {getComponent()}
-        </div>
+        <SnackbarProvider>
+            <div id="UserDashboard" className={'CenterContainer'}>
+                {/*variant="fullWidth"*/}
+                <AppBar position="static" className="navigationBar">
+                    <Tooltip placement='right' title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+                        <Info/>
+                    </Tooltip>
+                    <Tabs value={value} onChange={handleChange} variant="fullWidth">
+                        <Tab label="Create/Modify Accounts" {...a11yProps(0)} />
+                        <Tab label="Get Group Users" {...a11yProps(1)} />
+                        <Tab label="Deactivate Accounts" {...a11yProps(2)} />
+                    </Tabs>
+                </AppBar>
+                {getComponent()}
+            </div>
+        </SnackbarProvider>
     </ThemeProvider>
 }
 
