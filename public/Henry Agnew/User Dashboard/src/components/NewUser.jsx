@@ -106,10 +106,6 @@ export default function NewUser() {
                         {
                             variant: 'warning',
                             persist: true,
-                            anchorOrigin: {
-                                vertical: 'bottom',
-                                horizontal: 'right',
-                            },
                             action: (key) => <Button onClick={() => {
                                 closeSnackbar(key);
                                 setSelectedLibrary('');
@@ -191,7 +187,8 @@ export default function NewUser() {
                 </Table>
             </TableContainer>
             <Divider/>
-            <TableContainer size="small" component={Paper} style={{maxHeight: '70vh'}}>
+            {/*style={{maxHeight: '70vh'}}*/}
+            <TableContainer size="small" component={Paper}>
                 <Table stickyHeader size="small" style={{display: 'inline-table'}}>
                     <TableHead><TableRow>
                         <TableCell/>
@@ -217,6 +214,7 @@ export default function NewUser() {
 }
 
 function RenderRow(props) {
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const [libraryUser, setLibraryUser] = React.useState();
     
     let ready = props?.user?.username && props?.user?.email;
@@ -268,7 +266,7 @@ function RenderRow(props) {
             alert("This is an error! Please alert the developer as you should not be see seeing this.");
             return false;
         }
-        const approve = alreadyExists === true || subdomain === prompt(`Please type "${subdomain}" to create the user ${props.user.username}`).trim()
+        const approve = alreadyExists === true || confirm(`Confirm creation of user ${props.user.username} on "${props.libraryname}"`)
         if (approve) {
             await LibreTexts.sendAPI('manageUser/create', {
                 payload: {
@@ -276,9 +274,10 @@ function RenderRow(props) {
                 }
             });
             getLibraryUser();
+            enqueueSnackbar(`${props.libraryname}/${props.user.username} success`,{variant:"success"});
         }
         else {
-            alert('Failed to create. Try again!')
+            enqueueSnackbar(`Cancelled action.`,{variant:"error"});
         }
     }
     

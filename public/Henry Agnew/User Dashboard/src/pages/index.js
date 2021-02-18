@@ -55,7 +55,10 @@ export default function Dashboard() {
     }
     
     return <ThemeProvider theme={theme}>
-        <SnackbarProvider>
+        <SnackbarProvider anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}>
             <div id="UserDashboard" className={'CenterContainer'}>
                 {/*variant="fullWidth"*/}
                 <AppBar position="static" className="navigationBar">

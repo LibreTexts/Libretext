@@ -13,7 +13,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 
 
 export default function DeactivateUsers(props) {
-    const [users, setUsers] = React.useState([]);
+    const [users, setUsers] = React.useState(false);
     const [total, setTotal] = React.useState();
     const [subdomain] = LibreTexts.parseURL();
     
@@ -58,8 +58,10 @@ export default function DeactivateUsers(props) {
     }
     
     function getProgress() {
-        if (!users?.length)
+        if (!users)
             return <div>Retrieving users for {subdomain}<br/><LinearProgress color="primary"/></div>;
+        else if(!users.length)
+            return <div>No inactive users found! Check back later or check other libraries.</div>;
         else {
             const percent = (total - users.length) / total * 100;
             return <div>{subdomain} {Math.trunc(percent)}%<LinearProgress color="secondary" variant="determinate"
@@ -72,13 +74,13 @@ export default function DeactivateUsers(props) {
             <div className="topPanel">
                 <div>This tool is used to deactivate all accounts on this library that have been unused for over two years. Accounts will be
                      moved from active to inactive status, but will not be deleted.
-                    <Button onClick={purgeUsers} color="secondary"
+                    <Button onClick={purgeUsers} color="secondary" disabled={!users.length}
                             variant="contained">DEACTIVATE {users.length} accounts</Button></div>
                 {getProgress()}
                 <TableContainer size="small" component={Paper}>
                     <Table size="small" style={{display: 'inline-table'}}>
                         <TableHead><TableRow>
-                            <TableCell>Username ({users.length})</TableCell>
+                            <TableCell>Username ({users.length ?? 'Loading'})</TableCell>
                             <TableCell>Last Login</TableCell>
                         </TableRow></TableHead>
                         <AutoSizer disableHeight={true}>
@@ -86,7 +88,7 @@ export default function DeactivateUsers(props) {
                                 <List
                                     className="List"
                                     height={500}
-                                    itemCount={users.length}
+                                    itemCount={users.length ?? 0}
                                     itemSize={40}
                                     width={width}
                                 >
