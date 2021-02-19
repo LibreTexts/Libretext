@@ -141,7 +141,7 @@ export default function OptionsPanel(props) {
 		padding: 20,
 	}}>
 		Remixer Options
-{/*		<FormControlLabel
+		<FormControlLabel
 			control={
 				<Switch
 					checked={props.options.tutorial}
@@ -149,7 +149,7 @@ export default function OptionsPanel(props) {
 					color="primary"
 					inputProps={{'aria-label': 'primary checkbox'}}
 				/>}
-			label="Show tutorial"/>*/}
+			label="Show tutorial"/>
 		<FormControlLabel
 			control={
 				<Switch

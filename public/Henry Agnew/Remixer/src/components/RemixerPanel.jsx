@@ -1,7 +1,7 @@
 import React from 'react';
 import RemixerFunctions from '../reusableFunctions';
 
-// import Tutorial from './Tutorial.jsx';
+import Tutorial from './Tutorial.jsx';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -371,11 +371,11 @@ class RemixerPanel extends React.Component {
                     <Publish/></Button>
             </div>
             <div id='LTFormContainer' data-beeline-skip>
-{/*                <Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
+                <Slide in={this.props.options.tutorial} direction={'right'} mountOnEnter unmountOnExit>
                     <div>Tutorial Panel
                         <Tutorial/>
                     </div>
-                </Slide>*/}
+                </Slide>
                 <div>Library Panel<select className='LTFormSubdomain'
                                           onChange={this.setSubdomain}
                                           value={this.state.subdomain}>{this.getSelectOptions()}</select>
