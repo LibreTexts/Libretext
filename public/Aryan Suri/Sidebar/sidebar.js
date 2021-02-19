@@ -778,7 +778,7 @@ function activateBeeLine() {
                 }
             }
             const contentContainer = $('.elm-skin-container');
-            if (theme === 'night_blues' || localStorage.getItem('darkMode')) {
+            if (theme === 'night_blues' || localStorage.getItem('darkMode') === 'true') {
                 contentContainer.addClass('darkMode');
             }
             else {
