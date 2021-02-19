@@ -39,7 +39,7 @@ function attribution() {
         const param = getParam();
         const attrdiv = document.createElement("div");
         const sidebar = document.getElementById("sidebarDiv");
-        sidebar?.style.display === "none";
+        (sidebar === null || sidebar === void 0 ? void 0 : sidebar.style.display) === "none";
         $(attrdiv).attr("id", "SB-PA-AD");
         document.body.append(attrdiv);
         $(attrdiv).html(`
