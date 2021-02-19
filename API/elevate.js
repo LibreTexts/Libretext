@@ -386,7 +386,7 @@ async function manageUser(req, res) {
     for (const group of libraryGroups)
         libraryGroupsMap[group.name] = group.id;
     
-    let user = await LibreTexts.getUser(payload.username, payload.subdomain);
+    let user = await LibreTexts.getUser(payload.username, payload.subdomain, body.user.username);
     if (req.params.method === 'get') {
         
         res.status(user ? 200 : 404);
@@ -394,11 +394,12 @@ async function manageUser(req, res) {
         return;
     }
     
-    
     //update user properties
     const role = payload.groups.includes('Admin') ? 'Admin' : 'Viewer';
     // if (req.params.method === 'modify') {
-    const response = await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users?dream.out.format=json`, null, null, body.user.username, {
+    
+    //TODO: license.seat is not currently working
+    let response = await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users?dream.out.format=json`, null, null, body.user.username, {
         method: 'POST',
         headers: {'content-type': 'application/xml; charset=utf-8'},
         body: `<user ${user ? `id="${user.id}"` : ''}>
@@ -406,15 +407,28 @@ async function manageUser(req, res) {
     <email>${payload.email}</email>
     <fullname>${payload.name}</fullname>
     <license.seat>true</license.seat>
-    <status>active</status>
+    <status>${payload.status}</status>
     <service.authentication id="${payload.sso ? 3 : 1}" />
     <permissions.user>
         <role>${role}</role>
     </permissions.user>
     </user>`
     });
+    res.status(response.status);
+    response = await response.text();
+    await LibreTexts.sleep(100);
     
-    user = await LibreTexts.getUser(payload.username, payload.subdomain);
+    // console.log(user.groups, payload.groups);
+    if (payload.status === 'active') {
+        await LibreTexts.authenticatedFetch(`https://${payload.subdomain}.libretexts.org/@api/deki/users/${user.id}/seat?dream.out.format=json`,
+            null,
+            null,
+            body.user.username,
+            {method: 'PUT'});
+    }
+    
+    //get updated user status
+    user = await LibreTexts.getUser(payload.username, payload.subdomain, body.user.username);
     user.groups = user.groups.map(g => g.name);
     
     // console.log(user.groups, payload.groups);
@@ -424,7 +438,7 @@ async function manageUser(req, res) {
     const removeGroups = user.groups.filter(g => !payload.groups.includes(g));
     
     // console.log(addGroups, removeGroups);
-    console.log(libraryGroupsMap);
+    // console.log(libraryGroupsMap);
     
     //add user to groups
     for (const group of addGroups) {
@@ -447,8 +461,7 @@ async function manageUser(req, res) {
         //.then(async data =>console.log(await data.text()))
     }
     
-    res.status(response.status);
-    res.send(await response.text());
+    res.send(response);
 }
 
 async function getUsersInGroup(req, res) {
@@ -456,6 +469,7 @@ async function getUsersInGroup(req, res) {
     let subdomains = Object.values(LibreTexts.libraries);
     let libraries = {};
     const inputGroup = req?.params?.group;
+    // res.setHeader('Content-Disposition', 'attachment');
     
     for (const subdomain of subdomains) {
         let groups = await getGroups(subdomain);
@@ -481,16 +495,20 @@ async function getUsersInGroup(req, res) {
         if (targetGroup) {
             if (!targetGroup.length)
                 targetGroup = [targetGroup];
-            result = result.concat(targetGroup.map(item => {
+            targetGroup = targetGroup.map(item => {
                 return {
                     group: inputGroup,
                     subdomain,
+                    status: item.status,
                     // id: item['@id'],
                     username: item.username,
                     email: item.email,
                     fullname: item.fullname,
                 }
-            }));
+            });
+            
+            targetGroup = targetGroup.filter(item => item.status === 'active');
+            result = result.concat(targetGroup);
         }
     }
     

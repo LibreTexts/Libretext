@@ -14,8 +14,8 @@ async function checkAuthorization(req, res, next) {
     body.username = body?.globalSettings?.userSystemName || body.username;
     body.id = body?.globalSettings?.userId || body.id;
     
-    const user = await LibreTexts.getUser(body.username, body.subdomain); //use backend channel and token to verify user identity
-    if (!user) {
+    const user = await LibreTexts.getUser(body.username, body.subdomain, body.username); //use backend channel and token to verify user identity
+    if(!user){
         res.status(404);
         next(`${body.username} not found`);
     }

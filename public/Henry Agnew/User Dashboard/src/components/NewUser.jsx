@@ -17,10 +17,16 @@ import AddCircle from "@material-ui/icons/AddCircle";
 import Chip from "@material-ui/core/Chip";
 import {useSnackbar} from 'notistack';
 
-
 export default function NewUser() {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-    const [user, setUser] = React.useState({username: '', email: '', name: '', sso: false, groups: []});
+    const [user, setUser] = React.useState({
+        username: '',
+        email: '',
+        name: '',
+        sso: false,
+        status: 'active',
+        groups: []
+    });
     const [selectedLibrary, setSelectedLibrary] = React.useState('');
     const libraries = Object.entries(LibreTexts.libraries);
     
@@ -66,6 +72,8 @@ export default function NewUser() {
             groups.sort();
             user[key] = groups;
         }
+        else if (key === 'status')
+            user[key] = event?.target?.checked ? 'active' : 'inactive';
         else
             user[key] = key === 'sso' ? event?.target?.checked : event?.target?.value;
         
@@ -92,11 +100,31 @@ export default function NewUser() {
         const isEmail = value[0].includes('@') ? value[0] : '';
         
         if (value) { //if first item is an email
+            if (isEmail && isEmail === document.getElementById('usernameHolder').innerText) {
+                enqueueSnackbar(`Danger! You are editing yourself. This is not recommended as you can lock yourself out!`,
+                    {
+                        variant: 'warning',
+                        persist: true,
+                        action: (key) => <Button onClick={() => {
+                            closeSnackbar(key);
+                        }}>Dismiss</Button>
+                    })
+                enqueueSnackbar(`Danger! ${isEmail} equals current login ${document.getElementById('usernameHolder').innerText}`,
+                    {
+                        variant: 'error',
+                        persist: true,
+                        action: (key) => <Button onClick={() => {
+                            closeSnackbar(key);
+                        }}>Dismiss</Button>
+                    })
+            }
+            
+            
             if (value?.[0]?.startsWith('admin')) {
                 alert('User Admin is restricted.');
             }
             else if (value.length === 1) { //only email
-                setUser({...user, username: value[0], email: isEmail})
+                setUser({...user, username: value[0], email: isEmail});
             }
             else {
                 const selected = LibreTexts.libraries[value?.[4]];
@@ -104,7 +132,7 @@ export default function NewUser() {
                     setSelectedLibrary(selected);
                     enqueueSnackbar(`Instructor requested an account on ${value?.[4]}`,
                         {
-                            variant: 'warning',
+                            variant: 'info',
                             persist: true,
                             action: (key) => <Button onClick={() => {
                                 closeSnackbar(key);
@@ -120,7 +148,8 @@ export default function NewUser() {
                     email: isEmail,
                     name: value?.[1],
                     sso: false,
-                    groups: []
+                    status: 'active',
+                    groups: ['BasicUser']
                 })
             }
             document.getElementById('dashboardUsername').value = value[0];
@@ -141,9 +170,10 @@ export default function NewUser() {
                     <TableHead><TableRow>
                         <TableCell>Username</TableCell>
                         <TableCell/>
+                        <TableCell>Active?</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Display Name</TableCell>
-                        <TableCell>SSO</TableCell>
+                        <TableCell>SSO Login</TableCell>
                         <TableCell>Groups</TableCell>
                     </TableRow></TableHead>
                     <TableBody><TableRow>
@@ -157,12 +187,18 @@ export default function NewUser() {
                             </Tooltip>
                         </TableCell>
                         <TableCell/>
+                        <Tooltip title="(De)activate this user"><TableCell><Switch checked={user?.status === 'active'}
+                                                                                   onChange={(e) => setUserValue(e, 'status')}/>
+                        </TableCell></Tooltip>
                         <TableCell><TextField label="Email" variant="filled" value={user.email}
                                               onChange={(e) => setUserValue(e, 'email')}/></TableCell>
                         <TableCell><TextField label="Name" variant="filled" value={user.name}
                                               onChange={(e) => setUserValue(e, 'name')}/></TableCell>
-                        <TableCell><Switch checked={Boolean(user?.sso)}
-                                           onChange={(e) => setUserValue(e, 'sso')}/></TableCell>
+                        <Tooltip
+                            title="Force user to use SSO to login. Username must be a Google or Microsoft email"><TableCell><Switch
+                            checked={Boolean(user?.sso)}
+                            onChange={(e) => setUserValue(e, 'sso')}/>
+                        </TableCell></Tooltip>
                         <TableCell>
                             <Autocomplete
                                 multiple
@@ -194,11 +230,11 @@ export default function NewUser() {
                         <TableCell/>
                         <TableCell>Library</TableCell>
                         <TableCell>ID</TableCell>
-                        {/*<TableCell>Active</TableCell>*/}
+                        <TableCell>Status</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Display Name</TableCell>
-                        <TableCell>SSO</TableCell>
+                        <TableCell>Login</TableCell>
                         <TableCell>Groups</TableCell>
                         <TableCell>Reuse Settings</TableCell>
                         <TableCell>Apply Settings</TableCell>
@@ -253,6 +289,7 @@ function RenderRow(props) {
             id: result?.id,
             username: result.username,
             email: result.email,
+            status: result.status,
             name: result.fullname,
             sso: result['service.authentication']?.['@id'] === '3',
             groups: groups,
@@ -268,27 +305,27 @@ function RenderRow(props) {
         }
         const approve = alreadyExists === true || confirm(`Confirm creation of user ${props.user.username} on "${props.libraryname}"`)
         if (approve) {
-            await LibreTexts.sendAPI('manageUser/create', {
-                payload: {
-                    subdomain, ...props.user
-                }
-            });
+            const payload = {
+                subdomain, ...props.user
+            }
+            setLibraryUser(undefined);
+            await LibreTexts.sendAPI('manageUser/create', {payload});
             getLibraryUser();
-            enqueueSnackbar(`${props.libraryname}/${props.user.username} success`,{variant:"success"});
+            enqueueSnackbar(`${props.libraryname}/${props.user.username} success`, {variant: "success"});
         }
         else {
-            enqueueSnackbar(`Cancelled action.`,{variant:"error"});
+            enqueueSnackbar(`Cancelled action.`, {variant: "error"});
         }
     }
     
     let innerCells;
     switch (libraryUser) {
         case undefined:
-            innerCells = <TableCell colSpan={8}>{<Skeleton variant="text" animation="wave"/>}</TableCell>;
+            innerCells = <TableCell colSpan={9}>{<Skeleton variant="text" animation="wave"/>}</TableCell>;
             break;
         case null:
             innerCells =
-                <TableCell colSpan={8}>
+                <TableCell colSpan={9}>
                     <Button variant="contained" color="primary" disabled={!ready} startIcon={<AddCircle/>}
                             style={{width: '100%'}} onClick={manageUser}>Create New
                                                                          Account</Button></TableCell>;
@@ -299,11 +336,13 @@ function RenderRow(props) {
             ready = ready && JSON.stringify(copy) !== JSON.stringify(props?.user)
             innerCells = <>
                 <TableCell>{libraryUser?.id}</TableCell>
+                <TableCell>{libraryUser?.status}</TableCell>
                 <TableCell>{libraryUser?.username}</TableCell>
                 <TableCell>{libraryUser?.email}</TableCell>
                 <TableCell>{libraryUser?.name}</TableCell>
-                {/*<TableCell><Switch checked={libraryUser?.status === 'active'}/></TableCell>*/}
-                <TableCell><Switch checked={libraryUser?.sso}/></TableCell>
+                {/*todo: create/modify groups*/}
+                {/*todo: hide sso left panel*/}
+                <TableCell>{libraryUser?.sso ? 'SSO' : 'Local'}</TableCell>
                 <TableCell>{JSON.stringify(libraryUser?.groups)}</TableCell>
                 <TableCell><Button variant="contained" startIcon={<PresentToAll/>}
                                    onClick={() => props.reuse(libraryUser)}>Reuse</Button></TableCell>
@@ -314,7 +353,10 @@ function RenderRow(props) {
             </>
     }
     
-    return <TableRow>
+    return <TableRow style={{
+        textDecoration: libraryUser?.status === 'inactive' ? 'line-through' : '',
+        fontStyle: libraryUser?.status === 'inactive' ? 'italic' : ''
+    }}>
         <TableCell>
             <img src={`https://libretexts.org/img/LibreTexts/glyphs/${props.subdomain}.png`}
                  style={{verticalAlign: 'middle'}}/></TableCell>

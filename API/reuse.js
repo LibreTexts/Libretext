@@ -450,10 +450,12 @@ async function getAPI(page, getContents, username = undefined) {
     return page;
 }
 
-async function getUser(username, subdomain) {
-    let user = await authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(username))}?dream.out.format=json`, null, null, username);
-    if (!user.ok)
+async function getUser(username, subdomain, requester = username) {
+    let user = await authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(username))}?dream.out.format=json`, null, null, requester);
+    if (!user.ok) {
+        // console.error(await user.text());
         return false;
+    }
     
     user = await user.json();
     user.seated = user['license.seat'];
