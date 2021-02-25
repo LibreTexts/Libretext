@@ -74,7 +74,7 @@ export default function LibreText(props) {
 		}, []);
 		
 		return (
-			<Dialog id="Commons-Learn-More" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+			<Dialog id="Commons-Learn-More" onClose={handleClose} aria-labelledby="customized-dialog-title" maxWidth="md" open={open}>
 				<DialogTitle onClose={handleClose}>
 					{props.item.title}
 				</DialogTitle>
@@ -149,11 +149,10 @@ export default function LibreText(props) {
 								aria-controls="panel3a-content">
 								<Typography>Book Preview</Typography>
 							</AccordionSummary>
-							<AccordionDetails style={{overflowX: "auto"}}>
+							<AccordionDetails style={{overflowX: "auto", flexDirection:'column'}}>
 								<a href={`${root}/Full.pdf`} className={'mt-icon-file-pdf'}
-								   target='_blank'>Download Full PDF
+								   target='_blank'>Download Full PDF</a>
 								<iframe src={`${root}/Preview.pdf?view=true`} height={500}/>
-								</a>
 							</AccordionDetails>
 						</Accordion>
 						{/*<Accordion>
