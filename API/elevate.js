@@ -482,7 +482,7 @@ async function getUsersInGroup(req, res) {
         }
     }
     
-    
+    const usersObject = {};
     for (const subdomain in libraries) {
         // console.log(subdomain, groups)
         if (!libraries[subdomain])
@@ -508,9 +508,20 @@ async function getUsersInGroup(req, res) {
             });
             
             targetGroup = targetGroup.filter(item => item.status === 'active');
+            
+            targetGroup.forEach(item => {
+                if (usersObject[item.username]) {
+                    usersObject[item.username].subdomain += `; ${item.subdomain}`;
+                }
+                else {
+                    usersObject[item.username] = item;
+                }
+            });
+            
             result = result.concat(targetGroup);
         }
     }
+    result = Object.values(usersObject);
     
     // console.log(req?.params.format);
     if (req?.params.format === 'json') {
