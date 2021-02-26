@@ -132,6 +132,10 @@ h1, h2, h3, h4, h5, h6 {
     font-size: inherit;
 }
 
+.publishPanel .MuiAppBar-root h6 > a{
+    color: white!important;
+}
+
 /*category*/
 #LTForm .article-topic-category span.fancytree-icon:before {
     content: '\e62a'
