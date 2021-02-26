@@ -1,7 +1,7 @@
 function getCC(inputTag) {
 	let tags;
 	if (inputTag) {
-		tags = [`license:${inputTag}`];
+		tags = [inputTag.startsWith('license:') ? inputTag : `license:${inputTag}`];
 	}
 	else {
 		tags = document.getElementById("pageTagsHolder");
