@@ -52,6 +52,18 @@
                                 license = getCC(license);
                                 data.license = license;
                             }
+    
+                            let content = `From ${data.currentPage ? '<b>current page</b>' : `<b class="mt-icon-link">${data.title}</b>`}`;
+    
+                            if (data.author) {
+                                content += ` by ${data.author}`;
+                            }
+                            if (data.license) {
+                                content += `<br/><a href="${data.license.link}" target="_blank">[Licensed ${data.license.title}]</a>`;
+                            }
+                            // content += `<iframe src="${pageURL}"/>`
+                            content += `<i> (${data.subdomain}-${data.id})</i>`
+                            data.content = `<a href="${pageURL}" target="_blank">${content}</a>`;
                             
                             console.log(data);
                             loadedPages[cls] = data;
@@ -86,20 +98,7 @@
                                 allowHTML: true,
                                 async onShow(instance) {
                                     const data = await getPage(cls);
-                                    
-                                    let content = `From ${data.currentPage ? '<b>current page</b>' : `<b class="mt-icon-link">${data.title}</b>`}`;
-                                    
-                                    let license = data.tags.find(tag => tag.startsWith('license:'));
-                                    if (data.author) {
-                                        content += ` by ${data.author}`;
-                                    }
-                                    if (data.license) {
-                                        content += `<br/>[Licensed <a href="${data.license.link}" target="_blank">${data.license.title}</a>]`;
-                                    }
-                                    // content += `<iframe src="${pageURL}"/>`
-                                    content += `<i> (${data.subdomain}-${data.id})</i>`
-                                    
-                                    instance.setContent(`<a href="${pageURL}" target="_blank">${content}</a>`);
+                                    instance.setContent(data.content);
                                 }
                             }));
                         }
@@ -119,9 +118,9 @@
                         const length = document.getElementsByClassName(loadedPagesKey).length;
                         loadedPages[loadedPagesKey] = await getPage(loadedPagesKey);
                         summaryContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPagesKey}: ${length} lines</li>`);
-                        attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPagesKey}: ${length} lines</li>`);
+                        attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${length} lines ${loadedPages[loadedPagesKey].content.replaceAll('<br/>','  ')}</li>`);
                     }
-                    attribution.innerHTML = `<ul>${attributionContents.join('')}</ul>`
+                    attribution.innerHTML = `<div>LibreLens Auto Attribution Generator</div><ul>${attributionContents.join('')}</ul>`
                     if (activated) {
                         summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`
                     }
