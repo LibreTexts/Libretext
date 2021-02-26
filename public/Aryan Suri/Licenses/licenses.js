@@ -1,9 +1,17 @@
-function getCC() {
-	let tags = document.getElementById("pageTagsHolder");
+function getCC(inputTag) {
+	let tags;
+	if (inputTag) {
+		tags = [`license:${inputTag}`];
+	}
+	else {
+		tags = document.getElementById("pageTagsHolder");
+		if (tags) {
+		    tags = tags.innerText;
+		    tags = tags.replace(/\\/g, "");
+		    tags = JSON.parse(tags);
+		}
+	}
 	if (tags) {
-		tags = tags.innerText;
-		tags = tags.replace(/\\/g, "");
-		tags = JSON.parse(tags);
 		for (let i = 0; i < tags.length; i++) {
 			if (tags[i].includes("license")) {
 				let tag = tags[i].split(":")[1];
