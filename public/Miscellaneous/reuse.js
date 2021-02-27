@@ -34,7 +34,7 @@ function LibreTextsReuse() {
         "Social Sciences": "socialsci",
         "Statistics": "stats",
         "Workforce": "workforce",
-        "Query":"query"
+        "Query": "query"
     };
     
     return {
@@ -428,7 +428,7 @@ function LibreTextsReuse() {
         return getCoverpage.coverpage;
     }
     
-    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
+    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy", showTitle = false) {
         let coverTitle;
         let content;
         const [subdomain] = LibreTexts.parseURL();
@@ -516,7 +516,8 @@ function LibreTextsReuse() {
                     target.addClass("toc-hierarchy");
                     // target.removeClass("elm-hierarchy mt-hierarchy");
                     target.innerHTML = "";
-                    target.prepend(`<a href="${url}"><b>${coverTitle}</b></a>`);
+                    if (showTitle)
+                        target.prepend(`<a href="${url}"><b>${coverTitle}</b></a>`);
                     target.fancytree({
                         source: content,
                         lazyLoad: function (event, data) {

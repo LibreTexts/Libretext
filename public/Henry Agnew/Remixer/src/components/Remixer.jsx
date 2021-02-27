@@ -187,7 +187,7 @@ class Remixer extends React.Component {
 		return <ThemeProvider theme={theme}>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
 			<div className="navigationBar">
-				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`} placement="right">
 					<Info/>
 				</Tooltip></div>
 				{this.state.permission !== 'Demonstration' ?
