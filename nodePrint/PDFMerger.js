@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = function (src, dest, opts, callback) {
     const defaultOpts = {
         maxBuffer: 1024 * 500, // 500kb
-        maxHeap: '3G' // for setting JVM heap limits
+        maxHeap: '5G' // for setting JVM heap limits
     };
     
     // this will help to fix the old code using the function without opts

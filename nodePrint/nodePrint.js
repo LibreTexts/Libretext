@@ -71,7 +71,7 @@ puppeteer.launch({
         if (kubernetesServiceHost) {
             console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
         }
-        const numThreads = kubernetesServiceHost ? 6 : 3;
+        const numThreads = kubernetesServiceHost ? 6 : 4;
         const concurrentTexts = 2;
         
         Gbrowser = browser;
