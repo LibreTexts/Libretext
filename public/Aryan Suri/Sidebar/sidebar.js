@@ -663,7 +663,7 @@ async function Sidebar() {
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
     <div class="custom_field">
-        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle LibreLens</a>
+        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='librelens-toggle mt-icon-eye-blocked'>&nbsp;Toggle AutoAttribution</a>
 			<div id="librelens-list">
 
 

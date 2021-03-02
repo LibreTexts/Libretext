@@ -388,7 +388,9 @@ function LibreTextsReuse() {
             
         }
         else {
+            let errorCode = response.status;
             let error = await response.json();
+            error.errorCode = errorCode;
             // console.error(`Can't get ${page.url}`);
             page.subdomain = subdomain;
             page.path = path;

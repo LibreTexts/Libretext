@@ -75,7 +75,7 @@ function getCC(inputTag) {
 					case "arr":
 						return {
 							label: "arr",
-							title: "All Rights Reserved Â©",
+							title: "All Rights Reserved ©",
 							link: "https://en.wikipedia.org/wiki/All_rights_reserved"
 						};
 				}
@@ -93,7 +93,7 @@ function getCC(inputTag) {
 
 	$('body').append(`
 		<div id="warningModal">
-			<div id="warningModalContent">  
+			<div id="warningModalContent">
 			</div>
 		</div>
     `);
@@ -167,7 +167,7 @@ function getCC(inputTag) {
 					break;
 			}
 
-		} 
+		}
 		document.addEventListener('copy', () => {
 			$(modalB).show();
 			localStorage.setItem("cc", cc.label);
@@ -275,7 +275,7 @@ function getCC(inputTag) {
 						case 6:
 						case 7:
 						case 10:
-						case 11: 
+						case 11:
 							preventPaste()
 							break;
 						case 12:
@@ -357,13 +357,13 @@ function getCC(inputTag) {
 	}
 
 
-	/* 
+	/*
 		switch(ccm[cct]) {
 			case 1:
-			case 2: 
+			case 2:
 			case 3:
 			case 4:
-			case 5: 
+			case 5:
 			case 6:
 			case 7:
 			case 8:

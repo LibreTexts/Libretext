@@ -22,10 +22,16 @@
                     let loadedAuthors = LibreTexts.active.libreLens.loadedAuthors || {};
                     
                     async function getPage(cls) {
-                        if (!loadedPages[cls] || !loadedPages[cls].id) {
+                        
+                        if (!loadedPages[cls] || (!loadedPages[cls].error && !loadedPages[cls].id)) {
                             const [, subdomain, pageID] = cls.match(/(?<=^lt-)(\w*?)-(\d*?)$/);
                             const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
                             let data = await LibreTexts.getAPI(pageURL, true); //TODO add page does not exist handling
+                            if (data.error) { //page not found
+                                loadedPages[cls] = data;
+                                return data;
+                            }
+                            
                             const [currentSubdomain, currentPath] = LibreTexts.parseURL();
                             if (data.subdomain === currentSubdomain && data.path === currentPath)
                                 data.currentPage = true;
@@ -41,8 +47,6 @@
                                 }
                                 
                                 author = loadedAuthors[data.subdomain][author];
-                                if (author)
-                                    author = author.name;
                                 data.author = author;
                             }
                             
@@ -53,7 +57,27 @@
                                 data.license = license;
                             }
                             
-                            console.log(data);
+                            let content = `<a href="${pageURL}" target="_blank">${data.currentPage ? '<b>Current page</b>' : `<b>${data.title}</b>`}</a>`;
+                            
+                            
+                            if (data.author) {
+                                content += ` by <a id="attr-author-link" href="${data.author.nameurl}">${data.author.name}</a>`;
+                            }
+                            else {
+                                data.author = ` by <a href="https://libretexts.org/">LibreTexts</a>`
+                            }
+                            
+                            
+                            if (data.license) {
+                                content += `,<br/>is licensed <a href="${data.license.link}" target="_blank">${data.license.title}</a>`;
+                            }
+                            else {
+                                content += ' has no license indicated.';
+                            }
+                            // content += `<i> (${data.subdomain}-${data.id})</i>`
+                            data.content = content;
+                            
+                            // console.log(data);
                             loadedPages[cls] = data;
                         }
                         return loadedPages[cls];
@@ -73,10 +97,12 @@
                         document.getElementsByClassName(cls).forEach(item => item.style.backgroundColor = backgroundColor);
                         const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
                         
-                        const button = document.getElementById('librelens-button');
-                        if (button) {
-                            button.classList.toggle("mt-icon-eye", activated);
-                            button.classList.toggle("mt-icon-eye-blocked", !activated);
+                        const button = document.getElementsByClassName('librelens-toggle');
+                        if (button && button.length) {
+                            for (const b of button){
+                                b.classList.toggle("mt-icon-eye", activated);
+                                b.classList.toggle("mt-icon-eye-blocked", !activated);
+                            }
                         }
                         
                         if (activated) {
@@ -86,20 +112,7 @@
                                 allowHTML: true,
                                 async onShow(instance) {
                                     const data = await getPage(cls);
-                                    
-                                    let content = `From ${data.currentPage ? '<b>current page</b>' : `<b class="mt-icon-link">${data.title}</b>`}`;
-                                    
-                                    let license = data.tags.find(tag => tag.startsWith('license:'));
-                                    if (data.author) {
-                                        content += ` by ${data.author}`;
-                                    }
-                                    if (data.license) {
-                                        content += `<br/>[Licensed <a href="${data.license.link}" target="_blank">${data.license.title}</a>]`;
-                                    }
-                                    // content += `<iframe src="${pageURL}"/>`
-                                    content += `<i> (${data.subdomain}-${data.id})</i>`
-                                    
-                                    instance.setContent(`<a href="${pageURL}" target="_blank">${content}</a>`);
+                                    instance.setContent(data.error ? `From ${cls} [deleted]` : data.content);
                                 }
                             }));
                         }
@@ -118,10 +131,13 @@
                     for (let loadedPagesKey in loadedPages) {
                         const length = document.getElementsByClassName(loadedPagesKey).length;
                         loadedPages[loadedPagesKey] = await getPage(loadedPagesKey);
+                        if (loadedPages[loadedPagesKey].error)
+                            continue;
+                        
                         summaryContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPagesKey}: ${length} lines</li>`);
-                        attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPagesKey}: ${length} lines</li>`);
+                        attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPages[loadedPagesKey].content.replaceAll('<br/>', '  ')}</li>`);
                     }
-                    attribution.innerHTML = `<ul>${attributionContents.join('')}</ul>`
+                    attribution.innerHTML = `<h2>AutoAttribution</h2><ul>${attributionContents.join('')}</ul>`
                     if (activated) {
                         summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`
                     }
@@ -131,10 +147,9 @@
                     LibreTexts.active.libreLens.loadedPages = loadedPages;
                     LibreTexts.active.libreLens.loadedAuthors = loadedAuthors;
                 }
+                LibreTexts.active.libreLens(false);
+                $('.mt-content-container').append('<div style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button><button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye librelens-toggle">&nbsp;Toggle AutoAttribution</button></div>');
             }
-            LibreTexts.active.libreLens(false);
-            $('.mt-content-container').append('<a onClick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" className="mt-icon-eye">&nbsp;Toggle LibreLens</a>');
-            
         }
     )
 })()
