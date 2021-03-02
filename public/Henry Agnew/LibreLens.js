@@ -26,14 +26,14 @@
                         if (!loadedPages[cls] || (!loadedPages[cls].error && !loadedPages[cls].id)) {
                             const [, subdomain, pageID] = cls.match(/(?<=^lt-)(\w*?)-(\d*?)$/);
                             const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
-                            let data = await LibreTexts.getAPI(pageURL, true); //TODO add page does not exist handling
+                            let data = await LibreTexts.getAPI(pageURL, true);
                             if (data.error) { //page not found
                                 loadedPages[cls] = data;
                                 return data;
                             }
                             
                             const [currentSubdomain, currentPath] = LibreTexts.parseURL();
-                            if (data.subdomain === currentSubdomain && data.path === currentPath)
+                            if (data.subdomain === currentSubdomain && pageID === document.getElementById('IDHolder').innerText)
                                 data.currentPage = true;
                             data.backgroundColor = loadedPages[cls].backgroundColor;
                             
@@ -148,7 +148,7 @@
                     LibreTexts.active.libreLens.loadedAuthors = loadedAuthors;
                 }
                 LibreTexts.active.libreLens(false);
-                $('.mt-content-container').append('<div style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button><button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye librelens-toggle">&nbsp;Toggle AutoAttribution</button></div>');
+                $('.mt-content-container').append('<div id="librelens-buttons" style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button><button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</button></div>');
             }
         }
     )
