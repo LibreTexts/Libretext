@@ -110,8 +110,6 @@
                                 content: `<a href="${pageURL}" target="_blank">From ${cls}</a>`,
                                 interactive: true,
                                 allowHTML: true,
-                                trigger: 'click',
-                                hideOnClick: "toggle",
                                 async onShow(instance) {
                                     const data = await getPage(cls);
                                     instance.setContent(data.error ? `From ${cls} [deleted]` : data.content);
