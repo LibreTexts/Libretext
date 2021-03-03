@@ -2,7 +2,7 @@ const LibreTexts = require('./reuse.js');
 const authenBrowser = require('./authenBrowser.json');
 
 async function checkAuthorization(req, res, next) {
-    if (!req.get('Referer')?.endsWith('libretexts.org/')) {
+    if (!req.get('origin')?.endsWith('libretexts.org')) {
         res.status(401);
         next(`Unauthorized ${req.get('x-forwarded-for')}`)
     }
