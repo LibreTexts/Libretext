@@ -25,7 +25,7 @@ function LibreTextsReuse() {
         "Chemistry": "chem",
         "Engineering": "eng",
         "Espanol": "espanol",
-        "Geology": "geo",
+        "Geosciences": "geo",
         "Humanities": "human",
         "K12 Education": "k12",
         "Mathematics": "math",
@@ -34,7 +34,7 @@ function LibreTextsReuse() {
         "Social Sciences": "socialsci",
         "Statistics": "stats",
         "Workforce": "workforce",
-        "Query":"query"
+        "Query": "query"
     };
     
     return {
@@ -388,7 +388,9 @@ function LibreTextsReuse() {
             
         }
         else {
+            let errorCode = response.status;
             let error = await response.json();
+            error.errorCode = errorCode;
             // console.error(`Can't get ${page.url}`);
             page.subdomain = subdomain;
             page.path = path;
@@ -428,7 +430,7 @@ function LibreTextsReuse() {
         return getCoverpage.coverpage;
     }
     
-    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
+    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy", showTitle = false) {
         let coverTitle;
         let content;
         const [subdomain] = LibreTexts.parseURL();
@@ -452,7 +454,7 @@ function LibreTextsReuse() {
             let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
             
             
-            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json&limit=all', subdomain);
             response = await response.json();
             info = await info;
             info = await info.json();
@@ -516,7 +518,8 @@ function LibreTextsReuse() {
                     target.addClass("toc-hierarchy");
                     // target.removeClass("elm-hierarchy mt-hierarchy");
                     target.innerHTML = "";
-                    target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
+                    if (showTitle)
+                        target.prepend(`<a href="${url}"><b>${coverTitle}</b></a>`);
                     target.fancytree({
                         source: content,
                         lazyLoad: function (event, data) {

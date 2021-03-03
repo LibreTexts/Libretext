@@ -1,4 +1,4 @@
-class LibreTextsGlossarizer {
+LibreTextsGlossarizer = class {
     constructor() {
         this.pluginName = 'glossarizer';
         this.defaults = {
@@ -39,14 +39,14 @@ class LibreTextsGlossarizer {
     getTermCols(rowText) { // tableRows[r]
         let cols = {};
         let colStart = [
-            [/(\<td data-th="Word\(s\)"\>)((.|\s)*?)(?=\<\/td>)/, "word"],
-            [/(\<td data-th="Definition"\>)((.|\s)*?)(?=\<\/td>)/, "definition"],
-            [/(\<td data-th="Image"\>)((.|\s)*?)(?=\<\/td>)/, "image"],
-            [/(\<td data-th="Caption"\>)((.|\s)*?)(?=\<\/td>)/, "caption"],
-            [/(\<td data-th="Link"\>)((.|\s)*?)(?=\<\/td>)/, "link"],
-            [/(\<td data-th="Source"\>)((.|\s)*?)(?=\<\/td>)/, "source"],
-            [/(\<td data-th="Source License"\>)((.|\s)*?)(?=\<\/td>)/, "license"],
-            [/(\<td data-th="Author URL"\>)((.|\s)*?)(?=\<\/td>)/, "sourceURL"],
+            [/(\<td[^\>]*?data-th="Word\(s\)"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "word"],
+            [/(\<td[^\>]*?data-th="Definition"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "definition"],
+            [/(\<td[^\>]*?data-th="Image"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "image"],
+            [/(\<td[^\>]*?data-th="Caption"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "caption"],
+            [/(\<td[^\>]*?data-th="Link"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "link"],
+            [/(\<td[^\>]*?data-th="Source"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "source"],
+            [/(\<td[^\>]*?data-th="Source License"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "license"],
+            [/(\<td[^\>]*?data-th="Author URL"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "sourceURL"],
         ];
         for (let t = 0; t < colStart.length; t++) {
             let tag = colStart[t][0];
@@ -174,23 +174,23 @@ class LibreTextsGlossarizer {
                 newTerm["term"] = cols["word"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
 
                 //Make Description
-                if (cols["link"].length) {
+                if (cols["link"]?.length) {
                     let aTagStart = 'href="';
                     let aTagEnd = '">';
                     let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
                     cols["definition"] = `<a href = "${href}" target="_blank">${cols["definition"]}</a>`;
                 }
-                if (cols["image"].length) {
+                if (cols["image"]?.length) {
                     cols["definition"] += `<div class='imageContainer'>${cols["image"]}</div>`;
                 }
-                if (cols["caption"].length) {
+                if (cols["caption"]?.length) {
                     cols["definition"] += `<p class = 'caption'>${cols["caption"]}</p>`;
                 }
                 let termSource = "";
-                if (cols["license"].length) {
+                if (cols["license"]?.length) {
                     termSource += cols["license"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
                 }
-                if (cols["source"].length) {
+                if (cols["source"]?.length) {
                     termSource += (termSource.length ? "; " : "") + cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
                 }
                 /*if (cols["sourceURL"].length) { //Need to make source URL work (Check for whether a tag is present, or else use text as url)
@@ -501,7 +501,8 @@ class LibreTextsGlossarizer {
                           return title;
                         },
                         allowHTML: true,
-                        delay: [1000, null],
+                        interactive : true,
+                        delay: [500, null],
                         popperOptions: {
                             modifiers: [
                                 {
@@ -545,17 +546,17 @@ class LibreTextsGlossarizer {
             let cols = this.getTermCols(tableRows[r]);
             if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
             let termSource = "";
-            if (cols["license"].length) {
+            if (cols["license"]?.length) {
                 termSource += cols["license"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
             }
-            if (cols["source"].length) {
+            if (cols["source"]?.length) {
                 termSource += (termSource.length ? "; " : "") + cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
             }
             
-            if (termSource.length) {
+            if (termSource?.length) {
                 cols["definition"] = cols["definition"].trim() + ` [${termSource}]`;
             }
-            if (cols["link"].length) {
+            if (cols["link"]?.length) {
                 let aTagStart = 'href="';
                 let aTagEnd = '">';
                 let href = cols["link"].substring(cols["link"].search(aTagStart) + aTagStart.length, cols["link"].search(aTagEnd));
@@ -584,7 +585,10 @@ class LibreTextsGlossarizer {
 
 
 //Self Initialize
-let libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
-window.addEventListener('load', ()=>{
-    libretextGlossary.makeGlossary();
+libretextGlossary = new LibreTextsGlossarizer(); // Needs to be accessible to the sidebar buttons
+window.addEventListener('load', () => {
+    if (libretextGlossary && !LibreTexts.active.glossarizer) {
+        LibreTexts.active.glossarizer = true;
+        libretextGlossary.makeGlossary();
+    }
 });

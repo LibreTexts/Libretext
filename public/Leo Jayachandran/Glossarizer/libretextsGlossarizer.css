@@ -15,10 +15,13 @@
 
 .tippy-box {
     text-align: center;
-    color: #30b3f6;
+    color: black;
     background: #e5f5fe;
     z-index: 991;
     border: 2px solid #30b3f6;
+}
+[data-tippy-root] {
+    display: inline;
 }
 
 .glossaryTable {

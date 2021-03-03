@@ -32,14 +32,42 @@ async function handler(request, response) {
                 'Content-Type': 'application/json',
             }); //allow targeted CORS
             let [, targetURL] = url.split('/bounce/');
-            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//))
+            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//)) {
                 responseError(`Invalid target ${targetURL}`, 400);
-            let requests;
-            requests = await LibreTexts.authenticatedFetch(targetURL);
-            if (requests.ok)
-                response.write(await requests.text());
-            else
-                responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
+            else {
+                let requests = await LibreTexts.authenticatedFetch(targetURL);
+                if (requests.ok)
+                    response.write(await requests.text());
+                else
+                    responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
+            response.end();
+        }
+        else {
+            responseError(request.method + ' Not Acceptable', 406);
+        }
+    }
+    else if (url.startsWith('/cross-library/')) {
+        if (request.method === 'GET') {
+            response.writeHead(200, {
+                'Access-Control-Allow-Origin': request.headers.origin || null,
+                'Access-Control-Allow-Methods': 'GET',
+                'Vary': 'Origin',
+                'Content-Type': 'application/json',
+            }); //allow targeted CORS
+            let [, targetURL] = url.split('/cross-library/');
+            targetURL = targetURL.replace('%3A', ':')
+            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/pages\//))
+                responseError(`Invalid target ${targetURL}`, 400);
+            else {
+                let requests;
+                requests = await LibreTexts.authenticatedFetch(targetURL);
+                if (requests.ok)
+                    response.write(await requests.text());
+                else
+                    responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
             response.end();
         }
         else {

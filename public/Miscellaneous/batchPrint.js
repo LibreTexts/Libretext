@@ -39,7 +39,7 @@ if (!window["batchPrint.js"]) {
 				
 				let id = document.getElementById('pageIDHolder').innerText;
 				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
-				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')))
+				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')) || downloadEntry.failed)
 					downloadEntry = false;
 			}
 			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
@@ -71,8 +71,11 @@ if (!window["batchPrint.js"]) {
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
 			}
-			
-			innerHTML += `<div class="LTdropdown" style="float:left; background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
+			//TODO Decide which button(s)
+			innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black" onclick="setTimeout(()=>$('#openControl').click(),100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
+			innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-quotes-left" title="Citation Menu"><span style="margin-left: 5px">Cite this page</span></div><div class="LTdropdown-content" style="right:0">
+<a onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</a><a onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</a><a onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</a>
+</div></div>`;
 			
 			if (batchPrint)
 				batchPrint.innerHTML = innerHTML;

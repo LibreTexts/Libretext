@@ -2,6 +2,7 @@ import React from 'react';
 import Toggle from 'react-toggle';
 import {FixedSizeList as List} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import {RevertButton} from "./RevisionLog.jsx";
 
 
 export default class Multi extends React.Component {
@@ -127,20 +128,6 @@ export default class Multi extends React.Component {
         this.socket.emit('multipreset', request);
     }
 
-    revert() {
-        let id = this.state.ID;
-        if (!id) {
-            id = prompt('Please enter in the id of the revision you would like to revert');
-            if (!id)
-                return false;
-        }
-        let request = {
-            user: this.state.user,
-            ID: id,
-        };
-        this.socket.emit('revert', request);
-    }
-
     getStatus() {
         switch (this.state.status) {
             case 'getSubpages':
@@ -178,7 +165,7 @@ export default class Multi extends React.Component {
                     }}/>
                         <div>
                             <button onClick={() => this.verifyRequest()}>Verify Request</button>
-                            <button onClick={() => this.revert()}>Revert Request {this.state.ID}</button>
+                            <RevertButton id={this.state.ID}/>
                         </div>
                     </div>
                     <div>

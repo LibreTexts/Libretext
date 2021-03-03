@@ -14,6 +14,7 @@ const md5 = require('md5');
 const events = require('events');
 const fetch = require('node-fetch');
 const querystring = require('querystring');
+// const merge = util.promisify(require('easy-pdf-merge'));
 const merge = util.promisify(require('./PDFMerger.js'));
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
@@ -70,7 +71,7 @@ puppeteer.launch({
         if (kubernetesServiceHost) {
             console.log(`In Kubernetes cluster: ${kubernetesServiceHost}`);
         }
-        const numThreads = kubernetesServiceHost ? 6 : 3;
+        const numThreads = kubernetesServiceHost ? 6 : 4;
         const concurrentTexts = 2;
         
         Gbrowser = browser;
@@ -608,13 +609,6 @@ puppeteer.launch({
                 height: numPages ?
                     (options.isHardcover ? '12.75 in' : '11.25 in') : '11 in',
             });
-            /*await page.addStyleTag({content: `#spine{ font-size: ${getSpine() / (getWidth() - 0.46) * 500}px}`});
-            await page.pdf({
-                path: `./PDF/A4/Cover/${escapedURL}.pdf`,
-                printBackground: true,
-                width: numPages ? `${getWidth() - 0.46} in` : '8.26 in',
-                height: numPages ? (options.isHardcover ? '13.44 in' : '11.94 in') : '11.69 in',
-            });*/
             
             // console.log(numPages ? getWidth() : '8.5 in', numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
             await page.close();
@@ -1721,11 +1715,18 @@ puppeteer.launch({
                 }
                 try {
                     if (files && files.length > 2) {
-                        await merge(files, `./PDF/Letter/Finished/${zipFilename}/Full.pdf`, {maxBuffer: 1024 * 10000000});
+                        let mergeFiles = files.map((file) => file.replace(`./PDF/Letter/order/${thinName}/`, ''))
+                        const opts = {
+                            maxBuffer: 100000000, //100 MB
+                            maxHeap: '3G',
+                            cwd: `./PDF/Letter/order/${thinName}`
+                        }
+                        await merge(mergeFiles, `../../Finished/${zipFilename}/Full.pdf`, opts);
                         if (hasCoverpage) {
-                            await merge(files.slice(0, 10), `./PDF/Letter/Finished/${zipFilename}/Preview.pdf`, {maxBuffer: 1024 * 10000000});
+                            await merge(mergeFiles.slice(0, 10), `../../Finished/${zipFilename}/Preview.pdf`, opts);
+                            mergeFiles.shift();
                             files.shift();
-                            await merge(files, `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, {maxBuffer: 1024 * 10000000});
+                            await merge(mergeFiles, `../../Finished/${zipFilename}/Publication/Content.pdf`, opts);
                         }
                     }
                     else {
@@ -1828,8 +1829,8 @@ puppeteer.launch({
                     timeTaken: time
                 }));
             // cleanup
-            // await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
-            // await fs.remove(`./PDF/Letter/order/${thinName}`);
+            await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
+            await fs.remove(`./PDF/Letter/order/${thinName}`);
             
             return {
                 zipFilename: zipFilename,
