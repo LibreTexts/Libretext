@@ -142,14 +142,14 @@
                     }
                     
                     let toggleButton = '';
-                    attribution.innerHTML = `<h2>AutoAttribution</h2>`;
                     if (outsidePages) {
+                        attribution.innerHTML = `<h2>AutoAttribution</h2>`;
                         attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
                         toggleButton = `<button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</button>`;
                     }
-                    /*else {
+                    else {
                         document.getElementsByClassName('librelens-toggle').forEach(el => el.remove());
-                    }*/
+                    }
                     attribution.innerHTML += `<div id="librelens-buttons" style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button>${toggleButton}</div>`;
                     
                     if (activated) {
