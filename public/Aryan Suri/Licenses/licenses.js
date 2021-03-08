@@ -65,7 +65,11 @@ function getCC(inputTag) {
 							link: "https://www.gnu.org/licenses/gpl-3.0.en.html"
 						};
 					case "gnudsl":
-						return { label: "gnudsl", title: "GNU DSL", link: "https://www.gnu.org/licenses/dsl.html" };
+						return {
+							label: "gnudsl",
+							title: "GNU DSL",
+							link: "https://www.gnu.org/licenses/dsl.html"
+						};
 					case "gnufdl":
 						return {
 							label: "gnufdl",
@@ -99,7 +103,8 @@ function getCC(inputTag) {
     `);
 
 	function licenseControl() {
-
+		ccCompare();
+		ccPageLabel();
 		const cc = getCC();
 		const admin = document.getElementById('adminHolder').innerText === 'true';
 		const pro = document.getElementById("proHolder").innerText === 'true';
@@ -108,50 +113,48 @@ function getCC(inputTag) {
 		if (admin) { }
 		else if (pro && groups.includes('developer')) { }
 		else { ccDetect(); }
-		ccPageLabel();
 	}
 
 	function ccDetect() {
 		const cc = getCC();
-		ccCompare();
 		if (cc) {
 			switch (cc.label) {
 				case "cc-BY":
 					modalC.setAttribute("style", "background-color: #aed581;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You can can remix and distribute the work as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "cc-by-sa":
 					modalC.setAttribute("style", "background-color: #fff176;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You can remix and distribute the work as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "cc-by-nc-sa":
 					modalC.setAttribute("style", "background-color: #fff176;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You can remix and distribute the work without profit as long as proper attribution is given and your work also comes with this same license. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "cc-by-nc":
 					modalC.setAttribute("style", "background-color: #fff176;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: <br> You can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: <br> You can remix and distribute the work without profit as long as proper attribution is given. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "cc-by-nd":
 					modalC.setAttribute("style", "background-color: #f44336;");
 
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You can share the work if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "cc-by-nc-nd":
 					modalC.setAttribute("style", "background-color: #f44336;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You can share the work without profit if proper attribution is given, but cannot modify it in any way. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "gnu":
 					modalC.setAttribute("style", "background-color: #fff176;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this license <a href=${cc.link}>here</a>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You have the freedom to run, study, share and modify the software. Learn more about this license <a href=${cc.link}>here</a>`;
 					break;
 				case "gnudsl":
 					modalC.setAttribute("style", "background-color: #f44336;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You have the freedom to run and remix software without profit. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "gnufdl":
 					modalC.setAttribute("style", "background-color: #fff176;");
-					modalC.innerHTML = `<span> The content you just copied is ${cc.title} licensed: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> </span>`;
+					modalC.innerHTML = `<span> The content you just copied/pasted is ${cc.title} licensed: You have the freedom to run but not remix any software for profit. Learn more about this license <a href=${cc.link}>here</a> </span>`;
 					break;
 				case "arr":
 					modalC.setAttribute("style", "background-color: #f44336;");
@@ -172,6 +175,9 @@ function getCC(inputTag) {
 			$(modalB).show();
 			localStorage.setItem("cc", cc.label);
 			console.log(`cc cookie: ${cc.label}`);
+		});
+		document.addEventListener('paste', () => {
+			$(modalB).show();
 		});
 	}
 
@@ -210,11 +216,11 @@ function getCC(inputTag) {
 							break;
 						case 6:
 						case 7:
-							preventPaste()
+							preventPaste();
 							break;
 						case 11:
 						case 12:
-							console.log("paste w/ warning");
+							ccDetect();
 							break;
 
 					} break;
@@ -237,7 +243,7 @@ function getCC(inputTag) {
 							preventPaste()
 							break;
 						case 12:
-							console.log("paste w/ warning");
+							ccDetect();
 							break;
 					} break;
 				case 3:
@@ -300,7 +306,7 @@ function getCC(inputTag) {
 							preventPaste()
 							break;
 						case 12:
-							console.log("paste w/ warning");
+							ccDetect();
 							break;
 					} break;
 				case 6:
@@ -323,6 +329,23 @@ function getCC(inputTag) {
 							console.log("paste/warn/switch");
 							break;
 					} break;
+				case 8:
+					switch (ccm[cct]) {
+						case 1:
+							console.log("paste and switch ");
+							break;
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+						case 12:
+					}
 				case 11:
 					switch (ccm[cct]) {
 						case 1:
@@ -342,6 +365,7 @@ function getCC(inputTag) {
 					} break;
 			}
 		}
+
 		function preventPaste() {
 			$('body').bind('paste', function (e) {
 				e.preventDefault();
@@ -354,8 +378,11 @@ function getCC(inputTag) {
 				e.preventDefault();
 			});
 		}
-	}
 
+		function changeLicense() {
+			$("live-tag-license-select select").val(ccm[ccs]);
+		}
+	}
 
 	/*
 		switch(ccm[cct]) {
@@ -374,6 +401,7 @@ function getCC(inputTag) {
 		}
 		
 	*/
+
 	function ccPageLabel() {
 		const cc = getCC();
 		if (cc) {
