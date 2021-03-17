@@ -7,13 +7,12 @@
 			let media = document.getElementsByClassName("elm-social-share")[0];
 			media.parentElement.insertBefore(nav, media);
 		}
+		remixerOption();
+		sandboxOption();
 		if (!window.location.hostname.startsWith('query')) {
 			propagatorOption();
 			downloadOption();
-			remixerOption();
-			//copyTranscludeOption();
 			copyContentOption(); //Forker
-			sandboxOption();
 		}
 		// setInterval(editorContentReuseLink, 500);
 	}

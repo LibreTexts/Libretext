@@ -19,12 +19,6 @@ if (!window["batchPrint.js"]) {
 		
 		const batchPrint = document.getElementById("batchPrint");
 		
-		if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
-			localStorage.setItem('darkMode', true);
-		if (localStorage.getItem('darkMode') === 'true')
-			$('.elm-skin-container').addClass('darkMode');
-		localStorage.removeItem('PDFSize');
-		
 		handleInner().then();
 		
 		async function handleInner() {

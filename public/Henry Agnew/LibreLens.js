@@ -20,6 +20,7 @@
                     });
                     let loadedPages = LibreTexts.active.libreLens.loadedPages || {};
                     let loadedAuthors = LibreTexts.active.libreLens.loadedAuthors || {};
+                    let outsidePages = 0;
                     
                     async function getPage(cls) {
                         
@@ -35,6 +36,8 @@
                             const [currentSubdomain, currentPath] = LibreTexts.parseURL();
                             if (data.subdomain === currentSubdomain && pageID === document.getElementById('IDHolder').innerText)
                                 data.currentPage = true;
+                            else
+                                outsidePages++;
                             data.backgroundColor = loadedPages[cls].backgroundColor;
                             
                             let author = data.tags.find(tag => tag.startsWith('authorname:'))
@@ -99,7 +102,7 @@
                         
                         const button = document.getElementsByClassName('librelens-toggle');
                         if (button && button.length) {
-                            for (const b of button){
+                            for (const b of button) {
                                 b.classList.toggle("mt-icon-eye", activated);
                                 b.classList.toggle("mt-icon-eye-blocked", !activated);
                             }
@@ -137,7 +140,18 @@
                         summaryContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPagesKey}: ${length} lines</li>`);
                         attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPages[loadedPagesKey].content.replaceAll('<br/>', '  ')}</li>`);
                     }
-                    attribution.innerHTML = `<h2>AutoAttribution</h2><ul>${attributionContents.join('')}</ul>`
+                    
+                    let toggleButton = '';
+                    if (outsidePages) {
+                        attribution.innerHTML = `<h2>AutoAttribution</h2>`;
+                        attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
+                        toggleButton = `<button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</button>`;
+                    }
+                    else {
+                        document.getElementsByClassName('librelens-toggle').forEach(el => el.remove());
+                    }
+                    attribution.innerHTML += `<div id="librelens-buttons" style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button>${toggleButton}</div>`;
+                    
                     if (activated) {
                         summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`
                     }
@@ -148,7 +162,6 @@
                     LibreTexts.active.libreLens.loadedAuthors = loadedAuthors;
                 }
                 LibreTexts.active.libreLens(false);
-                $('.mt-content-container').append('<div id="librelens-buttons" style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button><button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</button></div>');
             }
         }
     )
