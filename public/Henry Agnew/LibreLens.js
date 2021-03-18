@@ -1,4 +1,7 @@
 (function () {
+    if (navigator.webdriver || window.matchMedia('print').matches){
+        return; //exit if not client-facing
+    }
     window.addEventListener('load', () => {
             if (!LibreTexts.active.libreLens) {
                 LibreTexts.active.libreLens = async (forceState) => {
