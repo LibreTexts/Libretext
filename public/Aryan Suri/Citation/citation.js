@@ -64,13 +64,13 @@ function getParam() {
     let parseDate = new Date($("#modifiedHolder").text());
     let accdate = [parseToday.getFullYear(), parseToday.getMonth() + 1, parseToday.getDate()];
     let issdate = [parseDate.getFullYear(), parseDate.getMonth() + 1, parseDate.getDate()];
-    let title = $("#titleHolder").text();
+    let title = $("#titleHolder").text().trim();
     let pageID = $("#pageIDHolder").text();
     let url = `https://chem.libretexts.org/@go/page/${pageID}`;
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text();
     if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
-        title = title.replace(/^[^:]*:/, '');
+        title = title.replace(/^[^:]*:/, '').trim();
     }
     let pageParam = {
         "type": "webpage",
