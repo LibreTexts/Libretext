@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import SubComponent from "../components/SubComponent.jsx";
 
 const AVOGADRO = 6.02214076E23;
 
@@ -29,7 +30,7 @@ function VCellReactHook(props) {
     const [omex, setOmex] = React.useState();
     const [omexFile, setomexFile] = React.useState('https://chem.libretexts.org/@api/deki/files/364064/test.omex?origin=mt-web');
     const [species, setSpecies] = React.useState([]);
-    const [resultID, setResultID] = React.useState();
+    const [jobID, setJobID] = React.useState();
     
     function updateSpecies(event, key) {
         let updated = {...species[key]};
@@ -44,35 +45,43 @@ function VCellReactHook(props) {
     async function createOmex() {
         const sbmlFile = Object.keys(omex.files).find(key => key.endsWith('.xml') && key !== 'manifest.xml');
         let sbml = await omex.file(sbmlFile).async('text');
-        sbml = convert.xml2js(sbml, {compact: true});
+        // sbml = convert.xml2js(sbml, {compact: false});
         
+        //TODO get this to work in non-compact mode
         //add back _attributes nested key
-        sbml.sbml.model.listOfSpecies.species = Object.values(species).map(sp => {
+        let temp = Object.values(species).map(sp => {
             return {"_attributes": sp};
         });
+        temp = convert.js2xml({listOfSpecies: {species: temp}}, {compact: true, spaces: 2});
         
-        console.log(sbml);
-        sbml = convert.js2xml(sbml, {compact: true});
+        // sbml = convert.js2xml(sbml, {compact: false});
+        console.log(temp);
+        sbml.replace(/<listOfSpecies>[\s\S].*?<\/listOfSpecies>/, temp);
+        
         await omex.file(sbmlFile, sbml);
         setOmex(omex);
+        // return;
         
         //send data to runBioSimulations API
         const formData = new FormData();
         const runMetadata = {"name": "hello", "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
-        formData.append('file', await omex.generateAsync({type: 'blob'}));
+        formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
         formData.append('simulationRun', JSON.stringify(runMetadata));
         
-        let response = await fetch(`https://run.api.biosimulations.org/run`, {
+        let response = await fetch(`https://home.miniland1333.com/proxy/run`, {
             method: 'POST',
             body: formData
         });
-        if(response.ok){
+        if (response.ok) {
             response = await response.json();
             alert(`Job ${response.id} successfully submitted!`);
-        }else{
-            alert(`Error encountered: ${await response.text()}`);
+            setJobID(response.id);
         }
-        console.log(await response.text());
+        else {
+            response = await response.json();
+            alert(`Error encountered: ${JSON.stringify(response)}`);
+        }
+        console.log(response);
     }
     
     //primary render method
@@ -112,6 +121,7 @@ function VCellReactHook(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <SubComponent jobID={jobID}/>
         </React.Fragment>
     );
 }
@@ -127,15 +137,14 @@ function SpeciesRow(props) {
             {props.specie.id}
         </TableCell>
         <TableCell>
-            <TextField id="filled-basic"
-                       label="Filled"
-                       type="number"
+            <TextField type="number"
                        variant="filled"
                        defaultValue={props.specie.initialAmount / AVOGADRO}
                        onChange={(e) => props.onChange(e, props.specie.id)}
             />
         </TableCell>
-        <TableCell>{props.specie.substanceUnits}</TableCell>
+        {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
+        <TableCell>moles per liter</TableCell>
     </TableRow>;
 }
 

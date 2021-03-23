@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "node ../../Miscellaneous/createBundle.js"
+    "package": "node ../../Miscellaneous/createBundle.js",
+    "corsProxy": "node ./node_modules/local-cors-proxy/bin/lcp.js --port 80 --proxyUrl https://run.api.biosimulations.org/"
   },
   "author": "",
   "license": "ISC",
