@@ -234,6 +234,7 @@ a.toggler.off {
   background-color: #127bc4;
   transform-origin: right;
   flex: 1;
+  padding-top: 10vh;
 }
 
 .top-tab{
@@ -241,13 +242,13 @@ a.toggler.off {
   font-size: 1rem !important;
   font-weight: 300;
   font-family: Roboto, serif;
-  transform: rotate(90deg);
+  transform: rotate(270deg);
   transform-origin: center;
   width: auto;
 }
 
 .top-tabs:first-child {
-  padding-top: 20px;
+  padding-top: 8vh;
 }
 
 .custom_sidebar #custom_dropdown-content a {
