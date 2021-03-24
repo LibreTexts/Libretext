@@ -54,6 +54,7 @@ function VCellReactHook(props) {
             loadOmex()
     }, [])
     
+    //load omex file for editing
     async function loadOmex() {
         if (!dataset.omex) {
             let file = prompt('Enter the url to your OMEX file', omexFile);
@@ -89,6 +90,7 @@ function VCellReactHook(props) {
         setSpecies(speciesObject);
     }
     
+    //modify omex file and submit to runBioSimulations
     async function submitOmex() {
         const sbmlFile = Object.keys(omex.files).find(key => key.endsWith('.xml') && key !== 'manifest.xml');
         let sbml = await omex.file(sbmlFile).async('text');
@@ -107,9 +109,9 @@ function VCellReactHook(props) {
         
         //send data to runBioSimulations API
         const formData = new FormData();
-        const runMetadata = {"name": "hello", "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
-        // const filename = `LT-${Math.round(Math.random()*1E10)}-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}`;
+        const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
         // console.log(filename);
+        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
         formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
         formData.append('simulationRun', JSON.stringify(runMetadata));
         
@@ -134,8 +136,9 @@ function VCellReactHook(props) {
     }
     
     //primary render method
+    //TODO: Make flex more mobile-friendly
     return (
-        <div style={{display: 'flex',}}>
+        <div id="biosimulation-render-container" style={{display: 'flex'}}>
             <div style={{flex: 1}}>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
@@ -164,11 +167,10 @@ function VCellReactHook(props) {
     );
 }
 
-
+//each Specie gets a SpeciesRow so its initialAmount can be user-modified
 function SpeciesRow(props) {
     if (props?.specie?.initialAmount === undefined)
         return null;
-    
     
     return <TableRow key={props.specie.id}>
         <TableCell scope="row">
@@ -182,6 +184,7 @@ function SpeciesRow(props) {
             />
         </TableCell>
         {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
+        {/*TODO: make units flexible*/}
         <TableCell>moles per liter</TableCell>
     </TableRow>;
 }

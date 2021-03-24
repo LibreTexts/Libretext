@@ -45,7 +45,7 @@ export default function GraphResults(props) {
                 
                 
                 //get results
-                response = await fetch(`https://home.miniland1333.com/proxy/results/${props.jobID}?sparse=false`);
+                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?sparse=false`);
                 response = await response.json();
                 console.log(response);
                 enqueueSnackbar(`Retrieved ${response.simId}`, {
@@ -86,18 +86,28 @@ export default function GraphResults(props) {
         })()
     }, [props.jobID]);
     
-    //prop requires a jobID to render
+    //requires a jobID to render
     if (!props.jobID)
         return null;
-    else if (!jobReady)
+    else if (!jobReady) //waiting for job to process
         return <CircularProgress size={200}/>
-    else {
+    else { //plot results
         return <Line data={simulationResults} options={{
             scales: {
+                xAxes: [{
+                    labelString: 'time (seconds)',
+                    ticks: {
+                        stepSize: 1,
+                        precision: 2,
+                        maxTicksLimit: 10,
+                        // callback: (label) => Number.parseFloat(label).toPrecision(2)
+                    }
+                }],
                 yAxes: [{
+                    id: 'y-axis-0',
                     type: 'linear',
                     ticks: {
-                        precision: 4,
+                        precision: 3,
                         maxTicksLimit: 6,
                         callback: (label) => Number.parseFloat(label).toPrecision(4)
                     }
