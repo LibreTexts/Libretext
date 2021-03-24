@@ -17,6 +17,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\public\Henry Agnew\VCell\node_modules\chart.js\dist\Chart.js">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\public\Henry Agnew\VCell\src\components\SubComponent.jsx">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\public\Henry Agnew\VCell\src\pages\index.js">
           <value>
             <Attribute>

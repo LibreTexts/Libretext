@@ -1,11 +1,12 @@
 {
-  "name": "api-dashboard",
+  "name": "vcell-runner",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "package": "node ../../Miscellaneous/createBundle.js",
-    "corsProxy": "node ./node_modules/local-cors-proxy/bin/lcp.js --port 80 --proxyUrl https://run.api.biosimulations.org/"
+    "corsProxy": "node ./node_modules/local-cors-proxy/bin/lcp.js --port 80 --proxyUrl https://run.api.biosimulations.org/",
+    "serveLocal": "node ./node_modules/serve/bin/serve.js -l 80"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "@material-ui/icons": "^4.11.2",
     "chart.js": "^2.9.4",
     "jszip": "^3.6.0",
+    "notistack": "^1.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.11.1",
@@ -27,6 +29,7 @@
     "@babel/plugin-transform-runtime": "7.11.0",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "local-cors-proxy": "^1.1.0"
+    "local-cors-proxy": "^1.1.0",
+    "serve": "^11.3.2"
   }
 }
