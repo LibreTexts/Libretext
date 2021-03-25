@@ -1,4 +1,4 @@
-"use strict";
+div"use strict";
 var CONVERSION_CALCULATOR;
 if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
     localStorage.setItem("beeline", "off");
@@ -712,6 +712,14 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
+        <a onclick = "" >&nbsp;Hypothesis</a>
+    </div>
+
+    <div class=custom field">
+        <a onclick = "">&nbsp;Note Bene</a>
+    </div>
+
+    <div class="custom_field">
         <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
     </div>
 
@@ -719,9 +727,9 @@ async function Sidebar() {
         <a href="https://www.facebook.com/LibreTexts/" rel="external nofollow" target="_blank" class="mt-icon-facebook">&nbsp;Facebook</a>
     </div>
 
-    <div class="custom_field">
-    
-    </div>
+    <!--<div class="custom_field">-->
+        <!--<a href="#" class="mt-icon-page-notification off" data-ga-label="Subscription widget toggle" title="Page notification">Watch Page</a>-->
+    <!--</div>-->
 
 </div>`,
 
