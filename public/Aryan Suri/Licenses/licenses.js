@@ -107,7 +107,7 @@ function getCC(inputTag) {
 
 		if (admin) { }
 		else if (pro && groups.includes('developer')) { }
-		else { ccDetect(); }
+		else {  }
 		ccPageLabel();
 	}
 
