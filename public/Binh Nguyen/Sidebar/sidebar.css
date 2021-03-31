@@ -251,6 +251,10 @@ a.toggler.off {
   padding-top: 8vh;
 }
 
+.top-tabs:nth-child(4) {
+  padding-top: 6vh;
+}
+
 .custom_sidebar #custom_dropdown-content a {
   color: black;
   padding: 12px 16px;
