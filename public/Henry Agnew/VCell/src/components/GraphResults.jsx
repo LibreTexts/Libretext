@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {CircularProgress} from "@material-ui/core";
 import {Line} from 'react-chartjs-2';
 import {useSnackbar} from 'notistack';
-
+import Button from "@material-ui/core/Button";
+import fileDownload from 'js-file-download';
 /*
 This component is receiving information from its parent through its "props"!
 The file extension .jsx is for standalone React Components, compared to index.js
@@ -10,6 +11,7 @@ The file extension .jsx is for standalone React Components, compared to index.js
 export default function GraphResults(props) {
     const [jobReady, setJobReady] = useState(false);
     const [simulationResults, setSimulationResults] = useState();
+    const [resultsOBJ, setResultsOBJ] = useState({});
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
     useEffect(() => {
@@ -58,19 +60,25 @@ export default function GraphResults(props) {
                 
                 //data parsing
                 let data = response.reports[0].data;
+                let dataObj = {};
+                for (let series of data){
+                    dataObj[series.label] = series;
+                }
+                setResultsOBJ(data);
+                
                 let lineChartData = {
-                    labels: precise(data.t),
+                    labels: precise(dataObj.t.values),
                     datasets: [],
                 };
-                for (const dataset in data) {
+                for (const dataset of data) {
                     const r = Math.floor(Math.random() * 256);
                     const g = Math.floor(Math.random() * 256);
                     const b = Math.floor(Math.random() * 256);
                     
-                    if (dataset !== 't')
+                    if (dataset.label !== 't')
                         lineChartData.datasets.push({
-                            label: dataset,
-                            data: precise(data[dataset]),
+                            label: dataset.label,
+                            data: precise(dataset.values),
                             fill: false,
                             pointStyle: 'circle',
                             radius: 1,
@@ -86,13 +94,22 @@ export default function GraphResults(props) {
         })()
     }, [props.jobID]);
     
+    function downloadData() {
+        let data = resultsOBJ.map(label=>label.label) + '\n';
+        for (let index in resultsOBJ[0].values){
+            data += resultsOBJ.map(label=>label.values[index]) + '\n'
+        }
+        
+        fileDownload(data, 'simulation_data.csv')
+    }
+    
     //requires a jobID to render
     if (!props.jobID)
         return null;
     else if (!jobReady) //waiting for job to process
         return <CircularProgress size={200}/>
     else { //plot results
-        return <Line data={simulationResults} options={{
+        return <><Line data={simulationResults} options={{
             scales: {
                 xAxes: [{
                     labelString: 'time (seconds)',
@@ -114,7 +131,9 @@ export default function GraphResults(props) {
                 }],
             }
         }
-        }/>;
+        }/>
+        <Button onClick={downloadData} variant="contained">Download CSV</Button>
+        </>;
     }
 }
 

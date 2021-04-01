@@ -16,8 +16,7 @@ import {SnackbarProvider, useSnackbar} from 'notistack';
 
 const AVOGADRO = 6.02214076E23;
 //TODO fix CORS issue. Currently using a proxy
-const API_ENDPOINT = `https://home.miniland1333.com/proxy`;
-// const API_ENDPOINT = `https://run.biosimulations.org/`;
+const API_ENDPOINT = `https://run.api.biosimulations.dev`;
 
 /*
 This code injects your React code into the webpage.
@@ -56,20 +55,21 @@ function VCellReactHook(props) {
     
     //load omex file for editing
     async function loadOmex() {
+        let file = omexFile;
         if (!dataset.omex) {
-            let file = prompt('Enter the url to your OMEX file', omexFile);
+            file = prompt('Enter the url to your OMEX file', file);
             setOmexFile(file);
         }
         
         let zip;
         try {
-            if (omexFile.includes('libretexts.org/@api/deki/files/'))
+            if (file.includes('libretexts.org/@api/deki/files/'))
                 //LibreTexts-specific file fetching
-                zip = await LibreTexts.authenticatedFetch(omexFile);
+                zip = await LibreTexts.authenticatedFetch(file);
             else
-                zip = await fetch(omexFile);
+                zip = await fetch(file);
         } catch (err) {
-            enqueueSnackbar(`Could not get file ${omexFile}`, {variant: "error"});
+            enqueueSnackbar(`Could not get file ${file}`, {variant: "error"});
             return;
         }
         
@@ -161,7 +161,7 @@ function VCellReactHook(props) {
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
             </div>
             <div style={{flex: 2}}>
-                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT}/>
+                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} />
             </div>
         </div>
     );
