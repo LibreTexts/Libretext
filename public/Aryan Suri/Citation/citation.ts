@@ -75,7 +75,8 @@ function getParam() {
     let issdate = [parseDate.getFullYear(), parseDate.getMonth() + 1, parseDate.getDate()];
     let title = $("#titleHolder").text().trim();
     let pageID = $("#pageIDHolder").text();
-    let url = `https://chem.libretexts.org/@go/page/${pageID}`
+    const [subdomain] = LibreTexts.parseURL();
+    let url = `https://${subdomain}.libretexts.org/@go/page/${pageID}`
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text()
     if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
