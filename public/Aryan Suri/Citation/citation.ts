@@ -76,7 +76,7 @@ function getParam() {
     let title = $("#titleHolder").text().trim();
     let pageID = $("#pageIDHolder").text();
     const [subdomain] = LibreTexts.parseURL();
-    let url = `https://${subdomain}.libretexts.org/@go/page/${pageID}`
+    let url = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
     let author = namesplitter($("li.mt-author-information a:first").text());
     let publisher = $("li.mt-author-companyname a:first").text()
     if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
