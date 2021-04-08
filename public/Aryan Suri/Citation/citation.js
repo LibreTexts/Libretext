@@ -1,4 +1,5 @@
 "use strict";
+
 function buildcite() {
     const sidebar = document.getElementById("sidebarDiv");
     const citeDiv = document.createElement("div");
@@ -35,9 +36,17 @@ function buildcite() {
 `);
     $('#citeSelect').val('citation-apa');
     getCite();
-    $('#citeSelect').on('change', function () { getCite(); });
-    $('#citeBIBTEX').on('click', function () { let citation = getFile('bibtex'); download(`${citation}`, 'bibtex.bbl', 'text/plain'); });
-    $('#citeRIS').on('click', function () { let citation = getFile('ris'); download(`${citation}`, 'citation.ris', 'text/plain'); });
+    $('#citeSelect').on('change', function () {
+        getCite();
+    });
+    $('#citeBIBTEX').on('click', function () {
+        let citation = getFile('bibtex');
+        download(`${citation}`, 'bibtex.bbl', 'text/plain');
+    });
+    $('#citeRIS').on('click', function () {
+        let citation = getFile('ris');
+        download(`${citation}`, 'citation.ris', 'text/plain');
+    });
     const citeCopy = document.getElementById("citeCopy");
     citeCopy.addEventListener("click", function () {
         let text = document.getElementById("citeText").innerText;
@@ -59,6 +68,7 @@ function buildcite() {
         document.body.removeChild(elem);
     });
 }
+
 function getParam() {
     let parseToday = new Date();
     let parseDate = new Date($("#modifiedHolder").text());
@@ -86,40 +96,22 @@ function getParam() {
         },
         "publisher": publisher
     };
+    
     function namesplitter(name, verbose = false) {
         let rawnames = name;
-        let splind = [0];
         let spls = [' and ', '& ', ', '];
         let rawauthnames = new Array;
         let authors = new Array;
-        var n = 0;
-        for (let i = 0; i < spls.length; i++) {
-            let finder = spls[i];
-            while (n < rawnames.length) {
-                let sfield = rawnames.slice(n);
-                if ((sfield.search(finder) != -1)) {
-                    let x = n + sfield.indexOf(finder) + 1;
-                    let y = x + finder.length - 1;
-                    splind.push(x, y);
-                    n = y;
-                }
-                else {
-                    n = rawnames.length;
-                }
-            }
+        
+        for (let splitter of spls) {
+            let splits = rawnames.split(splitter);
+            if (splits.length <= 1)
+                continue;
+            splits = splits.map(elem=>elem.trim());
+            rawauthnames = splits;
+            break;
         }
-        splind.sort();
-        splind.push(n);
-        for (let i = 0; i < (splind.length); i += 2) { // Slices string into individual names
-            let bslice = splind[i];
-            if (i + 2 == splind.length) {
-                var eslice = splind[i + 1];
-            }
-            else {
-                var eslice = splind[i + 1] - 1;
-            }
-            rawauthnames.push(rawnames.slice(bslice, eslice));
-        }
+        
         for (let i = 0; i < rawauthnames.length; i++) { // Parses names into family and given names
             let rawname = rawauthnames[i];
             let namedict = {};
@@ -169,8 +161,10 @@ function getParam() {
         }
         return authors;
     }
+    
     return pageParam;
 }
+
 function getCite(verbose = false) {
     // Extend Available Templates //
     let mlaname = 'mla';
@@ -196,8 +190,9 @@ function getCite(verbose = false) {
     return pageParam;
 }
 ;
+
 function download(data, filename, type) {
-    let file = new Blob([data], { type: type });
+    let file = new Blob([data], {type: type});
     if (window.navigator.msSaveOrOpenBlob)
         window.navigator.msSaveOrOpenBlob(file, filename);
     else {
@@ -212,6 +207,7 @@ function download(data, filename, type) {
         }, 0);
     }
 }
+
 function getFile(type) {
     let pageParam = getParam();
     type = type;
@@ -221,6 +217,7 @@ function getFile(type) {
     return output;
 }
 ;
+
 function hidecite() {
     if (!$(event.target).closest('#asModalContent').length && !$(event.target).is('#asModalContent')) {
         $("#SB-PC-AD").remove();
