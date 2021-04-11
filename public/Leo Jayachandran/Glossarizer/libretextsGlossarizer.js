@@ -143,23 +143,33 @@ LibreTextsGlossarizer = class {
                 bodycontent = "";
                 return [];
             }
-            bodycontent = bodycontent.substring(bodycontent.search(/<tbody.*>\s*<tr>\s*<td data-th="Word\(s\)"/));
-            //Find the body of the glossary table
-            let tableStart = '<tbody';
-            let tableEnd = "</tbody>";
-            let startPoint = bodycontent.search(tableStart) + tableStart.length;
-            let endPoint = bodycontent.substring(startPoint).search(tableEnd) + startPoint;
-            let tBody = bodycontent.substring(startPoint, endPoint).replace(/&nbsp;/g, " ").trim();
+            
+            //Remove up to the 
+            bodycontent = bodycontent.substring(bodycontent.search(/<tbody[^>]*?>[^<]*<tr[^>]*?>[^<]*<td[^>]*?data-th="Word\(s\)"/));
 
+            //Find the contents table body of the glossary table
+            let tbodyregex = /<tbody[^>]*?>(.|\s)*?(?=<\/tbody>)/;
+            let tBody = tbodyregex.exec(bodycontent)[0];
+            tBody = tBody.substring(tBody.search(/<tbody[^>]*?>/)).replace(/&nbsp;/g, " ").trim();
+            
             //Generate the rows of the table
             let tableRows = [];
-            for (let i = 0; i < tBody.length;) {
+            //Search through tBody
+            for (let i = 0; i < tBody.length;/*Incremented at the end of the loop*/) {
+                //Change starting point to look for new row
                 let trimmedBody = tBody.substring(i);
-                let rowStart = '<tr>';
-                let rowEnd = '</tr>';
-                let rowContent = trimmedBody.substring(trimmedBody.search(rowStart) + rowStart.length, trimmedBody.search(rowEnd)).trim();
+                
+                let rowRegex = /<tr[^>]*?>((.|\s)*?)<\/tr>/;
+                //Get the whole row including the <tr> tags
+                let wholeRow = rowRegex.exec(trimmedBody);
+                if (wholeRow == null) break;
+
+                //Row contents without <tr> tags
+                let rowContent = wholeRow[1].trim();
                 tableRows.push(rowContent);
-                i += trimmedBody.search(rowEnd) + rowEnd.length;
+
+                //Increment search index to skip past this row
+                i += wholeRow[0].length;
             }
 
             //Generate the Glossary
@@ -193,9 +203,9 @@ LibreTextsGlossarizer = class {
                 if (cols["source"]?.length) {
                     termSource += (termSource.length ? "; " : "") + cols["source"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
                 }
-                /*if (cols["sourceURL"].length) { //Need to make source URL work (Check for whether a tag is present, or else use text as url)
+                if (cols["sourceURL"]?.length) { //Need to make source URL work (Check for whether a tag is present, or else use text as url)
                     cols["definition"] = cols["definition"].trim() + cols["sourceURL"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
-                }*/
+                }
                 if (termSource.length) {
                     cols["definition"] = cols["definition"].trim() + `<p class = "glossarySource">[${termSource}]</p>`;
                 }
@@ -568,6 +578,7 @@ LibreTextsGlossarizer = class {
             newTerm["term"] = `<span class = "glossaryTerm">${currentTerm}</span>`;
             glossaryList.push(newTerm);
         }
+        // Sort Glossary Terms
         glossaryList.sort((a, b) => {
             return (a["term"].replace(/<.*?>/g, "").toLowerCase() < b["term"].replace(/<.*?>/g, "").toLowerCase()) ? -1 : 1;
         });
