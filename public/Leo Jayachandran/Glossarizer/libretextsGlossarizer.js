@@ -144,7 +144,7 @@ LibreTextsGlossarizer = class {
                 return [];
             }
             
-            //Remove up to the 
+            //Trim up to the start of the table body
             bodycontent = bodycontent.substring(bodycontent.search(/<tbody[^>]*?>[^<]*<tr[^>]*?>[^<]*<td[^>]*?data-th="Word\(s\)"/));
 
             //Find the contents table body of the glossary table
