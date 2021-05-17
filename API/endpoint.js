@@ -100,8 +100,9 @@ async function handler(request, response) {
                 let input = JSON.parse(body);
                 input.mode = input.mode ?? "raw";
                 input.format = input.format ?? "html";
+                input.dreamformat = input.dreamformat ?? "xml";
                 //Only get requests are acceptable
-                let requests = await LibreTexts.authenticatedFetch(input.path, `contents?mode=${input.mode}&format=${input.format}`, input.subdomain, 'LibreBot');
+                let requests = await LibreTexts.authenticatedFetch(input.path, `contents?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
                 if (requests.ok)
                     response.write(await requests.text());
                 else

@@ -82,7 +82,7 @@ export default class App extends Component {
                     <br/><br/>
                     <button onClick={() => $(".help").slideToggle()}>Show/Hide Help</button>
                     <img className={"help"} style={{display: "none"}}
-                         src={"https://awesomefiles.libretexts.org/Molecules/MoleculeGenerator/help.png"}/>
+                         src={"https://awesomefiles.libretexts.org/Miscellaneous/Molecules/MoleculeGenerator/help.png"}/>
                     <button className={"help"} style={{display: "none"}} onClick={() => $(".help").slideUp()}>Hide
                                                                                                               Help
                     </button>
@@ -188,12 +188,12 @@ export default class App extends Component {
         console.log(this.state.type);
         switch (this.state.type) {
             case "GLmol":
-                sampleContent.src = this.state.path + "/Molecules/GLmol/js/GLWrapper.js";
+                sampleContent.src = this.state.path + "Miscellaneous/Molecules/GLmol/js/GLWrapper.js";
                 sampleContent = this.processDataset(this.state.options, GLoptions, sampleContent);
                 // sampleContent.dataset.id = "=1ugu";
                 break;
             case "JSmol":
-                sampleContent.src = this.state.path + "/Molecules/JSmol/JSmolWrapper.js";
+                sampleContent.src = this.state.path + "Miscellaneous/Molecules/JSmol/JSmolWrapper.js";
                 sampleContent.dataset.id = "=1blu";
                 break;
         }
@@ -229,6 +229,7 @@ const GLoptions = {
     label: {name: "Show GLmol label", help: "", type: "bool"},
     multiple: {name: "Multiple molecules", help: "", type: "bool"},
     spin: {name: "Enable spinning", help: "", type: "bool"},
+    initialRotation: {name: "Initial Rotation", help: "", type: "text", placeholder: "ex. 180, 90, 0"},
     speed: {name: "Spin speed", help: "", type: "text", placeholder: "any number"},
     // defaultZoom: {name: "Default Zoom", help: "", type: "text", placeholder: "zoom molecule to set", disabled: true},
     note1: {name: "The below options are only useful for proteins", type: "note"},
