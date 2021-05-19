@@ -35,6 +35,7 @@ function VCellReactHook(props) {
     const [omex, setOmex] = React.useState();
     const [omexFile, setOmexFile] = React.useState(dataset.omex);
     const [species, setSpecies] = React.useState([]);
+    const [parameters, setParameters] = React.useState([]);
     const [jobID, setJobID] = React.useState();
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
@@ -46,6 +47,14 @@ function VCellReactHook(props) {
         updated.initialAmount = newValue;
         species[key] = updated;
         setSpecies(species);
+    }
+    
+    function updateParameter(event, key) {
+        let updated = {...parameters[key]};
+        
+        updated.value = event.target.value;
+        parameters[key] = updated;
+        setParameters(parameters);
     }
     
     React.useEffect(() => {
@@ -88,6 +97,11 @@ function VCellReactHook(props) {
             speciesObject[specie['_attributes'].id] = specie['_attributes'];
         });
         setSpecies(speciesObject);
+        const parametersObject = {};
+        sbml.sbml.model.listOfParameters.parameter.forEach(parameter => {
+            parametersObject[parameter['_attributes'].id] = parameter['_attributes'];
+        });
+        setParameters(parametersObject);
     }
     
     //modify omex file and submit to runBioSimulations
@@ -102,6 +116,13 @@ function VCellReactHook(props) {
         temp = convert.js2xml({listOfSpecies: {species: temp}}, {compact: true, spaces: 2});
         console.log(temp);
         sbml = sbml.replace(/<listOfSpecies>[\s\S]*?<\/listOfSpecies>/, temp);
+        
+        temp = Object.values(parameters).map(sp => {
+            return {"_attributes": sp};
+        });
+        temp = convert.js2xml({listOfParameters: {parameter: temp}}, {compact: true, spaces: 2});
+        console.log(temp);
+        sbml = sbml.replace(/<listOfParameters>[\s\S]*?<\/listOfParameters>/, temp);
         // console.log(sbml);
         await omex.file(sbmlFile, sbml);
         setOmex(omex);
@@ -155,6 +176,21 @@ function VCellReactHook(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <TableContainer component={Paper}>
+                    <Table aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Parameter</TableCell>
+                                <TableCell>Value</TableCell>
+                                <TableCell>Units</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key} parameter={value}
+                                                                                       onChange={updateParameter}/>)}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 {!dataset.omex ? <Button onClick={loadOmex} variant="contained">
                     Load File
                 </Button> : null}
@@ -186,6 +222,26 @@ function SpeciesRow(props) {
         {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
         {/*TODO: make units flexible*/}
         <TableCell>moles per liter</TableCell>
+    </TableRow>;
+}
+
+//each Specie gets a SpeciesRow so its initialAmount can be user-modified
+function ParameterRow(props) {
+    if (props?.parameter?.value === undefined)
+        return null;
+    
+    return <TableRow key={props.parameter.id}>
+        <TableCell scope="row">
+            {props.parameter.id}
+        </TableCell>
+        <TableCell>
+            <TextField type="number"
+                       variant="filled"
+                       defaultValue={(props.parameter.value)}
+                       onChange={(e) => props.onChange(e, props.parameter.id)}
+            />
+        </TableCell>
+        <TableCell>{props.parameter.units}</TableCell>
     </TableRow>;
 }
 
