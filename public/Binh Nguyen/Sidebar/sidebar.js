@@ -265,15 +265,15 @@ async function Sidebar() {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6, #sb7").hide();
                     $("#sb4").toggle("slide");
                 });
-                $("#openDevelopers").on("click", function () {
+                $("#openLibraries").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb6, #sb7").hide();
                     $("#sb5").toggle("slide");
                 });
-                $("#openLibraries").on("click", function () {
+                $("#openCommunity").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb7").hide();
                     $("#sb6").toggle("slide");
                 });
-                $("#openCommunity").on("click", function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb7").toggle("slide");
                 });
@@ -318,15 +318,15 @@ async function Sidebar() {
                     $("#sb1, #sb2, #sb3, #sb5, #sb6, #sb7").hide();
                     $("#sb4").toggle();
                 });
-                $("#openDevelopers").on("click", function () {
-                    $("#sb1, #sb2, #sb3, #sb4,#sb6, #sb7").hide();
+                $("#openLibraries").on("click", function () {
+                    $("#sb1, #sb2, #sb3, #sb4, #sb6, #sb7").hide();
                     $("#sb5").toggle();
                 });
-                $("#openLibraries").on("click", function () {
+                $("#openCommunity").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb7").hide();
                     $("#sb6").toggle();
                 });
-                $("#openCommunity").on("click", function () {
+                $("#openDevelopers").on("click", function () {
                     $("#sb1, #sb2, #sb3, #sb4, #sb5, #sb6").hide();
                     $("#sb7").toggle();
                 });
@@ -478,14 +478,14 @@ async function Sidebar() {
             <div class="top-tab"> Libraries </div>
 		</div>
 
+		<div id="openCommunity"  class="top-tabs">
+            <div class="top-tab"> Community </div>
+		</div>
+
 		<div id="openDevelopers"  class="top-tabs">
 			<div class="top-tab"> Developers </div>
 		</div>
 
-		<div id="openCommunity"  class="top-tabs">
-            <div class="top-tab"> Community </div>
-		</div>
-		
 
 	    </div>` : `<div id="sbHeader" class="sbHeader" style="">
 		<div id="openContents"  class="top-tabs">
@@ -720,45 +720,18 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
-        <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
-    </div>
-
-    <div class="custom_field">
-        <a href="https://www.facebook.com/LibreTexts/" rel="external nofollow" target="_blank" class="mt-icon-facebook">&nbsp;Facebook</a>
-    </div>
-
-    <div class="custom_field">
     
     </div>
 
 </div>`,
 
-//Developers Section
-            "developers": `<div id="sb5"  class="custom_sidebar">
-	<div class="custom_field">
-		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
-		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div>
-        <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
-        <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
-        <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
-        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
-		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
-        <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
-		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
-		<a href="https://h5p.libretexts.org/" class="mt-icon-article"> H5P Server</a>
-		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
-		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
-		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
-	</div>
-	</div>`,
-
 //Libraries Section
-            "libraries": `<div id="sb6"  class="custom_sidebar">
+            "libraries": `<div id="sb5"  class="custom_sidebar">
 
 
             <div class="custom_field">
             <div style="display: flex; flex-direction: column; margin-left: 10px;">
-                <ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">EspaÃ±ol</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
+                <ol style="list-style: none;"><li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li><li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li><li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li><li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li><li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li><li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li><li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li></ol>
                 <ol style="list-style: none;"><li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li><li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li><li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li><li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li><li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li><li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li></ol>
             </div>
         </div>
@@ -766,7 +739,7 @@ async function Sidebar() {
 
 
 //Community Section
-	    "community": `<div id="sb7"  class="custom_sidebar">
+	    "community": `<div id="sb6"  class="custom_sidebar">
 
 	    <div class="custom_field">
 		    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>
@@ -788,7 +761,26 @@ async function Sidebar() {
 		    <a href="https://www.facebook.com/LibreTexts/" rel="external nofollow" target="_blank" class="mt-icon-facebook">&nbsp;Facebook</a>
 	    </div>
 
-	    </div>`
+	    </div>`,
+
+//Developers Section
+            "developers": `<div id="sb7"  class="custom_sidebar">
+	<div class="custom_field">
+		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
+		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div>
+        <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
+        <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
+        <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
+        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
+		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
+        <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
+		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+		<a href="https://h5p.libretexts.org/" class="mt-icon-article"> H5P Server</a>
+		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
+		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
+		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
+	</div>
+	</div>`
         };
     }
 }
