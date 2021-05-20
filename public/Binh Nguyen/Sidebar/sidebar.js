@@ -689,7 +689,7 @@ async function Sidebar() {
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
     <div class="custom_field">
-        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle LibreLens</a>
+        <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle AutoAttribution</a>
 			<div id="librelens-list">
 
 
@@ -779,6 +779,15 @@ async function Sidebar() {
 	    <div class="custom_field">
 		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
 	    </div>
+
+	    <div class="custom_field">
+		    <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
+	    </div>
+
+	    <div class="custom_field">
+		    <a href="https://www.facebook.com/LibreTexts/" rel="external nofollow" target="_blank" class="mt-icon-facebook">&nbsp;Facebook</a>
+	    </div>
+
 	    </div>`
         };
     }
