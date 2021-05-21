@@ -11,8 +11,15 @@ div.CtxtMenu_Info {
     padding: 0;
 }
 
+div.CtxtMenu_InfoContent mjx-labels > mjx-itable {
+    display: none;
+}
+
+span.CtxtMenu_InfoTitle {
+    display: none;
+}
+
 div.CtxtMenu_InfoContent {
-    position: absolute;
     background-color: #F0F0F0;
     overflow: auto;
     display: block;
@@ -20,16 +27,6 @@ div.CtxtMenu_InfoContent {
     padding: .5em;
     border: 1px solid black;
     margin: 0;
-    text-align: left;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    box-shadow: 5px 5px 15px #AAAAAA;
-    -webkit-box-shadow: 5px 5px 15px #AAAAAA;
-    -moz-box-shadow: 5px 5px 15px #AAAAAA;
-}
-span.CtxtMenu_InfoTitle {
-    display: none;
 }
 
 #MathJax_Zoom {
