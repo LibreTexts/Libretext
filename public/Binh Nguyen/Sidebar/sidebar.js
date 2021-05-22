@@ -757,19 +757,45 @@ async function Sidebar() {
 	    <div class="custom_field">
 		<div style="display: flex; flex-direction: column; margin-left: 10px;">
 		    <ol style="list-style: none;">
-			<li><a data-color="#00b224" href="https://forums.libretexts.org/g/CommunityBiology/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li>
-			<li><a data-color="#207537" href="https://forums.libretexts.org/g/CommunityBusiness/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li>
-			<li><a data-color="#00bfff" class="internal" href="https://forums.libretexts.org/g/CommunityChemistry/topics" rel="internal" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li>
-			<li><a data-color="#ff6a00" href="https://forums.libretexts.org/g/CommunityEngineering/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li>
-			<li><a data-color="#d77b00" href="https://forums.libretexts.org/g/CommunityEspanol/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li>
-			<li><a data-color="#e5a800" href="https://forums.libretexts.org/g/CommunityGeosciences/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li>
-			<li><a data-color="#00bc94" href="https://forums.libretexts.org/g/CommunityHumanities/topics" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li>
-			<li><a data-color="#3737bf" href="https://forums.libretexts.org/g/CommunityMathematics/topics" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li>
-			<li><a data-color="#e52817" href="https://forums.libretexts.org/g/CommunityMedicine/topics" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li>
-			<li><a data-color="#841fcc" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li>
-			<li><a data-color="#f20c92" href="https://forums.libretexts.org/g/CommunitySocialSciences/topics" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li>
-			<li><a data-color="#05baff" href="https://forums.libretexts.org/g/CommunityStatistics/topics" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li>
-			<li><a data-color="#bf4000" href="ttps://forums.libretexts.org/g/CommunityWorkforce/topics" rel="external nofollow" target="_blank" class="link-https" style=" background: none none repeat scroll 0% 0%; color: rgb(18, 123, 196);"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li>
+			<li><a data-color="#00b224"
+				href="https://forums.libretexts.org/g/CommunityBiology/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li>
+			<li><a data-color="#207537"
+				href="https://forums.libretexts.org/g/CommunityBusiness/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li>
+			<li><a data-color="#00bfff" class="internal"
+				href="https://forums.libretexts.org/g/CommunityChemistry/topics"
+				rel="external nofollow"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li>
+			<li><a data-color="#ff6a00"
+				href="https://forums.libretexts.org/g/CommunityEngineering/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li>
+			<li><a data-color="#d77b00"
+				href="https://forums.libretexts.org/g/CommunityEspanol/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li>
+			<li><a data-color="#e5a800"
+				href="https://forums.libretexts.org/g/CommunityGeosciences/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li>
+			<li><a data-color="#00bc94"
+				href="https://forums.libretexts.org/g/CommunityHumanities/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li>
+			<li><a data-color="#3737bf"
+				href="https://forums.libretexts.org/g/CommunityMathematics/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li>
+			<li><a data-color="#e52817"
+				href="https://forums.libretexts.org/g/CommunityMedicine/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li>
+			<li><a data-color="#841fcc" 
+				href="https://workforce.libretexts.org/" 
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li>
+			<li><a data-color="#f20c92"
+				href="https://forums.libretexts.org/g/CommunitySocialSciences/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li>
+			<li><a data-color="#05baff"
+				href="https://forums.libretexts.org/g/CommunityStatistics/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li>
+			<li><a data-color="#bf4000"
+				href="ttps://forums.libretexts.org/g/CommunityWorkforce/topics"
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li>
 		    </ol>
 		</div>
 	    </div>
@@ -811,6 +837,7 @@ async function Sidebar() {
 		<a href="https://h5p.libretexts.org/" class="mt-icon-article"> H5P Server</a>
 		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
 		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
+		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax" class="mt-icon-article"> RealTime Mathjax</a>
 		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
 	</div>
 	</div>`

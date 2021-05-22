@@ -452,9 +452,6 @@ div#construction-guide-put {
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px)  {
-  #elm-main-content {
-    padding-left: 0 !important;
-  }
   .custom_sidebar {
     width: 100vw;
     padding-left: 0;
@@ -489,7 +486,7 @@ and (max-device-width : 1024px)  {
 
 @media only screen and (max-width: 415px) {
   #elm-main-content {
-    padding-left: 0 !important;
+    padding-left: 10px !important;
   }
   .custom_sidebar {
     width: 100vw;
