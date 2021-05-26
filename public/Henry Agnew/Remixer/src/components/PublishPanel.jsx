@@ -655,12 +655,6 @@ function PublishSubPanel(props) {
 				<pre class="script">
 				wiki.page("${tempPath}", NULL)</pre>
 				</div>
-				
-				<div class="comment">
-				<div class="mt-comment-content">
-				<p><a href="${tempPath}">Content Reuse Link: ${tempPath}</a></p>
-				</div>
-				</div>
 				${renderTags(page.tags)}`;
 							}
 							response = await LibreTexts.authenticatedFetch(page.path, `contents?${writeMode}&dream.out.format=json&title=${encodeURIComponent(page.title)}`, null, {
