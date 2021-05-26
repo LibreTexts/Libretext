@@ -13,6 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import GraphResults from "../components/GraphResults.jsx";
 import Button from "@material-ui/core/Button";
 import {SnackbarProvider, useSnackbar} from 'notistack';
+import {Accordion, AccordionDetails,AccordionSummary, Tooltip} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const AVOGADRO = 6.02214076E23;
 //TODO fix CORS issue. Currently using a proxy
@@ -38,6 +40,8 @@ function VCellReactHook(props) {
     const [parameters, setParameters] = React.useState([]);
     const [jobID, setJobID] = React.useState();
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+    
+    const simulator = {"simulator": "vcell", "simulatorVersion": "7.3.0.07"}
     
     function updateSpecies(event, key) {
         let updated = {...species[key]};
@@ -131,8 +135,8 @@ function VCellReactHook(props) {
         //send data to runBioSimulations API
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
+        const runMetadata = {"name": name, "email": null, ...simulator};
         // console.log(filename);
-        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
         formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
         formData.append('simulationRun', JSON.stringify(runMetadata));
         
@@ -161,42 +165,64 @@ function VCellReactHook(props) {
     return (
         <div id="biosimulation-render-container" style={{display: 'flex'}}>
             <div style={{flex: 1}}>
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Species</TableCell>
-                                <TableCell>Initial Conditions</TableCell>
-                                <TableCell>Units</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Object.entries(species).map(([key, value]) => <SpeciesRow key={key} specie={value}
-                                                                                       onChange={updateSpecies}/>)}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Parameter</TableCell>
-                                <TableCell>Value</TableCell>
-                                <TableCell>Units</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key} parameter={value}
-                                                                                       onChange={updateParameter}/>)}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >Species conditions
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Species</TableCell>
+                                        <TableCell>Initial Conditions</TableCell>
+                                        <TableCell>Units</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {Object.entries(species).map(([key, value]) => <SpeciesRow key={key} specie={value}
+                                                                                               onChange={updateSpecies}/>)}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >Parameters
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Parameter</TableCell>
+                                    <TableCell>Value</TableCell>
+                                    <TableCell>Units</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key} parameter={value}
+                                                                                                onChange={updateParameter}/>)}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    </AccordionDetails>
+                </Accordion>
+                
                 {!dataset.omex ? <Button onClick={loadOmex} variant="contained">
                     Load File
                 </Button> : null}
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
+                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}><p>Simulation ran using {simulator.simulator} and powered by https://run.biosimulations.org</p></Tooltip>
             </div>
-            <div style={{flex: 2}}>
+            <div style={{flex: 1}}>
                 <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} />
             </div>
         </div>
