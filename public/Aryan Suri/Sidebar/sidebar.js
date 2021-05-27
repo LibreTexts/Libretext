@@ -666,11 +666,26 @@ async function Sidebar() {
 //Tool Section
             "usage": `<div id="sb4"  class="custom_sidebar">
     <div class="custom_field">
+        <a href="https://adapt.libretexts.org/" target="_blank" class='mt-icon-pencil2'>&nbsp;ADAPT Homework System</a>
+    </div>
+    <div class="custom_field">
+		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
+    </div>
+    <div class="custom_field">
+		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+    </div>
+    <div class="custom_field">
         <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
     <div class="custom_field">
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
+	<div class="custom_field">
+		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark Page</a>
+			<div id="bm-list">
+
+			</div>
+	</div>
     <div class="custom_field">
         <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle AutoAttribution</a>
 			<div id="librelens-list">
@@ -678,12 +693,6 @@ async function Sidebar() {
 
 			</div>
     </div>
-	<div class="custom_field">
-		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark</a>
-			<div id="bm-list">
-
-			</div>
-	</div>
 	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary</p>
         <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
             <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
@@ -692,10 +701,6 @@ async function Sidebar() {
                 <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
             <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
         </form>
-    </div>
-
-    <div class="custom_field">
-        <a href="https://adapt.libretexts.org/" target="_blank" class='mt-icon-pencil2'>&nbsp;Adapt Homework System</a>
     </div>
     
     <div class="custom_field">
@@ -722,11 +727,6 @@ async function Sidebar() {
 
 //Community Section
             "community": `<div id="sb6"  class="custom_sidebar">
-
-	    <div class="custom_field">
-		    <a title="https://chem.libretexts.org/Under_Construction/Construction_Forums" href="https://chem.libretexts.org/Courses/Remixer_University/Discipline-Specific_Forums" rel="internal">Discipline Specific Forums</a>
-	    </div>
-	    
 	    <div class="custom_field">
 		<div style="display: flex; flex-direction: column;">
 		    <ol style="list-style: none;">
@@ -767,6 +767,10 @@ async function Sidebar() {
 	    <div class="custom_field">
 		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
 	    </div>
+	    
+	    <div class="custom_field">
+		    <a href="https://discord.libretexts.org/" rel="external nofollow" target="_blank" class="mt-icon-chat2">&nbsp;Community Help Chat</a>
+	    </div>
 
 	    <div class="custom_field">
 		    <a href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="external nofollow" target="_blank" class="mt-icon-twitter">&nbsp;Twitter</a>
@@ -783,10 +787,10 @@ async function Sidebar() {
 	<div class="custom_field">
 		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
 		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div>
-        <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Cover</a>
-        <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Contents</a>
+        <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Text Cover</a>
+        <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Page Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
-        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Unorder Page</a>
+        <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Reset Page Order</a>
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
