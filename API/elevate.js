@@ -33,9 +33,17 @@ async function createSandbox(req, res) {
     const body = req.body;
     // console.log(body);
     
-    let path = `Sandboxes/${body.username}`;
+    let originalPath = `Sandboxes/${body.username}`; 
+    let path = originalPath.replace('@','_at_');
     let result = `${body.subdomain}/${body.username}`;
-    let response = await LibreTexts.authenticatedFetch(path, 'contents', body.subdomain, botUsername, {
+
+    //TODO migrate emails 
+    if(body.username.includes('@'))
+        await LibreTexts.authenticatedFetch(originalPath, `move?name=${body.username.replace('@','_at_')}`, body.subdomain, botUsername, {
+            method: 'POST',
+        });
+
+    let response = await LibreTexts.authenticatedFetch(path, `contents?title=${body.username}`, body.subdomain, botUsername, {
         method: 'POST',
         body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
     });
