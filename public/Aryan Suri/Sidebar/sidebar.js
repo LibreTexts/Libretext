@@ -695,17 +695,16 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
+        <a href="https://adapt.libretexts.org/" target="_blank" class='mt-icon-pencil2'>&nbsp;Adapt Homework System</a>
+    </div>
+    
+    <div class="custom_field">
         <a onclick = "event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
     </div>
 
     <div class="custom_field">
         <a onclick = "event.preventDefault()">&nbsp;Note Bene</a>
     </div>
-
-    <div class="custom_field">
-    
-    </div>
-
 </div>`,
 
 //Libraries Section
@@ -791,7 +790,7 @@ async function Sidebar() {
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
-		<a href="https://h5p.libretexts.org/" class="mt-icon-article"> H5P Server</a>
+		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
 		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
 		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
 		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax" class="mt-icon-article"> RealTime Mathjax</a>
