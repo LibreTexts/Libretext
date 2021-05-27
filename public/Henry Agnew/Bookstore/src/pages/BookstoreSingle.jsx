@@ -21,10 +21,22 @@ import Select from "@material-ui/core/Select";
 import {IconFlagCA, IconFlagUS,} from 'material-ui-flags';
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import {FormControl, FormGroup, FormLabel, LinearProgress} from "@material-ui/core";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    FormControl,
+    FormGroup,
+    FormLabel,
+    LinearProgress,
+    Typography
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from "@material-ui/core/IconButton";
-
+import GetAppIcon from '@material-ui/icons/GetApp';
+import LinkIcon from '@material-ui/icons/Link';
+import CallMadeIcon from '@material-ui/icons/CallMade';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -52,6 +64,7 @@ function BookstoreSingle(props) {
     const [quantity, setQuantity] = React.useState(1);
     const [stripe, setStripe] = React.useState();
     const [isProcessing, setIsProcessing] = React.useState(false);
+    const [showPreview, setShowPreview] = React.useState('panel1');
     const [dialogState, setDialogState] = React.useState({
         one: false,
         two: false,
@@ -63,7 +76,11 @@ function BookstoreSingle(props) {
         setDialogState({...dialogState, [event.target.name]: event.target.checked});
     };
     
+    const handleShowPreview = (panel) => (event, isExpanded) => {
+        setShowPreview(isExpanded? panel : false);
+    };
     
+    const root = `https://batch.libretexts.org/print/Finished/${props.item.zipFilename}`;
     const fileSource = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore`;
     const APIendpoint = `https://api.libretexts.org/bookstore${window.location.href.includes('/beta/') ? '/beta' : ''}`
     let validPrice = shippingData.length;
@@ -242,13 +259,44 @@ function BookstoreSingle(props) {
         <Paper className='orderForm' id='bookstoreSingle'>
             <div>
                 <Paper className='bookstoreColumn'>
-                    <h3>{props.item.title}</h3>
-                    <img
-                        src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+                    <div>
+                        <Accordion expanded={showPreview==='panel1'} onChange={handleShowPreview('panel1')}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls="panel3a-content">
+                                <h3>{props.item.title}</h3>
+                            </AccordionSummary>
+                            <AccordionDetails style={{overflowX: "auto", flexDirection:"column"}}>
+                                <img style={{maxHeight: "250px"}}
+                                     src={`https://${props.library}.libretexts.org/@api/deki/pages/${props.item.id}/files/=mindtouch.page%2523thumbnail`}/>
+                            
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion expanded={showPreview==='panel2'} onChange={handleShowPreview('panel2')}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls="panel3a-content">
+                                <Typography>Print Preview</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails style={{overflowX: "auto", flexDirection:"column"}}>
+                                <a target="_blank" className="normalLink" href={`${root}/Preview.pdf?view=true`}>Open Preview in New Tab<CallMadeIcon/></a>
+                                <a target="_blank" className="normalLink" href={`${root}/Full.pdf?view=true`}>Open Full PDF in New Tab<CallMadeIcon/></a>
+                                <iframe src={`${root}/Preview.pdf?view=true`} height={500}/>
+                            </AccordionDetails>
+                        </Accordion>
+                    </div>
                     <p>{props.item.author}</p>
                     <p>{props.item.institution}</p>
                     <p>Bookstore Identifier: {props.item.zipFilename}</p>
                     <p>Number of pages: {props.item.numPages}</p>
+                    
+                    <div style={{display: "flex"}}>
+                        <a target="_blank" href={`${root}/Full.pdf?view=true`}>
+                            <Tooltip title="If you want, you can use this PDF on your computer or to print at home!"><Button variant='contained'>Full PDF<GetAppIcon/></Button></Tooltip></a>
+                        <a target="_blank" href={`${root}/Publication.zip`}><Button variant='contained'>Print Book
+                                                                                                        Files <GetAppIcon/></Button></a>
+                    </div>
+                    
                     <Divider/>
                     <div style={{display: "flex", justifyContent: 'space-around'}}>
                         <Button onClick={() => setQuantityInternal(quantity - 1)}
@@ -322,7 +370,8 @@ function BookstoreSingle(props) {
                     {renderShipping()}
                     <p>Shipping prices are calculated for
                        within {shippingLocation === "CA" ? 'Canada' : 'the United States'}. Contact us at
-                       bookstore@libretexts.org for orders outside of this area.</p>
+                       bookstore@libretexts.org for orders outside of this area or if you see an error in the PDFs that
+                       needs correcting.</p>
                 </Paper>
             </div>
             

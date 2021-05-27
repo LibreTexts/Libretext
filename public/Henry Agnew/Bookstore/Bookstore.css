@@ -6,6 +6,10 @@ div#missionContent {
     margin-top: 70px;
 }
 
+.bookstoreColumn p {
+    margin: 0;
+}
+
 .Text {
     width: 220px;
     height: 220px;
