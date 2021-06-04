@@ -33,16 +33,17 @@ async function createSandbox(req, res) {
     const body = req.body;
     // console.log(body);
     
-    let originalPath = `Sandboxes/${body.username}`; 
-    let path = originalPath.replace('@','_at_');
+    let originalPath = `Sandboxes/${body.username}`;
+    let path = originalPath.replace('@', '_at_');
     let result = `${body.subdomain}/${body.username}`;
-
-    //TODO migrate emails 
-    if(body.username.includes('@'))
-        await LibreTexts.authenticatedFetch(originalPath, `move?name=${body.username.replace('@','_at_')}`, body.subdomain, botUsername, {
+    
+    if (body.username.includes('@')) {
+        let migrate = await LibreTexts.authenticatedFetch(originalPath, `move?name=${body.username.replace('@', '_at_')}&allow=deleteredirects&dream.out.format=json`, body.subdomain, botUsername, {
             method: 'POST',
         });
-
+        console.log(`Migrate ${body.username} pages: ${(await migrate.json())["@count"]}`);
+    }
+    
     let response = await LibreTexts.authenticatedFetch(path, `contents?title=${body.username}`, body.subdomain, botUsername, {
         method: 'POST',
         body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
