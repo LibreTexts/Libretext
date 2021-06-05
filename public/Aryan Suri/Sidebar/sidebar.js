@@ -794,7 +794,14 @@ async function Sidebar() {
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Page Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
         <a onclick = "event.preventDefault(); LibreTexts.authenticatedFetch(null,'unorder',null,{method:'PUT'}); window.location.reload()" class="mt-icon-shuffle" href='#' >&nbsp;Reset Page Order</a>
-		<a onclick = 'event.preventDefault(); LibreTexts.getSubpages().then(data => {alert("Check your console for the output"); console.log(JSON.stringify(JSON.stringify(data).match(/(?<="id":")\\d+(?=")/g)))})' class="mt-icon-flow-cascade" href='#' >&nbsp;Get Subpages</a>
+		<a onclick = 'event.preventDefault(); LibreTexts.getSubpages().then(data => {
+		    alert("Copied pageIDs to the clipboard");
+		    data = JSON.stringify(data).match(/(?<="id":")\\d+(?=")/g);
+		    let [subdomain] = LibreTexts.parseURL();
+		    data = data.map(e=>subdomain + "-" + e);
+            navigator.clipboard.writeText(data.join(", "))
+		    console.log(data.join(", "));
+		})' class="mt-icon-flow-cascade" href='#' >&nbsp;Get PageIDs</a>
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
         <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
 		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
