@@ -220,6 +220,7 @@ a.toggler.off {
 
 .sbHeader {
   display: flex;
+  background-color: #127bc4;
   flex-direction: column;
   position: fixed;
   top: 0;
@@ -227,32 +228,22 @@ a.toggler.off {
   height: 100vh;
   width: 25px;
   z-index: 30000003;
+  justify-content: space-around;
 }
 
 .top-tabs {
   cursor: pointer;
-  background-color: #127bc4;
-  transform-origin: right;
-  flex: 1;
-  padding-top: 10vh;
-}
-
-.top-tab{
   color: white;
+  writing-mode: vertical-lr;
+  text-align: center;
+  flex: unset;
+  display: flex;
+  align-items: center;
+  transform: rotate(180deg);
+  transform-origin: center;
   font-size: 1rem !important;
   font-weight: 300;
   font-family: Roboto, serif;
-  transform: rotate(270deg);
-  transform-origin: center;
-  width: auto;
-}
-
-.top-tabs:first-child {
-  padding-top: 8vh;
-}
-
-.top-tabs:nth-child(4) {
-  padding-top: 6.9vh;
 }
 
 .custom_sidebar #custom_dropdown-content a {
@@ -449,8 +440,8 @@ div#construction-guide-put {
   background-color: transparent !important;
 }
 
-@media only screen 
-and (min-device-width : 768px) 
+@media only screen
+and (min-device-width : 768px)
 and (max-device-width : 1024px)  {
   .custom_sidebar {
     width: 100vw;
@@ -463,17 +454,9 @@ and (max-device-width : 1024px)  {
     width: 100vw;
     text-align: center;
   }
-  .top-tabs {
-      padding-top: 0;
-  }
-  .top-tabs:first-child {
-    padding-top: 0;
-  }
-  .top-tabs:nth-child(4) {
-    padding-top: 0;
-  }
-  .top-tab  {
+  .top-tabs  {
     font-size: 0.7rem !important;
+    writing-mode: initial;
     transform: none;
   }
 }
@@ -499,19 +482,13 @@ and (max-device-width : 1024px)  {
     width: 100vw;
     text-align: center;
   }
-  .top-tabs {
-    padding-top: 0;
-    padding-right: 1vw;
-  }
-  .top-tabs:first-child {
-    padding-top: 0;
-  }
-  .top-tabs:nth-child(4) {
-    padding-top: 0;
-  }
-  .top-tab  {
+  .top-tabs  {
     font-size: 0.7rem !important;
     transform: none;
+    writing-mode: initial;
+  }
+  hypothesis-sidebar {
+    display: none;
   }
 }
 
@@ -528,13 +505,12 @@ and (max-device-width : 1024px)  {
   }
 }
 /*Prevent Mindtouch changes to glossary label*/
-  .glossaryLabel {
-    display: inline;
-  }
-  .glossaryLabel:after {
-    content: none;
-  }
-  #glossarizerOptions form {
-      text-indent: 2em;
-  }
-
+.glossaryLabel {
+  display: inline;
+}
+.glossaryLabel:after {
+  content: none;
+}
+#glossarizerOptions form {
+  text-indent: 2em;
+}
