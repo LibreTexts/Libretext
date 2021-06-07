@@ -167,6 +167,7 @@ async function Sidebar() {
     LibreTexts.TOC(null, "#custom_target");
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
+    LibreTexts.TOC("https://chem.libretexts.org/Bookshelves", "#chemistry-guide-put");
     
     function getSidebar() {
         if (param.pro) {
@@ -431,6 +432,14 @@ async function Sidebar() {
                     $("#library-guide-put").slideUp("slow");
                 }
             });
+            $('#chemistry-guide').on("click", function () {
+                if ($("#chemistry-guide-put").is(":hidden")) {
+                    $("#chemistry-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#chemistry-guide-put").slideUp("slow");
+                }
+            });
             if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
                 localStorage.setItem('darkMode', 'true');
             if (localStorage.getItem('darkMode') === 'true')
@@ -509,7 +518,7 @@ async function Sidebar() {
                 </iframe>
             </div>
         <a id="ref_table" target="_blank" >Reference Tables</a>
-            <div id="ref-table-put" class="custom_field" style="display: none; background-color: white ">
+            <div id="ref-table-put" class="custom_field" style="display: none">
 
             </div>
          <a id="phy_table" target="_blank" >Physical Constants</a>
@@ -576,7 +585,7 @@ async function Sidebar() {
 
               <form name="property_form">
                 <span>
-                  <select class="select-property" name="the_menu" size=1 onChange="CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_A.unit_menu); CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_B.unit_menu)">
+                  <select class="select-pput /Users/Nguyen/Documents/Web_dev/Sidebar/sidebar.jsroperty" name="the_menu" size=1 onChange="CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_A.unit_menu); CONVERSION_CALCULATOR.UpdateUnitMenu(this, document.form_B.unit_menu)">
                   </select>
                 </span>
               </form>
@@ -718,15 +727,11 @@ async function Sidebar() {
 //Libraries Section
             "libraries": `<div id="sb5"  class="custom_sidebar">
 
-
-    <div class="custom_field">
-	    <div style="display: flex; flex-direction: column;">
-		<ol style="list-style: none;">
-		    <li><a data-color="#00b224" href="https://bio.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">Biology</a></li> <li><a data-color="#207537" href="https://biz.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">Business</a></li> <li><a data-color="#00bfff" class="internal" href="https://chem.libretexts.org/" rel="internal""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">Chemistry</a></li> <li><a data-color="#ff6a00" href="https://eng.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering</a></li> <li><a data-color="#d77b00" href="https://espanol.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español</a></li> <li><a data-color="#e5a800" href="https://geo.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences</a></li> <li><a data-color="#00bc94" href="https://human.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">Humanities</a></li> <li><a data-color="#3737bf" href="https://math.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">Mathematics</a></li> <li><a data-color="#e52817" href="https://med.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">Medicine</a></li> <li><a data-color="#841fcc" href="https://phys.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">Physics</a></li> <li><a data-color="#f20c92" href="https://socialsci.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">Social Sciences</a></li> <li><a data-color="#05baff" href="https://stats.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">Statistics</a></li> <li><a data-color="#bf4000" href="https://workforce.libretexts.org/" rel="external nofollow" target="_blank" class="link-https""><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">Workforce</a></li> </ol>
-	    </div>
-        </div>
+	<div class="custom_field">
+		<a id="chemistry-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Chemistry</a>
+		<div id="chemistry-guide-put" class="custom_field"  style="display: none">                </div>
+	</div>
     </div>`,
-
 
 //Community Section
             "community": `<div id="sb6"  class="custom_sidebar">
@@ -789,7 +794,7 @@ async function Sidebar() {
             "developers": `<div id="sb7"  class="custom_sidebar">
 	<div class="custom_field">
 		<a id="construction-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Construction Guide</a>
-		<div id="construction-guide-put" class="custom_field" style=" background-color: white ">                </div>
+		<div id="construction-guide-put" class="custom_field">                </div>
         <a onclick = "event.preventDefault(); cover(window.location.href)" href='#' class='mt-icon-book'>&nbsp;Get Text Cover</a>
         <a href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}" class="mt-icon-edit-page" target="_blank">&nbsp;Get Page Contents</a>
         <a onclick = "event.preventDefault(); $('dd').show();" href='#' class='mt-icon-eye3'>&nbsp;Reveal Answers</a>
