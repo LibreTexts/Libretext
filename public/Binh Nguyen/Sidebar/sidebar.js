@@ -168,6 +168,18 @@ async function Sidebar() {
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves", "#chemistry-guide-put");
+    LibreTexts.TOC("https://bio.libretexts.org/Bookshelves", "#biology-guide-put");
+    LibreTexts.TOC("https://biz.libretexts.org/Bookshelves", "#business-guide-put");
+    LibreTexts.TOC("https://eng.libretexts.org/Bookshelves", "#eng-guide-put");
+    LibreTexts.TOC("https://espanol.libretexts.org", "#espanol-guide-put");
+    LibreTexts.TOC("https://geo.libretexts.org/Bookshelves", "#geosciences-guide-put");
+    LibreTexts.TOC("https://human.libretexts.org/Bookshelves", "#humanities-guide-put");
+    LibreTexts.TOC("https://math.libretexts.org/Bookshelves", "#math-guide-put");
+    LibreTexts.TOC("https://med.libretexts.org/Bookshelves", "#medicine-guide-put");
+    LibreTexts.TOC("https://phys.libretexts.org/Bookshelves", "#physics-guide-put");
+    LibreTexts.TOC("https://socialsci.libretexts.org/Bookshelves", "#social-guide-put");
+    LibreTexts.TOC("https://stats.libretexts.org/Bookshelves", "#statistics-guide-put");
+    LibreTexts.TOC("https://workforce.libretexts.org/Bookshelves", "#workforce-guide-put");
     
     function getSidebar() {
         if (param.pro) {
@@ -438,6 +450,102 @@ async function Sidebar() {
                 }
                 else {
                     $("#chemistry-guide-put").slideUp("slow");
+                }
+            });
+            $('#biology-guide').on("click", function () {
+                if ($("#biology-guide-put").is(":hidden")) {
+                    $("#biology-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#biology-guide-put").slideUp("slow");
+                }
+            });
+            $('#business-guide').on("click", function () {
+                if ($("#business-guide-put").is(":hidden")) {
+                    $("#business-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#business-guide-put").slideUp("slow");
+                }
+            });
+            $('#eng-guide').on("click", function () {
+                if ($("#eng-guide-put").is(":hidden")) {
+                    $("#eng-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#eng-guide-put").slideUp("slow");
+                }
+            });
+            $('#espanol-guide').on("click", function () {
+                if ($("#espanol-guide-put").is(":hidden")) {
+                    $("#espanol-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#espanol-guide-put").slideUp("slow");
+                }
+            });
+            $('#geosciences-guide').on("click", function () {
+                if ($("#geosciences-guide-put").is(":hidden")) {
+                    $("#geosciences-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#geosciences-guide-put").slideUp("slow");
+                }
+            });
+            $('#humanities-guide').on("click", function () {
+                if ($("#humanities-guide-put").is(":hidden")) {
+                    $("#humanities-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#humanities-guide-put").slideUp("slow");
+                }
+            });
+            $('#math-guide').on("click", function () {
+                if ($("#math-guide-put").is(":hidden")) {
+                    $("#math-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#math-guide-put").slideUp("slow");
+                }
+            });
+            $('#medicine-guide').on("click", function () {
+                if ($("#medicine-guide-put").is(":hidden")) {
+                    $("#medicine-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#medicine-guide-put").slideUp("slow");
+                }
+            });
+            $('#physics-guide').on("click", function () {
+                if ($("#physics-guide-put").is(":hidden")) {
+                    $("#physics-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#physics-guide-put").slideUp("slow");
+                }
+            });
+            $('#social-guide').on("click", function () {
+                if ($("#social-guide-put").is(":hidden")) {
+                    $("#social-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#social-guide-put").slideUp("slow");
+                }
+            });
+            $('#statistics-guide').on("click", function () {
+                if ($("#statistics-guide-put").is(":hidden")) {
+                    $("#statistics-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#statistics-guide-put").slideUp("slow");
+                }
+            });
+            $('#workforce-guide').on("click", function () {
+                if ($("#workforce-guide-put").is(":hidden")) {
+                    $("#workforce-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#workforce-guide-put").slideUp("slow");
                 }
             });
             if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
@@ -728,8 +836,45 @@ async function Sidebar() {
             "libraries": `<div id="sb5"  class="custom_sidebar">
 
 	<div class="custom_field">
-		<a id="chemistry-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Chemistry</a>
+		<a id="chemistry-guide"  target="_blank" rel="internal">&nbsp;Chemistry</a>
 		<div id="chemistry-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="biology-guide"  target="_blank" rel="internal">&nbsp;Biology</a>
+		<div id="biology-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="business-guide"  target="_blank" rel="internal">&nbsp;Business</a>
+		<div id="business-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="eng-guide"  target="_blank" rel="internal">&nbsp;Engineering</a>
+		<div id="eng-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="espanol-guide"  target="_blank" rel="internal">&nbsp;Español</a>
+		<div id="espanol-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="geosciences-guide"  target="_blank" rel="internal">&nbsp;Geosciences</a>
+		<div id="geosciences-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="humanities-guide"  target="_blank" rel="internal">&nbsp;Humanities</a>
+		<div id="humanities-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="math-guide"  target="_blank" rel="internal">&nbsp;Mathematics</a>
+		<div id="math-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="medicine-guide"  target="_blank" rel="internal">&nbsp;Medicine</a>
+		<div id="medicine-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="physics-guide"  target="_blank" rel="internal">&nbsp;Physics</a>
+		<div id="physics-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="social-guide"  target="_blank" rel="internal">&nbsp;Social Sciences</a>
+		<div id="social-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="statistics-guide"  target="_blank" rel="internal">&nbsp;Statistics</a>
+		<div id="statistics-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="workforce-guide"  target="_blank" rel="internal">&nbsp;Workforce</a>
+		<div id="workforce-guide-put" class="custom_field"  style="display: none">                </div>
+
 	</div>
     </div>`,
 
