@@ -107,7 +107,7 @@ function getParam() {
             let splits = rawnames.split(splitter);
             if (splits.length <= 1)
                 continue;
-            splits = splits.map(elem=>elem.trim());
+            splits = splits.map(elem => elem.trim());
             rawauthnames = splits;
             break;
         }
@@ -159,6 +159,9 @@ function getParam() {
                 console.log("Family: " + authors[i]['family']);
             }
         }
+        if (!authors || !authors.length)
+            authors = null;
+        
         return authors;
     }
     
