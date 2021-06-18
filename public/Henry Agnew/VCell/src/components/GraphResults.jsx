@@ -55,7 +55,7 @@ export default function GraphResults(props) {
                 
                 
                 //get results
-                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?sparse=false`);
+                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=false`);
                 response = await response.json();
                 console.log(response);
                 enqueueSnackbar(`Retrieved ${response.simId}`, {
@@ -67,7 +67,7 @@ export default function GraphResults(props) {
                 }
                 
                 //data parsing
-                let data = response.reports[0].data;
+                let data = response.outputs[0].data;
                 let dataObj = {};
                 for (let series of data) {
                     dataObj[series.label] = series;
