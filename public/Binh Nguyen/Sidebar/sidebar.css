@@ -436,6 +436,10 @@ a.toggler.off {
   padding-left: 10px;
 }
 
+div#construction-guide-put {
+  background-color: transparent !important;
+}
+
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)  {
@@ -501,12 +505,12 @@ and (max-device-width : 1024px)  {
   }
 }
 /*Prevent Mindtouch changes to glossary label*/
-.glossaryLabel {
+.glossaryLabel, .annotationLabel {
   display: inline;
 }
-.glossaryLabel:after {
+.glossaryLabel:after, .annotationLabel:after {
   content: none;
 }
-#glossarizerOptions form {
+#glossarizerOptions form, #annotationOptions form {
   text-indent: 2em;
 }

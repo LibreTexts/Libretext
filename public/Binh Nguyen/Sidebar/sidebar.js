@@ -168,6 +168,18 @@ async function Sidebar() {
     LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", "#construction-guide-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference", "#ref-table-put");
     LibreTexts.TOC("https://chem.libretexts.org/Bookshelves", "#chemistry-guide-put");
+    LibreTexts.TOC("https://bio.libretexts.org/Bookshelves", "#biology-guide-put");
+    LibreTexts.TOC("https://biz.libretexts.org/Bookshelves", "#business-guide-put");
+    LibreTexts.TOC("https://eng.libretexts.org/Bookshelves", "#eng-guide-put");
+    LibreTexts.TOC("https://espanol.libretexts.org", "#espanol-guide-put");
+    LibreTexts.TOC("https://geo.libretexts.org/Bookshelves", "#geosciences-guide-put");
+    LibreTexts.TOC("https://human.libretexts.org/Bookshelves", "#humanities-guide-put");
+    LibreTexts.TOC("https://math.libretexts.org/Bookshelves", "#math-guide-put");
+    LibreTexts.TOC("https://med.libretexts.org/Bookshelves", "#medicine-guide-put");
+    LibreTexts.TOC("https://phys.libretexts.org/Bookshelves", "#physics-guide-put");
+    LibreTexts.TOC("https://socialsci.libretexts.org/Bookshelves", "#social-guide-put");
+    LibreTexts.TOC("https://stats.libretexts.org/Bookshelves", "#statistics-guide-put");
+    LibreTexts.TOC("https://workforce.libretexts.org/Bookshelves", "#workforce-guide-put");
     
     function getSidebar() {
         if (param.pro) {
@@ -354,8 +366,8 @@ async function Sidebar() {
         function controlSidebar() {
             window.addEventListener('click', function (event) {
                 if (event.target == document.getElementById("custom_open")) {
-                    $("#sb2, #sb3, #sb4, #sb5, #sb6, #sb7").hide();
-                    $("#sb1, #sbHeader").show("slide");
+		    $("#sb2, #sb3, #sb4, #sb5, #sb6, #sb7").hide();
+		    $("#sb1, #sbHeader").show("slide");
                 }
             });
             $('#per_table').on("click", function () {
@@ -438,6 +450,102 @@ async function Sidebar() {
                 }
                 else {
                     $("#chemistry-guide-put").slideUp("slow");
+                }
+            });
+            $('#biology-guide').on("click", function () {
+                if ($("#biology-guide-put").is(":hidden")) {
+                    $("#biology-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#biology-guide-put").slideUp("slow");
+                }
+            });
+            $('#business-guide').on("click", function () {
+                if ($("#business-guide-put").is(":hidden")) {
+                    $("#business-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#business-guide-put").slideUp("slow");
+                }
+            });
+            $('#eng-guide').on("click", function () {
+                if ($("#eng-guide-put").is(":hidden")) {
+                    $("#eng-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#eng-guide-put").slideUp("slow");
+                }
+            });
+            $('#espanol-guide').on("click", function () {
+                if ($("#espanol-guide-put").is(":hidden")) {
+                    $("#espanol-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#espanol-guide-put").slideUp("slow");
+                }
+            });
+            $('#geosciences-guide').on("click", function () {
+                if ($("#geosciences-guide-put").is(":hidden")) {
+                    $("#geosciences-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#geosciences-guide-put").slideUp("slow");
+                }
+            });
+            $('#humanities-guide').on("click", function () {
+                if ($("#humanities-guide-put").is(":hidden")) {
+                    $("#humanities-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#humanities-guide-put").slideUp("slow");
+                }
+            });
+            $('#math-guide').on("click", function () {
+                if ($("#math-guide-put").is(":hidden")) {
+                    $("#math-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#math-guide-put").slideUp("slow");
+                }
+            });
+            $('#medicine-guide').on("click", function () {
+                if ($("#medicine-guide-put").is(":hidden")) {
+                    $("#medicine-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#medicine-guide-put").slideUp("slow");
+                }
+            });
+            $('#physics-guide').on("click", function () {
+                if ($("#physics-guide-put").is(":hidden")) {
+                    $("#physics-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#physics-guide-put").slideUp("slow");
+                }
+            });
+            $('#social-guide').on("click", function () {
+                if ($("#social-guide-put").is(":hidden")) {
+                    $("#social-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#social-guide-put").slideUp("slow");
+                }
+            });
+            $('#statistics-guide').on("click", function () {
+                if ($("#statistics-guide-put").is(":hidden")) {
+                    $("#statistics-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#statistics-guide-put").slideUp("slow");
+                }
+            });
+            $('#workforce-guide').on("click", function () {
+                if ($("#workforce-guide-put").is(":hidden")) {
+                    $("#workforce-guide-put").slideDown("slow");
+                }
+                else {
+                    $("#workforce-guide-put").slideUp("slow");
                 }
             });
             if (window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === undefined)
@@ -677,34 +785,48 @@ async function Sidebar() {
     <div class="custom_field">
         <a href="https://adapt.libretexts.org/" target="_blank" class='mt-icon-pencil2'>&nbsp;ADAPT Homework System</a>
     </div>
+
     <div class="custom_field">
-		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
+	<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
     </div>
+
     <div class="custom_field">
-		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+	<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
     </div>
+
     <div class="custom_field">
-		<a href="/Under_Construction/Development_Details/OER_Remixer" class="mt-icon-tree"> OER Remixer</a>
+	<a href="/Under_Construction/Development_Details/OER_Remixer" class="mt-icon-tree"> OER Remixer</a>
     </div>
+
     <div class="custom_field">
         <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
+
     <div class="custom_field">
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
-	<div class="custom_field">
-		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark Page</a>
-			<div id="bm-list">
 
-			</div>
+    <div class="custom_field">
+	<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark Page</a>
+	<div id="bm-list">
+
 	</div>
+    </div>
+
     <div class="custom_field">
         <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle AutoAttribution</a>
-			<div id="librelens-list">
+	<div id="librelens-list">
 
-
-			</div>
+	</div>
     </div>
+
+    <div class="custom_field">
+	    <a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-page-notification'>&nbsp;Watch Option</a>
+		    <div id="bm-list">
+
+		    </div>
+    </div>
+
 	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary</p>
         <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
             <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
@@ -713,6 +835,17 @@ async function Sidebar() {
                 <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
             <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
         </form>
+    </div>
+    
+
+    <div id="annotationOptions" class="custom_field">
+	<p class="mt-icon-bubble">&nbsp;Annotation</p>
+
+	<form oninput="">
+	    <p><input id="" name="" type="radio" value=""/><label class="annotationLabel" for="none">Hypothesis</label></p>
+	    <p><input id="" name="" type="radio" value=""/><label class="annotationLabel" for="none">Note Bene</label></p>
+	    <p><input type="radio" value="none"/><label class="annotationLabel" for="none">None</label></p>
+	</form> 
     </div>
     
     <div class="custom_field">
@@ -728,8 +861,45 @@ async function Sidebar() {
             "libraries": `<div id="sb5"  class="custom_sidebar">
 
 	<div class="custom_field">
-		<a id="chemistry-guide"  target="_blank" rel="internal" class="mt-icon-site-tools ">&nbsp;Chemistry</a>
+		<a id="chemistry-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">&nbsp;Chemistry</a>
 		<div id="chemistry-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="biology-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">&nbsp;Biology</a>
+		<div id="biology-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="business-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">&nbsp;Business</a>
+		<div id="business-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="eng-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">&nbsp;Engineering</a>
+		<div id="eng-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a href="https://espanol.libretexts.org/" id="espanol-guide"  target="_blank" rel="noreferrer noopener"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">&nbsp;Español</a>
+		<div id="espanol-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="geosciences-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">&nbsp;Geosciences</a>
+		<div id="geosciences-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="humanities-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">&nbsp;Humanities</a>
+		<div id="humanities-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="math-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">&nbsp;Mathematics</a>
+		<div id="math-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="medicine-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">&nbsp;Medicine</a>
+		<div id="medicine-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="physics-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">&nbsp;Physics</a>
+		<div id="physics-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="social-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">&nbsp;Social Sciences</a>
+		<div id="social-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="statistics-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">&nbsp;Statistics</a>
+		<div id="statistics-guide-put" class="custom_field"  style="display: none">                </div>
+
+		<a id="workforce-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">&nbsp;Workforce</a>
+		<div id="workforce-guide-put" class="custom_field"  style="display: none">                </div>
+
 	</div>
     </div>`,
 
@@ -773,9 +943,12 @@ async function Sidebar() {
 	    </div>
 	
 	    <div class="custom_field">
-		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
+		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"> &nbsp;<i class="fas fa-info"></i>   Blog</a>
 	    </div>
 	    
+	    <div class="custom_field">
+		<a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
+	    </div>
 	    <div class="custom_field">
 		    <a href="https://chat.libretexts.org/" rel="external nofollow" target="_blank" class="mt-icon-chat2">&nbsp;Community Help Chat</a>
 	    </div>
@@ -808,12 +981,11 @@ async function Sidebar() {
 		    console.log(data.join(", "));
 		})' class="mt-icon-flow-cascade" href='#' >&nbsp;Get PageIDs</a>
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
-        <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
-		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+		<a href="https://jupyter.libretexts.org/hub/login">&nbsp<i class="fas fa-square-root-alt"></i>  Jupyter Hub</a>
+		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax">&nbsp<i class="fas fa-square-root-alt"></i> RealTime Mathjax</a>
 		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
 		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
 		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
-		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax" class="mt-icon-article"> RealTime Mathjax</a>
 		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
 	</div>
 	</div>`
