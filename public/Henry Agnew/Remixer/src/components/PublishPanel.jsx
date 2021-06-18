@@ -80,7 +80,7 @@ export default function PublishPanel(props) {
             if (!page.sourceURL)
                 copyMode = 'blank'; //pages without a source are blank
             page.copyMode = copyMode;
-            if(!page.tags)
+            if (!page.tags)
                 page.tags = [];
             
             if (props.mode === 'Remix') {
@@ -431,7 +431,9 @@ function PublishSubPanel(props) {
         if (props.mode === 'Remix') {
             destRoot = props.institution;
             if (destRoot.endsWith('Sandboxes')) {
-                destRoot += `/${document.getElementById('usernameHolder').innerText}`;
+                let username = document.getElementById('usernameHolder').innerText;
+                username = username.replace('@', '_at_');
+                destRoot += `/${username}`;
             }
             destRoot = `${destRoot}/${LibreTexts.cleanPath(props.RemixTree.title)}`;
         }
@@ -509,7 +511,7 @@ function PublishSubPanel(props) {
             eta: 'Done!',
         });
         if (props.mode === 'Remix')
-            batch(destRoot,'&createMatterOnly=true');
+            batch(destRoot, '&createMatterOnly=true');
         setIsActive(false);
         
         async function completedPage(page, text, color, isFailed = false) {
