@@ -584,9 +584,13 @@ async function Sidebar() {
             });
         }
         
-        //Set initial value for glossary options
-        document.getElementById("glossarizerOptions" + localStorage.getItem("glossarizerType")).checked = true;
+        // Set initial value for glossary options
+        document.getElementById("glossarizerOptions" + "-" + localStorage.getItem("glossarizerType")).checked = true;
     }
+
+	// Set initial value for annotation (Note Bene and Hypothesis)
+	localStorage.setItem("annotationType", "none");
+        document.getElementById("annotationOptions" + "-" + localStorage.getItem("annotationType")).checked = true;
     
     function getData(pro) {
         return {
@@ -821,35 +825,60 @@ async function Sidebar() {
     </div>
 
     <div class="custom_field">
-	    <a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-page-notification'>&nbsp;Watch Option</a>
-		    <div id="bm-list">
-
-		    </div>
+	<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-page-notification'>&nbsp;Watch Option</a>
+	<form class="option" action="">
+	    <div class="legend">
+		<a class="mt-f1-success mt-f1-link" href="https://success.mindtouch.com/@go/cid/subscriptions">
+		    <span class="ui-icon mt-icon-f1-link"></span>
+		</a>
+	    </div>
+		Receive email notifications for:
+	    <ul>
+		<li class="self">
+		    <input id="deki-page-alerts-self" class="mt-checkbox" type="radio"
+		    data-ga-label="Subscribe to self" name="alert" checked="checked" value="1">
+		    <label for="deki-page-alerts-tree" class="mt-label-checkbox"
+			data-ga-label="Subscribe to self">This page only</label>
+		</li>
+		<li class="tree">
+		    <input id="deki-page-alerts-tree" class="mt-checkbox" type="radio"
+		    data-ga-label="Subscribe to tree" name="alert" checked="checked" value="2">
+		    <label for="deki-page-alerts-tree" class="mt-label-checkbox"
+			data-ga-label="Subscribe to tree">This page and all subpages</label>
+		</li>
+		<li class="off">
+		    <input id="deki-page-alerts-off" class="mt-checkbox" type="radio"
+		    data-ga-label="Unsubscribe" name="alert" checked="checked" value="0">
+		    <label for="deki-page-alerts-off" class="mt-label-checkbox"
+			data-ga-label="Unsubscribe">Turn OFF notifications for this page</label>
+		</li>
+	    </ul>
+	</form>
     </div>
 
 	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary</p>
         <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
-            <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
-            <!-- <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
-                <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
-                <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
-            <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
+            <p><input id="glossarizerOptions-textbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
+            <!-- <p><input id="glossarizerOptions-achem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
+                <p><input id="glossarizerOptions-ichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
+                <p><input id="glossarizerOptions-ochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
+            <p><input id="glossarizerOptions-none" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
         </form>
     </div>
     
 
     <div id="annotationOptions" class="custom_field">
-	<p class="mt-icon-bubble">&nbsp;Annotation</p>
+	<p><i class="fa fa-asterisk"></i>&nbsp;Annotation</p>
 
-	<form oninput="">
-	    <p><input id="" name="" type="radio" value=""/><label class="annotationLabel" for="none">Hypothesis</label></p>
-	    <p><input id="" name="" type="radio" value=""/><label class="annotationLabel" for="none">Note Bene</label></p>
-	    <p><input type="radio" value="none"/><label class="annotationLabel" for="none">None</label></p>
+	<form oninput="makeAnnotation(annotationOptions.value)">
+	    <p><input id="annotationOptions-hypothesis" name="annotationOptions" type="radio" value="hypothesis"/><label class="annotationLabel" for="none">Hypothesis</label></p>
+	    <p><input id="annotationOptions-notebene" name="annotationOptions" type="radio" value="notebene"/><label class="annotationLabel" for="none">Note Bene</label></p>
+	    <p><input id="annotationOptions-none" name="annotationOptions" type="radio" value="none"/><label class="annotationLabel" for="none">None</label></p>
 	</form> 
     </div>
     
     <div class="custom_field">
-        <a onclick = "event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
+        <a onclick = " $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
     </div>
 
     <div class="custom_field">
@@ -943,7 +972,7 @@ async function Sidebar() {
 	    </div>
 	
 	    <div class="custom_field">
-		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"> &nbsp;<i class="fas fa-info"></i>   Blog</a>
+		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"> &nbsp;<i class="fa fa-info"></i>   Blog</a>
 	    </div>
 	    
 	    <div class="custom_field">
@@ -1112,4 +1141,21 @@ function removeBookmarks() {
     (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.removeChild(document.querySelector("#sbBookmark"));
     sessionStorage.removeItem("Title");
     sessionStorage.removeItem("Bookmark");
+}
+
+function makeAnnotation(inputSourceOption) {
+    let sourceOption = inputSourceOption || localStorage.getItem("annotationType");
+    
+    switch((sourceOption || "").trim().toLowerCase()) {
+	case "none":
+	    $('hypothesis-sidebar').hide()
+	    return;
+	case "notebene":
+	    localStorage.setItem("annotationType", "notebene");
+	    $('hypothesis-sidebar').hide()
+	    break;
+	default:
+	    localStorage.setItem("annotationType", "hypothesis");
+	    $('hypothesis-sidebar').show()
+    }
 }
