@@ -3,6 +3,9 @@ var CONVERSION_CALCULATOR;
 if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
     localStorage.setItem("beeline", "off");
 }
+if (!localStorage.getItem("glossarizerType") || localStorage.getItem("beeline") === "null") {
+    localStorage.setItem("glossarizerType", "textbook");
+}
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
@@ -861,7 +864,15 @@ function activateBeeLine() {
         const toggles = $('.BLtoggle');
         if (toggles[0]) {
             const btns = toggles.find('button, a');
-            doBeeline(localStorage.getItem("beeline"), localStorage.getItem("beeline"));
+            
+            if (localStorage.getItem("beeline")){
+                doBeeline(localStorage.getItem("beeline"), localStorage.getItem("beeline"));
+                if (typeof ga === 'function') {
+                    ga('send', 'event', 'BeelineInitialized', localStorage.getItem("beeline"));
+                }
+            }
+            
+            
             btns.on("click", function (e) {
                 if (!e.target.href)
                     e.preventDefault();

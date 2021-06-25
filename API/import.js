@@ -950,12 +950,20 @@ async function processPretext(data, socket) {
         
         //find the PreTeXt source within this zip file
         let source = await runProcess('grep', ['-rl', '-E', "<pretext|<mathbook", `${data.path}-Unzipped`]);
-        console.log(`${data.path}-Unzipped`, source);
         if (!source) {
+            console.error('errorMessage', 'Cannot find a valid PreTeXt source root');
             socket.emit('errorMessage', 'Cannot find a valid PreTeXt source root');
             return;
         }
+        
+        console.log(source.split(`${data.path}-Unzipped`), source.split(`${data.path}-Unzipped`).length)
+        if (source.split(`${data.path}-Unzipped`)?.length !== 2) {
+            console.error('Too many possible PreTeXt source roots: '+source);
+            socket.emit('errorMessage', 'Too many possible PreTeXt source roots');
+            return;
+        }
         source = source.trim();
+        console.log(source);
         
         //obtain JSON manifest
         let rootPath = `${data.path}-Unzipped/out`;
