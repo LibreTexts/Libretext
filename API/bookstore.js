@@ -385,6 +385,10 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
 
 
 //send request to the Lulu API
+    if (session.shipping.address.country === "US") { //remove optional zip+4
+        session.shipping.address.postal_code = session.shipping.address.postal_code.substring(0,5);
+    }
+    
     const payload = {
         contact_email: bookstoreConfig.RECEIPT_EMAIL,
         external_id: session.id,
