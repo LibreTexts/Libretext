@@ -204,7 +204,7 @@ if (!window["analytics.js"]) {
                 if (!coverpage) {
                     const isPro = document.getElementById('proHolder').innerText === 'true';
                     if (isPro)
-                        alert("Analytic Tracking Requires a Coverpage to be set");
+                        alert("Analytic Tracking requires a Coverpage tag to be set in the page settings");
                     else
                         alert('No coverpage found! Please inform your instructor');
                     return null;
