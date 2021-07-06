@@ -9,7 +9,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import ReactDOM from 'react-dom';
-import SubComponent from "../components/SubComponent.jsx";
 import {Button, SwipeableDrawer, List, Divider, ListItem, ListItemIcon, ListItemText,} from "@material-ui/core";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
@@ -71,6 +70,7 @@ function HelloWorld(props) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
+            <Libraries/>
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
@@ -92,13 +92,6 @@ function HelloWorld(props) {
     );
     
     return (<React.Fragment>
-            <Button variant="contained" onClick={() => {
-                setNumClicks(numClicks + 1);
-                setButtonText(`Thanks, I've been clicked ${numClicks + 1} times!`)
-            }}>
-                {buttonText}
-            </Button>
-            <SubComponent number={numClicks}/>
             <div>
                 {['left', 'right', 'top', 'bottom'].map((anchor) => (
                     <React.Fragment key={anchor}>
@@ -114,9 +107,9 @@ function HelloWorld(props) {
                     </React.Fragment>
                 ))}
             </div>
-            <Readability/>
-            <Resources/>
-            <Tools/>
+            {/*<Readability/>*/}
+            {/*<Resources/>*/}
+            {/*<Tools/>*/}
             <Libraries/>
             <Community/>
             <Developers/>
