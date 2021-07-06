@@ -10,9 +10,8 @@ if (!window["analytics.js"]) {
         let coverpage;
         let login = '';
         // const root = "home.miniland1333.com"
-    
-    
-    
+        
+        
         if (navigator.webdriver || isUserAutomated || window.matchMedia('print').matches) {
             $content.show();
             return; //exit if not client-facing
@@ -203,7 +202,11 @@ if (!window["analytics.js"]) {
             if (!coverpage) {
                 coverpage = await LibreTexts.getCoverpage();
                 if (!coverpage) {
-                    alert('No coverpage found! Aborting');
+                    const isPro = document.getElementById('proHolder').innerText === 'true';
+                    if (isPro)
+                        alert("Analytic Tracking Requires a Coverpage to be set");
+                    else
+                        alert('No coverpage found! Please inform your instructor');
                     return null;
                 }
                 
