@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 function loginCAS(event) {
     event.preventDefault();
-    Cookies.set('api_redirect', window.location.href, {domain: 'libretexts.org'});
+    Cookies.set('api_redirect', window.location.href, {domain: 'libretexts.org', sameSite:'lax'});
     window.location = 'https://api.libretexts.org/cas-bridge';
 }
 
