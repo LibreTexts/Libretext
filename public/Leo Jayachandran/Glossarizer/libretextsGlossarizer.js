@@ -132,7 +132,7 @@ LibreTextsGlossarizer = class {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    console.error("Textbook glossary not found!");
+                    console.debug("Textbook glossary not found!");
                     return {
                         body: ""
                     };
@@ -228,7 +228,7 @@ LibreTextsGlossarizer = class {
         }
 
         if (retrievedGlossary.length <= 1) { // Deal with incompatible Glossary
-            console.error("incompatible glossary");
+            console.debug("incompatible glossary");
             return;
         }
         retrievedGlossary.sort((a,b) => {return b.term.length - a.term.length}) //sort from longest term to shortest term
@@ -533,6 +533,9 @@ LibreTextsGlossarizer = class {
     }
 
     buildBackMatter() {
+        //Hide the example table
+        let $example = $("table:contains('Example and Directions')").hide()
+        //Build the backend
         let $glossaryTable = $("table:contains('Word" + "(s)')")
         let tBody = $glossaryTable.html().replace(/&nbsp;/g, " ").replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
         tBody = tBody.substring(tBody.search("<tbody"), tBody.search("</tbody>")).trim();
@@ -586,9 +589,10 @@ LibreTextsGlossarizer = class {
         glossaryList.map((currentValue) => {
             glossaryText += '<p class="glossaryElement">' + currentValue["term"] + " | " + currentValue["description"] + "</p>";
         });
-
+        // Render terms
         $glossaryTable.after(`<div id = "visibleGlossary">${glossaryText}</div>`);
-
+        // Hide Glossary table
+        $glossaryTable.hide()
 
 
     }
