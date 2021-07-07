@@ -2,3 +2,24 @@
 .subComponent {
     border: 2px solid blue;
 }
+
+#LibreTextsSidebar > .MuiDrawer-paper {
+    background: #ececec;
+}
+
+#LibreTextsSidebar .SidebarItem {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #595959;
+    text-decoration: none;
+}
+
+#LibreTextsSidebar .SidebarItem > [class*="mt-icon"] {
+    font-size: x-large;
+}
+
+#LibreTextsSidebar .SidebarItem > .MuiListItemIcon-root > img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}

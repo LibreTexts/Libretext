@@ -6,16 +6,12 @@ Always place your imports at the top of files!
 import React, {useState} from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ReactDOM from 'react-dom';
-import {Button, SwipeableDrawer, List, Divider, ListItem, ListItemIcon, ListItemText,} from "@material-ui/core";
-import Readability from "../components/Readability.jsx";
-import Resources from "../components/Resources.jsx";
-import Tools from "../components/Tools.jsx";
+import {Button, Divider, IconButton, SwipeableDrawer,} from "@material-ui/core";
 import Libraries from "../components/Libraries.jsx";
 import Community from "../components/Community.jsx";
 import Developers from "../components/Developers.jsx";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 
 /*
@@ -30,10 +26,9 @@ document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 const useStyles = makeStyles({
     list: {
-        width: 250,
-    },
-    fullList: {
-        width: 'auto',
+        width: 400,
+        overflowY: "auto",
+        maxWidth: "90vw",
     },
 });
 
@@ -41,81 +36,81 @@ const useStyles = makeStyles({
 This is your React Hook.
 Your top-level logic should go here, but other parts should be handled by sub-components.
 */
-function HelloWorld(props) {
-    const [buttonText, setButtonText] = useState("Click me, please");
-    const [numClicks, setNumClicks] = useState(0);
+function Sidebar(props) {
+    const [openPanel, setOpenPanel] = useState();
     
     const classes = useStyles();
-    const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
-    });
     
-    const toggleDrawer = (anchor, open) => (event) => {
+    const toggleDrawer = (anchor) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-        
-        setState({...state, [anchor]: open});
+        setOpenPanel(anchor);
     };
     
-    const list = (anchor) => (
-        <div
-            className={clsx(classes.list, {
-                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-            })}
+    const list = () => {
+        let currentPanel;
+        switch (openPanel) {
+            case "library":
+                currentPanel = <Libraries/>;
+                break;
+            case "community":
+                currentPanel = <Community/>;
+                break;
+            case "developers":
+                currentPanel = <Developers/>;
+                break;
+        }
+        
+        return <div
+            className={clsx(classes.list)}
             role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
+            // onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
         >
-            <Libraries/>
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                        <ListItemText primary={text}/>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider/>
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                        <ListItemText primary={text}/>
-                    </ListItem>
-                ))}
-            </List>
+            {currentPanel}
         </div>
-    );
+    };
     
     return (<React.Fragment>
             <div>
-                {['left', 'right', 'top', 'bottom'].map((anchor) => (
+                {['library', 'community', 'developers'].map((anchor) => (
                     <React.Fragment key={anchor}>
-                        <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-                        <SwipeableDrawer
-                            anchor={anchor}
-                            open={state[anchor]}
-                            onClose={toggleDrawer(anchor, false)}
-                            onOpen={toggleDrawer(anchor, true)}
-                        >
-                            {list(anchor)}
-                        </SwipeableDrawer>
+                        <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
                 ))}
+                <SwipeableDrawer
+                    id="LibreTextsSidebar"
+                    anchor={'left'}
+                    open={Boolean(openPanel)}
+                    onClose={toggleDrawer(false)}
+                    disableSwipeToOpen={true}
+                    onOpen={() => {
+                    }}>
+                    <div className={classes.drawerHeader}>
+                        <IconButton onClick={toggleDrawer(false)}>
+                            {openPanel}
+                            <ChevronLeftIcon/>
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    {list()}
+                </SwipeableDrawer>
             </div>
-            {/*<Readability/>*/}
-            {/*<Resources/>*/}
-            {/*<Tools/>*/}
-            <Libraries/>
-            <Community/>
-            <Developers/>
         </React.Fragment>
     );
 }
 
+if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
+    localStorage.setItem("beeline", "off");
+}
+window.addEventListener("load", () => {
+    if (Sidebar && !LibreTexts.active.sidebar) {
+        LibreTexts.active.sidebar = true;
+        Sidebar();
+    }
+});
 
-ReactDOM.render(<HelloWorld/>, target);
+window.Sidebar = async function () {
+    ReactDOM.render(<Sidebar/>, target);
+}
