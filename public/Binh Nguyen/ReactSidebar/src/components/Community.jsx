@@ -34,7 +34,7 @@ function CommunityLibraryItem(props) {
         </ListItem>)
 }
 CommunityLibraryItem.propTypes = {
-    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
     href: PropTypes.string,
     icon: PropTypes.string,
     onClick: PropTypes.func,

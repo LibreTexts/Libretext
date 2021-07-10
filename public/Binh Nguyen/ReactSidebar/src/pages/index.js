@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import {Button, Divider, IconButton, SwipeableDrawer,} from "@material-ui/core";
+import Contents from "../components/Contents.jsx";
 import Libraries from "../components/Libraries.jsx";
 import Community from "../components/Community.jsx";
 import Developers from "../components/Developers.jsx";
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
 This is your React Hook.
 Your top-level logic should go here, but other parts should be handled by sub-components.
 */
-function Sidebar(props) {
+function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     
     const classes = useStyles();
@@ -51,6 +52,9 @@ function Sidebar(props) {
     const list = () => {
         let currentPanel;
         switch (openPanel) {
+            case "contents":
+                currentPanel = <Contents/>;
+                break;
             case "library":
                 currentPanel = <Libraries/>;
                 break;
@@ -74,7 +78,7 @@ function Sidebar(props) {
     
     return (<React.Fragment>
             <div>
-                {['library', 'community', 'developers'].map((anchor) => (
+                {['contents','library', 'community', 'developers'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
@@ -104,6 +108,9 @@ function Sidebar(props) {
 if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
     localStorage.setItem("beeline", "off");
 }
+if (!localStorage.getItem("glossarizerType") || localStorage.getItem("beeline") === "null") {
+    localStorage.setItem("glossarizerType", "textbook");
+}
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
@@ -111,6 +118,6 @@ window.addEventListener("load", () => {
     }
 });
 
-window.Sidebar = async function () {
-    ReactDOM.render(<Sidebar/>, target);
+window.Sidebar = function () {
+    ReactDOM.render(<SidebarComponent/>, target);
 }

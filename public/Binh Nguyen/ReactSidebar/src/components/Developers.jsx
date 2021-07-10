@@ -35,8 +35,11 @@ export default function Developers(props) {
             }}/>
             <IconLink title="Get PageIDs" icon="mt-icon-flow-cascade" onClick={() => {
                 LibreTexts.getSubpages().then(data => {
-                    data = JSON.stringify(data).match(/(?<="id":")\d+(?=")/g);
-                    if (!data) {
+                    data = JSON.stringify(data).match(/"id":"\d+"/g);
+                    if (data) {
+                        data = data.map(e => e.match(/"id":"(\d+)"/)[1]);
+                    }
+                    else {
                         data = [document.getElementById("IDHolder")?.innerText];
                     }
                     let [subdomain] = LibreTexts.parseURL();
