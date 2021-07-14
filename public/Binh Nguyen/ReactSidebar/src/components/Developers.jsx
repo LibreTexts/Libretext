@@ -1,6 +1,6 @@
 import React from 'react';
 import {List} from "@material-ui/core";
-import {IconLink, TableOfContents} from "./Common.jsx";
+import {IconLink, LibraryItem, TableOfContents} from "./Common.jsx";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -13,7 +13,6 @@ export default function Developers(props) {
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id="panel1a-header"
                 >
                     <Typography className="mt-icon-site-tools">Construction Guide</Typography>
                 </AccordionSummary>
@@ -54,6 +53,7 @@ export default function Developers(props) {
             <IconLink title="Office Hours" icon="mt-icon-topic"
                       href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/"/>
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
+            <LibraryItem key="query" text="Query Library" subdomain="query"/>
             <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Webwork Server" icon="mt-icon-article" href="https://webwork.libretexts.org/webwork2"/>
             <IconLink title="IMathAS Server" icon="mt-icon-article" href="https://imathas.libretexts.org/imathas/"/>

@@ -9,7 +9,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import {Button, Divider, IconButton, SwipeableDrawer,} from "@material-ui/core";
 import Contents from "../components/Contents.jsx";
+import Resources from "../components/Resources.jsx";
 import Libraries from "../components/Libraries.jsx";
+import Tools from "../components/Tools.jsx";
 import Community from "../components/Community.jsx";
 import Developers from "../components/Developers.jsx";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -25,13 +27,13 @@ target.id = Math.random() * 100;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 
-const useStyles = makeStyles({
-    list: {
-        width: 400,
-        overflowY: "auto",
-        maxWidth: "90vw",
-    },
-});
+// const useStyles = makeStyles({
+//     list: {
+//         width: 400,
+//         overflowY: "auto",
+//         maxWidth: "90vw",
+//     },
+// });
 
 /*
 This is your React Hook.
@@ -40,7 +42,7 @@ Your top-level logic should go here, but other parts should be handled by sub-co
 function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     
-    const classes = useStyles();
+    // const classes = useStyles();
     
     const toggleDrawer = (anchor) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -53,21 +55,33 @@ function SidebarComponent(props) {
         let currentPanel;
         switch (openPanel) {
             case "contents":
-                currentPanel = <Contents/>;
+                currentPanel = <Contents toggleDrawer={toggleDrawer}/>;
                 break;
-            case "library":
-                currentPanel = <Libraries/>;
+            case "resources":
+                currentPanel = <Resources toggleDrawer={toggleDrawer}/>;
+                break;
+            case "tools":
+                currentPanel = <Tools toggleDrawer={toggleDrawer}/>;
+                break;
+            case "libraries":
+                currentPanel = <Libraries toggleDrawer={toggleDrawer}/>;
                 break;
             case "community":
-                currentPanel = <Community/>;
+                currentPanel = <Community toggleDrawer={toggleDrawer}/>;
                 break;
             case "developers":
-                currentPanel = <Developers/>;
+                currentPanel = <Developers toggleDrawer={toggleDrawer}/>;
                 break;
+                default:
+                    console.error(`${openPanel} not implemented`);
         }
         
         return <div
-            className={clsx(classes.list)}
+            style={{
+                width: 400,
+                overflowY: "auto",
+                maxWidth: "90vw",
+            }}
             role="presentation"
             // onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
@@ -78,11 +92,12 @@ function SidebarComponent(props) {
     
     return (<React.Fragment>
             <div>
-                {['contents','library', 'community', 'developers'].map((anchor) => (
+                {['contents','resources','libraries', 'tools', 'community', 'developers'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
                 ))}
+                <div id="sidebarDiv"/>
                 <SwipeableDrawer
                     id="LibreTextsSidebar"
                     anchor={'left'}
@@ -91,7 +106,7 @@ function SidebarComponent(props) {
                     disableSwipeToOpen={true}
                     onOpen={() => {
                     }}>
-                    <div className={classes.drawerHeader}>
+                    <div>
                         <IconButton onClick={toggleDrawer(false)}>
                             {openPanel}
                             <ChevronLeftIcon/>

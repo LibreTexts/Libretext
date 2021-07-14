@@ -1,8 +1,4 @@
 /*Put the CSS that goes with the React project here!*/
-.subComponent {
-    border: 2px solid blue;
-}
-
 #LibreTextsSidebar > .MuiDrawer-paper {
     background: #ececec;
 }
@@ -23,3 +19,15 @@
     width: 25px;
     object-fit: contain;
 }
+
+#LibreTextsSidebar .MuiAccordionDetails-root {
+    width:100%;
+    padding: 0;
+}
+
+#LibreTextsSidebar .MuiAccordionDetails-root iframe {
+    width:100%;
+    min-height: 350px;
+    overflow: auto;
+}
+

@@ -5,7 +5,7 @@ import {createHash} from 'crypto';
 
 
 export function IconLink(props) {
-    return (
+    return (<>
         <ListItem button key={props.title} component={Link} href={props.href}
                   onClick={props.onClick}
                   rel="external nofollow"
@@ -13,13 +13,29 @@ export function IconLink(props) {
                   className="SidebarItem">
             <ListItemIcon className={props.icon || ""}/>
             <ListItemText primary={props.title}/>
-        </ListItem>)
+        
+        </ListItem>
+        {props.children}
+    </>)
 }
+
 IconLink.propTypes = {
     title: PropTypes.string.isRequired,
     href: PropTypes.string,
     icon: PropTypes.string,
     onClick: PropTypes.func,
+}
+
+export function LibraryItem(props) {
+    return (
+        <ListItem button key={props.text} component={Link} href={`https://${props.subdomain}.libretexts.org`}
+                  rel="external nofollow"
+                  target="_blank"
+                  className="SidebarItem">
+            <ListItemIcon><img className="icon" alt=""
+                               src={`https://libretexts.org/img/LibreTexts/glyphs_blue/${props.subdomain}.png`}/></ListItemIcon>
+            <ListItemText primary={props.text}/>
+        </ListItem>)
 }
 
 export function TableOfContents(props) {
@@ -30,12 +46,13 @@ export function TableOfContents(props) {
     hash = hash.digest('hex');
     
     
-    useEffect(()=>{
-        LibreTexts.TOC("https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide", `#${hash}`);
-    },[props.coverpageURL])
+    useEffect(() => {
+        LibreTexts.TOC(props.coverpageURL, `#${hash}`);
+    }, [props.coverpageURL])
     
     return (<div id={hash}/>)
 }
+
 TableOfContents.propTypes = {
     coverpageURL: PropTypes.string.isRequired,
 }
