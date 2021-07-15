@@ -21,7 +21,8 @@ export default function Readability(props) {
     }
     
     function BeelineButton(props) {
-        return <Button id={`SB_${props.theme}`} variant="contained" onClick={setBeelineTheme(props.theme)}>
+        return <Button id={`SB_${props.theme}`} variant="contained" onClick={setBeelineTheme(props.theme)}
+                       style={{margin: 6}}>
             {props.title || props.theme}
             {currentTheme === props.theme ? <CheckIcon/> : null}
         </Button>

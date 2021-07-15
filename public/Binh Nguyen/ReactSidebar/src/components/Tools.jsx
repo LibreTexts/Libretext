@@ -10,11 +10,11 @@ export default function Tools(props) {
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
             <IconLink title="OER Remixer" icon="mt-icon-tree"
                       href="/Under_Construction/Development_Details/OER_Remixer"/>
-            <IconLink title="Get Page Citation" icon="mt-icon-quote" onClick={() => {
+            <IconLink title="Page Citation" icon="mt-icon-quote" onClick={() => {
                 buildcite();
                 props.toggleDrawer(false)();
             }}/>
-            <IconLink title="Get Page Attribution" icon="mt-icon-quote" onClick={() => {
+            <IconLink title="Page Attribution" icon="mt-icon-quote" onClick={() => {
                 attribution();
                 props.toggleDrawer(false)();
             }}/>

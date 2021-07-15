@@ -90,7 +90,7 @@ function SidebarComponent(props) {
         
         return <div
             style={{
-                width: 400,
+                width: 500,
                 overflowY: "auto",
                 maxWidth: "90vw",
             }}
@@ -123,7 +123,7 @@ function SidebarComponent(props) {
                                 onChange={(event) => toggleDrawer(event.target.value)(event)}>
                             {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab.toUpperCase()}</MenuItem>)}
                         </Select>
-                        <IconButton onClick={toggleDrawer(false)}>
+                        <IconButton onClick={toggleDrawer(false)} title="Close Sidebar panel">
                             <ChevronLeftIcon/>
                         </IconButton>
                     </div>
@@ -136,7 +136,7 @@ function SidebarComponent(props) {
                                                 onClick={(event) => toggleDrawer(tab)(event)}>
                             {tab.toUpperCase()}</div>)}
                     </div>
-                    {!openPanel ? <button id="custom_open"
+                    {!openPanel ? <button id="custom_open"  title="Open Sidebar panel"
                                          onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</button> : null}
                 
                 </Portal>

@@ -7,8 +7,14 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {TableOfContents} from "./Common.jsx";
 
 export default function Resources(props) {
+    const [expanded, setExpanded] = React.useState('panel1');
+    
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+    
     return (<>
-        <Accordion defaultExpanded={true}>
+        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -23,7 +29,7 @@ export default function Resources(props) {
                 </iframe>
             </AccordionDetails>
         </Accordion>
-        <Accordion>
+        <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -35,7 +41,7 @@ export default function Resources(props) {
                     coverpageURL="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference"/>
             </AccordionDetails>
         </Accordion>
-        <Accordion>
+        <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -48,7 +54,7 @@ export default function Resources(props) {
                     loading="lazy"/>
             </AccordionDetails>
         </Accordion>
-        <Accordion>
+        <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
