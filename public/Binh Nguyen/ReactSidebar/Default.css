@@ -31,3 +31,88 @@
     overflow: auto;
 }
 
+#LibreTextsSidebar #doBeeline {
+    display: flex;
+    flex-direction: column;
+}
+
+#SB_bright {
+    background-image: linear-gradient(90deg, #0000F4, #000000, #E93323);
+    color: #ffffff;
+}
+
+#SB_blues {
+    background-image: linear-gradient(90deg, #0000f1, #000000, #891bd5);
+    color: #ffffff;
+}
+
+#SB_night_blues {
+    background-image: linear-gradient(90deg, #56aaff, #ffffff, #9e8dfc);
+    color: #383838;
+}
+
+#SB_gray {
+    background-image: linear-gradient(90deg, #7d7d7d, #000000, #7d7d7d);
+    color: #ffffff;
+}
+
+.darkMode #beelineExample {
+    color: white;
+    background-color: #252525;
+}
+
+.sbHeader {
+    display: none;
+    background-color: #127bc4;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 25px;
+    justify-content: space-around;
+    border-right: 2px solid white;
+}
+
+.sbHeader .top-tabs {
+    cursor: pointer;
+    color: white;
+    writing-mode: vertical-lr;
+    text-align: center;
+    flex: unset;
+    align-items: center;
+    transform: rotate(
+            180deg
+    );
+    transform-origin: center;
+    font-size: 1rem !important;
+    font-weight: 300;
+    font-family: Roboto, serif;
+}
+
+#custom_open {
+    width: 43.333px;
+    height: 43.333px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #127bc4;
+    color: #e5e5e5;
+    border: none;
+    border-radius: 0px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    border: 2px solid white;
+}
+
+@media (min-width:500px) and (min-height: 500px){
+    #LibreTextsSidebar > .MuiDrawer-paper {
+        padding-left: 30px;
+    }
+    #custom_open {
+        display: none;
+    }
+    .sbHeader{
+        display: flex;
+    }
+}

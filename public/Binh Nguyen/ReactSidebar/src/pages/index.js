@@ -4,11 +4,10 @@ These pieces are code are then bundled into your application during the compilat
 Always place your imports at the top of files!
 */
 import React, {useState} from 'react';
-import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
-import {Button, Divider, IconButton, SwipeableDrawer,} from "@material-ui/core";
+import {Button, Divider, IconButton, MenuItem, Portal, Select, SwipeableDrawer,} from "@material-ui/core";
 import Contents from "../components/Contents.jsx";
+import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
 import Libraries from "../components/Libraries.jsx";
 import Tools from "../components/Tools.jsx";
@@ -41,15 +40,22 @@ Your top-level logic should go here, but other parts should be handled by sub-co
 */
 function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
-    
+    const [lastPanel, setLastPanel] = useState();
+    const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools', 'community'];
+    const isPro = document.getElementById("proHolder")?.innerText === 'true';
+    if (isPro)
+        tabs.push('developers');
     // const classes = useStyles();
     
-    const toggleDrawer = (anchor) => (event) => {
+    const toggleDrawer = (panel) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-        setOpenPanel(anchor);
+        setOpenPanel(panel);
+        if (panel)
+            setLastPanel(panel);
     };
+    LibreTexts.active.sidebarToggleDrawer = toggleDrawer;
     
     const list = () => {
         let currentPanel;
@@ -59,6 +65,9 @@ function SidebarComponent(props) {
                 break;
             case "resources":
                 currentPanel = <Resources toggleDrawer={toggleDrawer}/>;
+                break;
+            case "readability":
+                currentPanel = <Readability toggleDrawer={toggleDrawer}/>;
                 break;
             case "tools":
                 currentPanel = <Tools toggleDrawer={toggleDrawer}/>;
@@ -72,8 +81,11 @@ function SidebarComponent(props) {
             case "developers":
                 currentPanel = <Developers toggleDrawer={toggleDrawer}/>;
                 break;
-                default:
-                    console.error(`${openPanel} not implemented`);
+            case undefined:
+            case false:
+                break;
+            default:
+                alert(`${openPanel} not implemented`);
         }
         
         return <div
@@ -92,7 +104,7 @@ function SidebarComponent(props) {
     
     return (<React.Fragment>
             <div>
-                {['contents','resources','libraries', 'tools', 'community', 'developers'].map((anchor) => (
+                {tabs.map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
@@ -106,15 +118,28 @@ function SidebarComponent(props) {
                     disableSwipeToOpen={true}
                     onOpen={() => {
                     }}>
-                    <div>
+                    <div style={{display: "flex"}}>
+                        <Select variant="filled" value={openPanel || ""} style={{flex: 1}}
+                                onChange={(event) => toggleDrawer(event.target.value)(event)}>
+                            {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab.toUpperCase()}</MenuItem>)}
+                        </Select>
                         <IconButton onClick={toggleDrawer(false)}>
-                            {openPanel}
                             <ChevronLeftIcon/>
                         </IconButton>
                     </div>
                     <Divider/>
                     {list()}
                 </SwipeableDrawer>
+                <Portal>
+                    <div id="sbHeader" className="sbHeader">
+                        {tabs.map((tab) => <div key={tab} className="top-tabs"
+                                                onClick={(event) => toggleDrawer(tab)(event)}>
+                            {tab.toUpperCase()}</div>)}
+                    </div>
+                    {!openPanel ? <button id="custom_open"
+                                         onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</button> : null}
+                
+                </Portal>
             </div>
         </React.Fragment>
     );

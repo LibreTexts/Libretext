@@ -62,3 +62,35 @@ function AutoAttribution(props) {
         </IconLink>
     </>)
 }
+
+
+
+function saveBookmark() {
+    const TITLE = document.getElementById("titleHolder").innerText;
+    const URL = window.location.href;
+    const CHECK = sessionStorage.getItem("Bookmark");
+    if (CHECK == null) {
+        sessionStorage.setItem("Title", TITLE);
+        sessionStorage.setItem("Bookmark", URL);
+        createBookmarks();
+    }
+}
+
+function createBookmarks() {
+    var _a;
+    const LI = document.createElement("li");
+    const URL = sessionStorage.getItem("Bookmark");
+    const TITLE = sessionStorage.getItem("Title");
+    LI.id = "sbBookmark";
+    LI.innerHTML = `<div > <p><a style="display: unset;" href="${URL}"> ${TITLE}</a><a id="removeBookmark" style="display: unset;" onclick="removeBookmarks()">| Remove</a> </p></div>`;
+    if (URL) {
+        (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.appendChild(LI);
+    }
+}
+
+function removeBookmarks() {
+    var _a;
+    (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.removeChild(document.querySelector("#sbBookmark"));
+    sessionStorage.removeItem("Title");
+    sessionStorage.removeItem("Bookmark");
+}
