@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {Button} from "@material-ui/core";
+import {Button, Divider, Switch} from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
+import NightsStay from "@material-ui/icons/NightsStay";
 
 export default function Readability(props) {
     const [currentTheme, setTheme] = React.useState(localStorage.getItem("beeline"));
@@ -12,17 +13,17 @@ export default function Readability(props) {
         setTheme(inTheme);
         localStorage.setItem('beeline', inTheme);
         if (inTheme === 'night_blues') {
-            localStorage.setItem('darkMode', 'true');
+            props.setDarkMode(true)
         }
         else {
-            localStorage.setItem('darkMode', 'false');
+            props.setDarkMode(false)
         }
         doBeeline(inTheme);
     }
     
     function BeelineButton(props) {
         return <Button id={`SB_${props.theme}`} variant="contained" onClick={setBeelineTheme(props.theme)}
-                       style={{margin: 6}}>
+                       style={{margin: 6, border: "2px solid white"}}>
             {props.title || props.theme}
             {currentTheme === props.theme ? <CheckIcon/> : null}
         </Button>
@@ -33,7 +34,7 @@ export default function Readability(props) {
     return <>
         <div style={{padding: 10}}>
             <a href="http://www.beelinereader.com/education/?utm_source=libretexts">
-                <h3>
+                <h3 style={{color: "#0e79fd", display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"/>
                     BeeLine Reader </h3>
             </a>
@@ -56,9 +57,26 @@ export default function Readability(props) {
                         localStorage.setItem('darkMode', localStorage.getItem('darkMode') !== 'true');
                     }}>Dark Mode</Button>*/}
             </div>
+            <Divider/>
+            <div>
+                <NightsStay/> Dark Mode
+                <Switch checked={props.darkMode} onClick={(event) => {
+                    if (localStorage.getItem('beeline') !== "off") {
+                        if (localStorage.getItem('beeline') === 'night_blues') {
+                            setBeelineTheme('bright')();
+                        }
+                        else {
+                            setBeelineTheme('night_blues')();
+                        }
+                    }
+                    else { //just trigger dark mode
+                        props.setDarkMode();
+                    }
+                }}/>
+            </div>
         </div>
     </>;
-    
+    //TODO: Add Font and Margin adjustment
     return (<div id="sb3" className="custom_sidebar">
             <div className="custom_field">
                 <a onClick="rtdefault()" className="btn btn-large">Default Settings</a>
@@ -72,16 +90,10 @@ export default function Readability(props) {
                 <input className="slider_ar" type="range" min={0} max={450} defaultValue={0} step={10}
                        id="slider-page-width"/>
             </div>
-            <p className="h_ar">Text Align:</p>
+            {/*            <p className="h_ar">Text Align:</p>
             <div className="custom_field">
                 <a id="toggler-text" href="#0" className="toggler off">Left</a>
-            </div>
-            <p className="h_ar">Sidebar Layout:</p>
-            <div style={{marginLeft: '10px'}} id="sbLayout" className="custom_field">
-                <button id="tabsTrue" onClick="savePanel(true)">Side View</button>
-                <button id="tabsFalse" onClick="savePanel(false)">Compressed View</button>
-                {/*<button id="tabsSplit" onclick="splitPanel()">Toggle Split View </button>*/}
-            </div>
+            </div>*/}
         </div>
     )
 }
@@ -115,17 +127,10 @@ function doBeeline(theme) {
     if (typeof ga === 'function') {
         ga('send', 'event', 'BeelineColor', localStorage.getItem("beeline"));
     }
-    const contentContainer = $('body');
-    if (theme === 'night_blues' || localStorage.getItem('darkMode') === 'true') {
-        contentContainer.addClass('darkMode');
-    }
-    else {
-        contentContainer.removeClass('darkMode');
-    }
 }
 
 window.activateBeeLine = function activateBeeLine() { //initalization function. Called by Mathjax
-    if (localStorage.getItem('darkMode') === undefined && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    if (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
         localStorage.setItem('darkMode', "true");
     
     if (localStorage.getItem("beeline")) {
@@ -135,15 +140,6 @@ window.activateBeeLine = function activateBeeLine() { //initalization function. 
     else {
         localStorage.setItem('beeline', 'off');
     }
-}
-
-function savePanel(_input) {
-    sessionStorage.setItem("sidepanel", _input);
-    location.reload();
-}
-
-function splitPanel() {
-    $("section.mt-content-container").toggleClass("padLeft");
 }
 
 function rtdefault() {

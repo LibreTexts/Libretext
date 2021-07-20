@@ -1,8 +1,9 @@
 import React from 'react';
 import {IconLink} from "./Common.jsx";
-import {List} from "@material-ui/core";
+import {FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup} from "@material-ui/core";
 
 export default function Tools(props) {
+    const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
             
@@ -18,6 +19,17 @@ export default function Tools(props) {
                 attribution();
                 props.toggleDrawer(false)();
             }}/>
+            <AutoAttribution/>
+            <FormControl component="fieldset" style={{padding: 20}}>
+                <FormLabel component="legend">Glossary Source</FormLabel>
+                <RadioGroup value={glossarySource} onChange={(event) => {
+                    libretextGlossary.makeGlossary(event.target.value);
+                    setGlossarySource(event.target.value)
+                }}>
+                    <FormControlLabel value="textbook" control={<Radio/>} label="Textbook"/>
+                    <FormControlLabel value="none" control={<Radio/>} label="None"/>
+                </RadioGroup>
+            </FormControl>
             {/*            <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
                 // event.preventDefault();
                 saveBookmark();
@@ -25,20 +37,8 @@ export default function Tools(props) {
                 <div id="bm-list">
                 </div>
             </IconLink>*/}
-            <AutoAttribution/>
         </List>
-        /*            <div id="glossarizerOptions" className="custom_field"><p className="mt-icon-bubble2">&nbsp;Glossary</p>
-                        <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
-                            <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio"
-                                      defaultValue="textbook"/><label className="glossaryLabel"
-                                                                      htmlFor="textbook">Textbook</label></p>
-                            {/!* <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
-                        <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
-                        <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> *!/}
-                            <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio"
-                                      defaultValue="none"/><label className="glossaryLabel" htmlFor="none">None</label></p>
-                        </form>
-                    </div>
+        /*
                     <div className="custom_field">
                         <a onclick="event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
                     </div>
@@ -62,7 +62,6 @@ function AutoAttribution(props) {
         </IconLink>
     </>)
 }
-
 
 
 function saveBookmark() {

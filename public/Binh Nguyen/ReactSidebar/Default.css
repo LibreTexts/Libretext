@@ -1,12 +1,20 @@
 /*Put the CSS that goes with the React project here!*/
+.fancytree-icon {
+    display: none;
+}
+
+.fancytree-expander {
+    margin-right: 5px;
+}
+
 #LibreTextsSidebar > .MuiDrawer-paper {
-    background: #ececec;
+    /*background: #ececec;*/
 }
 
 #LibreTextsSidebar .SidebarItem {
     padding-top: 5px;
     padding-bottom: 5px;
-    color: #595959;
+    color: unset;
     text-decoration: none;
 }
 
@@ -21,12 +29,12 @@
 }
 
 #LibreTextsSidebar .MuiAccordionDetails-root {
-    width:100%;
+    width: 100%;
     padding: 0;
 }
 
 #LibreTextsSidebar .MuiAccordionDetails-root iframe {
-    width:100%;
+    width: 100%;
     min-height: 350px;
     overflow: auto;
 }
@@ -56,9 +64,20 @@
     color: #ffffff;
 }
 
+.mt-checkbox, input[type=checkbox], input[type=radio] {
+    position: absolute;
+}
+
+/*Darkmode items*/
 .darkMode #beelineExample {
     color: white;
     background-color: #252525;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.darkMode #LibreTextsSidebar span.fancytree-title > a {
+    color: white;
 }
 
 .sbHeader {
@@ -105,14 +124,20 @@
     border: 2px solid white;
 }
 
-@media (min-width:500px) and (min-height: 500px){
+#LibreTextsSidebar .mt-label:after, #LibreTextsSidebar label:after {
+    content: initial;
+}
+
+@media (min-width: 500px) and (min-height: 500px) {
     #LibreTextsSidebar > .MuiDrawer-paper {
         padding-left: 30px;
     }
+
     #custom_open {
         display: none;
     }
-    .sbHeader{
+
+    .sbHeader {
         display: flex;
     }
 }

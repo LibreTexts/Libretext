@@ -5,7 +5,17 @@ Always place your imports at the top of files!
 */
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import {Button, Divider, IconButton, MenuItem, Portal, Select, SwipeableDrawer,} from "@material-ui/core";
+import {
+    Button,
+    Divider,
+    IconButton,
+    MenuItem,
+    Portal,
+    Select,
+    SwipeableDrawer,
+    useMediaQuery,
+} from "@material-ui/core";
+import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
@@ -26,14 +36,6 @@ target.id = Math.random() * 100;
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 
 
-// const useStyles = makeStyles({
-//     list: {
-//         width: 400,
-//         overflowY: "auto",
-//         maxWidth: "90vw",
-//     },
-// });
-
 /*
 This is your React Hook.
 Your top-level logic should go here, but other parts should be handled by sub-components.
@@ -41,6 +43,26 @@ Your top-level logic should go here, but other parts should be handled by sub-co
 function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     const [lastPanel, setLastPanel] = useState();
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") ? localStorage.getItem("darkMode") === "true" : prefersDarkMode);
+    
+    const theme = React.useMemo(
+        () =>{
+            const contentContainer = $('body');
+            if (darkMode) {
+                contentContainer.addClass('darkMode');
+            }
+            else {
+                contentContainer.removeClass('darkMode');
+            }
+            
+            return createTheme({
+                palette: {
+                    type: darkMode ? 'dark' : 'light',
+                },
+            })},
+        [darkMode],
+    );
     const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools', 'community'];
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
     if (isPro)
@@ -57,6 +79,14 @@ function SidebarComponent(props) {
     };
     LibreTexts.active.sidebarToggleDrawer = toggleDrawer;
     
+    function darkModeChange(mode) {
+        if (mode === undefined) //toggle its value
+            mode = !darkMode
+        
+        localStorage.setItem('darkMode', mode);
+        setDarkMode(mode);
+    }
+    
     const list = () => {
         let currentPanel;
         switch (openPanel) {
@@ -67,7 +97,8 @@ function SidebarComponent(props) {
                 currentPanel = <Resources toggleDrawer={toggleDrawer}/>;
                 break;
             case "readability":
-                currentPanel = <Readability toggleDrawer={toggleDrawer}/>;
+                currentPanel =
+                    <Readability toggleDrawer={toggleDrawer} darkMode={darkMode} setDarkMode={darkModeChange}/>;
                 break;
             case "tools":
                 currentPanel = <Tools toggleDrawer={toggleDrawer}/>;
@@ -102,13 +133,13 @@ function SidebarComponent(props) {
         </div>
     };
     
-    return (<React.Fragment>
+    return (<ThemeProvider theme={theme}>
             <div>
-                {tabs.map((anchor) => (
+{/*                {tabs.map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
-                ))}
+                ))}*/}
                 <div id="sidebarDiv"/>
                 <SwipeableDrawer
                     id="LibreTextsSidebar"
@@ -119,7 +150,7 @@ function SidebarComponent(props) {
                     onOpen={() => {
                     }}>
                     <div style={{display: "flex"}}>
-                        <Select variant="filled" value={openPanel || ""} style={{flex: 1}}
+                        <Select variant="filled" value={openPanel || ""} style={{flex: 1, backgroundColor:"#127bc480"}}
                                 onChange={(event) => toggleDrawer(event.target.value)(event)}>
                             {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab.toUpperCase()}</MenuItem>)}
                         </Select>
@@ -132,16 +163,16 @@ function SidebarComponent(props) {
                 </SwipeableDrawer>
                 <Portal>
                     <div id="sbHeader" className="sbHeader">
-                        {tabs.map((tab) => <div key={tab} className="top-tabs"
+                        {tabs.map((tab) => <div key={tab} className="top-tabs" tabIndex="-1"
                                                 onClick={(event) => toggleDrawer(tab)(event)}>
                             {tab.toUpperCase()}</div>)}
                     </div>
-                    {!openPanel ? <button id="custom_open"  title="Open Sidebar panel"
-                                         onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</button> : null}
+                    {!openPanel ? <button id="custom_open" title="Open Sidebar panel" tabIndex="0"
+                                          onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</button> : null}
                 
                 </Portal>
             </div>
-        </React.Fragment>
+        </ThemeProvider>
     );
 }
 
