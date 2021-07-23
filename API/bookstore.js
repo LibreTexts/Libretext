@@ -314,10 +314,17 @@ app.post(basePath + '/publish-order/', async (req, res) => {
     res.sendStatus(200);
 });
 
-app.post(basePath + '/retryOrder/:orderID', async (req, res) => {
-    let orderID = req.params.orderID;
+app.post(basePath + '/retryOrder', express.urlencoded(), async (req, res) => {
+    let auth = req.body.tokenField;
+    if (!auth) {
+        return res.sendStatus(401);
+    }
+    else if (auth !== bookstoreConfig.LIBRETEXTS_APU_KEY) {
+        return res.sendStatus(403);
+    }
+    
+    let orderID = req.body.orderID;
     if (!orderID) {
-        res.write(`⚠️  Invalid order ID`);
         return res.sendStatus(400);
     }
     
@@ -386,7 +393,7 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
 
 //send request to the Lulu API
     if (session.shipping.address.country === "US") { //remove optional zip+4
-        session.shipping.address.postal_code = session.shipping.address.postal_code.substring(0,5);
+        session.shipping.address.postal_code = session.shipping.address.postal_code.substring(0, 5);
     }
     
     const payload = {
