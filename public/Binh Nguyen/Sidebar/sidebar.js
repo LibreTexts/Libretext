@@ -366,8 +366,8 @@ async function Sidebar() {
         function controlSidebar() {
             window.addEventListener('click', function (event) {
                 if (event.target == document.getElementById("custom_open")) {
-                    $("#sb2, #sb3, #sb4, #sb5, #sb6, #sb7").hide();
-                    $("#sb1, #sbHeader").show("slide");
+		    $("#sb2, #sb3, #sb4, #sb5, #sb6, #sb7").hide();
+		    $("#sb1, #sbHeader").show("slide");
                 }
             });
             $('#per_table').on("click", function () {
@@ -584,13 +584,17 @@ async function Sidebar() {
             });
         }
         
-        //Set initial value for glossary options
-        document.getElementById("glossarizerOptions" + localStorage.getItem("glossarizerType")).checked = true;
+        // Set initial value for glossary options
+        document.getElementById("glossarizerOptions" + "-" + localStorage.getItem("glossarizerType")).checked = true;
     }
+
+	// Set initial value for annotation (Note Bene and Hypothesis)
+	localStorage.setItem("annotationType", "none");
+        document.getElementById("annotationOptions" + "-" + localStorage.getItem("annotationType")).checked = true;
     
     function getData(pro) {
         return {
-            "open": `<button id="custom_open"  >☰</button>`,
+            "open": `<button id="custom_open"  >â˜°</button>`,
             "header": pro ? `<div id="sbHeader" class="sbHeader" style="">
 	    <div id="openContents" class="top-tabs"> Contents </div>
 		<div id="openResources" class="top-tabs"> Resources </div>
@@ -785,46 +789,98 @@ async function Sidebar() {
     <div class="custom_field">
         <a href="https://adapt.libretexts.org/" target="_blank" class='mt-icon-pencil2'>&nbsp;ADAPT Homework System</a>
     </div>
+
     <div class="custom_field">
-		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
+	<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
     </div>
+
     <div class="custom_field">
-		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+	<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
     </div>
+
     <div class="custom_field">
-		<a href="/Under_Construction/Development_Details/OER_Remixer" class="mt-icon-tree"> OER Remixer</a>
+	<a href="/Under_Construction/Development_Details/OER_Remixer" class="mt-icon-tree"> OER Remixer</a>
     </div>
+
     <div class="custom_field">
         <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class='mt-icon-quote'>&nbsp;Get Page Citation</a>
     </div>
+
     <div class="custom_field">
         <a onclick = "event.preventDefault(); attribution()" target="_blank" class='mt-icon-quote'>&nbsp;Get Page Attribution</a>
     </div>
-	<div class="custom_field">
-		<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark Page</a>
-			<div id="bm-list">
 
-			</div>
+    <div class="custom_field">
+	<a onclick = "event.preventDefault(); saveBookmark()" href='#' class='mt-icon-bookmarks'>&nbsp;Bookmark Page</a>
+	<div id="bm-list">
+
 	</div>
+    </div>
+
     <div class="custom_field">
         <a id="librelens-button" onclick = "event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class='mt-icon-eye-blocked'>&nbsp;Toggle AutoAttribution</a>
-			<div id="librelens-list">
+	<div id="librelens-list">
 
-
-			</div>
+	</div>
     </div>
+
+    <div class="custom_field">
+	<a onclick = "$('.option').toggle(); $('.mt-icon-page-notification').toggleClass('off')" href='#' class='mt-icon-page-notification off'>&nbsp;Watch Option</a>
+	<form class="option" action="">
+<!--
+<div class="legend">
+		<a class="mt-f1-success mt-f1-link" href="https://success.mindtouch.com/@go/cid/subscriptions">
+		    <span class="ui-icon mt-icon-f1-link"></span>
+		</a>
+	    </div>
+		Receive email notifications for:
+--!>
+	    <ul>
+		<li class="self">
+		    <input id="deki-page-alerts-self" class="mt-checkbox" type="radio"
+		    data-ga-label="Subscribe to self" name="alert" checked="checked" value="1">
+		    <label for="deki-page-alerts-tree" class="mt-label-checkbox"
+			data-ga-label="Subscribe to self">This page only</label>
+		</li>
+		<li class="tree">
+		    <input id="deki-page-alerts-tree" class="mt-checkbox" type="radio"
+		    data-ga-label="Subscribe to tree" name="alert" checked="" value="2">
+		    <label for="deki-page-alerts-tree" class="mt-label-checkbox"
+			data-ga-label="Subscribe to tree">This page and all subpages</label>
+		</li>
+		<li class="off">
+		    <input id="deki-page-alerts-off" class="mt-checkbox" type="radio"
+		    data-ga-label="Unsubscribe" name="alert" checked="checked" value="0">
+		    <label for="deki-page-alerts-off" class="mt-label-checkbox"
+			data-ga-label="Unsubscribe">Turn OFF notifications for this page</label>
+		</li>
+	    </ul>
+	</form>
+    </div>
+
 	<div id="glossarizerOptions" class="custom_field" ><p class="mt-icon-bubble2">&nbsp;Glossary</p>
         <form oninput="libretextGlossary.makeGlossary(glossarizerOptions.value)">
-            <p><input id="glossarizerOptionstextbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
-            <!-- <p><input id="glossarizerOptionsachem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
-                <p><input id="glossarizerOptionsichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
-                <p><input id="glossarizerOptionsochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
-            <p><input id="glossarizerOptionsnone" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
+            <p><input id="glossarizerOptions-textbook" name="glossarizerOptions" type="radio" value="textbook"/><label class="glossaryLabel" for="textbook">Textbook</label></p>
+            <!-- <p><input id="glossarizerOptions-achem" name="glossarizerOptions" type="radio" value="achem"/><label class="glossaryLabel" for="achem">Analytical Library</label></p>
+                <p><input id="glossarizerOptions-ichem" name="glossarizerOptions" type="radio" value="ichem"/><label class="glossaryLabel" for="ichem">Inorganic Library</label></p>
+                <p><input id="glossarizerOptions-ochem" name="glossarizerOptions" type="radio" value="ochem"/><label class="glossaryLabel" for="ochem">Organic Library</label></p> -->
+            <p><input id="glossarizerOptions-none" name="glossarizerOptions" type="radio" value="none"/><label class="glossaryLabel" for="none">None</label></p>
         </form>
     </div>
     
+
+    <div id="annotationOptions" class="custom_field">
+	<p><i class="fa fa-asterisk"></i>&nbsp;Annotation</p>
+
+	<form oninput="makeAnnotation(annotationOptions.value)">
+	    <p><input id="annotationOptions-hypothesis" name="annotationOptions" type="radio" value="hypothesis"/><label class="annotationLabel" for="none">Hypothesis</label></p>
+	    <p><input id="annotationOptions-notebene" name="annotationOptions" type="radio" value="notebene"/><label class="annotationLabel" for="none">Note Bene</label></p>
+	    <p><input id="annotationOptions-none" name="annotationOptions" type="radio" value="none"/><label class="annotationLabel" for="none">None</label></p>
+	</form> 
+    </div>
+    
     <div class="custom_field">
-        <a onclick = "event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
+        <a onclick = " $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
     </div>
 
     <div class="custom_field">
@@ -836,43 +892,43 @@ async function Sidebar() {
             "libraries": `<div id="sb5"  class="custom_sidebar">
 
 	<div class="custom_field">
-		<a id="chemistry-guide"  target="_blank" rel="internal">&nbsp;Chemistry</a>
+		<a id="chemistry-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/chem.png">&nbsp;Chemistry</a>
 		<div id="chemistry-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="biology-guide"  target="_blank" rel="internal">&nbsp;Biology</a>
+		<a id="biology-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/bio.png">&nbsp;Biology</a>
 		<div id="biology-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="business-guide"  target="_blank" rel="internal">&nbsp;Business</a>
+		<a id="business-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/biz.png">&nbsp;Business</a>
 		<div id="business-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="eng-guide"  target="_blank" rel="internal">&nbsp;Engineering</a>
+		<a id="eng-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">&nbsp;Engineering</a>
 		<div id="eng-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="espanol-guide"  target="_blank" rel="internal">&nbsp;Español</a>
+		<a href="https://espanol.libretexts.org/" id="espanol-guide"  target="_blank" rel="noreferrer noopener"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">&nbsp;EspaÃ±ol</a>
 		<div id="espanol-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="geosciences-guide"  target="_blank" rel="internal">&nbsp;Geosciences</a>
+		<a id="geosciences-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">&nbsp;Geosciences</a>
 		<div id="geosciences-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="humanities-guide"  target="_blank" rel="internal">&nbsp;Humanities</a>
+		<a id="humanities-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/human.png">&nbsp;Humanities</a>
 		<div id="humanities-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="math-guide"  target="_blank" rel="internal">&nbsp;Mathematics</a>
+		<a id="math-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/math.png">&nbsp;Mathematics</a>
 		<div id="math-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="medicine-guide"  target="_blank" rel="internal">&nbsp;Medicine</a>
+		<a id="medicine-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/med.png">&nbsp;Medicine</a>
 		<div id="medicine-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="physics-guide"  target="_blank" rel="internal">&nbsp;Physics</a>
+		<a id="physics-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/phys.png">&nbsp;Physics</a>
 		<div id="physics-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="social-guide"  target="_blank" rel="internal">&nbsp;Social Sciences</a>
+		<a id="social-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/socialsci.png">&nbsp;Social Sciences</a>
 		<div id="social-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="statistics-guide"  target="_blank" rel="internal">&nbsp;Statistics</a>
+		<a id="statistics-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/stats.png">&nbsp;Statistics</a>
 		<div id="statistics-guide-put" class="custom_field"  style="display: none">                </div>
 
-		<a id="workforce-guide"  target="_blank" rel="internal">&nbsp;Workforce</a>
+		<a id="workforce-guide"  target="_blank" rel="internal"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/workforce.png">&nbsp;Workforce</a>
 		<div id="workforce-guide-put" class="custom_field"  style="display: none">                </div>
 
 	</div>
@@ -892,7 +948,7 @@ async function Sidebar() {
 			<li><a data-color="#ff6a00" href="https://forums.libretexts.org/g/CommunityEngineering/topics"
 				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/eng.png">Engineering Forums</a></li>
 			<li><a data-color="#d77b00" href="https://forums.libretexts.org/g/CommunityEspanol/topics"
-				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">Español Forums</a></li>
+				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/espanol.png">EspaÃ±ol Forums</a></li>
 			<li><a data-color="#e5a800" href="https://forums.libretexts.org/g/CommunityGeosciences/topics"
 				rel="external nofollow" target="_blank" class="link-https"><img class="icon" alt="" src="https://libretexts.org/img/LibreTexts/glyphs_blue/geo.png">Geosciences Forums</a></li>
 			<li><a data-color="#00bc94" href="https://forums.libretexts.org/g/CommunityHumanities/topics"
@@ -918,9 +974,12 @@ async function Sidebar() {
 	    </div>
 	
 	    <div class="custom_field">
-		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https">Blog</a>
+		    <a href="https://blog.libretexts.org/" rel="external nofollow" target="_blank" class="link-https"> &nbsp;<i class="fa fa-info"></i>   Blog</a>
 	    </div>
 	    
+	    <div class="custom_field">
+		<a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
+	    </div>
 	    <div class="custom_field">
 		    <a href="https://chat.libretexts.org/" rel="external nofollow" target="_blank" class="mt-icon-chat2">&nbsp;Community Help Chat</a>
 	    </div>
@@ -953,12 +1012,11 @@ async function Sidebar() {
 		    console.log(data.join(", "));
 		})' class="mt-icon-flow-cascade" href='#' >&nbsp;Get PageIDs</a>
 		<a title="https://groups.io/g/Libretexts-ConstructionForum" href="https://groups.io/g/Libretexts-ConstructionForum" rel="external nofollow" target="_blank"  class="mt-icon-archive">&nbsp;Construction Forum</a>
-        <a href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/" rel="external nofollow" target="_blank"  class="mt-icon-topic" >&nbsp;Office Hours</a>
-		<a href="https://jupyter.libretexts.org/hub/login" class="mt-icon-archive"> Jupyter Hub</a>
+		<a href="https://jupyter.libretexts.org/hub/login">&nbsp<i class="fas fa-square-root-alt"></i>  Jupyter Hub</a>
+		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax">&nbsp<i class="fas fa-square-root-alt"></i> RealTime Mathjax</a>
 		<a href="https://studio.libretexts.org/" class="mt-icon-article"> LibreStudio Server</a>
 		<a href="https://webwork.libretexts.org/webwork2" class="mt-icon-article"> Webwork Server</a>
 		<a href="https://imathas.libretexts.org/imathas/" class="mt-icon-article"> IMathAS Server</a>
-		<a href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax" class="mt-icon-article"> RealTime Mathjax</a>
 		<a href="https://libremaps.libretexts.org/" class="mt-icon-archive"> LibreMaps</a>
 	</div>
 	</div>`
@@ -1085,4 +1143,25 @@ function removeBookmarks() {
     (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.removeChild(document.querySelector("#sbBookmark"));
     sessionStorage.removeItem("Title");
     sessionStorage.removeItem("Bookmark");
+}
+
+function watchOption() {
+
+}
+
+function makeAnnotation(inputSourceOption) {
+    let sourceOption = inputSourceOption || localStorage.getItem("annotationType");
+    
+    switch((sourceOption || "").trim().toLowerCase()) {
+	case "none":
+	    $('hypothesis-sidebar').hide()
+	    return;
+	case "notebene":
+	    localStorage.setItem("annotationType", "notebene");
+	    $('hypothesis-sidebar').hide()
+	    break;
+	default:
+	    localStorage.setItem("annotationType", "hypothesis");
+	    $('hypothesis-sidebar').show()
+    }
 }
