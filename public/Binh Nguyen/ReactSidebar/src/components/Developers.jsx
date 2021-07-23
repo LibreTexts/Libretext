@@ -48,6 +48,11 @@ export default function Developers(props) {
                     alert("Copied pageIDs to the clipboard");
                 })
             }}/>
+{/*            <IconLink title="Get PageIDs" icon="mt-icon-flow-cascade" onClick={() => {
+                
+                
+                batch(window.location.href, '&createMatterOnly=true');
+            }}/>*/}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
             <IconLink title="Office Hours" icon="mt-icon-topic"
