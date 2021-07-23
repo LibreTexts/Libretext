@@ -838,7 +838,7 @@ async function Sidebar() {
 	    <ul>
 		<li class="self">
 		    <input id="deki-page-alerts-self" class="mt-checkbox" type="radio"
-		    data-ga-label="Subscribe to self" name="alert" checked="checked" value="1">
+		    data-ga-label="Subscribe to self" name="alert" checked="" value="1">
 		    <label for="deki-page-alerts-tree" class="mt-label-checkbox"
 			data-ga-label="Subscribe to self">This page only</label>
 		</li>
@@ -850,7 +850,7 @@ async function Sidebar() {
 		</li>
 		<li class="off">
 		    <input id="deki-page-alerts-off" class="mt-checkbox" type="radio"
-		    data-ga-label="Unsubscribe" name="alert" checked="checked" value="0">
+		    data-ga-label="Unsubscribe" name="alert" checked="" value="0">
 		    <label for="deki-page-alerts-off" class="mt-label-checkbox"
 			data-ga-label="Unsubscribe">Turn OFF notifications for this page</label>
 		</li>
