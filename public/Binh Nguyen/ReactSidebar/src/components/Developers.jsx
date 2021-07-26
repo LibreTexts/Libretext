@@ -8,16 +8,20 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default function Developers(props) {
+    let tags = document.getElementById('pageTagsHolder').innerText;
+    const isCoverpage = tags.includes('coverpage:yes');
+    
     return (<List>
             <Accordion defaultExpanded={true}>
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1a-content"
                 >
                     <Typography className="mt-icon-site-tools">Construction Guide</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <TableOfContents coverpageURL={"https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide"}/>
+                    <TableOfContents
+                        coverpageURL={"https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide"}/>
                 </AccordionDetails>
             </Accordion>
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
@@ -48,11 +52,9 @@ export default function Developers(props) {
                     alert("Copied pageIDs to the clipboard");
                 })
             }}/>
-{/*            <IconLink title="Get PageIDs" icon="mt-icon-flow-cascade" onClick={() => {
-                
-                
+            {isCoverpage ? <IconLink title="Generate Front/Back matter" icon="mt-icon-book2" onClick={() => {
                 batch(window.location.href, '&createMatterOnly=true');
-            }}/>*/}
+            }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
             <IconLink title="Office Hours" icon="mt-icon-topic"

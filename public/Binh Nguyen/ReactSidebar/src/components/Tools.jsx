@@ -4,9 +4,10 @@ import {FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup} from 
 
 export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
+    const [notification, setNotifications] = React.useState(localStorage.getItem("glossarizerType"));
+    
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
-            
             <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
             <IconLink title="OER Remixer" icon="mt-icon-tree"
@@ -37,7 +38,18 @@ export default function Tools(props) {
                 <div id="bm-list">
                 </div>
             </IconLink>*/}
+            <FormControl component="fieldset" style={{padding: 20}}>
+                <FormLabel component="legend">Page Notifications</FormLabel>
+                    <RadioGroup value={glossarySource} onChange={(event) => {
+                        libretextGlossary.makeGlossary(event.target.value);
+                        setGlossarySource(event.target.value)
+                    }}>
+                        <FormControlLabel value="textbook" control={<Radio/>} label="Textbook"/>
+                        <FormControlLabel value="none" control={<Radio/>} label="None"/>
+                    </RadioGroup>
+            </FormControl>
         </List>
+);
         /*
                     <div className="custom_field">
                         <a onclick="event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
@@ -46,7 +58,6 @@ export default function Tools(props) {
                         <a onclick="event.preventDefault()">&nbsp;Note Bene</a>
                     </div>
                 </div>*/
-    );
 }
 
 function AutoAttribution(props) {
