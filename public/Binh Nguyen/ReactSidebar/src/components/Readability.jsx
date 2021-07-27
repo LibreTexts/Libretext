@@ -34,9 +34,8 @@ export default function Readability(props) {
     return <>
         <div style={{padding: 10}}>
             <a href="http://www.beelinereader.com/education/?utm_source=libretexts">
-                <h3 style={{color: "#0e79fd", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                    <img src="https://awesomefiles.libretexts.org/Students/Henry Agnew/BeeLine/beeline-logo.png"/>
-                    BeeLine Reader </h3>
+                <img style={{margin: "0 5vw"}} title="Beeline Logo"
+                    src="https://test.libretexts.org/hagnew/development/public/Binh%20Nguyen/ReactSidebar/src/assets/beeline_logo_combo_master-cropped.svg"/>
             </a>
             
             <p id="beelineExample"> BeeLine Reader uses subtle color gradients to help you read more quickly and
