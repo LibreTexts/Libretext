@@ -25,12 +25,15 @@ async function handler(request, response) {
     
     if (url.startsWith('/bounce/')) {
         if (request.method === 'GET') {
-            response.writeHead(200, {
+            let localBounce = request.headers.origin.endsWith('libretexts.org');
+            response.writeHead(200, !localBounce ? {
                 'Access-Control-Allow-Origin': request.headers.origin || null,
                 'Access-Control-Allow-Methods': 'GET',
                 'Vary': 'Origin',
                 'Content-Type': 'application/json',
-            }); //allow targeted CORS
+            }:{
+                'Content-Type': 'application/json',
+            }); //allow targeted CORS, but prevent double CORS
             let [, targetURL] = url.split('/bounce/');
             if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//)) {
                 responseError(`Invalid target ${targetURL}`, 400);
