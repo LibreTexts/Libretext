@@ -269,7 +269,6 @@ async function fork(req, res) {
                             contentReuse = await localFork(contentReuse, crossLibrary);
                             
                             sourceTags.push(`source[${++index}]-${subdomain}-${info['@id']}`);
-                            contentReuse = `<div class="comment"><div class="mt-comment-content"><p>Forker source[${index}] start-${subdomain}-${info['@id']}</p></div></div>${contentReuse}<div class="comment"><div class="mt-comment-content"><p>Forker source[${index}] end-${subdomain}-${info['@id']}</p></div></div>`;
                             
                             result = result.replace(matches[i], contentReuse);
                         }

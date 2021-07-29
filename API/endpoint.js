@@ -21,11 +21,10 @@ async function handler(request, response) {
     let url = request.url;
     url = url.replace('endpoint/', '');
     url = LibreTexts.clarifySubdomain(url);
-    
+    let localBounce = request.headers?.origin?.endsWith('libretexts.org');
     
     if (url.startsWith('/bounce/')) {
         if (request.method === 'GET') {
-            let localBounce = request.headers.origin.endsWith('libretexts.org');
             response.writeHead(200, !localBounce ? {
                 'Access-Control-Allow-Origin': request.headers.origin || null,
                 'Access-Control-Allow-Methods': 'GET',
@@ -53,12 +52,14 @@ async function handler(request, response) {
     }
     else if (url.startsWith('/cross-library/')) {
         if (request.method === 'GET') {
-            response.writeHead(200, {
+            response.writeHead(200, !localBounce ? {
                 'Access-Control-Allow-Origin': request.headers.origin || null,
                 'Access-Control-Allow-Methods': 'GET',
                 'Vary': 'Origin',
                 'Content-Type': 'application/json',
-            }); //allow targeted CORS
+            }:{
+                'Content-Type': 'application/json',
+            }); //allow targeted CORS, but prevent double CORS
             let [, targetURL] = url.split('/cross-library/');
             targetURL = targetURL.replace('%3A', ':')
             if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/pages\//))
