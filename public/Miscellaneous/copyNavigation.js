@@ -14,29 +14,6 @@
             downloadOption();
             copyContentOption(); //Forker
         }
-        // setInterval(editorContentReuseLink, 500);
-    }
-    
-    function copyTranscludeOption() {
-        let tags = document.getElementById("pageTagsHolder");
-        if (tags) {
-            tags = tags.innerText;
-            tags = tags.replace(/\\/g, "");
-            tags = JSON.parse(tags);
-            let copy = document.getElementsByClassName("mt-user-menu-copy-page");
-            if (copy.length && !tags.includes("transcluded:yes")) {
-                let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
-                copy = original.cloneNode(true);
-                let copyTarget = copy.getElementsByTagName("a")[0];
-                copyTarget.href = window.location.origin + "/Under_Construction/Users/Henry/Copy_Transclude?" + encodeURIComponent(window.location.href);
-                copyTarget.innerText = "Copy-Transclude";
-                copyTarget.classList.add("mt-icon-paste3");
-                copyTarget.classList.remove("mt-icon-copy-page");
-                copyTarget.setAttribute("target", "_blank");
-                copyTarget.title = "Transcluding will make a copy that receives updates from the original content";
-                original.parentNode.insertBefore(copy, original.nextSibling)
-            }
-        }
     }
     
     function propagatorOption() {
@@ -194,33 +171,6 @@
         }
     }
     
-    async function getTags(pageID, extraArray) {
-        let tags = await LibreTexts.authenticatedFetch(pageID, 'tags?dream.out.format=json');
-        tags = await tags.json();
-        if (tags["@count"] !== "0") {
-            if (tags.tag) {
-                if (tags.tag.length) {
-                    tags = tags.tag.map((tag) => tag["@value"]);
-                }
-                else {
-                    tags = [tags.tag["@value"]];
-                }
-            }
-            if (extraArray && extraArray.length) {
-                for (let i = 0; i < extraArray.length; i++) {
-                    if (!tags.includes(extraArray[i]))
-                        tags.push(extraArray[i]);
-                }
-            }
-            tags.splice(tags.indexOf("transcluded:yes"), 1);
-            tags = tags.map((tag) => `<tag value="${tag}"/>`).join("");
-            return "<tags>" + tags + "</tags>";
-        }
-        else {
-            return null;
-        }
-    }
-    
     async function copyContent(e) {
         e.preventDefault();
         if (confirm("Fork this page?\nThis will transform all content-reuse pages into editable content.\n You can use the revision history to undo this action.")) {
@@ -234,172 +184,6 @@
             }
             else
                 alert(response);
-            
-            
-            /*let pageID = document.getElementById("pageNumberHolder").children[0].children[1].innerText;
-            let current = window.location.origin.split('/')[2].split('.')[0];
-            let response = await LibreTexts.authenticatedFetch(pageID, `contents?mode=raw`);
-            let sourceTags = [];
-            if (response.ok) {
-                let contentReuse = await response.text();
-                if (contentReuse) {
-                    contentReuse = decodeHTML(contentReuse);
-                    contentReuse = contentReuse.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
-                    
-                    //Cross-library Forker
-                    let result = contentReuse;
-                    let success;
-                    let subdomain;
-                    let matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
-                    if (matches && matches.length) {
-                        do {
-                            let path = JSON.parse(matches[0].match(/{.*?}/)[0].replace(/'/g, '"'));
-                            
-                            //Get cross content
-                            let content = await LibreTexts.authenticatedFetch(path.PageID, 'contents?mode=raw', path.Library);
-                            subdomain = path.Library;
-                            content = await content.text();
-                            content = content.match(/<body>([\s\S]*?)<\/body>/)[1].replace("<body>", "").replace("</body>", "");
-                            content = decodeHTML(content);
-                            
-                            
-                            response = await LibreTexts.authenticatedFetch(path.PageID, 'files?dream.out.format=json', path.Library);
-                            if (response.ok) {
-                                let files = await response.json();
-                                if (files["@count"] !== "0") {
-                                    alert('Copying files over');
-                                    if (files.file) {
-                                        if (!files.file.length) {
-                                            files = [files.file];
-                                        }
-                                        else {
-                                            files = files.file;
-                                        }
-                                    }
-                                }
-                                let promiseArray = [];
-                                for (let i = 0; i < files.length; i++) {
-                                    let file = files[i];
-                                    if (file['@res-is-deleted'] === 'false')
-                                        promiseArray.push(processFile(file, {
-                                            path: path.PageID,
-                                            data: {subdomain: path.Library}
-                                        }, window.location.pathname.slice(1), file['@id']));
-                                }
-                                promiseArray = await Promise.all(promiseArray);
-                                for (let i = 0; i < promiseArray.length; i++) {
-                                    if (promiseArray[i]) {
-                                        content = content.replace(promiseArray[i].original, promiseArray[i].final);
-                                        content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
-                                    }
-                                }
-                            }
-                            sourceTags.push(`source-${subdomain}-${path.PageID}`);
-                            
-                            content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${path.PageID}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${path.PageID}</p></div></div>`;
-                            
-                            result = result.replace(matches[0], content);
-                            matches = result.match(/(<p class="mt-script-comment">Cross Library Transclusion<\/p>\n\n<pre class="script">\ntemplate\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g);
-                            
-                        } while (matches && matches.length);
-                        success = true;
-                    }
-                    contentReuse = result;
-                    
-                    [subdomain] = await LibreTexts.parseURL();
-                    //Local Forker
-                    matches = contentReuse.match(/(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g) || contentReuse.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
-                    if (matches && matches.length) {
-                        do {
-                            // WAITING FOR ECMA 2018      let path = matches[0].match(/(?<=data-page=")[^"]+/)[0];
-                            let path = matches[0].match(/(wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/) || matches[0].match(/(data-page=")[^"]+/);
-                            //End compliance code
-                            path = path[0]
-                                .replace('wiki.page(&quot;', '')
-                                .replace(/&quot;\)\s*?<\/pre>/, '')
-                                .replace('data-page="', '');
-                            
-                            let content = await fetch('https://api.libretexts.org/endpoint/contents', {
-                                method: 'PUT',
-                                body: JSON.stringify({
-                                    path: path,
-                                    api: 'contents?mode=raw',
-                                    subdomain: subdomain,
-                                }),
-                            })
-                            let info = await LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
-                            content = await content.text();
-                            info = await info.json();
-                            content = decodeHTML(content);
-                            
-                            // WAITING FOR ECMA 2018      content = content.match(/(?<=<body>)([\s\S]*?)(?=<\/body>)/)[1];
-                            content = content.match(/(<body>)([\s\S]*?)(<\/body>)/)[2];
-                            //End compliance code
-                            
-                            if (subdomain) {
-                                response = await LibreTexts.authenticatedFetch(path, 'files?dream.out.format=json', subdomain);
-                                alert('Copying files over. This may take a while...');
-                                if (response.ok) {
-                                    let files = await response.json();
-                                    if (files["@count"] !== "0") {
-                                        if (files.file) {
-                                            if (!files.file.length) {
-                                                files = [files.file];
-                                            }
-                                            else {
-                                                files = files.file;
-                                            }
-                                        }
-                                    }
-                                    let promiseArray = [];
-                                    for (let i = 0; i < files.length; i++) {
-                                        let file = files[i];
-                                        if (file['@res-is-deleted'] === 'false')
-                                            promiseArray.push(processFile(file, {
-                                                path: path,
-                                                data: {subdomain: subdomain}
-                                            }, window.location.pathname.slice(1), file['@id']));
-                                    }
-                                    promiseArray = await Promise.all(promiseArray);
-                                    for (let i = 0; i < promiseArray.length; i++) {
-                                        if (promiseArray[i]) {
-                                            content = content.replace(promiseArray[i].original, promiseArray[i].final);
-                                            content = content.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            subdomain = subdomain || current;
-                            sourceTags.push(`source-${subdomain}-${info['@id']}`);
-                            
-                            content = `<div class="comment"><div class="mt-comment-content"><p>Forker source start-${subdomain}-${info['@id']}</p></div></div>${content}<div class="comment"><div class="mt-comment-content"><p>Forker source end-${subdomain}-${info['@id']}</p></div></div>`;
-                            
-                            result = result.replace(matches[0], content);
-                            
-                            matches = result.match(/(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g);
-                        } while (matches && matches.length);
-                        success = true;
-                    }
-                    if (success) {
-                        await LibreTexts.authenticatedFetch(pageID, `contents?edittime=now`, subdomain, {
-                            method: "POST",
-                            body: result,
-                        });
-                        
-                        let tags = await getTags(pageID, sourceTags);
-                        await LibreTexts.authenticatedFetch(pageID, `tags`, subdomain, {
-                            method: "PUT",
-                            body: tags,
-                            headers: {"Content-Type": "text/xml; charset=utf-8"}
-                        });
-                        location.reload();
-                    }
-                    else {
-                        alert("No content-reuse sections detected!");
-                    }
-                }
-            }*/
         }
     }
     
@@ -481,33 +265,6 @@
         }
     }
     
-    async function processFile(file, child, path, id) {
-        //only files with extensions
-        let filename = file['filename'];
-        
-        if (file.contents['@href'].includes('mindtouch.page#thumbnail') || file.contents['@href'].includes('mindtouch.page%23thumbnail')) {
-            let hasThumbnail = await LibreTexts.authenticatedFetch(null, "files/=mindtouch.page%2523thumbnail");
-            if (hasThumbnail.ok)
-                return false;
-            else
-                filename = `=mindtouch.page%23thumbnail`;
-        }
-        let image = await LibreTexts.authenticatedFetch(child.path, `files/${filename}`, child.data.subdomain);
-        
-        image = await image.blob();
-        let response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, child.data.subdomain, {
-            method: "PUT",
-            body: image,
-        });
-        response = await response.json();
-        let original = file.contents['@href'].replace(`https://${child.data.subdomain}.libretexts.org`, '');
-        return {
-            original: original,
-            oldID: id,
-            newID: response['@id'],
-            final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(path))}/files/${filename}`
-        };
-    }
     
     document.addEventListener('DOMContentLoaded', fn);
     
