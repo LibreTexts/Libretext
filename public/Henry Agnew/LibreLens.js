@@ -103,14 +103,6 @@
                         document.getElementsByClassName(cls).forEach(item => item.style.backgroundColor = backgroundColor);
                         const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
                         
-                        const button = document.getElementsByClassName('librelens-toggle');
-                        if (button && button.length) {
-                            for (const b of button) {
-                                b.classList.toggle("mt-icon-eye", activated);
-                                b.classList.toggle("mt-icon-eye-blocked", !activated);
-                            }
-                        }
-                        
                         if (activated) {
                             LibreTexts.active.libreLens.tippyInstances = LibreTexts.active.libreLens.tippyInstances.concat(tippy(`.${cls}`, {
                                 content: `<a href="${pageURL}" target="_blank">From ${cls}</a>`,
@@ -127,7 +119,7 @@
                     const summary = document.getElementById('librelens-list');
                     let attribution = document.getElementById('librelens-attribution-list');
                     if (!attribution) {
-                        $('.mt-content-container').append('<div id="librelens-attribution-list"/>');
+                        $('.mt-content-footer').append('<div id="librelens-attribution-list"/>');
                         attribution = document.getElementById('librelens-attribution-list');
                     }
                     
@@ -144,16 +136,13 @@
                         attributionContents.push(`<li style="background-color: ${loadedPages[loadedPagesKey].backgroundColor}">${loadedPages[loadedPagesKey].content.replaceAll('<br/>', '  ')}</li>`);
                     }
                     
-                    let toggleButton = '';
                     if (outsidePages) {
                         attribution.innerHTML = `<h2>AutoAttribution</h2>`;
                         attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
-                        toggleButton = `<button onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</button>`;
                     }
                     else {
                         document.getElementsByClassName('librelens-toggle').forEach(el => el.remove());
                     }
-                    attribution.innerHTML += `<div id="librelens-buttons" style="display: flex; justify-content: space-evenly"><button onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</button><button onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</button>${toggleButton}</div>`;
                     
                     if (activated) {
                         summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`
