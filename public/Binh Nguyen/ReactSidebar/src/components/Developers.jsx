@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default function Developers(props) {
     let tags = document.getElementById('pageTagsHolder').innerText;
-    const isCoverpage = tags.includes('coverpage:yes');
+    const allowMatter = tags.includes('coverpage:yes') || tags.includes('coverpage:toc');
     
     return (<List>
             <Accordion defaultExpanded={true}>
@@ -52,7 +52,7 @@ export default function Developers(props) {
                     alert("Copied pageIDs to the clipboard");
                 })
             }}/>
-            {isCoverpage ? <IconLink title="Generate Front/Back matter" icon="mt-icon-book2" onClick={() => {
+            {allowMatter ? <IconLink title="Generate Front/Back matter" icon="mt-icon-book2" onClick={() => {
                 batch(window.location.href, '&createMatterOnly=true');
             }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
