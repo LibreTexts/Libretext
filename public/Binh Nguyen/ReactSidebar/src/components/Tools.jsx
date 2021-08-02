@@ -38,16 +38,17 @@ export default function Tools(props) {
                 <div id="bm-list">
                 </div>
             </IconLink>*/}
-            <FormControl component="fieldset" style={{padding: 20}}>
+{/*            <FormControl component="fieldset" style={{padding: 20}}>
                 <FormLabel component="legend">Page Notifications</FormLabel>
-                    <RadioGroup value={glossarySource} onChange={(event) => {
+                    <RadioGroup value={pageNotifications} onChange={(event) => {
                         libretextGlossary.makeGlossary(event.target.value);
                         setGlossarySource(event.target.value)
                     }}>
-                        <FormControlLabel value="textbook" control={<Radio/>} label="Textbook"/>
-                        <FormControlLabel value="none" control={<Radio/>} label="None"/>
+                        <FormControlLabel value="1" control={<Radio/>} label="This page only"/>
+                        <FormControlLabel value="2" control={<Radio/>} label="This page and all subpages"/>
+                        <FormControlLabel value="0" control={<Radio/>} label="Notifications OFF"/>
                     </RadioGroup>
-            </FormControl>
+            </FormControl>*/}
         </List>
 );
         /*

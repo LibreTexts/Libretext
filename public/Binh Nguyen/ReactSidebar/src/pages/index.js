@@ -70,8 +70,10 @@ function SidebarComponent(props) {
     // const classes = useStyles();
     
     const toggleDrawer = (panel) => (event) => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
+        if (event && event.type === 'keydown') {
+            if (event.key !== 'Escape') { //only escape will close
+                return;
+            }
         }
         setOpenPanel(panel);
         if (panel)

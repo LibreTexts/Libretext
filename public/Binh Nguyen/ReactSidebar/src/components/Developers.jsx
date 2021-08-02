@@ -52,7 +52,7 @@ export default function Developers(props) {
                     alert("Copied pageIDs to the clipboard");
                 })
             }}/>
-            {allowMatter ? <IconLink title="Generate Front/Back matter" icon="mt-icon-book2" onClick={() => {
+            {allowMatter ? <IconLink title="Generate Front/Back Matter" icon="mt-icon-book2" onClick={() => {
                 batch(window.location.href, '&createMatterOnly=true');
             }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"

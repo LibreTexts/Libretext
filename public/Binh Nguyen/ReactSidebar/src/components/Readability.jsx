@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {Button, Divider, Switch} from "@material-ui/core";
+import {Button, Divider, Grid, Slider, Switch} from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
 import NightsStay from "@material-ui/icons/NightsStay";
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import FormatIndentIncreaseIcon from '@material-ui/icons/FormatIndentIncrease';
 
 export default function Readability(props) {
     const [currentTheme, setTheme] = React.useState(localStorage.getItem("beeline"));
+    const [textSize, setTextSize] = React.useState(localStorage.getItem("font_size") || 1.0);
+    const [marginSize, setMarginSize] = React.useState(localStorage.getItem("page_width") || 0);
     
     const setBeelineTheme = (inTheme) => () => {
         if (!inTheme)
@@ -31,11 +35,67 @@ export default function Readability(props) {
     
     BeelineButton.propTypes = {theme: PropTypes.string}
     
+    
+    function rtdefault() {
+        setTextSize(1.0);
+        setMarginSize(0);
+        localStorage.removeItem('font_size');
+        localStorage.removeItem('page_width');
+        location.reload();
+    }
+    
     return <>
         <div style={{padding: 10}}>
+            <Grid container spacing={2}>
+                <Grid item xs={3} id="text-size-slider">
+                    Text Size
+                </Grid>
+                <Grid item xs>
+                    <Slider aria-labelledby="text-size-slider"
+                            marks
+                            onChange={(e, value) => {
+                                setTextSize(value);
+                                localStorage.setItem('font_size', value);
+                                $('section.mt-content-container p').css("font-size", value + "rem");
+                            }}
+                            value={textSize}
+                            min={0.4}
+                            max={1.8}
+                            step={0.1}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextFieldsIcon/>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={3} id="margin-size-slider">
+                    Margin Size
+                </Grid>
+                <Grid item xs>
+                    <Slider aria-labelledby="margin-size-slider"
+                            marks
+                            onChange={(e, value) => {
+                                setMarginSize(value);
+                                localStorage.setItem('page_width', value);
+                                $('section.mt-content-container').css("margin-left", value + "vw");
+                                $('section.mt-content-container').css("margin-right", value + "vw");
+                            }}
+                            value={marginSize}
+                            min={0}
+                            max={30}
+                            step={5}
+                    />
+                </Grid>
+                <Grid item>
+                    <FormatIndentIncreaseIcon/>
+                </Grid>
+            </Grid>
+            <Button variant="contained" onClick={rtdefault}>Reset to Default Settings</Button>
+            <Divider/>
             <a href="http://www.beelinereader.com/education/?utm_source=libretexts">
                 <img style={{margin: "0 5vw"}} title="Beeline Logo"
-                    src="https://test.libretexts.org/hagnew/development/public/Binh%20Nguyen/ReactSidebar/src/assets/beeline_logo_combo_master-cropped.svg"/>
+                     src="https://test.libretexts.org/hagnew/development/public/Binh%20Nguyen/ReactSidebar/src/assets/beeline_logo_combo_master-cropped.svg"/>
             </a>
             
             <p id="beelineExample"> BeeLine Reader uses subtle color gradients to help you read more quickly and
@@ -57,22 +117,29 @@ export default function Readability(props) {
                     }}>Dark Mode</Button>*/}
             </div>
             <Divider/>
-            <div>
-                <NightsStay/> Dark Mode
-                <Switch checked={props.darkMode} onClick={(event) => {
-                    if (localStorage.getItem('beeline') !== "off") {
-                        if (localStorage.getItem('beeline') === 'night_blues') {
-                            setBeelineTheme('bright')();
+            <Grid container spacing={2}>
+                <Grid item xs={3} id="margin-size-slider">
+                    Dark Mode
+                </Grid>
+                <Grid item xs>
+                    <Switch checked={props.darkMode} onClick={(event) => {
+                        if (localStorage.getItem('beeline') !== "off") {
+                            if (localStorage.getItem('beeline') === 'night_blues') {
+                                setBeelineTheme('bright')();
+                            }
+                            else {
+                                setBeelineTheme('night_blues')();
+                            }
                         }
-                        else {
-                            setBeelineTheme('night_blues')();
+                        else { //just trigger dark mode
+                            props.setDarkMode();
                         }
-                    }
-                    else { //just trigger dark mode
-                        props.setDarkMode();
-                    }
-                }}/>
-            </div>
+                    }}/>
+                </Grid>
+                <Grid item>
+                    <NightsStay/>
+                </Grid>
+            </Grid>
         </div>
     </>;
     //TODO: Add Font and Margin adjustment
@@ -139,17 +206,4 @@ window.activateBeeLine = function activateBeeLine() { //initalization function. 
     else {
         localStorage.setItem('beeline', 'off');
     }
-}
-
-function rtdefault() {
-    $('section.mt-content-container p').css("font-size", 1.1 + "rem");
-    $('section.mt-content-container').css("margin-left", 0 + "px");
-    $('section.mt-content-container').css("margin-right", 0 + "px");
-    $('section.mt-content-container p').css("text-align", "justify");
-    $("#size").val("1.1");
-    $("#slider-page-width").val("0");
-    $("#toggler-text").attr("class", "toggler");
-    sessionStorage.setItem('page_width', '0');
-    sessionStorage.setItem('text_align', "Justify");
-    sessionStorage.setItem('font_size', '1.1');
 }
