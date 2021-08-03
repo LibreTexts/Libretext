@@ -5,6 +5,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {TableOfContents} from "./Common.jsx";
+import IframeResizer from "iframe-resizer-react";
 
 export default function Resources(props) {
     const [expanded, setExpanded] = React.useState('panel1');
@@ -22,11 +23,11 @@ export default function Resources(props) {
                 <Typography>Periodic Table</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <iframe
+                <IframeResizer
                     src="https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true"
                     loading="lazy"
                     alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number.">
-                </iframe>
+                </IframeResizer>
             </AccordionDetails>
         </Accordion>
         <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>

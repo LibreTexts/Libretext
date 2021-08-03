@@ -7,6 +7,10 @@
     margin-right: 5px;
 }
 
+#LibreTextsSidebar .fancytree-title {
+    max-width: unset;
+}
+
 #LibreTextsSidebar > .MuiDrawer-paper {
     /*background: #ececec;*/
 }
