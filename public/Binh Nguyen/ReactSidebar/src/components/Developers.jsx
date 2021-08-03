@@ -59,7 +59,6 @@ export default function Developers(props) {
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
             <IconLink title="Office Hours" icon="mt-icon-topic"
                       href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/"/>
-            <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
             <LibraryItem key="query" text="Query Library" subdomain="query"/>
             <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Webwork Server" icon="mt-icon-article" href="https://webwork.libretexts.org/webwork2"/>

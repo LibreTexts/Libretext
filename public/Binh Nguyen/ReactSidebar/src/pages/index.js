@@ -3,7 +3,7 @@ This code imports external libraries so that React can use them!
 These pieces are code are then bundled into your application during the compilation process.
 Always place your imports at the top of files!
 */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {
     Button,
@@ -16,6 +16,7 @@ import {
     useMediaQuery,
 } from "@material-ui/core";
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
+import {blue, pink} from '@material-ui/core/colors';
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
@@ -47,7 +48,7 @@ function SidebarComponent(props) {
     const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") ? localStorage.getItem("darkMode") === "true" : prefersDarkMode);
     
     const theme = React.useMemo(
-        () =>{
+        () => {
             const contentContainer = $('body');
             if (darkMode) {
                 contentContainer.addClass('darkMode');
@@ -58,11 +59,27 @@ function SidebarComponent(props) {
             
             return createTheme({
                 palette: {
+                    primary: blue,
+                    secondary: pink,
                     type: darkMode ? 'dark' : 'light',
                 },
-            })},
+            })
+        },
         [darkMode],
     );
+    
+    useEffect(function () { // initialization
+        const textSize = localStorage.getItem("LT_fontSize");
+        const marginSize = localStorage.getItem("LT_pageWidth");
+        if (textSize)
+            $('section.mt-content-container p, section.mt-content-container li').css("font-size", textSize + "rem");
+        if (marginSize) {
+            $('section.mt-content-container').css("margin-left", marginSize + "vw");
+            $('section.mt-content-container').css("margin-right", marginSize + "vw");
+        }
+    }, [])
+    
+    
     const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools', 'community'];
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
     if (isPro)
@@ -137,7 +154,7 @@ function SidebarComponent(props) {
     
     return (<ThemeProvider theme={theme}>
             <div>
-{/*                {tabs.map((anchor) => (
+                {/*                {tabs.map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
@@ -152,9 +169,15 @@ function SidebarComponent(props) {
                     onOpen={() => {
                     }}>
                     <div style={{display: "flex"}}>
-                        <Select variant="filled" value={openPanel || ""} style={{flex: 1, backgroundColor:"#127bc480"}}
+                        <Select variant="filled" value={openPanel || ""}
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: "#127bc480",
+                                    fontSize: 20,
+                                    textTransform: 'capitalize'
+                                }}
                                 onChange={(event) => toggleDrawer(event.target.value)(event)}>
-                            {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab.toUpperCase()}</MenuItem>)}
+                            {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab}</MenuItem>)}
                         </Select>
                         <IconButton onClick={toggleDrawer(false)} title="Close Sidebar panel">
                             <ChevronLeftIcon/>
@@ -165,9 +188,10 @@ function SidebarComponent(props) {
                 </SwipeableDrawer>
                 <Portal>
                     <div id="sbHeader" className="sbHeader">
-                        {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`} className="top-tabs"
-                                                onClick={(event) => toggleDrawer(tab)(event)}>
-                            <span>{tab.toUpperCase()}</span></Button>)}
+                        {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`}
+                                                   className="top-tabs"
+                                                   onClick={(event) => toggleDrawer(tab)(event)}>
+                            <span>{tab}</span></Button>)}
                     </div>
                     {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
                                           onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}

@@ -8,10 +8,10 @@ export default function Tools(props) {
     
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
-            <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
             <IconLink title="OER Remixer" icon="mt-icon-tree"
                       href="/Under_Construction/Development_Details/OER_Remixer"/>
+            <IconLink title="LibreCommons" icon="mt-icon-support-hands" href="https://commons.libretexts.org"/>
             <IconLink title="Page Citation" icon="mt-icon-quote" onClick={() => {
                 buildcite();
                 props.toggleDrawer(false)();

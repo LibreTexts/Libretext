@@ -8,16 +8,16 @@ export default function Community(props) {
         <IconLink title="YouTube Channel" icon="mt-icon-youtube"
                   href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg"/>
         <IconLink title="Blog" icon="mt-icon-newspaper3" href="https://blog.libretexts.org/"/>
-        <Divider/>
-        {Object.entries(LibreTexts.libraries).map((entry, index) => (
-            <CommunityLibraryItem key={entry[1]} text={entry[0]} subdomain={entry[1]}/>
-        ))}
-        <Divider/>
         <IconLink title="Community Help Chat" icon="mt-icon-chat2" href="https://chat.libretexts.org/"/>
+        <Divider/>
         <IconLink title="Twitter" icon="mt-icon-twitter"
                   href="https://twitter.com/LibreTexts?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"/>
         <IconLink title="Facebook" icon="mt-icon-facebook" href="https://www.facebook.com/LibreTexts/"/>
     
+        <Divider/>
+        {Object.entries(LibreTexts.libraries).map((entry, index) => (
+            <CommunityLibraryItem key={entry[1]} text={entry[0]} subdomain={entry[1]}/>
+        ))}
     </List>);
 }
 

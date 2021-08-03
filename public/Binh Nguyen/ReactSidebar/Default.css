@@ -80,6 +80,13 @@
     color: white;
 }
 
+
+#LibreTextsSidebar .MuiGrid-spacing-xs-2 {
+    width: 100%;
+    margin: 0;
+    align-items: center;
+}
+
 .sbHeader {
     display: none;
     background-color: #127bc4;
@@ -88,7 +95,7 @@
     top: 0;
     left: 0;
     height: 100vh;
-    min-width: 30px;
+    min-width: 25px;
     z-index: 1400;
     justify-content: space-around;
     border-right: 2px solid white;
@@ -109,6 +116,7 @@
 }
 .sbHeader .top-tabs span {
     writing-mode: vertical-lr;
+    text-transform: capitalize;
 }
 
 #custom_open {
