@@ -1,0 +1,158 @@
+/*Put the CSS that goes with the React project here!*/
+.fancytree-icon {
+    display: none;
+}
+
+.fancytree-expander {
+    margin-right: 5px;
+}
+
+#LibreTextsSidebar > .MuiDrawer-paper {
+    /*background: #ececec;*/
+}
+
+#LibreTextsSidebar .SidebarItem {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: unset;
+    text-decoration: none;
+}
+
+#LibreTextsSidebar .SidebarItem > [class*="mt-icon"] {
+    font-size: x-large;
+}
+
+#LibreTextsSidebar .SidebarItem > .MuiListItemIcon-root > img {
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+}
+
+#LibreTextsSidebar .MuiAccordionDetails-root {
+    width: 100%;
+    padding: 0;
+}
+
+#LibreTextsSidebar .MuiAccordionDetails-root iframe {
+    width: 100%;
+    min-height: 350px;
+    overflow: auto;
+}
+
+#LibreTextsSidebar #doBeeline {
+    display: flex;
+    flex-direction: column;
+}
+
+#SB_bright {
+    background-image: linear-gradient(90deg, #0000F4, #000000, #E93323);
+    color: #ffffff;
+}
+
+#SB_blues {
+    background-image: linear-gradient(90deg, #0000f1, #000000, #891bd5);
+    color: #ffffff;
+}
+
+#SB_night_blues {
+    background-image: linear-gradient(90deg, #56aaff, #ffffff, #9e8dfc);
+    color: #383838;
+}
+
+#SB_gray {
+    background-image: linear-gradient(90deg, #7d7d7d, #000000, #7d7d7d);
+    color: #ffffff;
+}
+
+.mt-checkbox, input[type=checkbox], input[type=radio] {
+    position: absolute;
+}
+
+/*Darkmode items*/
+.darkMode #beelineExample {
+    color: white;
+    background-color: #252525;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.darkMode #LibreTextsSidebar span.fancytree-title > a {
+    color: white;
+}
+
+
+#LibreTextsSidebar .MuiGrid-spacing-xs-2 {
+    width: 100%;
+    margin: 0;
+    align-items: center;
+}
+
+.sbHeader {
+    display: none;
+    background-color: #127bc4;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-width: 25px;
+    z-index: 1400;
+    justify-content: space-around;
+    border-right: 2px solid white;
+}
+
+.sbHeader .top-tabs {
+    color: white;
+    min-width: unset;
+    align-items: center;
+    transform: rotate(
+            180deg
+    );
+    transform-origin: center;
+    font-size: 1rem !important;
+    font-weight: 300;
+    font-family: Roboto, serif;
+    padding: 0;
+}
+.sbHeader .top-tabs span {
+    writing-mode: vertical-lr;
+    text-transform: capitalize;
+}
+
+#custom_open {
+    width: 43.333px;
+    height: 43.333px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #127bc4;
+    color: #e5e5e5;
+    border: none;
+    border-radius: 0px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    border: 2px solid white;
+}
+
+#LibreTextsSidebar .mt-label:after, #LibreTextsSidebar label:after {
+    content: initial;
+}
+
+#LibreTextsSidebar div[role=presentation] .MuiDivider-root {
+    margin: 10px 0;
+    height: 2px;
+}
+
+@media (min-width: 500px) and (min-height: 500px) {
+    #LibreTextsSidebar > .MuiDrawer-paper {
+        padding-left: 30px;
+    }
+
+    #custom_open {
+        display: none;
+    }
+
+    .sbHeader {
+        display: flex;
+    }
+}

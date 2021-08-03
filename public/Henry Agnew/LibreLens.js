@@ -141,6 +141,7 @@
                         attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
                     }
                     else {
+                        attribution.innerHTML = "";
                         document.getElementsByClassName('librelens-toggle').forEach(el => el.remove());
                     }
                     

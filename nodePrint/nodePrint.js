@@ -217,7 +217,7 @@ puppeteer.launch({
                     url = url.slice(0, -4);
                 }
                 let file = await getTOC(url);
-                staticFileServer.serveFile(`../PDF/${size}/TOC/${file}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
+                staticFileServer.serveFile(`../PDF/${size}/Margin/TOC/${file}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
             }
             else if (url.startsWith('/cover=')) {
                 url = url.split('/cover=')[1];
@@ -463,29 +463,34 @@ puppeteer.launch({
             return array;
         }
         
-        async function getLicense(current, subdomain) {
+        async function getLicense(current) {
+            function ccIcon(icon) {
+                return '<img src="data:image/jpeg;base64,' + baseIMG.cc[icon] + '" height="20"/>';
+            }
+            
+            
             for (let i = 0; i < current.tags.length; i++) {
                 if (current.tags[i].includes("license")) {
                     let tag = current.tags[i].split(":")[1];
                     switch (tag) {
                         case "publicdomain":
-                            return {label: "CC-PublicDomain", link: "#"};
+                            return {label: ccIcon("pd"), link: "#"};
                         case "ccby":
-                            return {label: "CC-BY", link: "https://creativecommons.org/licenses/by/4.0/"};
+                            return {label: ccIcon("by"), link: "https://creativecommons.org/licenses/by/4.0/"};
                         case "ccbysa":
-                            return {label: "CC-BY-SA", link: "https://creativecommons.org/licenses/by-sa/4.0/"};
+                            return {label: ccIcon("by-sa"), link: "https://creativecommons.org/licenses/by-sa/4.0/"};
+                        case "ccbync":
+                            return {label: ccIcon("by-nc"), link: "https://creativecommons.org/licenses/by-nc/4.0/"};
                         case "ccbyncsa":
                             return {
-                                label: "CC-BY-NC-SA",
+                                label: ccIcon("nc-by-sa"),
                                 link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
                             };
-                        case "ccbync":
-                            return {label: "CC-BY-NC", link: "https://creativecommons.org/licenses/by-nc/4.0/"};
                         case "ccbynd":
-                            return {label: "CC-BY-ND", link: "https://creativecommons.org/licenses/by-nd/4.0/"};
+                            return {label: ccIcon("by-nd"), link: "https://creativecommons.org/licenses/by-nd/4.0/"};
                         case "ccbyncnd":
                             return {
-                                label: "CC-BY-NC-ND",
+                                label: ccIcon("by-nc-nd"),
                                 link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
                             };
                         case "gnu":
@@ -768,9 +773,8 @@ puppeteer.launch({
                 else
                     summary = body;
             }
-            let imageExists = await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail`);
             
-            let content = `<div style="padding: 0 0 10px 0" class="summary">${!tags.includes('coverpage:yes') && imageExists.ok ? `<img class="summaryImage" src="https://${subdomain}.libretexts.org/@api/deki/pages/${current.id}/thumbnail"/>` : ''}${summary || ''}</div></div>${await getLevel(current)}`;
+            let content = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${await getLevel(current)}`;
             if (tags.includes('coverpage:yes')) {
                 let uploadContent = content.replace(/style="column-count: 2"/g, '');
                 await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'LibreBot', {
@@ -865,8 +869,7 @@ puppeteer.launch({
                 return result;
             }
             
-            const topIMG = baseIMG[subdomain];
-            const color = colors[subdomain];
+            const color = "#127bc4";
             
             const cssb = [];
             cssb.push('<style>');
@@ -878,17 +881,12 @@ puppeteer.launch({
             cssb.push('.date, .pageNumber {display: inline-block}');
             cssb.push('.added {padding: 0px 4px}');
             cssb.push('a {text-decoration:none; color: white}');
-            cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
-            cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
-            cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
             cssb.push('</style>');
             const css = cssb.join('');
             const prefix = '';
             
             const style1 = '<div id="mainH">' +
                 '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/jpeg;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; margin-right: 10px"/></a>' +
-                '<div class="trapezoid"></div>' +
-                `<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content; background: ${color}; border-radius: 10px;"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
                 '</div>';
             
             const style2 = `<div id="mainF">` +
@@ -1227,16 +1225,13 @@ puppeteer.launch({
                     if (tags.includes('printoptions:no-header') || tags.includes('printoptions:no-header-title'))
                         showHeaders = false;
                     
-                    const host = url.split("/")[2].split(".");
-                    const subdomain = host[0];
-                    const topIMG = baseIMG[subdomain];
-                    const color = colors[subdomain];
+                    const color = "#127bc4";
                     prefix = prefix ? prefix + "." : "";
                     let license = getLicense(current);
                     
                     const cssb = [];
                     cssb.push('<style>');
-                    cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
+                    cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw; justify-content:space-between; align-items:center;}');
                     cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
                     cssb.push('#main {border: 1px solid blue;}');
                     cssb.push('#mainF > a {display:block}');
@@ -1245,17 +1240,13 @@ puppeteer.launch({
                     cssb.push('.date, .pageNumber {display: inline-block}');
                     cssb.push('.added {padding: 0px 4px}');
                     cssb.push('a {text-decoration:none; color: white}');
-                    cssb.push(`.trapezoid{ position:relative; display:inline-block; border-bottom: 20px solid ${color}; border-right: 0px solid transparent; border-left: 8px solid transparent; width: 9px; top: -10px; left: 1px; }`);
-                    cssb.push(`.trapezoid:before{ content:\' \'; left:-8px; top:37px; position:absolute; background: ${color}; border-radius:80px 0px 0px 80px; width:17px; height:8px; }`);
-                    cssb.push(`.trapezoid:after { content:\' \'; left:-1px; top:15px; position:absolute; background: ${color}; border-radius:75px 0px 0px 80px; width:10px; height:19px; }`);
                     cssb.push('</style>');
                     const css = cssb.join('');
                     
                     
                     const style1 = '<div id="mainH">' +
                         '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-                        '<div class="trapezoid"></div>' +
-                        `<div id="library"><a href="https://${subdomain}.libretexts.org" style="width: fit-content"><img src="data:image/png;base64,${topIMG}" height="20" style="padding:5px;"/></a></div>` +
+                        `<div style="font-size:13px;">${title}</div>`+
                         '</div>';
                     
                     license = await license;
@@ -1263,13 +1254,13 @@ puppeteer.launch({
                     
                     const style2 = `<div id="mainF">` +
                         `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `${current.name ? `<div>${current.name}</div>` : ''}<div><div class="date"></div></div>` +
+                        `<a href="${license ? license.link : ''}">${license ? license.label : ''}</a>${current.name ? `<div>${current.name}</div>` : ''}` +
                         `</div>` +
                         
                         `<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
                         
                         `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `<a href="${license ? license.link : ''}">${license ? license.label : ''}</a><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
+                        `<div><div class="date"></div></div><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
                         '</div>';
                     if ((performance.now() - start) / 1000 > 20)
                         console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
