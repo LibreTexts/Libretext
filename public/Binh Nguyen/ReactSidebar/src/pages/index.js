@@ -70,7 +70,7 @@ function SidebarComponent(props) {
     // const classes = useStyles();
     
     const toggleDrawer = (panel) => (event) => {
-        if (event && event.type === 'keydown') {
+        if (event && event.type === 'keydown' && !panel) {
             if (event.key !== 'Escape') { //only escape will close
                 return;
             }
@@ -165,12 +165,12 @@ function SidebarComponent(props) {
                 </SwipeableDrawer>
                 <Portal>
                     <div id="sbHeader" className="sbHeader">
-                        {tabs.map((tab) => <div key={tab} className="top-tabs" tabIndex="-1"
+                        {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`} className="top-tabs"
                                                 onClick={(event) => toggleDrawer(tab)(event)}>
-                            {tab.toUpperCase()}</div>)}
+                            <span>{tab.toUpperCase()}</span></Button>)}
                     </div>
-                    {!openPanel ? <button id="custom_open" title="Open Sidebar panel" tabIndex="0"
-                                          onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</button> : null}
+                    {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
+                                          onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}
                 
                 </Portal>
             </div>

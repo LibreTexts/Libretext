@@ -88,17 +88,15 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: 25px;
+    min-width: 30px;
+    z-index: 1400;
     justify-content: space-around;
     border-right: 2px solid white;
 }
 
 .sbHeader .top-tabs {
-    cursor: pointer;
     color: white;
-    writing-mode: vertical-lr;
-    text-align: center;
-    flex: unset;
+    min-width: unset;
     align-items: center;
     transform: rotate(
             180deg
@@ -107,6 +105,10 @@
     font-size: 1rem !important;
     font-weight: 300;
     font-family: Roboto, serif;
+    padding: 0;
+}
+.sbHeader .top-tabs span {
+    writing-mode: vertical-lr;
 }
 
 #custom_open {
