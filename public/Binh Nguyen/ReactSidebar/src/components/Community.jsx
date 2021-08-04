@@ -4,6 +4,10 @@ import {IconLink} from "./Common.jsx";
 import PropTypes from "prop-types";
 
 export default function Community(props) {
+    let forums = {...LibreTexts.libraries};
+    delete forums.Query;
+    forums = Object.entries(forums);
+    
     return (<List>
         <IconLink title="YouTube Channel" icon="mt-icon-youtube"
                   href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg"/>
@@ -15,7 +19,7 @@ export default function Community(props) {
         <IconLink title="Facebook" icon="mt-icon-facebook" href="https://www.facebook.com/LibreTexts/"/>
     
         <Divider/>
-        {Object.entries(LibreTexts.libraries).map((entry, index) => (
+        {forums.map((entry, index) => (
             <CommunityLibraryItem key={entry[1]} text={entry[0]} subdomain={entry[1]}/>
         ))}
     </List>);
@@ -30,7 +34,7 @@ function CommunityLibraryItem(props) {
                   className="SidebarItem">
             <ListItemIcon><img className="icon" alt=""
                                src={`https://libretexts.org/img/LibreTexts/glyphs_blue/${props.subdomain}.png`}/></ListItemIcon>
-            <ListItemText primary={props.text + " Forums"}/>
+            <ListItemText primary={props.text + " Forum"}/>
         </ListItem>)
 }
 CommunityLibraryItem.propTypes = {
