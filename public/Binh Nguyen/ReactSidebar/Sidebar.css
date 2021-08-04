@@ -116,8 +116,10 @@
     font-size: 1rem !important;
     font-weight: 300;
     font-family: Roboto, serif;
-    border: none;
     padding: 0;
+}
+.sbHeader .top-tabs:hover {
+    border: none;
 }
 .sbHeader .top-tabs span {
     writing-mode: vertical-lr;
