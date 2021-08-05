@@ -5,7 +5,8 @@ window.addEventListener("load", () => {
 function buildManager() {
     //generate html
     const managerArea = document.createElement('div');
-    const managerData = `<input type="text" id="referenceInput-Text" value=""> <button onclick="inputReference(document.getElementById('referenceInput-Text').value)">Cite</button>`;
+    const pageID = $("#pageIDHolder").text();
+    const managerData = `<input type="text" id="referenceInput-Text" value=""> <button onclick="inputReference(document.getElementById('referenceInput-Text').value, ${pageID})">Cite</button>`;
     const referenceArea = document.createElement('ul');
     referenceArea.id = 'referenceDisplay';
     managerArea.id = 'referenceInput';
@@ -14,7 +15,7 @@ function buildManager() {
     document.getElementById("pageText").append(managerArea);
     document.getElementById("pageText").append(referenceArea);
 }
-async function inputReference(data) {
+async function inputReference(data, ID) {
     //import citation pkg
     const Cite = CitRequire('citation-js');
     const citationObject = document.createElement("li");
@@ -25,7 +26,7 @@ async function inputReference(data) {
     let userRefJSON;
     //check if json file exists
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(null, 'files/=userReferences.json', null);
+        userRefJSON = await LibreTexts.authenticatedFetch(null, `files/=id-${ID}_references.json`, null);
         userRefJSON = await userRefJSON.json();
     }
     catch (e) {
@@ -34,7 +35,7 @@ async function inputReference(data) {
     }
     //add reference to json & upload
     userRefJSON.push(refObject);
-    await LibreTexts.authenticatedFetch(null, 'files/=userReferences.json', null, {
+    await LibreTexts.authenticatedFetch(null, `files/=id-${ID}-references.json`, null, {
         method: "PUT",
         body: (JSON.stringify(userRefJSON))
     });
