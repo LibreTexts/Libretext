@@ -89,7 +89,7 @@ function BookstoreSingle(props) {
     
     const taxesMultiplier = 1.2;
     const HI_AK_surcharge = {name: 'Hawaii/Alaska', price: 5};
-    const baseCost = (0.03 * props.item.numPages + 1.69) * taxesMultiplier; //cost from Lulu API
+    const baseCost = (0.032 * props.item.numPages + 1.80) * taxesMultiplier; //cost from Lulu API
     let totalCost = baseCost;
     const colorCost = (props.item.numPages * 1.5 / 100) * taxesMultiplier; //cost from Lulu API
     if (hardcover)
