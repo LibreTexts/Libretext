@@ -27,7 +27,7 @@ async function inputReference(data:any, ID:string) {
     let userRefJSON: any;
     //check if json file exists
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=id-${ID}_references.json`,null);
+        userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=id-${ID}-references.json`,null);
         userRefJSON = await userRefJSON.json();
     } catch(e) {
         console.log('catch:', e);
