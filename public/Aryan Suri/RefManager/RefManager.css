@@ -1,0 +1,25 @@
+#referenceInput {
+    width: 400px;
+    display: inline-flex;
+    font-size: 12px;
+    align-content: center;
+    align-items: center;
+}
+
+#referenceInput #referenceInput-Text {
+    margin-right: 10px;
+}
+
+#referenceDisplay {
+    padding: 0;
+    list-style-type: none;
+    width: 400px;
+}
+
+#referenceDisplay li {
+    font-family: Monospaced;
+    font-size: 12px;
+    border-color: black;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+}
