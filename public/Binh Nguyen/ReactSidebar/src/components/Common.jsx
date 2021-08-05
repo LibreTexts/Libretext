@@ -2,6 +2,11 @@ import {Link, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
 import {createHash} from 'crypto';
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Typography from "@material-ui/core/Typography";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
 
 
 export function IconLink(props) {
@@ -27,15 +32,35 @@ IconLink.propTypes = {
 }
 
 export function LibraryItem(props) {
-    return (
-        <ListItem button key={props.text} component={Link} href={`https://${props.subdomain}.libretexts.org`}
+    let URLname = 'https://chem.libretexts.org'
+    if (props.text == 'Espanol' || props.text == 'Query') {
+	URLname = `https://${props.subdomain}.libretexts.org/home`
+    }
+    else {
+	URLname = `https://${props.subdomain}.libretexts.org/Bookshelves/`
+    }
+    return (<>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={`${props.text}`}
+          id={props.text}
+        >
+	  <ListItem button key={props.text} component={Link} href={`https://${props.subdomain}.libretexts.org`}
                   rel="external nofollow"
                   target="_blank"
                   className="SidebarItem">
             <ListItemIcon><img className="icon" alt=""
                                src={`https://libretexts.org/img/LibreTexts/glyphs_blue/${props.subdomain}.png`}/></ListItemIcon>
             <ListItemText primary={props.text}/>
-        </ListItem>)
+        </ListItem>
+        </AccordionSummary>
+        <AccordionDetails>
+	    <TableOfContents coverpageURL={URLname}/>
+        </AccordionDetails>
+      </Accordion>
+	</>
+    )
 }
 
 export function TableOfContents(props) {
