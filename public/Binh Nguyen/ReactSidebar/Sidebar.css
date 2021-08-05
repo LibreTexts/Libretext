@@ -139,6 +139,7 @@
     top: 0px;
     left: 0px;
     border: 2px solid white;
+    z-index: 1400;
 }
 
 #LibreTextsSidebar .mt-label:after, #LibreTextsSidebar label:after {
