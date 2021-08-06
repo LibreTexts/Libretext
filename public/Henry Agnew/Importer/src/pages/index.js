@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Toggle from 'react-toggle';
 import Importer from "../components/Importer.jsx";
 import ReactDOM from 'react-dom';
+import Info from "@material-ui/icons/Info";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -18,13 +20,16 @@ function Dashboard() {
 			<select onChange={(event) => {
 				setPanel(event.target.value);
 			}} defaultValue={panel}>
-				{/*<option value={'Revisions'}>Revision Log</option>*/}
 				<option value={'epub'}>Import EPUB</option>
 				<option value={'commoncartridge'}>Import Common Cartridge</option>
 				<option value={'libremap'}>Import into LibreMaps</option>
 				{/*<option value={'pdf'}>Import PDF</option>*/}
+				<option value={'cnx'}>Import CNX</option>
 				<option value={'pretext'}>Import PreTeXt</option>
 			</select>
+			<div style={{flex: 1}}><Tooltip placement="right" title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
+				<Info/>
+			</Tooltip></div>
 			<div>
 				<label style={{display: 'flex', alignItems: 'center'}}>
 					<span style={{marginRight: '10px'}}>Dev Mode</span>
