@@ -1,14 +1,11 @@
 const http = require('http');
 const timestamp = require("console-timestamp");
 const EPub = require("epub");
-const filenamify = require('filenamify');
-const server = http.createServer(handler);
-const io = require('socket.io')(server, {path: '/import/ws'});
+const server = http.createServer();
 const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
 const fetch = require("node-fetch");
 const async = require('async');
-const md5 = require('md5');
 const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
@@ -23,49 +20,16 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
 server.listen(port);
 const now1 = new Date();
 // fs.emptyDir('ImportFiles');
+const io = require('socket.io')(server, {
+    path: '/import/ws',
+    cors: port === 3003 ? {} : {origin: '*', methods: ["GET", "POST"]}
+});
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
 findRemoveSync('./ImportFiles', {
     age: {seconds: 30 * 8.64e+4},
     files: "*.*",
 });
-
-function handler(request, response) {
-    const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
-    let url = request.url;
-    url = LibreTexts.clarifySubdomain(url);
-    console.log(url);
-    
-    if (url.startsWith('/websocketclient')) {
-        //Serve client socket.io Javascript file
-        staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
-    }
-    else {
-        responseError('Action not found', 400);
-    }
-    
-    function responseError(message, status) {
-        //else fall through to error
-        response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
-        response.write(("Bad Request\n" + (message ? message : url)));
-        response.end();
-    }
-    
-    function reportMessage(message, isError) {
-        if (isError) {
-            console.error(message);
-        }
-        else {
-            console.log(message);
-        }
-        let json = {
-            message: message,
-            isError: isError,
-        };
-        response.write(JSON.stringify(json) + "\r\n");
-    }
-}
-
 
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
@@ -135,14 +99,8 @@ async function downloadFile(data, socket) {
         return;
     }
     const contentLength = +response.headers.get('Content-Length');
-    if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/)) {
-        console.log(response.headers.get('content-disposition'))
-        try {
-            data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
-        } catch (e) {
-            data.filename = response.headers.get('content-disposition').match(/(?<=filename=).*?(?=;|$)/)[0];
-        }
-    }
+    if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
+        data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
     
     // Step 3: read the data
     let receivedLength = 0; // received that many bytes at the moment
@@ -208,10 +166,10 @@ async function listFiles(data, socket) {
     }
 }
 
-/*processPretext({
-	path: './ImportFiles/hdagnew@ucdavis.edu/pretext/aata-master.zip',
-	user: 'hdagnew@ucdavis.edu',
-	subdomain: 'chem'
+/*processCNX({
+	path: './ImportFiles/asuri@ucdavis.edu/cnx/cnx.zip',
+	user: 'asuri@ucdavis.edu',
+	subdomain: 'dev'
 }, {emit: (a, b) => console.error(b)});*/
 
 async function processCommonCartridge(data, socket) {
@@ -245,12 +203,12 @@ async function processCommonCartridge(data, socket) {
         await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-        }, data.subdomain);
+        });
         onlinePath += `/${data.filename}`;
         await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
-        }, data.subdomain);
+        });
         await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
         
         //parse imsmanifest.xml
@@ -312,7 +270,7 @@ async function processCommonCartridge(data, socket) {
         await Working.authenticatedFetch(path, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-        }, data.subdomain);
+        });
         await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
         
         for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
@@ -378,14 +336,14 @@ async function processCommonCartridge(data, socket) {
                 await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
                     method: "POST",
                     body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a>${convertedType}</p>`,
-                }, data.subdomain);
+                });
                 await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
             }
             else if (page.type === 'guide') {
                 await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
                     method: "POST",
                     body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${convertedType}</p>`,
-                }, data.subdomain);
+                });
                 await Promise.all(
                     [Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
                         Working.putProperty('mindtouch.page#welcomeHidden', true, path),
@@ -948,21 +906,11 @@ async function processPretext(data, socket) {
         
         
         //find the PreTeXt source within this zip file
-        let source = await runProcess('grep', ['-rl', '-E', "<pretext|<mathbook", `${data.path}-Unzipped`]);
+        let source = await runProcess('grep', ['-rl', '-E', "'<pretext|<mathbook'", `${data.path}-Unzipped`]);
         if (!source) {
-            console.error('errorMessage', 'Cannot find a valid PreTeXt source root');
             socket.emit('errorMessage', 'Cannot find a valid PreTeXt source root');
             return;
         }
-        
-        console.log(source.split(`${data.path}-Unzipped`), source.split(`${data.path}-Unzipped`).length)
-        if (source.split(`${data.path}-Unzipped`)?.length !== 2) {
-            console.error('Too many possible PreTeXt source roots: '+source);
-            socket.emit('errorMessage', 'Too many possible PreTeXt source roots');
-            return;
-        }
-        source = source.trim();
-        console.log(source);
         
         //obtain JSON manifest
         let rootPath = `${data.path}-Unzipped/out`;
@@ -986,7 +934,7 @@ async function processPretext(data, socket) {
         //Build PreTeXt
         let xsltproc = await runProcess('xsltproc', ['--xinclude', '-o', rootPath + '/', './mathbook/xsl/pretext-basic-html.xsl', source]);
         console.log('done building');
-        //TODO fix onlinePath
+        
         await fs.writeJSON('out.json', current);
         
         
@@ -1001,7 +949,6 @@ async function processPretext(data, socket) {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
         }, data.subdomain);
-        onlinePath += `/${data.filename}`;
         
         //begin page uploads
         let log = [];
@@ -1023,11 +970,11 @@ async function processPretext(data, socket) {
         await clearBacklog();
         
         //Function Zone
-        function digestPage(page, parent = {depth: 0, path: null}) {
+        function digestPage(page, parent = {depth: 0, path: ''}) {
             totalPages++;
             page.depth = parent.depth + 1;
             page.source = page.link.match(/(?<=^.*\/)[^\/]*?$/)[0];
-            page.path = parent.path === null ? '' : `${parent.path}/${page.title}`;
+            page.path = `${parent.path}/${page.title}`;
             
             if (page.depth === 1)
                 page.type = 'category';
