@@ -783,7 +783,8 @@ puppeteer.launch({
                 });
             }
             content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h2>${current.title}</h2></a>`}` + content;
-            content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
+            content += `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/LibreTexts-content.css"/>` +
+                '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
                 '<style>a {text-decoration: none; color:#127bc4}' +
                 'body>ul {list-style-type: none; color:black}' +
                 'h2>a{color:#127bc4}' +
