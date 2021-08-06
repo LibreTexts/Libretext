@@ -273,7 +273,7 @@
         document.body.classList.add("contentOnly");
     }
     if (window.location.href.includes("adaptView")
-        || (document.referrer && document.referrer.match(/^https:\/\/([A-Za-z]*?\.)?adapt\.libretexts\.org/))) {
+        || (document.referrer && document.referrer.match(/^https:\/\/[-.\w]*?adapt\.libretexts\.org/))) {
         document.body.classList.add("contentOnly");
         document.body.classList.add("adaptView");
     }
