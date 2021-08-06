@@ -216,5 +216,6 @@ window.addEventListener("load", () => {
 });
 
 window.Sidebar = function () {
-    ReactDOM.render(<SidebarComponent/>, target);
+    if (window === window.top) //don't activate if in an iframe
+        ReactDOM.render(<SidebarComponent/>, target);
 }

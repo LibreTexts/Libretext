@@ -14,61 +14,99 @@ export default function Resources(props) {
         setExpanded(isExpanded ? panel : false);
     };
     
-    return (<>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-            >
-                <Typography>Periodic Table</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <IframeResizer
-                    src="https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true"
-                    loading="lazy"
-                    alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number.">
-                </IframeResizer>
-            </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-            >
-                <Typography>Reference Tables</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <TableOfContents
-                    coverpageURL="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference"/>
-            </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-            >
-                <Typography>Physical Constants</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <iframe
-                    src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"
-                    loading="lazy"/>
-            </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1a-content"
-            >
-                <Typography>Scientific Calculator</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <iframe
-                    src="https://www.desmos.com/scientific"
-                    loading="lazy"/>
-            </AccordionDetails>
-        </Accordion>
-    </>);
+    let [subdomain] = LibreTexts.parseURL();
+    switch (subdomain){
+        case "bio":{
+            return (<>
+                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Reference Tables</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableOfContents
+                            coverpageURL="https://bio.libretexts.org/Learning_Objects/Reference"/>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Physical Constants</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <iframe
+                            src="https://bio.libretexts.org/Learning_Objects/Reference/Physical_Constants_and_Conversion_of_Units?adaptView"
+                            loading="lazy"/>
+                    </AccordionDetails>
+                </Accordion>
+            </>);
+        }
+        case "chem":{
+            return (<>
+                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Periodic Table</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <IframeResizer
+                            src="https://pubchem.ncbi.nlm.nih.gov/periodic-table/#view=table&embed=true&hide_all_headings=true"
+                            loading="lazy"
+                            alt="The Periodic Table of the Elements showing all elements with their chemical symbols, atomic weight, and atomic number.">
+                        </IframeResizer>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Reference Tables</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableOfContents
+                            coverpageURL="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference"/>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Physical Constants</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <iframe
+                            src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"
+                            loading="lazy"/>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Scientific Calculator</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <iframe
+                            src="https://www.desmos.com/scientific"
+                            loading="lazy"/>
+                    </AccordionDetails>
+                </Accordion>
+            </>);
+        }
+        default:
+        
+    }
+    
+   
 }
 
 function ConversionCalculator(props) {
