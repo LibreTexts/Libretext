@@ -11,10 +11,8 @@ function buildManager(){
     referenceArea.id='referenceDisplay';
     managerArea.id = 'referenceInput';
     managerArea.innerHTML = managerData;
-
     document.getElementById("pageText")!.append(managerArea);
     document.getElementById("pageText")!.append(referenceArea);
-
     updateManager()
 }
 
@@ -23,37 +21,41 @@ async function storeReference(data: any, ID:string){
     const Data = new Cite(data);
     const reference = Data.format('data');
     const citation = Data.format('citation');
-    let Log = [];
+    const parseReference = JSON.parse(reference);
 
-    let referenceID = {
-        "id": Math.floor(100000 + Math.random() * 900000),
+    let Log = [];
+    let referenceGlobal = {
+        "id": parseReference[0].id,
         "citation": citation,
         "data": data
+    }
+    let referenceLocal = {
+        "id": parseReference[0].id,
+        "citation": citation
     }
 
     if (localStorage.getItem("book-references") !== null) {
         let Logged: any = localStorage.getItem("book-references");
         Logged = JSON.parse(Logged);
-        Logged.push(referenceID);
-        localStorage.setItem(`book-references`, JSON.stringify(Logged));
+        Logged.push(referenceLocal);
+        localStorage.setItem("book-references", JSON.stringify(Logged));
     } else {
-        Log.push(referenceID);
+        Log.push(referenceLocal);
         localStorage.setItem("book-references", JSON.stringify(Log));
     }
     let userRefJSON: any;
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=${ID}-references.json`,null);
+        userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=${ID}references.json`,null);
         userRefJSON = await userRefJSON.json();
     } catch(e) {
         console.log(e);
         userRefJSON = [];
     }
-    userRefJSON.push(reference);
-    await LibreTexts.authenticatedFetch(null,`files/=${ID}-references.json`,null, {
+    userRefJSON.push(referenceGlobal);
+    await LibreTexts.authenticatedFetch(null,`files/=${ID}references.json`,null, {
         method:"PUT",
         body:(JSON.stringify(userRefJSON))
     });
-
     updateManager();
 }
 
@@ -64,8 +66,8 @@ function updateManager(){
         //@ts-ignore
         render.forEach((element)=> {
             let item = document.createElement("li");
-            item.innerText = "ID# " + element.id + " |  Citation " + element.citation;
+            item.innerText = "ID# " + element.id + "                  Citation:  " + element.citation;
             document.getElementById('referenceDisplay')!.appendChild(item);
         });
-    } else { return null;}
+    } else {return null;}
 }

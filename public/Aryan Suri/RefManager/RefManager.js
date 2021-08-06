@@ -19,33 +19,38 @@ async function storeReference(data, ID) {
     const Data = new Cite(data);
     const reference = Data.format('data');
     const citation = Data.format('citation');
+    const parseReference = JSON.parse(reference);
     let Log = [];
-    let referenceID = {
-        "id": Math.floor(100000 + Math.random() * 900000),
+    let referenceGlobal = {
+        "id": parseReference[0].id,
         "citation": citation,
         "data": data
+    };
+    let referenceLocal = {
+        "id": parseReference[0].id,
+        "citation": citation
     };
     if (localStorage.getItem("book-references") !== null) {
         let Logged = localStorage.getItem("book-references");
         Logged = JSON.parse(Logged);
-        Logged.push(referenceID);
-        localStorage.setItem(`book-references`, JSON.stringify(Logged));
+        Logged.push(referenceLocal);
+        localStorage.setItem("book-references", JSON.stringify(Logged));
     }
     else {
-        Log.push(referenceID);
+        Log.push(referenceLocal);
         localStorage.setItem("book-references", JSON.stringify(Log));
     }
     let userRefJSON;
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(null, `files/=${ID}-references.json`, null);
+        userRefJSON = await LibreTexts.authenticatedFetch(null, `files/=${ID}references.json`, null);
         userRefJSON = await userRefJSON.json();
     }
     catch (e) {
         console.log(e);
         userRefJSON = [];
     }
-    userRefJSON.push(reference);
-    await LibreTexts.authenticatedFetch(null, `files/=${ID}-references.json`, null, {
+    userRefJSON.push(referenceGlobal);
+    await LibreTexts.authenticatedFetch(null, `files/=${ID}references.json`, null, {
         method: "PUT",
         body: (JSON.stringify(userRefJSON))
     });
@@ -58,7 +63,7 @@ function updateManager() {
         //@ts-ignore
         render.forEach((element) => {
             let item = document.createElement("li");
-            item.innerText = "ID# " + element.id + " |  Citation " + element.citation;
+            item.innerText = "ID# " + element.id + "                  Citation:  " + element.citation;
             document.getElementById('referenceDisplay').appendChild(item);
         });
     }
