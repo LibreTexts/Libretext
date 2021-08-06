@@ -581,14 +581,16 @@ async function processEPUB(data, socket) {
     for (let i = 0; i < toc.length; i++) {
         if (toc[i].level) {
             //front and back matter ignored
+            
             let page = toc[i];
             let indexes = page.title.match(/^[0-9]+\.[0-9]/);
             if (indexes) {
                 indexes = indexes[0];
-                page.title = page.title.replace(indexes, indexes + ':');
+                let numbers = indexes.split('.');
+                page.title = page.title.replace(indexes, `${numbers[0]}.${numbers[1].padStart(2,'0')}:`);
             }
             else {
-                page.title = `${chapterIndex}.${pageIndex}: ${page.title}`;
+                page.title = `${chapterIndex}.${String(pageIndex).padStart(2,'0')}: ${page.title}`;
             }
             pageIndex++;
             filtered.push({title: page.title, id: page.id, href: page.href});
@@ -683,7 +685,7 @@ async function processEPUB(data, socket) {
         
         async function processChapter(chapter) {
             let title = chapter.title;
-            title = title.replace("Chapter ", "");
+            title = title.replace("Chapter ", "").replace("/","--");
             let number = title.match(/[0-9]+(?= )/);
             if (number) {
                 number = number[0];
@@ -695,8 +697,9 @@ async function processEPUB(data, socket) {
             }
             let padded = title.replace(number, ("" + number).padStart(2, "0"));
             chapter.title = title;
-            chapter.padded = padded;
+            chapter.padded = LibreTexts.cleanPath(padded);
             let path = `${onlinePath}/${padded}`;
+            path = LibreTexts.cleanPath(path);
             let response = await Working.authenticatedFetch(path, `contents?edittime=now${padded !== title ? `&title=${encodeURIComponent(title)}` : ''}`, {
                 method: "POST",
                 body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`,
@@ -748,7 +751,7 @@ async function processEPUB(data, socket) {
             }
             
             let title = page.title || `Untitled Page ${("" + ++untitled).padStart(2, "0")}`;
-            let path = title;
+            let path = LibreTexts.cleanPath(title.replace("/","--"));
             
             let chapterNumber = path.match(/.*?(?=\.)/);
             if (!isSimple && chapterNumber) { //adds padding if necessary
@@ -1216,16 +1219,20 @@ async function putProperty(name, value, path, subdomain, username) {
 
 async function uploadImages(contents, path, imageProcessor, data) {
     //Rewrite image src url
-    let images = contents.match(/<img .*?src=".*?\/.*?>/g);
-    let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
+    let images = contents.match(/<img [^>\n]*?src=".*?\/.*?>/g);
     const atRoot = images === null;
     if (atRoot) {
-        images = contents.match(/<img .*?src=".*?>/g);
+        images = contents.match(/<img [^>\n]*?src=".*?>/g);
     }
-    if (src) {
-        for (let i = 0; i < src.length; i++) {
-            if (!src[i].startsWith('http')) {
-                let [filename, image, filePath] = await imageProcessor(src[i]);
+    if (images) {
+        for (let i = 0; i < images.length; i++) {
+            let src = images[i].match(/(?<=<img [^>\n]*?src=").*?(?=")/g)?.[0];
+            if(!src){
+                console.error(`Img src not valid: ${images[i]}`);
+                continue;
+            }
+            if (!src.startsWith('http')) {
+                let [filename, image, filePath] = await imageProcessor(src);
                 if (!image) {
                     console.error(`Could not find ${filePath}`);
                     continue;
@@ -1233,10 +1240,10 @@ async function uploadImages(contents, path, imageProcessor, data) {
                 const fileID = await uploadImage(filename, path, image, data.subdomain, data.user, data.socket);
                 let toReplace;
                 if (atRoot) { // at root url
-                    toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
+                    toReplace = images[i].replace(/(?<=<img [^>\n]*?src=)"/, `"/@api/deki/files/${fileID}/`);
                 }
                 else {
-                    toReplace = images[i].replace(/(?<=<img .*?src=").*\/(?=.*?")/, `/@api/deki/files/${fileID}/`);
+                    toReplace = images[i].replace(/(?<=<img [^>\n]*?src=").*\/(?=[^>\n]*?")/, `/@api/deki/files/${fileID}/`);
                 }
                 
                 contents = contents.replace(images[i], toReplace);
