@@ -15,8 +15,8 @@ import {
     SwipeableDrawer,
     useMediaQuery,
 } from "@material-ui/core";
-import {createTheme, ThemeProvider} from '@material-ui/core/styles';
-import {blue, pink} from '@material-ui/core/colors';
+import {createTheme, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
+import {blue, grey} from "@material-ui/core/colors";
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
@@ -60,7 +60,8 @@ function SidebarComponent(props) {
             return createTheme({
                 palette: {
                     primary: blue,
-                    secondary: pink,
+                    secondary: {main: '#008000'},
+                    default: grey,
                     type: darkMode ? 'dark' : 'light',
                 },
             })
@@ -152,53 +153,55 @@ function SidebarComponent(props) {
         </div>
     };
     
-    return (<ThemeProvider theme={theme}>
-            <div>
-                {/*                {tabs.map((anchor) => (
+    return (<StylesProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <div>
+                    {/*                {tabs.map((anchor) => (
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor)}>{anchor}</Button>
                     </React.Fragment>
                 ))}*/}
-                <div id="sidebarDiv"/>
-                <SwipeableDrawer
-                    id="LibreTextsSidebar"
-                    anchor={'left'}
-                    open={Boolean(openPanel)}
-                    onClose={toggleDrawer(false)}
-                    disableSwipeToOpen={true}
-                    onOpen={() => {
-                    }}>
-                    <div style={{display: "flex"}}>
-                        <Select variant="filled" value={openPanel || ""}
-                                style={{
-                                    flex: 1,
-                                    backgroundColor: "#127bc480",
-                                    fontSize: 20,
-                                    textTransform: 'capitalize'
-                                }}
-                                onChange={(event) => toggleDrawer(event.target.value)(event)}>
-                            {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab}</MenuItem>)}
-                        </Select>
-                        <IconButton onClick={toggleDrawer(false)} title="Close Sidebar panel">
-                            <ChevronLeftIcon/>
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    {list()}
-                </SwipeableDrawer>
-                <Portal>
-                    <div id="sbHeader" className="sbHeader">
-                        {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`}
-                                                   className="top-tabs"
-                                                   onClick={(event) => toggleDrawer(tab)(event)}>
-                            <span>{tab}</span></Button>)}
-                    </div>
-                    {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
-                                          onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}
-                
-                </Portal>
-            </div>
-        </ThemeProvider>
+                    <div id="sidebarDiv"/>
+                    <SwipeableDrawer
+                        id="LibreTextsSidebar"
+                        anchor={'left'}
+                        open={Boolean(openPanel)}
+                        onClose={toggleDrawer(false)}
+                        disableSwipeToOpen={true}
+                        onOpen={() => {
+                        }}>
+                        <div style={{display: "flex"}}>
+                            <Select variant="filled" value={openPanel || ""}
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: "#127bc480",
+                                        fontSize: 20,
+                                        textTransform: 'capitalize'
+                                    }}
+                                    onChange={(event) => toggleDrawer(event.target.value)(event)}>
+                                {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab}</MenuItem>)}
+                            </Select>
+                            <IconButton onClick={toggleDrawer(false)} title="Close Sidebar panel">
+                                <ChevronLeftIcon/>
+                            </IconButton>
+                        </div>
+                        <Divider/>
+                        {list()}
+                    </SwipeableDrawer>
+                    <Portal>
+                        <div id="sbHeader" className="sbHeader">
+                            {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`}
+                                                       className="top-tabs"
+                                                       onClick={(event) => toggleDrawer(tab)(event)}>
+                                <span>{tab}</span></Button>)}
+                        </div>
+                        {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
+                                              onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}
+                    
+                    </Portal>
+                </div>
+            </ThemeProvider>
+        </StylesProvider>
     );
 }
 
