@@ -1587,6 +1587,10 @@ puppeteer.launch({
             
             if (options.createMatterOnly) {
                 await getTOC(current);
+                response.write(JSON.stringify({
+                    message: "complete",
+                    filename: "createMatterOnly",
+                }));
                 return null; //done creating matter, exit immediately.
             }
             

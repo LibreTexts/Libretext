@@ -144,6 +144,10 @@ if (!window["batchPrint.js"]) {
 					batchButton.innerText = "Refresh complete";
 					return;
 				}
+				else if (out.filename === 'createMatterOnly') {
+					batchButton.innerText = "Done creating front/back matter";
+					return;
+				}
 				if (out.message === 'error') {
 					alert(out.text);
 					return;
