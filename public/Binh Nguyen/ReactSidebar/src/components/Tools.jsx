@@ -4,7 +4,7 @@ import {FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup} from 
 
 export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
-    const [notification, setNotifications] = React.useState(localStorage.getItem("glossarizerType"));
+    const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0].value || "0");
     
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
@@ -21,6 +21,13 @@ export default function Tools(props) {
                 props.toggleDrawer(false)();
             }}/>
             <AutoAttribution/>
+	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
+		 event.preventDefault();
+		saveBookmark();
+	    }}>
+		<div id="bm-list">
+		</div>
+	    </IconLink>
             <FormControl component="fieldset" style={{padding: 20}}>
                 <FormLabel component="legend">Glossary Source</FormLabel>
                 <RadioGroup value={glossarySource} onChange={(event) => {
@@ -31,24 +38,18 @@ export default function Tools(props) {
                     <FormControlLabel value="none" control={<Radio/>} label="None"/>
                 </RadioGroup>
             </FormControl>
-            {/*            <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
-                // event.preventDefault();
-                saveBookmark();
-            }}>
-                <div id="bm-list">
-                </div>
-            </IconLink>*/}
-{/*            <FormControl component="fieldset" style={{padding: 20}}>
-                <FormLabel component="legend">Page Notifications</FormLabel>
-                    <RadioGroup value={pageNotifications} onChange={(event) => {
-                        libretextGlossary.makeGlossary(event.target.value);
-                        setGlossarySource(event.target.value)
-                    }}>
-                        <FormControlLabel value="1" control={<Radio/>} label="This page only"/>
-                        <FormControlLabel value="2" control={<Radio/>} label="This page and all subpages"/>
-                        <FormControlLabel value="0" control={<Radio/>} label="Notifications OFF"/>
-                    </RadioGroup>
-            </FormControl>*/}
+	    <br/>
+	    <FormControl component="fieldset" style={{padding: 20}}>
+		<FormLabel component="legend">Page Notifications</FormLabel>
+		    <RadioGroup value={notification} onChange={(event) => {
+			makeNotification(event.target.value);
+			setNotifications(event.target.value)
+		    }}>
+			<FormControlLabel value="1" control={<Radio/>} label="This page only"/>
+			<FormControlLabel value="2" control={<Radio/>} label="This page and all subpages"/>
+			<FormControlLabel value="0" control={<Radio/>} label="Notifications OFF"/>
+		    </RadioGroup>
+	    </FormControl>
         </List>
 );
         /*
@@ -104,4 +105,14 @@ function removeBookmarks() {
     (_a = document.querySelector("#bm-list")) === null || _a === void 0 ? void 0 : _a.removeChild(document.querySelector("#sbBookmark"));
     sessionStorage.removeItem("Title");
     sessionStorage.removeItem("Bookmark");
+}
+
+function makeNotification(args) {
+    const subdomain = window.location.origin.split('/')[2].split('.')[0];
+    let pageType = "all";
+    if (args == "0") {
+	pageType = "page";
+    }
+    let pageID = document.getElementById('IDHolder').innerText;
+    fetch(`https://${subdomain}.libretexts.org/@app/subscription/status.json?pageId=${pageID}&status=${args}&type=${pageType}`, {method: "POST"});
 }

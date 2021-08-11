@@ -103,7 +103,34 @@ export default function Resources(props) {
             </>);
         }
         default:
-        
+	    return (<>               
+		<Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Physical Constants</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <iframe
+                            src="https://chem.libretexts.org/Bookshelves/Ancillary_Materials/Reference/Units_and_Conversions/Physical_Constants?adaptView"
+                            loading="lazy"/>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                    >
+                        <Typography>Scientific Calculator</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <iframe
+                            src="https://www.desmos.com/scientific"
+                            loading="lazy"/>
+                    </AccordionDetails>
+                </Accordion>
+	    </>);
     }
     
    
