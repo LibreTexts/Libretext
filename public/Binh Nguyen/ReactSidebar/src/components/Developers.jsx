@@ -12,7 +12,7 @@ export default function Developers(props) {
     const allowMatter = tags.includes('coverpage:yes') || tags.includes('coverpage:toc');
     
     return (<List>
-            <Accordion defaultExpanded={true}>
+            <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1a-content"
@@ -59,7 +59,6 @@ export default function Developers(props) {
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
             <IconLink title="Office Hours" icon="mt-icon-topic"
                       href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/"/>
-            <LibraryItem key="query" text="Query Library" subdomain="query"/>
             <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Webwork Server" icon="mt-icon-article" href="https://webwork.libretexts.org/webwork2"/>
             <IconLink title="IMathAS Server" icon="mt-icon-article" href="https://imathas.libretexts.org/imathas/"/>

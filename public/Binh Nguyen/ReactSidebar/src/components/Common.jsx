@@ -33,7 +33,7 @@ IconLink.propTypes = {
 
 export function LibraryItem(props) {
     let URLname = 'https://chem.libretexts.org'
-    if (props.subdomain == 'espanol' || props.subdomain == 'query') {
+    if (props.subdomain === 'espanol' || props.subdomain === 'query') {
 	URLname = `https://${props.subdomain}.libretexts.org/home`
     }
     else {
