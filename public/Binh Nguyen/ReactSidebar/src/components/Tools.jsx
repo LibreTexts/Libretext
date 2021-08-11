@@ -4,7 +4,8 @@ import {FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup} from 
 
 export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
-    const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0].value || "0");
+    const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0]?.value || "0");
+    const isPro = document.getElementById("proHolder")?.innerText === 'true';
     
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
@@ -39,18 +40,19 @@ export default function Tools(props) {
                 </RadioGroup>
             </FormControl>
             <br/>
-            <FormControl component="fieldset" style={{padding: 20}}>
+            {isPro ? <FormControl component="fieldset" style={{padding: 20}}>
                 <FormLabel component="legend">Page Notifications</FormLabel>
                 <RadioGroup value={notification} onChange={async (event) => {
-                    await makeNotification(event.target.value);
-                    setNotifications(event.target.value);
+                    let value = event.target.value;
+                    await makeNotification(value);
+                    setNotifications(value);
                     location.reload();
                 }}>
                     <FormControlLabel value="1" control={<Radio/>} label="This page only"/>
                     <FormControlLabel value="2" control={<Radio/>} label="This page and all subpages"/>
                     <FormControlLabel value="0" control={<Radio/>} label="Notifications OFF"/>
                 </RadioGroup>
-            </FormControl>
+            </FormControl> : null}
         </List>
     );
     /*

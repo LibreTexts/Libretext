@@ -7,6 +7,10 @@
     margin-right: 5px;
 }
 
+#LibreTextsSidebar .toc-hierarchy{
+    padding: 20px;
+}
+
 #LibreTextsSidebar .fancytree-title {
     max-width: unset;
 }
@@ -93,7 +97,7 @@
 
 .sbHeader {
     display: none;
-    background-color: #127bc4;
+    /*background-color: #127bc4;*/
     flex-direction: column;
     position: fixed;
     top: 0;
