@@ -1,6 +1,47 @@
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     buildManager()
 });
+
+// Table of Contents:
+// buildManager, updateManager, storeReference, deleteReference, processReference --> replaceReferenceID
+
+
+function buildManager(){
+    const managerArea: HTMLDivElement = document.createElement('div');
+    const pageID = $("#pageIDHolder").text();
+    const referenceArea = document.createElement('ul');
+
+    managerArea.innerHTML =  `<input type="text" id="referenceInput-Text" value=""> <button onclick="storeReference(document.getElementById('referenceInput-Text').value, ${pageID})">Cite</button>`
+    referenceArea.id='referenceDisplay';
+    managerArea.id = 'referenceInput';
+    document.getElementById("pageText")!.append(managerArea);
+    document.getElementById("pageText")!.append(referenceArea);
+    updateManager(true)
+}
+
+function updateManager(refresh: boolean, ref = JSON.parse(<string>localStorage.getItem("book-references"))){
+    if (refresh) {
+        try {
+            for (let elem of ref) {
+                let item: HTMLLIElement = document!.createElement("li");
+                // @ts-ignore
+                item.onclick = deleteReference;
+                item.innerText = "ID# " + elem.id + "\n"+ "Citation:  " + elem.citation;
+                document.getElementById('referenceDisplay')!.appendChild(item);
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+    else {
+        let item = document.createElement("li");
+        // @ts-ignore
+        item.onclick = deleteReference;
+        item.innerText = "ID# " + ref.id + "\n"+ "Citation:  " + ref.citation;
+        document.getElementById('referenceDisplay')!.appendChild(item);
+    }
+}
 
 async function storeReference(data: any, ID:string){
     const Cite = CitRequire('citation-js');
@@ -8,8 +49,9 @@ async function storeReference(data: any, ID:string){
     const reference = Data.format('data');
     const citation = Data.format('citation');
     const parseReference = JSON.parse(reference);
-
+    const coverPage = await LibreTexts.getCoverpage();
     let Log = [];
+
     let referenceGlobal = {
         "id": parseReference[0].id,
         "citation": citation,
@@ -31,57 +73,61 @@ async function storeReference(data: any, ID:string){
     }
     let userRefJSON: any;
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=${ID}references.json`,null);
+        userRefJSON = await LibreTexts.authenticatedFetch(coverPage,`files/=references.json`,null);
         userRefJSON = await userRefJSON.json();
     } catch(e) {
         console.log(e);
         userRefJSON = [];
     }
     userRefJSON.push(referenceGlobal);
-    await LibreTexts.authenticatedFetch(null,`files/=${ID}references.json`,null, {
+    await LibreTexts.authenticatedFetch(coverPage,`files/=references.json`,null, {
         method:"PUT",
         body:(JSON.stringify(userRefJSON))
     });
 
-    updateManager(referenceLocal);
-    alert("object cited");
+    updateManager(false, referenceLocal);
 }
 
-function deleteReference(this: any) {
-    this.remove()
-    // @TODO remove local-storage obj
-}
+function deleteReference(this: HTMLElement) {
+    const text = this.innerText;
+    const refPattern = new RegExp(".*ID#\\s*([^\\n\\r]*)");
+    const ID = text.match(refPattern)!
+    const render = localStorage.getItem("book-references");
 
-function buildManager(){
-    const managerArea: HTMLDivElement = document.createElement('div');
-    const pageID = $("#pageIDHolder").text();
-    const managerData =  `<input type="text" id="referenceInput-Text" value=""> <button onclick="storeReference(document.getElementById('referenceInput-Text').value, ${pageID})">Cite</button>`
-    const referenceArea = document.createElement('ul');
-
-    referenceArea.id='referenceDisplay';
-    managerArea.id = 'referenceInput';
-    managerArea.innerHTML = managerData;
-    document.getElementById("pageText")!.append(managerArea);
-    document.getElementById("pageText")!.append(referenceArea);
-    updateManagerRefresh()
-}
-function updateManager(elem: { id: any; citation: any; }) {
-    let item = document.createElement("li");
-    item.onclick = deleteReference;
-    item.innerText = "ID# " + elem.id + "\n"+ "Citation:  " + elem.citation;
-    document.getElementById('referenceDisplay')!.appendChild(item);
-}
-function updateManagerRefresh(ref=JSON.parse(<string>localStorage.getItem("book-references"))){
-    let render: string | null = localStorage.getItem("book-references");
     if (render != null) {
-        render = JSON.parse(render);
-        //@ts-ignore
-        render.forEach((element)=> {
-            let item = document.createElement("li");
-            item.onclick = deleteReference;
-            item.innerText = "ID# " + element.id + "\n"+ "Citation:  " + element.citation;
+        let obj = JSON.parse(render);
+        let index = obj.findIndex((element: { id: string; }) => element.id === ID[1]);
+        let obj1 = obj.slice()
+        obj1.splice(index, 1)
+        localStorage.setItem("book-references", JSON.stringify(obj1))
+    }
 
-            document.getElementById('referenceDisplay')!.appendChild(item);
-        });
-    } else {return null;}
+    this.remove()
+}
+
+async function processReference(){
+    const coverPage = await LibreTexts.getCoverpage();
+    const reg = /(?:\\#)([\s\S]*?)(?:#\\)/gm;
+    let referenceJSON;
+
+    try {
+        referenceJSON = await LibreTexts.authenticatedFetch(coverPage,`files/=references.json`,null);
+        referenceJSON = await referenceJSON.json();
+        console.log("try achieved, references pulled")
+    } catch(e) {
+        console.log(e);
+        return;
+    }
+    const pageContent = document.getElementById("pageText")!.innerHTML;
+
+    function replaceReferenceID (inputString: string) {
+        return "<b>" + inputString + " processed" + "</b>";
+    }
+
+    let thh: string = pageContent.replace(reg, (match, offset, string) => {
+        const trimmedMatch = match.substring(2, match.length - 2).trim();
+        return replaceReferenceID(trimmedMatch);
+    });
+    console.log(thh)
+    document.getElementById("pageText")!.innerHTML = thh;
 }
