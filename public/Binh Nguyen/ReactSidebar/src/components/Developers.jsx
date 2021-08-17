@@ -27,8 +27,6 @@ export default function Developers(props) {
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
                 cover(window.location.href)
             }}/>
-            <IconLink title="Get Page Contents" icon="mt-icon-edit-page"
-                      href={`/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder')?.innerText}`}/>
             <IconLink title="Reveal Answers" icon="mt-icon-eye3" onClick={() => {
                 $('dd').show();
             }}/>

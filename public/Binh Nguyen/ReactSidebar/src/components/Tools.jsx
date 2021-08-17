@@ -19,6 +19,8 @@ export default function Tools(props) {
                 buildcite();
                 props.toggleDrawer(false)();
             }}/>
+            <IconLink title="Get Page Contents" icon="mt-icon-edit-page"
+                      href={`/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder')?.innerText}`}/>
             <IconLink title="Page Attribution" icon="mt-icon-quote" onClick={() => {
                 attribution();
                 props.toggleDrawer(false)();
