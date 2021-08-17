@@ -176,10 +176,11 @@ function SidebarComponent(props) {
                                         flex: 1,
                                         backgroundColor: "#127bc480",
                                         fontSize: 20,
-                                        textTransform: 'capitalize'
+					textTransform: "capitalize"
                                     }}
+				    id="toggle-top-tabs"
                                     onChange={(event) => toggleDrawer(event.target.value)(event)}>
-                                {tabs.map((tab) => <MenuItem value={tab} key={tab}>{tab}</MenuItem>)}
+                                {tabs.map((tab) => <MenuItem value={tab} key={tab} style={{textTransform: "capitalize"}}>{tab}</MenuItem>)}
                             </Select>
                             <IconButton onClick={toggleDrawer(false)} title="Close Sidebar panel">
                                 <ChevronLeftIcon/>
@@ -208,8 +209,11 @@ function SidebarComponent(props) {
 if (localStorage.getItem("beeline") === null || localStorage.getItem("beeline") === "null") {
     localStorage.setItem("beeline", "off");
 }
-if (!localStorage.getItem("glossarizerType") || localStorage.getItem("beeline") === "null") {
+if (!localStorage.getItem("glossarizerType") || localStorage.getItem("glossarizerType") === "null") {
     localStorage.setItem("glossarizerType", "textbook");
+}
+if (!localStorage.getItem("annotationType") || localStorage.getItem("annotationType") === "null") {
+    localStorage.setItem("annotationType", "none");
 }
 window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {

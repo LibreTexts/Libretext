@@ -7,10 +7,6 @@
     margin-right: 5px;
 }
 
-#LibreTextsSidebar .toc-hierarchy{
-    padding: 20px;
-}
-
 #LibreTextsSidebar .fancytree-title {
     max-width: unset;
 }
@@ -30,6 +26,10 @@
     font-size: x-large;
 }
 
+#LibreTextsSidebar .SidebarItem > [class*="fas"] {
+    font-size: x-large;
+}
+
 #LibreTextsSidebar .SidebarItem > .MuiListItemIcon-root > img {
     height: 25px;
     width: 25px;
@@ -45,6 +45,10 @@
     width: 100%;
     min-height: 350px;
     overflow: auto;
+}
+
+.svg-inline--fa {
+    font-size: x-large;
 }
 
 #LibreTextsSidebar #doBeeline {
@@ -97,7 +101,7 @@
 
 .sbHeader {
     display: none;
-    /*background-color: #127bc4;*/
+    background-color: #127bc4;
     flex-direction: column;
     position: fixed;
     top: 0;

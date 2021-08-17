@@ -11,6 +11,7 @@ export default function Community(props) {
     return (<List>
         <IconLink title="YouTube Channel" icon="mt-icon-youtube"
                   href="https://www.youtube.com/channel/UCP7H_PcHpiINWs8qpg0JaNg"/>
+        <IconLink title="Office Hours" icon="mt-icon-topic" href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/"/>
         <IconLink title="Blog" icon="mt-icon-newspaper3" href="https://blog.libretexts.org/"/>
         <IconLink title="Community Help Chat" icon="mt-icon-chat2" href="https://chat.libretexts.org/"/>
         <Divider/>

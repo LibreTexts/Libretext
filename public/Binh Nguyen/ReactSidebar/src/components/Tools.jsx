@@ -6,9 +6,11 @@ export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
     const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0]?.value || "0");
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
+    const [annotation, setAnnotation] = React.useState(localStorage.getItem("annotationType"));
     
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
+            <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
             <IconLink title="OER Remixer" icon="mt-icon-tree"
                       href="/Under_Construction/Development_Details/OER_Remixer"/>
@@ -22,13 +24,14 @@ export default function Tools(props) {
                 props.toggleDrawer(false)();
             }}/>
             <AutoAttribution/>
-            <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
-                event.preventDefault();
-                saveBookmark();
-            }}>
-                <div id="bm-list">
-                </div>
-            </IconLink>
+	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
+		 event.preventDefault();
+		saveBookmark();
+	    }}>
+		<div id="bm-list">
+		</div>
+	    </IconLink>
+	    <br/>
             <FormControl component="fieldset" style={{padding: 20}}>
                 <FormLabel component="legend">Glossary Source</FormLabel>
                 <RadioGroup value={glossarySource} onChange={(event) => {
@@ -53,6 +56,21 @@ export default function Tools(props) {
                     <FormControlLabel value="0" control={<Radio/>} label="Notifications OFF"/>
                 </RadioGroup>
             </FormControl> : null}
+	    <br/>
+	    <FormControl component="fieldset" style={{padding: 20}}>
+		<FormLabel component="legend">Page Annotation</FormLabel>
+		    <RadioGroup value={annotation} onChange={(event) => {
+		    //localStorage.setItem("annotationType", "none");
+		    //document.getElementByID("annotationOptions" + "-" + localStorage.getItem("annotationType")).checked = true;
+
+			makeAnnotation(event.target.value);
+			setAnnotation(event.target.value)
+		    }}>
+			<FormControlLabel value="hypothesis" control={<Radio/>} label="Hypothesis"/>
+			<FormControlLabel value="note bene" control={<Radio/>} label="Note Bene"/>
+			<FormControlLabel value="none" control={<Radio/>} label="None"/>
+		    </RadioGroup>
+	    </FormControl>
         </List>
     );
     /*
@@ -110,12 +128,28 @@ function removeBookmarks() {
     sessionStorage.removeItem("Bookmark");
 }
 
-async function makeNotification(args) {
+async function makeNotification(statusValue) {
     const subdomain = window.location.origin.split('/')[2].split('.')[0];
     let pageType = "all";
-    if (args === "0") {
-        pageType = "page";
+    if (statusValue == "0") {
+	pageType = "page";
     }
     let pageID = document.getElementById('IDHolder').innerText;
-    await fetch(`https://${subdomain}.libretexts.org/@app/subscription/status.json?pageId=${pageID}&status=${args}&type=${pageType}`, {method: "POST"});
+    await fetch(`https://${subdomain}.libretexts.org/@app/subscription/status.json?pageId=${pageID}&status=${statusValue}&type=${pageType}`, {method: "POST"});
+}
+
+function makeAnnotation(inputSourceOption) {
+    let sourceOption = inputSourceOption || localStorage.getItem("annotationType");
+    switch ((sourceOption || "").trim().toLowerCase()) {
+	case "none":
+	    localStorage.setItem("annotationType", "none");
+	    $("hypothesis-sidebar").hide()
+	    return;
+	case "notebene":
+	    localStorage.setItem("annotationType", "notebene");
+	    $("hypothesis-sidebar").hide()
+	default:
+	    localStorage.setItem("annotationType", "hypothesis");
+	    $("hypothesis-sidebar").show()
+    }
 }

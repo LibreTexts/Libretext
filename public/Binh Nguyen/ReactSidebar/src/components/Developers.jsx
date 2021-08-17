@@ -57,10 +57,8 @@ export default function Developers(props) {
             }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
-            <IconLink title="Office Hours" icon="mt-icon-topic"
-                      href="https://blog.libretexts.org/2019/06/13/libretexts-offers-new-weekly-office-hours/"/>
-            <IconLink title="LibreStudio Server" icon="mt-icon-article" href="https://studio.libretexts.org/"/>
-            <IconLink title="Webwork Server" icon="mt-icon-article" href="https://webwork.libretexts.org/webwork2"/>
+            <IconLink title="Jupyter Hub" icon="fas fa-square-root-alt" href="https://jupyter.libretexts.org/hub/login"/>
+            <IconLink title="Webwork Server" icon="fas fa-square-root-alt" href="https://webwork.libretexts.org/webwork2"/>
             <IconLink title="IMathAS Server" icon="mt-icon-article" href="https://imathas.libretexts.org/imathas/"/>
             <IconLink title="RealTime Mathjax" icon="mt-icon-article"
                       href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax"/>
