@@ -1,5 +1,6 @@
 window.addEventListener("load", async () => {
-    buildManager()
+    buildManager();
+    await processReference();
 });
 
 // Table of Contents:
@@ -13,8 +14,8 @@ function buildManager(){
     managerArea.innerHTML =  `<input type="text" id="referenceInput-Text" value=""> <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Cite</button>`
     referenceArea.id='referenceDisplay';
     managerArea.id = 'referenceInput';
-    document.getElementById("pageText")!.append(managerArea);
-    document.getElementById("pageText")!.append(referenceArea);
+    document.getElementById("elm-header")!.appendChild(managerArea);
+    document.getElementById("elm-header")!.appendChild(referenceArea);
     updateManager(true)
 }
 
@@ -22,13 +23,11 @@ function updateManager(refresh: boolean, ref: any = JSON.parse(<string>localStor
     if (refresh) {
         try {
             for (let key in ref) {
-                if (ref.hasOwnProperty(key)){
-                    let item: HTMLLIElement = document!.createElement("li");
-                    // @ts-ignore
-                    item.onclick = deleteReference;
-                    item.innerText = "ID# " + ref[key].id + "\n"+ "Citation:  " + ref[key].citation;
-                    document.getElementById('referenceDisplay')!.appendChild(item);
-                }
+                let item: HTMLLIElement = document!.createElement("li");
+                // @ts-ignore
+                item.onclick = deleteReference;
+                item.innerText = "ID# " + ref[key].id + "\n"+ "Citation:  " + ref[key].citation;
+                document.getElementById('referenceDisplay')!.appendChild(item);
             }
         }
         catch (e) {
@@ -100,24 +99,27 @@ function deleteReference(this: HTMLElement) {
 
 async function processReference(){
     const coverPage = await LibreTexts.getCoverpage();
-    const reg = /(?:\\#)([\s\S]*?)(?:#\\)/gm;
-    let referenceJSON;
-
+    const reg = new RegExp(/(?:\\#)([\s\S]*?)(?:#\\)/gm);
+    let referenceJSON: any;
     try {
         referenceJSON = await LibreTexts.authenticatedFetch(coverPage,`files/=references.json`,null);
         referenceJSON = await referenceJSON.json();
     } catch(e) {
-        return;
+        console.log(e)
     }
     const pageContent = document.getElementById("pageText")!.innerHTML;
-
-    function replaceReferenceID (inputString: string) {
-        return "<b>" + inputString + " processed" + "</b>";
+    function replaceReferenceID (ref: any, inputString: string) {
+        const key = inputString.replace(new RegExp(/&nbsp;/gm), " ").replace(new RegExp(/<[\s\S]*?>/gm),"").trim()
+        if (key in ref) {
+            return ref[key].citation;
+        }
+        return "Citation not Found";
     }
-
-    let thh: string = pageContent.replace(reg, (match, offset, string) => {
+    let procReference: string = pageContent.replace(reg, (match, offset, string) => {
+        console.log(`match found: ${match}`);
         const trimmedMatch = match.substring(2, match.length - 2).trim();
-        return replaceReferenceID(trimmedMatch);
+        return replaceReferenceID(referenceJSON, trimmedMatch);
     });
-    document.getElementById("pageText")!.innerHTML = thh;
+
+    document.getElementById("pageText")!.innerHTML = procReference;
 }
