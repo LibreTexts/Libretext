@@ -1,7 +1,7 @@
 #referenceInput {
-    width: 400px;
+    width: inherit;
     display: inline-flex;
-    font-size: 12px;
+    #font-size: 12px;
     align-content: center;
 }
 
@@ -9,19 +9,17 @@
 
 #referenceDisplay {
     list-style-type: none;
-    width: 400px;
+    width: inherit;
     padding: 0px;
 }
 
 #referenceDisplay li {
     font-family: Monospaced;
-    font-size: 12px;
     color: black;
     border-color: black;
     border-width: 1px 0px 1px 0px;
     border-style: solid;
     padding: 5px;
-    width: 100%;
 }
 
 #referenceDisplay li:hover {
@@ -40,6 +38,7 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color: black
 }
 
 /* Modal Content */
@@ -48,7 +47,7 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 450px;
+    width: 600px;
 }
 
 /* The Close Button */

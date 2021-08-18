@@ -7,12 +7,13 @@ window.addEventListener("load", async () => {
 function buildManager(){
     const referenceModalButton = document.createElement("button");
     const referenceModal = document.createElement("div");
-    referenceModalButton.innerHTML = `Citation Manager`;
+    referenceModalButton.innerHTML = `Reference Manager`;
     referenceModalButton.id = "referenceModalBtn";
     referenceModal.innerHTML = `
         <div id="referenceModal">
             <div id="referenceModalContent">
-            <h3> Citation Manager</h3>
+            <h3> Reference Manager</h3>
+            <p> Click to copy citation ID.</p>
             <div id="referenceInput">
                 <input type="text" id="referenceInput-Text" value=""> 
                 <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Cite</button>
@@ -39,28 +40,31 @@ function buildManager(){
             modal.style.display = "none";
         }
     }
-    updateManager(true)
+    updateManager(true, false)
 }
 
-function updateManager(refresh: boolean, ref: any = JSON.parse(<string>localStorage.getItem("book-references"))){
+async function updateManager(refresh: boolean, ref: any){
+    let userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=references.json`,null);
+    userRefJSON = await userRefJSON.json();
     if (refresh) {
         try {
-            for (let key in ref) {
+            let i = 0
+            for (let key in userRefJSON) {
+
                 let item: HTMLLIElement = document!.createElement("li");
-                item.innerText = `Citation: ${ref[key].citation}         ${ref[key].id}`
-                let i = ref[key].id
+                item.innerText = `${userRefJSON[key].citation} ${userRefJSON[key].id}`
                 // @ts-ignore
                 item.onclick =()=>{  const el = document.createElement('textarea');
-                    el.value = `\\#${ref[key].id}#\\`;
+                    el.value = `\\#${userRefJSON[key].id}#\\`;
                     el.setAttribute('readonly', '');
                     el.style.position = 'absolute';
                     el.style.left = '-9999px';
                     document.body.appendChild(el);
                     el.select();
                     document.execCommand('copy');
-                    document.body.removeChild(el);
-                    alert("Citation ID copied")};
+                    document.body.removeChild(el);};
                 document.getElementById('referenceDisplay')!.appendChild(item);
+                i++
             }
         }
         catch (e) {
@@ -69,17 +73,16 @@ function updateManager(refresh: boolean, ref: any = JSON.parse(<string>localStor
     }
     else {
         let item: HTMLLIElement = document!.createElement("li");
-        item.innerText = `Citation: ${ref.citation}         /#${ref.id}#/`
+        item.innerText = `${ref.citation}   ${ref.id}`
         item.onclick =()=>{const el = document.createElement('textarea');
-            el.value = `/#${ref.id}#/`;
+            el.value = `\\#${ref.id}#\\`;
             el.setAttribute('readonly', '');
             el.style.position = 'absolute';
             el.style.left = '-9999px';
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');
-            document.body.removeChild(el);
-            alert("Citation ID copied")};
+            document.body.removeChild(el);};
         document.getElementById('referenceDisplay')!.appendChild(item);
     }
 }
@@ -103,15 +106,6 @@ async function storeReference(data: any){
         "citation": citation
     }
 
-    if (localStorage.getItem("book-references") !== null) {
-        let Logged: any = JSON.parse(<string>localStorage.getItem("book-references"));
-        Logged[parseReference[0].id] = referenceLocal;
-        localStorage.setItem("book-references", JSON.stringify(Logged));
-    } else {
-        Log[parseReference[0].id] = referenceLocal;
-        localStorage.setItem("book-references", JSON.stringify(Log));
-    }
-
     let userRefJSON: any;
     try {
         userRefJSON = await LibreTexts.authenticatedFetch(null,`files/=references.json`,null);
@@ -125,7 +119,7 @@ async function storeReference(data: any){
         body:(JSON.stringify(userRefJSON))
     });
 
-    updateManager(false, referenceLocal);
+    await updateManager(false, referenceLocal);
 }
 function copyReference(str: string){
     console.log("fnc called")
@@ -141,15 +135,15 @@ function copyReference(str: string){
     document.body.removeChild(el);
     return;
 }
-function deleteReference(this: HTMLElement) {
-    const reg = new RegExp(".*ID#\\s*([^\\n\\r]*)");
-    const ID = this.innerText.match(reg)![1]
-    const references = JSON.parse(<string>localStorage.getItem("book-references"));
-    delete references[ID];
-
-    localStorage.setItem("book-references", JSON.stringify(references))
-    this.remove()
-}
+// function deleteReference(this: HTMLElement) {
+//     const reg = new RegExp(".*ID#\\s*([^\\n\\r]*)");
+//     const ID = this.innerText.match(reg)![1]
+//     const references = JSON.parse(<string>localStorage.getItem("book-references"));
+//     delete references[ID];
+//
+//     localStorage.setItem("book-references", JSON.stringify(references))
+//     this.remove()
+// }
 
 async function processReference(){
     const coverPage = await LibreTexts.getCoverpage();

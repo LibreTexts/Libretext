@@ -74,3 +74,4 @@ API/out.json
 .idea/workspace.xml
 /.idea/deployment.xml
 /API/JWT/
+.idea/sshConfigs.xml
