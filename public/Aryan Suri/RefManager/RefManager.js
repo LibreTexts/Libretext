@@ -13,11 +13,12 @@ function buildManager() {
         <div id="referenceModal">
             <div id="referenceModalContent">
             <h3> Reference Manager</h3>
-            <p> Click to copy citation ID.</p>
+            <p> Import references using RIS, bibtex, json, DOI, or wikidataID formats.</p>
             <div id="referenceInput">
                 <input type="text" id="referenceInput-Text" value=""> 
-                <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Cite</button>
+                <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Add</button>
             </div>
+             <p> dev note: plus sign will be to add to book-json, red cross to remove citation.</p>
             <ul id="referenceDisplay"></ul>
             </div>
         </div>
@@ -30,9 +31,6 @@ function buildManager() {
     btn.onclick = function () {
         modal.style.display = "block";
     };
-    // span.onclick = function() {
-    //     modal.style.display = "none";
-    // }
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
@@ -41,28 +39,15 @@ function buildManager() {
     updateManager(true, false);
 }
 async function updateManager(refresh, ref) {
-    let userRefJSON = await LibreTexts.authenticatedFetch(null, `files/=references.json`, null);
-    userRefJSON = await userRefJSON.json();
     if (refresh) {
+        let userRefJSON = await LibreTexts.authenticatedFetch(null, `files/=references.json`, null);
+        userRefJSON = await userRefJSON.json();
         try {
-            let i = 0;
             for (let key in userRefJSON) {
-                let item = document.createElement("li");
-                item.innerText = `${userRefJSON[key].citation} ${userRefJSON[key].id}`;
-                // @ts-ignore
-                item.onclick = () => {
-                    const el = document.createElement('textarea');
-                    el.value = `\\#${userRefJSON[key].id}#\\`;
-                    el.setAttribute('readonly', '');
-                    el.style.position = 'absolute';
-                    el.style.left = '-9999px';
-                    document.body.appendChild(el);
-                    el.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(el);
-                };
-                document.getElementById('referenceDisplay').appendChild(item);
-                i++;
+                let newReference = document.createElement("div");
+                newReference.className = "newReference";
+                newReference.innerHTML = `<li onclick=copyReference(this.innerText)>${userRefJSON[key].citation} ${userRefJSON[key].id}</li><a> &#x2795; </a><a> &#x274C; </a>`;
+                document.getElementById('referenceDisplay').appendChild(newReference);
             }
         }
         catch (e) {
@@ -70,20 +55,12 @@ async function updateManager(refresh, ref) {
         }
     }
     else {
-        let item = document.createElement("li");
-        item.innerText = `${ref.citation}   ${ref.id}`;
-        item.onclick = () => {
-            const el = document.createElement('textarea');
-            el.value = `\\#${ref.id}#\\`;
-            el.setAttribute('readonly', '');
-            el.style.position = 'absolute';
-            el.style.left = '-9999px';
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-        };
-        document.getElementById('referenceDisplay').appendChild(item);
+        let newReference = document.createElement("div");
+        newReference.className = "newReference";
+        newReference.innerHTML = `<li onclick=copyReference()>${ref.citation} ${ref.id}</li><a> &#x274C; </a>`;
+        document.getElementById('referenceDisplay').appendChild(newReference);
+    }
+    function copyReference(str) {
     }
 }
 async function storeReference(data) {
@@ -117,20 +94,6 @@ async function storeReference(data) {
         body: (JSON.stringify(userRefJSON))
     });
     await updateManager(false, referenceLocal);
-}
-function copyReference(str) {
-    console.log("fnc called");
-    console.log(str);
-    const el = document.createElement('textarea');
-    el.value = str;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    return;
 }
 // function deleteReference(this: HTMLElement) {
 //     const reg = new RegExp(".*ID#\\s*([^\\n\\r]*)");

@@ -1,11 +1,13 @@
 #referenceInput {
     width: inherit;
-    display: inline-flex;
-    #font-size: 12px;
+    display: flex;
     align-content: center;
+    justify-content: space-between;
 }
 
-
+#referenceInput #referenceInput-Text {
+    width: 500px;
+}
 
 #referenceDisplay {
     list-style-type: none;
@@ -16,13 +18,11 @@
 #referenceDisplay li {
     font-family: Monospaced;
     color: black;
-    border-color: black;
-    border-width: 1px 0px 1px 0px;
-    border-style: solid;
     padding: 5px;
+    width: 500px;
 }
 
-#referenceDisplay li:hover {
+.newReference:hover {
     background-color: #127bc4;
 }
 
@@ -67,4 +67,19 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.newReference {
+    border-color: black;
+    border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    width: inherit;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.newReference:last-child {
+    border-width: 1px 0px 1px 0px;
 }
