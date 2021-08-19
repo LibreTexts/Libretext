@@ -96,8 +96,14 @@ function LibreTextsReuse() {
         if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
             if (url.includes('libretexts.org/@go/page'))
                 return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/@go\/page\/)(.*)/)[2]]
-            else
-                return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
+            else {
+                let path = url.match(/(https?:\/\/.*?\/)(.*)/);
+                if (path)
+                    path = path[2]
+                else path = ""
+                
+                return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], path]
+            }
         }
         else {
             return [];
