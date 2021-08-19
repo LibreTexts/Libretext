@@ -17,7 +17,10 @@ export default function Developers(props) {
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1a-content"
                 >
-                    <Typography className="mt-icon-site-tools">Construction Guide</Typography>
+		    <ListItemLink>
+			<ListItemIcon className="mt-icon-site-tools"></ListItemIcon>
+			<ListItemText primary="Construction Guide"/>
+		    </ListItemLink>
                 </AccordionSummary>
                 <AccordionDetails>
                     <TableOfContents
@@ -63,4 +66,8 @@ export default function Developers(props) {
             <IconLink title="LibreMaps" icon="mt-icon-archive" href="https://libremaps.libretexts.org/"/>
         </List>
     );
+}
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
 }

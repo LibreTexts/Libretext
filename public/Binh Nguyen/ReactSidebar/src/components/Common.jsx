@@ -46,7 +46,7 @@ export function LibraryItem(props) {
           aria-controls={`${props.text}`}
           id={props.text}
         >
-	  <ListItem button key={props.text} component={Link} href={`https://${props.subdomain}.libretexts.org`}
+	<ListItem button key={props.text} component={Link} href={`https://${props.subdomain}.libretexts.org`}
                   rel="external nofollow"
                   target="_blank"
                   className="SidebarItem">
