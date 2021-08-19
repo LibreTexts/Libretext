@@ -1,5 +1,5 @@
 import React from 'react';
-import {List} from "@material-ui/core";
+import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {IconLink, LibraryItem, TableOfContents} from "./Common.jsx";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -12,21 +12,24 @@ export default function Developers(props) {
     const allowMatter = tags.includes('coverpage:yes') || tags.includes('coverpage:toc');
     
     return (<List>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                >
+	 
+		<Accordion>
+		<AccordionSummary
+		    expandIcon={<ExpandMoreIcon/>}
+		    aria-controls="panel1a-content"
+		>
 		    <ListItemLink>
 			<ListItemIcon className="mt-icon-site-tools"></ListItemIcon>
 			<ListItemText primary="Construction Guide"/>
 		    </ListItemLink>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <TableOfContents
-                        coverpageURL={"https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide"}/>
-                </AccordionDetails>
-            </Accordion>
+		</AccordionSummary>
+		<AccordionDetails>
+		    <TableOfContents
+			coverpageURL={"https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide"}/>
+		</AccordionDetails>
+	    </Accordion>
+
+	    
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
                 cover(window.location.href)
             }}/>
