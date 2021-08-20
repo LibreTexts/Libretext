@@ -22,7 +22,7 @@
     text-decoration: none;
 }
 
-#LibreTextsSidebar .SidebarItem > [class*="mt-icon"] {
+#LibreTextsSidebar .SidebarItem [class*="mt-icon"] {
     font-size: x-large;
 }
 

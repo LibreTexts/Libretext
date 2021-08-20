@@ -51,7 +51,6 @@ export default function Tools(props) {
                     let value = event.target.value;
                     await makeNotification(value);
                     setNotifications(value);
-                    location.reload();
                 }}>
                     <FormControlLabel value="1" control={<Radio/>} label="This page only"/>
                     <FormControlLabel value="2" control={<Radio/>} label="This page and all subpages"/>
@@ -62,9 +61,6 @@ export default function Tools(props) {
 	    <FormControl component="fieldset" style={{padding: 20}}>
 		<FormLabel component="legend">Page Annotation</FormLabel>
 		    <RadioGroup value={annotation} onChange={(event) => {
-		    //localStorage.setItem("annotationType", "none");
-		    //document.getElementByID("annotationOptions" + "-" + localStorage.getItem("annotationType")).checked = true;
-
 			makeAnnotation(event.target.value);
 			setAnnotation(event.target.value)
 		    }}>
@@ -130,14 +126,28 @@ function removeBookmarks() {
     sessionStorage.removeItem("Bookmark");
 }
 
-async function makeNotification(statusValue) {
+function makeNotification(statusValue) {
     const subdomain = window.location.origin.split('/')[2].split('.')[0];
     let pageType = "all";
-    if (statusValue == "0") {
-	pageType = "page";
+    if (statusValue == "1") {
+	document.querySelector(".mt-icon-page-notification")?.classList.remove("off");
+	document.querySelector(".mt-icon-page-notification .status").innerText = "On";
+	document.querySelector("#deki-page-alerts-self").checked = true;
     }
+    else if (statusValue == "2") {
+	document.querySelector(".mt-icon-page-notification")?.classList.remove("off");
+	document.querySelector(".mt-icon-page-notification .status").innerText = "On";
+	document.querySelector("#deki-page-alerts-tree").checked = true;
+    }
+    else {
+	pageType = "page";
+	document.querySelector(".mt-icon-page-notification")?.classList.add("off");
+	document.querySelector(".mt-icon-page-notification .status").innerText = "Off";
+	document.querySelector("#deki-page-alerts-off").checked = true;
+    }
+
     let pageID = document.getElementById('IDHolder').innerText;
-    await fetch(`https://${subdomain}.libretexts.org/@app/subscription/status.json?pageId=${pageID}&status=${statusValue}&type=${pageType}`, {method: "POST"});
+    fetch(`https://${subdomain}.libretexts.org/@app/subscription/status.json?pageId=${pageID}&status=${statusValue}&type=${pageType}`, {method: "POST"});
 }
 
 function makeAnnotation(inputSourceOption) {

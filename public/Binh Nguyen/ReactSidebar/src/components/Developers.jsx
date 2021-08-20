@@ -13,12 +13,13 @@ export default function Developers(props) {
     
     return (<List>
 	 
-		<Accordion>
+	    <Accordion
+		className="SidebarItem">
 		<AccordionSummary
 		    expandIcon={<ExpandMoreIcon/>}
 		    aria-controls="panel1a-content"
 		>
-		    <ListItemLink>
+		    <ListItemLink href="https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide" target="_blank">
 			<ListItemIcon className="mt-icon-site-tools"></ListItemIcon>
 			<ListItemText primary="Construction Guide"/>
 		    </ListItemLink>
