@@ -1,5 +1,4 @@
 "use strict";
-// @author: Aryan Suri
 // @TODO: 1. add a putRefJSON func
 // @TODO: 2. add a upgradeRef func
 // @TODO: 3. #LEO bibliography
@@ -22,8 +21,9 @@ async function buildManager() {
                 <input type="text" id="referenceInput-Text" value=""> 
                 <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Add</button>
             </div>
-             <p> dev note0: plus sign (upcoming) to add to book-json, red cross (works) is to remove citation.</p>
+             <p> Click ID to copy.Click &#x2795; to add to book. Click &#x274C; to remove.</p>
             <ul id="referenceDisplay"></ul>
+            <div id="referenceModalOutput"></div>
             </div>
         </div>
     `;
@@ -45,19 +45,7 @@ async function buildManager() {
 async function updateManager() {
     let userRefJSON = await getRefJSON();
     if (userRefJSON) {
-        let userRefArray = Object.values(userRefJSON);
-        document.getElementById('referenceDisplay').innerHTML = '';
-        userRefArray = userRefArray.sort((a, b) => {
-            if (a.citation == b.citation) {
-                return 0;
-            }
-            else if (a.citation < b.citation) {
-                return -1;
-            }
-            else {
-                return 1;
-            }
-        });
+        let userRefArray = sortReference(userRefJSON);
         let i = 0;
         let value;
         for (value of userRefArray) {
@@ -127,7 +115,7 @@ function copyReference() {
     document.execCommand('copy');
     document.body.removeChild(el);
     tippy(`#${this.id}`, {
-        content: 'My tooltip!',
+        content: 'Content copied!',
     });
 }
 async function deleteReference() {
@@ -149,28 +137,47 @@ async function deleteReference() {
     }
     document.getElementById(`newReference${refNUM}`).remove();
 }
-function upgradeReference() {
-    return console.log('upgrade reference');
+async function upgradeReference() {
+    const path = window.location.pathname.substring(1);
+    const cover = await LibreTexts.getCoverpage();
     let refID = this.id;
-    const refNUM = refID[refID.length - 1];
     refID = refID.slice(0, -2);
-    let pageJSON = await getRefJSON();
-    let bookJSON = await getRefJSON(true);
-    if (LibreTexts.getCoverpage() !== window.location.pathname) {
-        if (bookJSON) {
-            console.log('book json exists');
-            let ref = pageJSON[refID];
-        }
+    if (cover !== path) {
+        let pageJSON = await getRefJSON();
+        let bookJSON = await getRefJSON(true);
         let ref = pageJSON[refID];
-        //console.log(ref);
-        // bookJSON[]
+        console.log(ref);
+        if (bookJSON && !bookJSON.hasOwnProperty(refID)) {
+            console.log('book json exists');
+            console.log('this key needs to be added');
+            bookJSON[refID] = ref;
+            await putRefJSON(bookJSON, true);
+        }
+        else {
+            console.log('book json doesnt exist so we make it');
+            bookJSON = {};
+            bookJSON[refID] = ref;
+            await putRefJSON(bookJSON, true);
+        }
     }
     else {
-        // cover page is page and so ref already exists
         return console.log('this url is cover page');
     }
-    // await putRefJSON(j, true);
-    // document.getElementById(`newReference${refNUM}`)!.remove();
+}
+function sortReference(refs) {
+    let userRefArray = Object.values(refs);
+    userRefArray = userRefArray.sort((a, b) => {
+        if (a.citation == b.citation) {
+            return 0;
+        }
+        else if (a.citation < b.citation) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    });
+    return userRefArray;
 }
 async function storeReference(data) {
     const Cite = CitRequire('citation-js');
@@ -220,18 +227,16 @@ async function processBibliography() {
             lang: 'en-US'
         });
     }
-    let keys = Object.keys(referenceJSON);
-    keys.sort((a, b) => {
-        return referenceJSON[a].formattedReference < referenceJSON[b].formattedReference ? -1 : 1;
-    });
+    let userRefArray = sortReference(referenceJSON);
     const managerArea = document.createElement('div');
     const referenceHeader = document.createElement("h2");
     const referenceArea = document.createElement('ol');
     referenceArea.className += "pageBibliography";
     referenceHeader.innerText = "Works Cited (APA)";
-    for (let key of keys) {
+    let value;
+    for (value of userRefArray) {
         const referenceList = document.createElement("li");
-        referenceList.innerHTML = referenceJSON[key].formattedReference;
+        referenceList.innerHTML = value.formattedReference;
         referenceArea.appendChild(referenceList);
     }
     managerArea.appendChild(referenceHeader);
