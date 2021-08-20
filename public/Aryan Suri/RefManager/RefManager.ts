@@ -5,6 +5,7 @@
 window.addEventListener("load", async () => {
     await buildManager();
     await processReference();
+    await processBibliography();
 
 
 });
@@ -68,12 +69,12 @@ async function updateManager() {
             refDiv.id = `newReference${i}`
             refDiv.innerHTML = `<li>${value.citation}</li>
                                 <li id="copy${i}">${value.id}</li> 
-                                <a id="upg${i}"> &#x2795; </a> 
+                                <a id="${value.id}${i}${i}"> &#x2795; </a> 
                                 <a id="${value.id}${i}"> &#x274C; </a>`
             document.getElementById('referenceDisplay')!.appendChild(refDiv);
             document.getElementById(`copy${i}`)!.addEventListener("click", copyReference);
-            document.getElementById(`upg${i}`)!.addEventListener("click", upgradeReference);
-            document.getElementById(`${value.id}${i}`)!.addEventListener("click", deleteReference);
+            document.getElementById(`${value.id}${i}${i}`)!.addEventListener("click", upgradeReference);
+            document.getElementById(`${value.id}${i}`)!.addEventListener("click",  deleteReference);
             i++
         }
     }
@@ -100,6 +101,21 @@ async function getRefJSON(cp = false) {
     return userRefJSON;
 }
 
+async function putRefJSON(json: JSON, cp: boolean = false){
+    let coverPage: any = null;
+    if (cp) {coverPage = await LibreTexts.getCoverpage();}
+    try {
+        await LibreTexts.authenticatedFetch(coverPage, `files/=references.json`, null, {
+            method: "PUT",
+            body: (JSON.stringify(json))
+        });
+    }
+    catch (e) {
+        return console.debug(e);
+    }
+    return;
+}
+
 function copyReference(this: HTMLElement) {
     const el = document.createElement('textarea');
     el.value = `\\#${this.innerText}#\\`;
@@ -123,10 +139,7 @@ async function deleteReference(this: HTMLElement) {
     if(userRefJSON) {
         if (userRefJSON.hasOwnProperty(refID)) {
             delete userRefJSON[refID];
-            await LibreTexts.authenticatedFetch(null, `files/=references.json`, null, {
-                method: "PUT",
-                body: (JSON.stringify(userRefJSON))
-            });
+            await putRefJSON(userRefJSON);
         } else {
             return console.log(`Key (${refID}) not found`);
         }
@@ -136,9 +149,27 @@ async function deleteReference(this: HTMLElement) {
     document.getElementById(`newReference${refNUM}`)!.remove();
 }
 
-async function upgradeReference(this: HTMLElement) {
-    const coverPage = await LibreTexts.getCoverpage();
-    return console.log('upgrade');
+function upgradeReference(this: HTMLElement) {
+    return console.log('upgrade reference')
+    let refID = this.id;
+    const refNUM = refID[refID.length - 1]
+    refID = refID.slice(0, -2);
+    let pageJSON = await getRefJSON();
+    let bookJSON = await getRefJSON(true);
+    if (LibreTexts.getCoverpage() !== window.location.pathname) {
+        if (bookJSON) {
+            console.log('book json exists');
+            let ref = pageJSON[refID]
+        }
+        let ref = pageJSON[refID]
+        //console.log(ref);
+        // bookJSON[]
+    } else {
+        // cover page is page and so ref already exists
+        return console.log('this url is cover page');
+    }
+    // await putRefJSON(j, true);
+    // document.getElementById(`newReference${refNUM}`)!.remove();
 }
 
 async function storeReference(data: any) {
@@ -147,7 +178,6 @@ async function storeReference(data: any) {
     const reference = Data.format('data');
     const citation = Data.format('citation');
     const parseReference = JSON.parse(reference);
-    const coverPage = await LibreTexts.getCoverpage();
     let Log: any = {};
 
     let referenceGlobal = {
@@ -159,17 +189,12 @@ async function storeReference(data: any) {
     let userRefJSON = await getRefJSON();
     if (!userRefJSON) {userRefJSON = {};}
     userRefJSON[parseReference[0].id] = referenceGlobal;
-    await LibreTexts.authenticatedFetch(null, `files/=references.json`, null, {
-        method: "PUT",
-        body: (JSON.stringify(userRefJSON))
-    });
-
+    await putRefJSON(userRefJSON);
     await updateManager();
 }
 
 
 async function processReference() {
-    const coverPage = await LibreTexts.getCoverpage();
     const reg = new RegExp(/(?:\\#)([\s\S]*?)(?:#\\)/gm);
     let userRefJSON = await getRefJSON();
     const pageContent = document.getElementById("pageText")!.innerHTML;
@@ -192,13 +217,34 @@ async function processReference() {
 
 async function processBibliography() {
     const Cite = CitRequire('citation-js');
-    // data is going to be from the references.json file
-    let userRefJSON = await getRefJSON();
-    // do a for key in ref (iterate thru json)
-    // for each key, take ref[key].data
-    // use that for data
-    // const Data = new Cite(data);
-    // const reference = Data.format('data');
-    // const managerArea: HTMLDivElement = document.createElement('div');
-    // const referenceArea = document.createElement('ul');
+    let referenceJSON = await getRefJSON();
+    for (let key in referenceJSON) {
+        const Data = new Cite(referenceJSON[key].data);
+        referenceJSON[key].formattedReference = Data.format('bibliography', {
+            format: 'html',
+            template: 'apa',
+            lang: 'en-US'
+        });
+    }
+
+    let keys = Object.keys(referenceJSON);
+    keys.sort((a,b) => {
+        return referenceJSON[a].formattedReference < referenceJSON[b].formattedReference ? -1 : 1;
+    });
+
+    const managerArea = document.createElement('div');
+    const referenceHeader = document.createElement("h2");
+    const referenceArea = document.createElement('ol');
+    referenceArea.className += "pageBibliography";
+    referenceHeader.innerText = "Works Cited (APA)";
+
+    for (let key of keys){
+        const referenceList = document.createElement("li");
+        referenceList.innerHTML = referenceJSON[key].formattedReference;
+        referenceArea.appendChild(referenceList);
+    }
+
+    managerArea.appendChild(referenceHeader);
+    managerArea.appendChild(referenceArea);
+    document.getElementById("pageText")!.appendChild(managerArea);
 }

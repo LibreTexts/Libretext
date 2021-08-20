@@ -83,3 +83,7 @@
 .newReference:last-child {
     border-width: 1px 0px 1px 0px;
 }
+
+.pageBibliography {
+    list-style-type: none;
+}
