@@ -193,12 +193,45 @@ async function processReference() {
 async function processBibliography() {
     const Cite = CitRequire('citation-js');
     // data is going to be from the references.json file
-    let userRefJSON = await getRefJSON();
-    // do a for key in ref (iterate thru json)
-    // for each key, take ref[key].data
-    // use that for data
-    // const Data = new Cite(data);
-    // const reference = Data.format('data');
-    // const managerArea: HTMLDivElement = document.createElement('div');
-    // const referenceArea = document.createElement('ul');
+
+    //Read references.json of current page
+    let referenceJSON;
+    try {
+        referenceJSON = await LibreTexts.authenticatedFetch(null,`files/=references.json`, null);
+        referenceJSON = await referenceJSON.json();
+    } catch(e) {
+        console.log(e);
+    }
+    for (let key in referenceJSON) {
+        //Create the formatted citation
+        const Data = new Cite(referenceJSON[key].data);
+        //Store in JSON Object
+        referenceJSON[key].formattedReference = Data.format('bibliography', {
+            format: 'html',
+            template: 'apa',
+            lang: 'en-US'
+        });
+    }
+
+    //Sort the order of the references alphabetically, functionality for numerical ordering to be added later
+    let keys = Object.keys(referenceJSON);
+    keys.sort((a: string,b: string) => {
+        return referenceJSON[a].formattedReference < referenceJSON[b].formattedReference ? -1 : 1;
+    });
+
+
+    const managerArea = document.createElement('div');
+    const referenceHeader = document.createElement("h2");
+    referenceHeader.innerText = "Works Cited";
+    const referenceArea = document.createElement('ul');
+    referenceArea.className += "pageBibliography";
+
+    for (let key of keys){
+        const referenceList = document.createElement("li");
+        referenceList.innerHTML = referenceJSON[key].formattedReference;
+        referenceArea.appendChild(referenceList);
+    }
+    managerArea.appendChild(referenceHeader);
+    managerArea.appendChild(referenceArea);
+    document.getElementById("pageText")?.appendChild(managerArea);
 }
