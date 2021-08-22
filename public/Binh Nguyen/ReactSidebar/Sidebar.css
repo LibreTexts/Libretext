@@ -22,11 +22,7 @@
     text-decoration: none;
 }
 
-#LibreTextsSidebar .SidebarItem [class*="mt-icon"] {
-    font-size: x-large;
-}
-
-#LibreTextsSidebar .SidebarItem > [class*="fas"] {
+#LibreTextsSidebar .SidebarItem [class*="mt-icon"], #LibreTextsSidebar .SidebarItem > [class*="fas"] {
     font-size: x-large;
 }
 
@@ -47,7 +43,8 @@
     overflow: auto;
 }
 
-.svg-inline--fa {
+.svg-inline--fa.fa-w-18 {
+    transform: translate(-15px);
     font-size: x-large;
 }
 
