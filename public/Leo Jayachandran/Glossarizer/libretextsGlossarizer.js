@@ -1,3 +1,5 @@
+
+
 LibreTextsGlossarizer = class {
     constructor() {
         this.pluginName = 'glossarizer';
@@ -508,24 +510,30 @@ LibreTextsGlossarizer = class {
                         content(reference) {
                           const title = reference.getAttribute('title');
                           reference.removeAttribute('title');
+                          //reference.setAttribute("aria-describedby", "tippy-1")
                           return title;
                         },
+                        theme: (localStorage.getItem("darkMode")== "true") ? 'dark' : 'light',
                         allowHTML: true,
                         interactive : true,
+                        //appendTo: "#pageText",
                         delay: [500, null],
                         popperOptions: {
                             modifiers: [
                                 {
                                   name: 'preventOverflow',
                                   options: {
-                                    padding: {left:30}, // Prevent clipping sidebar
+                                    padding: {left:30, top: 500}, // Prevent clipping sidebar and menu bar
                                   },
                                 },
                               ],
-                          },
-                     });
+                          },  
+                        });
                 }
+                
             });
+            
+            $("." + defaults.replaceClass).attr('tabindex', 0);
 
 
         });
@@ -555,7 +563,7 @@ LibreTextsGlossarizer = class {
                 "term": "",
                 "description": ""
             };
-            //Get cells in the 3 columns
+            //Get cells in the columns
             let cols = this.getTermCols(tableRows[r]);
             if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
             let termSource = "";
