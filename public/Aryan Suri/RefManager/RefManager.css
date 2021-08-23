@@ -19,6 +19,7 @@
     list-style-type: none;
     width: inherit;
     padding: 0px;
+    font-family: Monospaced;
 }
 
 #referenceDisplay li {
@@ -58,7 +59,7 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 70vw;
+    width: 75vw;
 }
 
 #referenceModalOutput {
