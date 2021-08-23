@@ -56,6 +56,7 @@ export default function MassTagger(props) {
                 }
                 else {
                     let [current, pageID] = e.split("-");
+                    current = current.trim();
                     return current === subdomain ? pageID : false;
                 }
             }).filter(e => e);
