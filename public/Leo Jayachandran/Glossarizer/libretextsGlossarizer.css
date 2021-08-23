@@ -11,15 +11,14 @@
     margin: -2px;
 }
 
-.tippy-box[data-theme~='dark'] {
+.tippy-box[data-theme~='dark'], .darkMode .tippy-box {
     background-color: #333;
     border: 2px solid black;
     text-align:left;
     color: white;
 }
-.tippy-box[data-theme~='dark'] > .tippy-arrow::before {
-    background: #333;
-    border: 2px solid black;
+.tippy-box[data-theme~='dark'] > .tippy-arrow::before, .darkMode .tippy-box > .tippy-arrow::before {
+    border-top-color: black;
     margin: -2px;
 }
 
