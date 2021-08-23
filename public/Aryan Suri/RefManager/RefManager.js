@@ -1,7 +1,4 @@
 "use strict";
-// @TODO: 1. add a putRefJSON func
-// @TODO: 2. add a upgradeRef func
-// @TODO: 3. #LEO bibliography
 window.addEventListener("load", async () => {
     await buildManager();
     await processReference();
@@ -21,9 +18,9 @@ async function buildManager() {
                 <input type="text" id="referenceInput-Text" value=""> 
                 <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Add</button>
             </div>
-             <p> Click ID to copy.Click &#x2795; to add to book. Click &#x274C; to remove.</p>
+             <p> Click reference to copy citation ID.</p>
             <ul id="referenceDisplay"></ul>
-            <div id="referenceModalOutput"></div>
+            <p id="referenceModalOutput"></p>
             </div>
         </div>
     `;
@@ -31,7 +28,6 @@ async function buildManager() {
     document.getElementsByClassName("elm-social-share")[0].appendChild(referenceModalButton);
     const modal = document.getElementById("referenceModal");
     const btn = document.getElementById("referenceModalBtn");
-    //const span = document.getElementById("referenceModalClose")!;
     btn.onclick = function () {
         modal.style.display = "block";
     };
@@ -45,6 +41,7 @@ async function buildManager() {
 async function updateManager() {
     let userRefJSON = await getRefJSON();
     if (userRefJSON) {
+        document.getElementById('referenceDisplay').innerHTML = "";
         let userRefArray = sortReference(userRefJSON);
         let i = 0;
         let value;
@@ -52,13 +49,9 @@ async function updateManager() {
             let refDiv = document.createElement("div");
             refDiv.className = "newReference";
             refDiv.id = `newReference${i}`;
-            refDiv.innerHTML = `<li>${value.citation}</li>
-                                <li id="copy${i}">${value.id}</li> 
-                                <a id="${value.id}${i}${i}"> &#x2795; </a> 
-                                <a id="${value.id}${i}"> &#x274C; </a>`;
+            refDiv.innerHTML = `<li id="${value.id}">${value.reference}</li> <a id="${value.id}${i}"> &#x274C; </a>`;
             document.getElementById('referenceDisplay').appendChild(refDiv);
-            document.getElementById(`copy${i}`).addEventListener("click", copyReference);
-            document.getElementById(`${value.id}${i}${i}`).addEventListener("click", upgradeReference);
+            document.getElementById(`${value.id}`).addEventListener("click", copyReference);
             document.getElementById(`${value.id}${i}`).addEventListener("click", deleteReference);
             i++;
         }
@@ -79,7 +72,6 @@ async function getRefJSON(cp = false) {
             userRefJSON = await userRefJSON.json();
         }
         else {
-            //console.error(userRefJSOn.status, await userRefJSON.text());
             return false;
         }
     }
@@ -104,9 +96,10 @@ async function putRefJSON(json, cp = false) {
     }
     return;
 }
-function copyReference() {
+async function copyReference() {
+    console.log(this.id);
     const el = document.createElement('textarea');
-    el.value = `\\#${this.innerText}#\\`;
+    el.value = `\\#${this.id}#\\`;
     el.setAttribute('readonly', '');
     el.style.position = 'absolute';
     el.style.left = '-9999px';
@@ -114,55 +107,22 @@ function copyReference() {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-    tippy(`#${this.id}`, {
-        content: 'Content copied!',
-    });
+    return document.getElementById("referenceModalOutput").innerText = `Citation ${this.id}, copied`;
 }
 async function deleteReference() {
     let refID = this.id;
     const refNUM = refID[refID.length - 1];
     refID = refID.slice(0, -1);
     let userRefJSON = await getRefJSON();
-    if (userRefJSON) {
-        if (userRefJSON.hasOwnProperty(refID)) {
-            delete userRefJSON[refID];
-            await putRefJSON(userRefJSON);
-        }
-        else {
-            return console.log(`Key (${refID}) not found`);
-        }
+    if (userRefJSON && userRefJSON.hasOwnProperty(refID)) {
+        delete userRefJSON[refID];
+        await putRefJSON(userRefJSON);
     }
     else {
         return;
     }
     document.getElementById(`newReference${refNUM}`).remove();
-}
-async function upgradeReference() {
-    const path = window.location.pathname.substring(1);
-    const cover = await LibreTexts.getCoverpage();
-    let refID = this.id;
-    refID = refID.slice(0, -2);
-    if (cover !== path) {
-        let pageJSON = await getRefJSON();
-        let bookJSON = await getRefJSON(true);
-        let ref = pageJSON[refID];
-        console.log(ref);
-        if (bookJSON && !bookJSON.hasOwnProperty(refID)) {
-            console.log('book json exists');
-            console.log('this key needs to be added');
-            bookJSON[refID] = ref;
-            await putRefJSON(bookJSON, true);
-        }
-        else {
-            console.log('book json doesnt exist so we make it');
-            bookJSON = {};
-            bookJSON[refID] = ref;
-            await putRefJSON(bookJSON, true);
-        }
-    }
-    else {
-        return console.log('this url is cover page');
-    }
+    document.getElementById("referenceModalOutput").innerText = "Citation deleted";
 }
 function sortReference(refs) {
     let userRefArray = Object.values(refs);
@@ -183,21 +143,67 @@ async function storeReference(data) {
     const Cite = CitRequire('citation-js');
     const Data = new Cite(data);
     const reference = Data.format('data');
+    const bibliographyItem = Data.format('bibliography');
     const citation = Data.format('citation');
     const parseReference = JSON.parse(reference);
-    let Log = {};
+    const path = window.location.pathname.substring(1);
+    const lib = await LibreTexts.extractSubdomain();
+    const cover = await LibreTexts.getCoverpage();
+    let id;
+    if (parseReference[0].hasOwnProperty('author')) {
+        if (parseReference[0].hasOwnProperty('issued')) {
+            id = lib + parseReference[0].author[0].family + parseReference[0].issued["date-parts"][0];
+        }
+        else {
+            id = lib + parseReference[0].author[0].family + Data.prototype.getFullYear();
+        }
+        console.log(id);
+    }
+    else {
+        id = lib + citation;
+    }
     let referenceGlobal = {
-        "id": parseReference[0].id,
+        "id": id,
         "citation": citation,
+        "reference": bibliographyItem,
         "data": data
     };
     let userRefJSON = await getRefJSON();
     if (!userRefJSON) {
         userRefJSON = {};
+        userRefJSON[referenceGlobal.id] = referenceGlobal;
+        await putRefJSON(userRefJSON);
+        await putRefJSON(userRefJSON, true);
+        await updateManager();
+        return document.getElementById("referenceModalOutput").innerText = "Citation added";
     }
-    userRefJSON[parseReference[0].id] = referenceGlobal;
-    await putRefJSON(userRefJSON);
-    await updateManager();
+    else {
+        if (!userRefJSON.hasOwnProperty(referenceGlobal.id)) {
+            userRefJSON[referenceGlobal.id] = referenceGlobal;
+            if (cover !== path) {
+                let bookJSON = await getRefJSON(true);
+                if (bookJSON) {
+                    if (!bookJSON.hasOwnProperty(referenceGlobal.id)) {
+                        bookJSON[referenceGlobal.id] = referenceGlobal;
+                        await putRefJSON(bookJSON, true);
+                    }
+                    else { }
+                }
+                else {
+                    bookJSON = {};
+                    bookJSON[referenceGlobal.id] = referenceGlobal;
+                    await putRefJSON(bookJSON, true);
+                }
+            }
+            else { }
+            await putRefJSON(userRefJSON);
+            await updateManager();
+            return document.getElementById("referenceModalOutput").innerText = "Citation added";
+        }
+        else {
+            return document.getElementById("referenceModalOutput").innerText = "Citation already exists";
+        }
+    }
 }
 async function processReference() {
     const reg = new RegExp(/(?:\\#)([\s\S]*?)(?:#\\)/gm);
@@ -215,6 +221,8 @@ async function processReference() {
         return replaceReferenceID(userRefJSON, trimmedMatch);
     });
     document.getElementById("pageText").innerHTML = procReference;
+    // nested processBibliography() {}
+    // pass in the ref[key] as an array? or through a for loop
 }
 async function processBibliography() {
     const Cite = CitRequire('citation-js');

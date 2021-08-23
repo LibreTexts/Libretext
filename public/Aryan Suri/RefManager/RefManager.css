@@ -5,9 +5,6 @@
     justify-content: space-between;
 }
 
-#referenceInput #referenceInput-Text {
-    width: 500px;
-}
 
 #referenceDisplay {
     list-style-type: none;
@@ -19,7 +16,7 @@
     font-family: Monospaced;
     color: black;
     padding: 5px;
-    width: 500px;
+    width: inherit;
 }
 
 .newReference:hover {
@@ -47,9 +44,13 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 600px;
+    width: 70vw;
 }
 
+#referenceModalOutput {
+    color: #0372a6;
+    font-size: 11px;
+}
 /* The Close Button */
 #referenceModalClose {
     color: #aaaaaa;
