@@ -4,8 +4,17 @@
     align-content: center;
     justify-content: space-between;
 }
+#referenceInput:first-child{
+    margin-left:0px;
+}
 
+#referenceInput * {
+    margin: 10px;
+}
 
+#referenceInput #referenceInput-Privacy {
+    width: 20%;
+}
 #referenceDisplay {
     list-style-type: none;
     width: inherit;
@@ -21,6 +30,11 @@
 
 .newReference:hover {
     background-color: #127bc4;
+}
+/*Hanging Indent*/
+.csl-entry {
+    padding-left: 2em;
+    text-indent: -2em;
 }
 
 #referenceModal {
