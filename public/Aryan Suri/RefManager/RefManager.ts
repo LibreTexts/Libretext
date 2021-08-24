@@ -265,7 +265,9 @@ function processBibliography(referenceJSON: any, anchoredKeys:any, mode: string 
     //Use only the unique keys that are anchored
     let userRefArray;
     const referenceHeader = document.createElement("h2");
+    if (mode == "citationmode:none") {return;}
     if (mode == "citationmode:bibliography") {
+        console.log("bibliography");
         userRefArray = sortReference(referenceJSON);
         referenceHeader.innerText = "Bibliography";
     }
@@ -281,10 +283,6 @@ function processBibliography(referenceJSON: any, anchoredKeys:any, mode: string 
         userRefArray = sortReference(reducedRefJSON);
         referenceHeader.innerText = "Works Cited";
     }
-    else {
-        return;
-    }
-
     const managerArea = document.createElement('div');
     const referenceArea = document.createElement('ol');
     referenceArea.className += "pageBibliography";
@@ -298,7 +296,9 @@ function processBibliography(referenceJSON: any, anchoredKeys:any, mode: string 
     }
     managerArea.appendChild(referenceHeader);
     managerArea.appendChild(referenceArea);
-    return document.getElementById("pageText")!.appendChild(managerArea);
+    document.getElementById("pageText")!.appendChild(managerArea);
+
+
 }
 
 function citeInstance(){
