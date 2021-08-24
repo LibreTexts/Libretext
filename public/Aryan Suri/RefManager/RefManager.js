@@ -7,33 +7,26 @@ document.querySelector("#live-tag-citationstyle-select").addEventListener("chang
     await updateManager();
 });
 async function buildManager() {
-    const referenceModalButton = document.createElement("button");
     const referenceModal = document.createElement("div");
-    referenceModalButton.innerHTML = `Reference Manager`;
-    referenceModalButton.id = "referenceModalBtn";
+    const referenceButton = document.createElement("button");
+    referenceButton.innerText = "Reference Manager";
+    referenceButton.id = "referenceModalBtn";
     referenceModal.innerHTML = `
         <div id="referenceModal">
             <div id="referenceModalContent">
             <h3> Reference Manager</h3>
-            <p> Import references using RIS, bibtex, json, DOI, or wikidataID formats.</p>
+            <p> Import references using RIS, bibtex, json, DOI, or wikidataID formats. Clickk reference to copy citation id, double click to remove</p>
             <div id="referenceInput">
-                <input type="text" id="referenceInput-Text" value=""> 
-                <button onclick="storeReference(document.getElementById('referenceInput-Text').value)">Add</button>
-                <select onchange="updatePrivacy(this.value)" id="referenceInput-Privacy" name="privacy"o>
-                    <option value="json-1">Page only</option>
-                    <option selected="selected" value="json-2">Book level</option>
-                    <option value="json-3">Global copy check</option>
-                </select>
+                <input type="text" id="referenceInput-Text" value=""/>
+                <button style="margin-left: 10px" onclick="storeReference(document.getElementById('referenceInput-Text').value)">Add</button>
             </div>
-             <p> Click reference to copy citation ID.</p>
-             <p>dev note: the [citationstyle] is just for testing.</p>
-            <ul id="referenceDisplay"></ul>
+            <table id="referenceDisplay"></table>
             <p id="referenceModalOutput"></p>
             </div>
         </div>
     `;
     document.body.append(referenceModal);
-    document.getElementsByClassName("elm-social-share")[0].appendChild(referenceModalButton);
+    document.getElementsByClassName("elm-social-share")[0].appendChild(referenceButton);
     const modal = document.getElementById("referenceModal");
     const btn = document.getElementById("referenceModalBtn");
     btn.onclick = function () {
@@ -62,10 +55,10 @@ async function updateManager() {
         let value;
         for (value of userRefArray) {
             let reference = renderReference(value.data, "reference");
-            let refDiv = document.createElement("div");
+            let refDiv = document.createElement("tr");
             refDiv.className = "newReference";
-            refDiv.id = `newReference${i}`;
-            refDiv.innerHTML = `<li id="${value.id}">${reference}</li> <p>[${style.substring(14)}]</p><a id="${value.id}${i}"> &#x274C; </a>`;
+            refDiv.id = `${value.id}`;
+            refDiv.innerHTML = `${reference} <a id=${value.id}${i}> &#x274C; </a>`;
             document.getElementById('referenceDisplay').appendChild(refDiv);
             document.getElementById(`${value.id}`).addEventListener("click", copyReference);
             document.getElementById(`${value.id}${i}`).addEventListener("click", deleteReference);
@@ -113,8 +106,10 @@ async function putRefJSON(json, cp = false) {
     return;
 }
 async function copyReference() {
+    let refID = this.id;
+    refID = refID.slice(0, -1);
     const el = document.createElement('textarea');
-    el.value = `\\#${this.id}#\\`;
+    el.value = `\\#${refID}#\\`;
     el.setAttribute('readonly', '');
     el.style.position = 'absolute';
     el.style.left = '-9999px';
@@ -122,12 +117,12 @@ async function copyReference() {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-    return document.getElementById("referenceModalOutput").innerText = `Citation (${this.id}) copied`;
+    return document.getElementById("referenceModalOutput").innerText = `Citation (${refID}) copied`;
 }
 async function deleteReference() {
-    let refID = this.id;
-    const refNUM = refID[refID.length - 1];
-    refID = refID.slice(0, -1);
+    const refIDI = this.id;
+    const num = refIDI.slice(-1);
+    const refID = refIDI.slice(0, -1);
     let userRefJSON = await getRefJSON();
     if (userRefJSON && userRefJSON.hasOwnProperty(refID)) {
         delete userRefJSON[refID];
@@ -136,7 +131,7 @@ async function deleteReference() {
     else {
         return;
     }
-    document.getElementById(`newReference${refNUM}`).remove();
+    document.getElementById(`${refID}`).remove();
     document.getElementById("referenceModalOutput").innerText = "Citation deleted";
 }
 function sortReference(refs) {
@@ -161,7 +156,7 @@ function renderReference(json, output) {
         style = "citationstyle:apa";
     }
     const Cite = citeInstance();
-    const Data = new Cite(JSON.stringify(json));
+    const Data = new Cite(json);
     if (output === "cite") {
         return Data.format('citation', {
             template: style,
@@ -273,25 +268,28 @@ function processBibliography(referenceJSON, anchoredKeys, mode = document.queryS
     //Use only the unique keys that are anchored
     let userRefArray;
     const referenceHeader = document.createElement("h2");
-    if (mode == "citationmode:none") {
-        return;
-    }
-    if (mode == "citationmode:bibliography") {
-        console.log("bibliography");
-        userRefArray = sortReference(referenceJSON);
-        referenceHeader.innerText = "Bibliography";
-    }
-    else if (mode == "citationmode:references" || "not-set") {
-        let reducedRefJSON = {};
-        if (anchoredKeys) {
-            for (let key of anchoredKeys) {
-                if (!(key in reducedRefJSON)) {
-                    reducedRefJSON[key] = referenceJSON[key];
+    referenceHeader.innerText = "";
+    switch (mode) {
+        case 'not-set':
+        case 'citationmode:references':
+            let reducedRefJSON = {};
+            if (anchoredKeys) {
+                for (let key of anchoredKeys) {
+                    if (!(key in reducedRefJSON)) {
+                        reducedRefJSON[key] = referenceJSON[key];
+                    }
                 }
             }
-        }
-        userRefArray = sortReference(reducedRefJSON);
-        referenceHeader.innerText = "Works Cited";
+            userRefArray = sortReference(reducedRefJSON);
+            referenceHeader.innerText = "Works Cited";
+            break;
+        case 'citationmode:bibliography':
+            userRefArray = sortReference(referenceJSON);
+            referenceHeader.innerText = "Bibliography";
+            break;
+        case 'citationmode:none':
+        default:
+            return;
     }
     const managerArea = document.createElement('div');
     const referenceArea = document.createElement('ol');
