@@ -261,22 +261,33 @@ async function processReference() {
     // pass in the ref[key] as an array? or through a for loop --> Pass the full refJson and the anchored keys
     processBibliography(userRefJSON, anchoredKeys);
 }
-function processBibliography(referenceJSON: any, anchoredKeys: any) {
+function processBibliography(referenceJSON: any, anchoredKeys:any, mode: string = document.querySelector("#live-tag-citationmode-select")!.value) {
     //Use only the unique keys that are anchored
-    let reducedRefJSON: any = {};
-    if (anchoredKeys){
-        for (let key of anchoredKeys){
-            if (!(key in reducedRefJSON)){
-                reducedRefJSON[key] = referenceJSON[key];
+    let userRefArray;
+    const referenceHeader = document.createElement("h2");
+    if (mode == "citationmode:bibliography") {
+        userRefArray = sortReference(referenceJSON);
+        referenceHeader.innerText = "Bibliography";
+    }
+    else if (mode == "citationmode:references" || "not-set") {
+        let reducedRefJSON: any = {};
+        if (anchoredKeys){
+            for (let key of anchoredKeys){
+                if (!(key in reducedRefJSON)){
+                    reducedRefJSON[key] = referenceJSON[key];
+                }
             }
         }
+        userRefArray = sortReference(reducedRefJSON);
+        referenceHeader.innerText = "Works Cited";
     }
-    let userRefArray = sortReference(reducedRefJSON);
+    else {
+        return;
+    }
+
     const managerArea = document.createElement('div');
-    const referenceHeader = document.createElement("h2");
     const referenceArea = document.createElement('ol');
     referenceArea.className += "pageBibliography";
-    referenceHeader.innerText = "Works Cited";
     let value: any;
     for (value of userRefArray) {
         let reference = renderReference(value.data, "reference");
@@ -287,7 +298,7 @@ function processBibliography(referenceJSON: any, anchoredKeys: any) {
     }
     managerArea.appendChild(referenceHeader);
     managerArea.appendChild(referenceArea);
-    document.getElementById("pageText")!.appendChild(managerArea);
+    return document.getElementById("pageText")!.appendChild(managerArea);
 }
 
 function citeInstance(){
