@@ -137,9 +137,15 @@ export default function GetOrder(props) {
                 </tbody>
             </table>
             <Divider/>
-            {order?.status === "SHIPPED" ? <iframe style={{width: '100%', height: 750}}
-                                                   src={`https://t.17track.net/en#nums=${trackingURLS.join()}`}/> : null}
-        </>;
+            {order?.status === "SHIPPED" ? <>
+                <p>Tracking numbers: {trackingURLS}</p>
+                <a target="_blank"
+                   href={`https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=${trackingURLS.join()}`}>
+                    {`https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=${trackingURLS.join()}`}
+                </a>
+                <Divider/>
+            </> : null}
+        </>
     }
     
     if (!orderID) {
