@@ -20,7 +20,7 @@ React.js projects require compilation using Browserify & Babel.
 | Henry's Projects | Description                                                                 | Status                      | React.js? |
 | ---------------- | --------------------------------------------------------------------------- | --------------------------- | --------- |
 | API              | Client interactions with API                                                | :heavy_check_mark:          |           |
-| API Dashboard    | Library-wide content maintenance                                            | heavy_check_mark:           | Yes       |
+| API Dashboard    | Library-wide content maintenance                                            | :heavy_check_mark:          | Yes       |
 | Commons          | LibreTexts Commons and Portals GUI                                          | Superceded by Ethan/Commons | Yes       |
 | Importer         | Extracts content from EPUB, Common Cartridges, and PreTexts into LibreTexts | :heavy_check_mark:          | Yes       |
 | Remixer          | Allows for Remixing book hiearchies from existing content                   | :heavy_check_mark:          | Yes       |

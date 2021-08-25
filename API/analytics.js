@@ -25,6 +25,9 @@ app.get(basePath + '/ping', (req, res) => {
     res.send('PONG');
 });
 
+/**
+ * Receives analytics data and stores it in a JSON file
+ */
 app.post(basePath + '/receive', async (req, res) => {
     res.send('Done');
     // res.status(200).end();
@@ -39,10 +42,12 @@ app.post(basePath + '/receive', async (req, res) => {
         let event = JSON.parse(body);
         let courseName = event.actor.courseName;
         
+        //basic data validation
         let user = event.actor.id.user || event.actor.id;
         if (!courseName || !user)
             return false;
         
+        //use crypto to retrieve analytics identifier
         const cipher = crypto.createCipheriv('aes-256-cbc', secure.analyticsSecure, Buffer.from(secure.analyticsSecure, 'hex'));
         
         user = cipher.update(user, 'utf8', 'hex')
@@ -174,6 +179,11 @@ async function prepareZipData(courseName) {
     console.timeEnd('Reprocessing');
 }
 
+/**
+ * 
+ * @param {string} courseName 
+ * @param {Response} res 
+ */
 async function streamZip(courseName, res) {
     const archiver = require('archiver');
     const archive = archiver('zip');
@@ -212,8 +222,12 @@ async function streamZip(courseName, res) {
     console.log(`Secure Access ${courseName}`);
 }
 
-//createLinker('chem-2737')
-
+/**
+ * Creates an associated between the analytics identifier and the respective user's email
+ * @async
+ * @param {string} courseName 
+ * @param {Response} res 
+ */
 async function createLinker(courseName, res) {
     let students = await fs.readdir(`./analyticsData/${courseName}`, {withFileTypes: true});
     let output = 'Identifier, Email\n';
