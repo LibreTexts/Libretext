@@ -1,13 +1,7 @@
-const http = require('http');
-const timestamp = require("console-timestamp");
-const filenamify = require('filenamify');
 const fs = require('fs-extra');
-const md5 = require('md5');
 const fetch = require("node-fetch");
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
-const async = require('async');
-const util = require('util');
 const he = require('he');
 
 const libraries = {
@@ -477,6 +471,10 @@ async function getUser(username, subdomain, requester = username) {
     return user;
 }
 
+/**
+ * Promise-wrapped setTimeout()
+ * @param {number} ms - number of milliseconds to wait
+ */
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
