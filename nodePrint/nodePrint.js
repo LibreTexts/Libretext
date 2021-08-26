@@ -1169,6 +1169,13 @@ puppeteer.launch({
                     } catch (err) {
                         console.error(`ERROR  Timeout Exceeded ${url}`);
                     }
+    
+                    for(let i = 0; i<10; i++){
+                        await page.evaluate(() => {
+                            window.scrollBy(0, window.innerHeight);
+                        });
+                        await sleep(100);
+                    }
                     
                     const out = await page.evaluate(function (url) {
                         let prefix = "";
