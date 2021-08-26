@@ -65,6 +65,7 @@ app.get(basePath + '/stripeInitialize', async (req, res) => {
     files = await Promise.all(files);
 })()
 
+//check and update the current order status from the Stripe and Lulu APIs
 async function updateOrder(sessionId, forceUpdate = false, beta = false) {
     let result = {};
     let writePath;
@@ -123,7 +124,7 @@ app.get(basePath + '/get-order', async (req, res) => {
     res.send(result);
 });
 
-//send LibreTexts info to Stripe
+//send LibreTexts info to Stripe and create a Stripe checkout session
 app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     const domainURL = bookstoreConfig.DOMAIN;
     const {shoppingCart, shippingSpeed, shippingLocation = 'US', shippingSurcharge = false} = req.body;
@@ -131,7 +132,6 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     let totalQuantity = 0;
     
     //turn items into lineItems
-    // console.log('Hello!');
     let lineItems = shoppingCart;
     let costCalculation = lineItems.map((item) => {
         totalQuantity += item.quantity;
@@ -141,10 +141,12 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
             "quantity": item.quantity
         }
     });
+    
+    //calculate shipping cost using Lulu API
     let shipping;
     switch (shippingLocation) {
         default:
-        case "US":
+        case "US": //United States
             shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
                 headers: {
                     // 'Cache-Control': 'no-cache',
@@ -170,7 +172,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
                 })
             });
             break;
-        case "CA":
+        case "CA": //Canada
             shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
                 headers: {
                     // 'Cache-Control': 'no-cache',
@@ -202,6 +204,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     if (beta)
         console.log(JSON.stringify(costCalculation, null, 2));
     
+    //Format data for Checkout session
     lineItems = lineItems.map((item, index) => {
         let costCalcItem = costCalculation.line_item_costs[index];
         const discount = false; //item.metadata.libreNet ||
@@ -229,9 +232,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
             description: `${item.hardcover ? 'Hardcover' : 'Paperback'},  ${item.color ? 'Color' : 'Black&White'}${discount ? ',  LibreNet bulk discount on quantities >=30' : ''}`
         }
     })
-    
-    //process shipping
-    shipping = await (await shipping).json();
+    shipping = await (await shipping).json(); //process shipping
     shipping = shipping.results[0];
     lineItems.push({
         price_data: {
@@ -253,10 +254,6 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     return*/
     
     // Create new Checkout Session for the order
-    // Other optional params include:
-    // [billing_address_collection] - to display billing address details on the page
-    // [customer] - if you have an existing Stripe Customer ID
-    // [customer_email] - lets you prefill the email input in the Checkout page
     // For full details see https://stripe.com/docs/api/checkout/sessions/create
     const session = await (beta ? stripe.beta : stripe).checkout.sessions.create({
         payment_method_types: bookstoreConfig.PAYMENT_METHODS.split(', '),
@@ -271,12 +268,16 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
             sessionType: 'create-lulu-checkout-session'
         }
     });
+    
     // console.log(session.id);
-    res.send({
+    res.send({ //send session.id back to the customer
         sessionId: session.id,
     });
 });
 
+/**
+ * Receives orders from Stripe and then sends to Lulu
+ */
 app.post(basePath + '/publish-order/', async (req, res) => {
     let data;
     let eventType;
@@ -314,6 +315,7 @@ app.post(basePath + '/publish-order/', async (req, res) => {
     res.sendStatus(200);
 });
 
+//retries orders received from the Lulu Dashboard
 app.post(basePath + '/retryOrder', express.urlencoded({ extended: true }), async (req, res) => {
     let auth = req.body.tokenField;
     if (!auth) {
@@ -334,11 +336,16 @@ app.post(basePath + '/retryOrder', express.urlencoded({ extended: true }), async
 
 app.listen(port, () => console.log(`Restarted Bookstore on port ${port}`));
 
-// fulfillOrder('sessionID');
-
+/**
+ * Processes paid orders from Stripe to Lulu API for printing
+ * @param {string} session - Stripe order session
+ * @param {boolean} beta - using beta mode instead of production
+ * @param {boolean} sendEmailOnly - only send receipt email
+ * @returns {Promise<void>}
+ */
 async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live order to Lulu
-    //sendEmailOnly is an optional luluID for resending receipts
     
+    //sendEmailOnly is an optional luluID for resending receipts
     await fs.ensureDir('./bookstore/pending');
     await fs.ensureDir('./bookstore/complete');
     const logDestination = `./bookstore/pending/${session}.json`;
@@ -463,6 +470,13 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
     }
 }
 
+/**
+ * Helper function that authenticates REST requests to the Lulu API
+ * @param {string} url
+ * @param {object} options - options to be used for fetch()
+ * @param {boolean} beta - using beta mode instead of production
+ * @returns {Promise<*>} - Lulu fetch() response promise
+ */
 async function LuluAPI(url, options, beta) {
     const config = {
         client: {
@@ -489,6 +503,12 @@ async function LuluAPI(url, options, beta) {
     return await fetch(url, options);
 }
 
+/**
+ * Send emails to customers from bookstore@libretexts.org
+ * @param {{shipping_level: (string|*|string), external_id: *, production_delay: number, line_items, shipping_address: {country_code, city, name: *, postcode, street1: *, street2: string | undefined, state_code, email}, contact_email: string}} payload
+ * @param {object} luluResponse - Lulu fetch() response
+ * @param {boolean} beta - using beta mode instead of production
+ */
 function sendLuluReceiptEmail(payload, luluResponse, beta = false) {
     const to = payload.shipping_address.email;
     const sub = `Thank you for your ${beta ? 'BETA ' : ''}order from the LibreTexts Bookstore!`;
@@ -563,6 +583,10 @@ ${payload.line_items.map(item => {
     });
 }
 
+/**
+ * Sends an error email to the customer and bookstore@libretexts.org when an error occurs
+ * @param {object} payload - payload for the rejected order
+ */
 function sendRejectedEmail(payload) {
     const to = [payload.lulu.shipping_address.email, 'bookstore@libretexts.org'];
     const sub = `Your order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore has encountered an error.`;
@@ -617,6 +641,10 @@ ${payload.lulu?.line_items?.map(item => {
     });
 }
 
+/**
+ * Sends an email once an order reaches the SHIPPED status
+ * @param {object} payload - payload for the current order
+ */
 function sendShippingEmail(payload) {
     const to = payload.lulu.shipping_address.email;
     const sub = 'Your order from the LibreTexts Bookstore has shipped.';
@@ -675,6 +703,11 @@ ${payload.lulu?.line_items.map(item => {
     });
 }
 
+/**
+ *
+ * @param {object} credentials - OAuth secrets
+ * @param {function} callback
+ */
 function authorize(credentials, callback) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
@@ -719,7 +752,6 @@ function authorize(credentials, callback) {
         });
     }
 }
-
 
 class CreateMail {
     constructor(auth, to, sub, body) {

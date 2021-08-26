@@ -43,4 +43,4 @@ Elevate
 
 Non-committed files
 ===================
-There are three JSON files that are not committed to the repository. They are secure.json, authen.json, and authenBrowser.json. These contain API keys are usually rotated twice a year for security purposes.
+There are multiple JSON files containing secrets that are not committed to the repository. They are `authen.json`, `authenBrowser.json`, `bookstoreConfig.json`, and `secure.json`.
