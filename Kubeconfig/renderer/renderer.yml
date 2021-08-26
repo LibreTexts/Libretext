@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wwrenderer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wwrenderer
+  template:
+    metadata:
+      labels:
+        app: wwrenderer
+    spec:
+      containers:
+      - name: wwrenderer
+        image : ghcr.io/drdrew42/ww-renderer
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "1"
+            memory: "1G"
+          limits:
+            cpu: "1.9"
+            memory: "4G"
+        ports:
+        - name: web
+          containerPort: 3000
+          protocol: TCP
+        env:
+        - name: MOJO_MODE
+          value: development
+        - name: SITE_HOST
+          value: https://example.org/
+        - name: problemJWTsecret
+          value: ""
+        - name: sessionJWTsecret
+          value: ""
+        volumeMounts:
+          - name: ww-opl
+            mountPath: /usr/app/webwork-open-problem-library
+          - name: ww-full
+            mountPath: /opt/webwork
+          - name: ww-pgfiles
+            mountPath: /usr/app/pgfiles
+      volumes:
+        - name: ww-opl
+          nfs:
+            server: 10.0.0.1
+            path: /opt/webwork/libraries/webwork-open-problem-library
+        - name: ww-full
+          nfs:
+            server: 10.0.0.1
+            path: /opt/webwork
+        - name: ww-pgfiles
+          nfs:
+            server: 10.0.0.1
+            path: /var/www/html/pgfiles
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: wwrenderer
+  labels:
+    app: wwrenderer
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "ww-balancer"
+spec:
+  # type: LoadBalancer
+  type: ClusterIP
+  selector:
+    app: wwrenderer
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wwrenderer
+  annotations:
+    metric-config.external.min-pods.prometheus/query: |
+      minpods
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: wwrenderer
+  minReplicas: 1
+  maxReplicas: 30
+  behavior:
+    scaleUp:
+      policies:
+      - type: Pods
+        value: 10
+        periodSeconds: 15
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: External
+    external:
+      metric:
+        name: min-pods
+        selector:
+          matchLabels:
+            type: prometheus
+      target:
+        type: AverageValue
+        averageValue: "1"

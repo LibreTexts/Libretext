@@ -1,0 +1,155 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adapt-env
+data:
+  APP_URL: "https://example.org"
+  APP_NAME: "Adapt"
+  APP_ENV: "production"
+  APP_KEY: ""
+  APP_DEBUG: "false"
+  APP_LOG_LEVEL: "debug"
+  LOG_CHANNEL: "stack"
+  DB_CONNECTION: "mysql"
+  DB_HOST: ""
+  DB_PORT: "1"
+  DB_DATABASE: ""
+  DB_USERNAME: ""
+  DB_PASSWORD: ""
+  REDIS_HOST: ""
+  REDIS_PASSWORD: ""
+  REDIS_PORT: "1"
+  WEBWORK_SEED: "123456"
+  IMATHAS_SEED: "123456"
+  BROADCAST_DRIVER: log
+  CACHE_DRIVER: file
+  QUEUE_CONNECTION: sync
+  SESSION_DRIVER: redis
+  SESSION_LIFETIME: "120"
+  MAIL_MAILER: mailgun
+  MAILGUN_DOMAIN: ""
+  MAILGUN_SECRET: ""
+  MAILGUN_ENDPOINT: ""
+  MAIL_ENCRYPTION: tls
+  TELEGRAM_BOT_TOKEN: ""
+  TELEGRAM_CHANNEL_ID: ""
+  AWS_ACCESS_KEY_ID: ""
+  AWS_SECRET_ACCESS_KEY: ""
+  AWS_BUCKET: ""
+  AWS_DEFAULT_REGION: ""
+  JWT_TTL: "1440"
+  H5P_USERNAME: ""
+  H5P_PASSWORD: ""
+  LIBRETEXTS_CLIENT_ID: ""
+  LIBRETEXTS_CLIENT_SECRET: ""
+  IS_ME_COOKIE: ""
+  # MINPODS: "20"
+  JWT_SECRET: ""
+  WEBWORK_JWT_SECRET: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adapt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adapt
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: adapt
+    spec:
+      containers:
+      - name: adapt
+        image: ghcr.io/kreut/adapt:master
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "0.9"
+            memory: "1G"
+          limits:
+            cpu: "1.9"
+            memory: "4G"
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: adapt-env
+# ---
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: adapt-cron
+# spec:
+#   schedule: "* * * * *"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - image: ghcr.io/kreut/adapt:master
+#             imagePullPolicy: Always
+#             name: adapt-cron
+#             command: ["php", "artisan", "schedule:run"]
+#             envFrom:
+#             - configMapRef:
+#                 name: adapt-env
+#           restartPolicy: OnFailure
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: adapt
+  labels:
+    app: adapt
+spec:
+  type: ClusterIP
+  selector:
+    app: adapt
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: adapt
+  annotations:
+    metric-config.external.min-pods.prometheus/query: |
+      minpods
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: adapt
+  minReplicas: 1
+  maxReplicas: 50
+  behavior:
+    scaleUp:
+      policies:
+      - type: Pods
+        value: 10
+        periodSeconds: 15
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: External
+    external:
+      metric:
+        name: min-pods
+        selector:
+          matchLabels:
+            type: prometheus
+      target:
+        type: AverageValue
+        averageValue: "1"
