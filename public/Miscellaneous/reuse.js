@@ -266,7 +266,7 @@ function LibreTextsReuse() {
         return result;
     }
     
-    async function getSubpages(rootURL, options = {}) {
+    async function getSubpages(rootURL = window.location.href, options = {}) {
         const [subdomain, path] = LibreTexts.parseURL(rootURL);
         
         let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
@@ -276,6 +276,7 @@ function LibreTextsReuse() {
         info = await info.json();
         return {
             title: info.title,
+            id: info["@id"],
             url: rootURL,
             children: await subpageCallback(pages)
         };
