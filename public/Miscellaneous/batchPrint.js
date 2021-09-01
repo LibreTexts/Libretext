@@ -77,104 +77,104 @@ if (!window["batchPrint.js"]) {
             innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-quotes-left" title="Citation Menu"><span style="margin-left: 5px">Cite this page</span></div><div class="LTdropdown-content" style="right:0">
 <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</a><a onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</a><a onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</a>
 </div></div>`;
-			
-			if (batchPrint)
-				batchPrint.innerHTML = innerHTML;
-			let getTOCLink = document.getElementById("getTOCLink");
-			if (getTOCLink) {
-				getTOCLink.rel = "nofollow";
-				getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
-			}
-		}
-	};
-	
-	function getChildren(HTML) {
-		let JSON = {};
-		if (HTML.children[1]) {
-			HTML = HTML.children[1].children;
-			
-			for (let i = 0; i < HTML.length; i++) {
-				let link = HTML[i].children[0];
-				JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
-			}
-		}
-		return JSON;
-	}
-	
-	function cover(target) {
-		let number = prompt('Number of content pages:');
-		if (number && !isNaN(number)) {
-			window.open(`https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${number}", "hasExtraPadding":true}`);
-		}
-		else {
-			alert(`${number} is not recognized as a number. Please try again.`);
-		}
-	}
-	
-	// noinspection ES6ConvertVarToLetConst
-	var batch = (target, additionalParameters = '') => {
-		if (window["batchComplete"]) {
-			window.location = window["batchComplete"];
-		}
-		else {
-			request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache${additionalParameters}` : window.location.href}`, true); //async get
-			request.addEventListener("progress", receive);
-			request.addEventListener("load", download);
-			request.send();
-			const batchButton = document.getElementById("printme");
-			batchButton.classList.remove('material-icons')
-			batchButton.innerText = 'Request sent...';
-			
-			
-			function receive() {
-				let newText = this.responseText;
-				// console.log(newText);
-				newText = newText.match(/^{.+}$(?!\s*^.*}$)/m);
-				if (newText) {
-					console.log(newText[0]);
-					const json = JSON.parse(newText[0]);
-					batchButton.innerText = json.percent + "%" + "\n" + json.eta;
-				}
-			}
-			
-			function download() {
-				let newText = this.responseText.match(/^{.+}$(?!\s*^.*}$)/m)[0];
-				const out = JSON.parse(newText);
-				if (out.filename === 'refreshOnly') {
-					batchButton.innerText = "Refresh complete";
-					return;
-				}
-				else if (out.filename === 'createMatterOnly') {
-					batchButton.innerText = "Done creating front/back matter";
-					return;
-				}
-				if (out.message === 'error') {
-					alert(out.text);
-					return;
-				}
-				if(out.filename) {
-					batchButton.innerText = "Redownload";
-					window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-					window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
-					
-					let tags = document.getElementById('pageTagsHolder').innerText;
-					if (tags.includes('coverpage:yes'))
-						setTimeout(() => window.location.reload(), 5000);
-				}
-			}
-		}
-		
-	};
-	
-	async function getBook() {
-		let coverpage = await LibreTexts.getCoverpage();
-		if (coverpage) {
-			let [subdomain] = LibreTexts.parseURL();
-			coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
-			return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
-		}
-		return false;
-	}
-	
-	window.addEventListener('load', fn);
+            
+            if (batchPrint)
+                batchPrint.innerHTML = innerHTML;
+            let getTOCLink = document.getElementById("getTOCLink");
+            if (getTOCLink) {
+                getTOCLink.rel = "nofollow";
+                getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
+            }
+        }
+    };
+    
+    function getChildren(HTML) {
+        let JSON = {};
+        if (HTML.children[1]) {
+            HTML = HTML.children[1].children;
+            
+            for (let i = 0; i < HTML.length; i++) {
+                let link = HTML[i].children[0];
+                JSON[link.textContent] = {link: link.href, children: getChildren(HTML[i])};
+            }
+        }
+        return JSON;
+    }
+    
+    function cover(target) {
+        let number = prompt('Number of content pages:');
+        if (number && !isNaN(number)) {
+            window.open(`https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${number}", "hasExtraPadding":true}`);
+        }
+        else {
+            alert(`${number} is not recognized as a number. Please try again.`);
+        }
+    }
+    
+    // noinspection ES6ConvertVarToLetConst
+    var batch = (target, additionalParameters = '') => {
+        if (window["batchComplete"]) {
+            window.location = window["batchComplete"];
+        }
+        else {
+            request.open("GET", `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache${additionalParameters}` : window.location.href}`, true); //async get
+            request.addEventListener("progress", receive);
+            request.addEventListener("load", download);
+            request.send();
+            const batchButton = document.getElementById("printme");
+            batchButton.classList.remove('material-icons')
+            batchButton.innerText = 'Request sent...';
+            
+            
+            function receive() {
+                let newText = this.responseText;
+                // console.log(newText);
+                newText = newText.match(/^{.+}$(?!\s*^.*}$)/m);
+                if (newText) {
+                    console.log(newText[0]);
+                    const json = JSON.parse(newText[0]);
+                    batchButton.innerText = json.percent + "%" + "\n" + json.eta;
+                }
+            }
+            
+            function download() {
+                let newText = this.responseText.match(/^{.+}$(?!\s*^.*}$)/m)[0];
+                const out = JSON.parse(newText);
+                if (out.filename === 'refreshOnly') {
+                    batchButton.innerText = "Refresh complete";
+                    return;
+                }
+                else if (out.filename === 'createMatterOnly') {
+                    batchButton.innerText = "Done creating front/back matter";
+                    return;
+                }
+                if (out.message === 'error') {
+                    alert(out.text);
+                    return;
+                }
+                if(out.filename) {
+                    batchButton.innerText = "Redownload";
+                    window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+                    window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
+                    
+                    let tags = document.getElementById('pageTagsHolder').innerText;
+                    if (tags.includes('coverpage:yes'))
+                        setTimeout(() => window.location.reload(), 5000);
+                }
+            }
+        }
+        
+    };
+    
+    async function getBook() {
+        let coverpage = await LibreTexts.getCoverpage();
+        if (coverpage) {
+            let [subdomain] = LibreTexts.parseURL();
+            coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
+            return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
+        }
+        return false;
+    }
+    
+    window.addEventListener('load', fn);
 }
