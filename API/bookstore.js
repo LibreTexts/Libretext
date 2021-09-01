@@ -314,7 +314,7 @@ app.post(basePath + '/publish-order/', async (req, res) => {
     res.sendStatus(200);
 });
 
-app.post(basePath + '/retryOrder', express.urlencoded(), async (req, res) => {
+app.post(basePath + '/retryOrder', express.urlencoded({ extended: true }), async (req, res) => {
     let auth = req.body.tokenField;
     if (!auth) {
         return res.sendStatus(401);

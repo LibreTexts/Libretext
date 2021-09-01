@@ -7,6 +7,7 @@ const app = express();
 const cors = require('cors');
 // app.use(cors());
 app.use(express.text());
+const async = require('async');
 
 //middleware configuration and initialization
 const basePath = '/ay';
@@ -65,104 +66,157 @@ app.post(basePath + '/receive', async (req, res) => {
     }
 })
 
-//TODO: Make this work
-app.put(basePath + '/secureAccess/:library([a-z]+)-:bookId(\\d+)', async (req, res) => {
-    res.send('Here\'s some data');
+app.get(basePath + '/listCourses', async (req, res) => {
+    let courses = await fs.readdir(`./analyticsData/`);
+    courses = courses.filter(e => e.startsWith('ay'));
+    res.send(courses);
+})
+
+app.post(basePath + '/secureAccess', express.urlencoded({extended: true}), async (req, res) => {
+    let auth = req.body.tokenField;
+    if (!auth) {
+        return res.sendStatus(401);
+    }
+    else if (auth !== secure.analyticsREST) {
+        return res.sendStatus(403);
+    }
     
-    let body = [];
-    request.on('data', (chunk) => {
-        body.push(chunk);
-    }).on('end', async () => {
-        let key = Buffer.concat(body).toString();
-        let courseName = secure.keys[key];
-        if (courseName)
-            await secureAccess(courseName);
-        else
-            responseError('Incorrect key', 403)
-    });
+    let courseName = req.body.courseName;
+    if (courseName) {
+        // courseName = `ay-${courseName}`;
+        if (!await fs.exists(`./analyticsData/${courseName}`)) {
+            return res.status(404).send({error: `Could not find course ${courseName}`});
+        }
+        await prepareZipData(courseName);
+        await streamZip(courseName, res)
+    }
 });
 
-async function secureAccess(courseName) {
+app.post(basePath + '/getLinker', express.urlencoded({extended: true}), async (req, res) => {
+    let auth = req.body.tokenField;
+    if (!auth) {
+        return res.sendStatus(401);
+    }
+    else if (auth !== secure.analyticsREST) {
+        return res.sendStatus(403);
+    }
+    
+    let courseName = req.body.courseName;
+    if (courseName) {
+        // courseName = `ay-${courseName}`;
+        if (!await fs.exists(`./analyticsData/${courseName}`)) {
+            return res.status(404).send({error: `Could not find course ${courseName}`});
+        }
+        await createLinker(courseName, res);
+    }
+});
+
+async function prepareZipData(courseName) {
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}/RAW`);
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}/CSV`);
+    console.time('copy');
     await fs.copy(`./analyticsData/${courseName}`, `./analyticsData/ZIP/${courseName}/RAW`);
+    console.timeEnd('copy');
     
     console.log(`Beginning ${courseName}`);
     //Reprocessing raw data
     let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
+    months = months.filter(m => m.isDirectory());
     
-    const stats = await fs.stat(`./analyticsSecure/secureAccess-${courseName}.zip`);
-    if (Date.now() - stats.mtime < 10 * 60000) { //10 minute cache
-        console.log('Found in cache');
-    }
-    else {
-        console.time('Reprocessing');
-        for (let i = 0; i < months.length; i++) {
-            let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
-            for (let j = 0; j < students.length; j++) {
-                let student = students[j];
-                if (student.isFile()) {
-                    student = student.name;
-                    const fileRoot = student.replace('.txt', '');
-                    let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${student}`);
-                    lines = lines.toString().replace(/\n$/, "").split('\n');
-                    lines = lines.map((line) => {
-                        try {
-                            let result = JSON.parse(line);
-                            return result;
-                        } catch (e) {
-                            console.error(`Invalid: ${line}`);
-                            return undefined;
-                        }
-                    });
-                    let result = lines;
-                    let resultCSV = 'courseName, library, id, platform, verb, pageURL, pageID, timestamp, pageSession, timeMe, [type or percent]';
-                    
-                    //CSV Handling
-                    for (let k = 0; k < result.length; k++) {
-                        let line = lines[k];
-                        if (!line) {
-                            continue;
-                        }
-                        resultCSV += `\n${line.actor.courseName}##${line.actor.library}##${line.actor.id}##${line.actor.platform || 'undefined'}##${line.verb}##${line.object.page}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
-                        switch (line.verb) {
-                            case 'left':
-                                resultCSV += `##${line.type}`;
-                                break;
-                            case 'read':
-                                resultCSV += `##${line.result.percent}`;
-                                break;
-                            case 'answerReveal':
-                                resultCSV += `##${line.result.answer}`;
-                                break;
-                        }
-                        
+    console.time('Reprocessing');
+    for (let month of months) {
+        console.log(month.name);
+        let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW/${month.name}`, {withFileTypes: true});
+        await async.eachLimit(students, 25, async (student) => {
+            if (student.isFile()) {
+                student = student.name;
+                const fileRoot = student.replace('.txt', '');
+                let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
+                lines = lines.toString().replace(/\n$/, "").split('\n');
+                lines = lines.map((line) => {
+                    try {
+                        return JSON.parse(line);
+                    } catch (e) {
+                        console.error(`Invalid: ${line}`, e);
+                        return undefined;
                     }
-                    resultCSV = resultCSV.replace(/,/g, '%2C');
-                    resultCSV = resultCSV.replace(/##/g, ',');
+                });
+                let result = lines;
+                let resultCSV = 'courseName## id## platform## verb## pageURL## pageID## timestamp## pageSession## timeMe## [type or percent]';
+                
+                //CSV Handling
+                for (let k = 0; k < result.length; k++) {
+                    let line = lines[k];
+                    if (!line) {
+                        continue;
+                    }
+                    resultCSV += `\n${line.actor.courseName}##${line.actor.id}##${line.actor.platform || 'undefined'}##${line.verb}##${line.object.url}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
+                    switch (line.verb) {
+                        case 'left':
+                            resultCSV += `##${line.type}`;
+                            break;
+                        case 'read':
+                            resultCSV += `##${line.result.percent}`;
+                            break;
+                        case 'answerReveal':
+                            resultCSV += `##${line.result.answer}`;
+                            break;
+                    }
                     
-                    await fs.writeFile(`./analyticsData/ZIP/${courseName}/CSV/${fileRoot}.csv`, resultCSV);
                 }
+                resultCSV = resultCSV.replace(/,/g, '%2C');
+                resultCSV = resultCSV.replace(/##/g, ',');
+                
+                await fs.appendFile(`./analyticsData/ZIP/${courseName}/CSV/${fileRoot}.csv`, resultCSV);
             }
-        }
-        console.timeEnd('Reprocessing');
-        console.time('Compressing');
-        await fs.ensureDir('./analyticsSecure');
-        zipLocal.sync.zip(`./analyticsData/ZIP/${courseName}`).compress().save(`./analyticsSecure/secureAccess-${courseName}.zip`);
-        console.timeEnd('Compressing');
+        })
     }
+    console.timeEnd('Reprocessing');
+}
+
+async function streamZip(courseName, res) {
+    const archiver = require('archiver');
+    const archive = archiver('zip');
+    
+    console.time('Compressing');
+    
+    archive.on('error', function (err) {
+        res.status(500).send({error: err.message});
+    });
+    
+    //on stream closed we can end the request
+    archive.on('end', function () {
+        console.log('Archive wrote %d bytes', archive.pointer());
+    });
+    
+    //set the archive name
+    res.attachment(`secureAccess-${courseName}.zip`);
+    
+    //this is the streaming magic
+    archive.pipe(res);
+    
+    let months = await fs.readdir(`./analyticsData/ZIP/${courseName}`, {withFileTypes: true});
+    months = months.filter(m => m.isDirectory());
+    
+    for (const dir of months) {
+        console.log(dir.name);
+        await archive.directory(`./analyticsData/ZIP/${courseName}/${dir.name}`, dir.name);
+    }
+    
+    await archive.finalize();
+    
+    console.timeEnd('Compressing');
+    await fs.ensureDir('./analyticsSecure');
     
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}`);
-    console.log(`Secure Access ${courseName} ${ip}`);
-    
-    res.sendFile(`./analyticsSecure/secureAccess-${courseName}.zip`)
+    console.log(`Secure Access ${courseName}`);
 }
 
 //createLinker('chem-2737')
 
-async function createLinker(courseName) {
-    let students = await fs.readdir(`./analyticsData/ay-${courseName}`, {withFileTypes: true});
-    let output = '';
+async function createLinker(courseName, res) {
+    let students = await fs.readdir(`./analyticsData/${courseName}`, {withFileTypes: true});
+    let output = 'Identifier, Email\n';
     for (const studentsKey of students) {
         if (studentsKey.isFile()) {
             const user = studentsKey.name.replace('.txt', '');
@@ -171,9 +225,12 @@ async function createLinker(courseName) {
             let user2 = decipher.update(Buffer.from(user, 'hex'))
             user2 += decipher.final('utf8');
             
-            console.log(user2);
-            output +=`${user}, ${user2}\n`;
+            // console.log(user2);
+            output += `${user}, ${user2}\n`;
         }
     }
     // console.log(output);
+    res.attachment(`secureAccess-linker-${courseName}.csv`);
+    res.set('Content-Type', 'text/csv');
+    res.send(output)
 }

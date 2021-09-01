@@ -1,66 +1,66 @@
 if (!window["batchPrint.js"]) {
-	window["batchPrint.js"] = true;
-	const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-	const isPro = document.getElementById("proHolder").innerText === 'true';
-	const groups = document.getElementById("groupHolder").innerText;
-	const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g, '\''));
-	let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
-	let request;
-	let requestJSON;
-	
-	let fn = () => {
-		const [subdomain, path] = LibreTexts.parseURL();
-		request = new XMLHttpRequest();
-		requestJSON = {
-			root: window.location.href,
-			batchName: window["BatchName"],
-			isNoCache: false
-		};
-		
-		const batchPrint = document.getElementById("batchPrint");
-		localStorage.removeItem('PDFSize');
-		
-		handleInner().then();
-		
-		async function handleInner() {
-			//Download widget handling
-			let tags = document.getElementById('pageTagsHolder').innerText;
-			let downloads = [];
-			let downloadEntry = false;
-			let url = window.location.href.replace(/#$/, '');
-			if (tags.includes('coverpage:yes')) {
-				
-				let subdomain = window.location.origin.split("/")[2].split(".")[0];
-				let part = subdomain === 'espanol' ? 'home' : window.location.href.includes('/Courses') ? 'Courses' : 'Bookshelves';
-				
-				downloads = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
-				downloads = await downloads.json();
-				if (downloads.items)
-					downloads = downloads.items;
-				
-				let id = document.getElementById('pageIDHolder').innerText;
-				downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
-				if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')) || downloadEntry.failed)
-					downloadEntry = false;
-			}
-			let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
-			const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
-			const fullBook = await getBook();
-			innerHTML += `<div class="LTdropdown-content">
-					${fullBook ? `<a href="${fullBook}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>`:''}
+    window["batchPrint.js"] = true;
+    const isAdmin = document.getElementById("adminHolder").innerText === 'true';
+    const isPro = document.getElementById("proHolder").innerText === 'true';
+    const groups = document.getElementById("groupHolder").innerText;
+    const tags = JSON.parse(document.getElementById("tagsHolder").innerText.replace(/\\'/g, '\''));
+    let batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
+    const [subdomain, path] = LibreTexts.parseURL();
+    let request;
+    let requestJSON;
+    
+    let fn = () => {
+        request = new XMLHttpRequest();
+        requestJSON = {
+            root: window.location.href,
+            batchName: window["BatchName"],
+            isNoCache: false
+        };
+        
+        const batchPrint = document.getElementById("batchPrint");
+        localStorage.removeItem('PDFSize');
+        
+        handleInner().then();
+        
+        async function handleInner() {
+            //Download widget handling
+            let tags = document.getElementById('pageTagsHolder').innerText;
+            let downloads = [];
+            let downloadEntry = false;
+            let url = window.location.href.replace(/#$/, '');
+            if (tags.includes('coverpage:yes')) {
+                
+                // let subdomain = window.location.origin.split("/")[2].split(".")[0];
+                let part = subdomain === 'espanol' ? 'home' : window.location.href.includes('/Courses') ? 'Courses' : 'Bookshelves';
+                
+                downloads = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
+                downloads = await downloads.json();
+                if (downloads.items)
+                    downloads = downloads.items;
+                
+                let id = document.getElementById('pageIDHolder').innerText;
+                downloadEntry = downloads.find((entry) => entry.id === id || entry.altID === id);
+                if (!downloadEntry || (!isPro && downloadEntry.tags.includes('luluPro')) || downloadEntry.failed)
+                    downloadEntry = false;
+            }
+            let innerHTML = `<div id="PrintDropdown" class="LTdropdown" style="float:right; background-color: #c53030"><a id="printme" class="dropbtn material-icons notSS" href="https://batch.libretexts.org/print/url=${window.location}.pdf" target="_blank" title="Get a PDF of this page" type="application/pdf">picture_as_pdf</a>`;
+            const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
+            const fullBook = await getBook();
+            innerHTML += `<div class="LTdropdown-content">
+					${fullBook ? `<a href="${fullBook}"  target="_blank" title="Get a PDF of this Book" type="application/pdf" rel="nofollow">Full Book</a>` : ''}
 					${tags.includes('"article:topic"') ? `<a href="https://batch.libretexts.org/print/url=${window.location}.pdf"  target="_blank" title="Get a PDF of this page" type="application/pdf">Page</a>` : ``}
 					${isChapter ? `<a onclick="event.preventDefault(); batch()" href='#' target="_blank" title="Get a PDF of this Chapter" type="application/pdf" rel="nofollow">Chapter</a>` : ``}
 					${batchAccess ? `<a onclick = "event.preventDefault(); batch()" href='#' class='mt-icon-spinner6' rel="nofollow">Compile</a>` : ''}
 					${batchAccess && downloadEntry ? `<a onclick = "event.preventDefault(); if (confirm('This will refresh all of the pages and will take quite a while. Are you sure?'))batch(window.location.href)" href='#' class='mt-icon-spinner6'>Compile Full</a>` : ''}
 
 				</div></div>`;
-			
-			if (downloadEntry) {
-				let root = `https://batch.libretexts.org/print/Finished/`;
-				if (downloadEntry.zipFilename)
-					root += downloadEntry.zipFilename.replace('/Full.pdf', '');
-				innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
-				innerHTML += `<div class="LTdropdown-content">
+            
+            if (downloadEntry) {
+                let root = `https://batch.libretexts.org/print/Finished/`;
+                if (downloadEntry.zipFilename)
+                    root += downloadEntry.zipFilename.replace('/Full.pdf', '');
+                innerHTML += '<div id="DownloadsDropdown" class="LTdropdown"  style="float:right; background-color: #0c85d0"><div class="dropbtn" title="Downloads Center"><span>Downloads</span></div>';
+                innerHTML += `<div class="LTdropdown-content">
 					<a href='${root}/Full.pdf' class='mt-icon-file-pdf'
 					   target='_blank'>Full PDF</a>
 					<a href='${root}/LibreText.imscc' class='mt-icon-graduation'
@@ -71,10 +71,10 @@ if (!window["batchPrint.js"]) {
 					<a href='${root}/Publication.zip' class='mt-icon-book3'
 					   target='_blank'>Print Book Files</a>
 				</div></div>`;
-			}
-			//TODO Replace with LibreTexts.active.sidebarToggleDrawer("readability")()
-			innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black" onclick="setTimeout(()=>{$('#openControl').click(); },100)"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
-			innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-quotes-left" title="Citation Menu"><span style="margin-left: 5px">Cite this page</span></div><div class="LTdropdown-content" style="right:0">
+            }
+            
+            innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black" onclick="LibreTexts.active.sidebarToggleDrawer('readability')()"><div id="doBeeLine" class="dropbtn mt-icon-binoculars" title="Customization Menu"><span style="margin-left: 5px">Readability</span></div></div>`;
+            innerHTML += `<div class="LTdropdown" style="background-color: #d4d4d4; color:black"><div class="dropbtn mt-icon-quotes-left" title="Citation Menu"><span style="margin-left: 5px">Cite this page</span></div><div class="LTdropdown-content" style="right:0">
 <a onclick = "event.preventDefault(); buildcite()" target="_blank"  class=\'mt-icon-quote\'>&nbsp;Get Page Citation</a><a onclick = "event.preventDefault(); attribution()" target="_blank" class=\'mt-icon-quote\'>&nbsp;Get Page Attribution</a><a onclick="event.preventDefault(); LibreTexts.active.libreLens()" target="_blank" class="mt-icon-eye-blocked librelens-toggle">&nbsp;Toggle AutoAttribution</a>
 </div></div>`;
 			
