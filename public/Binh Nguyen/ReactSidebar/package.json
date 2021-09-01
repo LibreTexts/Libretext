@@ -13,6 +13,7 @@
     "@material-ui/styles": "^4.10.0",
     "clsx": "^1.1.1",
     "create-react-class": "^15.6.3",
+    "file-saver": "^2.0.5",
     "iframe-resizer-react": "^1.1.0",
     "notistack": "^0.9.17",
     "prop-types": "^15.7.2",
