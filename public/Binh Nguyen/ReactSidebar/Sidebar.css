@@ -133,7 +133,6 @@
 }
 .sbHeader .top-tabs:hover {
     border: none;
-    background-color: transparent;
 }
 .sbHeader .top-tabs span {
     writing-mode: vertical-lr;
