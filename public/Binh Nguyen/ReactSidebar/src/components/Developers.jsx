@@ -70,7 +70,7 @@ export default function Developers(props) {
                     }
                     return array;
                 }
-                pages = pages.map(e=>`"${e.title}",${e.id}`);S
+                pages = pages.map(e=>`"${e.title}",${e.id}`);
                 pages.unshift('Page title, Page ID, Page tag(s)');
                 let [subdomain] = LibreTexts.parseURL();
                 saveAs(new Blob([pages.join('\n')],{type:"text/csv;charset=utf-8"}),`masstagger-${subdomain}-${response.id}.csv`);

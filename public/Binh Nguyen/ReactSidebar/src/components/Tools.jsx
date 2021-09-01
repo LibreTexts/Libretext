@@ -26,13 +26,13 @@ export default function Tools(props) {
                 props.toggleDrawer(false)();
             }}/>
             <AutoAttribution/>
-	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
+{/*	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
 		 event.preventDefault();
 		saveBookmark();
 	    }}>
 		<div id="bm-list">
 		</div>
-	    </IconLink>
+	    </IconLink>*/}
 	    <br/>
             <FormControl component="fieldset" style={{padding: 20}}>
                 <FormLabel component="legend">Glossary Source</FormLabel>
@@ -58,7 +58,7 @@ export default function Tools(props) {
                 </RadioGroup>
             </FormControl> : null}
 	    <br/>
-	    <FormControl component="fieldset" style={{padding: 20}}>
+{/*	    <FormControl component="fieldset" style={{padding: 20}}>
 		<FormLabel component="legend">Page Annotation</FormLabel>
 		    <RadioGroup value={annotation} onChange={(event) => {
 			makeAnnotation(event.target.value);
@@ -68,17 +68,9 @@ export default function Tools(props) {
 			<FormControlLabel value="note bene" control={<Radio/>} label="Note Bene"/>
 			<FormControlLabel value="none" control={<Radio/>} label="None"/>
 		    </RadioGroup>
-	    </FormControl>
+	    </FormControl>*/}
         </List>
     );
-    /*
-                <div className="custom_field">
-                    <a onclick="event.preventDefault(); $('hypothesis-sidebar').toggle()">&nbsp;Hypothesis</a>
-                </div>
-                <div className="custom_field">
-                    <a onclick="event.preventDefault()">&nbsp;Note Bene</a>
-                </div>
-            </div>*/
 }
 
 function AutoAttribution(props) {

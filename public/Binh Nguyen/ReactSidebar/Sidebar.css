@@ -47,7 +47,7 @@
     margin-bottom: 0px;
 }
 
-.svg-inline--fa {
+#LibreTextsSidebar .svg-inline--fa {
     transform: translate(-15px);
     font-size: x-large;
 }
