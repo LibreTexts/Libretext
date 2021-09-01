@@ -142,7 +142,7 @@ async function prepareZipData(courseName) {
                     }
                 });
                 let result = lines;
-                let resultCSV = 'courseName## id## platform## verb## pageURL## pageID## timestamp## pageSession## timeMe## [type or percent]';
+                let resultCSV = 'courseName## id## platform## verb## pageURL## pageID## timestamp## pageSession## timeMe## beeline_status## [type or percent]';
                 
                 //CSV Handling
                 for (let k = 0; k < result.length; k++) {
@@ -150,7 +150,7 @@ async function prepareZipData(courseName) {
                     if (!line) {
                         continue;
                     }
-                    resultCSV += `\n${line.actor.courseName}##${line.actor.id}##${line.actor.platform || 'undefined'}##${line.verb}##${line.object.url}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}`;
+                    resultCSV += `\n${line.actor.courseName}##${line.actor.id}##${line.actor.platform || 'undefined'}##${line.verb}##${line.object.url}##${line.object.id}##"${line.object.timestamp}"##${line.object.pageSession}##${line.object.timeMe}}##${line.object.beeline}`;
                     switch (line.verb) {
                         case 'left':
                             resultCSV += `##${line.type}`;

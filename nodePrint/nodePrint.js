@@ -1169,13 +1169,14 @@ puppeteer.launch({
                     } catch (err) {
                         console.error(`ERROR  Timeout Exceeded ${url}`);
                     }
-    
-                    for(let i = 0; i<10; i++){
-                        await page.evaluate(() => {
-                            window.scrollBy(0, window.innerHeight);
-                        });
-                        await sleep(100);
-                    }
+                    
+                    await page.evaluate(function(){
+                        let images = document.getElementsByTagName('img');
+                        for (let img of images){
+                            img.loading = "eager";
+                        }
+                    });
+                    await sleep(1000);
                     
                     const out = await page.evaluate(function (url) {
                         let prefix = "";
@@ -1254,7 +1255,6 @@ puppeteer.launch({
                     
                     const style1 = '<div id="mainH">' +
                         '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-                        `<div style="font-size:13px;">${title}</div>`+
                         '</div>';
                     
                     license = await license;
