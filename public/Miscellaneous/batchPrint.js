@@ -144,11 +144,15 @@ if (!window["batchPrint.js"]) {
                     batchButton.innerText = "Refresh complete";
                     return;
                 }
+                else if (out.filename === 'createMatterOnly') {
+                    batchButton.innerText = "Done creating front/back matter";
+                    return;
+                }
                 if (out.message === 'error') {
                     alert(out.text);
                     return;
                 }
-                if (out.filename) {
+                if(out.filename) {
                     batchButton.innerText = "Redownload";
                     window.location = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
                     window["batchComplete"] = `https://batch.libretexts.org/print/Finished/${out.filename}/Full.pdf`;
@@ -165,7 +169,7 @@ if (!window["batchPrint.js"]) {
     async function getBook() {
         let coverpage = await LibreTexts.getCoverpage();
         if (coverpage) {
-            // let [subdomain] = LibreTexts.parseURL();
+            let [subdomain] = LibreTexts.parseURL();
             coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
             return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
         }
