@@ -178,7 +178,7 @@
     }
 }
 
-@media (min-width: 500px) and (max-width: 1330px) {
+@media screen and (min-width: 500px) and (max-width: 1330px) {
   #elm-main-content {
     padding-left: 30px !important;
   }
