@@ -82,19 +82,8 @@ async function handler(request, response) {
         responseError('Unauthorized', 401);
     }
     else if (url.startsWith('/contents')) {
-        if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-            response.writeHead(200, {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-            });
-            response.end();
-        }
-        else if (request.method === 'PUT') {
-            response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-                'Content-Type': 'application/json',
-            } : {'Content-Type': 'application/json'});
+        if (request.method === 'PUT') {
+            response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
             request.on('data', (chunk) => {
                 body.push(chunk);
@@ -120,19 +109,8 @@ async function handler(request, response) {
         }
     }
     else if (url === '/IIAB' || url === '/STEMGraph') {
-        if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-            response.writeHead(200, {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-            });
-            response.end();
-        }
-        else if (request.method === 'PUT') {
-            response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-                'Content-Type': 'application/json',
-            } : {'Content-Type': 'application/json'});
+        if (request.method === 'PUT') {
+            response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
             request.on('data', (chunk) => {
                 body.push(chunk);
@@ -184,19 +162,8 @@ async function handler(request, response) {
         }
     }
     else if (url === '/refreshList') {
-        if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-            response.writeHead(200, {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-            });
-            response.end();
-        }
-        else if (request.method === 'PUT') {
-            response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-                'Content-Type': 'application/json',
-            } : {'Content-Type': 'application/json'});
+        if (request.method === 'PUT') {
+            response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
             request.on('data', (chunk) => {
                 body.push(chunk);
@@ -222,19 +189,8 @@ async function handler(request, response) {
         }
     }
     else if (url === '/refreshListAdd') {
-        if (request.headers.host === 'computer.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-            response.writeHead(200, {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-            });
-            response.end();
-        }
-        else if (request.method === 'PUT') {
-            response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-                'Content-Type': 'application/json',
-            } : {'Content-Type': 'application/json'});
+        if (request.method === 'PUT') {
+            response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
             request.on('data', (chunk) => {
                 body.push(chunk);
@@ -275,22 +231,8 @@ async function handler(request, response) {
         }
     }
     else if (url.startsWith('/getAuthors/')) {
-        if (request.headers.host.includes('.miniland1333.com') && request.method === 'OPTIONS') { //options checking
-            response.writeHead(200, {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'GET',
-                'Content-Type': ' application/json',
-                'Cache-Control': 'public, max-age=36000',
-            });
-            response.end();
-        }
-        else if (request.method === 'GET') {
-            response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                'Access-Control-Allow-Origin': request.headers.origin || null,
-                'Access-Control-Allow-Methods': 'PUT',
-                'Content-Type': ' application/json',
-                'Cache-Control': 'public, max-age=36000',
-            } : {'Content-Type': ' application/json', 'Cache-Control': 'public, max-age=36000'});
+        if (request.method === 'GET') {
+            response.writeHead(200, {'Content-Type': ' application/json', 'Cache-Control': 'public, max-age=36000'});
             
             let subdomain = url.split('/getAuthors/')[1];
             let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen['getAuthors']);
