@@ -33,24 +33,34 @@ export default function MassTagger(props) {
         file = await file.text();
         file = toCSV(file, {
             skip_empty_lines: true,
+            trim: true,
+            relax_column_count: true,
         });
+        
+        //skip header line if present
+        if (file?.[0]?.[1] && isNaN(file[0][1])) {
+            file.shift();
+        }
+        
         const tags = {};
         let [subdomain] = LibreTexts.parseURL();
         file.forEach(entry => {
             
-            let [id, value] = entry;
-            if (!id || !value)
-                return; //skip empty entries
+            let [, id, ...value] = entry;
             
+            //basic validation
+            if (!id)
+                return;
             id = String(id);
-            value = String(value);
             
             if (id.includes(','))
                 id = id.split(',');
             else
                 id = [id]
             
-            id = id.map(e => {
+            //extract pageIDs
+            id = id.filter(e => e).map(e => {
+                e = e.trim();
                 if (!e.includes("-")) {
                     return e;
                 }
@@ -59,12 +69,21 @@ export default function MassTagger(props) {
                     current = current.trim();
                     return current === subdomain ? pageID : false;
                 }
-            }).filter(e => e);
+            });
             
-            if (value.includes(','))
-                value = value.split(',');
-            else
-                value = [value]
+            // convert into array of tags
+            if (!value)
+                value = [];
+            value = value.map(e => {
+                if (e.includes(',')) {
+                    return e.split(',');
+                }
+                else {
+                    return e;
+                }
+            });
+            value = value.flat();
+            value = value.filter(e => e).map(e => e.trim()); // format tags
             
             for (let i of id) {
                 if (tags[i]) {
@@ -85,6 +104,9 @@ export default function MassTagger(props) {
     async function updateTags() {
         let result = {};
         for (const page in newTags) {
+            if (!newTags[page])
+                continue;
+            
             await LibreTexts.sleep(2000);
             
             try {
@@ -125,6 +147,9 @@ export default function MassTagger(props) {
                         accept=".csv"
                         hidden
                         onChange={processCSV}
+                        onClick={(event) => {
+                            event.target.value = null
+                        }}
                     />
                 </Button>
                 <Button
