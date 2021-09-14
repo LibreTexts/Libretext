@@ -23,6 +23,7 @@ async function handler(request, response) {
     url = LibreTexts.clarifySubdomain(url);
     let localBounce = request.headers?.origin?.endsWith('libretexts.org');
     
+    // allows external sites to access deki files
     if (url.startsWith('/bounce/')) {
         if (request.method === 'GET') {
             response.writeHead(200, !localBounce ? {
@@ -33,6 +34,7 @@ async function handler(request, response) {
             }:{
                 'Content-Type': 'application/json',
             }); //allow targeted CORS, but prevent double CORS
+            
             let [, targetURL] = url.split('/bounce/');
             if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//)) {
                 responseError(`Invalid target ${targetURL}`, 400);
@@ -50,6 +52,7 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
+    // allows other sites to access anonymous read-only pages APIs
     else if (url.startsWith('/cross-library/')) {
         if (request.method === 'GET') {
             response.writeHead(200, !localBounce ? {
@@ -78,9 +81,12 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
+    // all subsequent endpoints must be same-origin of libretexts.org
     else if (!request.headers.origin || !request.headers.origin.endsWith('libretexts.org')) {
         responseError('Unauthorized', 401);
     }
+    // access anonymous (GET) /contents endpoint
+    // https://success.mindtouch.com/Integrations/API/API_Calls/pages/pages%2F%2F%7Bpageid%7D%2F%2Fcontents_(GET)
     else if (url.startsWith('/contents')) {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
@@ -108,59 +114,7 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
-    else if (url === '/IIAB' || url === '/STEMGraph') {
-        if (request.method === 'PUT') {
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            let body = [];
-            request.on('data', (chunk) => {
-                body.push(chunk);
-            }).on('end', async () => {
-                body = Buffer.concat(body).toString();
-                
-                let input = JSON.parse(body);
-                
-                if (input.key !== secure['IIAB'] && input.key !== secure['STEMGraph']) {
-                    responseError(`Invalid Key`, 403);
-                }
-                switch (input.action) {
-                    case 'hierarchy':
-                        const rootURL = `https://${input.subdomain}.libretexts.org/${input.path}`;
-                        console.time(`Hierarchy: ${rootURL}`);
-                        let finalResult = await LibreTexts.authenticatedFetch(input.path, 'tree?dream.out.format=json', input.subdomain, null, {
-                            headers: {
-                                'origin': 'https://api.libretexts.org',
-                            },
-                        });
-                        if (finalResult.ok)
-                            response.write(await finalResult.text());
-                        else
-                            responseError(`${finalResult.statusText}\n${await finalResult.text()}`, 400);
-                        
-                        console.timeEnd(`Hierarchy: ${rootURL}`);
-                        break;
-                    
-                    case 'contents':
-                    default:
-                        let requests = await LibreTexts.authenticatedFetch(input.path, 'contents', input.subdomain, null, {
-                            headers: {
-                                'origin': 'https://api.libretexts.org',
-                            },
-                        });
-                        if (requests.ok)
-                            response.write(await requests.text());
-                        else
-                            responseError(`${requests.statusText}\n${await requests.text()}`, 400);
-                        break;
-                }
-                
-                if (!response.finished)
-                    response.end();
-            });
-        }
-        else {
-            responseError(request.method + ' Not Acceptable', 406);
-        }
-    }
+    // store JSON of Commons books from batch.libretexts.org
     else if (url === '/refreshList') {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
@@ -188,6 +142,7 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
+    // append a single JSON Commons book from batch.libretexts.org
     else if (url === '/refreshListAdd') {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
@@ -230,6 +185,7 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
+    // get a library's author's information
     else if (url.startsWith('/getAuthors/')) {
         if (request.method === 'GET') {
             response.writeHead(200, {'Content-Type': ' application/json', 'Cache-Control': 'public, max-age=36000'});
@@ -250,22 +206,6 @@ async function handler(request, response) {
             else {
                 console.error(await contents.text());
             }
-            response.end();
-        }
-    }
-    else if (url.startsWith('/queryEvents')) {
-        if (!request.headers.origin || !request.headers.origin.endsWith('adapt.libretexts.org')) {
-            responseError('Forbidden', 403);
-        }
-        else if (request.method === 'GET') {
-            let [, queryParams] = url.split('/queryEvents');
-            let requests;
-            requests = await LibreTexts.authenticatedFetch(`https://query.libretexts.org/@api/deki/events/page-hierarchy/home${queryParams || ''}`, null, null, authen['getAuthors'])
-            if (requests.ok)
-                response.write(await requests.text());
-            else
-                responseError(`${requests.statusText}\n${await requests.text()}`, 400);
-            
             response.end();
         }
     }
