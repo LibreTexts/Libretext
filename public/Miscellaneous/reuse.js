@@ -16,6 +16,7 @@ const LibreEditor = {
     }
 };
 
+// attach functions to namespace
 const LibreTexts = LibreTextsReuse();
 
 function LibreTextsReuse() {
@@ -38,7 +39,7 @@ function LibreTextsReuse() {
     };
     
     return {
-        active: {},
+        active: {}, //object which active instances can attach themselves to
         debug: {},
         authenticatedFetch: authenticatedFetch,
         // clarifySubdomain: clarifySubdomain,
@@ -82,12 +83,21 @@ function LibreTextsReuse() {
         return ret;
     }
     
+    /**
+     * @param {string} url - url to get subdomain from
+     * @returns {string}
+     */
     function extractSubdomain(url = window.location.href) {
         let origin = url.split("/")[2].split(".");
         const subdomain = origin[0];
         return subdomain;
     }
     
+    /**
+     * Breaks up a url into the subdomain and path
+     * @param {string} url
+     * @returns {string[]}
+     */
     function parseURL(url = window.location.href) {
         if (url.includes('?')) //strips any query parameters
             url = url.split('?')[0];
@@ -110,6 +120,11 @@ function LibreTextsReuse() {
         }
     }
     
+    /**
+     * Removes problematic characters from the url
+     * @param path
+     * @returns {string}
+     */
     function cleanPath(path) {
         let front = "", back = path;
         if (path.includes('/'))
@@ -129,6 +144,13 @@ function LibreTextsReuse() {
         return front + back;
     }
     
+    /**
+     * Wrapper for interacting with api.libretexts.org/elevate endpoints.
+     * Used by developers for elevated-permission API requests
+     * @param {string} api - endpoint to request
+     * @param {Object} options
+     * @param {string} method - REST method
+     */
     async function sendAPI(api, options = {}, method = 'PUT') {
         if (!document.getElementById('seatedCheck'))
             throw Error('User not authenticated');
@@ -150,6 +172,13 @@ function LibreTextsReuse() {
         })
     }
     
+    /**
+     * fetch wrapper function that automatically uses Mindtouch browser API tokens
+     * @param {string|number} path - the path or pageID of the target page. Can also instead take a full arbitrary API url.
+     * @param {string} api - the /pages {@link https://success.mindtouch.com/Integrations/API/API_Calls/pages|sub-endpoint} that you are calling
+     * @param {string} subdomain - subdomain that the target page belongs to
+     * @param {Object} [options={}] - optional options that will be passed to fetch()
+     */
     async function authenticatedFetch(path, api = '', subdomain, options = {}) {
         let isNumber;
         let [current, currentPath] = parseURL();
@@ -196,6 +225,7 @@ function LibreTextsReuse() {
                 options);
     }
     
+    // Retrieves public browser API keys
     async function getKeys() {
         if (typeof getKeys.keys === 'undefined') {
             let keys = await fetch('https://cdn.libretexts.net/authenBrowser.json');
@@ -204,6 +234,11 @@ function LibreTextsReuse() {
         return getKeys.keys;
     }
     
+    /**
+     * Parses citation information for a page
+     * @param url
+     * @returns {Promise<{Object}>}
+     */
     async function getCitationInformation(url = window.location.href) {
         let coverpage = await LibreTexts.getCoverpage(url);
         let result = {};
@@ -266,6 +301,11 @@ function LibreTextsReuse() {
         return result;
     }
     
+    /**
+     * Recursively get the subpages for a given page
+     * @param {string} rootURL - url to get the recursive subpages for
+     * @param {{flat: boolean, depth: number, socket}} options
+     */
     async function getSubpages(rootURL, options = {}) {
         const [subdomain, path] = LibreTexts.parseURL(rootURL);
         
@@ -322,7 +362,11 @@ function LibreTextsReuse() {
         }
     }
     
-    //fills in missing API data for a page
+    /**
+     * Grabs and formats the API data for a page
+     * @param {string|Object} page - url or page object
+     * @param {boolean} getContents - include the page contents
+     */
     async function getAPI(page, getContents) {
         if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
             return page;
@@ -406,11 +450,17 @@ function LibreTextsReuse() {
         return page;
     }
     
+    // Outputs the current page contents to the console
     async function getCurrentContents() {
         LibreTexts.authenticatedFetch(window.location.href, 'contents?mode=edit').then(async (data) => console.log(await data.text()))
     }
     
-    async function getCoverpage(url = window.location.href) { //returns path to coverpage
+    /**
+     * Locates the parent page that is the coverpage, if it exists
+     * @param url - page to look up the coverpage for
+     * @returns {Promise<string>} - path to the coverpage
+     */
+    async function getCoverpage(url = window.location.href) {
         if (typeof getCoverpage.coverpage === 'undefined') {
             const urlArray = url.replace("?action=edit", "").split("/");
             for (let i = urlArray.length; i > 3; i--) {
@@ -436,6 +486,14 @@ function LibreTextsReuse() {
         return getCoverpage.coverpage;
     }
     
+    /**
+     * Attaches a FancyTree Table of Contents to an element
+     * @param {string|null} coverpageUrl - root url for the table of contents hiearchy
+     * @param {string} targetElement - HTML selector to append the fancytree to
+     * @param {boolean} showTitle
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy", showTitle = false) {
         let coverTitle;
         let content;
@@ -540,6 +598,10 @@ function LibreTextsReuse() {
         }
     }
     
+    /**
+     * Promise-wrapped setTimeout()
+     * @param {number} ms - number of milliseconds to wait
+     */
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }

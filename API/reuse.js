@@ -39,7 +39,14 @@ let LibreTextsFunctions = {
 };
 
 
-//Function Zone
+/**
+ * fetch wrapper function that automatically uses Mindtouch browser or server API tokens
+ * @param {string|number} path - the path or pageID of the target page. Can also instead take a full arbitrary API url.
+ * @param {string} api - the /pages {@link https://success.mindtouch.com/Integrations/API/API_Calls/pages|sub-endpoint} that you are calling
+ * @param {string} subdomain - subdomain that the target page belongs to
+ * @param {string} username - the user that is performing this request
+ * @param {Object} [options={}] - optional options that will be passed to fetch()
+ */
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
     let isNumber;
     path = String(path);
@@ -104,6 +111,12 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
     }
 }
 
+/**
+ * Alternate getSubpages when working on the root. For all other uses, instead use getSubpages()
+ * @param {string} rootURL - url to get the recursive subpages for
+ * @param {username} username - current user that is performing this request
+ * @param {{flat}} options
+ */
 async function getSubpagesAlternate(rootURL, username, options) {
     let origin = rootURL.split("/")[2].split(".");
     const subdomain = origin[0];
@@ -129,6 +142,12 @@ async function getSubpagesAlternate(rootURL, username, options) {
     return pages
 }
 
+/**
+ * Recursively get the subpages for a given page
+ * @param {string} rootURL - url to get the recursive subpages for
+ * @param {username} username - current user that is performing this request
+ * @param {{flat: boolean, depth: number, socket}} options
+ */
 async function getSubpages(rootURL, username, options = {}) {
     let origin = rootURL.split("/")[2].split(".");
     const subdomain = origin[0];
@@ -280,6 +299,11 @@ async function getSubpages(rootURL, username, options = {}) {
     }
 }
 
+/**
+ *
+ * @param url
+ * @returns {string}
+ */
 function clarifySubdomain(url) {
     url = decodeURIComponent(url);
     url = url.replace('https://español.libretexts.org', 'https://espanol.libretexts.org');
@@ -305,6 +329,13 @@ function encodeHTML(content) {
     return he.encode(content, {'useNamedReferences': true});
 }
 
+/**
+ * Helper function for server API tokens. You should likely use authenticatedFetch()
+ * instead of using this function directly
+ * @param {string} username - user to authenticate as
+ * @param {string} subdomain - library to authenticate with
+ * @returns {string}
+ */
 function authenticate(username, subdomain) {
     const user = "=" + username;
     const crypto = require('crypto');
@@ -315,6 +346,11 @@ function authenticate(username, subdomain) {
     return `${authen[subdomain].key}_${epoch}_${user}_${hash}`;
 }
 
+/**
+ * Squashes all the recursive subpages/childen into a single array
+ * @param current
+ * @returns {*[]}
+ */
 function addLinks(current) {
     let array = [current.url];
     let children = current.children;
@@ -326,12 +362,21 @@ function addLinks(current) {
     return array;
 }
 
+/**
+ * @param url - url to get subdomain from
+ * @returns {string}
+ */
 function extractSubdomain(url) {
     let origin = url.split("/")[2].split(".");
     const subdomain = origin[0];
     return subdomain;
 }
 
+/**
+ * Breaks up a url into the subdomain and path
+ * @param {string} url
+ * @returns {string[]}
+ */
 function parseURL(url) {
     if (url.includes('?')) //strips any query parameters
         url = url.split('?')[0];
@@ -343,6 +388,11 @@ function parseURL(url) {
     }
 }
 
+/**
+ * Removes problematic characters from the url
+ * @param path
+ * @returns {string}
+ */
 function cleanPath(path) {
     let front = "", back = path;
     if (path.includes('/'))
@@ -362,7 +412,12 @@ function cleanPath(path) {
     return front + back;
 }
 
-//fills in missing API data for a page. Username optional
+/**
+ * Grabs and formats the API data for a page
+ * @param {string|Object} page - url or page object
+ * @param {boolean} getContents - include the page contents
+ * @param {string} username
+ */
 async function getAPI(page, getContents, username = undefined) {
     if (page.title && page.properties && page.id && page.tags && (!getContents || page.content))
         return page;
@@ -444,6 +499,11 @@ async function getAPI(page, getContents, username = undefined) {
     return page;
 }
 
+/**
+ * Get the information for a particular user
+ * @param {string} username - user to get information about
+ * @param {string} requester - user that is performing the request
+ */
 async function getUser(username, subdomain, requester = username) {
     let user = await authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/users/=${encodeURIComponent(encodeURIComponent(username))}?dream.out.format=json`, null, null, requester);
     if (!user.ok) {
