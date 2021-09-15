@@ -22,7 +22,7 @@
     text-decoration: none;
 }
 
-#LibreTextsSidebar .SidebarItem > [class*="mt-icon"] {
+#LibreTextsSidebar .SidebarItem [class*="mt-icon"], #LibreTextsSidebar .SidebarItem > [class*="fas"] {
     font-size: x-large;
 }
 
@@ -41,6 +41,15 @@
     width: 100%;
     min-height: 350px;
     overflow: auto;
+}
+
+#LibreTextsSidebar .MuiFormControlLabel-root {
+    margin-bottom: 0px;
+}
+
+#LibreTextsSidebar .svg-inline--fa {
+    transform: translate(-15px);
+    font-size: x-large;
 }
 
 #LibreTextsSidebar #doBeeline {
@@ -91,6 +100,10 @@
     align-items: center;
 }
 
+#LibreTextsSidebar .MuiIconButton-root {
+    padding: 5px;
+}
+
 .sbHeader {
     display: none;
     background-color: #127bc4;
@@ -102,7 +115,7 @@
     min-width: 25px;
     z-index: 1400;
     justify-content: space-around;
-    border-right: 2px solid white;
+    box-shadow: 2px 4px 4px #0009;
 }
 
 .sbHeader .top-tabs {
@@ -138,7 +151,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    border: 2px solid white;
+    box-shadow: 1px 1px 1px #0009;
     z-index: 1400;
 }
 
@@ -163,6 +176,12 @@
     .sbHeader {
         display: flex;
     }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1330px) {
+  #elm-main-content {
+    padding-left: 30px !important;
+  }
 }
 
 @media print {
