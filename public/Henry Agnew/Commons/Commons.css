@@ -1,0 +1,226 @@
+.Text {
+    width: 220px;
+    height: 220px;
+    /* border: 1px solid black; */
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    margin: 10px;
+}
+
+
+.MuiIconButton-label > input[type="checkbox"] {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.MuiButtonBase-root {
+    /*padding: 0;*/
+    /*margin: 0 10px;*/
+}
+
+.mt-label:after, label:after {
+    content: unset;
+}
+
+.MuiTooltip-tooltip {
+    font-size: 0.8rem;
+}
+
+.MuiMenuItem-root > div {
+    width: 100%;
+}
+
+.MuiDivider-root {
+    margin: 15px 0;
+}
+
+input:focus, input:hover, .no-touch input:hover {
+    border: unset;
+    box-shadow: unset;
+}
+
+.mt-checkbox, input[type=checkbox], input[type=radio] {
+    position: absolute;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: unset;
+}
+
+.mt-legend, legend {
+    font-size: unset;
+    margin: unset;
+    padding: unset;
+}
+
+.CommonsAutocomplete {
+    flex: 1;
+    min-width: 250px;
+}
+
+.MuiAutocomplete-popper img {
+    height: 20px !important;
+}
+
+.CommonsEntry img.coverImage {
+    filter: brightness(50%);
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+    width: 100%;
+    height: 150px !important;
+    background: lightgray;
+}
+
+.textSide {
+    /*background-color: #0c85d0;*/
+    width: 220px;
+    height: 220px;
+    position: relative;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: space-around;*/
+    /*align-items: stretch;*/
+    /*box-sizing: border-box;*/
+    /*!*padding: 10px;*!*/
+    /*font-size: 80%;*/
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
+}
+
+.textSide:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)
+}
+
+.textSide .entryContent {
+    position: absolute;
+    top: 0;
+}
+
+.entryContent .MuiCardContent-root {
+    padding: 10px;
+}
+
+.entryContent .entryInstitution {
+    text-shadow: 0 0 4px #000000;
+    font-size: 0.8rem;
+    color: white;
+    margin: 0;
+}
+
+.entryContent .entryTitle {
+    text-shadow: 0 0 4px #000000;
+    color: #ffffff;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.textSide > .entryAuthor {
+    padding: 0 10px;
+    margin: 0;
+}
+
+.entryContent .libraryIcon {
+    width: 10px;
+    margin-right: 2px;
+}
+
+.textFront {
+    border-radius: 0px 20px 20px 0px;
+    border-right: 8px solid #0a446c;
+}
+
+.textFront div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.textFront > div > h5 {
+    color: white;
+    margin: 0;
+}
+
+.textBack {
+    align-items: stretch;
+    background-color: #0c85d0;
+}
+
+.textBack a {
+    color: white;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.textBack a:not(:first-child) {
+    border-top: 1px solid white;
+}
+
+.textBack a:hover {
+    color: #141414;
+    background-color: #f5f7fa;
+    transition-duration: 500ms;
+    border-radius: 5px 5px 0 0;
+}
+
+.textBack a:before {
+    margin-right: .5em;
+}
+
+.Center {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f3f3f3;
+    padding: 10px;
+    justify-content: space-around;
+    border-radius: 10px;
+}
+
+.CenterContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.centerSearch {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.headerFit > div {
+    height: 80%;
+}
+
+.headerFit > div > div {
+    height: 100%;
+    display: flex;
+}
+
+/*.orderForm {
+    background: lightgray;
+}
+
+.orderForm button img {
+    width: 150px;
+}
+
+.orderForm button:not(.Mui-selected) img {
+    filter: saturate(0);
+}
+
+.orderForm button.Mui-selected {
+    color: white;
+    font-weight: bold;
+    background: #0f67a6;
+}
+
+.orderForm button .MuiToggleButton-label {
+    display: block;
+}*/
+
+@media (max-width: 500px){
+    #Commons-Learn-More .MuiDialogContent-root{
+        flex-wrap: wrap;
+    }
+}

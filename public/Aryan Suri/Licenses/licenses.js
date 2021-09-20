@@ -1,9 +1,17 @@
-function getCC() {
-	let tags = document.getElementById("pageTagsHolder");
+function getCC(inputTag) {
+	let tags;
+	if (inputTag) {
+		tags = [inputTag.startsWith('license:') ? inputTag : `license:${inputTag}`];
+	}
+	else {
+		tags = document.getElementById("pageTagsHolder");
+		if (tags) {
+		    tags = tags.innerText;
+		    tags = tags.replace(/\\/g, "");
+		    tags = JSON.parse(tags);
+		}
+	}
 	if (tags) {
-		tags = tags.innerText;
-		tags = tags.replace(/\\/g, "");
-		tags = JSON.parse(tags);
 		for (let i = 0; i < tags.length; i++) {
 			if (tags[i].includes("license")) {
 				let tag = tags[i].split(":")[1];
@@ -67,7 +75,7 @@ function getCC() {
 					case "arr":
 						return {
 							label: "arr",
-							title: "All Rights Reserved Â©",
+							title: "All Rights Reserved ©",
 							link: "https://en.wikipedia.org/wiki/All_rights_reserved"
 						};
 				}
@@ -85,7 +93,7 @@ function getCC() {
 
 	$('body').append(`
 		<div id="warningModal">
-			<div id="warningModalContent">  
+			<div id="warningModalContent">
 			</div>
 		</div>
     `);
@@ -99,7 +107,7 @@ function getCC() {
 
 		if (admin) { }
 		else if (pro && groups.includes('developer')) { }
-		else { ccDetect(); }
+		else {  } //TODO: add back ccDetect();
 		ccPageLabel();
 	}
 
@@ -159,7 +167,7 @@ function getCC() {
 					break;
 			}
 
-		} 
+		}
 		document.addEventListener('copy', () => {
 			$(modalB).show();
 			localStorage.setItem("cc", cc.label);
@@ -267,7 +275,7 @@ function getCC() {
 						case 6:
 						case 7:
 						case 10:
-						case 11: 
+						case 11:
 							preventPaste()
 							break;
 						case 12:
@@ -349,13 +357,13 @@ function getCC() {
 	}
 
 
-	/* 
+	/*
 		switch(ccm[cct]) {
 			case 1:
-			case 2: 
+			case 2:
 			case 3:
 			case 4:
-			case 5: 
+			case 5:
 			case 6:
 			case 7:
 			case 8:

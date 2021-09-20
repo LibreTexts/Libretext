@@ -220,34 +220,30 @@ a.toggler.off {
 
 .sbHeader {
   display: flex;
+  background-color: #127bc4;
   flex-direction: column;
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 25px;
   z-index: 30000003;
+  justify-content: space-around;
 }
 
 .top-tabs {
   cursor: pointer;
-  background-color: #127bc4;
-  transform-origin: right;
-  flex: 1;
-}
-
-.top-tabs h5 {
   color: white;
+  writing-mode: vertical-lr;
+  text-align: center;
+  flex: unset;
+  display: flex;
+  align-items: center;
+  transform: rotate(180deg);
+  transform-origin: center;
   font-size: 1rem !important;
   font-weight: 300;
-  font-family: Roboto;
-  transform: rotate(90deg);
-  transform-origin: center;
-  width: auto;
-}
-
-.top-tabs:first-child {
-  padding-top: 20px;
+  font-family: Roboto, serif;
 }
 
 .custom_sidebar #custom_dropdown-content a {
@@ -440,6 +436,31 @@ a.toggler.off {
   padding-left: 10px;
 }
 
+div#construction-guide-put {
+  background-color: transparent !important;
+}
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+  .custom_sidebar {
+    width: 100vw;
+    padding-left: 0;
+    padding-top: 25px;
+  }
+  .sbHeader {
+    flex-direction: row;
+    height: 25px;
+    width: 100vw;
+    text-align: center;
+  }
+  .top-tabs  {
+    font-size: 0.7rem !important;
+    writing-mode: initial;
+    transform: none;
+  }
+}
+
 @media only screen and (max-width: 1335px) {
   #elm-main-content {
     padding-left: 30px !important;
@@ -448,7 +469,7 @@ a.toggler.off {
 
 @media only screen and (max-width: 415px) {
   #elm-main-content {
-    padding-left: 0 !important;
+    padding-left: 10px !important;
   }
   .custom_sidebar {
     width: 100vw;
@@ -459,13 +480,15 @@ a.toggler.off {
     flex-direction: row;
     height: 25px;
     width: 100vw;
+    text-align: center;
   }
-  .top-tabs:first-child {
-    padding-top: 0;
-  }
-  .top-tabs h5 {
+  .top-tabs  {
     font-size: 0.7rem !important;
     transform: none;
+    writing-mode: initial;
+  }
+  hypothesis-sidebar {
+    display: none;
   }
 }
 
@@ -482,12 +505,12 @@ a.toggler.off {
   }
 }
 /*Prevent Mindtouch changes to glossary label*/
-  .glossaryLabel {
-    display: inline;
-  }
-  .glossaryLabel:after {
-    content: none;
-  }
-  #glossarizerOptions form {
-      text-indent: 2em;
-  }
+.glossaryLabel {
+  display: inline;
+}
+.glossaryLabel:after {
+  content: none;
+}
+#glossarizerOptions form {
+  text-indent: 2em;
+}

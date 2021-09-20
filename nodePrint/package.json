@@ -23,7 +23,7 @@
     "node-persist": "^3.1.0",
     "node-static": "git+https://github.com/LibreTexts/node-static.git",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^8.0.0",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {

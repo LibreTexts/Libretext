@@ -21,25 +21,57 @@ async function handler(request, response) {
     let url = request.url;
     url = url.replace('endpoint/', '');
     url = LibreTexts.clarifySubdomain(url);
-    
+    let localBounce = request.headers?.origin?.endsWith('libretexts.org');
     
     if (url.startsWith('/bounce/')) {
         if (request.method === 'GET') {
-            response.writeHead(200, {
+            response.writeHead(200, !localBounce ? {
                 'Access-Control-Allow-Origin': request.headers.origin || null,
                 'Access-Control-Allow-Methods': 'GET',
                 'Vary': 'Origin',
                 'Content-Type': 'application/json',
-            }); //allow targeted CORS
+            }:{
+                'Content-Type': 'application/json',
+            }); //allow targeted CORS, but prevent double CORS
             let [, targetURL] = url.split('/bounce/');
-            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//))
+            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/files\//)) {
                 responseError(`Invalid target ${targetURL}`, 400);
-            let requests;
-            requests = await LibreTexts.authenticatedFetch(targetURL);
-            if (requests.ok)
-                response.write(await requests.text());
-            else
-                responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
+            else {
+                let requests = await LibreTexts.authenticatedFetch(targetURL);
+                if (requests.ok)
+                    response.write(await requests.text());
+                else
+                    responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
+            response.end();
+        }
+        else {
+            responseError(request.method + ' Not Acceptable', 406);
+        }
+    }
+    else if (url.startsWith('/cross-library/')) {
+        if (request.method === 'GET') {
+            response.writeHead(200, !localBounce ? {
+                'Access-Control-Allow-Origin': request.headers.origin || null,
+                'Access-Control-Allow-Methods': 'GET',
+                'Vary': 'Origin',
+                'Content-Type': 'application/json',
+            }:{
+                'Content-Type': 'application/json',
+            }); //allow targeted CORS, but prevent double CORS
+            let [, targetURL] = url.split('/cross-library/');
+            targetURL = targetURL.replace('%3A', ':')
+            if (!targetURL?.match(/^https:\/\/\w*?\.libretexts.org\/@api\/deki\/pages\//))
+                responseError(`Invalid target ${targetURL}`, 400);
+            else {
+                let requests;
+                requests = await LibreTexts.authenticatedFetch(targetURL);
+                if (requests.ok)
+                    response.write(await requests.text());
+                else
+                    responseError(`${requests.statusText}\n${await requests.text()}`, 400);
+            }
             response.end();
         }
         else {
@@ -72,8 +104,9 @@ async function handler(request, response) {
                 let input = JSON.parse(body);
                 input.mode = input.mode ?? "raw";
                 input.format = input.format ?? "html";
+                input.dreamformat = input.dreamformat ?? "xml";
                 //Only get requests are acceptable
-                let requests = await LibreTexts.authenticatedFetch(input.path, `contents?mode=${input.mode}&format=${input.format}`, input.subdomain, 'LibreBot');
+                let requests = await LibreTexts.authenticatedFetch(input.path, `contents?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
                 if (requests.ok)
                     response.write(await requests.text());
                 else

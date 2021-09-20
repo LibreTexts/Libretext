@@ -1,40 +1,11 @@
-'use strict';
-
-var fs = require('fs');
-var exec = require('child_process').exec;
-var path = require('path');
-
-function checkSrc(src, callback) {
-    
-    if (!Array.isArray(src)) return callback('Source is not an Array'); else if (src.length < 2) return callback('There must be atleast 2 input files');
-    
-    var norm_src = [];
-    
-    for (var i = 0; i < src.length; i++) {
-        
-        if (typeof src[i] === 'string') {
-            
-            /*
-            //Check if source file exists
-             fs.stat(src[i],function(err,stats){
-               if(err)
-                return callback('Can\'t access file : ' + src[i]);
-               if(!stats.isFile())
-                return callback(src[i] + ' is not a File');
-             });*/
-            
-            norm_src.push('"' + src[i] + '"');
-        }
-        else return callback('Source : ' + src[i] + ' + , is not a file name');
-    }
-    
-    callback(null, norm_src);
-}
+const exec = require('child_process').exec;
+const path = require('path');
+const fs = require('fs');
 
 module.exports = function (src, dest, opts, callback) {
-    
-    var defaultOpts = {
-        maxBuffer: 1024 * 500 // 500kb
+    const defaultOpts = {
+        maxBuffer: 1024 * 500, // 500kb
+        maxHeap: '5G' // for setting JVM heap limits
     };
     
     // this will help to fix the old code using the function without opts
@@ -48,31 +19,71 @@ module.exports = function (src, dest, opts, callback) {
         opts = defaultOpts;
     }
     
-    var dirPathArr = __dirname.split(path.sep);
+    const dirPathArr = __dirname.split(path.sep);
     
     dirPathArr.push('pdfbox.jar');
     
-    var jarPath = dirPathArr.join(path.sep);
+    const jarPath = dirPathArr.join(path.sep);
     
-    var command = ['java -jar -Xmx3G "' + jarPath + '" PDFMerger'];
+    let command = [
+        "java", "-jar", `${jarPath}`, "PDFMerger"
+    ];
+    
+    let maxHeapOpt = opts.maxHeap ? '-Xmx' + opts.maxHeap : null;
+    delete opts.maxHeap;
+    if (maxHeapOpt) {
+        command.splice(2, 0, maxHeapOpt)
+    }
     
     checkSrc(src, function (err, norm_src) {
-        
-        if (err) return callback(err);
+        if (err) {
+            return callback(err);
+        }
         
         command = command.concat(norm_src);
         
-        command.push('"' + dest + '"');
+        command.push(`"${dest}"`);
         
-        var child = exec(command.join(' '), opts, function (err, stdout, stderr) {
-            
-            if (err) return callback(err);
+        
+        const child = exec(command.join(' '), opts, function (err, stdout, stderr) {
+            if (err) {
+                return callback(err);
+            }
             
             callback(null);
         });
         
         child.on('error', function (err) {
-            return callback('Execution problem. ' + err);
+            return callback(`Execution problem. ${err}`);
         });
     });
+    
+    
+    function checkSrc(src, callback) {
+        if (!Array.isArray(src)) {
+            return callback('Source is not an Array');
+        }
+        else if (src.length < 2) {
+            return callback('There must be at least 2 input files');
+        }
+        
+        const norm_src = [];
+        
+        for (let i = 0; i < src.length; i++) {
+            if (typeof src[i] === 'string') {
+                let path = opts.cwd ? `${opts.cwd}/${src[i]}` : src[i]; //account for cwd
+                if (fs.existsSync(path)) {
+                    norm_src.push(`"${src[i]}"`);
+                }
+                else {
+                    return callback(`File "${src[i]}" does not exist`);
+                }
+            }
+            else {
+                return callback(`Source : ${src[i]} + , is not a file name`);
+            }
+        }
+        
+        callback(null, norm_src);
+    }
 };

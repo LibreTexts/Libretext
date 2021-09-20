@@ -1,0 +1,15 @@
+/*Put the CSS that goes with the React project here!*/
+.subComponent {
+    border: 2px solid blue;
+}
+
+#biosimulation-render-container {
+    align-items: stretch;
+    justify-content: space-evenly;
+}
+
+@media (orientation: portrait){
+    #biosimulation-render-container{
+        flex-direction: column;
+    }
+}

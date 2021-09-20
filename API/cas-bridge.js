@@ -74,7 +74,7 @@ http.createServer(async (req, res) => {
     
     //`api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`
     res.writeHead(redirect ? 302 : 200, {
-        'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure; Max-Age=600000`],
+        'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure; Max-Age=600000; SameSite=Lax`],
         'Content-Type': 'text/plain',
         'Location': redirect,
     });

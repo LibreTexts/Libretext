@@ -39,12 +39,13 @@ img.youtubeImage {
 .thisqrcode {
 	position:absolute;
 	top: 0px;
-  }
-  
+	left: 0;
+}
+
 
 @media print {
-	.youtubeIFrame {
-		display: none
+	.mt-video-widget > iframe.youtubeIFrame {
+		display: none;
 	}
 
 	.mt-video-widget .youtubeImage {
@@ -52,8 +53,8 @@ img.youtubeImage {
 		height: inherit!important;
 	}
 
-	.mt-video-widget .youtubeImage, .mt-video-widget .youtubeImageContainer {
-		position: absolute;
+	.mt-video-widget .youtubeImageContainer {
+		position: relative;
 	}
 
 	.youtubeImageContainer {

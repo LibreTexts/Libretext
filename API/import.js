@@ -31,6 +31,43 @@ findRemoveSync('./ImportFiles', {
     files: "*.*",
 });
 
+
+function handler(request, response) {
+    const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+    let url = request.url;
+    url = LibreTexts.clarifySubdomain(url);
+    console.log(url);
+    
+    if (url.startsWith('/websocketclient')) {
+        //Serve client socket.io Javascript file
+        staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
+    }
+    else {
+        responseError('Action not found', 400);
+    }
+    
+    function responseError(message, status) {
+        //else fall through to error
+        response.writeHead(status ? status : 400, {"Content-Type": "text/html"});
+        response.write(("Bad Request\n" + (message ? message : url)));
+        response.end();
+    }
+    
+    function reportMessage(message, isError) {
+        if (isError) {
+            console.error(message);
+        }
+        else {
+            console.log(message);
+        }
+        let json = {
+            message: message,
+            isError: isError,
+        };
+        response.write(JSON.stringify(json) + "\r\n");
+    }
+}
+
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
     // console.log('an user connected');
@@ -99,8 +136,16 @@ async function downloadFile(data, socket) {
         return;
     }
     const contentLength = +response.headers.get('Content-Length');
-    if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/))
-        data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
+
+    if (response.headers.get('content-disposition') && response.headers.get('content-disposition').match(/(?<=filename=).*$/)) {
+        console.log(response.headers.get('content-disposition'))
+        try {
+            data.filename = response.headers.get('content-disposition').match(/(?<=filename=").*(?=")/)[0];
+        } catch (e) {
+            data.filename = response.headers.get('content-disposition').match(/(?<=filename=).*?(?=;|$)/)[0];
+        }
+    }
+
     
     // Step 3: read the data
     let receivedLength = 0; // received that many bytes at the moment
@@ -203,12 +248,16 @@ async function processCommonCartridge(data, socket) {
         await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-        });
+
+        }, data.subdomain);
+
         onlinePath += `/${data.filename}`;
         await Working.authenticatedFetch(onlinePath, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a><a href=\"#\">coverpage:yes</a></p>",
-        });
+
+        }, data.subdomain);
+
         await Working.putProperty('mindtouch.idf#subpageListing', 'simple', onlinePath);
         
         //parse imsmanifest.xml
@@ -270,7 +319,9 @@ async function processCommonCartridge(data, socket) {
         await Working.authenticatedFetch(path, "contents?abort=exists", {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
-        });
+
+        }, data.subdomain);
+
         await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
         
         for (const [key, value] of Object.entries(resourceTypes)) { //new page for each resource type
@@ -336,14 +387,18 @@ async function processCommonCartridge(data, socket) {
                 await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
                     method: "POST",
                     body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a>${convertedType}</p>`,
-                });
+
+                }, data.subdomain);
+
                 await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
             }
             else if (page.type === 'guide') {
                 await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
                     method: "POST",
                     body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${convertedType}</p>`,
-                });
+
+                }, data.subdomain);
+
                 await Promise.all(
                     [Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
                         Working.putProperty('mindtouch.page#welcomeHidden', true, path),
@@ -538,14 +593,18 @@ async function processEPUB(data, socket) {
     for (let i = 0; i < toc.length; i++) {
         if (toc[i].level) {
             //front and back matter ignored
+
             let page = toc[i];
             let indexes = page.title.match(/^[0-9]+\.[0-9]/);
             if (indexes) {
                 indexes = indexes[0];
-                page.title = page.title.replace(indexes, indexes + ':');
+
+                let numbers = indexes.split('.');
+                page.title = page.title.replace(indexes, `${numbers[0]}.${numbers[1].padStart(2,'0')}:`);
             }
             else {
-                page.title = `${chapterIndex}.${pageIndex}: ${page.title}`;
+                page.title = `${chapterIndex}.${String(pageIndex).padStart(2,'0')}: ${page.title}`;
+
             }
             pageIndex++;
             filtered.push({title: page.title, id: page.id, href: page.href});
@@ -640,7 +699,9 @@ async function processEPUB(data, socket) {
         
         async function processChapter(chapter) {
             let title = chapter.title;
-            title = title.replace("Chapter ", "");
+
+            title = title.replace("Chapter ", "").replace("/","--");
+
             let number = title.match(/[0-9]+(?= )/);
             if (number) {
                 number = number[0];
@@ -652,8 +713,11 @@ async function processEPUB(data, socket) {
             }
             let padded = title.replace(number, ("" + number).padStart(2, "0"));
             chapter.title = title;
-            chapter.padded = padded;
+
+            chapter.padded = LibreTexts.cleanPath(padded);
             let path = `${onlinePath}/${padded}`;
+            path = LibreTexts.cleanPath(path);
+
             let response = await Working.authenticatedFetch(path, `contents?edittime=now${padded !== title ? `&title=${encodeURIComponent(title)}` : ''}`, {
                 method: "POST",
                 body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`,
@@ -705,7 +769,9 @@ async function processEPUB(data, socket) {
             }
             
             let title = page.title || `Untitled Page ${("" + ++untitled).padStart(2, "0")}`;
-            let path = title;
+
+            let path = LibreTexts.cleanPath(title.replace("/","--"));
+
             
             let chapterNumber = path.match(/.*?(?=\.)/);
             if (!isSimple && chapterNumber) { //adds padding if necessary
@@ -906,12 +972,25 @@ async function processPretext(data, socket) {
         
         
         //find the PreTeXt source within this zip file
-        let source = await runProcess('grep', ['-rl', '-E', "'<pretext|<mathbook'", `${data.path}-Unzipped`]);
+
+        let source = await runProcess('grep', ['-rl', '-E', "<pretext|<mathbook", `${data.path}-Unzipped`]);
         if (!source) {
+            console.error('errorMessage', 'Cannot find a valid PreTeXt source root');
+
             socket.emit('errorMessage', 'Cannot find a valid PreTeXt source root');
             return;
         }
         
+
+        console.log(source.split(`${data.path}-Unzipped`), source.split(`${data.path}-Unzipped`).length)
+        if (source.split(`${data.path}-Unzipped`)?.length !== 2) {
+            console.error('Too many possible PreTeXt source roots: '+source);
+            socket.emit('errorMessage', 'Too many possible PreTeXt source roots');
+            return;
+        }
+        source = source.trim();
+        console.log(source);
+
         //obtain JSON manifest
         let rootPath = `${data.path}-Unzipped/out`;
         let current = await runProcess('xsltproc', ['--xinclude', './mathbook/xsl/pretext-json-manifest.xsl', source]);
@@ -934,7 +1013,9 @@ async function processPretext(data, socket) {
         //Build PreTeXt
         let xsltproc = await runProcess('xsltproc', ['--xinclude', '-o', rootPath + '/', './mathbook/xsl/pretext-basic-html.xsl', source]);
         console.log('done building');
-        
+
+        //TODO fix onlinePath
+
         await fs.writeJSON('out.json', current);
         
         
@@ -949,6 +1030,9 @@ async function processPretext(data, socket) {
             method: "POST",
             body: "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-category</a></p>",
         }, data.subdomain);
+
+        onlinePath += `/${data.filename}`;
+
         
         //begin page uploads
         let log = [];
@@ -970,11 +1054,13 @@ async function processPretext(data, socket) {
         await clearBacklog();
         
         //Function Zone
-        function digestPage(page, parent = {depth: 0, path: ''}) {
+
+        function digestPage(page, parent = {depth: 0, path: null}) {
             totalPages++;
             page.depth = parent.depth + 1;
             page.source = page.link.match(/(?<=^.*\/)[^\/]*?$/)[0];
-            page.path = `${parent.path}/${page.title}`;
+            page.path = parent.path === null ? '' : `${parent.path}/${page.title}`;
+
             
             if (page.depth === 1)
                 page.type = 'category';
@@ -1162,16 +1248,22 @@ async function putProperty(name, value, path, subdomain, username) {
 
 async function uploadImages(contents, path, imageProcessor, data) {
     //Rewrite image src url
-    let images = contents.match(/<img .*?src=".*?\/.*?>/g);
-    let src = contents.match(/(?<=<img .*?src=").*?(?=")/g);
+
+    let images = contents.match(/<img [^>\n]*?src=".*?\/.*?>/g);
     const atRoot = images === null;
     if (atRoot) {
-        images = contents.match(/<img .*?src=".*?>/g);
+        images = contents.match(/<img [^>\n]*?src=".*?>/g);
     }
-    if (src) {
-        for (let i = 0; i < src.length; i++) {
-            if (!src[i].startsWith('http')) {
-                let [filename, image, filePath] = await imageProcessor(src[i]);
+    if (images) {
+        for (let i = 0; i < images.length; i++) {
+            let src = images[i].match(/(?<=<img [^>\n]*?src=").*?(?=")/g)?.[0];
+            if(!src){
+                console.error(`Img src not valid: ${images[i]}`);
+                continue;
+            }
+            if (!src.startsWith('http')) {
+                let [filename, image, filePath] = await imageProcessor(src);
+
                 if (!image) {
                     console.error(`Could not find ${filePath}`);
                     continue;
@@ -1179,10 +1271,12 @@ async function uploadImages(contents, path, imageProcessor, data) {
                 const fileID = await uploadImage(filename, path, image, data.subdomain, data.user, data.socket);
                 let toReplace;
                 if (atRoot) { // at root url
-                    toReplace = images[i].replace(/(?<=<img .*?src=)"/, `"/@api/deki/files/${fileID}/`);
+
+                    toReplace = images[i].replace(/(?<=<img [^>\n]*?src=)"/, `"/@api/deki/files/${fileID}/`);
                 }
                 else {
-                    toReplace = images[i].replace(/(?<=<img .*?src=").*\/(?=.*?")/, `/@api/deki/files/${fileID}/`);
+                    toReplace = images[i].replace(/(?<=<img [^>\n]*?src=").*\/(?=[^>\n]*?")/, `/@api/deki/files/${fileID}/`);
+
                 }
                 
                 contents = contents.replace(images[i], toReplace);

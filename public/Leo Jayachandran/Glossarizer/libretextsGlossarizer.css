@@ -1,5 +1,35 @@
+.tippy-box[data-theme~='light'] {
+    background-color: #e7f6fe;
+    color: black;
+    border: 2px solid #34b4f5;
+    text-align: left;
+    color: #0a73a5;
+}
+.tippy-box[data-theme~='light'] > .tippy-arrow::before {
+    background: #e7f6fe;
+    border: 2px solid #34b4f5;
+    margin: -2px;
+}
+
+.tippy-box[data-theme~='dark'] {
+    background-color: #333;
+    border: 2px solid black;
+    text-align:left;
+    color: white;
+}
+.tippy-box[data-theme~='dark'] > .tippy-arrow::before {
+    background: #333;
+    border: 2px solid black;
+    margin: -2px;
+}
+
+[data-tippy-root] {
+    display: inline;
+}
+
 .glossarizer_replaced:hover {
     border-bottom: 1px #333 dotted;
+    background-color:#bbe2f8;
 }
 
 .glossarizer_replaced {
@@ -7,72 +37,13 @@
     display: inline;
     text-decoration-line: none;
 }
-
-.glossarizerTooltip {
-    text-align: center;
-    color: #098dd0;
-    background: #e5f5fe;
-    position: absolute;
-    z-index: 991;
-    padding: 15px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    border: 2px solid #30b3f6;
+.tippy-arrow {
+    color: #30b3f6;
+    margin: -2px;
 }
 
-.glossarizerTooltip p {
-    margin-top: 0;
-}
-.glossarizerTooltip img {
-    max-height: 100px;
-}
-
-.glossarizerTooltip .caption {
-    margin-top: 0;
-}
-.glossarizerTooltip .glossarySource {
-    text-align: right;
-    margin: 0;
-}
-
-.glossarizerTooltip:before {
-    content: 'x';
-    position: absolute;
-    color: #098dd0;
-    right: 8px;
-    top: 3px;
-    font-size: 12px;
-}
-.glossarizerTooltip:after {/* triangle decoration */
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid #30b3f6;
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -10px;
-    margin-left: -10px;
-}
-
-.glossarizerTooltip.top:after {
-    border-top-color: transparent;
-    border-bottom: 2px solid #30b3f6;
-    top: -20px;
-    bottom: auto;
-}
-
-
-.glossarizerTooltip.left:after {
-    left: 10px;
-    margin: 0;
-}
-
-.glossarizerTooltip.right:after {
-    right: 10px;
-    left: auto;
-    margin: 0;
+[data-tippy-root] {
+    display: inline;
 }
 
 .glossaryTable {
@@ -81,6 +52,10 @@
 .glossaryTerm {
     font-weight: bold;
 }
-.glossaryElement {
-    margin-bottom: 1em;
+
+p.glossaryElement {
+    font-size: 1.0rem;
+    margin: 0.5rem 0 1em;
 }
+
+

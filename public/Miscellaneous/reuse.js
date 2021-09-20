@@ -25,7 +25,7 @@ function LibreTextsReuse() {
         "Chemistry": "chem",
         "Engineering": "eng",
         "Espanol": "espanol",
-        "Geology": "geo",
+        "Geosciences": "geo",
         "Humanities": "human",
         "K12 Education": "k12",
         "Mathematics": "math",
@@ -33,7 +33,8 @@ function LibreTextsReuse() {
         "Physics": "phys",
         "Social Sciences": "socialsci",
         "Statistics": "stats",
-        "Workforce": "workforce"
+        "Workforce": "workforce",
+        "Query": "query"
     };
     
     return {
@@ -57,6 +58,7 @@ function LibreTextsReuse() {
         getCurrentContents: getCurrentContents,
         getCoverpage: getCoverpage,
         TOC: TOC,
+        sleep: sleep,
         libraries: libraries,
     };
     
@@ -94,8 +96,14 @@ function LibreTextsReuse() {
         if (url && url.match(/https?:\/\/.*?\.libretexts\.org/)) {
             if (url.includes('libretexts.org/@go/page'))
                 return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/@go\/page\/)(.*)/)[2]]
-            else
-                return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], url.match(/(https?:\/\/.*?\/)(.*)/)[2]]
+            else {
+                let path = url.match(/(https?:\/\/.*?\/)(.*)/);
+                if (path)
+                    path = path[2]
+                else path = ""
+                
+                return [url.match(/(https?:\/\/)(.*?)(?=\.)/)[2], path]
+            }
         }
         else {
             return [];
@@ -127,8 +135,7 @@ function LibreTextsReuse() {
         
         let [current, path] = LibreTexts.parseURL();
         let payload = {
-            username: document.getElementById('usernameHolder').innerText,
-            id: document.getElementById('userIDHolder').innerText,
+            globalSettings: JSON.parse(document.getElementById('mt-global-settings').innerText),
             subdomain: current,
             token: (await getKeys())[current],
             path: path,
@@ -259,7 +266,7 @@ function LibreTextsReuse() {
         return result;
     }
     
-    async function getSubpages(rootURL, options = {}) {
+    async function getSubpages(rootURL = window.location.href, options = {}) {
         const [subdomain, path] = LibreTexts.parseURL(rootURL);
         
         let pages = await authenticatedFetch(path, 'subpages?limit=all&dream.out.format=json', subdomain);
@@ -269,6 +276,7 @@ function LibreTextsReuse() {
         info = await info.json();
         return {
             title: info.title,
+            id: info["@id"],
             url: rootURL,
             children: await subpageCallback(pages)
         };
@@ -387,7 +395,9 @@ function LibreTextsReuse() {
             
         }
         else {
+            let errorCode = response.status;
             let error = await response.json();
+            error.errorCode = errorCode;
             // console.error(`Can't get ${page.url}`);
             page.subdomain = subdomain;
             page.path = path;
@@ -427,7 +437,7 @@ function LibreTextsReuse() {
         return getCoverpage.coverpage;
     }
     
-    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy") {
+    async function TOC(coverpageUrl, targetElement = ".elm-hierarchy.mt-hierarchy", showTitle = false) {
         let coverTitle;
         let content;
         const [subdomain] = LibreTexts.parseURL();
@@ -451,7 +461,7 @@ function LibreTextsReuse() {
             let info = LibreTexts.authenticatedFetch(path, 'info?dream.out.format=json', subdomain);
             
             
-            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json', subdomain);
+            let response = await LibreTexts.authenticatedFetch(path, 'subpages?dream.out.format=json&limit=all', subdomain);
             response = await response.json();
             info = await info;
             info = await info.json();
@@ -515,7 +525,8 @@ function LibreTextsReuse() {
                     target.addClass("toc-hierarchy");
                     // target.removeClass("elm-hierarchy mt-hierarchy");
                     target.innerHTML = "";
-                    target.prepend(`<a href="${url}"><h6>${coverTitle}</h6></a>`);
+                    if (showTitle)
+                        target.prepend(`<a href="${url}"><b>${coverTitle}</b></a>`);
                     target.fancytree({
                         source: content,
                         lazyLoad: function (event, data) {
@@ -530,5 +541,8 @@ function LibreTextsReuse() {
         }
     }
     
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
 
