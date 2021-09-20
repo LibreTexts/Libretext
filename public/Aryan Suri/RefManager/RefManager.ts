@@ -241,6 +241,7 @@ async function processReference() {
     let anchoredKeys: any[] = [];
     function replaceReferenceID(ref: any, inputString: string) {
         const key = inputString.replace(new RegExp(/&nbsp;/gm), " ").replace(new RegExp(/<[\s\S]*?>/gm), "").trim();
+        console.log(ref, inputString)
         if (key in ref) {
             anchoredKeys.push(key)
             return renderReference(ref[key].data, "cite");

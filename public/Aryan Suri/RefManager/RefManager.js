@@ -107,7 +107,6 @@ async function putRefJSON(json, cp = false) {
 }
 async function copyReference() {
     let refID = this.id;
-    refID = refID.slice(0, -1);
     const el = document.createElement('textarea');
     el.value = `\\#${refID}#\\`;
     el.setAttribute('readonly', '');
@@ -249,7 +248,9 @@ async function processReference() {
     let anchoredKeys = [];
     function replaceReferenceID(ref, inputString) {
         const key = inputString.replace(new RegExp(/&nbsp;/gm), " ").replace(new RegExp(/<[\s\S]*?>/gm), "").trim();
+        console.log(ref , inputString)
         if (key in ref) {
+            console.log(ref, inputString)
             anchoredKeys.push(key);
             return renderReference(ref[key].data, "cite");
         }
