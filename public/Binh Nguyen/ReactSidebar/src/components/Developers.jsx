@@ -67,6 +67,7 @@ export default function Developers(props) {
             <IconLink title="RealTime Mathjax" icon="fas fa-square-root-alt"
                       href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax"/>
             <IconLink title="LibreMaps" icon="mt-icon-archive" href="https://libremaps.libretexts.org/"/>
+	    <LibraryItem key="query" text="Query Library" subdomain="query"/>
         </List>
     );
 }
