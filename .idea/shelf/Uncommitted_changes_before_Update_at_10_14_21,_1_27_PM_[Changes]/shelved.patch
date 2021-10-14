@@ -1,0 +1,32 @@
+Index: .idea/sshConfigs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n    <component name=\"SshConfigs\">\n        <configs>\n            <sshConfig host=\"test.libretexts.org\" id=\"8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc\" keyPath=\"$USER_HOME$/.ssh/id_rsa\" port=\"22\" nameFormat=\"DESCRIPTIVE\" username=\"hagnew\" />\n            <sshConfig host=\"api.libretexts.org\" id=\"721eabf3-5484-42ce-80cd-fbe06c622364\" keyPath=\"$USER_HOME$/.ssh/id_rsa\" port=\"22\" nameFormat=\"DESCRIPTIVE\" username=\"root\" />\n            <sshConfig host=\"batch.libretexts.org\" id=\"340bdb47-09c2-4fea-962a-fb2fedada4c8\" keyPath=\"$USER_HOME$/.ssh/id_rsa\" port=\"22\" nameFormat=\"DESCRIPTIVE\" username=\"root\" />\n            <sshConfig host=\"front.libretexts.org\" id=\"11858421-7d87-4d9a-a8a8-efb7403adf0d\" keyPath=\"$USER_HOME$/.ssh/id_rsa\" port=\"22\" nameFormat=\"DESCRIPTIVE\" username=\"hagnew\" />\n        </configs>\n    </component>\n</project>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/sshConfigs.xml b/.idea/sshConfigs.xml
+--- a/.idea/sshConfigs.xml	(revision 7a1ccc63d14dcbe6a97e8af28ef6e83a0da8e486)
++++ b/.idea/sshConfigs.xml	(date 1634231736453)
+@@ -1,11 +1,11 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-    <component name="SshConfigs">
+-        <configs>
+-            <sshConfig host="test.libretexts.org" id="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
+-            <sshConfig host="api.libretexts.org" id="721eabf3-5484-42ce-80cd-fbe06c622364" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
+-            <sshConfig host="batch.libretexts.org" id="340bdb47-09c2-4fea-962a-fb2fedada4c8" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
+-            <sshConfig host="front.libretexts.org" id="11858421-7d87-4d9a-a8a8-efb7403adf0d" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
+-        </configs>
+-    </component>
+-</project>
++  <component name="SshConfigs">
++    <configs>
++      <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="test.libretexts.org" id="8f2234fe-7c98-4fd4-9f0c-b6aed4b550cc" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
++      <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="api.libretexts.org" id="721eabf3-5484-42ce-80cd-fbe06c622364" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
++      <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="batch.libretexts.org" id="340bdb47-09c2-4fea-962a-fb2fedada4c8" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="root" />
++      <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="front.libretexts.org" id="11858421-7d87-4d9a-a8a8-efb7403adf0d" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="hagnew" />
++    </configs>
++  </component>
++</project>
+\ No newline at end of file
