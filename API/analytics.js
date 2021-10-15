@@ -25,6 +25,9 @@ app.get(basePath + '/ping', (req, res) => {
     res.send('PONG');
 });
 
+/**
+ * Receives analytics data and stores it in a JSON file
+ */
 app.post(basePath + '/receive', async (req, res) => {
     res.send('Done');
     // res.status(200).end();
@@ -39,10 +42,12 @@ app.post(basePath + '/receive', async (req, res) => {
         let event = JSON.parse(body);
         let courseName = event.actor.courseName;
         
+        //basic data validation
         let user = event.actor.id.user || event.actor.id;
         if (!courseName || !user)
             return false;
         
+        //use crypto to retrieve analytics identifier
         const cipher = crypto.createCipheriv('aes-256-cbc', secure.analyticsSecure, Buffer.from(secure.analyticsSecure, 'hex'));
         
         user = cipher.update(user, 'utf8', 'hex')
@@ -66,13 +71,20 @@ app.post(basePath + '/receive', async (req, res) => {
     }
 })
 
+/**
+ * Sends a list of all the available course directories
+ */
 app.get(basePath + '/listCourses', async (req, res) => {
     let courses = await fs.readdir(`./analyticsData/`);
     courses = courses.filter(e => e.startsWith('ay'));
     res.send(courses);
 })
 
+/**
+ * Processes all requests to get zips of analytics data
+ */
 app.post(basePath + '/secureAccess', express.urlencoded({extended: true}), async (req, res) => {
+    // validate security token
     let auth = req.body.tokenField;
     if (!auth) {
         return res.sendStatus(401);
@@ -88,10 +100,13 @@ app.post(basePath + '/secureAccess', express.urlencoded({extended: true}), async
             return res.status(404).send({error: `Could not find course ${courseName}`});
         }
         await prepareZipData(courseName);
-        await streamZip(courseName, res)
+        await streamZip(courseName, res);
     }
 });
 
+/**
+ * Processes all requests to get linker identifiers for analytics data
+ */
 app.post(basePath + '/getLinker', express.urlencoded({extended: true}), async (req, res) => {
     let auth = req.body.tokenField;
     if (!auth) {
@@ -111,19 +126,24 @@ app.post(basePath + '/getLinker', express.urlencoded({extended: true}), async (r
     }
 });
 
+/**
+ * Converts the RAW JSON into CSV
+ * @param courseName - name of course to process
+ * @returns {Promise<void>}
+ */
 async function prepareZipData(courseName) {
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}/RAW`);
     await fs.emptyDir(`./analyticsData/ZIP/${courseName}/CSV`);
-    console.time('copy');
+    console.time('copy'); //copy to working directory
     await fs.copy(`./analyticsData/${courseName}`, `./analyticsData/ZIP/${courseName}/RAW`);
     console.timeEnd('copy');
     
     console.log(`Beginning ${courseName}`);
-    //Reprocessing raw data
+
     let months = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW`, {withFileTypes: true});
     months = months.filter(m => m.isDirectory());
     
-    console.time('Reprocessing');
+    console.time('Reprocessing');    //Reprocessing raw data into CSV
     for (let month of months) {
         console.log(month.name);
         let students = await fs.readdir(`./analyticsData/ZIP/${courseName}/RAW/${month.name}`, {withFileTypes: true});
@@ -133,7 +153,7 @@ async function prepareZipData(courseName) {
                 const fileRoot = student.replace('.txt', '');
                 let lines = await fs.readFile(`./analyticsData/ZIP/${courseName}/RAW/${month.name}/${student}`);
                 lines = lines.toString().replace(/\n$/, "").split('\n');
-                lines = lines.map((line) => {
+                lines = lines.map((line) => { //convert RAW JSON lines into an array of JSON objects
                     try {
                         return JSON.parse(line);
                     } catch (e) {
@@ -141,6 +161,8 @@ async function prepareZipData(courseName) {
                         return undefined;
                     }
                 });
+                
+                //JSON into CSV conversion
                 let result = lines;
                 let resultCSV = 'courseName## id## platform## verb## pageURL## pageID## timestamp## pageSession## timeMe## beeline_status## [type or percent]';
                 
@@ -174,6 +196,11 @@ async function prepareZipData(courseName) {
     console.timeEnd('Reprocessing');
 }
 
+/**
+ * Sends ZIP stream as response to res
+ * @param {string} courseName - name of course to process
+ * @param {Response} res - Response to send the ZIP datastream to
+ */
 async function streamZip(courseName, res) {
     const archiver = require('archiver');
     const archive = archiver('zip');
@@ -212,8 +239,11 @@ async function streamZip(courseName, res) {
     console.log(`Secure Access ${courseName}`);
 }
 
-//createLinker('chem-2737')
-
+/**
+ * Creates an associated between the analytics identifier and the respective user's email
+ * @param {string} courseName - name of course to process
+ * @param {Response} res
+ */
 async function createLinker(courseName, res) {
     let students = await fs.readdir(`./analyticsData/${courseName}`, {withFileTypes: true});
     let output = 'Identifier, Email\n';

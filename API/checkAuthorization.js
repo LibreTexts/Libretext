@@ -1,6 +1,12 @@
 const LibreTexts = require('./reuse.js');
 const authenBrowser = require('./authenBrowser.json');
 
+/**
+ * Verifies passed Authorization with Mindtouch backend
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {function} next 
+ */
 async function checkAuthorization(req, res, next) {
     if (!req.get('origin')?.endsWith('libretexts.org')) {
         res.status(401);

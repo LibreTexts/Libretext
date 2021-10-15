@@ -20,7 +20,8 @@ const now1 = new Date();
 app.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`));
 const prefix = '/elevate';
 const botUsername = 'LibreBot';
-//Creates a user sandbox and limits permissions to just that user
+
+//express.js endpoints
 app.put(`${prefix}/createSandbox`, createSandbox);
 app.put(`${prefix}/cleanPath`, cleanPath);
 app.put(`${prefix}/fork`, fork);
@@ -28,7 +29,11 @@ app.put(`${prefix}/manageUser/:method`, manageUser);
 app.put(`${prefix}/getUsers/:group.:format`, getUsersInGroup);
 app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
-
+/**
+ * Creates a user sandbox and limits permissions to just that user
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 async function createSandbox(req, res) {
     const body = req.body;
     // console.log(body);
@@ -37,6 +42,7 @@ async function createSandbox(req, res) {
     let path = originalPath.replace('@', '_at_');
     let result = `${body.subdomain}/${body.username}`;
     
+    //replace any '@' in username
     if (body.username.includes('@')) {
         let migrate = await LibreTexts.authenticatedFetch(originalPath, `move?name=${body.username.replace('@', '_at_')}&allow=deleteredirects&dream.out.format=json`, body.subdomain, botUsername, {
             method: 'POST',
@@ -44,6 +50,7 @@ async function createSandbox(req, res) {
         console.log(`Migrate ${body.username} pages: ${(await migrate.json())["@count"]}`);
     }
     
+    //create sandbox page
     let response = await LibreTexts.authenticatedFetch(path, `contents?title=${body.username}`, body.subdomain, botUsername, {
         method: 'POST',
         body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
@@ -109,6 +116,11 @@ async function createSandbox(req, res) {
     res.send(result);
 }
 
+/**
+ * Lists all of the groups for a particular subdomain
+ * @param {string} subdomain 
+ * @returns {array} groups for that subdomain
+ */
 async function getGroups(subdomain) {
     let groups;
     if (typeof getGroups.groups === "undefined") { //reuse old data
@@ -135,6 +147,11 @@ async function getGroups(subdomain) {
     return groups;
 }
 
+/**
+ * Removes any problematic characters from a page's path by moving it
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 async function cleanPath(req, res) {
     const body = req.body;
     body.subdomain = body.pageSubdomain || body.subdomain;
@@ -169,6 +186,11 @@ async function cleanPath(req, res) {
         res.send('okay');
 }
 
+/**
+ * Converts any content-reuse section in the page contents into the transcluded html content
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 async function fork(req, res) {
     const body = req.body;
     let destination = {path: body.path, subdomain: body.subdomain};
@@ -218,7 +240,7 @@ async function fork(req, res) {
                 if (temp !== result)
                     success = true;
                 
-                //Local Forker
+                //Same-site Forker
                 async function localFork(original, crossLibrary) {
                     let subdomain = crossLibrary || body.subdomain;
                     let result = original;
@@ -281,7 +303,7 @@ async function fork(req, res) {
                 sourceTags.splice(sourceTags.indexOf("transcluded:yes"), 1);
                 sourceTags = sourceTags.map(tag => `<a href="#">${tag}</a>`).join('');
                 const comment = `[BOT Fork] Successfully forked https://${body.subdomain}.libretexts.org/${body.path}`;
-                if (success) {
+                if (success) { //update page contents
                     await LibreTexts.authenticatedFetch(destination.path, `contents?edittime=now&comment=${encodeURIComponent(comment)}`, destination.subdomain, body.username, {
                         method: "POST",
                         body: result + `<p class="template:tag-insert"><em>Tags recommended by the template: </em>${sourceTags}</p>`,
@@ -323,7 +345,14 @@ async function fork(req, res) {
         return result;
     }
     
-    
+    /**
+     * 
+     * @param {string} content - target page's HTML that will be modified 
+     * @param {Object} source - source page object
+     * @param {Object} destination - destination page object
+     * @param {string} user - current user that is performing this operation
+     * @returns {string} - modified target page content
+     */
     async function copyFiles(content, source, destination, user) {
         let response = await LibreTexts.authenticatedFetch(source.path, 'files?dream.out.format=json', source.subdomain, 'LibreBot');
         if (response.ok) {
@@ -385,6 +414,11 @@ async function fork(req, res) {
     }
 }
 
+/**
+ * Modifies a user's information and permissions
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 async function manageUser(req, res) {
     const body = req.body;
     const payload = body.payload;
@@ -472,6 +506,11 @@ async function manageUser(req, res) {
     res.send(response);
 }
 
+/**
+ * Sends back CSV file of all users in a particular group
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 async function getUsersInGroup(req, res) {
     let result = [];
     let subdomains = Object.values(LibreTexts.libraries);
