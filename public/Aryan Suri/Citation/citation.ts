@@ -193,9 +193,9 @@ function getCite(verbose = false) {
     // Generate citation in desired format. //
 
     const Cite = CitRequire('citation-js');
-    Cite.plugins.config.get('csl').templates.add(mlaname, mlatemplate);
-    Cite.plugins.config.get('csl').templates.add(acsname, acstemplate);
-    Cite.plugins.config.get('csl').templates.add(chicagoname, chicagotemplate);
+    Cite.plugins.config.get('@csl').templates.add(mlaname, mlatemplate);
+    Cite.plugins.config.get('@csl').templates.add(acsname, acstemplate);
+    Cite.plugins.config.get('@csl').templates.add(chicagoname, chicagotemplate);
     let citetemp = $('#citeSelect').children("option:Selected").val();
 
     let pageParam = getParam();
