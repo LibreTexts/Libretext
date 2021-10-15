@@ -47,7 +47,7 @@
     margin-bottom: 0px;
 }
 
-#LibreTextsSidebar .svg-inline--fa {
+.svg-inline--fa {
     transform: translate(-15px);
     font-size: x-large;
 }
@@ -133,6 +133,7 @@
 }
 .sbHeader .top-tabs:hover {
     border: none;
+    background-color: transparent;
 }
 .sbHeader .top-tabs span {
     writing-mode: vertical-lr;
@@ -178,14 +179,9 @@
     }
 }
 
-@media screen and (min-width: 500px) and (max-width: 1330px) {
-  #elm-main-content {
-    padding-left: 30px !important;
-  }
-}
-
-@media print {
-    #custom_open, .sbHeader, #LibreTextsSidebar {
-        display: none;
+@media (min-width: 500px) and (max-width: 1330px) {
+    #elm-main-content {
+        padding-left: 30px !important;
     }
 }
+
