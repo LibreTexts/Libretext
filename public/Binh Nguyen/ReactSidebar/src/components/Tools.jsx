@@ -53,9 +53,7 @@ export default function Tools(props) {
 		    </RadioGroup>
 	    </FormControl>
 	    <br/>
-            <Button id="referenceModalBtn" onClick={(event) => {
-			document.getElementById("referenceModal").style.display = "block"
-		    }}>Reference Manager</Button>
+
 		 
 	{/*	    <FormControl component="fieldset" style={{padding: 20}}>
 		<FormLabel component="legend">Page Annotation</FormLabel>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Button, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {IconLink, LibraryItem, TableOfContents} from "./Common.jsx";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -68,6 +68,9 @@ export default function Developers(props) {
                       href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax"/>
             <IconLink title="LibreMaps" icon="mt-icon-archive" href="https://libremaps.libretexts.org/"/>
 	    <LibraryItem key="query" text="Query Library" subdomain="query"/>
+	    <Button id="referenceModalBtn" onClick={(event) => {
+		document.getElementById("referenceModal").style.display = "block"
+	    }}>Reference Manager</Button>
         </List>
     );
 }
