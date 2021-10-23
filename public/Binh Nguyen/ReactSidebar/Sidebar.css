@@ -180,9 +180,9 @@
 }
 
 @media (min-width: 500px) and (max-width: 1330px) {
-  #elm-main-content {
-    padding-left: 30px !important;
-  }
+    #elm-main-content {
+        padding-left: 30px !important;
+    }
 }
 
 @media print {

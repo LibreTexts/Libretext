@@ -23,7 +23,7 @@ const {
 } = jose
 
 const serviceName = 'https://api.libretexts.org/cas-bridge';
-// Default prefix is '/'.
+// set up connection to the CAS server
 const handler = httpCasClient({
     casServerUrlPrefix: 'https://sso.libretexts.org/cas',
     serverName: serviceName
@@ -32,14 +32,14 @@ const handler = httpCasClient({
 const key = JWK.asKey(readFileSync('./JWT/cas-bridge'));
 
 
-// console.log(JWT.sign({Hello: "World!"}, key, {issuer: serviceName}));
-
 http.createServer(async (req, res) => {
     if (req.url.includes('public')) {
         res.writeHead(200, {
             'Content-Type': 'text/plain',
             'Cache-Control': 'public,  max-age=604800, immutable, must-revalidate, no-transform'
         });
+        
+        // serve pubkey for JWT verification
         return res.end(readFileSync('./JWT/cas-bridge.pub'));
     }
     
@@ -57,7 +57,7 @@ http.createServer(async (req, res) => {
     delete principal?.attributes?.refresh_token
     delete principal?.attributes?.aio
     
-    
+    // create JWT cookie containing principal information
     const cookies = cookie.parse(req.headers.cookie);
     const redirect = cookies?.api_redirect?.replace(/#$/, '') || undefined;
     console.log(JSON.stringify(principal, null, 2));
@@ -72,7 +72,6 @@ http.createServer(async (req, res) => {
     const token = JWT.sign(payload, key, {issuer: serviceName});
     // console.log(payload, token);
     
-    //`api_redirect=; Domain=libretexts.org; expires=expires: ${new Date(0)};`
     res.writeHead(redirect ? 302 : 200, {
         'Set-Cookie': [`overlayJWT=${token}; Domain=libretexts.org; secure; Max-Age=600000; SameSite=Lax`],
         'Content-Type': 'text/plain',

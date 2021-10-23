@@ -4,8 +4,8 @@ import {IconLink, LibraryItem, TableOfContents} from "./Common.jsx";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {saveAs} from 'file-saver';
 
 export default function Developers(props) {
     let tags = document.getElementById('pageTagsHolder').innerText;
@@ -55,6 +55,25 @@ export default function Developers(props) {
                     console.log(data.join(", "));
                     alert("Copied pageIDs to the clipboard");
                 })
+            }}/>
+            <IconLink title="Generate MassTagger CSV" icon="mt-icon-csv" onClick={async ()=>{
+                let response = await LibreTexts.getSubpages();
+                let pages = addLinks(response);
+                function addLinks(current) {
+                    let array = [current];
+                    if (current?.children?.length) {
+                        current.children.forEach((child) => {
+                            if (child.title === 'Front Matter' || child.title === 'Back Matter')
+                                return;
+                            array = array.concat(addLinks(child));
+                        });
+                    }
+                    return array;
+                }
+                pages = pages.map(e=>`"${e.title}",${e.id}`);
+                pages.unshift('Page title, Page ID, Page tag(s)');
+                let [subdomain] = LibreTexts.parseURL();
+                saveAs(new Blob([pages.join('\n')],{type:"text/csv;charset=utf-8"}),`masstagger-${subdomain}-${response.id}.csv`);
             }}/>
             {allowMatter ? <IconLink title="Generate Front/Back Matter" icon="mt-icon-book2" onClick={() => {
                 batch(window.location.href, '&createMatterOnly=true');

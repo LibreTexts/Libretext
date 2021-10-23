@@ -172,8 +172,8 @@ function doBeeline(theme) {
 }
 
 window.activateBeeLine = function activateBeeLine() { //initalization function. Called by Mathjax
-    if (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        localStorage.setItem('darkMode', "true");
+    // if (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    //     localStorage.setItem('darkMode', "true");
     
     if (localStorage.getItem("beeline")) {
         if (localStorage.getItem("beeline") !== "off")
