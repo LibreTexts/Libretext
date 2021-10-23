@@ -218,6 +218,7 @@ window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
         Sidebar();
+	buildManager();
     }
 });
 

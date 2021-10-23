@@ -185,3 +185,8 @@
     }
 }
 
+@media print {
+    #custom_open, .sbHeader, #LibreTextsSidebar {
+        display: none;
+    }
+}
