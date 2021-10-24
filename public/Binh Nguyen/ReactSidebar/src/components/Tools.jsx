@@ -21,7 +21,8 @@ export default function Tools(props) {
                 attribution();
                 props.toggleDrawer(false)();
             }}/>
-            <IconLink title="Get Page Content" icon="mt-icon-edit-page" href="/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder').innerText}"/>
+            <IconLink title="Get Page Contents" icon="mt-icon-edit-page"
+                      href={`/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder')?.innerText}`}/>
             <AutoAttribution/>
 	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
 		 event.preventDefault();
