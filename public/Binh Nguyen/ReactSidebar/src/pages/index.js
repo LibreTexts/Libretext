@@ -44,8 +44,7 @@ Your top-level logic should go here, but other parts should be handled by sub-co
 function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     const [lastPanel, setLastPanel] = useState();
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") ? localStorage.getItem("darkMode") === "true" : prefersDarkMode);
+    const [darkMode, setDarkMode] = useState( localStorage.getItem("darkMode") === "true");
     
     const theme = React.useMemo(
         () => {

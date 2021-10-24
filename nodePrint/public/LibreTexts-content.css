@@ -1,0 +1,2033 @@
+/* From control panel */
+
+@default-font-family: "Tahoma", Arial, serif;
+
+.doublecolumn {
+  -webkit-column-count: 2; /* Chrome, Safari, Opera */
+  -moz-column-count: 2; /* Firefox */
+  column-count: 2;
+}
+
+.elm-footer-siteinfo-nav{display:none;}
+.elm-meta-bottom{display:none;}
+.elm-header-logo-container{display:none;}
+.elm-pdf-export{display:none !important}
+
+.elm-related-articles-container{display:none;} 
+.mt-related-articles-header{display:none;}
+.mt-related-listings-container{display:none;}
+#F1 mt-icon-special-character-warning  { display:none  !important;}
+#mt-template-referencepage{display:none !important}
+#mt-template-topicpage{display:none !important}
+#mt-template-knowledgebasepage{display:none !important}
+#mt-template-blank{display:none !important}
+
+
+hide{
+    display:none;
+}
+
+/* Hide file attachments from search results */
+    #mt-search-results li.type-file{
+    display:none;
+    }
+
+/* GeniusSearch styles  */
+.special-search #page-top,
+.special-geniussearch #page-top {
+    border-top: 0 !important;
+}
+#mt-search-container .mt-help-actions-container {
+    width: 100%;
+}
+.elm-article-feedback {margin-bottom: 0;}
+.elm-attachments{margin: 0em 0 1em;}
+
+#Classification{display:none;}
+#Tag_directory{display:none;}
+#Article_directory{display:none;}
+#Path{display:none;}
+#Featured_articles{display:none;}
+.mt-new-features-container{display:none;}
+/*.pageInfo {display: none !important;}*/
+
+
+.MathJax_Display {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.mt-content-container p{
+    font-size: 1.1rem;
+    text-align: left;
+    line-height: 1.5;
+    display: block;
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+}
+p.mt-align-center{text-align: center;}
+
+.elm-meta-top dd{
+        color: black !important;  
+}
+
+
+/**************************Hyperlink Styling ********************/
+.mt-content-container a, .elm-footer a, .elm-meta-article-navigation a, .elm-article-pagination a, .toc-button a, .mt-breadcrumbs a{
+  color: #0372a6 !important;
+}
+
+.mt-content-container a:hover{
+    color: #bf1722 !important;
+}
+.elm-footer a:hover{
+    color: #bf1722 !important;
+}
+.elm-meta-article-navigation a:hover{
+    color: #bf1722 !important;
+}
+
+.mt-content-container a:hover, a:focus {
+    text-decoration: underline;
+}
+.elm-footer a:hover, a:focus {
+    text-decoration: underline;
+}
+.elm-meta-article-navigation a:hover, a:focus {
+    text-decoration: underline;
+}
+
+/******************************* Table Block *****************************/
+.mt-content-container table p{
+    font-size: 1.05rem !important;
+    margin: 0em !important;
+}
+.mt-content-container td, .mt-content-container th {
+   font-size: 1rem;
+   vertical-align: middle;
+   /*text-align: center;*/
+   padding: 0.4em !important;
+}
+
+caption { 
+    display: table-caption;
+    text-align: center;
+    font-size: 1rem;
+}
+.mt-content-container table {
+    margin-bottom: 1em !important;
+}
+
+/******************************* List Block *****************************/
+.mt-content-container ol, .mt-content-container ul {
+   font-size: 1.1rem;
+   line-height: 1.4;
+}
+
+.attributions p {
+    line-height: 1.25 !important;
+    margin-block-start: 0em !important;
+    margin-block-end: 0em !important;
+    font-size: 1rem !important;
+}
+.attributions ul{
+   line-height: 1.25;
+}
+.attributions li {
+    line-height: 1.25 !important;
+    margin-block-start: 0em !important;
+    margin-block-end: 0em !important;
+    font-size: 1rem !important;
+}
+
+/*
+.mt-content-container :not(.mt-category-container) :not(.mt-guide-listings) ol li {
+	text-align: left;
+        font-size: 1.1rem;
+}
+
+.mt-content-container :not(.mt-category-container) :not(.mt-guide-listings) :not(.mt-sortable-listings-container) :not(.mt-topic-hierarchy-listings) ul li {
+	text-align: left;
+        font-size: 1.1rem;
+}
+*/
+/******************************* blockquote Block *****************************/
+.mt-content-container blockquote {
+  display: block;
+  font-size: 1.3rem !important;
+  color:  #0372a6;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 50px;
+    
+  padding-left: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+    
+  border-left: 3px solid #0f67a6;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-right: 0px;
+}
+
+/******************************* Header Block *****************************/
+h1 {
+    font-size: 1.7rem;
+    line-height: 25px;
+    color: 	#0372a6;
+    text-align: left !important;
+    margin: 4px 0 !important;
+}
+h2, h3, h4, h5, h6 {
+    text-align: left !important;
+    margin: 0.6em 0 0.8em 0 !important;
+    font-weight: bold;
+    color: 	#0372a6;
+    /*margin-block-end: -0.4em !important;*/
+}
+h2 {
+   font-size: 1.5rem  !important;
+}
+ h3 {
+   font-size: 1.3rem  !important;
+}
+ h4 {
+   font-size: 1.1rem  !important;
+}
+ h5 {
+   font-size: 1.0rem  !important;
+}
+ h6 {
+   font-size: 0.9rem  !important;
+}
+
+.sbHeader h2, .sbHeader h3, .sbHeader h4, .sbHeader h5, .sbHeader h6{
+    color: white !important;
+}
+
+
+p.boxtitle{
+    font-style: normal;
+    font-size: 1.4rem !important;
+    color: DarkSlateGray;
+    background: none;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+    border-bottom: 1px solid DarkSlateGray;
+}
+
+/******************************* Figure Block *****************************/
+figure { 
+    /*display: block;*/
+    margin-left: 0.2em !important;
+    margin-right: 0.2em !important;
+    margin-top: 0;
+    margin-bottom: 0.3em;
+    /*padding: 0.2em 0.2em 0.2em 0.2em;*/
+    break-inside: avoid-page;
+}
+
+figure img { 
+    display: block;
+    float:none;
+    break-inside: avoid-page;
+}
+
+figcaption { 
+    display: block;
+    caption-side: bottom;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.25 !important;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    break-inside: avoid-page;
+}
+.row{
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: center;  
+}
+
+/***************************** author bar ********************************/
+.mt-author-container {
+    background: initial;
+    border: 0px;
+    border-radius: @border-radius-default;
+    clear: both;
+    color: initial;
+    font-size: 85%;
+    margin: 0 0 1em;
+    overflow: hidden;
+    padding: 0em 1em 0em 1em;
+}
+.mt-author-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.mt-author-container .mt-author-image {
+    float: left;
+    margin: 0 1em 0 0;
+}
+.mt-author-container .mt-author-image-crop {
+    border: 1px solid #0372a6;
+    border-radius: 50%;
+    height: 3em;
+    overflow: hidden;
+    position: relative;
+    width: 3em;
+}
+.mt-author-container .mt-author-image-crop img {
+    display: inline;
+    height: 100%;
+    margin: 0 auto;
+    width: auto;
+}
+.mt-author-container img {
+    max-height: 3em;
+    max-width: 3em;
+    vertical-align: middle;
+}
+
+.mt-author-container a {
+  color: #0372a6 !important;
+}
+.mt-author-container a:hover{
+    color: #bf1722 !important;
+}
+.mt-author-container a:hover, a:focus {
+    text-decoration: underline;
+}
+
+/******************************* Box Block I (to be depreciated)*****************************/
+.definition,
+.note1,
+.example,
+.exercise,
+.theorem, 
+.skills, 
+.query{
+     display: block;
+     overflow: hidden;
+     border: solid 1px  hsla(0, 0%, 0%, 0.5);
+     -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+     border-radius: 5px;
+     padding-left: 7px;
+     padding-right: 7px;
+     padding-bottom: 0px;
+     padding-top: 0px;
+     margin-bottom: 7px;
+     margin-top: 7px;
+     /*page-break-inside: avoid;*/
+}
+    
+.exercise {
+    background-color: hsla(2, 100%, 99%, 1);
+}
+.note1 {
+    background-color: hsla(48, 100%, 99%, 1);
+}
+.definition {
+    background-color: hsla(136, 100%, 99%, 1);
+}
+.skills {
+    background-color: hsla(353, 100%, 99%, 1);
+}
+.example{
+    background-color: hsla(238, 100%, 99%, 1);
+}
+.theorem {
+    background-color: hsla(308, 100%, 99%, 1);
+}
+.query {
+    background-color: hsla(0, 0%, 0%, 1);
+}
+
+
+/***************************** Box Block II (to be depreciated) ********************************/
+.mt-content-container .boxobjectives, .boxexample, .boxexercise, .boxquery, .boxnotewithlegend, .boxnotewithoutlegend, .boxprocedure, .boxdefinition, .boxtheorem, .boxlemma, .boxnotation, .boxproposition {
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius: 8px;
+    border:0px;
+    padding-top: 0em;
+    padding-bottom: 0em;
+    padding-left: 1em;
+    padding-right: 1em;
+    /*margin-top: 1em;*/
+    margin-bottom: 1em;
+    /*margin-right: 0;*/
+    /*margin-left: 0;*/
+    overflow: visible;
+}
+
+.mt-content-container .boxnotewithlegend, .boxprocedure, .notation {
+   background-color: hsla(20, 0%, 93%, 1);
+}
+
+.mt-content-container .boxnotewithoutlegend{  
+    background-color: hsla(20, 0%, 93%, 1);
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.mt-content-container .boxexample {
+  background-color: hsla(220, 100%, 97%, 1);
+}
+
+.mt-content-container .boxexercise {
+  background-color: hsla(0, 100%, 96%, 1);
+}
+
+.mt-content-container .boxquery{	
+  border: 2px solid green;
+}
+
+.mt-content-container .boxdefinition, .boxtheorem, .boxlemma, .boxnotation, .boxproposition {
+    background-color: hsla(28, 80%, 95%, 1);
+
+/*hsla(180, 100%, 93%, 1);*/
+}
+
+.mt-content-container .boxobjectives {
+    background-color: hsla(0, 0%, 90%, 1);
+}
+
+.mt-content-container .boxlegend
+{
+  font-style: normal  !important;
+  font-size: 1.3rem  !important;
+  font-weight: normal !important;
+  padding-bottom: 0.20em;
+  padding-top: 0.20em;
+  margin-left: 0.2em;
+  color: white;
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.boxnotewithlegend .boxlegend  {
+  background-color: hsla(20, 0%, 45%, 1);
+}
+.boxnotewithoutlegend .boxlegend  {
+  background-color: hsla(20, 0%, 45%, 1);
+  font-size: 0em!important;
+  visibility: hidden !important;
+}
+.boxprocedure .boxlegend  {
+  background-color: hsla(20, 0%, 45%, 1);
+}
+.boxnotation .boxlegend  {
+  background-color: hsla(20, 0%, 45%, 1);
+}
+.boxexample .boxlegend  {
+  background-color: hsla(220, 100%, 60%, 1);
+}
+.boxexercise .boxlegend  {
+  background-color: hsla(0, 100%, 56%, 1);
+}
+.boxquery .boxlegend  {
+  background-color: hsl(120,100%, 25%,1);
+}
+.boxobjectives .boxlegend  {
+  background-color: hsla(0, 0%, 10%, 1);
+}
+.boxdefinition .boxlegend  {
+  background-color: hsl(43,81%,36%, 1)
+}
+.boxtheorem .boxlegend  {
+  background-color: hsl(43,81%,36%, 1)
+}
+.boxlemma .boxlegend  {
+  background-color: hsl(43,81%,36%, 1)
+}
+.boxnotation .boxlegend  {
+  background-color: hsl(43,81%,36%, 1)
+}
+.boxproposition .boxlegend  {
+  background-color: hsl(43,81%,36%, 1)
+}
+
+
+/***************************** Box block III ********************************/
+.box-objectives, .box-example, .box-exercise, .box-warning, .box-query, .box-adapt, .box-note, .box-procedure, .box-definition, .box-theorem, .box-lemma, .box-notation, .box-proposition, .box-interactive{
+ display: block;
+  border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+ 
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  padding: 0px 13px 1px 10px;
+  margin-bottom: 1.2em !important;
+  margin-top: 1.2em !important;
+  orphans: 3;
+}
+
+.box-objectives p, .box-example p, .box-exercise p, .box-warning p, .box-query p, .box-note p, .box-procedure p, .box-definition p, .box-theorem p, .box-lemma p, .box-notation p, .box-proposition p, .box-interactive p {
+    font-size: 1.1rem;
+}
+
+.box-query{
+  padding: 0px 0px 0px 0px !important;
+  border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+}
+
+.box-adapt{
+  padding: 0px 0px 0px 0px !important;
+  border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+}
+
+/****************  Tuning the box colors ***************/
+.box-objectives{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 4px solid hsla(204, 83%, 41%, 1);
+}
+.box-example{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 4px solid hsla(204, 83%, 41%, 1);
+}
+.box-exercise{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 4px solid hsla(204, 83%, 41%, 1);
+}
+.box-warning{
+	background-color: hsl(0, 100%, 96%);
+    	border-left: 4px solid hsl(0, 100%, 31%);
+}
+.box-query, .box-adapt{
+    	border: 4px solid hsla(204, 83%, 41%, 1) !important;
+}
+.box-interactive{
+    	border: 4px solid black;
+}
+.box-definition, .box-theorem, .box-lemma, .box-notation, .box-proposition {
+   	background-color: hsl(124, 33%, 94%);
+   	border-left: 5px solid  hsl(132, 36%, 27%);
+}
+.box-note{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 5px solid hsla(204, 83%, 41%, 1);
+}
+.boxprocedure, .notation {
+   	background-color: hsla(20, 0%, 93%, 1);
+   	border-left: 5px solid hsl(43,81%,36%, 1)
+}
+
+/************** Defining the Legends ******************/
+.box-legend {
+  display: block;
+  overflow: hidden;
+  margin: 0 0px 3px 0px;
+  transform: translate(-11px, 0px);
+  break-inside: avoid-page !important;
+  page-break-inside: avoid !important;
+  text-align: left !important;
+}
+
+.box-query .box-legend {
+  transform: translate(0px, 0px) !important;
+  margin: 0 0px 0px 0px !important;
+}
+.box-adapt .box-legend {
+  transform: translate(0px, 0px) !important;
+  margin: 0 0px 0px 0px !important;
+}
+
+.box-interactive .box-legend {
+  transform: translate(-11px, 0px) !important;
+  margin: 0 0px 0px 0px !important;
+}
+    
+.box-legend > span {
+  float: left;
+  font-family: "Tahoma", Arial, serif !important;
+  font-size: 1.2rem  !important;
+  font-weight: normal !important;
+  color: white;
+  padding: 3px 5px 3px 5px !important;
+  margin: 0 0 3px 0;
+  border-radius: 0px;
+}
+    
+.box-legend p {
+  float: left;
+  font-family: "Tahoma", Arial, serif !important;
+  font-size: 1.2rem  !important;
+  font-weight: normal !important;
+  color: white;
+  font-size: 15px !important;
+  padding: 3px 5px 3px 5px !important;
+  margin: 0 0 3px 0;
+  border-radius: 0px;
+}
+
+
+/************** Tuning the Legends ******************/
+
+.box-objectives .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+} 
+.box-example .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+}
+.box-exercise .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+}   
+.box-query .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+}
+.box-adapt .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+}
+.box-note .box-legend > span{
+  	background-color: hsla(204, 83%, 41%, 1);
+} 
+.box-interactive .box-legend > span{
+  	background-color: black;
+}
+
+
+
+.box-warning .box-legend > span{
+  	background-color:  hsl(0, 100%, 31%);
+} 
+
+
+.box-procedure .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+}
+.box-definition .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+}   
+.box-theorem .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+} 
+.box-lemma .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+}
+.box-notation .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+}   
+.box-proposition .box-legend > span{
+  	background-color: hsl(132, 36%, 27%);
+}
+
+/* From /Template:Custom/Views/ContentHeader/CSS */
+.darkMode {
+    background-color:#252525; 
+     color: white;
+ }
+ 
+ .darkMode .mt-content-container p {
+     color: white;
+ }
+ 
+ .darkMode .mt-content-container .boxexample,
+ .darkMode .mt-content-container .boxexercise,
+ .darkMode .mt-content-container .boxlemma,
+ .darkMode .mt-content-container .boxnotation,
+ .darkMode .mt-content-container .boxnotewithlegend,
+ .darkMode .mt-content-container .boxnotewithoutlegend,
+ .darkMode .mt-content-container .boxprocedure,
+ .darkMode .mt-content-container .boxproposition,
+ .darkMode .mt-content-container .boxquery,
+ .darkMode .mt-content-container .boxtheorem,
+ .darkMode .mt-content-container .boxobjectives, 
+ .darkMode .mt-content-container .box-example,
+ .darkMode .mt-content-container .box-exercise,
+ .darkMode .mt-content-container .box-lemma,
+ .darkMode .mt-content-container .box-notation,
+ .darkMode .mt-content-container .box-warning,
+ .darkMode .mt-content-container .box-note,
+ .darkMode .mt-content-container .box-notewithlegend,
+ .darkMode .mt-content-container .box-notewithoutlegend,
+ .darkMode .mt-content-container .box-procedure,
+ .darkMode .mt-content-container .box-proposition,
+ .darkMode .mt-content-container .box-query,
+ .darkMode .mt-content-container .box-theorem,
+ .darkMode .mt-content-container .box-objectives 
+ {
+     background: #f0f5ff24;
+     box-shadow: 3px 3px 4px #00000085;
+ }
+ 
+ .darkMode p.boxtitle {
+     color:white;
+ }
+ 
+ .darkMode th {
+     background:#00629a;
+ }
+ 
+ 
+ .darkMode tr, .darkMode tr td {
+     background:none;
+ }
+ 
+ .darkMode tr:nth-child(even), .darkMode tr:nth-child(even) td {
+     background:#555555;
+ }
+ 
+ .optimize {
+     display: flex;
+     flex-wrap: wrap;
+ }
+ 
+ /* Hide header if in iframe*/
+ .contentOnly .elm-header,
+ .contentOnly .elm-meta-icons,
+ .contentOnly div.annotator-frame,
+ .adaptView .elm-footer,
+ .contentOnly article#elm-main-content > *:not(:first-child, .mt-content-container),
+ .adaptView article#elm-main-content > header, 
+ .contentOnly hypothesis-sidebar,
+ .contentOnly #sidebarDiv{
+     display:none;
+ }
+ 
+ .contentOnly #mt-summary {
+     display:none!important;
+ }
+ 
+ iframe.imathas_problem, iframe.webwork_problem {
+     border: none;
+     width: 100%;
+ }
+ 
+ /*GeoGebra fix*/
+ article.elm-content-container, section.mt-content-container {
+     height: auto !important;
+     width: auto !important;
+ }
+ 
+ 
+ .elm-meta-top .mt-article-pagination a {
+     width: auto;
+     color: #30b3f6;
+ }
+ 
+ .elm-meta-top .mt-article-pagination a:hover {
+     color: #b4b4b4;
+ }
+ 
+ .elm-meta-top .elm-article-pagination {
+     float: unset;
+ }
+ 
+ #elm-main-content ol.elm-meta-data .elm-social-share {
+     margin: 0;
+ }
+ 
+ #MathJax_Zoom {
+  color: black;   
+ }
+ 
+ #donate {
+     background-color: green;
+     color: white;
+     display: flex;
+     padding: 5px;
+     align-items: center;
+     font-size: 80%;
+ }
+ 
+ #donate:hover {
+     background-color: #005E00;
+ }
+ 
+ .youtubeImageContainer {
+     position: relative;
+ }
+ 
+ a.notSS {
+     width: auto;
+     height: auto;
+     margin-top: 0;
+ }
+ 
+ .toc-button.mt-icon-hierarchy-trigger-closed:before {
+     content: "\e8a6";
+     font-size: 150%;
+ }
+ 
+ span.fancytree-icon:before {
+     content: "\e8aa";
+ }
+ 
+ .mt-icon-hierarchy-trigger-open:before {
+     font-size: 150%;
+ }
+ 
+ span.fancytree-has-children > span.fancytree-icon:before {
+     content: "\e8b3";
+ }
+ 
+ span.fancytree-title > a {
+     color: #666;
+ }
+ 
+ span.fancytree-selected .fancytree-title, span.fancytree-selected .fancytree-icon {
+     color: #1a9003;
+ }
+ 
+ .toc-hierarchy > div {
+     display: none;
+ }
+ 
+ .toc-hierarchy h6 {
+     margin-top: 0;
+     color: #137ac3
+ }
+ 
+ .pageInfo {
+     float: left;
+     margin: 0 1em 0 0;
+ }
+ 
+ .cc {
+     color: black;
+ }
+ 
+ .glossarizer_replaced {
+     border-bottom: 1px #333 dotted;
+ }
+ 
+ #pageTagsHolder {
+     display: none;
+ }
+ 
+ #batchPrint {
+     display: flex;
+     align-items: stretch;
+     justify-content: center;
+ }
+ 
+ #TOCbutton {
+     margin: 2px;
+     display: flex;
+     line-height: 2.4;
+     justify-content: center;
+     align-items: center;
+     color: #127bc4;
+     font-size: 100%;
+     height: 100%;
+ }
+ 
+ @media (min-width: 1000px) {
+     nav.elm-header-global-nav ol.mt-breadcrumbs {
+         max-width: 85% !important;
+     }
+     #TOCbutton {
+         width: auto;
+     }
+ }
+ 
+ div.propagatorLoader {
+     display: flex;
+     margin: 10px;
+     justify-content: center;
+ }
+ 
+ .loaderStatus {
+     /* flex: 1; */
+     justify-content: center;
+     text-align: center;
+ }
+ 
+ /* Modal Foundation*/
+ #warningModal {
+     
+   position: fixed ;
+   left: 0px;
+   top: 0px;
+   bottom:0px;
+   right:0px;
+   margin:0px;
+ 
+   display: none; /* Hidden by default */
+   z-index: 10000; 
+   padding-top: 0px; /* Location of the box */
+   
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+ 
+   overflow: auto; /* Enable scroll if needed */
+   background-color: rgb(0,0,0); /* Fallback color */
+   background-color: rgb(0,0,0,0);/* Black w/ opacity */
+ }
+ 
+ /* Modal Content */
+ #warningModalSlide {
+ 
+   font-family: 'Roboto';
+   font-size: 14px;
+   background-color: #EFEFEF ;
+   margin: auto;
+   padding: 15px;
+   /*border: 0px solid #888;*/
+   width: 40%;
+   box-shadow: -2px 8px 10px #c7c7c7;
+ }
+ 
+ 
+ #elm-main-content figure {
+     display: flex;
+     align-items: center;
+     flex-direction: column;
+     margin: 0;
+     page-break-inside: avoid;
+     margin-bottom: 0.3em !important;
+ }
+ 
+ .mt-video-widget:not(.cke_widget_element) {
+     margin: 0 auto !important;
+ }
+ 
+ .glmol{
+     text-align: left;
+ }
+ 
+ 
+ 
+ 
+ #copyResults img {
+     width: 30px;
+     height: 30px;
+     object-fit: contain;
+ }
+ 
+ #LTform, #LTPreview {
+     display: flex;
+     flex-direction: column;
+ }
+ 
+ #LTFormContainer, .LTFormHeader, #LTFormFooter {
+     display: flex;
+ }
+ 
+ #LTFormContainer .fancytree-container, #LTPreviewForm .fancytree-container {
+     background: #f3f3f3;
+     border-radius: 10px;
+     overflow: auto;
+     flex: 1;
+ }
+ 
+ #LTLeft, #LTRight, #LTPreviewForm, #LTTutorial {
+     /*flex: 1;*/
+     align-items: stretch;
+     height: 60vh;
+     max-width: 45vw;
+     overflow: hidden;
+     width: 100%;
+     background: #f3f3f3;
+     border-radius: 10px;
+     display: flex;
+     flex-direction: column;
+ }
+ 
+ #LTLeft, #LTTutorial {
+     border-radius: 0 0 10px 10px;
+ }
+ 
+ select.LTFormSubdomain {
+     border-radius: 10px 10px 0 0;
+ }
+ 
+ #LTFormFooter {
+     flex-direction: column;
+ }
+ 
+ .LTFormHeader {
+     justify-content: flex-end;
+     margin-top: 30px;
+     background-color: #127bc4;
+     padding: 10px;
+     border-radius: 5px;
+     color: white
+ }
+ 
+ ul.ui-fancytree.fancytree-container.fancytree-plain.fancytree-ext-dnd5 {
+ }
+ 
+ #LTFormContainer > div {
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     margin: 10px;
+     max-width: 45vw;
+ }
+ 
+ .LTTitle {
+     flex: 1;
+     display: flex;
+     align-items: center;
+ }
+ 
+ div#LTPreviewForm {
+     max-width: unset;
+     margin: 10px;
+     width: auto;
+ }
+ 
+ div#LTLeftAlert, div#LTRightAlert {
+     height: 30px;
+     background-color: rgba(18, 122, 196, 0.61);
+     width: inherit;
+     z-index: 1;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+ 
+ select#LTFormSubdomain {
+     border-radius: 10px 10px 0 0;
+ }
+ 
+ #mt-site-search-input {
+     max-width: 40vw;
+ }
+ 
+ #getTOCLink {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background-color: slategrey;
+     color: white;
+     width: fit-content;
+     padding: 0 3px;
+ }
+ 
+ .annotator-frame.annotator-collapsed > div.annotator-bucket-bar {
+     background: none;
+ }
+ 
+ .mobileOnly {
+     display: none;
+ }
+ 
+ #RemixerIcon, #DownloadIcon, #SSOInstructorIcon {
+     width: auto;
+ }
+ 
+ #RemixerIcon:before, #DownloadIcon:before, #SSOInstructorIcon:before {
+     vertical-align: middle;
+ }
+ 
+ .elm-header-user-nav .mt-user-menu li.mt-user-quick-login {
+     margin-left: 0;
+ }
+ 
+ .mt-user-menu {
+     display: flex;
+     justify-content: center;
+ }
+ li.elm-social-share a {
+     height: unset;
+     width: auto;
+     margin: 0 2px 0 0;
+ }
+ 
+ #LTRight > ul > li {
+     min-height: 100%;
+ }
+ 
+ .react-toggle {
+     height: 24px;
+ }
+ 
+ .buttonsetForm > button:first-child {
+     background: #525050;
+     color: white;
+ }
+ 
+ /*Added to make a hyperlink position below the breadcrumb bar and is viewable */
+ /*#pageText > .mt-section > span:first-child {
+     top: -50px;
+     display: block;
+     position: relative;
+ }*/
+ 
+ .elm-header-notice.fixed {
+ position: static;
+ }
+ 
+ .elm-fixed-header {
+ position: static;
+ }
+ 
+ /* Dropdown Button */
+ .LTdropdown > .dropbtn {
+     color: inherit;
+     background-color: inherit;
+     border: none;
+     height: 100%;
+     padding: 5px;
+     display: flex;
+     align-items: center;
+     box-sizing: border-box;
+ }
+ 
+ .LTdropdown a:visited {
+     color: inherit;
+ }
+ 
+ /* The container <div> - needed to position the dropdown content */
+ .LTdropdown {
+     position: relative;
+     display: inline-block;
+     margin-right: 2px;
+     color: white;
+     background: black;
+ }
+ 
+ /* Dropdown Content (Hidden by Default) */
+ .LTdropdown-content {
+     color: inherit;
+     display: none;
+     position: absolute;
+     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+     background: inherit;
+     z-index: 5;
+     flex-direction: column;
+     align-items: stretch;
+     width: max-content;
+     width: -moz-max-content;
+ }
+ 
+ /* Links inside the dropdown */
+ .LTdropdown > .LTdropdown-content a {
+     color: inherit;
+     background: inherit;
+     padding: 12px 16px;
+     text-decoration: none;
+     display: block;
+     width: initial;
+     text-align: center;
+     font-size: 12px;
+     margin: 0;
+ }
+ 
+ /* Change color of dropdown links on hover */
+ .LTdropdown > .LTdropdown-content a:hover  {
+     filter: brightness(85%);
+     transition-duration: 250ms;
+     color: white;
+ }
+ 
+ .LTdropdown-content a:before  {
+     margin-right: 2px;
+ }
+ 
+ .LTdropdown-content a:not(:first-child) {
+     border-top: 1px solid white;
+ }
+ 
+ /* Show the dropdown menu on hover */
+ .LTdropdown:hover .LTdropdown-content {
+     display: flex;
+ }
+ 
+ /* Change the background color of the dropdown button when the dropdown content is shown */
+ .LTdropdown:hover .dropbtn {
+     filter: brightness(85%);
+ }
+ 
+ nav.elm-header-user-nav > div.elm-nav-container > ol {
+     display: flex;
+ }
+ 
+ 
+ nav.elm-header-user-nav > div.elm-nav-container > ol > li {
+     display: flex;
+ }
+ 
+ li.elm-global-search {
+     flex: 1
+ }
+ 
+ #mt-site-search-input {
+     width: auto;
+ }
+ 
+ 
+ .mt-breadcrumbs a span.nb-comment-highlight {
+    font-size: unset;
+    margin-right: unset;
+    vertical-align: unset;
+ }
+ 
+ @font-face {
+     font-family: 'moreicons';
+     src: url(https://cdn.libretexts.net/github/LibreTextsMain/Miscellaneous/icosso.woff) format("woff");
+     font-weight: normal;
+     font-style: normal
+ }
+ .icon-SSO:before {
+     font-family: 'moreicons' !important;
+     content: "\e95d";
+     vertical-align: middle;
+     cursor: pointer;
+     margin-right: 0.25em;
+ }
+ .sso-user {
+     border: 2px solid white;
+     border-radius: 5px; 
+     vertical-align: middle;  
+ }
+ .sso-user:hover:after {
+     content: " (Logout)";
+ }
+ 
+ .authenticated-sso.elm-header-user-nav {
+     background-color: #0f67a6;
+         
+ }
+ .authenticated-sso.elm-header-user-nav .mt-user-menu-user  {
+     background: #323232;
+     border-radius: 5px;
+ }
+ .authenticated-sso.elm-header-user-nav .mt-user-menu > li > a {
+     color: white;
+ }
+ 
+ /*Media Queries*/
+ @media (max-width: 600px) {
+     .mobileOnly {
+         display: block;
+     }
+ 
+     .mobileHide {
+         display: none;
+     }
+ 
+     .LTBranding {
+         flex-direction: column;
+     }
+ 
+ }
+ 
+ @media (max-width: 875px) {
+     #RemixerIcon, #DownloadIcon, #SSOInstructorIcon {
+         width: 1.95em;
+     }
+ }
+ 
+ @media (min-width: 1000px) {
+     nav.elm-header-global-nav ol.mt-breadcrumbs {
+         max-width: 85% !important;
+     }
+ 
+     #TOCbutton {
+         width: auto;
+     }
+ }
+ 
+ @media (max-width: 1001px) {
+ 
+     #TOCbutton {
+         width: 20px;
+         justify-content: flex-start;
+     }
+ }
+ /*
+ @media (min-width: 83em) {
+    article.elm-content-container {
+       min-width: unset;
+    }
+ }
+ */
+ /*
+ @media (min-width: 37.5em){
+     .elm-header-user-nav {
+         z-index: 1;
+     }
+ }
+ */
+ 
+ .mt-content-container img {
+     height: auto!important;
+     object-fit: contain;
+ }
+ .mt-content-container .mt-sortable-listing-link img {
+     height: 150px!important;
+ }
+ 
+ .mt-video-widget > p {
+     text-align: center;
+ }
+ 
+ option[value="article:topic-portfolio"] {
+     display: none;
+ }
+ option[value="article:howto"] {
+     display: none;
+ }
+ option[value="article:reference"] {
+     display: none;
+ }
+ 
+ .live-tag-link {
+     white-space: normal;
+     user-select: text;
+     -webkit-user-drag: none;
+ }
+ 
+ span.mt-font-ma-shan-zheng{
+     font-family: 'Ma Shan Zheng';
+ }
+
+
+.printOnly {
+    display: none;
+}
+.hideprint {
+    visibility: visible !important;
+    display: block !important;
+}
+.showprint {
+    visibility: hidden !important;
+    display: none !important;
+}
+@media print {
+   .box-interactive, .box-query, .box-adapt {
+        visibility: hidden !important;
+        display: none !important;
+        ;
+   }
+    
+   table.mt-responsive-table {
+       /*table-layout: auto;
+       */
+   }
+    #librelens-attribution-list {
+        display: none;
+   }
+    .elm-meta-top .mt-article-pagination * {
+        display: none;
+   }
+    .mt-author-container {
+        background: #f0f0f0;
+        border-radius: .5em;
+        visibility: hidden !important;
+        display: none !important;
+   }
+    #elm-main-content {
+        padding-bottom: 0;
+   }
+    main.elm-skin-container {
+        display: inline;
+   }
+    .mt-video-widget:not(.cke_widget_element) {
+        margin: 0 auto !important;
+        width: 60% !important;
+        page-break-inside: avoid;
+   }
+    .elm-skin-container {
+        background-color: #ffffff !important;
+   }
+    .mt-sortable-listing {
+        background-color: #ffffff !important;
+   }
+    .twocolumn {
+        -webkit-column-count: 2;
+       /* Chrome, Safari, Opera */
+        -moz-column-count: 2;
+       /* Firefox */
+        column-count: 2;
+   }
+    .threecolumn {
+        -webkit-column-count: 3;
+       /* Chrome, Safari, Opera */
+        -moz-column-count: 3;
+       /* Firefox */
+        column-count: 3;
+   }
+    .hideprint {
+        visibility: hidden !important;
+        ;
+        display: none !important;
+        ;
+   }
+    .showprint {
+        visibility: visible !important;
+        ;
+        display: block !important;
+        ;
+   }
+    .printOnly {
+        display: block;
+   }
+    .printHide {
+        display: none;
+   }
+    img {
+        zoom: 0.60;
+        page-break-inside: avoid;
+   }
+    .mt-author-container img {
+        zoom: 1;
+   }
+    .MathJax_Display {
+        margin-top: 0.7em !important;
+        margin-bottom: 0.7em !important;
+   }
+    blockquote {
+        display: block;
+        font-size: 120%;
+        color: black;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 40px;
+        padding-left: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-left: 3px solid #0f67a6;
+        border-top: 0px;
+        border-bottom: 0px;
+        border-right: 0px;
+   }
+    p {
+        text-align: justify;
+        orphans: 2;
+        widows: 2;
+        margin-block-start: 0.5em;
+        margin-block-end: 0.5em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+   }
+    .definition, .note1, .example, .exercise, .skills {
+        border: solid 1px hsla(0, 0%, 0%, 0.5);
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        padding-left: 7px;
+        padding-right: 7px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+   }
+    .definition {
+        background-color: hsla(7, 93%, 41%, 0.03);
+   }
+    .example {
+        background-color: hsla(215, 93%, 39%, 0.03);
+   }
+    .note1 {
+        background-color: hsla(78, 93%, 39%, 0.03);
+   }
+    .exercise {
+        background-color: hsla(283, 93%, 24%, 0.03);
+   }
+    .skills {
+        background-color: hsla(7, 93%, 41%, 0.03);
+   }
+    ol.elm-meta-top {
+        display: none;
+   }
+    body:not(.cke_editable) .mt-responsive-table th, body:not(.cke_editable) .mt-responsive-table td, body:not(.cke_editable) table th[data-th] {
+        display: table-cell !important;
+        background-image: none !important;
+        font-size: 95%;
+   }
+    #mt-page-health-container, header.elm-header, #mt-toc-container, #mt-content-side, div#mt-summary, li.elm-pdf-export, li.elm-social-share, footer.elm-footer, footer.elm-content-footer, li.elm-meta-icons, li.elm-last-modified, li.elm-page-restriction, body:not(.cke_editable) .mt-responsive-table td:before {
+        display: none !important;
+   }
+    body {
+        font-size: 0.80em !important;
+        font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif !important;
+   }
+    .mt-content-container ol, .mt-content-container p, .mt-content-container ul {
+        font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif !important;
+        font-size: 100%;
+        line-height: 1.4;
+   }
+    h1, h2, h3, h4, h5 {
+        color: hsl(205, 82%, 42%) !important;
+        align-content: left;
+        font-family: "Tahoma", Arial, serif !important;
+        text-align: left !important;
+        margin: 0.8em 0 0 0 !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-after: avoid !important;
+        break-after: avoid-page !important;
+        orphans: 1;
+        margin-block-end: -3px !important;
+   }
+    h1 {
+        font-size: 18px !important;
+   }
+    h2 {
+        font-size: 15px !important;
+   }
+    h3 {
+        font-size: 13px !important;
+   }
+    h4 {
+        font-size: 11px !important;
+   }
+    h5 {
+        font-size: 10px !important;
+   }
+    .mt-new-features-container {
+        display: none;
+   }
+   /*https://stackoverflow.com/questions/9238868/how-do-i-avoid-a-page-break-immediately-after-a-heading/53742871#53742871*/
+   /* h2::after {
+        content: "";
+        display: block;
+        height: 30px;
+        margin-bottom: -30px;
+   }
+    h3::after {
+        content: "";
+        display: block;
+        height: 30px;
+        margin-bottom: -30px;
+   }
+    h4::after {
+        content: "";
+        display: block;
+        height: 30px;
+        margin-bottom: -30px;
+   }
+    h5::after {
+        content: "";
+        display: block;
+        height: 30px;
+        margin-bottom: -30px;
+   }
+    */
+    p.boxtitle {
+        font-style: normal;
+        font-size: 120%;
+        color: DarkSlateGray;
+        line-height: 80% !important;
+        background: none;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        text-align: left !important;
+        border-bottom: 1px solid DarkSlateGray;
+        font-family: "Tahoma", Arial, serif !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+        break-after: avoid-page;
+        orphans: 1;
+   }
+    dt {
+        color: initial;
+   }
+    .row {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        justify-content: center;
+        break-inside: avoid;
+   }
+    #elm-main-content figcaption {
+        caption-side: bottom;
+        text-align: justify;
+        font-size: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 0.3em;
+        break-inside: avoid-page;
+   }
+    .rightfig {
+        display: table;
+        float: right;
+        margin: 0em 0 0em 1em;
+   }
+    .rightfigcaption {
+        display: table-caption;
+        caption-side: bottom;
+        margin: 0.3em 0 0 0;
+        text-align: justify;
+        font-size: 90%;
+   }
+   /**************************** table bar ***************************/
+    caption {
+        display: table-caption;
+        text-align: center;
+        font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif !important;
+   }
+    body:not(.cke_editable) .mt-responsive-table td, body:not(.cke_editable) .mt-responsive-table th {
+        padding: 0.4em !important;
+        padding-top: 0.3em !important;
+        padding-right: 0.4em !important;
+        padding-bottom: 0.3em !important;
+        padding-left: 0.4em !important;
+        vertical-align: middle;
+   }
+    body:not(.cke_editable) .mt-responsive-table p {
+        margin: 0em !important;
+   }
+    body:not(.cke_editable) .mt-responsive-table tr td:last-child {
+        border: none !important;
+   }
+    body:not(.cke_editable) .mt-responsive-table tr th:last-child {
+        border-bottom-width: 0.15em !important;
+   }
+    table {
+        margin-top: 0.5em !important;
+        margin-bottom: 1em !important;
+        -webkit-print-color-adjust: exact;
+        page-break-inside: none;
+   }
+    .mt-content-container table p {
+        margin: 0em !important;
+   }
+    th, td {
+        font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif !important;
+       /*text-align: center;
+       */
+       /*vertical-align: middle;
+       */
+   }
+   /**************************** lists ***************************/
+    ul, ol {
+        text-align: justify !important;
+        margin: 0.3em 0 0.5em 0;
+   }
+    ol li, ul li {
+        text-align: justify !important;
+        font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif !important;
+        margin-top: 0em !important;
+        margin-bottom: 0em !important;
+   }
+    .attributions li, .attributions p {
+        line-height: 1.25 !important;
+        margin-block-start: 0em !important;
+        margin-block-end: 0em !important;
+        font-size: 12px !important;
+   }
+   /**************************** author bar ***************************/
+    .mt-author-container {
+        /*background: @secondary-container-background-color;*/
+        /*border: 1px solid @secondary-container-border-color;*/
+        /*border-radius: @border-radius-default;*/
+        clear: both;
+        /*color: @tertiary-font-color;*/
+        font-size: 85%;
+        margin: 0 0 1em;
+        overflow: hidden;
+        padding: .5em 1em;
+   }
+    .mt-author-container ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+   }
+    .mt-author-container .mt-author-image {
+        float: left;
+        margin: 0 1em 0 0;
+   }
+    .mt-author-container .mt-author-image-crop {
+        /*border: 1px solid @primary-container-border-color;*/
+        border-radius: 50%;
+        height: 3em;
+        overflow: hidden;
+        position: relative;
+        width: 3em;
+   }
+    .mt-author-container .mt-author-image-crop img {
+        display: inline;
+        height: 100%;
+        margin: 0 auto;
+        width: auto;
+   }
+    .mt-author-container img {
+        max-height: 3em;
+        max-width: 3em;
+        vertical-align: middle;
+   }
+    elm-skin-container {
+        display: block !important;
+   }
+    hypothesis-sidebar,
+    hypothesis-adder,
+    .h-sidebar-iframe,
+    .annotator-frame {
+        display: none;
+   }
+   /* canvas, img, object, video {
+        max-width: 100%;
+        max-height: 500px;
+   }
+    */
+   /**************** Box container styles *******************/
+    .mt-content-container .boxobjectives, .boxexample, .boxexercise, .boxquery, .boxnotewithlegend, .boxnotewithoutlegend, .boxprocedure, .boxdefinition, .boxtheorem, .boxlemma, .boxnotation, .boxproposition {
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        padding-top: 0em;
+        padding-bottom: 0em;
+        padding-left: 1em;
+        padding-right: 1em;
+       /*margin-top: 1em;
+       */
+        margin-bottom: 1em;
+       /*margin-right: 0;
+       */
+       /*margin-left: 0;
+       */
+        overflow: visible;
+        border: 0px;
+        orphans: 2;
+   }
+    .mt-content-container .boxnotewithlegend, .boxprocedure, .notation {
+        background-color: hsla(20, 0%, 93%, 1);
+   }
+    .mt-content-container .boxexample, .boxexercise {
+        background-color: hsla(220, 100%, 97%, 1);
+   }
+    .mt-content-container .boxwarning {
+        background-color: hsla(0, 100%, 96%, 1);
+   }
+    .mt-content-container .boxdefinition, .boxtheorem, .boxlemma, .boxnotation, .boxproposition {
+        background-color: hsla(28, 80%, 95%, 1);
+   }
+    .mt-content-container .boxobjectives {
+        background-color: hsla(0, 0%, 90%, 1);
+   }
+    .mt-content-container .boxnotewithoutlegend {
+        background-color: hsla(20, 0%, 93%, 1);
+        padding-right: 1em;
+        padding-left: 1em;
+        padding-top: 0.5em !important;
+        padding-bottom: 0.5em !important;
+        margin-right: 1em;
+        margin-left: 1em;
+   }
+    .mt-content-container .boxquery {
+        border: 2px solid green;
+        page-break-inside: avoid;
+        visibility: hidden !important;
+        display: none !important;
+   }
+   /**************** Box legend container styles *******************/
+    .mt-content-container .boxlegend {
+        font-style: normal !important;
+        font-size: 1.1em !important;
+        font-weight: normal !important;
+        font-family: "Tahoma", Arial, serif !important;
+        padding-top: 0.2em !important;
+        padding-bottom: 0.2em !important;
+        padding-left: 0.3em !important;
+        padding-right: 0.3em !important;
+        margin-left: 0.35em;
+        color: white;
+        border-radius: 3px;
+        overflow: visible;
+        break-inside: avoid !important;
+   }
+    .boxnotewithlegend .boxlegend {
+        background-color: hsla(20, 0%, 45%, 1);
+   }
+    .boxnotewithoutlegend .boxlegend {
+        background-color: hsla(20, 0%, 45%, 1);
+        font-size: 0em !important;
+        visibility: hidden !important;
+   }
+    .boxprocedure .boxlegend {
+        background-color: hsla(20, 0%, 45%, 1);
+   }
+    .boxnotation .boxlegend {
+        background-color: hsla(20, 0%, 45%, 1);
+   }
+    .boxexample .boxlegend {
+        background-color: hsla(220, 100%, 60%, 1);
+   }
+    .boxexercise .boxlegend {
+        background-color: hsla(0, 100%, 56%, 1);
+   }
+    .boxquery .boxlegend {
+        background-color: hsl(120, 100%, 25%, 1);
+   }
+    .boxobjectives .boxlegend {
+        background-color: hsla(0, 0%, 10%, 1);
+   }
+    .boxdefinition .boxlegend {
+        background-color: hsla(28, 80%, 52%, 1);
+   }
+    .boxtheorem .boxlegend {
+        background-color: hsla(28, 80%, 52%, 1);
+   }
+    .boxlemma .boxlegend {
+        background-color: hsla(28, 80%, 52%, 1);
+   }
+    .boxnotation .boxlegend {
+        background-color: hsla(28, 80%, 52%, 1);
+   }
+    .boxproposition .boxlegend {
+        background-color: hsla(28, 80%, 52%, 1);
+   }
+   /****************************************** Current New boxes **********************************************************************/
+    .box-objectives, .box-example, .box-exercise, .box-warning, .box-query, .box-note, .box-procedure, .box-definition, .box-theorem, .box-lemma, .box-notation, .box-proposition, .box-interactive {
+        display: block;
+        border-radius: 1px;
+        -moz-border-radius: 1px;
+        -webkit-border-radius: 1px;
+        -moz-border-radius: 1px;
+        -webkit-border-radius: 1px;
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
+        padding: 0px 13px 1px 10px;
+        margin-bottom: 1.2em !important;
+        margin-top: 1.2em !important;
+        orphans: 3;
+   }
+   /**************** Tuning the Paragraph in the box ***************/
+    .box-objectives p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-example p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-exercise p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-query p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-query p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-note p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-procedure p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-definition p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-theorem p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-lemma p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-notation p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-proposition p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-interactive p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+    .box-warning p:nth-child(2) {
+        margin-block-start: -4px;
+        break-before: avoid-page;
+   }
+   /**************** Tuning the box colors ***************/
+    .box-objectives{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 2px solid hsla(204, 83%, 41%, 1);
+   }
+    .box-example{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 2px solid hsla(204, 83%, 41%, 1);
+   }
+    .box-exercise{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 2px solid hsla(204, 83%, 41%, 1);
+   }
+    .box-warning{
+        background-color: hsl(0, 100%, 96%);
+        border-left: 2px solid hsl(0, 100%, 31%);
+   }
+    .box-query{
+        border: 2px solid hsla(220, 100%, 60%, 1);
+   }
+    .box-interactive{
+        border: 2px solid black;
+   }
+    .box-definition, .box-theorem, .box-lemma, .box-notation, .box-proposition {
+        background-color: hsl(124, 33%, 94%);
+        border-left: 2px solid hsl(132, 36%, 27%);
+   }
+    .box-note{
+        background-color: hsla(204, 83%, 97%, 1);
+        border-left: 2px solid hsla(204, 83%, 41%, 1);
+   }
+    .boxprocedure, .notation {
+        background-color: hsla(20, 0%, 93%, 1);
+        border-left: 2px solid hsl(43,81%,36%, 1) 
+   }
+   /************** Defining the Lgends ******************/
+    .box-legend {
+        display: block;
+        overflow: hidden;
+        margin: 0 0 5px 0;
+        transform: translate(-11px, 0px);
+        break-inside: avoid-page !important;
+        page-break-inside: avoid !important;
+   }
+    .box-legend>span {
+        float: left;
+        font-family: "Tahoma", Arial, serif !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+        color: white;
+        padding: 4px 5px 4px 5px !important;
+        margin: 0 0 3px 0;
+        line-height: 0.8em;
+        border-radius: 1px;
+   }
+    .box-legend p {
+        float: left;
+        font-family: "Tahoma", Arial, serif !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+        color: white;
+        font-size: 15px !important;
+        padding: 4px 5px 4px 5px !important;
+        margin: 0 0 3px 0;
+        line-height: 0.8em;
+        border-radius: 1px;
+   }
+   /*https://stackoverflow.com/questions/9238868/how-do-i-avoid-a-page-break-immediately-after-a-heading/53742871#53742871*/
+   /*.box-legend ::after {
+        content: " ";
+        display: block;
+        height: 50px;
+        margin-bottom: -50px;
+   }
+   */
+   /* .box-example .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f128";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    .box-exercise .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f040";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    .box-warning .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f12a";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    .box-note .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f0e5";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    .box-query .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f040";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    .box-adapt .box-legend ::before{
+        font-family: FontAwesome;
+        content: "\f021";
+        display: inline-block;
+        padding-right: 5px;
+   }
+    */
+   /************** Tuning the Legends ******************/
+    .box-objectives .box-legend > span{
+        background-color: hsl(212,77%,47%,1);
+   }
+    .box-example .box-legend > span{
+        background-color: hsl(212,77%,47%,1);
+   }
+    .box-exercise .box-legend > span{
+        background-color: hsl(212,77%,47%,1);
+   }
+    .box-query .box-legend > span{
+        background-color: hsl(212,77%,47%,1);
+   }
+    .box-interactive .box-legend > span{
+        background-color: black;
+   }
+    .box-note .box-legend > span{
+        background-color: hsla(204, 83%, 41%, 1);
+   }
+    .box-warning .box-legend > span{
+        background-color: hsl(0, 100%, 31%);
+   }
+    .box-procedure .box-legend > span{
+        background-color: hsla(39, 100%, 58%, 1);
+   }
+    .box-definition .box-legend > span{
+        background-color: hsl(132, 36%, 27%);
+   }
+    .box-theorem .box-legend > span{
+        background-color: hsl(132, 36%, 27%);
+   }
+    .box-lemma .box-legend > span{
+        background-color: hsl(132, 36%, 27%);
+   }
+    .box-notation .box-legend > span{
+        background-color: hsl(132, 36%, 27%);
+   }
+    .box-proposition .box-legend > span{
+        background-color: hsl(132, 36%, 27%);
+   }
+}

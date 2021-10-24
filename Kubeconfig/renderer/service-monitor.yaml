@@ -1,0 +1,16 @@
+# make sure this is in prometheus' namespace and matches helm `release`
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: adapt
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: adapt
+  endpoints:
+  - port: web
+    path: api/kubernetes

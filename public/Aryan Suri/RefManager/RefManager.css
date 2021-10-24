@@ -1,0 +1,117 @@
+#referenceInput {
+    width: inherit;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+
+#referenceInput:first-child{
+    margin-left:0px;
+}
+
+#referenceInput #referenceInput-Privacy {
+    width: 20%;
+}
+#referenceDisplay {
+    border: 0!important;
+    font-size: 15px;
+    font-family: Arial,sans-serif;
+    line-height: 1.24;
+    list-style-type: none;
+    width: inherit;
+    padding: 0px;
+}
+#referenceInput button, input {
+    border-radius: 0 !important;
+}
+#referenceDisplay li {
+    color: black;
+    padding: 5px;
+    width: inherit;
+}
+
+
+#referenceDisplay tr {
+    background: #FFFFFF;
+    padding-top: 20px;
+
+}
+
+/*Hanging Indent*/
+.csl-entry {
+    padding-left: 2em;
+    text-indent: -2em;
+}
+
+#referenceModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color: black
+
+
+}
+
+/* Modal Content */
+#referenceModalContent {
+    font-size: 15px;
+    font-family: Arial,sans-serif;
+    line-height: 1.24;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 40px;
+    /*border: 1px solid #888;*/
+    width: 60vw;
+}
+
+#referenceModalOutput {
+    color: #0372a6;
+}
+/* The Close Button */
+#referenceModalClose {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+#referenceModalBtn{
+    margin-top: 5px;
+    border-radius: 0px;
+}
+
+#referenceModalClose:hover,
+#referenceModalClose:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.newReference {
+    /*border-color: black;*/
+    /*border-width: 1px 0px 0px 0px;*/
+    /*border-style: solid;*/
+    width: inherit;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.newReference:hover {
+    color: #0c85d0;
+}
+.newReference:last-child {
+    /*border-width: 1px 0px 1px 0px;*/
+}
+
+.pageBibliography {
+    list-style-type: none;
+}

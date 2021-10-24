@@ -510,6 +510,7 @@ LibreTextsGlossarizer = class {
                           reference.removeAttribute('title');
                           return title;
                         },
+                        theme: (localStorage.getItem("darkMode")== "true") ? 'dark' : 'light',
                         allowHTML: true,
                         interactive : true,
                         delay: [500, null],

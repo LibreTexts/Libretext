@@ -783,7 +783,8 @@ puppeteer.launch({
                 });
             }
             content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h2>${current.title}</h2></a>`}` + content;
-            content += '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
+            content += `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/LibreTexts-content.css"/>` +
+                '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
                 '<style>a {text-decoration: none; color:#127bc4}' +
                 'body>ul {list-style-type: none; color:black}' +
                 'h2>a{color:#127bc4}' +
@@ -1169,6 +1170,14 @@ puppeteer.launch({
                         console.error(`ERROR  Timeout Exceeded ${url}`);
                     }
                     
+                    await page.evaluate(function(){
+                        let images = document.getElementsByTagName('img');
+                        for (let img of images){
+                            img.loading = "eager";
+                        }
+                    });
+                    await sleep(1000);
+                    
                     const out = await page.evaluate(function (url) {
                         let prefix = "";
                         let title = document.getElementById("title");
@@ -1246,7 +1255,6 @@ puppeteer.launch({
                     
                     const style1 = '<div id="mainH">' +
                         '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-                        `<div style="font-size:13px;">${title}</div>`+
                         '</div>';
                     
                     license = await license;
@@ -1586,6 +1594,10 @@ puppeteer.launch({
             
             if (options.createMatterOnly) {
                 await getTOC(current);
+                response.write(JSON.stringify({
+                    message: "complete",
+                    filename: "createMatterOnly",
+                }));
                 return null; //done creating matter, exit immediately.
             }
             
