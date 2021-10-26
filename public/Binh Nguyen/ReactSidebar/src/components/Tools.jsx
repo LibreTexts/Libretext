@@ -4,7 +4,7 @@ import {Button, FormControl, FormControlLabel, FormLabel, List, Radio, RadioGrou
 
 export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));
-    const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0].value || "0");
+    //const [notification, setNotifications] = React.useState($('form.options')?.serializeArray()?.[0].value || "0");
     const [annotation, setAnnotation] = React.useState(localStorage.getItem("annotationType"));
     
     return (<List>
@@ -43,7 +43,7 @@ export default function Tools(props) {
                 </RadioGroup>
             </FormControl>
 	    <br/>
-	    <FormControl component="fieldset" style={{padding: 20}}>
+	{/*   <FormControl component="fieldset" style={{padding: 20}}>
 		<FormLabel component="legend">Page Notifications</FormLabel>
 		    <RadioGroup value={notification} onChange={(event) => {
 			makeNotification(event.target.value);
@@ -57,7 +57,7 @@ export default function Tools(props) {
 	    <br/>
 
 		 
-	{/*	    <FormControl component="fieldset" style={{padding: 20}}>
+    	    <FormControl component="fieldset" style={{padding: 20}}>
 		<FormLabel component="legend">Page Annotation</FormLabel>
 		    <RadioGroup value={annotation} onChange={(event) => {
 		    //localStorage.setItem("annotationType", "none");
