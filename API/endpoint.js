@@ -87,10 +87,11 @@ async function handler(request, response) {
     }
     // access anonymous (GET) /contents endpoint
     // https://success.mindtouch.com/Integrations/API/API_Calls/pages/pages%2F%2F%7Bpageid%7D%2F%2Fcontents_(GET)
-    else if (url.startsWith('/contents')) {
+    else if (url.startsWith('/contents') ||url.startsWith('/tags') || url.startsWith('/info')) {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
+            let endpoint = url.split('?');
             request.on('data', (chunk) => {
                 body.push(chunk);
             }).on('end', async () => {
@@ -101,7 +102,7 @@ async function handler(request, response) {
                 input.format = input.format ?? "html";
                 input.dreamformat = input.dreamformat ?? "xml";
                 //Only get requests are acceptable
-                let requests = await LibreTexts.authenticatedFetch(input.path, `contents?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
+                let requests = await LibreTexts.authenticatedFetch(input.path, `${endpoint[0]}?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
                 if (requests.ok)
                     response.write(await requests.text());
                 else
