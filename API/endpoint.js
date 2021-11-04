@@ -91,7 +91,7 @@ async function handler(request, response) {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
-            let endpoint = url.split('?');
+            let endpoint = url.split('?')[0].replace(/^\/+/g,'');
             request.on('data', (chunk) => {
                 body.push(chunk);
             }).on('end', async () => {
