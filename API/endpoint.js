@@ -102,7 +102,7 @@ async function handler(request, response) {
                 input.format = input.format ?? "html";
                 input.dreamformat = input.dreamformat ?? "xml";
                 //Only get requests are acceptable
-                let requests = await LibreTexts.authenticatedFetch(input.path, `${endpoint[0]}?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
+                let requests = await LibreTexts.authenticatedFetch(input.path, `${endpoint}?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
                 if (requests.ok)
                     response.write(await requests.text());
                 else
