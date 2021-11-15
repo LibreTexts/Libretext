@@ -1,0 +1,78 @@
+.libreNavBtn {
+    display: block;
+    position: fixed;
+    background-color: #5498D4;
+    top: calc(50% - 1em);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#backButton {
+    left: 38px;
+}
+
+#nextButton {
+    right: 30px;
+}
+
+#backButtonIcon, #nextButtonIcon {
+    color: #FFFFFF;
+    width: 40%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: relative;
+}
+
+#backTitle {
+    left: 83px;
+}
+
+#nextTitle {
+    right: 75px;
+}
+
+.libreNavTitle {
+    display: none;
+    cursor: pointer;
+    background-color: #127BC4;
+    color: #FFFFFF;
+    border-radius: 5px;
+    position: fixed;
+    top: calc(50% - 16px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    height: 40px
+}
+
+.libreNavText {
+    line-height: 40px;
+    padding: 0 8px 0 8px;
+}
+
+.libreNavBtn:hover {
+    background-color: rgba(18,123,196, 1);
+}
+
+@media only screen and (max-width: 1445px) {
+    .libreNavBtn {
+        display: none;
+    }
+}
+
+@media print {
+  .libreNavBtn {
+      display: none;
+  }
+}
