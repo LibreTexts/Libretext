@@ -1,6 +1,6 @@
 #attrModal,
 #asModal {
-    display: none;
+    display: flex;
     position: fixed;
     z-index: 9999;
     left: 0;
@@ -11,7 +11,7 @@
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-  
+
 #attrModalContent,
 #asModalContent {
     background-color: white;
@@ -21,7 +21,7 @@
     width: 40%;
     font-size: 18px;
 }
- 
+
 span.closeModal {
     color: black;
     float: right;
@@ -46,7 +46,7 @@ span.closeModal:focus {
     padding-bottom: 0.75em;
     font-size: 1.3em;
 }
-  
+
 #citeContent, #attr-links {
     border-top: 1px solid lightgrey;
     padding-top: 1em;

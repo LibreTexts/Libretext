@@ -8,7 +8,7 @@ function attribution() {
         let title = $("#titleHolder").text();
         let author = $("li.mt-author-information a:first").text();
         if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
-            title = title.replace(/^[^:]*:/, '');
+            title = title.replace(/^[^:]*:/, '').trim();
         }
         let titlestr = `"${title}"`;
         let pageID = $("#pageIDHolder").text();
@@ -48,9 +48,9 @@ function attribution() {
             <div onclick="hideattr()" id="attrModal">
 
                 <div id="attrModalContent" style="cursor: pointer" >
-                    <span class="closeModal">×</span>
+                    <span class="closeModal" onclick="hideattr()">×</span>
                     <h5 id="modalTitle">Get Page Attribution</h5>
-                    
+
                     <div id="attrHTML">
                     </div>
 
@@ -110,7 +110,7 @@ function attribution() {
     }
 }
 function hideattr() {
-    if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
+    if ($("#SB-PA-AD").length) {
         $("#SB-PA-AD").remove();
         const sidebar = document.getElementById("sidebarDiv");
         sidebar.style.display = "block";
