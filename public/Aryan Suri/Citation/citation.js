@@ -9,7 +9,9 @@ function buildcite() {
     $(citeDiv).html(`
 
 <div onclick="hidecite()" id="asModal">
-       <div id="asModalContent" style="cursor: pointer" >
+       <div id="asModalContent" style="cursor: pointer">
+            <span class="closeModal">×</span>
+            <h5 id="modalTitle">Cite Page</h5>
             <div  id="citeHTML">
                 <p id="citeText"> </p>
             </div>
@@ -26,10 +28,10 @@ function buildcite() {
                 </select>
             </div>
             <div id="citeContent">
-                 <a id="citeCopy" style="text-decoration: none; color: #666" >Copy Text</a>
-                 <a id="citeCopyHTML" style="text-decoration: none; color: #666" >Copy HTML</a>
-                 <a id="citeBIBTEX" style="text-decoration: none; color: #666" >Download BibTeX </a>
-                 <a id="citeRIS" style="text-decoration: none; color: #666" >Download RIS </a>
+                 <a id="citeCopy">Copy Text</a>
+                 <a id="citeCopyHTML">Copy HTML</a>
+                 <a id="citeBIBTEX">Download BibTeX </a>
+                 <a id="citeRIS">Download RIS </a>
             </div>
        </div>
 </div>

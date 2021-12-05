@@ -1,70 +1,75 @@
+#attrModal,
 #asModal {
-    display: flex;
+    display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: none;
-    background-color: none;
-    justify-content: center;
-    align-content: center;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
-
-#asModalContent {
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40vw;
-    z-index: 30000001;
-    margin-left: 0px;
-    top: calc(50% - 150px);
-    position: absolute;
-    border-radius: 10px;
-}
-
-
-#attrModal {
-    display: flex;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: none;
-    background-color: none;
-    justify-content: center;
-    align-content: center;
-  }
   
-  #attrModalContent {
-    background-color: #fefefe;
+#attrModalContent,
+#asModalContent {
+    background-color: white;
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 40vw;
-    z-index: 30000001;
-    margin-left: 0;
-    top: calc(50% - 137px);
-    position: absolute;
-    border-radius: 10px;
-  } 
+    width: 40%;
+    font-size: 18px;
+}
+ 
+span.closeModal {
+    color: black;
+    float: right;
+    font-size: 1.3em;
+    font-weight: bold;
+    line-height: 1em;
+    vertical-align: middle;
+}
+span.closeModal:hover,
+span.closeModal:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ h5#modalTitle {
+    margin: 0 !important;
+    padding: 0;
+    font-weight: normal;
+    color: black;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 0.75em;
+    font-size: 1.3em;
+}
   
 #citeContent, #attr-links {
-    margin-top: 10px;
+    border-top: 1px solid lightgrey;
+    padding-top: 1em;
+    margin-top: 1em;
     display: flex;
     justify-content: space-between;
 }
 
-#citeText {
-    font-size: 1rem;
+#attr-links > a,
+#citeContent > a {
+    padding: 0.5em 0.75em;
+    border-radius: 4px;
+    color: #555;
+    font-size: 1em;
+}
+#attr-links > a:hover,
+#attr-links > a:focus
+#citeContent > a:hover,
+#citeContent > a:focus {
+    background: #efecec;
+    color: black;
 }
 
 #citeSelect {
     max-width: 30%;
-}
-
-#citeCopy:hover, #citeCopyHTML:hover, #citeBIBTEX:hover, #citeRIS:hover {
-    font-style: italic !important;
 }
