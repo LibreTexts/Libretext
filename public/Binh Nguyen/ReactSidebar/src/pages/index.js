@@ -45,7 +45,7 @@ function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     const [lastPanel, setLastPanel] = useState();
     const [darkMode, setDarkMode] = useState( localStorage.getItem("darkMode") === "true");
-    
+
     const theme = React.useMemo(
         () => {
             const contentContainer = $('body');
@@ -55,7 +55,7 @@ function SidebarComponent(props) {
             else {
                 contentContainer.removeClass('darkMode');
             }
-            
+
             return createTheme({
                 palette: {
                     primary: blue,
@@ -67,7 +67,7 @@ function SidebarComponent(props) {
         },
         [darkMode],
     );
-    
+
     useEffect(function () { // initialization
         const textSize = localStorage.getItem("LT_fontSize");
         const marginSize = localStorage.getItem("LT_pageWidth");
@@ -78,14 +78,14 @@ function SidebarComponent(props) {
             $('section.mt-content-container').css("margin-right", marginSize + "vw");
         }
     }, [])
-    
-    
+
+
     const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools', 'community'];
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
     if (isPro)
         tabs.push('developers');
     // const classes = useStyles();
-    
+
     const toggleDrawer = (panel) => (event) => {
         if (event && event.type === 'keydown' && !panel) {
             if (event.key !== 'Escape') { //only escape will close
@@ -97,15 +97,15 @@ function SidebarComponent(props) {
             setLastPanel(panel);
     };
     LibreTexts.active.sidebarToggleDrawer = toggleDrawer;
-    
+
     function darkModeChange(mode) {
         if (mode === undefined) //toggle its value
             mode = !darkMode
-        
+
         localStorage.setItem('darkMode', mode);
         setDarkMode(mode);
     }
-    
+
     const list = () => {
         let currentPanel;
         switch (openPanel) {
@@ -137,7 +137,7 @@ function SidebarComponent(props) {
             default:
                 alert(`${openPanel} not implemented`);
         }
-        
+
         return <div
             style={{
                 width: 500,
@@ -151,7 +151,7 @@ function SidebarComponent(props) {
             {currentPanel}
         </div>
     };
-    
+
     return (<StylesProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <div>
@@ -190,14 +190,14 @@ function SidebarComponent(props) {
                     </SwipeableDrawer>
                     <Portal>
                         <div id="sbHeader" className="sbHeader">
-                            {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`}
+                            {tabs.map((tab) => <Button key={tab} tabIndex={0} title={`Open ${tab} panel`}
                                                        className="top-tabs"
                                                        onClick={(event) => toggleDrawer(tab)(event)}>
                                 <span>{tab}</span></Button>)}
                         </div>
-                        {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
+                        {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex={0}
                                               onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}
-                    
+
                     </Portal>
                 </div>
             </ThemeProvider>
@@ -218,7 +218,7 @@ window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
         Sidebar();
-	buildManager();
+	    buildManager();
     }
 });
 
