@@ -14,6 +14,7 @@ const LibreTexts = require('./reuse.js');
 const tidy = require("tidy-html5").tidy_html5;
 const { performance } = require('perf_hooks');
 const filenamify = require('filenamify');
+const puppeteer = require('puppeteer');
 const basePath = '/bot';
 let port = 3006;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -62,7 +63,6 @@ app.post(basePath + '/revert', (req, res) => {
 
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
-    //console.log('Connected.');
     socket.emit('welcome', `Connected to LibreTexts Bot Server.`);
 
     //Define callback events;
@@ -72,7 +72,7 @@ io.on('connection', function (socket) {
     socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
     socket.on('convertContainers', (data) => jobHandler('convertContainers', data, socket));
     socket.on('multipreset', (data) => jobHandler('multipreset', data, socket));
-    socket.on('licenseReport', (data) => licenseReportHandler(data, socket));
+    socket.on('licenseReport', (data) => jobHandler('licenseReport', data, socket));
 
     socket.on('revert', (data) => revert(data, socket));
 });
@@ -87,7 +87,7 @@ async function jobHandler(jobType, input, socket) {
             case 'foreignImage':
             case 'convertContainers':
             case 'licenseReport':
-                return input.root;
+                return input.root && input.user;
             case 'multipreset':
                 return input.root && input.multi;
         }
@@ -101,8 +101,9 @@ async function jobHandler(jobType, input, socket) {
             case 'headerFix':
             case 'foreignImage':
             case 'convertContainers':
+                return {root: input.root, user: input.user};
             case 'licenseReport':
-                return {root: input.root};
+                return {root: input.root, user: input.user, createReportPage: input.createReportPage, generateReportPDF: input.generateReportPDF};
             case 'multipreset':
                 return {root: input.root, multi: input.multi};
         }
@@ -135,6 +136,11 @@ async function jobHandler(jobType, input, socket) {
     let ID = await logStart(input, input.findOnly);
     socket.emit('setState', {state: 'starting', ID: ID});
     console.log(`JOB [${ID}](${input.user}) ${jobType} ${jobType === 'findReplace' ? input.find : ''}`);
+
+    if (jobType === 'licenseReport') {
+        // redirect for new licenseReport infrastructure
+        return licenseReport(input, socket, ID);
+    }
 
     let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
     // pages = LibreTexts.addLinks(await pages);
@@ -225,10 +231,6 @@ async function jobHandler(jobType, input, socket) {
                     [result, numContainers] = await convertContainers(job, result);
                     comment = `[BOT ${ID}] Upgraded ${numContainers} Containers`;
                     break;
-                case 'licenseReport':
-                    [result, numPgsReport] = await licenseReport(job, result);
-                    comment = `[BOT ${ID}] Generated License Report for ${numPgsReport}`;
-                    break;
                 case 'headerFix':
                     result = await headerFix(job, result);
                     comment = `[BOT ${ID}] Fixed Headers`;
@@ -277,10 +279,6 @@ async function jobHandler(jobType, input, socket) {
             return;
 
         // result = LibreTexts.encodeHTML(result);
-
-        if (jobType === 'licenseReport') {
-            return;
-        }
 
         //send update
         if (input.findOnly) {
@@ -622,23 +620,18 @@ async function convertContainers(input, content) {
     }
 }
 
-async function licenseReportHandler(input, socket) {
+async function licenseReport(input, socket, botID) {
     let startTime = performance.now();
-    let botID = await logStart(input);
     let progress = 0;
-    let idx = 0;
-    socket.emit('setState', {state: 'starting', ID: botID});
+
     input = {
         ...input,
-        root: input.root.replace(/\/$/, ''),
-        jobType: 'licenseReport',
-        subdomain: LibreTexts.extractSubdomain(input.root),
         ID: botID
-    }
+    };
 
-    socket.emit('setState', {state: 'gettingSubpages', ID: botID});
+    socket.emit('setState', {state: 'gettingSubpages', ID: input.ID});
     let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: false});
-    socket.emit('setState', {state: 'gotSubpages', ID: botID});
+    socket.emit('setState', {state: 'gotSubpages', ID: input.ID});
 
     if (typeof(pages) === 'object' && pages.hasOwnProperty('id')) {
         input.bookID = pages.id;
@@ -735,7 +728,7 @@ async function licenseReportHandler(input, socket) {
         }
     }
 
-    socket.emit('setState', {state: 'processPages', ID: botID});
+    socket.emit('setState', {state: 'processPages', ID: input.ID});
 
     async function recursiveCount(pageObject) {
         let count = 1;
@@ -803,8 +796,8 @@ async function licenseReportHandler(input, socket) {
     }
 
     let toc = await recurseSection(pages);
-    socket.emit('setState', {state: 'processedPages', ID: botID});
-    socket.emit('setState', {state: 'postProcessing', ID: botID});
+    socket.emit('setState', {state: 'processedPages', ID: input.ID});
+    socket.emit('setState', {state: 'postProcessing', ID: input.ID});
 
     uniqueLicenses = uniqueLicenses.map((item) => {
         return {
@@ -839,7 +832,9 @@ async function licenseReportHandler(input, socket) {
 
     let mostRestrIdx = null;
     uniqueLicenses.forEach((item, idx) => {
-        uniqueLicenses[idx].percent = Math.floor(item.count / pageCount * 100);
+        let licensePercent = (item.count / pageCount) * 100;
+        if (!Number.isInteger(licensePercent)) licensePercent = licensePercent.toFixed(1);
+        uniqueLicenses[idx].percent = licensePercent;
         let findMostRestr = orderedLicenses.findIndex(lic => lic === item.raw);
         if ((findMostRestr >= 0) && (findMostRestr < mostRestrIdx || mostRestrIdx === null)) {
             mostRestrIdx = findMostRestr;
@@ -858,7 +853,7 @@ async function licenseReportHandler(input, socket) {
     });
 
     toc.totalPages = pageCount;
-    socket.emit('setState', {state: 'postProcessed', ID: botID});
+    socket.emit('setState', {state: 'postProcessed', ID: input.ID});
 
     const collator = new Intl.Collator(undefined, {
         numeric: true,
@@ -880,9 +875,9 @@ async function licenseReportHandler(input, socket) {
     async function recurseOutput(pageObject) {
         let newString = `<li class='mt-font-size-10'><span>${pageObject.title}<span>`;
         if (pageObject.license) {
-            newString += ` — <a href='${pageObject.license?.link}' target='_blank' rel='noopener noreferrer'><em>${pageObject.license?.label}`;
+            newString += ` — <a href="${pageObject.license?.link}" target='_blank' rel='noopener noreferrer'><em>${pageObject.license?.label}`;
             if (pageObject.license?.version) {
-                newString += ` (v${pageObject.license?.version})`;
+                newString += ` ${pageObject.license?.version}`;
             }
             newString += '</em></a>';
         }
@@ -898,54 +893,36 @@ async function licenseReportHandler(input, socket) {
         return newString;
     }
 
-    async function recurseOutputTable(pageObject, parentTitle, isChild = false) {
-        let newString = `<tr><td data-th='Page'>`;
-        if (isChild) {
-            newString += `${parentTitle || pageObject.title}/`;
-        }
-        newString += `${pageObject.title}</td><td data-th='License'>`;
-        if (pageObject.license) {
-            newString += `<a href='${pageObject.license?.link}' target='_blank' rel='noopener noreferrer'><em>${pageObject.license?.label}`;
-            if (pageObject.license?.version) {
-                newString += ` (v${pageObject.license?.version})`;
+    let reportHTML = '';
+    if (input.createReportPage === true || input.generateReportPDF === true) {
+        socket.emit('setState', { state: 'formattingReport', ID: input.ID });
+        let reportText = `<h2>Licensing Overview</h2><p class='mt-font-size-10'><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p class='mt-font-size-10'><strong>Total Pages:</strong> ${pageCount}</p><p class='mt-font-size-10'><strong>Most Restrictive License:</strong> <a href="${mostRestrictive.link}" target='_blank' rel='noopener noreferrer'><em>${mostRestrictive.label}</em></a></p><p class='mt-font-size-10'><strong>All licenses found:</strong></p><ul>`;
+        uniqueLicenses.forEach((item) => {
+            reportText += `<li class='mt-font-size-10'><a href="${item.link}" target='_blank' rel='noopener noreferrer'>${item.label}`;
+            if (item.version) {
+                reportText += ` ${item.version}`;
             }
-            newString += '</em></td>';
-        }
-        newString += '</tr>';
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
-            for (let idx = 0; idx < pageObject.children.length; idx++) {
-                let subpage = pageObject.children[idx];
-                newString += await recurseOutputTable(subpage, pageObject.title, true);
-            }
-        }
-        return newString;
+            reportText += `</a>: ${item.percent}% (${item.count} ${item.count > 1 ? 'pages': 'page'})</a></li>`;
+        });
+        reportText += '</ul><h2>Licensing by Page</h2>';
+        reportText += '<ul>';
+        reportText += await recurseOutput(toc);
+        reportText += '</ul>';
+        reportHTML = reportText;
+        socket.emit('setState', { state: 'formattedReport', ID: input.ID });
     }
 
 
     if (input.createReportPage === true) {
-        socket.emit('setState', {state: 'updatingReportPage', ID: botID});
-        let reportText = `<h2>Licensing Overview</h2><p class='mt-font-size-10'><strong>Total Pages:</strong> ${pageCount}</p><p class='mt-font-size-10'><strong>Most Restrictive License:</strong> <a href='${mostRestrictive.link}' target='_blank' rel='noopener noreferrer'><em>${mostRestrictive.label}</em></a></p><p class='mt-font-size-10'><strong>All licenses found:</strong></p><ul>`;
-        uniqueLicenses.forEach((item) => {
-            reportText += `<li class='mt-font-size-10'><a href='${item.link}' target='_blank' rel='noopener noreferrer'>${item.label}`;
-            if (item.version) {
-                reportText += ` (v${item.version})`;
-            }
-            reportText += `</a>: ${item.percent}% (${item.count} pages)</a></li>`;
-        });
-        reportText += '</ul><h2>Licensing By Page</h2>';
-        reportText += '<ul>';
-        reportText += await recurseOutput(toc);
-        //reportText += `<table class='mt-responsive-table'><thead><tr><th scope='col'>Page Name</th><th scope='col'>License</th></tr></thead><tbody>`;
-        //reportText += await recurseOutputTable(toc);
-        //reportText += '</tbody></table>'
-        reportText += '</ul>';
+        socket.emit('setState', {state: 'updatingReportPage', ID: input.ID});
         let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
-        let createReport = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing_Report`, `contents?title=Content Licensing Report&edittime=now&dream.out.format=json`, input.subdomain, 'LibreBot', {
+        let createComment = `[BOT ${input.ID}] Updated Content Licensing Report`;
+        let createReport = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing_Report`, `contents?dream.out.format=json&title=Content Licensing Report&edittime=now&comment=${encodeURIComponent(createComment)}`, input.subdomain, 'LibreBot', {
             method: 'POST',
-            body: reportText
+            body: reportHTML
         });
         if (!createReport.ok) {
-            console.error('Could not create licensing report.');
+            console.error('Could not create licensing report page.');
             let error = await createReport.text();
             console.error(error);
             socket.emit('errorMessage', {
@@ -967,7 +944,86 @@ async function licenseReportHandler(input, socket) {
                 message: error,
             });
         }
-        socket.emit('setState', {state: 'updatedReportPage', ID: botID});
+        socket.emit('setState', {state: 'updatedReportPage', ID: input.ID});
+    }
+
+
+    async function generatePDF() {
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+        const page = await browser.newPage();
+        await page.setContent(`
+            <!DOCTYPE HTML>
+            <html lang='en'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>${toc.title} - Content Licensing Report</title>
+                    <style>
+                        html {
+                            font-family: sans-serif;
+                        }
+                        body {
+                            font-size: 10pt;
+                            font-family: Verdana, Tahoma, Arial, serif;
+                            font-weight: lighter;
+                        }
+                        body a {
+                            text-decoration: none;
+                        }
+                        #libreLogo {
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                            height: 100px;
+                        }
+                        #pageHeader {
+                            text-align: center;
+                        }
+                        body h1,h2,h3,h4,h5,h6 {
+                            font-weight: 500;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <img src='https://batch.libretexts.org/logo.png' id='libreLogo' />
+                    <h1 id='pageHeader'><em>Content Licensing Report</em></h1>
+                    ${reportHTML}
+                </body>
+            </html>
+        `, {
+            waitUntil: 'networkidle0'
+        });
+        const newPDF = await page.pdf({
+            format: 'Letter',
+            margin: {
+                top: '48px',
+                left: '48px',
+                bottom: '48px',
+                right: '48px'
+            }
+        });
+        await browser.close();
+        let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
+        let attachReport = await LibreTexts.authenticatedFetch(rootPath, `files/content-licensing-report.pdf?dream.out.format=json`, input.subdomain, 'LibreBot', {
+            method: 'PUT',
+            body: newPDF
+        });
+        if (!attachReport.ok) {
+            console.error('Could not attach licensing report PDF.');
+            let error = await attachReport.text();
+            console.error(error);
+            socket.emit('errorMessage', {
+                noAlert: false,
+                message: error
+            });
+        }
+    }
+
+    if (input.generateReportPDF === true) {
+        socket.emit('setState', {state: 'generatingPDF', ID: input.ID});
+        await generatePDF();
+        socket.emit('setState', {state: 'generatedPDF', ID: input.ID});
     }
 
     let endTime = performance.now();
@@ -984,13 +1040,14 @@ async function licenseReportHandler(input, socket) {
         text: toc
     };
     if (input.hasOwnProperty('bookID')) {
-        await fs.ensureDir(`./public/licensereports/${input.subdomain}`);
-        await fs.writeJSON(`./public/licensereports/${input.subdomain}/${filenamify(input.bookID)}.json`, licenseReportData);
+        let fileOutName = filenamify(input.subdomain + '-' + input.bookID);
+        await fs.ensureDir(`./public/licensereports`);
+        await fs.writeJSON(`./public/licensereports/${fileOutName}.json`, licenseReportData);
     }
     socket.emit('licenseReportData', licenseReportData);
     socket.emit('setState', {
         state: 'done',
-        ID: input.createReportPage ? botID : null
+        ID: (input.createReportPage || input.generateReportPDF) ? input.ID : null
     });
     await logCompleted(input);
 }
