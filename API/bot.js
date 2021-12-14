@@ -917,7 +917,7 @@ async function licenseReport(input, socket, botID) {
         socket.emit('setState', {state: 'updatingReportPage', ID: input.ID});
         let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
         let createComment = `[BOT ${input.ID}] Updated Content Licensing Report`;
-        let createReport = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing_Report`, `contents?dream.out.format=json&title=Content Licensing Report&edittime=now&comment=${encodeURIComponent(createComment)}`, input.subdomain, 'LibreBot', {
+        let createReport = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Content_Licensing_Report`, `contents?dream.out.format=json&title=Content Licensing Report&edittime=now&comment=${encodeURIComponent(createComment)}`, input.subdomain, 'LibreBot', {
             method: 'POST',
             body: reportHTML
         });
@@ -930,7 +930,7 @@ async function licenseReport(input, socket, botID) {
                 message: error
             });
         }
-        let updateTags = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing_Report`, `tags`, input.subdomain, 'LibreBot', {
+        let updateTags = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Content_Licensing_Report`, `tags`, input.subdomain, 'LibreBot', {
             method: 'PUT',
             headers: {'content-type': 'application/xml; charset=utf-8'},
             body: `<tags><tag value='article:topic'/></tags>`
