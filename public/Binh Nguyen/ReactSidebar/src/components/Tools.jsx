@@ -106,7 +106,7 @@ async function viewLicensingReport() {
         if (subpages.children && Array.isArray(subpages.children)) {
             let frontMatter = subpages.children.find(item => typeof(item.title) === 'string' && item.title.includes('Front Matter'));
             if (frontMatter !== undefined && frontMatter.children && Array.isArray(frontMatter.children)) {
-                let clr = frontMatter.children.find(item => typeof(item.title) === 'string' && item.title.includes('Content Licensing Report'));
+                let clr = frontMatter.children.find(item => typeof(item.title) === 'string' && item.title.includes('Licensing'));
                 if (clr !== undefined && clr.url !== undefined) {
                     foundCLR = true;
                     window.open(clr.url, '_blank', 'noopener noreferrer');

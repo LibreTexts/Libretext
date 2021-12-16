@@ -32,13 +32,13 @@ app.use((req, res, next) => {
         next(`Unauthorized ${req.get('x-forwarded-for')}`)
     }
     next()
-})
+});
 
 app.use(express.json());
 
 app.get(basePath + '/websocketclient', (req, res) => {
     res.sendFile('node_modules/socket.io-client/dist/socket.io.js', {root: '.'})
-})
+});
 
 app.use(basePath + '/Logs/', express.static('BotLogs'))
 
@@ -718,12 +718,18 @@ async function licenseReport(input, socket, botID) {
                     link: "#",
                     raw: 'arr'
                 };
+            case "notset":
+                return {
+                    label: "Unclassified",
+                    link: "#",
+                    raw: "notset"
+                };
             default: {
                 return {
                     label: 'Unknown License',
                     link: '#',
                     raw: 'unknown'
-                }
+                };
             }
         }
     }
@@ -750,26 +756,28 @@ async function licenseReport(input, socket, botID) {
         if (pageInfo.hasOwnProperty('tags') && Array.isArray(pageInfo.tags)) {
             let foundLicTag = pageInfo.tags.find(item => item.includes('license:'));
             let foundLicVer = pageInfo.tags.find(item => item.includes('licenseversion:'));
+            let license = null;
+            let licenseVersion = null;
             if (foundLicTag) {
-                let license = foundLicTag.replace('license:', '');
-                let licenseVersion = '4.0';
+                license = foundLicTag.replace('license:', '');
+                licenseVersion = '4.0';
                 if (foundLicVer) {
                     foundLicVer = foundLicVer.replace('licenseversion:', '');
                     foundLicVer = foundLicVer.slice(0,1) + '.' + foundLicVer.slice(1);
                     licenseVersion = foundLicVer;
                 }
-                let existingUnique = uniqueLicenses.find((item) => {
-                    if (item.raw === license) {
-                        if (!item.version || (item.version && item.version === licenseVersion)) {
-                            return item;
-                        }
+            } else license = 'notset';
+            let existingUnique = uniqueLicenses.find((item) => {
+                if (item.raw === license) {
+                    if (!item.version || (item.version && item.version === licenseVersion)) {
+                        return item;
                     }
-                    return null;
-                });
-                let newLicenseInfo = getLicenseInfo(license, licenseVersion);
-                if (!existingUnique) uniqueLicenses.push(newLicenseInfo);
-                newEntry.license = newLicenseInfo;
-            }
+                }
+                return null;
+            });
+            let newLicenseInfo = getLicenseInfo(license, licenseVersion);
+            if (!existingUnique) uniqueLicenses.push(newLicenseInfo);
+            newEntry.license = newLicenseInfo;
         }
         if (pageInfo.id) newEntry.id = pageInfo.id;
         if (pageInfo.url) newEntry.url = pageInfo.url;
@@ -833,7 +841,7 @@ async function licenseReport(input, socket, botID) {
     let mostRestrIdx = null;
     uniqueLicenses.forEach((item, idx) => {
         let licensePercent = (item.count / pageCount) * 100;
-        if (!Number.isInteger(licensePercent)) licensePercent = licensePercent.toFixed(1);
+        if (!isNaN(licensePercent)) licensePercent = parseFloat(licensePercent.toFixed(1));
         uniqueLicenses[idx].percent = licensePercent;
         let findMostRestr = orderedLicenses.findIndex(lic => lic === item.raw);
         if ((findMostRestr >= 0) && (findMostRestr < mostRestrIdx || mostRestrIdx === null)) {
@@ -873,7 +881,7 @@ async function licenseReport(input, socket, botID) {
     await recurseSort(toc);
 
     async function recurseOutput(pageObject) {
-        let newString = `<li class='mt-font-size-10'><span>${pageObject.title}<span>`;
+        let newString = `<li><span>${pageObject.title}<span>`;
         if (pageObject.license) {
             newString += ` — <a href="${pageObject.license?.link}" target='_blank' rel='noopener noreferrer'><em>${pageObject.license?.label}`;
             if (pageObject.license?.version) {
@@ -894,21 +902,27 @@ async function licenseReport(input, socket, botID) {
     }
 
     let reportHTML = '';
+    let overviewHTML = '';
     if (input.createReportPage === true || input.generateReportPDF === true) {
         socket.emit('setState', { state: 'formattingReport', ID: input.ID });
-        let reportText = `<h2>Licensing Overview</h2><p class='mt-font-size-10'><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p class='mt-font-size-10'><strong>Total Pages:</strong> ${pageCount}</p><p class='mt-font-size-10'><strong>Most Restrictive License:</strong> <a href="${mostRestrictive.link}" target='_blank' rel='noopener noreferrer'><em>${mostRestrictive.label}</em></a></p><p class='mt-font-size-10'><strong>All licenses found:</strong></p><ul>`;
+        reportHTML = `<h2>Overview</h2>`;
+        overviewHTML = `<p><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p><strong>Total Pages:</strong> ${pageCount}</p><p><strong>Most Restrictive License:</strong> <a href="${mostRestrictive.link}" target='_blank' rel='noopener noreferrer'><em>${mostRestrictive.label}</em></a></p><p><strong>All licenses found:</strong></p><ul>`;
         uniqueLicenses.forEach((item) => {
-            reportText += `<li class='mt-font-size-10'><a href="${item.link}" target='_blank' rel='noopener noreferrer'>${item.label}`;
+            overviewHTML += `<li><a href="${item.link}" target='_blank' rel='noopener noreferrer'>${item.label}`;
             if (item.version) {
-                reportText += ` ${item.version}`;
+                overviewHTML += ` ${item.version}`;
             }
-            reportText += `</a>: ${item.percent}% (${item.count} ${item.count > 1 ? 'pages': 'page'})</a></li>`;
+            overviewHTML += `</a>: ${item.percent}% (${item.count} ${item.count > 1 ? 'pages': 'page'})</a></li>`;
         });
-        reportText += '</ul><h2>Licensing by Page</h2>';
-        reportText += '<ul>';
-        reportText += await recurseOutput(toc);
-        reportText += '</ul>';
-        reportHTML = reportText;
+        overviewHTML += '</ul>';
+        reportHTML += overviewHTML;
+        let detailedLink = input.root;
+        if (!detailedLink.endsWith('/')) detailedLink += '/';
+        detailedLink += 'zz%3A_Back_Matter/30%3A_Detailed_Licensing';
+        overviewHTML += `<p><em>A detailed breakdown of this resource's licensing can be found in <strong><a href="${detailedLink}" rel='noopener noreferrer'>Back Matter/Detailed Licensing</a></strong></em>.</p>`;
+        reportHTML += '<h2>By Page</h2><div style="column-count: 2; margin-top: 1em;"><ul style="margin: 0;">';
+        reportHTML += await recurseOutput(toc);
+        reportHTML += '</ul></div>';
         socket.emit('setState', { state: 'formattedReport', ID: input.ID });
     }
 
@@ -916,28 +930,53 @@ async function licenseReport(input, socket, botID) {
     if (input.createReportPage === true) {
         socket.emit('setState', {state: 'updatingReportPage', ID: input.ID});
         let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
-        let createComment = `[BOT ${input.ID}] Updated Content Licensing Report`;
-        let createReport = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Content_Licensing_Report`, `contents?dream.out.format=json&title=Content Licensing Report&edittime=now&comment=${encodeURIComponent(createComment)}`, input.subdomain, 'LibreBot', {
+        let overviewComment = `[BOT ${input.ID}] Updated Licensing Overview`;
+        let detailedComment = `[BOT ${input.ID}] Updated Detailed Licensing`;
+        let createOverview = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing`, `contents?dream.out.format=json&title=Licensing&edittime=now&comment=${encodeURIComponent(overviewComment)}`, input.subdomain, 'LibreBot', {
+            method: 'POST',
+            body: overviewHTML
+        });
+        let createDetailed = await LibreTexts.authenticatedFetch(`${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`, `contents?dream.out.format=json&title=${encodeURIComponent('Detailed Licensing')}&edittime=now&comment=${detailedComment}`, input.subdomain, 'LibreBot', {
             method: 'POST',
             body: reportHTML
         });
-        if (!createReport.ok) {
-            console.error('Could not create licensing report page.');
-            let error = await createReport.text();
+        if (!createOverview.ok) {
+            console.error('Could not create licensing overview page.');
+            let error = await createOverview.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
                 message: error
             });
         }
-        let updateTags = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Content_Licensing_Report`, `tags`, input.subdomain, 'LibreBot', {
+        if (!createDetailed.ok) {
+            console.error('Could not create detailed licensing page.');
+            let error = await createDetailed.text();
+            console.error(error);
+            socket.emit('errorMessage', {
+                noAlert: false,
+                message: error
+            });
+        }
+        let updateOptions = {
             method: 'PUT',
             headers: {'content-type': 'application/xml; charset=utf-8'},
             body: `<tags><tag value='article:topic'/></tags>`
-        });
-        if (!updateTags.ok) {
-            console.error('Could not update licensing report tags.');
-            let error = await updateTags.text();
+        };
+        let updateOverviewTags = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing`, `tags`, input.subdomain, 'LibreBot', updateOptions);
+        let updateDetailedTags = await LibreTexts.authenticatedFetch(`${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`, `tags`, input.subdomain, 'LibreBot', updateOptions);
+        if (!updateOverviewTags.ok) {
+            console.error('Could not update licensing overview tags.');
+            let error = await updateOverviewTags.text();
+            console.error(error);
+            socket.emit('errorMessage', {
+                noAlert: false,
+                message: error,
+            });
+        }
+        if (!updateDetailedTags.ok) {
+            console.error('Could not update detailed licensing tags.');
+            let error = await updateDetailedTags.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
