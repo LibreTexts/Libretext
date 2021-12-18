@@ -26,6 +26,14 @@ fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
 server.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} on port ${port}`));
 
+app.use((req, res, next) => {
+    if (!req.get('Referer')?.endsWith('libretexts.org/')) {
+        res.status(401);
+        next(`Unauthorized ${req.get('x-forwarded-for')}`)
+    }
+    next()
+});
+
 app.use(express.json());
 
 app.get(basePath + '/websocketclient', (req, res) => {
