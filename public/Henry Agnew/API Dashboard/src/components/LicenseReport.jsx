@@ -265,7 +265,7 @@ export default class LicenseReport extends React.Component {
                             <Typography variant='body1'><strong>Resource Title:</strong> <Link href={this.state.reportData?.text?.url} target='_blank' rel='noopener noreferrer'>{this.state.reportData?.text?.title}</Link></Typography>
                             <Typography variant='body1'><strong>Webpages:</strong> {this.state.reportData?.text?.totalPages}</Typography>
                             {(this.state.reportData?.meta?.specialRestrictions && Array.isArray(this.state.reportData.meta.specialRestrictions)) &&
-                                <Typography variant='body1'><strong>Applicable Restrictions:</strong> {buildSpecialRestrictions(this.state.reportData.meta.specialRestrictions)}</Typography>
+                                <Typography variant='body1'><strong>Applicable Restrictions:</strong> {this.buildSpecialRestrictions(this.state.reportData.meta.specialRestrictions)}</Typography>
                             }
                             <Typography variant='body1'><strong>All licenses found:</strong></Typography>
                             {(this.state.reportData?.meta?.licenses && Array.isArray(this.state.reportData.meta.licenses)) &&
