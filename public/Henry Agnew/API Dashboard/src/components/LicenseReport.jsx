@@ -207,6 +207,30 @@ export default class LicenseReport extends React.Component {
         return builtItems;
     }
 
+    buildSpecialRestrictions(specialRestrictions) {
+        if (Array.isArray(specialRestrictions)) {
+            let restrString = '';
+            let restrCount = 0;
+            if (specialRestrictions.includes('noncommercial')) {
+                if (restrCount > 0) restrString += `, `;
+                restrString += `Noncommercial`;
+                restrCount++;
+            }
+            if (specialRestrictions.includes('noderivatives')) {
+                if (restrCount > 0) restrString += `, `;
+                restrString += `No Derivatives`;
+                restrCount++;
+            }
+            if (specialRestrictions.includes('fairuse')) {
+                if (restrCount > 0) restrString += `, `;
+                restrString += `Fair Use`;
+                restrCount++;
+            }
+            return restrString;
+        }
+        return '';
+    }
+
     render() {
         return (
             <div id="LicenseReport">
@@ -236,11 +260,13 @@ export default class LicenseReport extends React.Component {
                     {this.getStatus()}
                     {(this.state.status === 'done') &&
                         <div>
-                            <Typography variant='h2'>Content Licensing Report</Typography>
-                            <Typography variant='h3'>Licensing Overview</Typography>
+                            <Typography variant='h2'>Content Licensing</Typography>
+                            <Typography variant='h3'>Overview</Typography>
                             <Typography variant='body1'><strong>Resource Title:</strong> <Link href={this.state.reportData?.text?.url} target='_blank' rel='noopener noreferrer'>{this.state.reportData?.text?.title}</Link></Typography>
-                            <Typography variant='body1'><strong>Total Pages:</strong> {this.state.reportData?.text?.totalPages}</Typography>
-                            <Typography variant='body1'><strong>Most Restrictive License:</strong> <Link href={this.state.reportData?.meta?.mostRestrictiveLicense?.link} target='_blank' rel='noopener noreferrer'>{this.state.reportData?.meta?.mostRestrictiveLicense?.label} {this.state.reportData?.meta?.mostRestrictiveLicense?.version}</Link></Typography>
+                            <Typography variant='body1'><strong>Webpages:</strong> {this.state.reportData?.text?.totalPages}</Typography>
+                            {(this.state.reportData?.meta?.specialRestrictions && Array.isArray(this.state.reportData.meta.specialRestrictions)) &&
+                                <Typography variant='body1'><strong>Applicable Restrictions:</strong> {buildSpecialRestrictions(this.state.reportData.meta.specialRestrictions)}</Typography>
+                            }
                             <Typography variant='body1'><strong>All licenses found:</strong></Typography>
                             {(this.state.reportData?.meta?.licenses && Array.isArray(this.state.reportData.meta.licenses)) &&
                                 <ul>
@@ -251,7 +277,7 @@ export default class LicenseReport extends React.Component {
                                     })}
                                 </ul>
                             }
-                            <Typography variant='h3'>Licensing by Page</Typography>
+                            <Typography variant='h3'>By Page</Typography>
                             {(this.state.reportData?.text) &&
                                 <TreeView
                                     aria-label='Table of Contents Navigator'

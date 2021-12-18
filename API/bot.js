@@ -26,14 +26,6 @@ fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
 server.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} on port ${port}`));
 
-app.use((req, res, next) => {
-    if (!req.get('Referer')?.endsWith('libretexts.org/')) {
-        res.status(401);
-        next(`Unauthorized ${req.get('x-forwarded-for')}`)
-    }
-    next()
-});
-
 app.use(express.json());
 
 app.get(basePath + '/websocketclient', (req, res) => {
@@ -641,8 +633,11 @@ async function licenseReport(input, socket, botID) {
     let processedPages = 0;
 
     // 'Most restrictive' to 'least restrictive'
-    let orderedLicenses = ['arr', 'ccbyncnd', 'ccbynd', 'ccbyncsa', 'ccbync',
+    let orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ccbyncsa', 'ccbync',
         'ccbysa', 'ccby', 'gnu', 'gnufdl', 'gnudsl', 'publicdomain'];
+    let ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync'];
+    let ndLicenses = ['ccbyncnd', 'ccbynd'];
+    let fuLicenses = ['fairuse'];
 
     function getLicenseInfo(lic, version = '4.0') {
         switch(lic) {
@@ -712,9 +707,15 @@ async function licenseReport(input, socket, botID) {
                     link: "https://www.gnu.org/licenses/fdl-1.3.en.html",
                     raw: 'gnufdl'
                 };
+            case "fairuse":
+                return {
+                    label: "Fair Use",
+                    link: "https://fairuse.stanford.edu/overview/fair-use/what-is-fair-use/",
+                    raw: 'fairuse'
+                };
             case "arr":
                 return {
-                    label: "© All Rights Reserved",
+                    label: "Other",
                     link: "#",
                     raw: 'arr'
                 };
@@ -849,6 +850,27 @@ async function licenseReport(input, socket, botID) {
         }
     });
     let mostRestrictive = getLicenseInfo(orderedLicenses[mostRestrIdx]);
+    let ncRestriction = false;
+    let ndRestriction = false;
+    let fuRestriction = false;
+    let foundSpecialRestrictions = [];
+    uniqueLicenses.forEach((item) => {
+        if (item.raw) {
+            if (!ncRestriction && ncLicenses.includes(item.raw)) {
+                ncRestriction = true;
+                foundSpecialRestrictions.push('noncommercial');
+            }
+            if (!ndRestriction && ndLicenses.includes(item.raw)) {
+                ndRestriction = true;
+                foundSpecialRestrictions.push('noderivatives');
+            }
+            if (!fuRestriction && fuLicenses.includes(item.raw)) {
+                fuRestriction = true;
+                foundSpecialRestrictions.push('fairuse');
+            }
+        }
+    });
+
 
     uniqueLicenses.sort((a, b) => {
         if (a.percent > b.percent) {
@@ -906,7 +928,28 @@ async function licenseReport(input, socket, botID) {
     if (input.createReportPage === true || input.generateReportPDF === true) {
         socket.emit('setState', { state: 'formattingReport', ID: input.ID });
         reportHTML = `<h2>Overview</h2>`;
-        overviewHTML = `<p><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p><strong>Total Pages:</strong> ${pageCount}</p><p><strong>Most Restrictive License:</strong> <a href="${mostRestrictive.link}" target='_blank' rel='noopener noreferrer'><em>${mostRestrictive.label}</em></a></p><p><strong>All licenses found:</strong></p><ul>`;
+        overviewHTML = `<p><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p><strong>Webpages:</strong> ${pageCount}</p>`;
+        if (ncRestriction || ndRestriction || fuRestriction) { // build special restrictions list
+            let restrCount = 0;
+            overviewHTML += `<p><strong>Applicable Restrictions:</strong> `;
+            if (ncRestriction) {
+                if (restrCount > 0) overviewHTML += `, `;
+                overviewHTML += `Noncommercial`;
+                restrCount++;
+            }
+            if (ndRestriction) {
+                if (restrCount > 0) overviewHTML += `, `;
+                overviewHTML += `No Derivatives`;
+                restrCount++;
+            }
+            if (fuRestriction) {
+                if (restrCount > 0) overviewHTML += `, `;
+                overviewHTML += `Fair Use`;
+                restrCount++;
+            }
+            overviewHTML += `</p>`
+        }
+        overviewHTML += `<p><strong>All licenses found:</strong></p><ul>`;
         uniqueLicenses.forEach((item) => {
             overviewHTML += `<li><a href="${item.link}" target='_blank' rel='noopener noreferrer'>${item.label}`;
             if (item.version) {
@@ -1073,7 +1116,8 @@ async function licenseReport(input, socket, botID) {
         timestamp: new Date(),
         runtime: `${endTime - startTime} ms`,
         meta: {
-            mostRestrictiveLicense: mostRestrictive,
+            mostRestrictiveLicense: mostRestrictive, // Deprecated?,
+            specialRestrictions: foundSpecialRestrictions,
             licenses: uniqueLicenses
         },
         text: toc
