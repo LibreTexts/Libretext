@@ -39,8 +39,9 @@
     }
     
     async function askPropagator() {
-        if (confirm(`Propagate ${window.location.href} to the other libraries?`)) {
-            let url = window.location.href;
+        const [subdomain, path] = LibreTexts.parseURL();
+        let url = `https://${subdomain}.libretexts.org/${path}`;
+        if (confirm(`Propagate ${url} to the other libraries?`)) {
             const subdomain = url.split("/")[2].split(".")[0];
             //Disabled for careered
             let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
