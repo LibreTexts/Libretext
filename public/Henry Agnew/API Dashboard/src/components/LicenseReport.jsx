@@ -189,7 +189,7 @@ export default class LicenseReport extends React.Component {
             pages.forEach((page, idx) => {
                 let prefix = page.id || 'childpage';
                 let newTreeItem = (
-                    <TreeItem nodeId={`${prefix}-${idx}`} label={
+                    <TreeItem nodeId={`${prefix}-${idx}`} key={`${prefix}-${idx}`} label={
                         <span>{page.title} {page.license?.label &&
                             <span> — <Link href={page.license?.link} target='_blank' rel='noopener noreferrer'>{page.license?.label} {page.license?.version}</Link></span>
                         }</span>
@@ -264,7 +264,7 @@ export default class LicenseReport extends React.Component {
                             <Typography variant='h3'>Overview</Typography>
                             <Typography variant='body1'><strong>Resource Title:</strong> <Link href={this.state.reportData?.text?.url} target='_blank' rel='noopener noreferrer'>{this.state.reportData?.text?.title}</Link></Typography>
                             <Typography variant='body1'><strong>Webpages:</strong> {this.state.reportData?.text?.totalPages}</Typography>
-                            {(this.state.reportData?.meta?.specialRestrictions && Array.isArray(this.state.reportData.meta.specialRestrictions)) &&
+                            {(Array.isArray(this.state.reportData?.meta?.specialRestrictions) && this.state.reportData.meta.specialRestrictions.length > 0) &&
                                 <Typography variant='body1'><strong>Applicable Restrictions:</strong> {this.buildSpecialRestrictions(this.state.reportData.meta.specialRestrictions)}</Typography>
                             }
                             <Typography variant='body1'><strong>All licenses found:</strong></Typography>
@@ -285,7 +285,7 @@ export default class LicenseReport extends React.Component {
                                     defaultExpandIcon={<ChevronRightIcon />}
                                     sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
                                 >
-                                    <TreeItem nodeId="root-1" label={
+                                    <TreeItem nodeId="root-1" key="root-1" label={
                                         <span>{this.state.reportData?.text?.title} - <Link href={this.state.reportData?.text?.license?.link} target='_blank' rel='noopener noreferrer'>{this.state.reportData?.text?.license?.label} {this.state.reportData?.text?.license?.version}</Link></span>
                                     }>
                                         {(this.state.reportData?.text?.children && Array.isArray(this.state.reportData.text.children)) &&

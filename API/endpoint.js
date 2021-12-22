@@ -1,3 +1,7 @@
+/**
+ * Miscellanous LibreTexts API services & endpoints.
+ * @file Defines various LibreTexts API endpoints.
+ */
 const http = require('http');
 const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
@@ -7,6 +11,7 @@ const authenBrowser = require('./authenBrowser.json');
 const secure = require('./secure.json');
 const fs = require('fs-extra');
 const md5 = require('md5');
+const { performance } = require('perf_hooks');
 const LibreTexts = require('./reuse.js');
 let port = 3005;
 if (process.argv.length >= 3 && parseInt(process.argv[2])) {
@@ -208,6 +213,21 @@ async function handler(request, response) {
                 console.error(await contents.text());
             }
             response.end();
+        }
+    } else if (url.startsWith('/getTOC/')) {
+        if (request.method === 'GET') {
+            let start = performance.now();
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            let resourceURL = url.split('/getTOC/')[1];
+            resourceURL.replace('%3A', ':');
+            let pages = await LibreTexts.getSubpages(resourceURL, 'LibreBot', { flat: false });
+            let end = performance.now();
+            response.end(JSON.stringify({
+                time: `${end - start} ms`,
+                toc: pages
+            }));
+        } else {
+            responseError(request.method + 'Not Acceptable', 406);
         }
     }
     else {
