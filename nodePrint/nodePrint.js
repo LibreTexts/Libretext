@@ -516,6 +516,17 @@ puppeteer.launch({
         async function getInformation(current) {
             if (current.gotInformation) return; //exit if already ran
             else current.gotInformation = true;
+            // Retrieve LibreText summary
+            current.summary = ''; // set to empty in case of not found
+            if (Array.isArray(current.properties)) {
+                let findSummary = current.properties.find(prop => typeof(prop) === 'object' && prop['@name'] === 'mindtouch.page#overview');
+                if (findSummary !== undefined && typeof(findSummary.contents) === 'object') {
+                    if (typeof(findSummary.contents['#text']) === 'string') {
+                        current.summary = findSummary.contents['#text'];
+                    }
+                }
+            }
+            // Process tags
             for (let i = 0; i < current.tags.length; i++) {
                 let tag = current.tags[i];
                 let items;
@@ -1842,6 +1853,7 @@ puppeteer.launch({
                 institution: current.companyname,
                 link: current.url,
                 tags: current.tags,
+                summary: current.summary,
                 failed: failed,
                 numPages: numPages,
             };
