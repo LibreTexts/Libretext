@@ -192,7 +192,7 @@ if (!window["analytics.js"]) {
         
         async function report(verb, object, extra) {
             const body = await getBody(verb, object, extra);
-            // console.log(body);
+            console.log(body);
             navigator.sendBeacon(`https://${root}/ay/receive`, body);
             // console.log(verb, object, extra);
         }
