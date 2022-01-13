@@ -8,6 +8,7 @@ const cors = require('cors');
 // app.use(cors());
 app.use(express.text());
 const async = require('async');
+const MongoClient = require('mongodb');
 
 //middleware configuration and initialization
 const basePath = '/ay';
@@ -65,6 +66,29 @@ app.post(basePath + '/receive', async (req, res) => {
                 await fs.appendFile(`./analyticsData/ay-${courseName[i]}/${datePath}/${user}.txt`, body + "\n");
                 await fs.appendFile(`./analyticsData/ay-${courseName[i]}/${user}.txt`, body + "\n");
             }
+        }
+
+        const uri = `${secure.mongodbAnalytics.protocol}://${secure.mongodbAnalytics.user}:${secure.mongodbAnalytics.pass}@${secure.mongodbAnalytics.host}:${secure.mongodbAnalytics.port}/${secure.mongodbAnalytics.dbname}?retryWrites=true&w=majority`;
+        const client = new MongoClient(uri);
+        try {
+            await client.connect();
+            await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
+            console.log("Connected successfully to server");
+
+            // write to collection
+            // should maybe create a new collection per course?
+
+            // db.collection('ltanalytics').insertOne(body, function (err, result) {
+            //     if (err)
+            //         res.send('Error');
+            //     else
+            //         res.send('Success');
+            // });
+
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await client.close();
         }
     } catch (e) {
         console.error(e);
