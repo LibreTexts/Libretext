@@ -43,8 +43,8 @@ app.post(basePath + '/receive', async (req, res) => {
 
     try {
         await client.connect();
-        await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
-        console.log("Connected successfully to server");
+        //await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
+        //console.log("Connected successfully to server");
     } catch (e) {
         console.error(e);
     }
@@ -83,12 +83,8 @@ app.post(basePath + '/receive', async (req, res) => {
         // write to collection
         // should maybe create a new collection per course?
         const db = client.db(secure.mongodbAnalytics.dbname);
-        db.collection('ltanalytics').insertOne(event, function (err, result) {
-            if (err)
-                res.send('Error');
-            else
-                res.send('Success');
-        });
+        await db.collection("ltanalytics").insertOne(event);
+        // console.log(`A document was inserted with the _id: ${result.insertedId}`);
 
     } catch (e) {
         console.error(e);
