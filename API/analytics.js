@@ -8,7 +8,7 @@ const cors = require('cors');
 // app.use(cors());
 app.use(express.text());
 const async = require('async');
-const MongoClient = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
 //middleware configuration and initialization
 const basePath = '/ay';
@@ -35,6 +35,18 @@ app.post(basePath + '/receive', async (req, res) => {
     // console.log(req.body);
     if (!(req.headers.origin && req.headers.origin.endsWith("libretexts.org"))) {
         return res.status(400).end();
+    }
+
+    // connect to mongodb
+    const uri = `${secure.mongodbAnalytics.protocol}://${secure.mongodbAnalytics.user}:${secure.mongodbAnalytics.pass}@${secure.mongodbAnalytics.host}/${secure.mongodbAnalytics.dbname}?retryWrites=true&w=majority`;
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+        await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
+        console.log("Connected successfully to server");
+    } catch (e) {
+        console.error(e);
     }
     
     let body = req.body;
@@ -68,30 +80,20 @@ app.post(basePath + '/receive', async (req, res) => {
             }
         }
 
-        const uri = `${secure.mongodbAnalytics.protocol}://${secure.mongodbAnalytics.user}:${secure.mongodbAnalytics.pass}@${secure.mongodbAnalytics.host}:${secure.mongodbAnalytics.port}/${secure.mongodbAnalytics.dbname}?retryWrites=true&w=majority`;
-        const client = new MongoClient(uri);
-        try {
-            await client.connect();
-            await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
-            console.log("Connected successfully to server");
+        // write to collection
+        // should maybe create a new collection per course?
+        const db = client.db(secure.mongodbAnalytics.dbname);
+        db.collection('ltanalytics').insertOne(event, function (err, result) {
+            if (err)
+                res.send('Error');
+            else
+                res.send('Success');
+        });
 
-            // write to collection
-            // should maybe create a new collection per course?
-
-            // db.collection('ltanalytics').insertOne(body, function (err, result) {
-            //     if (err)
-            //         res.send('Error');
-            //     else
-            //         res.send('Success');
-            // });
-
-        } catch (e) {
-            console.error(e);
-        } finally {
-            await client.close();
-        }
     } catch (e) {
         console.error(e);
+    } finally {
+        await client.close();
     }
 })
 
