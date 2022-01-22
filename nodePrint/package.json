@@ -19,7 +19,7 @@
     "jszip": "^3.5.0",
     "md5": "^2.3.0",
     "node-eta": "^0.9.0",
-    "node-fetch": "^3.1.1",
+    "node-fetch": "^2.6.7",
     "node-persist": "^3.1.0",
     "node-static": "git+https://github.com/LibreTexts/node-static.git",
     "pdf-parse": "^1.1.1",
