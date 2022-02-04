@@ -457,15 +457,15 @@ function licenseControl() {
     }
 
     /** Create batch print options and DonorBox links (if applicable) */
-    if ($('.elm-social.share').length > 0) {
+    if ($('.elm-social-share').length > 0) {
       let batchHTML = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
       if (!isAdmin) {
         batchHTML += '<a href="https://donorbox.org/libretexts" target="_blank" rel="noopener noreferrer" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a>';
-        $('.elm-social-share')[0].innerHTML = `${batchHTML}</div>`;
         window.DonorBox = {
           widgetLinkClassName: 'custom-dbox-popup',
         };
       }
+      $('.elm-social-share')[0].innerHTML = `${batchHTML}</div>`;
     }
 
     /** Enable DonorBox */
