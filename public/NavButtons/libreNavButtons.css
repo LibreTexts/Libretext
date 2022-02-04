@@ -67,7 +67,7 @@
 /* Hide built-in pagination if buttons are displayed */
 @media only screen and (min-width: 1445px) {
     .elm-article-pagination {
-        display: none;
+        display: none !important;
     }
 }
 

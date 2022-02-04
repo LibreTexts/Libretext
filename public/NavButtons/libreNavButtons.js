@@ -6,7 +6,7 @@
  */
 
 /**
- * Instaniates navigation buttons and adds them to the DOM, if applicable.
+ * Instantiates navigation buttons and adds them to the DOM, if applicable.
  */
 function libreNavButtons() {
   if (window !== window.top) {
