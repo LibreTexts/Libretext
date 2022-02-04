@@ -1,14 +1,22 @@
 Public (Front-end) Files
 ============
-This directory is for client-side scripts that are used on the Front-End LibreTexts platform. Projects are sorted based on the Project author. These files are auto-deployed to the Cloudflare CDN at cdn.libretexts.org
+This directory is for client-side scripts that are used on the Front-End LibreTexts platform. ~~Projects are sorted based on the Project author.~~ These files are auto-deployed to the Cloudflare CDN at cdn.libretexts.org
+
+
 
 React.js projects require compilation using Browserify & Babel.
+
+| Deprecated Projects | Description                                                    | Status                          |
+| ----------------- | -------------------------------------------------------------- | ------------------------------- |
+| Aryan/Licenses          | Labels library pages with corresponding content licensing symbols | Awaiting deletion, superceded by `/LicenseControl`             |
+| Aryan/FBButtons         | Hovering front/back navigation buttons                         | Awaiting deletion, superceded by `/NavButtons`            |
+| Aryan/Sidebar           | Blue sidebar containing site links and resources               | Awaiting deletion, superceded by `Binh/ReactSidebar` |
+
 
 | Aryans's Projects | Description                                                    | Status                          |
 | ----------------- | -------------------------------------------------------------- | ------------------------------- |
 | Citation          | Generator for citations and attributions using Citation.js lib | :heavy_check_mark:              |
-| FBButtons         | Hovering front/back navigation buttons                         | :heavy_check_mark:              |
-| Sidebar           | Blue sidebar containing site links and resources               | Superceded by Binh/ReactSidebar |
+| RefManager          | Allows users to view/manage content references on Libraries | :question:             |
 
 
 | Binh's Projects | Description                                                          | Status             |
