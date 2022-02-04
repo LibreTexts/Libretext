@@ -7,7 +7,7 @@ LicenseControl assumes the following libraries are already available on any page
 * [jQuery](https://jquery.com)
 
 
-## Development
+### Development
 LicenseControl files should always be minified before a release to production. For example:
 * `terser licensecontrol.js -c -m -o licensecontrol.min.js`
 * `minify licensecontrol.css > licensecontrol.min.css`

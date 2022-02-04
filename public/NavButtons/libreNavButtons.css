@@ -9,7 +9,6 @@
     border-radius: 100%;
     cursor: pointer;
     text-align: center;
-    vertical-align: middle;
     z-index: 1000;
     margin: 0;
     padding: 0;
@@ -63,6 +62,13 @@
 
 .libreNavBtn:hover {
     background-color: rgba(18,123,196, 1);
+}
+
+/* Hide built-in pagination if buttons are displayed */
+@media only screen and (min-width: 1445px) {
+    .elm-article-pagination {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 1445px) {
