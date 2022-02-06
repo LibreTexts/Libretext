@@ -9,7 +9,7 @@ import FormatIndentIncreaseIcon from '@material-ui/icons/FormatIndentIncrease';
 export default function Readability(props) {
     const [currentTheme, setTheme] = React.useState(localStorage.getItem("beeline"));
     const [textSize, setTextSize] = React.useState(localStorage.getItem("LT_fontSize") || 1.0);
-    const [marginSize, setMarginSize] = React.useState(localStorage.getItem("LT_pageWidth") || 0);
+    const [marginSize, setMarginSize] = React.useState(localStorage.getItem("LT_pageWidth") || 5);
     
     const setBeelineTheme = (inTheme) => () => {
         if (!inTheme)
@@ -35,10 +35,9 @@ export default function Readability(props) {
     
     BeelineButton.propTypes = {theme: PropTypes.string}
     
-    
     function rtdefault() {
         setTextSize(1.0);
-        setMarginSize(0);
+        setMarginSize(5);
         localStorage.removeItem('LT_fontSize');
         localStorage.removeItem('LT_pageWidth');
         localStorage.removeItem('darkMode');

@@ -6,7 +6,7 @@
         "jquery": true
     },
     "extends": [
-        "airbnb-base",
+        "airbnb",
         "plugin:jsdoc/recommended"
     ],
     "ignorePatterns": [

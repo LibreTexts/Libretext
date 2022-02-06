@@ -1,7 +1,7 @@
 import {Link, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
-import {createHash} from 'crypto';
+import Hashes from 'jshashes';
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -66,10 +66,7 @@ export function LibraryItem(props) {
 export function TableOfContents(props) {
     
     //create hash to use as the id
-    let hash = createHash('sha256');
-    hash.update(props.coverpageURL);
-    hash = hash.digest('hex');
-    
+    let hash = new Hashes.SHA256().hex(props.coverpageURL);
     
     useEffect(() => {
         LibreTexts.TOC(props.coverpageURL, `#${hash}`);
