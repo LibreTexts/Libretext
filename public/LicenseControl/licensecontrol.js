@@ -137,6 +137,13 @@ function getCC(inputTag) {
             link: 'https://en.wikipedia.org/wiki/All_rights_reserved',
             raw: 'arr',
           };
+        case 'ck12':
+          return {
+            label: 'ck12',
+            title: 'CK-12',
+            link: 'https://www.ck12info.org/curriculum-materials-license',
+            raw: 'ck12',
+          };
         default:
           break;
       }
@@ -205,6 +212,7 @@ function licenseControl() {
       gnufdl: 10,
       arr: 11,
       notset: 12,
+      ck12: 13,
     };
     const licLabel = license.label;
     const licStored = localStorage.getItem('cc');
@@ -380,6 +388,10 @@ function licenseControl() {
           warnModalContent.setAttribute('style', warningStyle);
           warnModalContent.innerHTML = `<span> ${titleText} licensed: You have the freedom to run but not remix any software for profit. Learn more about this license ${licLink}.</span>`;
           break;
+        case 'ck12':
+          warnModalContent.setAttribute('style', dangerStyle);
+          warnModalContent.innerHTML = `<span> ${titleText} license: Learn more about this license ${licLink}.</span>`;
+          break;
         case 'arr':
           warnModalContent.setAttribute('style', dangerStyle);
           warnModalContent.innerHTML = '<span> The license of the content on this page is All Rights Reserved. The content is allowed to be used on the LibreTexts platform thanks to the author. Usage off the platform requires explicit permission from the content authors.</span>';
@@ -428,14 +440,17 @@ function licenseControl() {
         case 'arr':
           licIcon = '<img style="height: 30px" src="https://awesomefiles.libretexts.org/Social Share Kit/arr.png" alt="All Rights Reserved"/>';
           break;
+        case 'ck12':
+          licIcon = '<img style="height: 30px" src="https://cdn.libretexts.net/LicenseIcons/ck12-license.svg" alt="CK-12 License"/>';
+          break;
         case 'notset':
           licIcon = '<span></span>';
           break;
         default: // CC licenses
-          licIcon = `<i class="cc ${license.label}"></i>`;
+          licIcon = `<span style="font-size: 30px"><i class="cc ${license.label}"></i></span>`;
           break;
       }
-      const licLinkStart = `<a style="width: max-content; width: -moz-max-content; overflow: initial; font-size: 30px;" href="${license.link}" target="_blank" rel="noopener noreferrer">${licIcon}</a>`;
+      const licLinkStart = `<a style="width: max-content; width: -moz-max-content; overflow: initial;" href="${license.link}" target="_blank" rel="noopener noreferrer">${licIcon}</a>`;
       pageLabel.innerHTML = `<span>${licLinkStart}</span>`;
 
       /** Add the label to DOM */
