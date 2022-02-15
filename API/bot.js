@@ -641,9 +641,9 @@ async function licenseReport(input, socket, botID) {
     let processedPages = 0;
 
     // 'Most restrictive' to 'least restrictive'
-    let orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ccbyncsa', 'ccbync',
+    let orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ck12', 'ccbyncsa', 'ccbync',
         'ccbysa', 'ccby', 'gnu', 'gnufdl', 'gnudsl', 'publicdomain'];
-    let ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync'];
+    let ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync', 'ck12'];
     let ndLicenses = ['ccbyncnd', 'ccbynd'];
     let fuLicenses = ['fairuse'];
 
@@ -709,6 +709,12 @@ async function licenseReport(input, socket, botID) {
                     link: "https://www.gnu.org/licenses/dsl.html",
                     raw: 'gnudsl'
                 };
+            case "ck12":
+                return {
+                    label: 'CK-12 License',
+                    link: 'https://www.ck12info.org/curriculum-materials-license/',
+                    raw: 'ck12'
+                }
             case "gnufdl":
                 return {
                     label: "GNU Free Documentation License",
@@ -1124,7 +1130,7 @@ async function licenseReport(input, socket, botID) {
         timestamp: new Date(),
         runtime: `${endTime - startTime} ms`,
         meta: {
-            mostRestrictiveLicense: mostRestrictive, // Deprecated?,
+            mostRestrictiveLicense: mostRestrictive, // TODO: Deprecated?,
             specialRestrictions: foundSpecialRestrictions,
             licenses: uniqueLicenses
         },
