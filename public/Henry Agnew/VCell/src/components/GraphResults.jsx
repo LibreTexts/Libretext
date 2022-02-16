@@ -26,12 +26,19 @@ export default function GraphResults(props) {
                 await sleep(5000);
                 
                 //check if job succeeded
-                let response = await fetch(`${props.API_ENDPOINT}/run/${props.jobID}`);
+                let response = await fetch(`${props.API_ENDPOINT}/runs/${props.jobID}`);
                 if (!response.ok) {
                     continue;
                 }
                 response = await response.json();
-                if (response.status !== "SUCCEEDED") {
+                if (response.status === "FAILED") {
+                    closeSnackbar()
+                    enqueueSnackbar(`${response.status} ${response.id}`, {
+                        variant: 'error',
+                        autoHideDuration: 5000,
+                    });
+                    break;
+                } else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'info',
@@ -61,7 +68,7 @@ export default function GraphResults(props) {
                 //data parsing
                 let data = response.reports[0].data;
                 let dataObj = {};
-                for (let series of data){
+                for (let series of data) {
                     dataObj[series.label] = series;
                 }
                 setResultsOBJ(data);
@@ -95,9 +102,9 @@ export default function GraphResults(props) {
     }, [props.jobID]);
     
     function downloadData() {
-        let data = resultsOBJ.map(label=>label.label) + '\n';
-        for (let index in resultsOBJ[0].values){
-            data += resultsOBJ.map(label=>label.values[index]) + '\n'
+        let data = resultsOBJ.map(label => label.label) + '\n';
+        for (let index in resultsOBJ[0].values) {
+            data += resultsOBJ.map(label => label.values[index]) + '\n'
         }
         
         fileDownload(data, 'simulation_data.csv')
@@ -132,7 +139,7 @@ export default function GraphResults(props) {
             }
         }
         }/>
-        <Button onClick={downloadData} variant="contained">Download CSV</Button>
+            <Button onClick={downloadData} variant="contained">Download CSV</Button>
         </>;
     }
 }

@@ -16,7 +16,7 @@ import {SnackbarProvider, useSnackbar} from 'notistack';
 
 const AVOGADRO = 6.02214076E23;
 //TODO fix CORS issue. Currently using a proxy
-const API_ENDPOINT = `https://run.api.biosimulations.dev`;
+const API_ENDPOINT = `https://api.biosimulations.org`;
 
 /*
 This code injects your React code into the webpage.
@@ -111,11 +111,11 @@ function VCellReactHook(props) {
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
         // console.log(filename);
-        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
+        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "7.4.0.33"};
         formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
         formData.append('simulationRun', JSON.stringify(runMetadata));
         
-        let response = await fetch(`${API_ENDPOINT}/run`, {
+        let response = await fetch(`${API_ENDPOINT}/runs`, {
             method: 'POST',
             body: formData
         });
