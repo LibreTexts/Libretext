@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 const filenamify = require('filenamify');
 const baseIMG = require("./baseIMG.js");
 const colors = require("./colors");
+const { pdfPageMargins, generatePDFHeader, generatePDFFooter } = require('./pdflayouts.js');
 const {performance} = require('perf_hooks');
 const timestamp = require("console-timestamp");
 const util = require('util');
@@ -464,53 +465,125 @@ puppeteer.launch({
         }
         
         async function getLicense(current) {
-            function ccIcon(icon) {
-                return '<img src="data:image/jpeg;base64,' + baseIMG.cc[icon] + '" height="20"/>';
+            /**
+             * Builds an HTML string with the specified Creative Commons license's icon(s).
+             * @param {string[]} clauses - Array of clause identifiers, starting with 'cc'.
+             * @returns {string} HTML string with license's icon(s) as image/svg.
+             */
+            function ccIcons(clauses) {
+                if (Array.isArray(clauses) && clauses.length > 0) {
+                    let iconString = '';
+                    clauses.forEach((item) => {
+                        iconString = `${iconString}<img src="data:image/svg+xml;base64,${baseIMG.cc[`${item}-clause`]}"/>`;
+                    });
+                    return iconString;
+                }
+                return '';
             }
-            
-            
-            for (let i = 0; i < current.tags.length; i++) {
-                if (current.tags[i].includes("license")) {
-                    let tag = current.tags[i].split(":")[1];
-                    switch (tag) {
-                        case "publicdomain":
-                            return {label: ccIcon("pd"), link: "#"};
-                        case "ccby":
-                            return {label: ccIcon("by"), link: "https://creativecommons.org/licenses/by/4.0/"};
-                        case "ccbysa":
-                            return {label: ccIcon("by-sa"), link: "https://creativecommons.org/licenses/by-sa/4.0/"};
-                        case "ccbync":
-                            return {label: ccIcon("by-nc"), link: "https://creativecommons.org/licenses/by-nc/4.0/"};
-                        case "ccbyncsa":
-                            return {
-                                label: ccIcon("nc-by-sa"),
-                                link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                            };
-                        case "ccbynd":
-                            return {label: ccIcon("by-nd"), link: "https://creativecommons.org/licenses/by-nd/4.0/"};
-                        case "ccbyncnd":
-                            return {
-                                label: ccIcon("by-nc-nd"),
-                                link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
-                            };
-                        case "gnu":
-                            return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
-                        case "gnudsl":
-                            return {
-                                label: "GNU Design Science License",
-                                link: "https://www.gnu.org/licenses/dsl.html"
-                            };
-                        case "gnufdl":
-                            return {
-                                label: "GNU Free Documentation License",
-                                link: "https://www.gnu.org/licenses/fdl-1.3.en.html"
-                            };
-                        case "arr":
-                            return {label: "© All Rights Reserved", link: ""};
+
+            if (Array.isArray(current.tags)) {
+                let license = '';
+                let licenseVersion = '4.0';
+                /* Find license and version (if indicated) */
+                current.tags.forEach((item) => {
+                    if (typeof (item) === 'string' && item.includes('license')) {
+                        const tagRaw = item.split(':');
+                        if (Array.isArray(tagRaw) && tagRaw.length > 1) {
+                            const [tagName, tagVal] = tagRaw;
+                            if (tagName === 'license') {
+                                license = tagVal;
+                            } else if (tagName === 'licenseversion' && tagVal.length === 2) {
+                                licenseVersion = `${tagVal.slice(0,1)}.${tagVal.slice(1)}`; // raw version has no separator
+                            }
+                        }
                     }
+                });
+                if (license.length > 0) {
+                    switch (license) {
+                        case 'publicdomain':
+                            return {
+                                label: ccIcons(['pd']),
+                                link: 'https://en.wikipedia.org/wiki/Public_domain',
+                                raw: 'publicdomain',
+                            };
+                        case 'ccby':
+                            return {
+                                label: ccIcons(['cc', 'by']),
+                                link: `https://creativecommons.org/licenses/by/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccby',
+                            };
+                        case 'ccbysa':
+                            return {
+                                label: ccIcons(['cc', 'by', 'sa']),
+                                link: `https://creativecommons.org/licenses/by-sa/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbysa',
+                            };
+                        case 'ccbyncsa':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc', 'sa']),
+                                link: `https://creativecommons.org/licenses/by-nc-sa/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbyncsa',
+                            };
+                        case 'ccbync':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc']),
+                                link: `https://creativecommons.org/licenses/by-nc/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbync',
+                            };
+                        case 'ccbynd':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nd']),
+                                link: `https://creativecommons.org/licenses/by-nd/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbynd',
+                            };
+                        case 'ccbyncnd':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc', 'nd']),
+                                link: `https://creativecommons.org/licenses/by-nc-nd/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbyncnd',
+                            };
+                        case 'gnu':
+                            return {
+                                label: 'GPL',
+                                link: 'https://www.gnu.org/licenses/gpl-3.0.en.html',
+                                raw: 'gnu',
+                            };
+                        case 'gnudsl':
+                            return {
+                                label: 'GNU Design Science License',
+                                link: 'https://www.gnu.org/licenses/dsl.html',
+                                raw: 'gnudsl',
+                            };
+                        case 'gnufdl':
+                            return {
+                                label: 'GNU Free Documentation License',
+                                link: 'https://www.gnu.org/licenses/fdl-1.3.en.html',
+                                raw: 'gnufdl',
+                            };
+                        case 'arr':
+                            return {
+                                label: '© All Rights Reserved',
+                                link: 'https://en.wikipedia.org/wiki/All_rights_reserved',
+                                raw: 'arr',
+                            };
+                        case 'ck12':
+                            return {
+                                label: `<img src="data:image/png;base64,${baseIMG.cc['ck12']}"/>`,
+                                link: 'https://www.ck12info.org/curriculum-materials-license',
+                                raw: 'ck12',
+                            };
+                        default:
+                            break;
+                        }
                 }
             }
-            return null; //not found
+            return null; // not found
         }
         
         async function getInformation(current) {
@@ -882,44 +955,22 @@ puppeteer.launch({
             }
             
             const color = "#127bc4";
-            
-            const cssb = [];
-            cssb.push('<style>');
-            cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-            cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-            cssb.push('#main {border: 1px solid blue;}');
-            cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-            cssb.push('* { -webkit-print-color-adjust: exact}');
-            cssb.push('.date, .pageNumber {display: inline-block}');
-            cssb.push('.added {padding: 0px 4px}');
-            cssb.push('a {text-decoration:none; color: white}');
-            cssb.push('</style>');
-            const css = cssb.join('');
             const prefix = '';
-            
-            const style1 = '<div id="mainH">' +
-                '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/jpeg;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; margin-right: 10px"/></a>' +
-                '</div>';
-            
-            const style2 = `<div id="mainF">` +
-                `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'></div>` +
-                `<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-                `<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-                `<div><div class="date"/></div>` +
-                '</div>';
-            
+            await page.addStyleTag({ content: `
+                @page {
+                    size: letter portrait;
+                    margin: ${pdfPageMargins};
+                    padding: 0;
+                }
+            `});
+
             await page.pdf({ //Lulu Letter
                 path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
                 displayHeaderFooter: true,
-                headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+                headerTemplate: generatePDFHeader(baseIMG["default"]),
+                footerTemplate: generatePDFFooter(color, null, null, prefix),
                 printBackground: true,
-                margin: {
-                    top: "1in",
-                    bottom: ".75in",
-                    right: "0.75in",
-                    left: "0.75in",
-                }
+                preferCSSPageSize: true
             });
             const end = performance.now();
             let time = end - start;
@@ -1244,72 +1295,38 @@ puppeteer.launch({
                         await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
                     if (tags.includes('printoptions:no-header') || tags.includes('printoptions:no-header-title'))
                         showHeaders = false;
-                    
+
                     const color = "#127bc4";
                     prefix = prefix ? prefix + "." : "";
-                    let license = getLicense(current);
-                    
-                    const cssb = [];
-                    cssb.push('<style>');
-                    cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw; justify-content:space-between; align-items:center;}');
-                    cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-                    cssb.push('#main {border: 1px solid blue;}');
-                    cssb.push('#mainF > a {display:block}');
-                    cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-                    cssb.push('* { -webkit-print-color-adjust: exact}');
-                    cssb.push('.date, .pageNumber {display: inline-block}');
-                    cssb.push('.added {padding: 0px 4px}');
-                    cssb.push('a {text-decoration:none; color: white}');
-                    cssb.push('</style>');
-                    const css = cssb.join('');
-                    
-                    
-                    const style1 = '<div id="mainH">' +
-                        '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-                        '</div>';
-                    
-                    license = await license;
+                    let license = await getLicense(current);
                     await getInformation(current);
-                    
-                    const style2 = `<div id="mainF">` +
-                        `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `<a href="${license ? license.link : ''}">${license ? license.label : ''}</a>${current.name ? `<div>${current.name}</div>` : ''}` +
-                        `</div>` +
-                        
-                        `<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-                        
-                        `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `<div><div class="date"></div></div><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
-                        '</div>';
+
                     if ((performance.now() - start) / 1000 > 20)
                         console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
                     try {
                         if (url.includes('Wakim_and_Grewal')) {
                             await page.addStyleTag({content: `.mt-content-container {font-size: 93%}`});
                         }
-                        
+                        await page.addStyleTag({ content: `
+                            @page {
+                                size: letter portrait;
+                                margin: ${showHeaders ? `${pdfPageMargins};` : '0.625in;'}
+                                padding: 0;
+                            }
+                        `});
+                        /* .mt-content-container {} .elm-content-container {} */
                         // console.log(`2 ${(performance.now()-start)/1000}`);
                         await page.pdf({ //Letter Margin
                             path: `./PDF/Letter/Margin/${PDFname}.pdf`,
                             displayHeaderFooter: showHeaders,
-                            headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                            footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+                            headerTemplate: generatePDFHeader(baseIMG['default']),
+                            footerTemplate: generatePDFFooter(color, current, license, prefix),
                             printBackground: true,
-                            margin: showHeaders ? {
-                                top: "1in",
-                                bottom: ".75in",
-                                right: "0.75in",
-                                left: "0.75in",
-                            } : {
-                                top: "0.5in",
-                                bottom: "0.5in",
-                                right: "0.75in",
-                                left: "0.75in",
-                            }
+                            preferCSSPageSize: true
                         });
                         // console.log(`3 ${(performance.now()-start)/1000}`);
                     } catch (e) {
-                        // console.error(e);
+                        console.error(e);
                     }
                     clearTimeout(timeout);
                     resolve();
