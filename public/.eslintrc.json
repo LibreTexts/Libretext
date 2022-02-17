@@ -21,6 +21,10 @@
     ],
     "rules": {
         "no-alert": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "react/function-component-definition": [2, {
+            "namedComponents": "arrow-function",
+            "unnamedComponents": "arrow-function"
+        }]
     }
 }
