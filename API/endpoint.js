@@ -92,11 +92,12 @@ async function handler(request, response) {
     }
     // access anonymous (GET) /contents endpoint
     // https://success.mindtouch.com/Integrations/API/API_Calls/pages/pages%2F%2F%7Bpageid%7D%2F%2Fcontents_(GET)
-    else if (url.startsWith('/contents') ||url.startsWith('/tags') || url.startsWith('/info')) {
+    else if (url.startsWith('/contents') ||url.startsWith('/tags') || url.startsWith('/info') || url.startsWith('/template')) {
         if (request.method === 'PUT') {
             response.writeHead(200, {'Content-Type': 'application/json'});
             let body = [];
             let endpoint = url.split('?')[0].replace(/^\/+/g,'');
+            if (url.startsWith('/template')) endpoint = 'contents'; // resolve internal API call
             request.on('data', (chunk) => {
                 body.push(chunk);
             }).on('end', async () => {
@@ -106,13 +107,36 @@ async function handler(request, response) {
                 input.mode = input.mode ?? "raw";
                 input.format = input.format ?? "html";
                 input.dreamformat = input.dreamformat ?? "xml";
+                if (url.startsWith('/template')) { // restrict Template calls
+                    if (!input.path.startsWith('Template:')) {
+                        responseError('Unauthorized', 401);
+                        return response.end();
+                    }
+                    input = {
+                        ...input,
+                        mode: 'edit',
+                        format: 'html',
+                        dreamformat: 'json'
+                    };
+                }
                 //Only get requests are acceptable
                 let requests = await LibreTexts.authenticatedFetch(input.path, `${endpoint}?mode=${input.mode}&format=${input.format}&dream.out.format=${input.dreamformat}`, input.subdomain, 'LibreBot');
-                if (requests.ok)
-                    response.write(await requests.text());
-                else
+                if (requests.ok) {
+                    if (!url.startsWith('/template')) {
+                        response.write(await requests.text());
+                    } else {
+                        let templateRes = await requests.json();
+                        if (typeof (templateRes.body) === 'string') { // return Template HTML
+                            response.write(JSON.stringify({
+                                template: templateRes.body
+                            }));
+                        } else {
+                            responseError("Error loading Template HTML", 400);
+                        }
+                    }
+                } else {
                     responseError(`${requests.statusText}\n${await requests.text()}`, 400);
-                
+                }
                 response.end();
             });
         }

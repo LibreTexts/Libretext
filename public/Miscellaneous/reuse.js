@@ -1,19 +1,50 @@
-//Plugins to the Editor are registered onto this object for later activation
+// Plugins to the Editor are registered onto this object for later activation
 const LibreEditor = {
-    registerAll: (config) => {
-        if (LibreEditor.done)
-            console.log('Already registered plugins');
-        else {
-            for (const key in LibreEditor) {
-                if (LibreEditor.hasOwnProperty(key) && key !== 'registerAll') {
-                    const element = LibreEditor[key];
-                    if (typeof element === 'function')
-                        element(config);
-                }
-            }
-            LibreEditor.done = true;
+  initialized: false,
+  pluginNames: ['enableBinder', 'libreTextsQuery', 'libreTextsAdapt', 'a11ychecker', 'a11yButton',
+    'balloonpanel', 'LibreFormat', 'LibreBoxes'],
+  /**
+   * Register the individual plugins with the CKEditor instance.
+   *
+   * @param {object} config - The current CKEditor instance.
+   */
+  registerPlugins: (config) => {
+    Object.keys(LibreEditor).forEach((plugin) => {
+      if (typeof (LibreEditor[plugin]) === 'function' && !['registerPlugins', 'registerAll'].includes(plugin)) {
+        try {
+          LibreEditor[plugin](config);
+        } catch (e) {
+          console.error(e);
+          console.error('LibreEditor: Encountered an error registering a plugin');
         }
+      }
+    });
+  },
+  /**
+   * Sets up event listeners and registers or re-registers LibreTexts plugins
+   * with the CKEditor instance.
+   *
+   * @param {object} config - The current CKEditor instance.
+   */
+  registerAll: (config) => {
+    /* De-register LibreTexts plugins when editor winds down */
+    CKEDITOR.on('instanceDestroyed', () => {
+      for (let i = 0, n = LibreEditor.pluginNames.length; i < n; i += 1) {
+        if (Object.keys(CKEDITOR.plugins.registered).includes(LibreEditor.pluginNames[i])) {
+          delete CKEDITOR.plugins.registered[LibreEditor.pluginNames[i]];
+        }
+      }
+    });
+    if (!LibreEditor.initialized) {
+      LibreEditor.registerPlugins(config);
+      LibreEditor.initialized = true;
+    } else {
+      CKEDITOR.config.extraPlugins = '';
+      console.log('LibreEditor: Already initialized, reactivating plugins now...');
+      LibreEditor.registerPlugins(config);
+      console.log('LibreEditor: Plugins reactivated.');
     }
+  },
 };
 
 // attach functions to namespace

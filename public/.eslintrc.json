@@ -9,6 +9,11 @@
         "airbnb",
         "plugin:jsdoc/recommended"
     ],
+    "globals": {
+        "LibreTexts": "readonly",
+        "LibreEditor": "writable",
+        "CKEDITOR": "writable"
+    },
     "ignorePatterns": [
         "*.min.js"
     ],
