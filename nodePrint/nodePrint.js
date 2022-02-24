@@ -1371,7 +1371,7 @@ puppeteer.launch({
                 console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
                 // console.log(pages);
             }
-            return {filename: PDFname + '.pdf', title: title};
+            return {filename: PDFname + '.pdf', title: title, lastModified: updateTime};
         }
         
         async function getLibretext(current, response, options) {
@@ -1642,6 +1642,7 @@ puppeteer.launch({
             const start = performance.now();
             const eta = new Eta(urlArray.length, true);
             let originalFiles = [];
+            let updateTimes = [];
             let failed = false;
             
             try {
@@ -1659,6 +1660,7 @@ puppeteer.launch({
                         else {
                             let temp = await getPDF(page, options.ip, isNoCache);
                             filename = temp.filename;
+                            if (temp.lastModified) updateTimes.push(temp.lastModified);
                         }
                         if (page.matter !== 'Back') {
                             title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
@@ -1693,6 +1695,7 @@ puppeteer.launch({
                     else {
                         let temp = await getPDF(page, options.ip, isNoCache);
                         filename = temp.filename;
+                        if (temp.lastModified) updateTimes.push(temp.lastModified);
                     }
                     count++;
                     eta.iterate();
@@ -1849,6 +1852,26 @@ puppeteer.launch({
             time = Math.round(time);
             time /= 10;
             console.log(zipFilename, time);
+
+            /* util to check if a variable is a proper Date */
+            function isValidDate(date) {
+                return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date);
+            }
+
+            /* Find the timestamp of the most recent modification */
+            let latestDate = null;
+            updateTimes.forEach((updTime) => {
+                let tempDate = null;
+                if (isValidDate(updTime)) {
+                    tempDate = updTime;
+                } else {
+                    tempDate = new Date(updTime);
+                }
+                if (isValidDate(tempDate) && (latestDate === null || tempDate > latestDate)) {
+                    latestDate = tempDate;
+                }
+            });
+
             if (response && heartbeat)
                 clearInterval(heartbeat);
             if (response && !response.finished)
@@ -1861,7 +1884,7 @@ puppeteer.launch({
             await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
             await fs.remove(`./PDF/Letter/order/${thinName}`);
             
-            return {
+            let libretextInfo = {
                 zipFilename: zipFilename,
                 title: current.title,
                 id: topPage.id,
@@ -1874,6 +1897,8 @@ puppeteer.launch({
                 failed: failed,
                 numPages: numPages,
             };
+            if (isValidDate(latestDate)) libretextInfo.lastModified = latestDate.toISOString();
+            return libretextInfo;
         }
     }
 );
