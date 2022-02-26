@@ -15,8 +15,8 @@ const md5 = require('md5');
 const events = require('events');
 const fetch = require('node-fetch');
 const querystring = require('querystring');
-// const merge = util.promisify(require('easy-pdf-merge'));
-const merge = util.promisify(require('./PDFMerger.js'));
+// const merge = util.promisify(require('./PDFMerger.js'));
+const PDFMerger = require('pdf-merger-js');
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
@@ -1746,28 +1746,32 @@ puppeteer.launch({
                     }, 1000);
                 }
                 try {
+                    const mergeStart = performance.now();
                     if (files && files.length > 2) {
-                        let mergeFiles = files.map((file) => file.replace(`./PDF/Letter/order/${thinName}/`, ''))
-                        const opts = {
-                            maxBuffer: 100000000, //100 MB
-                            maxHeap: '3G',
-                            cwd: `./PDF/Letter/order/${thinName}`
+                        const pdfMerger = new PDFMerger();
+                        for (let i = 0, n = files.length; i < n; i += 1) {
+                            pdfMerger.add(files[i]);
                         }
-                        await merge(mergeFiles, `../../Finished/${zipFilename}/Full.pdf`, opts);
+                        await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
                         if (hasCoverpage) {
-                            await merge(mergeFiles.slice(0, 10), `../../Finished/${zipFilename}/Preview.pdf`, opts);
-                            mergeFiles.shift();
-                            files.shift();
-                            await merge(mergeFiles, `../../Finished/${zipFilename}/Publication/Content.pdf`, opts);
+                            for (let i = 0, n = 10; i < n; i += 1) {
+                                pdfMerger.add(files[i]);
+                            }
+                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Preview.pdf`);
+                            for (let i = 1, n = files.length; i < n; i += 1) {
+                                pdfMerger.add(files[i]);
+                            }
+                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
                         }
-                    }
-                    else {
+                    } else {
                         await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
                         if (hasCoverpage) {
                             await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
                         }
                     }
-                    console.log(`Done Merging${options.index ? ` [${options.index}]` : ''}`);
+                    const mergeEnd = performance.now();
+                    const mergeSeconds = (mergeEnd - mergeStart) / 1000;
+                    console.log(`Done Merging${options.index ? ` [${options.index}]` : ''} (${mergeSeconds}s)`);
                 } catch (e) {
                     console.error(`Merge Failed ${zipFilename}${options.index ? ` [${options.index}]` : ''}`);
                     console.error(e);
