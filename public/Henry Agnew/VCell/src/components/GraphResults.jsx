@@ -21,9 +21,10 @@ export default function GraphResults(props) {
                 return;
             
             let counter = 0;
-            while (counter < 12) {
+            while (counter < 60) {
                 counter++;
-                await sleep(5000);
+                if (!props.prevJob) //check immediately if using cached job
+                    await sleep(5000);
                 
                 //check if job succeeded
                 let response = await fetch(`${props.API_ENDPOINT}/runs/${props.jobID}`);
@@ -38,7 +39,8 @@ export default function GraphResults(props) {
                         autoHideDuration: 5000,
                     });
                     break;
-                } else if (response.status !== "SUCCEEDED") {
+                }
+                else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'info',
@@ -54,27 +56,25 @@ export default function GraphResults(props) {
                 
                 
                 //get results
-                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?sparse=false`);
+                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
                 response = await response.json();
                 console.log(response);
                 enqueueSnackbar(`Retrieved ${response.simId}`, {
                     variant: 'success',
                 });
                 
-                function precise(inputArray) {
-                    return inputArray.map(x => Number.parseFloat(x).toPrecision(4));
-                }
-                
                 //data parsing
-                let data = response.reports[0].data;
+                let data = response.outputs[0].data;
                 let dataObj = {};
                 for (let series of data) {
                     dataObj[series.label] = series;
                 }
                 setResultsOBJ(data);
                 
+                const time_label = "time_tsk_0_0";
+                
                 let lineChartData = {
-                    labels: precise(dataObj.t.values),
+                    labels: dataObj[time_label].values,
                     datasets: [],
                 };
                 for (const dataset of data) {
@@ -82,10 +82,10 @@ export default function GraphResults(props) {
                     const g = Math.floor(Math.random() * 256);
                     const b = Math.floor(Math.random() * 256);
                     
-                    if (dataset.label !== 't')
+                    if (dataset.label !== time_label)
                         lineChartData.datasets.push({
-                            label: dataset.label,
-                            data: precise(dataset.values),
+                            label: dataset.label.replace("dataGen_tsk_0_0_", ""),
+                            data: dataset.values,
                             fill: false,
                             pointStyle: 'circle',
                             radius: 1,
@@ -114,31 +114,52 @@ export default function GraphResults(props) {
     if (!props.jobID)
         return null;
     else if (!jobReady) //waiting for job to process
-        return <CircularProgress size={200}/>
+        return <><p>Job ID: {props.jobID}</p><CircularProgress size={200}/></>
     else { //plot results
-        return <><Line data={simulationResults} options={{
-            scales: {
-                xAxes: [{
-                    labelString: 'time (seconds)',
-                    ticks: {
-                        stepSize: 1,
-                        precision: 2,
-                        maxTicksLimit: 10,
-                        // callback: (label) => Number.parseFloat(label).toPrecision(2)
+        return <>
+            <p>Job ID: {props.jobID}</p>
+            <Line data={simulationResults} options={{
+                animation: false,
+                parsing: false,
+                plugins: {
+                    decimation: { //TODO: Fix decimation as it is not working
+                        enabled: true,
+                        algorithm: "lttb",
+                        samples: 100,
+                        threshold: 100,
                     }
-                }],
-                yAxes: [{
-                    id: 'y-axis-0',
-                    type: 'linear',
-                    ticks: {
-                        precision: 3,
-                        maxTicksLimit: 6,
-                        callback: (label) => Number.parseFloat(label).toPrecision(4)
+                },
+                tooltips: {
+                    enabled: true,
+                    mode: 'single',
+                    callbacks: {
+                        label: function (tooltipItems, data) {
+                            return tooltipItems.yLabel.toExponential(4);
+                        }
                     }
-                }],
+                },
+                scales: {
+                    xAxes: [{
+                        labelString: 'time (seconds)',
+                        ticks: {
+                            stepSize: 1,
+                            precision: 2,
+                            maxTicksLimit: 10,
+                            // callback: (label) => Number.parseFloat(label).toPrecision(2)
+                        }
+                    }],
+                    yAxes: [{
+                        id: 'y-axis-0',
+                        type: 'linear',
+                        ticks: {
+                            precision: 3,
+                            maxTicksLimit: 6,
+                            callback: (label) => Number.parseFloat(label).toPrecision(4)
+                        }
+                    }],
+                }
             }
-        }
-        }/>
+            }/>
             <Button onClick={downloadData} variant="contained">Download CSV</Button>
         </>;
     }
