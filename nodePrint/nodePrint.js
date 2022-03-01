@@ -421,7 +421,7 @@ puppeteer.launch({
                                     origin: 'print.libretexts.org'
                                 }
                             });
-                            console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
+                            console.log(`Finished Refresh: ${subdomain}/${path} (${ip}), ${finished.length} items`);
                             if (subdomain === 'espanol')
                                 break; //Only processing home path
                             
@@ -1015,7 +1015,7 @@ puppeteer.launch({
                     hasLower = hasLower || subpages[i].subpages.length;
                 }
                 let resourceArray = []; // for current
-                if (hasLower && current.tags.includes('article:topic-category')) { //go down a level
+                if (hasLower && current.tags?.includes('article:topic-category')) { //go down a level
                     for (let i = 0; i < subpages.length; i++) {
                         result = result.concat(addsubpages(subpages[i]));
                     }
@@ -1745,6 +1745,8 @@ puppeteer.launch({
                             }) + "\r\n")
                     }, 1000);
                 }
+
+                // Merge content files
                 try {
                     const mergeStart = performance.now();
                     if (files && files.length > 2) {
@@ -1778,76 +1780,92 @@ puppeteer.launch({
                     failed = true;
                 }
                 
-                //Publication covers
-                if (!failed && await fs.exists(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`)) {
-                    let dataBuffer = await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
-                    let lulu = await pdf(dataBuffer);
-                    numPages = lulu.numpages;
-                    console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
-                    filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
-                    await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
-                    if (lulu.numpages >= 32) {
-                        filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
-                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
-                    }
-                    else {
-                        let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
-                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
-                    }
-                    if (lulu.numpages >= 24) {
+                // Publication covers
+                try {
+                    if (!failed && await fs.exists(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`)) {
+                        let dataBuffer = await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
+                        let lulu = await pdf(dataBuffer);
+                        numPages = lulu.numpages;
+                        console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
+                        filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
+                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
+                        if (lulu.numpages >= 32) {
+                            filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
+                            await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
+                        }
+                        else {
+                            let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
+                            await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
+                        }
+                        if (lulu.numpages >= 24) {
+                            filename = `Cover/${await getCover(current, lulu.numpages, {
+                                hasExtraPadding: true,
+                                isHardcover: true
+                            })}.pdf`;
+                            await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+                        }
+                        else {
+                            let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
+                            await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
+                        }
                         filename = `Cover/${await getCover(current, lulu.numpages, {
                             hasExtraPadding: true,
-                            isHardcover: true
+                            thin: true
                         })}.pdf`;
-                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
                     }
-                    else {
-                        let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
-                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
-                    }
-                    filename = `Cover/${await getCover(current, lulu.numpages, {
-                        hasExtraPadding: true,
-                        thin: true
-                    })}.pdf`;
-                    await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
+                } catch (e) {
+                    console.error(`Error creating publication covers ${zipFilename}`);
+                    console.error(e);
                 }
+
                 //save log of private pages
-                if (hasCoverpage && privatePages.length) {
-                    await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
+                try {
+                    if (hasCoverpage && privatePages.length) {
+                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
+                    }
+                } catch (e) {
+                    console.error(`Error saving log of private pages ${zipFilename}`);
+                    console.error(e);
                 }
-                
-                //creating zip files
-                if (hasCoverpage) {
-                    console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
-                    let individualZIP = new JSZip();
-                    let PublicationZIP = new JSZip();
-                    files = await fs.readdir('./PDF/Letter/libretexts/' + zipFilename);
-                    for (let i = 0; i < files.length; i++) {
-                        individualZIP.file(files[i], await fs.readFile(`./PDF/Letter/libretexts/${zipFilename}/${files[i]}`));
+
+                // creating zip files
+                try {
+                    if (hasCoverpage) {
+                        console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
+                        let individualZIP = new JSZip();
+                        let PublicationZIP = new JSZip();
+                        files = await fs.readdir('./PDF/Letter/libretexts/' + zipFilename);
+                        for (let i = 0; i < files.length; i++) {
+                            individualZIP.file(files[i], await fs.readFile(`./PDF/Letter/libretexts/${zipFilename}/${files[i]}`));
+                        }
+                        files = await fs.readdir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
+                        for (let i = 0; i < files.length; i++) {
+                            PublicationZIP.file(files[i], await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/${files[i]}`));
+                        }
+                        
+                        
+                        await saveAs(individualZIP, `./PDF/Letter/Finished/${zipFilename}/Individual.zip`);
+                        await saveAs(PublicationZIP, `./PDF/Letter/Finished/${zipFilename}/Publication.zip`);
+                        
+                        
+                        async function saveAs(zip, destination) {
+                            let result = await zip.generateAsync({type: "nodebuffer"});
+                            await fs.writeFile(destination, result);
+                        }
+                        
+                        if (failed) {
+                            console.error(`Merge Failed, clearing cache${options.index ? ` [${options.index}]` : ''}`);
+                            await async.mapLimit(originalFiles, 10, async (filename) => {
+                                await fs.remove(`./PDF/Letter/${filename}`);
+                                await fs.remove(`./PDF/Letter/Margin/${filename}`);
+                            });
+                            console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
+                        }
                     }
-                    files = await fs.readdir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
-                    for (let i = 0; i < files.length; i++) {
-                        PublicationZIP.file(files[i], await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/${files[i]}`));
-                    }
-                    
-                    
-                    await saveAs(individualZIP, `./PDF/Letter/Finished/${zipFilename}/Individual.zip`);
-                    await saveAs(PublicationZIP, `./PDF/Letter/Finished/${zipFilename}/Publication.zip`);
-                    
-                    
-                    async function saveAs(zip, destination) {
-                        let result = await zip.generateAsync({type: "nodebuffer"});
-                        await fs.writeFile(destination, result);
-                    }
-                    
-                    if (failed) {
-                        console.error(`Merge Failed, clearing cache${options.index ? ` [${options.index}]` : ''}`);
-                        await async.mapLimit(originalFiles, 10, async (filename) => {
-                            await fs.remove(`./PDF/Letter/${filename}`);
-                            await fs.remove(`./PDF/Letter/Margin/${filename}`);
-                        });
-                        console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
-                    }
+                } catch (e) {
+                    console.error(`Error creating zip files ${zipFilename}`);
+                    console.error(e);   
                 }
             }
             const end = performance.now();
