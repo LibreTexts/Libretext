@@ -3,7 +3,7 @@ api.libretexts.org
 
 | Function               | Port | Description                                                                |
 | -----------            | ---- | ---                                                                        |
-| Schedule               | None | Fires scheduled refresh events to the print server                         |
+| Schedule               | None | Fires scheduled events to servers in the LibreVerse                        |
 | Timetrack              | 3001 | Receives Timetrack events from custom timetrack.js                         |
 | Propagator             | 3002 | Copies pages between libraries                                             |
 | Import                 | 3003 | Imports EPUB, Common Cartridges, PDFs, and PreTexts into LibreTexts        |
@@ -17,7 +17,9 @@ api.libretexts.org
 
 Schedule
 ---
-Sends REST requests to batch.libretexts.org to regenerate the PDFs for each book and update the `Courses.json` and `Bookshelves.json`
+Sends REST requests to:
+* batch.libretexts.org to regenerate the PDFs for each book and update the `Courses.json` and `Bookshelves.json`
+* commons.libretexts.org to sync LibreCommons with the LibreTexts Libraries and Homework systems
 
 Timetrack
 ---
