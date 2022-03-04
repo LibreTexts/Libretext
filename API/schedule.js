@@ -34,8 +34,8 @@ const batchSchedule = {
  * @param {number} timeOffset - An offset to apply to the batch job's schedule.
  */
 function scheduleLibraryBatch(library, target, timeSpec, timeOffset) {
-  const time = `30 ${timeSpec.hour + timeOffset} ** ${timeSpec.day}`;
-  scheduler.scheduleJob(time, () => {
+  const time = `30 ${timeSpec.hour + timeOffset} * * ${timeSpec.day}`;
+  scheduler.scheduleJob(`${library}-${target}`, time, () => {
     try {
       console.log(`Running Refresh no-cache for ${library}/${target}`);
       fetch('https://batch.libretexts.org/print/Refresh', {
@@ -57,7 +57,7 @@ function scheduleLibraryBatch(library, target, timeSpec, timeOffset) {
  * Adds the scheduler job to sync LibreCommons with library listings.
  */
 function scheduleCommonsLibrarySync() {
-  scheduler.scheduleJob('30 6 ***', () => {
+  scheduler.scheduleJob('commons-libraries', '30 6 * * *', () => {
     try {
       console.log('Running LibreCommons Libraries Sync');
       fetch('https://commons.libretexts.org/api/v1/commons/syncwithlibs/automated', {
@@ -85,7 +85,7 @@ function scheduleCommonsLibrarySync() {
  * Adds the scheduler job to sync LibreCommons with LibreTexts homework/assessment systems.
  */
 function scheduleCommonsHomeworkSync() {
-  scheduler.scheduleJob('30 0 ***', () => {
+  scheduler.scheduleJob('commons-homework', '30 0 * * *', () => {
     try {
       console.log('Running LibreCommons Homework Sync');
       fetch('https://commons.libretexts.org/api/v1/commons/homework/sync/automated', {
