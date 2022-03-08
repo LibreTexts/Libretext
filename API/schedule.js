@@ -110,6 +110,34 @@ function scheduleCommonsHomeworkSync() {
 }
 
 /**
+ * Adds the scheduler job to process daily Conductor Alerts.
+ */
+function scheduleConductorDailyAlerts() {
+  scheduler.scheduleJob('conductor-alerts', '0 8 * * *', () => {
+    try {
+      console.log('Running Conductor Daily Alerts Processing');
+      fetch('https://commons.libretexts.org/api/v1/alerts/processdaily', {
+        method: 'PUT',
+        headers: {
+          origin: 'https://api.libretexts.org',
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: `Bearer ${secure.conductor_key}`,
+        },
+      }).then((res) => res.json()).then((alertsProcessRes) => {
+        if (alertsProcessRes.err === false) {
+          console.log(`Finished Conductor Daily Alerts Processing: ${alertsProcessRes.msg}`);
+        } else {
+          throw (new Error(alertsProcessRes.errMsg));
+        }
+      });
+    } catch (e) {
+      console.error('FAILED Conductor Daily Alerts Processing');
+      console.error(e);
+    }
+  });
+}
+
+/**
  * Initializes the Schedule service and registers all defined jobs.
  */
 function initialize() {
@@ -126,6 +154,8 @@ function initialize() {
   // Schedule LibreCommons sync jobs
   scheduleCommonsLibrarySync();
   scheduleCommonsHomeworkSync();
+  // Schedule Conductor tasks
+  scheduleConductorDailyAlerts();
   console.log('All jobs scheduled.');
 }
 
