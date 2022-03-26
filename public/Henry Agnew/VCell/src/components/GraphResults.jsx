@@ -20,12 +20,12 @@ export default function GraphResults(props) {
             if (!props.jobID)
                 return;
             else if (props.jobID === "QUICK") {
-                await plotData();
+                await plotData(); //quick already has data retrieved, so we can use it immediately
                 return;
             }
             
             let counter = 0;
-            while (counter < 60) {
+            while (counter < 60) { //loop while simulation is processing
                 counter++;
                 if (!props.prevJob) //check immediately if using cached job
                     await sleep(5000);
@@ -57,11 +57,17 @@ export default function GraphResults(props) {
                     continue;
                 }
             }
-            
+            // simulation timed out
+            closeSnackbar()
+            enqueueSnackbar(`$TIMEOUT ERROR ${response.id}`, {
+                variant: 'error',
+                autoHideDuration: 5000,
+            });
             
         })()
     }, [props.jobID]);
     
+    //export data in CSV format for user download
     function downloadData() {
         let data = resultsOBJ.map(label => label.label) + '\n';
         for (let index in resultsOBJ[0].values) {
@@ -73,17 +79,13 @@ export default function GraphResults(props) {
     
     async function plotData() {
         let response;
-        //get logs
-        /*response = await fetch(`https://home.miniland1333.com/proxy/logs/${props.jobID}`);
-        response = await response.text();
-        console.log(response);*/
-        
         
         //get results
-        if (props.jobID === "QUICK") {
+        if (props.jobID === "QUICK") { //data is passed through a prop for quick simulations
             response = props.quickData;
         }
         else {
+            //need to fetch the data for slow simulations
             response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
             response = await response.json();
             console.log(response);
@@ -182,6 +184,7 @@ export default function GraphResults(props) {
     }
 }
 
+// sleep promise
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -46,9 +46,7 @@ function VCellReactHook(props) {
     const [parameters, setParameters] = React.useState([]);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
-    const simulator = {"simulator": "vcell", "simulatorVersion": "7.3.0.07"}
-    
-    function updateSpecies(event, key) {
+    function updateSpecies(event, key) { //updates a species concentration based on user input
         let updated = {...species[key]};
         let newValue = event.target.value * AVOGADRO;
         newValue = Math.max(0, newValue);
@@ -58,7 +56,7 @@ function VCellReactHook(props) {
         setSpecies(species);
     }
     
-    function updateParameter(event, key) {
+    function updateParameter(event, key) { //updates a parameter based on user input
         let updated = {...parameters[key]};
         
         updated.value = event.target.value;
@@ -106,6 +104,7 @@ function VCellReactHook(props) {
             speciesObject[specie['_attributes'].id] = specie['_attributes'];
         });
         setSpecies(speciesObject);
+        //extract parameters so they can also be user-modified
         const parametersObject = {};
         sbml.sbml.model.listOfParameters.parameter.forEach(parameter => {
             parametersObject[parameter['_attributes'].id] = parameter['_attributes'];
@@ -151,10 +150,12 @@ function VCellReactHook(props) {
             formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
             formData.append('simulationRun', JSON.stringify(runMetadata));
             
+            //start the simulation
             let response = await fetch(`${API_ENDPOINT}/runs`, {
                 method: 'POST',
                 body: formData
             });
+            //simulation will continue processing in the background. <GraphResults> will listen for completion
             if (response.ok) {
                 response = await response.json();
                 enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
@@ -184,6 +185,7 @@ function VCellReactHook(props) {
                 "variables": []
             }))
             
+            //send simulation and wait for it to finish
             let response = await fetch(`${API_ENDPOINT}/run/run`, {
                 method: 'POST',
                 body: formData,
@@ -192,13 +194,13 @@ function VCellReactHook(props) {
                 },
             });
             if (response.ok) {
-                response = await response.json();
+                response = await response.json(); //results will be in this json
                 enqueueSnackbar(`QUICK plot`, {
                     variant: 'success',
                 });
                 clearPrevJob(undefined);
                 setJobID('QUICK');
-                setQuickData(response);
+                setQuickData(response); //TODO: Think of a better way to pass data to the Graph subcomponent
             }
             else {
                 response = await response.json();
@@ -215,7 +217,7 @@ function VCellReactHook(props) {
     //TODO: add attributions for VCell and run.biosimulators.org
     return (
         <div id="biosimulation-render-container" style={{display: 'flex'}}>
-            <div style={{flex: 1}}>
+            <div style={{flex: 2}}>
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
