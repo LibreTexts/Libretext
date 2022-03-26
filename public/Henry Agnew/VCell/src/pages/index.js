@@ -14,19 +14,22 @@ import GraphResults from "../components/GraphResults.jsx";
 import Button from "@material-ui/core/Button";
 import {SnackbarProvider, useSnackbar} from 'notistack';
 
-const AVOGADRO = 6.02214076E23;
-//TODO fix CORS issue. Currently using a proxy
-const API_ENDPOINT = `https://api.biosimulations.org`;
 
 /*
 This code injects your React code into the webpage.
 */
 const target = document.createElement("div");
-// noinspection JSValidateTypes
-target.id = Math.random() * 100;
-// noinspection XHTMLIncompatabilitiesJS
+target.id = String(Math.random() * 100);
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 const dataset = document.currentScript.dataset;
+
+
+const AVOGADRO = 6.02214076E23;
+const SLOW_API_ENDPOINT = `https://api.biosimulations.org`;
+const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`;
+const speed = dataset.quick;
+const API_ENDPOINT = Boolean(dataset.quick) ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
+const simulator = dataset.simulator ?? "vcell";
 
 /*
 React Hook for creating OMEX files based on user inputs and then submitting the jobs to runBioSimulations
@@ -37,6 +40,7 @@ function VCellReactHook(props) {
     const [species, setSpecies] = React.useState([]);
     const [jobID, setJobID] = React.useState(dataset.prevjobid?.trim() || undefined);
     const [prevJob, clearPrevJob] = React.useState(Boolean(dataset.prevjobid));
+    const [quickData, setQuickData] = React.useState();
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
     function updateSpecies(event, key) {
@@ -93,6 +97,10 @@ function VCellReactHook(props) {
     
     //modify omex file and submit to runBioSimulations
     async function submitOmex() {
+        if (!omex) {
+            loadOmex();
+            return false;
+        }
         const sbmlFile = Object.keys(omex.files).find(key => key.endsWith('.xml') && key !== 'manifest.xml');
         let sbml = await omex.file(sbmlFile).async('text');
         
@@ -107,36 +115,74 @@ function VCellReactHook(props) {
         await omex.file(sbmlFile, sbml);
         setOmex(omex);
         // return;
-        
+    
         //send data to runBioSimulations API
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
-        // console.log(filename);
-        //TODO: Use https://api.biosimulators.org/simulators/vcell/latest?includeTests=false to get latest version
-        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "latest"};
-        formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
-        formData.append('simulationRun', JSON.stringify(runMetadata));
-        
-        let response = await fetch(`${API_ENDPOINT}/runs`, {
-            method: 'POST',
-            body: formData
-        });
-        if (response.ok) {
-            response = await response.json();
-            enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
-                variant: 'success',
+    
+        if (!speed) { //slow simulation handling
+            // console.log(filename);
+            const runMetadata = {"name": name, "email": null, "simulator": simulator, "simulatorVersion": "latest"};
+            formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
+            formData.append('simulationRun', JSON.stringify(runMetadata));
+            
+            let response = await fetch(`${API_ENDPOINT}/runs`, {
+                method: 'POST',
+                body: formData
             });
-            clearPrevJob(undefined);
-            console.log(`JOB ID: ${response.id}`);
-            setJobID(response.id);
+            if (response.ok) {
+                response = await response.json();
+                enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
+                    variant: 'success',
+                });
+                clearPrevJob(undefined);
+                setQuickData(undefined);
+                console.log(`JOB ID: ${response.id}`);
+                setJobID(response.id);
+            }
+            else {
+                response = await response.json();
+                enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
+                    variant: 'error',
+                });
+            }
+            console.log(response);
         }
         else {
-            response = await response.json();
-            enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
-                variant: 'error',
+            formData.append('simulator', "tellurium"); //TODO: replace tellurium with variable
+            formData.append('_type', "SimulationRun");
+            formData.append('archiveUrl', "https://bio.libretexts.org/@api/deki/files/38382/test.omex?revision=1");
+            // formData.append('archiveFile', await omex.generateAsync({type: 'blob'}), 'test.omex');
+            formData.append('archiveFile', '');
+            formData.append('environment', JSON.stringify({
+                "_type": "Environment",
+                "variables": []
+            }))
+            
+            let response = await fetch(`${API_ENDPOINT}/run/run`, {
+                method: 'POST',
+                body: formData,
+                "headers": {
+                    "accept": "application/json",
+                },
             });
+            if (response.ok) {
+                response = await response.json();
+                enqueueSnackbar(`QUICK plot`, {
+                    variant: 'success',
+                });
+                clearPrevJob(undefined);
+                setJobID('QUICK');
+                setQuickData(response);
+            }
+            else {
+                response = await response.json();
+                enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
+                    variant: 'error',
+                });
+            }
+            console.log(response);
         }
-        console.log(response);
     }
     
     //primary render method
@@ -166,7 +212,7 @@ function VCellReactHook(props) {
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
             </div>
             <div style={{flex: 2}}>
-                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} />
+                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} quickData={quickData}/>
             </div>
         </div>
     );

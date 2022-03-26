@@ -19,6 +19,10 @@ export default function GraphResults(props) {
             setJobReady(false);
             if (!props.jobID)
                 return;
+            else if (props.jobID === "QUICK") {
+                await plotData();
+                return;
+            }
             
             let counter = 0;
             while (counter < 60) {
@@ -32,13 +36,17 @@ export default function GraphResults(props) {
                     continue;
                 }
                 response = await response.json();
-                if (response.status === "FAILED") {
+                if (response.status === "SUCCEEDED") {
+                    await plotData();
+                    return;
+                }
+                else if (response.status === "FAILED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'error',
                         autoHideDuration: 5000,
                     });
-                    break;
+                    return;
                 }
                 else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
@@ -48,56 +56,9 @@ export default function GraphResults(props) {
                     });
                     continue;
                 }
-                
-                //get logs
-                /*response = await fetch(`https://home.miniland1333.com/proxy/logs/${props.jobID}`);
-                response = await response.text();
-                console.log(response);*/
-                
-                
-                //get results
-                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
-                response = await response.json();
-                console.log(response);
-                enqueueSnackbar(`Retrieved ${response.simId}`, {
-                    variant: 'success',
-                });
-                
-                //data parsing
-                let data = response.outputs[0].data;
-                let dataObj = {};
-                for (let series of data) {
-                    dataObj[series.label] = series;
-                }
-                setResultsOBJ(data);
-                
-                const time_label = "time_tsk_0_0";
-                
-                let lineChartData = {
-                    labels: dataObj[time_label].values,
-                    datasets: [],
-                };
-                for (const dataset of data) {
-                    const r = Math.floor(Math.random() * 256);
-                    const g = Math.floor(Math.random() * 256);
-                    const b = Math.floor(Math.random() * 256);
-                    
-                    if (dataset.label !== time_label)
-                        lineChartData.datasets.push({
-                            label: dataset.label.replace("dataGen_tsk_0_0_", ""),
-                            data: dataset.values,
-                            fill: false,
-                            pointStyle: 'circle',
-                            radius: 1,
-                            borderColor: `rgba(${r},${g},${b},0.3)`,
-                        });
-                }
-                
-                setSimulationResults(lineChartData);
-                console.log(lineChartData)
-                setJobReady(true);
-                break;
             }
+            
+            
         })()
     }, [props.jobID]);
     
@@ -108,6 +69,62 @@ export default function GraphResults(props) {
         }
         
         fileDownload(data, 'simulation_data.csv')
+    }
+    
+    async function plotData() {
+        let response;
+        //get logs
+        /*response = await fetch(`https://home.miniland1333.com/proxy/logs/${props.jobID}`);
+        response = await response.text();
+        console.log(response);*/
+        
+        
+        //get results
+        if (props.jobID === "QUICK") {
+            response = props.quickData;
+        }
+        else {
+            response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
+            response = await response.json();
+            console.log(response);
+            enqueueSnackbar(`Retrieved ${response.simId}`, {
+                variant: 'success',
+            });
+        }
+    
+        //data parsing
+        let data = response.outputs[0].data;
+        let dataObj = {};
+        for (let series of data) {
+            dataObj[series.label] = series;
+        }
+        setResultsOBJ(data);
+        
+        const time_label = "time_tsk_0_0";
+        
+        let lineChartData = {
+            labels: dataObj[time_label].values,
+            datasets: [],
+        };
+        for (const dataset of data) {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            
+            if (dataset.label !== time_label)
+                lineChartData.datasets.push({
+                    label: dataset.label.replace("dataGen_tsk_0_0_", ""),
+                    data: dataset.values,
+                    fill: false,
+                    pointStyle: 'circle',
+                    radius: 1,
+                    borderColor: `rgba(${r},${g},${b},0.3)`,
+                });
+        }
+        
+        setSimulationResults(lineChartData);
+        console.log(lineChartData)
+        setJobReady(true);
     }
     
     //requires a jobID to render
