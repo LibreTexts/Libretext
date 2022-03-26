@@ -176,7 +176,7 @@ export default function GraphResults(props) {
                     }],
                 }
             }
-            }/>
+        }/>
             <Button onClick={downloadData} variant="contained">Download CSV</Button>
         </>;
     }
