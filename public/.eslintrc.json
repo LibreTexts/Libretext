@@ -2,7 +2,7 @@
     "root": true,
     "env": {
         "browser": true,
-        "es2021": true,
+        "es6": true,
         "jquery": true
     },
     "extends": [
@@ -12,7 +12,9 @@
     "globals": {
         "LibreTexts": "readonly",
         "LibreEditor": "writable",
-        "CKEDITOR": "writable"
+        "CKEDITOR": "writable",
+        "getCC": "readonly",
+        "tippy": "readonly"
     },
     "ignorePatterns": [
         "*.min.js"

@@ -27,7 +27,14 @@
 function getCC(inputTag) {
   let tags = [];
   if (typeof (inputTag) === 'string') {
-    tags = [inputTag.startsWith('license:') ? inputTag : `license:${inputTag}`];
+    const inputParts = inputTag.split('@');
+    const licenseTag = inputTag.startsWith('license:') ? inputParts[0] : `license:${inputParts[0]}`;
+    let licenseVerTag = '';
+    if (inputParts.length > 1) { // license version was included as part of license tag
+      licenseVerTag = `licenseversion:${inputParts[1]}`;
+    }
+    tags.push(licenseTag);
+    if (licenseVerTag !== '') tags.push(licenseVerTag);
   } else {
     let tagsHolder = document.getElementById('pageTagsHolder');
     if (tagsHolder) {
