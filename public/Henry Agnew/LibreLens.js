@@ -55,7 +55,7 @@
             data.backgroundColor = loadedPages[cls].backgroundColor;
 
             let author = data.tags.find((tag) => tag.startsWith('authorname:'));
-            const authorOverride = data.tags.find((tag) => tag.startsWith('author@'));
+            const sourceAuthors = data.tags.filter((tag) => tag.startsWith('author@'));
             if (author) {
               author = author.replace('authorname:', '');
 
@@ -67,10 +67,16 @@
               author = loadedAuthors[data.subdomain][author];
               data.author = author;
             }
-            if (authorOverride) {
-              const authorOvrdParts = authorOverride.split('@');
-              if (authorOvrdParts.length > 1) {
-                data.author = { name: authorOvrdParts[1] };
+            if (sourceAuthors.length > 0) {
+              const authorOverrides = [];
+              sourceAuthors.forEach((authorTag) => {
+                const authorOvrdParts = authorTag.split('@');
+                if (authorOvrdParts.length > 1) {
+                  authorOverrides.push(authorOvrdParts[1]);
+                }
+              });
+              if (authorOverrides.length > 0) {
+                data.author = { name: authorOverrides.join(', ') };
               }
             }
 
@@ -180,12 +186,12 @@
         }
 
         if (outsidePages) {
-          attribution.innerHTML = '<h2>AutoAttribution</h2>';
           attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
         } else {
           attribution.innerHTML = '';
           document.getElementsByClassName('librelens-toggle').forEach((el) => el.remove());
         }
+        attribution.innerHTML += '<button onclick="LibreTexts.active.libreLens()" style="display:block;margin: 0 auto;"><span class="mt-icon-eye" style="vertical-align:middle;margin-right:5px;" aria-hidden="true"></span>Toggle block-level attributions</button>';
 
         if (activated) summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`;
         else if (summary) summary.innerHTML = '';
