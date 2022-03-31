@@ -187,11 +187,11 @@
 
         if (outsidePages) {
           attribution.innerHTML += `<ul>${attributionContents.join('')}</ul>`;
+          attribution.innerHTML += '<button onclick="LibreTexts.active.libreLens()" style="display:block;margin: 0 auto;"><span class="mt-icon-eye" style="vertical-align:middle;margin-right:5px;" aria-hidden="true"></span>Toggle block-level attributions</button>';
         } else {
           attribution.innerHTML = '';
           document.getElementsByClassName('librelens-toggle').forEach((el) => el.remove());
         }
-        attribution.innerHTML += '<button onclick="LibreTexts.active.libreLens()" style="display:block;margin: 0 auto;"><span class="mt-icon-eye" style="vertical-align:middle;margin-right:5px;" aria-hidden="true"></span>Toggle block-level attributions</button>';
 
         if (activated) summary.innerHTML = `<ul>${summaryContents.join('')}</ul>`;
         else if (summary) summary.innerHTML = '';
