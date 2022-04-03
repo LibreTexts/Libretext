@@ -24,3 +24,13 @@
     width: 40%;
     box-shadow: -2px 8px 10px #c7c7c7;
 }
+
+.libre-cc-icons img {
+    height: 25px;
+    vertical-align: top;
+    margin-top: 1px;
+}
+
+.libre-cc-icons img:not(:last-child) {
+    padding-right: 2px;
+}
