@@ -265,7 +265,7 @@ async function fork(req, res) {
       if (foundMatchIdx !== -1) { // tag exists
         const tagNumMatch = tags[foundMatchIdx].match(/\[[0-9]+\]/m);
         if (tagNumMatch !== null && tagNumMatch.length > 0) {
-          const tagNum = tagNumMatch[0].replaceAll(/(\[|\])/g, '');
+          const tagNum = tagNumMatch[0].replace(/(\[|\])/g, '');
           return [Number.parseInt(tagNum, 10), tags[foundMatchIdx]];
         }
       }
