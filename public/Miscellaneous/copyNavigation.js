@@ -16,9 +16,8 @@
     
     function propagatorOption() {
         const isAdmin = document.getElementById("adminHolder").innerText === "true";
-        const isLibrarySpecific = window.location.href.includes('LibrarySpecific');
         const libraryHeader = window.location.href.endsWith('Template:Custom/Views/Header');
-        if (isAdmin && !isLibrarySpecific && !libraryHeader) {
+        if (isAdmin && !libraryHeader) {
             let copy = document.getElementsByClassName("mt-user-menu-copy-page");
             if (copy.length) {
                 let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
