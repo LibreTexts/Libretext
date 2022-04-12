@@ -1,2 +1,3 @@
-# NewReactTemplate
-Welcome to React! This project serves as a template that contains everything you need to start coding in React. For a more in-depth guide, visit https://github.com/LibreTexts/Libretext/wiki/Getting-Started-with-React.
+# Sidebar
+
+The Sidebar appears on all LibreTexts libraries and provides quick navigation around the library and access to helpful related resources.

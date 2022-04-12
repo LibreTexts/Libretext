@@ -3,6 +3,7 @@ This code imports external libraries so that React can use them!
 These pieces are code are then bundled into your application during the compilation process.
 Always place your imports at the top of files!
 */
+import '../Sidebar.css';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -15,16 +16,15 @@ import {
     SwipeableDrawer,
     useMediaQuery,
 } from "@material-ui/core";
-import {createTheme, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
-import {blue, grey} from "@material-ui/core/colors";
+import {createTheme, StylesProvider, ThemeProvider} from '@material-ui/core/styles/index.js';
+import {blue, grey} from "@material-ui/core/colors/index.js";
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
 import Libraries from "../components/Libraries.jsx";
 import Tools from "../components/Tools.jsx";
-import Community from "../components/Community.jsx";
 import Developers from "../components/Developers.jsx";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft.js';
 
 
 /*
@@ -45,7 +45,7 @@ function SidebarComponent(props) {
     const [openPanel, setOpenPanel] = useState();
     const [lastPanel, setLastPanel] = useState();
     const [darkMode, setDarkMode] = useState( localStorage.getItem("darkMode") === "true");
-    
+
     const theme = React.useMemo(
         () => {
             const contentContainer = $('body');
@@ -55,7 +55,7 @@ function SidebarComponent(props) {
             else {
                 contentContainer.removeClass('darkMode');
             }
-            
+
             return createTheme({
                 palette: {
                     primary: blue,
@@ -67,7 +67,7 @@ function SidebarComponent(props) {
         },
         [darkMode],
     );
-    
+
     useEffect(function () { // initialization
         const textSize = localStorage.getItem("LT_fontSize");
         const marginSize = localStorage.getItem("LT_pageWidth");
@@ -78,14 +78,14 @@ function SidebarComponent(props) {
             $('section.mt-content-container').css("margin-right", marginSize + "vw");
         }
     }, [])
-    
-    
-    const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools', 'community'];
+
+
+    const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools'];
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
     if (isPro)
         tabs.push('developers');
     // const classes = useStyles();
-    
+
     const toggleDrawer = (panel) => (event) => {
         if (event && event.type === 'keydown' && !panel) {
             if (event.key !== 'Escape') { //only escape will close
@@ -97,15 +97,15 @@ function SidebarComponent(props) {
             setLastPanel(panel);
     };
     LibreTexts.active.sidebarToggleDrawer = toggleDrawer;
-    
+
     function darkModeChange(mode) {
         if (mode === undefined) //toggle its value
             mode = !darkMode
-        
+
         localStorage.setItem('darkMode', mode);
         setDarkMode(mode);
     }
-    
+
     const list = () => {
         let currentPanel;
         switch (openPanel) {
@@ -125,9 +125,6 @@ function SidebarComponent(props) {
             case "libraries":
                 currentPanel = <Libraries toggleDrawer={toggleDrawer}/>;
                 break;
-            case "community":
-                currentPanel = <Community toggleDrawer={toggleDrawer}/>;
-                break;
             case "developers":
                 currentPanel = <Developers toggleDrawer={toggleDrawer}/>;
                 break;
@@ -137,7 +134,7 @@ function SidebarComponent(props) {
             default:
                 alert(`${openPanel} not implemented`);
         }
-        
+
         return <div
             style={{
                 width: 500,
@@ -151,7 +148,7 @@ function SidebarComponent(props) {
             {currentPanel}
         </div>
     };
-    
+
     return (<StylesProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <div>
@@ -190,14 +187,14 @@ function SidebarComponent(props) {
                     </SwipeableDrawer>
                     <Portal>
                         <div id="sbHeader" className="sbHeader">
-                            {tabs.map((tab) => <Button key={tab} tabIndex="1" title={`Open ${tab} panel`}
+                            {tabs.map((tab) => <Button key={tab} tabIndex={0} title={`Open ${tab} panel`}
                                                        className="top-tabs"
                                                        onClick={(event) => toggleDrawer(tab)(event)}>
                                 <span>{tab}</span></Button>)}
                         </div>
-                        {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex="1"
+                        {!openPanel ? <Button id="custom_open" title="Open Sidebar panel" tabIndex={0}
                                               onClick={(event) => toggleDrawer(lastPanel || "contents")(event)}>☰</Button> : null}
-                    
+
                     </Portal>
                 </div>
             </ThemeProvider>
@@ -218,7 +215,7 @@ window.addEventListener("load", () => {
     if (Sidebar && !LibreTexts.active.sidebar) {
         LibreTexts.active.sidebar = true;
         Sidebar();
-	buildManager();
+	    buildManager();
     }
 });
 

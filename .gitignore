@@ -1,3 +1,6 @@
+# Editor configurations
+.vscode
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -63,6 +66,7 @@ Temporary Items
 /nodePrint/public/FullPDF/
 /public/Downloads Center/.cache/
 /API/public/Hierarchy/
+/API/public/licensereports
 /nodePrint/authenBrowser.json
 /nodePrint/authen.json
 /API/BotLogs/

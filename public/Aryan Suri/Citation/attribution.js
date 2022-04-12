@@ -8,11 +8,12 @@ function attribution() {
         let title = $("#titleHolder").text();
         let author = $("li.mt-author-information a:first").text();
         if (title.match(/^[A-Za-z ]*?[0-9]+[.0-9A-Za-z]*?: /)) {
-            title = title.replace(/^[^:]*:/, '');
+            title = title.replace(/^[^:]*:/, '').trim();
         }
         let titlestr = `"${title}"`;
         let pageID = $("#pageIDHolder").text();
-        let url = `https://chem.libretexts.org/@go/page/${pageID}`;
+        let currentLibrary = window.location.host.split('.')[1] ? window.location.host.split('.')[0] : 'chem';
+        let url = `https://${currentLibrary}.libretexts.org/@go/page/${pageID}`;
         let isauthor = Boolean(author);
         let iscc = Boolean(cc);
         try {
@@ -47,34 +48,36 @@ function attribution() {
             <div onclick="hideattr()" id="attrModal">
 
                 <div id="attrModalContent" style="cursor: pointer" >
-                    
+                    <span class="closeModal" onclick="hideattr()">×</span>
+                    <h5 id="modalTitle">Get Page Attribution</h5>
+
                     <div id="attrHTML">
                     </div>
 
 
                     <div id="attr-links">
-                        <a id="attr-copy" style="text-decoration: none; color: #666" >Copy Text</a>
-                        <a id="attr-html" style="text-decoration: none; color: #666" >Copy HTML</a>
-                        <a id="attr-author" style="text-decoration: none; color: #666"> Affiliation's Page</a>
-                        <a id="attr-program" style="text-decoration: none; color: #666"> Program's Page</a>
+                        <a id="attr-copy">Copy Text</a>
+                        <a id="attr-html">Copy HTML</a>
+                        <a id="attr-author"> Affiliation's Page</a>
+                        <a id="attr-program"> Program's Page</a>
                     </div>
                 </div>
 
             </div>`);
         if (param.cc) {
             if (param.isauthor) {
-                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
+                $("#attrHTML").html(`<p id="attr-text"><a href="${param.url}">${param.title}</a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.</p><br/>`);
             }
             else {
-                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title} </a>.  </p> <br/>`);
+                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}">${param.title}</a> by <a href="https://libretexts.org/">LibreTexts</a> is licensed under <a href="${cc.link}"> ${cc.title}</a>.</p><br/>`);
             }
         }
         else {
             if (param.isauthor) {
-                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.  </p> <br/>`);
+                $("#attrHTML").html(`<p id="attr-text"><a href="${param.url}">${param.title}</a> by <a id="attr-author-link" href="">${param.author}</a>, <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.  </p><br/>`);
             }
             else {
-                $("#attrHTML").html(`<p id="attr-text"> <a href="${param.url}"> ${param.title} </a> by <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.  </p> <br/>`);
+                $("#attrHTML").html(`<p id="attr-text"><a href="${param.url}">${param.title}</a> by <a href="https://libretexts.org/">LibreTexts</a> has no license indicated.</p><br/>`);
             }
         }
         const attrCopy = document.getElementById("attr-copy");
@@ -107,7 +110,7 @@ function attribution() {
     }
 }
 function hideattr() {
-    if (!$(event.target).closest('#attrModalContent').length && !$(event.target).is('#attrModalContent')) {
+    if ($("#SB-PA-AD").length) {
         $("#SB-PA-AD").remove();
         const sidebar = document.getElementById("sidebarDiv");
         sidebar.style.display = "block";

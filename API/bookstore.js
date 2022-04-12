@@ -130,6 +130,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     const {shoppingCart, shippingSpeed, shippingLocation = 'US', shippingSurcharge = false} = req.body;
     const beta = req.query.beta;
     let totalQuantity = 0;
+    const operatingCost = 0.08; // percent in decimal!!
     
     //turn items into lineItems
     let lineItems = shoppingCart;
@@ -205,10 +206,13 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         console.log(JSON.stringify(costCalculation, null, 2));
     
     //Format data for Checkout session
+    let booksCost = 0;
     lineItems = lineItems.map((item, index) => {
         let costCalcItem = costCalculation.line_item_costs[index];
         const discount = false; //item.metadata.libreNet ||
         const price = (discount ? costCalcItem.total_cost_excl_tax : costCalcItem.total_cost_excl_discounts) * taxMultiplier;
+        const unit_cost = Math.ceil(price * 100 / item.quantity); //amount in cents
+        booksCost = (unit_cost * item.quantity);
         return {
             price_data: {
                 currency: 'usd',
@@ -226,13 +230,14 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
                         numPages: item.metadata.numPages,
                     },
                 },
-                unit_amount: Math.ceil(price * 100 / item.quantity) //amount in cents
+                unit_amount: unit_cost
             },
             quantity: item.quantity,
             description: `${item.hardcover ? 'Hardcover' : 'Paperback'},  ${item.color ? 'Color' : 'Black&White'}${discount ? ',  LibreNet bulk discount on quantities >=30' : ''}`
         }
     })
-    shipping = await (await shipping).json(); //process shipping
+    /* Process shipping */
+    shipping = await (await shipping).json();
     shipping = shipping.results[0];
     lineItems.push({
         price_data: {
@@ -246,6 +251,19 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days. ${shippingSurcharge ? `Includes ${shippingSurcharge.name} surcharge` : ''}`,
         quantity: 1,
     });
+    /* Add Operating Cost */
+    lineItems.push({
+        price_data: {
+            currency: 'usd',
+            product_data: {
+                name: 'Operating Cost'
+            },
+            unit_amount: Math.ceil(booksCost * operatingCost) // amount in cents
+        },
+        description: `${operatingCost * 100}%. This Operating Cost helps to offset the project's administrative overhead. Thank you for supporting LibreTexts.`,
+        quantity: 1
+    });
+
     
     // console.log(JSON.stringify(lineItems, null, 2));
     /*res.send({

@@ -54,8 +54,17 @@
 }
 
 p.glossaryElement {
-    font-size: 1.0rem;
+    font-size: 1.0em;
     margin: 0.5rem 0 1em;
 }
 
-
+@media print {
+    .glossaryDefinition {
+        font-size: 0.85em;
+    }
+    p.glossaryElement {
+        break-inside: avoid;
+        margin-bottom: 0.5em;
+        font-size: 0.9em;
+    }
+}

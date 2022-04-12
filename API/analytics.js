@@ -8,6 +8,7 @@ const cors = require('cors');
 // app.use(cors());
 app.use(express.text());
 const async = require('async');
+const MongoClient = require('mongodb').MongoClient;
 
 //middleware configuration and initialization
 const basePath = '/ay';
@@ -34,6 +35,18 @@ app.post(basePath + '/receive', async (req, res) => {
     // console.log(req.body);
     if (!(req.headers.origin && req.headers.origin.endsWith("libretexts.org"))) {
         return res.status(400).end();
+    }
+
+    // connect to mongodb
+    const uri = `${secure.mongodbAnalytics.protocol}://${secure.mongodbAnalytics.user}:${secure.mongodbAnalytics.pass}@${secure.mongodbAnalytics.host}/${secure.mongodbAnalytics.dbname}?retryWrites=true&w=majority`;
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+        //await client.db(secure.mongodbAnalytics.dbname).command({ ping: 1 });
+        //console.log("Connected successfully to server");
+    } catch (e) {
+        console.error(e);
     }
     
     let body = req.body;
@@ -66,8 +79,17 @@ app.post(basePath + '/receive', async (req, res) => {
                 await fs.appendFile(`./analyticsData/ay-${courseName[i]}/${user}.txt`, body + "\n");
             }
         }
+
+        // write to collection
+        // should maybe create a new collection per course?
+        const db = client.db(secure.mongodbAnalytics.dbname);
+        await db.collection("ltanalytics").insertOne(event);
+        // console.log(`A document was inserted with the _id: ${result.insertedId}`);
+
     } catch (e) {
         console.error(e);
+    } finally {
+        await client.close();
     }
 })
 

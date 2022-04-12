@@ -9,6 +9,7 @@ import ForeignImage from "../components/ForeignImage.jsx";
 import BatchMonitor from "../components/BatchMonitor.jsx";
 import ConvertContainers from "../components/ConvertContainers.jsx";
 import Multi from "../components/Multi.jsx";
+import LicenseReport from "../components/LicenseReport.jsx";
 import {Tooltip} from "@material-ui/core";
 import Info from "@material-ui/icons/Info";
 
@@ -27,7 +28,7 @@ class Dashboard extends React.Component {
             devMode: localStorage.getItem('devMode'),
         }
     }
-    
+
     render() {
         return <div className={'CenterContainer'}>
             <div className="navigationBar">
@@ -40,6 +41,7 @@ class Dashboard extends React.Component {
                     <option value={'BatchMonitor'}>Batch Monitor</option>
                     <option value={'ConvertContainers'}>Upgrade Containers</option>
                     <option value={'Multistep Preset'}>Multistep Preset</option>
+                    <option value={'License Report'}>Licensing Report</option>
                 </select>
                 <div style={{flex: 1}}><Tooltip placement="right"
                                                 title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
@@ -71,7 +73,7 @@ class Dashboard extends React.Component {
             {this.getPanel()}
         </div>
     }
-    
+
     getPanel() {
         switch (this.state.panel) {
             case "RevisionLog":
@@ -90,14 +92,16 @@ class Dashboard extends React.Component {
                 return <ConvertContainers devMode={this.state.devMode}/>;
             case "Multistep Preset":
                 return <Multi devMode={this.state.devMode}/>;
+            case "License Report":
+                return <LicenseReport devMode={this.state.devMode}/>;
         }
     }
-    
+
     setPanel = (event) => {
         localStorage.setItem('api_dashboard_panel', event.target.value);
         this.setState({panel: event.target.value});
     }
-    
+
 }
 
 

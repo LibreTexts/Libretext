@@ -1,29 +1,36 @@
 const http = require('http');
+const util = require('util');
+const events = require('events');
+const { performance } = require('perf_hooks');
+const querystring = require('querystring');
 const nodeStatic = require('node-static');
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra');
 const filenamify = require('filenamify');
-const baseIMG = require("./baseIMG.js");
-const colors = require("./colors");
-const {performance} = require('perf_hooks');
-const timestamp = require("console-timestamp");
-const util = require('util');
-const async = require("async");
+const async = require('async');
 const Eta = require('node-eta');
 const md5 = require('md5');
-const events = require('events');
+const timestamp = require('console-timestamp');
 const fetch = require('node-fetch');
-const querystring = require('querystring');
-// const merge = util.promisify(require('easy-pdf-merge'));
-const merge = util.promisify(require('./PDFMerger.js'));
+const PDFMerger = require('pdf-merger-js');
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
-const JSZip = require("jszip");
-const he = require("he");
+const JSZip = require('jszip');
+const he = require('he');
 const convert = require('xml-js');
+const baseIMG = require('./baseIMG.js');
+const styles = require('./styles.js');
+const colors = require('./colors');
+const {
+  pdfPageMargins,
+  generatePDFHeader,
+  generatePDFFooter
+} = require('./pdflayouts.js');
+// const merge = util.promisify(require('./PDFMerger.js'));
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
+const ignoreList = require('./ignoreList.json');
 
 let Gbrowser;
 let Gserver;
@@ -74,6 +81,42 @@ puppeteer.launch({
         
         Gbrowser = browser;
         Gserver = server;
+
+        const viewportSettings = { width: 975, height: 1000 };
+        const pptrPageLoadSettings = {
+          timeout: 60000,
+          waitUntil: ['load', 'domcontentloaded', 'networkidle0']
+        };
+
+        const pptrRequestHandler = (pptrReq) => {
+          if (Array.isArray(ignoreList?.list)) {
+            let i = 0;
+            const listLen = ignoreList.list.length;
+            while (i < listLen) {
+              if (pptrReq.url().indexOf(ignoreList.list[i]) !== -1) {
+                return pptrReq.abort();
+              }
+              i += 1;
+            }
+          }
+          return pptrReq.continue();
+        };
+
+        const pptrDialogHandler = async (dialog) => {
+          await dialog.dismiss();
+        };
+
+        const eagerImageLoader = () => {
+          const images = document.getElementsByTagName('img');
+          for (let img of images) {
+            img.loading = 'eager';
+          }
+        };
+
+        function safe(input) {
+          if (input) return he.encode(input, { 'useNamedReferences': true });
+          return '';
+        }
         
         async function handler(request, response) {
             let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -420,7 +463,7 @@ puppeteer.launch({
                                     origin: 'print.libretexts.org'
                                 }
                             });
-                            console.log(`Finished Refresh ${subdomain} ${path} ${ip}`);
+                            console.log(`Finished Refresh: ${subdomain}/${path} (${ip}), ${finished.length} items`);
                             if (subdomain === 'espanol')
                                 break; //Only processing home path
                             
@@ -464,58 +507,141 @@ puppeteer.launch({
         }
         
         async function getLicense(current) {
-            function ccIcon(icon) {
-                return '<img src="data:image/jpeg;base64,' + baseIMG.cc[icon] + '" height="20"/>';
+            /**
+             * Builds an HTML string with the specified Creative Commons license's icon(s).
+             * @param {string[]} clauses - Array of clause identifiers, starting with 'cc'.
+             * @returns {string} HTML string with license's icon(s) as image/svg.
+             */
+            function ccIcons(clauses) {
+                if (Array.isArray(clauses) && clauses.length > 0) {
+                    let iconString = '';
+                    clauses.forEach((item) => {
+                        iconString = `${iconString}<img src="data:image/svg+xml;base64,${baseIMG.cc[`${item}-clause`]}"/>`;
+                    });
+                    return iconString;
+                }
+                return '';
             }
-            
-            
-            for (let i = 0; i < current.tags.length; i++) {
-                if (current.tags[i].includes("license")) {
-                    let tag = current.tags[i].split(":")[1];
-                    switch (tag) {
-                        case "publicdomain":
-                            return {label: ccIcon("pd"), link: "#"};
-                        case "ccby":
-                            return {label: ccIcon("by"), link: "https://creativecommons.org/licenses/by/4.0/"};
-                        case "ccbysa":
-                            return {label: ccIcon("by-sa"), link: "https://creativecommons.org/licenses/by-sa/4.0/"};
-                        case "ccbync":
-                            return {label: ccIcon("by-nc"), link: "https://creativecommons.org/licenses/by-nc/4.0/"};
-                        case "ccbyncsa":
-                            return {
-                                label: ccIcon("nc-by-sa"),
-                                link: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                            };
-                        case "ccbynd":
-                            return {label: ccIcon("by-nd"), link: "https://creativecommons.org/licenses/by-nd/4.0/"};
-                        case "ccbyncnd":
-                            return {
-                                label: ccIcon("by-nc-nd"),
-                                link: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
-                            };
-                        case "gnu":
-                            return {label: "GPL", link: "https://www.gnu.org/licenses/gpl-3.0.en.html"};
-                        case "gnudsl":
-                            return {
-                                label: "GNU Design Science License",
-                                link: "https://www.gnu.org/licenses/dsl.html"
-                            };
-                        case "gnufdl":
-                            return {
-                                label: "GNU Free Documentation License",
-                                link: "https://www.gnu.org/licenses/fdl-1.3.en.html"
-                            };
-                        case "arr":
-                            return {label: "© All Rights Reserved", link: ""};
+
+            if (Array.isArray(current.tags)) {
+                let license = '';
+                let licenseVersion = '4.0';
+                /* Find license and version (if indicated) */
+                current.tags.forEach((item) => {
+                    if (typeof (item) === 'string' && item.includes('license')) {
+                        const tagRaw = item.split(':');
+                        if (Array.isArray(tagRaw) && tagRaw.length > 1) {
+                            const [tagName, tagVal] = tagRaw;
+                            if (tagName === 'license') {
+                                license = tagVal;
+                            } else if (tagName === 'licenseversion' && tagVal.length === 2) {
+                                licenseVersion = `${tagVal.slice(0,1)}.${tagVal.slice(1)}`; // raw version has no separator
+                            }
+                        }
                     }
+                });
+                if (license.length > 0) {
+                    switch (license) {
+                        case 'publicdomain':
+                            return {
+                                label: ccIcons(['pd']),
+                                link: 'https://en.wikipedia.org/wiki/Public_domain',
+                                raw: 'publicdomain',
+                            };
+                        case 'ccby':
+                            return {
+                                label: ccIcons(['cc', 'by']),
+                                link: `https://creativecommons.org/licenses/by/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccby',
+                            };
+                        case 'ccbysa':
+                            return {
+                                label: ccIcons(['cc', 'by', 'sa']),
+                                link: `https://creativecommons.org/licenses/by-sa/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbysa',
+                            };
+                        case 'ccbyncsa':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc', 'sa']),
+                                link: `https://creativecommons.org/licenses/by-nc-sa/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbyncsa',
+                            };
+                        case 'ccbync':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc']),
+                                link: `https://creativecommons.org/licenses/by-nc/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbync',
+                            };
+                        case 'ccbynd':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nd']),
+                                link: `https://creativecommons.org/licenses/by-nd/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbynd',
+                            };
+                        case 'ccbyncnd':
+                            return {
+                                label: ccIcons(['cc', 'by', 'nc', 'nd']),
+                                link: `https://creativecommons.org/licenses/by-nc-nd/${licenseVersion}/`,
+                                version: licenseVersion,
+                                raw: 'ccbyncnd',
+                            };
+                        case 'gnu':
+                            return {
+                                label: 'GPL',
+                                link: 'https://www.gnu.org/licenses/gpl-3.0.en.html',
+                                raw: 'gnu',
+                            };
+                        case 'gnudsl':
+                            return {
+                                label: 'GNU Design Science License',
+                                link: 'https://www.gnu.org/licenses/dsl.html',
+                                raw: 'gnudsl',
+                            };
+                        case 'gnufdl':
+                            return {
+                                label: 'GNU Free Documentation License',
+                                link: 'https://www.gnu.org/licenses/fdl-1.3.en.html',
+                                raw: 'gnufdl',
+                            };
+                        case 'arr':
+                            return {
+                                label: '© All Rights Reserved',
+                                link: 'https://en.wikipedia.org/wiki/All_rights_reserved',
+                                raw: 'arr',
+                            };
+                        case 'ck12':
+                            return {
+                                label: `<img src="data:image/png;base64,${baseIMG.cc['ck12']}"/>`,
+                                link: 'https://www.ck12info.org/curriculum-materials-license',
+                                raw: 'ck12',
+                            };
+                        default:
+                            break;
+                        }
                 }
             }
-            return null; //not found
+            return null; // not found
         }
         
         async function getInformation(current) {
             if (current.gotInformation) return; //exit if already ran
             else current.gotInformation = true;
+            // Retrieve LibreText summary
+            current.summary = ''; // set to empty in case of not found
+            if (Array.isArray(current.properties)) {
+                let findSummary = current.properties.find(prop => typeof(prop) === 'object' && prop['@name'] === 'mindtouch.page#overview');
+                if (findSummary !== undefined && typeof(findSummary.contents) === 'object') {
+                    if (typeof(findSummary.contents['#text']) === 'string') {
+                        current.summary = findSummary.contents['#text'];
+                    }
+                }
+            }
+            // Process tags
             for (let i = 0; i < current.tags.length; i++) {
                 let tag = current.tags[i];
                 let items;
@@ -731,193 +857,176 @@ puppeteer.launch({
                 }
             }
         }
+
+        async function getLevel(current, level = 2, isSubTOC) {
+          let result = '';
+          if (current.subpages && current.subpages.length) {
+              let pages = [];
+              for (let i = 0; i < current.subpages.length; i++) {
+                  let child = current.subpages[i];
+                  if ((child.title === 'Front Matter' || child.title === 'Back Matter') && (!child.subpages || !child.subpages.length)) {
+                      // skip since empty
+                  } else if (child.title === 'Front Matter' || child.title === 'Front Matter') {
+                      let tempChildren = child.subpages;
+                      tempChildren = tempChildren.filter(subpage => !['TitlePage', 'InfoPage', 'Table of Contents'].includes(subpage.title));
+                      pages = pages.concat(tempChildren)
+                  } else {
+                      pages.push(child);
+                  }
+              }
+              if (level === 2 && current.tags.includes('article:topic-guide')) {
+                  isSubTOC = 'yes';
+                  level = 3;
+              }
+              const twoColumn = current.tags.includes('columns:two') && current.tags.includes('coverpage:yes') && level === 2;
+              const prefix = level === 2 ? 'h2' : 'h';
+              // Get subtitles
+              let inner = await async.map(pages, async (elem) => {
+                  // elem = await getAPI(elem);
+                  if (elem.modified === 'restricted') return ''; // private page 
+                  const isSubtopic = level > 2 ? `indent${level - 2}` : null;
+                  return `<li><div class="nobreak ${isSubtopic}"><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}></div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
+              });
+              inner = inner.join('');
+              
+              result = `<ul class='libre-print-list' ${twoColumn ? 'style="column-count: 2"' : ''}>${inner}</ul>`;
+          }
+          return result;
+      }
+
+        async function processDirectoryPage(currentPage, listing) {
+          let directory = document.querySelector('.mt-guide-content, .mt-category-container');
+          if (directory !== null && listing !== null) {
+            const newDirectory = document.createElement('div');
+            newDirectory.innerHTML = listing;
+            directory.replaceWith(newDirectory);
+            if (Array.isArray(currentPage?.tags)) {
+              let pageType = 'Section Overview';
+              if (currentPage.tags.includes('coverpage:yes') || currentPage.title?.includes('Table of Contents')) {
+                pageType = 'Table of Contents';
+              } else if (currentPage.tags.includes('article:topic-guide')) {
+                pageType = 'Chapter Overview';
+              }
+              const pageTitle = document.querySelector('#title');
+              pageTitle.setAttribute('style', 'border-bottom: none !important');
+              const pageTitleParent = pageTitle.parentNode;
+              if (pageTitle !== null && pageTitleParent !== null) {
+                const newTitle = document.createElement('h1');
+                newTitle.appendChild(document.createTextNode(pageType));
+                newTitle.id = 'libre-print-directory-header';
+
+                const typeContainer = document.createElement('div');
+                typeContainer.id = 'libre-print-directory-header-container';
+                typeContainer.appendChild(newTitle);
+                pageTitleParent.insertBefore(typeContainer, pageTitle);
+              }
+            }
+            return true;
+          }
+          return false;
+        }
+
         
         async function getTOC(current, isHTML) {
-            // await fs.ensureDir('./PDF/Letter/TOC');
-            await fs.ensureDir('./PDF/Letter/Margin/TOC');
-            console.log('Starting TOC');
-            const start = performance.now();
-            current = await getAPI(current, {getContents: true});
-            if (!current.subpages)
-                current.subpages = (await getSubpages(current)).subpages;
-            let escapedURL = `${current.subdomain}-${current.id}`;
-            if (current.modified === 'restricted') //private page
-                return 'restricted';
-            const page = await browser.newPage();
-            
-            function safe(input) {
-                if (input)
-                    return he.encode(input, {'useNamedReferences': true});
+          // await fs.ensureDir('./PDF/Letter/TOC');
+          await fs.ensureDir('./PDF/Letter/Margin/TOC');
+          console.log('Starting TOC');
+          const start = performance.now();
+          current = await getAPI(current);
+          if (!current.subpages) {
+            current.subpages = (await getSubpages(current)).subpages;
+          }
+          let escapedURL = `${current.subdomain}-${current.id}`;
+          if (current.modified === 'restricted') return 'restricted'; // private page
+          const [subdomain, path] = parseURL(current.url);
+          const page = await browser.newPage();
+          page.setViewport(viewportSettings);
+          await page.setRequestInterception(true);
+
+          let url = current.url;
+          let properties = current.properties;
+          properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
+          properties = properties && properties.contents && properties.contents['#text'] ? safe(properties.contents['#text']) : '';
+
+          let summary = '';
+          if (properties) {
+            summary = properties;
+          } else if (current.content) {
+            let body = current.content.body[0];
+            if (body.includes('class="mt-guide-content"') || body.includes('class="mt-category-container')) {
+              summary = body.match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
+              if (summary) summary = summary[0];
+            } else {
+              summary = body;
             }
-            
-            let [subdomain, path] = parseURL(current.url);
-            
-            let properties = current.properties;
-            properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
-            properties = properties && properties.contents && properties.contents['#text'] ?
-                safe(properties.contents['#text']) : '';
-            let tags = current.tags;
-            
-            let summary = '';
-            if (properties) {
-                summary = properties
-            }
-            else if (current.content) {
-                let body = current.content.body[0];
-                if (body.includes('class="mt-guide-content"') || body.includes('class="mt-category-container')) {
-                    summary = body.match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
-                    if (summary) {
-                        summary = summary[0];
-                    }
-                }
-                else
-                    summary = body;
-            }
-            
-            let content = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${await getLevel(current)}`;
-            if (tags.includes('coverpage:yes')) {
-                let uploadContent = content.replace(/style="column-count: 2"/g, '');
-                await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'LibreBot', {
-                    method: 'POST',
-                    body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
-                });
-            }
-            content = `${tags.includes('coverpage:yes') ? '<h1>Table of Contents</h1>' : `<h1>${tags.includes('article:topic-guide') ? 'Chapter' : 'Section'} Overview</h1><div class="nobreak"><a href="${current.url}"><h2>${current.title}</h2></a>`}` + content;
-            content += `<link rel="stylesheet" type="text/css" href="http://localhost:${port}/print/LibreTexts-content.css"/>` +
-                '<script src=\'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\' async></script>\n ' +
-                '<style>a {text-decoration: none; color:#127bc4}' +
-                'body>ul {list-style-type: none; color:black}' +
-                'h2>a{color:#127bc4}' +
-                'li {list-style-type:none}' +
-                // '* {border: 1px solid blue}' +
-                'ul {margin: 10px 0 0 0; padding: 0; column-gap: 30px}' +
-                '.indent {margin-left: 10px;}' +
-                'h2, h3, h4, h5, h, l {margin: 10px 0 0 0; font-weight: normal;}' +
-                'li:first-child > div > h2 {margin: 0;}' +
-                'h1, h2, h3, h4, h5, h {text-transform: uppercase; font-family:"Tahoma", Arial, serif}' +
-                '.nobreak {page-break-inside: avoid;}' +
-                '.summary {text-align: justify; text-justify: inter-word;}' +
-                '.summaryImage {height: 150px; width: 150px; margin: 0 10px; object-fit: contain; float:right}' +
-                'body {font-size: 12px; font-family: \'Big Caslon\', \'Book Antiqua\', \'Palatino Linotype\', Georgia, serif}</style>' +
-                '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:r,b,i%7CSource+Code+Pro:r,b" media="all">';
-            if (isHTML) {
-                const end = performance.now();
-                let time = end - start;
-                time /= 100;
-                time = Math.round(time);
-                time /= 10;
-                console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
-                return content;
-            }
-            
-            try {
-                await page.setContent(content,
-                    {waitUntil: ["load", "domcontentloaded", 'networkidle0']});
-            } catch (e) {
-            
-            }
-            
-            async function getLevel(current, level = 2, isSubTOC) {
-                let result = '';
-                if (current.subpages && current.subpages.length) {
-                    let pages = [];
-                    for (let i = 0; i < current.subpages.length; i++) {
-                        let child = current.subpages[i];
-                        if ((child.title === 'Front Matter' || child.title === 'Back Matter') && (!child.subpages || !child.subpages.length)) {
-                            //skip since empty
-                        }
-                        else if (child.title === 'Front Matter' || child.title === 'Front Matter') {
-                            let tempChildren = child.subpages;
-                            tempChildren = tempChildren.filter(subpage => !['TitlePage', 'InfoPage', 'Table of Contents'].includes(subpage.title));
-                            pages = pages.concat(tempChildren)
-                        }
-                        else {
-                            pages.push(child);
-                        }
-                    }
-                    
-                    if (level === 2 && tags.includes('article:topic-guide')) {
-                        isSubTOC = 'yes';
-                        level = 3;
-                    }
-                    
-                    let twoColumn = tags.includes('columns:two') && tags.includes('coverpage:yes') && level === 2;
-                    
-                    let prefix = level === 2 ? 'h2' : 'h';
-                    
-                    //Summary Handling
-                    let inner = await async.map(pages, async (elem, callback) => {
-                        elem = await getAPI(elem);
-                        if (elem.modified === 'restricted') //private page
-                            return '';
-                        let summary = '';
-                        let isSubtopic = level > 2 ? 'indent' : null;
-                        if (level === 2 || isSubTOC) {
-                            properties = elem.properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
-                            let good = properties && properties.contents && properties.contents['#text'];
-                            if (good && (!elem.tags.includes('article:topic') || isSubTOC)) {
-                                summary = `<div style="padding-bottom:10px" class="summary">${safe(properties.contents['#text'])}</div>`;
-                            }
-                        }
-                        
-                        return `<li><div class="nobreak ${isSubtopic}"><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}>${summary}</div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
-                    });
-                    inner = inner.join('');
-                    
-                    result = `<ul ${twoColumn ? 'style="column-count: 2"' : ''}>${inner}</ul>`;
-                }
-                
-                return result;
-            }
-            
-            const color = "#127bc4";
-            
-            const cssb = [];
-            cssb.push('<style>');
-            cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw}');
-            cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-            cssb.push('#main {border: 1px solid blue;}');
-            cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-            cssb.push('* { -webkit-print-color-adjust: exact}');
-            cssb.push('.date, .pageNumber {display: inline-block}');
-            cssb.push('.added {padding: 0px 4px}');
-            cssb.push('a {text-decoration:none; color: white}');
-            cssb.push('</style>');
-            const css = cssb.join('');
-            const prefix = '';
-            
-            const style1 = '<div id="mainH">' +
-                '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/jpeg;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; margin-right: 10px"/></a>' +
-                '</div>';
-            
-            const style2 = `<div id="mainF">` +
-                `<div style="flex:1; display:inline-flex; align-items: center; justify-content: flex-start; color:#F5F5F5;" class='added'></div>` +
-                `<div style="background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-                `<div style="flex:1; display:inline-flex; align-items: center;   justify-content: flex-end; color:#F5F5F5;">` +
-                `<div><div class="date"/></div>` +
-                '</div>';
-            
-            await page.pdf({ //Lulu Letter
-                path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
-                displayHeaderFooter: true,
-                headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
-                printBackground: true,
-                margin: {
-                    top: "1in",
-                    bottom: ".75in",
-                    right: "0.75in",
-                    left: "0.75in",
-                }
+          }
+
+          const listing = await getLevel(current);
+
+          let tocContent = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${listing}`;
+          if (current.tags?.includes('coverpage:yes')) {
+            const uploadContent = tocContent.replace(/style="column-count: 2"/g, '');
+            await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'LibreBot', {
+              method: 'POST',
+              body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
             });
+          }
+
+          if (isHTML) {
             const end = performance.now();
             let time = end - start;
             time /= 100;
             time = Math.round(time);
             time /= 10;
-            await page.close();
-            console.log(`TOC Created: ${time}s ${escapedURL}`);
-            return escapedURL;
+            console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
+            return listing;
+          }
+
+          try {
+            page.on('dialog', pptrDialogHandler);
+            page.on('request', pptrRequestHandler);
+            await page.goto(`${url}?no-cache`, pptrPageLoadSettings);
+          } catch (err) {
+            console.error(err);
+            console.error(`ERROR TOC - Timeout Exceeded ${url}`)
+          }
+
+          try {
+            await page.evaluate(eagerImageLoader);
+            await sleep(1000);
+            await page.evaluate(processDirectoryPage, current, listing);
+            await sleep(1000);
+          } catch (err) {
+            console.error(err);
+            console.error(`ERROR Rendering TOC ${url}`);
+          }
+
+          const color = "#127bc4";
+          const prefix = '';
+          await page.addStyleTag({ content: `
+              @page {
+                  size: letter portrait;
+                  margin: ${pdfPageMargins};
+                  padding: 0;
+              }
+              ${styles.tocStyles}
+          `});
+          await page.pdf({ //Lulu Letter
+              path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
+              displayHeaderFooter: true,
+              headerTemplate: generatePDFHeader(baseIMG["default"]),
+              footerTemplate: generatePDFFooter(color, null, null, prefix),
+              printBackground: true,
+              preferCSSPageSize: true
+          });
+          const end = performance.now();
+          let time = end - start;
+          time /= 100;
+          time = Math.round(time);
+          time /= 10;
+          await page.close();
+          console.log(`TOC Created: ${time}s ${escapedURL}`);
+          return escapedURL;
         }
         
         async function getThinCC(current, destination) {
@@ -953,7 +1062,7 @@ puppeteer.launch({
                     hasLower = hasLower || subpages[i].subpages.length;
                 }
                 let resourceArray = []; // for current
-                if (hasLower && current.tags.includes('article:topic-category')) { //go down a level
+                if (hasLower && current.tags?.includes('article:topic-category')) { //go down a level
                     for (let i = 0; i < subpages.length; i++) {
                         result = result.concat(addsubpages(subpages[i]));
                     }
@@ -1067,30 +1176,23 @@ puppeteer.launch({
             }
         }
         
-        async function getPDF(current, ip, isNoCache = false) {
+        async function getPDF(current, ip, isNoCache = false, isTOC = false) {
             current = await getAPI(current);
             let escapedURL = `${current.subdomain}-${current.id}`;
             let stats, err, compile;
             
-            if (ip.startsWith('<<Batch'))
-                compile = true; //When called by getLibreText
-            
+            if (ip.startsWith('<<Batch')) {
+              
+            }
             if ((working[escapedURL] && Date.now() - working[escapedURL] > 120000)) {
                 delete working[escapedURL];	//2 min timeout for DUPE
             }
-            
-            if (current.title === 'InfoPage')
-                isNoCache = true;
-            
+            if (current.title === 'InfoPage') {
+              isNoCache = true;
+            }
             
             const updateTime = current.modified;
-            /*let allExist = [fs.exists(`./PDF/Letter/${escapedURL}.pdf`),
-                fs.exists(`./PDF/Letter/Margin/${escapedURL}.pdf`),
-                fs.exists(`./PDF/A4/${escapedURL}.pdf`),
-                fs.exists(`./PDF/A4/Margin/${escapedURL}.pdf`)];*/
             let allExist = [fs.exists(`./PDF/Letter/Margin/${escapedURL}.pdf`)];
-            /*if (!compile)
-                allExist.push(fs.exists(`./PDF/A4/Margin/${escapedURL}.pdf`));*/
             allExist = await Promise.all(allExist);
             allExist = allExist.every((item) => item);
             
@@ -1106,35 +1208,29 @@ puppeteer.launch({
             
             if (updateTime === 'restricted') {
                 console.error(`PRIVA  ${ip} ${url}`);
-                return {filename: 'restricted'};
+                return { filename: 'restricted' };
             }
             
-            //variable in which recompiling becomes more probable as file ages. Caps at maxAge
+            // variable in which recompiling becomes more probable as file ages. Caps at maxAge
             let randomCache = Math.random() * 2; //0 to 2
             randomCache = (Date.now() - stats?.mtime) > (randomCache + 0.2) * (maxFreshAge * 8.64e+7);
             
-            if (!isNoCache && allExist && !err && stats.mtime > updateTime && !randomCache) { //file is up to date
+            if (!isNoCache && allExist && !err && stats.mtime > updateTime && !randomCache) { // file is up to date
                 // 8.64e+7 ms/day
                 console.log(`CACHE  ${ip} ${url}`);
                 await sleep(ip.startsWith('<<Batch ') ? 1000 : 500);
                 
                 return {filename: escapedURL + '.pdf'};
             }
-            /*			else if (!isNoCache && working[escapedURL]) { //another thread is already working
-                            eventEmitter.on(escapedURL, () => {
-                                console.log(`DUPE   ${ip} ${url}`);
-                                // staticFileServer.serveFile('../PDF/' + escapedURL + '.pdf', 200, {'cache-control': 'no-cache'}, request, response);
-                            });
-                            return false;
-                        }*/
             
             const start = performance.now();
             console.log(`NEW    ${ip} ${url}`);
             
             const page = await browser.newPage();
-            page.setViewport({width: 975, height: 1000});
+            page.setViewport(viewportSettings);
+            await page.setRequestInterception(true);
+
             let timeout;
-            // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
             let failed = false;
             
             working[escapedURL] = Date.now();
@@ -1145,37 +1241,28 @@ puppeteer.launch({
                 let renderPDF = new Promise(async (resolve, reject) => {
                     timeout = setTimeout(() => reject(new Error(`Render Timeout Reached  ${url}`)), 200000);
                     try {
-                        page.on('dialog', async dialog => {
-                            await dialog.dismiss();
-                        });
+                        page.on('dialog', pptrDialogHandler);
+                        page.on('request', pptrRequestHandler);
+
                         if (url.includes('Sandboxes')) {
-                            await page.goto(`https://${current.subdomain}.libretexts.org` + "?no-cache", {
-                                timeout: 50000,
-                                waitUntil: ["load", "domcontentloaded", 'networkidle0']
-                            });
-                            
-                            //authenticate the BOT
+                            await page.goto(`https://${current.subdomain}.libretexts.org/?no-cache`, pptrPageLoadSettings);
+                            // authenticate the BOT
                             let token = authenticate('LibreBot', current.subdomain);
                             await page.evaluate(async function (token, subdomain, redirect) {
                                 await fetch(`https://${subdomain}.libretexts.org/@api/deki/users/authenticate?x-deki-token=${token}&redirect=${redirect}`);
                             }, token, current.subdomain, url);
-                            
                         }
                         
-                        await page.goto(url + "?no-cache", {
-                            timeout: 50000,
-                            waitUntil: ["load", "domcontentloaded", 'networkidle0']
-                        });
+                        await page.goto(`${url}?no-cache`, pptrPageLoadSettings);
                     } catch (err) {
                         console.error(`ERROR  Timeout Exceeded ${url}`);
                     }
                     
-                    await page.evaluate(function(){
-                        let images = document.getElementsByTagName('img');
-                        for (let img of images){
-                            img.loading = "eager";
-                        }
-                    });
+                    await page.evaluate(eagerImageLoader);
+                    await sleep(1000);
+
+                    const listing = await getLevel(current);
+                    await page.evaluate(processDirectoryPage, current, null, listing);
                     await sleep(1000);
                     
                     const out = await page.evaluate(function (url) {
@@ -1191,35 +1278,7 @@ puppeteer.launch({
                             }
                             title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
                         }
-                        let tags = document.getElementById('pageTagsHolder').innerText;
-                        
-                        //Mathjax link handling
-                        /*$("a[href^='#mjx-eqn-eq']").each(function (index) {
-                            // console.log(url + $(this).attr('href'));
-                            $(this).attr('href', url + $(this).attr('href'))
-                        });*/
-                        /*
-                        if (tags) {
-                            try {
-                                tags = tags.replace(/\\/, "");
-                                tags = JSON.parse(tags);
-                                if (!tags.length)
-                                    tags = null;
-                                if (tags && tags.includes('hidetop:solutions')) {
-                                    let h3 = $('h3');
-                                    h3.wrap(doWrap);
-                                    
-                                    function doWrap(index) {
-                                        if (this.id) {
-                                            return `<a target="_blank" href="${url}#${this.id}"></a>`
-                                        }
-                                    }
-                                }
-                            } catch (e) {
-                                console.error(e.toString());
-                            }
-                        }*/
-                        
+                        let tags = document.getElementById('pageTagsHolder').innerText;                        
                         return [prefix, innerText, tags];
                     }, url);
                     let prefix = out[0];
@@ -1233,72 +1292,37 @@ puppeteer.launch({
                         await page.addStyleTag({content: 'dd, dl {display: none;} h3 {font-size: 160%}'});
                     if (tags.includes('printoptions:no-header') || tags.includes('printoptions:no-header-title'))
                         showHeaders = false;
-                    
+
                     const color = "#127bc4";
                     prefix = prefix ? prefix + "." : "";
-                    let license = getLicense(current);
-                    
-                    const cssb = [];
-                    cssb.push('<style>');
-                    cssb.push('#mainH {display:flex; margin: -1px 40px 0 40px; width: 100vw; justify-content:space-between; align-items:center;}');
-                    cssb.push(`#mainF {display:flex; margin: -1px 50px 0 50px; width: 100vw; font-size:7px; justify-content: center; background-color: ${color}; border-radius: 10px; padding:0px 8px;}`);
-                    cssb.push('#main {border: 1px solid blue;}');
-                    cssb.push('#mainF > a {display:block}');
-                    cssb.push(`#library {background-color: ${color}; flex:1; display:inline-flex; justify-content:flex-end; border-radius: 0 7px 7px 0; margin:5px 0}`);
-                    cssb.push('* { -webkit-print-color-adjust: exact}');
-                    cssb.push('.date, .pageNumber {display: inline-block}');
-                    cssb.push('.added {padding: 0px 4px}');
-                    cssb.push('a {text-decoration:none; color: white}');
-                    cssb.push('</style>');
-                    const css = cssb.join('');
-                    
-                    
-                    const style1 = '<div id="mainH">' +
-                        '<a href="https://libretexts.org" style="display: inline-block"><img src="data:image/png;base64,' + baseIMG["default"] + '" height="30" style="padding:5px; background-color: white; margin-right: 10px"/></a>' +
-                        '</div>';
-                    
-                    license = await license;
+                    let license = await getLicense(current);
                     await getInformation(current);
-                    
-                    const style2 = `<div id="mainF">` +
-                        `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `<a href="${license ? license.link : ''}">${license ? license.label : ''}</a>${current.name ? `<div>${current.name}</div>` : ''}` +
-                        `</div>` +
-                        
-                        `<div style="display: flex; align-items: center; background-color: white; border: 1px solid ${color}; color: ${color}; padding: 2px; border-radius: 10px; min-width: 10px; text-align: center; font-size: 8px">` + prefix + `<div class="pageNumber"></div></div>` +
-                        
-                        `<div style="flex:1; display:inline-flex; align-items: center; justify-content: space-between; color:#F5F5F5;" class='added'>` +
-                        `<div><div class="date"></div></div><a href="https://${current.subdomain}.libretexts.org/@go/page/${current.id}?pdf">https://${current.subdomain}.libretexts.org/@go/page/${current.id}</a>` +
-                        '</div>';
-                    if ((performance.now() - start) / 1000 > 20)
-                        console.log(`LOAD ${ip} ${(performance.now() - start) / 1000} ${PDFname}`);
+
+                    const loadTime = (performance.now() - start) / 1000;
+                    if (loadTime > 20) console.log(`LOAD ${ip} ${loadTime.toFixed(2)} ${PDFname}`);
+
                     try {
                         if (url.includes('Wakim_and_Grewal')) {
                             await page.addStyleTag({content: `.mt-content-container {font-size: 93%}`});
                         }
-                        
-                        // console.log(`2 ${(performance.now()-start)/1000}`);
+                        await page.addStyleTag({ content: `
+                            @page {
+                                size: letter portrait;
+                                margin: ${showHeaders ? `${pdfPageMargins};` : '0.625in;'}
+                                padding: 0;
+                            }
+                            ${styles.tocStyles}
+                        `});
                         await page.pdf({ //Letter Margin
                             path: `./PDF/Letter/Margin/${PDFname}.pdf`,
                             displayHeaderFooter: showHeaders,
-                            headerTemplate: css + style1 + '<style>div#mainH{margin-top:17px}</style>',
-                            footerTemplate: css + style2 + '<style>div#mainF{margin-bottom:15px}</style>',
+                            headerTemplate: generatePDFHeader(baseIMG['default']),
+                            footerTemplate: generatePDFFooter(color, current, license, prefix),
                             printBackground: true,
-                            margin: showHeaders ? {
-                                top: "1in",
-                                bottom: ".75in",
-                                right: "0.75in",
-                                left: "0.75in",
-                            } : {
-                                top: "0.5in",
-                                bottom: "0.5in",
-                                right: "0.75in",
-                                left: "0.75in",
-                            }
+                            preferCSSPageSize: true
                         });
-                        // console.log(`3 ${(performance.now()-start)/1000}`);
                     } catch (e) {
-                        // console.error(e);
+                        console.error(e);
                     }
                     clearTimeout(timeout);
                     resolve();
@@ -1343,7 +1367,7 @@ puppeteer.launch({
                 console.log(`RENDER ${ip} [${pages.length}] ${time}s ${PDFname}`);
                 // console.log(pages);
             }
-            return {filename: PDFname + '.pdf', title: title};
+            return {filename: PDFname + '.pdf', title: title, lastModified: updateTime};
         }
         
         async function getLibretext(current, response, options) {
@@ -1614,6 +1638,7 @@ puppeteer.launch({
             const start = performance.now();
             const eta = new Eta(urlArray.length, true);
             let originalFiles = [];
+            let updateTimes = [];
             let failed = false;
             
             try {
@@ -1626,21 +1651,19 @@ puppeteer.launch({
                     page = await getAPI(page);
                     let filename, title = page.title;
                     if (page.matter) {
-                        if (page.title === 'Table of Contents')
-                            filename = `TOC/${await getTOC(current)}.pdf`;
-                        else {
+                        if (page.title === 'Table of Contents') {
+                          filename = `TOC/${await getTOC(current)}.pdf`;
+                        } else {
                             let temp = await getPDF(page, options.ip, isNoCache);
                             filename = temp.filename;
+                            if (temp.lastModified) updateTimes.push(temp.lastModified);
                         }
                         if (page.matter !== 'Back') {
                             title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
-                        }
-                        else {
+                        } else {
                             title = `99999:${String.fromCharCode(64 + page.miniIndex)} ${page.title}`;
-                        }
-                        
-                    }
-                    else if (page.subpages && page.subpages.length > 1 && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
+                        }  
+                    } else if (page.subpages && page.subpages.length > 1 && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
                         filename = `TOC/${await getTOC(page)}.pdf`;
                         
                         if (page.tags.includes('coverpage:yes')) {//no Front Matter TOC
@@ -1650,21 +1673,10 @@ puppeteer.launch({
                             
                             title = `00000:${String.fromCharCode(64 + page.index)} Table of Contents`;
                         }
-                    }
-                    /*else if (kubernetesServiceHost) {
-                        let offloadURL = `http://${kubernetesServiceHost}/url=${url}`;
-                        if (isNoCache)
-                            offloadURL += '?no-cache&offload';
-                        else
-                            offloadURL += '?offload';
-                        
-                        let offload = await fetch(offloadURL);
-                        offload = await offload.json();
-                        filename = offload.filename;
-                    }*/
-                    else {
+                    } else {
                         let temp = await getPDF(page, options.ip, isNoCache);
                         filename = temp.filename;
+                        if (temp.lastModified) updateTimes.push(temp.lastModified);
                     }
                     count++;
                     eta.iterate();
@@ -1675,16 +1687,17 @@ puppeteer.launch({
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/libretexts/${zipFilename}/${title}.pdf`);
                         await fs.copy(`./PDF/Letter/Margin/${filename}`, `./PDF/Letter/order/${thinName}/${`${page.index}`.padStart(3, '0')}.pdf`);
                         
+                    } else {
+                      privatePages.push(page.url);
                     }
-                    else
-                        privatePages.push(page.url);
-                    if (response && !response.finished)
-                        response.write(JSON.stringify({
-                            message: "progress",
-                            percent: (Math.round(count / urlArray.length * 1000) / 10),
-                            eta: eta.format("{{etah}}"),
-                            // count: count,
-                        }) + "\r\n");
+                    if (response && !response.finished) {
+                      response.write(JSON.stringify({
+                        message: "progress",
+                        percent: (Math.round(count / urlArray.length * 1000) / 10),
+                        eta: eta.format("{{etah}}"),
+                        // count: count,
+                      }) + "\r\n");
+                    }
                 });
             } catch (err) {
                 throw err;
@@ -1714,105 +1727,127 @@ puppeteer.launch({
                             }) + "\r\n")
                     }, 1000);
                 }
+
+                // Merge content files
                 try {
+                    const mergeStart = performance.now();
                     if (files && files.length > 2) {
-                        let mergeFiles = files.map((file) => file.replace(`./PDF/Letter/order/${thinName}/`, ''))
-                        const opts = {
-                            maxBuffer: 100000000, //100 MB
-                            maxHeap: '3G',
-                            cwd: `./PDF/Letter/order/${thinName}`
+                        const pdfMerger = new PDFMerger();
+                        for (let i = 0, n = files.length; i < n; i += 1) {
+                            pdfMerger.add(files[i]);
                         }
-                        await merge(mergeFiles, `../../Finished/${zipFilename}/Full.pdf`, opts);
+                        await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
                         if (hasCoverpage) {
-                            await merge(mergeFiles.slice(0, 10), `../../Finished/${zipFilename}/Preview.pdf`, opts);
-                            mergeFiles.shift();
-                            files.shift();
-                            await merge(mergeFiles, `../../Finished/${zipFilename}/Publication/Content.pdf`, opts);
+                            for (let i = 0, n = 10; i < n; i += 1) {
+                                pdfMerger.add(files[i]);
+                            }
+                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Preview.pdf`);
+                            for (let i = 1, n = files.length; i < n; i += 1) {
+                                pdfMerger.add(files[i]);
+                            }
+                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
                         }
-                    }
-                    else {
+                    } else {
                         await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
                         if (hasCoverpage) {
                             await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
                         }
                     }
-                    console.log(`Done Merging${options.index ? ` [${options.index}]` : ''}`);
+                    const mergeEnd = performance.now();
+                    const mergeSeconds = (mergeEnd - mergeStart) / 1000;
+                    console.log(`Done Merging${options.index ? ` [${options.index}]` : ''} (${mergeSeconds.toFixed(2)}s)`);
                 } catch (e) {
                     console.error(`Merge Failed ${zipFilename}${options.index ? ` [${options.index}]` : ''}`);
                     console.error(e);
                     failed = true;
                 }
                 
-                //Publication covers
-                if (!failed && await fs.exists(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`)) {
-                    let dataBuffer = await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
-                    let lulu = await pdf(dataBuffer);
-                    numPages = lulu.numpages;
-                    console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
-                    filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
-                    await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
-                    if (lulu.numpages >= 32) {
-                        filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
-                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
-                    }
-                    else {
-                        let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
-                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
-                    }
-                    if (lulu.numpages >= 24) {
+                // Publication covers
+                try {
+                    if (!failed && await fs.exists(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`)) {
+                        let dataBuffer = await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
+                        let lulu = await pdf(dataBuffer);
+                        numPages = lulu.numpages;
+                        console.log(`Got numpages${options.index ? ` [${options.index}]` : ''} ${lulu.numpages}`);
+                        filename = `Cover/${await getCover(current, lulu.numpages)}.pdf`;
+                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Amazon.pdf`);
+                        if (lulu.numpages >= 32) {
+                            filename = `Cover/${await getCover(current, lulu.numpages, {hasExtraPadding: true})}.pdf`;
+                            await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_PerfectBound.pdf`);
+                        }
+                        else {
+                            let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 32 for Perfect Bound. Please use one of the other bindings or increase the number of pages`;
+                            await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_PerfectBound.txt`, notice);
+                        }
+                        if (lulu.numpages >= 24) {
+                            filename = `Cover/${await getCover(current, lulu.numpages, {
+                                hasExtraPadding: true,
+                                isHardcover: true
+                            })}.pdf`;
+                            await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+                        }
+                        else {
+                            let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
+                            await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
+                        }
                         filename = `Cover/${await getCover(current, lulu.numpages, {
                             hasExtraPadding: true,
-                            isHardcover: true
+                            thin: true
                         })}.pdf`;
-                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_Casewrap.pdf`);
+                        await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
                     }
-                    else {
-                        let notice = `Your LibreText of ${lulu.numpages} is below the minimum of 24 for Casewrap. Please use one of the other bindings or increase the number of pages`;
-                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Casewrap.txt`, notice);
-                    }
-                    filename = `Cover/${await getCover(current, lulu.numpages, {
-                        hasExtraPadding: true,
-                        thin: true
-                    })}.pdf`;
-                    await fs.copy(`./PDF/Letter/${filename}`, `./PDF/Letter/Finished/${zipFilename}/Publication/Cover_CoilBound.pdf`);
+                } catch (e) {
+                    console.error(`Error creating publication covers ${zipFilename}`);
+                    console.error(e);
                 }
+
                 //save log of private pages
-                if (hasCoverpage && privatePages.length) {
-                    await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
+                try {
+                    if (hasCoverpage && privatePages.length) {
+                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Notice_Private_Pages.txt`, privatePages.join('\n'));
+                    }
+                } catch (e) {
+                    console.error(`Error saving log of private pages ${zipFilename}`);
+                    console.error(e);
                 }
-                
-                //creating zip files
-                if (hasCoverpage) {
-                    console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
-                    let individualZIP = new JSZip();
-                    let PublicationZIP = new JSZip();
-                    files = await fs.readdir('./PDF/Letter/libretexts/' + zipFilename);
-                    for (let i = 0; i < files.length; i++) {
-                        individualZIP.file(files[i], await fs.readFile(`./PDF/Letter/libretexts/${zipFilename}/${files[i]}`));
+
+                // creating zip files
+                try {
+                    if (hasCoverpage) {
+                        console.log(`Zipping${options.index ? ` [${options.index}]` : ''}`);
+                        let individualZIP = new JSZip();
+                        let PublicationZIP = new JSZip();
+                        files = await fs.readdir('./PDF/Letter/libretexts/' + zipFilename);
+                        for (let i = 0; i < files.length; i++) {
+                            individualZIP.file(files[i], await fs.readFile(`./PDF/Letter/libretexts/${zipFilename}/${files[i]}`));
+                        }
+                        files = await fs.readdir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
+                        for (let i = 0; i < files.length; i++) {
+                            PublicationZIP.file(files[i], await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/${files[i]}`));
+                        }
+                        
+                        
+                        await saveAs(individualZIP, `./PDF/Letter/Finished/${zipFilename}/Individual.zip`);
+                        await saveAs(PublicationZIP, `./PDF/Letter/Finished/${zipFilename}/Publication.zip`);
+                        
+                        
+                        async function saveAs(zip, destination) {
+                            let result = await zip.generateAsync({type: "nodebuffer"});
+                            await fs.writeFile(destination, result);
+                        }
+                        
+                        if (failed) {
+                            console.error(`Merge Failed, clearing cache${options.index ? ` [${options.index}]` : ''}`);
+                            await async.mapLimit(originalFiles, 10, async (filename) => {
+                                await fs.remove(`./PDF/Letter/${filename}`);
+                                await fs.remove(`./PDF/Letter/Margin/${filename}`);
+                            });
+                            console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
+                        }
                     }
-                    files = await fs.readdir(`./PDF/Letter/Finished/${zipFilename}/Publication`);
-                    for (let i = 0; i < files.length; i++) {
-                        PublicationZIP.file(files[i], await fs.readFile(`./PDF/Letter/Finished/${zipFilename}/Publication/${files[i]}`));
-                    }
-                    
-                    
-                    await saveAs(individualZIP, `./PDF/Letter/Finished/${zipFilename}/Individual.zip`);
-                    await saveAs(PublicationZIP, `./PDF/Letter/Finished/${zipFilename}/Publication.zip`);
-                    
-                    
-                    async function saveAs(zip, destination) {
-                        let result = await zip.generateAsync({type: "nodebuffer"});
-                        await fs.writeFile(destination, result);
-                    }
-                    
-                    if (failed) {
-                        console.error(`Merge Failed, clearing cache${options.index ? ` [${options.index}]` : ''}`);
-                        await async.mapLimit(originalFiles, 10, async (filename) => {
-                            await fs.remove(`./PDF/Letter/${filename}`);
-                            await fs.remove(`./PDF/Letter/Margin/${filename}`);
-                        });
-                        console.error(`Cache ${zipFilename} cleared${options.index ? ` [${options.index}]` : ''}`);
-                    }
+                } catch (e) {
+                    console.error(`Error creating zip files ${zipFilename}`);
+                    console.error(e);   
                 }
             }
             const end = performance.now();
@@ -1821,6 +1856,26 @@ puppeteer.launch({
             time = Math.round(time);
             time /= 10;
             console.log(zipFilename, time);
+
+            /* util to check if a variable is a proper Date */
+            function isValidDate(date) {
+                return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date);
+            }
+
+            /* Find the timestamp of the most recent modification */
+            let latestDate = null;
+            updateTimes.forEach((updTime) => {
+                let tempDate = null;
+                if (isValidDate(updTime)) {
+                    tempDate = updTime;
+                } else {
+                    tempDate = new Date(updTime);
+                }
+                if (isValidDate(tempDate) && (latestDate === null || tempDate > latestDate)) {
+                    latestDate = tempDate;
+                }
+            });
+
             if (response && heartbeat)
                 clearInterval(heartbeat);
             if (response && !response.finished)
@@ -1833,7 +1888,7 @@ puppeteer.launch({
             await fs.emptyDir(`./PDF/Letter/libretexts/${zipFilename}`);
             await fs.remove(`./PDF/Letter/order/${thinName}`);
             
-            return {
+            let libretextInfo = {
                 zipFilename: zipFilename,
                 title: current.title,
                 id: topPage.id,
@@ -1842,9 +1897,12 @@ puppeteer.launch({
                 institution: current.companyname,
                 link: current.url,
                 tags: current.tags,
+                summary: current.summary,
                 failed: failed,
                 numPages: numPages,
             };
+            if (isValidDate(latestDate)) libretextInfo.lastModified = latestDate.toISOString();
+            return libretextInfo;
         }
     }
 );

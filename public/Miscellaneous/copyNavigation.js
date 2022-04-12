@@ -7,20 +7,17 @@
             let media = document.getElementsByClassName("elm-social-share")[0];
             media.parentElement.insertBefore(nav, media);
         }
-        remixerOption();
         sandboxOption();
         if (!window.location.hostname.startsWith('query')) {
             propagatorOption();
-            downloadOption();
             copyContentOption(); //Forker
         }
     }
     
     function propagatorOption() {
         const isAdmin = document.getElementById("adminHolder").innerText === "true";
-        const isLibrarySpecific = window.location.href.includes('LibrarySpecific');
         const libraryHeader = window.location.href.endsWith('Template:Custom/Views/Header');
-        if (isAdmin && !isLibrarySpecific && !libraryHeader) {
+        if (isAdmin && !libraryHeader) {
             let copy = document.getElementsByClassName("mt-user-menu-copy-page");
             if (copy.length) {
                 let original = document.getElementsByClassName("mt-user-menu-copy-page")[0];
@@ -41,8 +38,9 @@
     }
     
     async function askPropagator() {
-        if (confirm(`Propagate ${window.location.href} to the other libraries?`)) {
-            let url = window.location.href;
+        const [subdomain, path] = LibreTexts.parseURL();
+        let url = `https://${subdomain}.libretexts.org/${path}`;
+        if (confirm(`Propagate ${url} to the other libraries?`)) {
             const subdomain = url.split("/")[2].split(".")[0];
             //Disabled for careered
             let otherArray = ["bio", "biz", "chem", "eng", "espanol", "geo", "human", "math", "med", "phys", "socialsci", "stats", "workforce"];
@@ -61,113 +59,6 @@
                     alert('Propagation successful');
                 }
             }
-        }
-    }
-    
-    function remixerOption() {
-        let targetName = "mt-new-page";
-        let copy = document.getElementsByClassName(targetName);
-        if (!copy.length) {
-            targetName = 'mt-site-tools';
-            copy = document.getElementsByClassName(targetName);
-        }
-        if (!copy.length) {
-            targetName = 'mt-user-menu-user';
-            copy = document.getElementsByClassName(targetName);
-        }
-        if (copy.length) {
-            let original = document.getElementsByClassName(targetName)[0];
-            copy = original.cloneNode(true);
-            copy.classList.remove("mt-new-page");
-            copy.classList.remove("mt-site-tools");
-            copy.classList.remove("mt-user-menu-user");
-            let copyTarget = copy.getElementsByTagName("a")[0];
-            copyTarget.href = window.location.origin + "/Under_Construction/Development_Details/OER_Remixer";
-            copyTarget.addEventListener('click', () => {
-                localStorage.setItem('RemixerLastText', JSON.stringify({
-                    title: document.getElementById('titleHolder').innerText,
-                    url: window.location.href
-                }));
-            })
-            copyTarget.innerText = "Remixer";
-            if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
-                copyTarget.id = "RemixerIcon";
-            
-            copyTarget.classList.add("mt-icon-tree");
-            copyTarget.classList.remove("mt-icon-new-page");
-            copyTarget.classList.remove("mt-icon-site-tools");
-            copyTarget.classList.remove("mt-icon-site-tools");
-            copyTarget.classList.remove("mt-icon-quick-sign-in");
-            copyTarget.classList.remove("mt-toggle-right");
-            copyTarget.setAttribute("target", "_blank");
-            copyTarget.title = "Remix a new LibreText";
-            let target;
-            switch (targetName) {
-                case 'mt-site-tools':
-                    target = original;
-                    break;
-                case 'mt-new-page':
-                    target = original.nextSibling;
-                    break;
-                case 'mt-user-menu-user':
-                    target = original.previousSibling.previousSibling;
-                    break;
-            }
-            original.parentNode.insertBefore(copy, target)
-        }
-        if (window.location.href.endsWith('OER_Remixer')) {
-            const groups = document.getElementById("groupHolder").innerText;
-            const isAdmin = document.getElementById("adminHolder").innerText === 'true';
-            if (!isAdmin) {
-                $('.mt-edit-page, .mt-new-page, .mt-page-options').remove();
-            }
-        }
-    }
-    
-    function downloadOption() {
-        let targetName = "mt-new-page";
-        let copy = document.getElementsByClassName(targetName);
-        if (!copy.length) {
-            targetName = 'mt-site-tools';
-            copy = document.getElementsByClassName(targetName);
-        }
-        if (!copy.length) {
-            targetName = 'mt-user-menu-user';
-            copy = document.getElementsByClassName(targetName);
-        }
-        if (copy.length) {
-            let original = document.getElementsByClassName(targetName)[0];
-            copy = original.cloneNode(true);
-            copy.classList.remove("mt-new-page");
-            copy.classList.remove("mt-site-tools");
-            copy.classList.remove("mt-user-menu-user");
-            let copyTarget = copy.getElementsByTagName("a")[0];
-            copyTarget.href = window.location.origin + "/Courses/Remixer_University/Download_Center";
-            copyTarget.innerText = "Downloads";
-            if (Array.from(copyTarget.classList).includes('mt-icon-quick-sign-in'))
-                copyTarget.id = "DownloadIcon";
-            
-            copyTarget.classList.add("mt-icon-download");
-            copyTarget.classList.remove("mt-icon-new-page");
-            copyTarget.classList.remove("mt-icon-site-tools");
-            copyTarget.classList.remove("mt-icon-site-tools");
-            copyTarget.classList.remove("mt-icon-quick-sign-in");
-            copyTarget.classList.remove("mt-toggle-right");
-            copyTarget.setAttribute("target", "_blank");
-            copyTarget.title = "Go to the Download Center";
-            let target;
-            switch (targetName) {
-                case 'mt-site-tools':
-                    target = original;
-                    break;
-                case 'mt-new-page':
-                    target = original.nextSibling;
-                    break;
-                case 'mt-user-menu-user':
-                    target = original.previousSibling.previousSibling;
-                    break;
-            }
-            original.parentNode.insertBefore(copy, target)
         }
     }
     

@@ -10,8 +10,13 @@ export default function Tools(props) {
     return (<List>
             <IconLink title="ADAPT Homework System" icon="mt-icon-pencil2" href="https://adapt.libretexts.org/"/>
             <IconLink title="Jupyter Hub" icon="mt-icon-archive" href="https://jupyter.libretexts.org/hub/login"/>
-            <IconLink title="OER Remixer" icon="mt-icon-tree"
-                      href="/Under_Construction/Development_Details/OER_Remixer"/>
+            <IconLink title="OER Remixer" icon="mt-icon-tree" onClick={() => {
+                localStorage.setItem('RemixerLastText', JSON.stringify({
+                    title: document.getElementById('titleHolder').innerText,
+                    url: window.location.href
+                }));
+                window.location.assign("/Under_Construction/Development_Details/OER_Remixer");
+            }}/>
             <IconLink title="LibreCommons" icon="mt-icon-support-hands" href="https://commons.libretexts.org"/>
             <IconLink title="Page Citation" icon="mt-icon-quote" onClick={() => {
                 buildcite();
@@ -23,11 +28,18 @@ export default function Tools(props) {
             }}/>
             <IconLink title="Get Page Contents" icon="mt-icon-edit-page"
                       href={`/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder')?.innerText}`}/>
+            <IconLink title="View Licensing Report" icon="mt-icon-list3" onClick={() => {
+                viewLicensingReport();
+                props.toggleDrawer(false)();
+            }} />
+            <IconLink title="Download Licensing Report (PDF)" icon="mt-icon-download3" onClick={() => {
+                downloadLicensingReport();
+                props.toggleDrawer(false)();
+            }} />
             <AutoAttribution/>
-	    <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
-		 event.preventDefault();
-		saveBookmark();
-	    }}>
+            <IconLink title="Bookmark Page" icon="mt-icon-bookmark" onClick={() => {
+                saveBookmark();
+            }}>
 		<div id="bm-list">
 		</div>
 	    </IconLink>
@@ -84,6 +96,49 @@ export default function Tools(props) {
                     </div>
                 </div>*/
 }
+
+
+async function viewLicensingReport() {
+    let coverpage = await LibreTexts.getCoverpage(window.location.href);
+    let foundCLR = false;
+    if (typeof(coverpage) !== undefined) {
+        let subpages = await LibreTexts.getSubpages(`${window.location.protocol}//${window.location.hostname}/${coverpage}`);
+        if (subpages.children && Array.isArray(subpages.children)) {
+            let frontMatter = subpages.children.find(item => typeof(item.title) === 'string' && item.title.includes('Front Matter'));
+            if (frontMatter !== undefined && frontMatter.children && Array.isArray(frontMatter.children)) {
+                let clr = frontMatter.children.find(item => typeof(item.title) === 'string' && item.title.includes('Licensing'));
+                if (clr !== undefined && clr.url !== undefined) {
+                    foundCLR = true;
+                    window.open(clr.url, '_blank', 'noopener noreferrer');
+                }
+            }
+        }
+    }
+    if (!foundCLR) alert("Sorry, a Licensing Report isn't available for this content.");
+}
+
+async function downloadLicensingReport() {
+    let coverpage = await LibreTexts.getCoverpage(window.location.href);
+    let foundCLR = false;
+    if (typeof(coverpage) !== undefined) {
+        let [subdomain, path] = LibreTexts.parseURL(`${window.location.protocol}//${window.location.hostname}/${coverpage}`);
+        let filesList = await LibreTexts.authenticatedFetch(path, 'files?dream.out.format=json', subdomain, {
+            method: 'GET'
+        });
+        if (filesList.ok) {
+            let filesJSON = await filesList.json();
+            if (filesJSON.file && Array.isArray(filesJSON.file)) {
+                let clr = filesJSON.file.find(item => typeof(item.filename) === 'string' && item.filename === 'content-licensing-report.pdf');
+                if (clr !== undefined && clr.contents && clr.contents['@href']) {
+                    foundCLR = true;
+                    window.open(clr.contents['@href'], '_blank', 'noopener noreferrer');
+                }
+            }
+        }
+    }
+    if (!foundCLR) alert("Sorry, a Licensing Report isn't available for this content."); 
+}
+
 
 function AutoAttribution(props) {
     const [active, setActive] = React.useState(false);

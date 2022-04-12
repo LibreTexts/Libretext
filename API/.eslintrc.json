@@ -1,0 +1,27 @@
+{
+    "root": true,
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb",
+        "plugin:jsdoc/recommended"
+    ],
+    "globals": {
+        "LibreTexts": "readonly"
+    },
+    "ignorePatterns": [
+        "*.min.js"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "jsdoc"
+    ],
+    "rules": {
+        "no-console": "off"
+    }
+}

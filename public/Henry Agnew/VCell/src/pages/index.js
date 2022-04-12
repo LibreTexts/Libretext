@@ -16,7 +16,7 @@ import {SnackbarProvider, useSnackbar} from 'notistack';
 
 const AVOGADRO = 6.02214076E23;
 //TODO fix CORS issue. Currently using a proxy
-const API_ENDPOINT = `https://run.api.biosimulations.dev`;
+const API_ENDPOINT = `https://api.biosimulations.org`;
 
 /*
 This code injects your React code into the webpage.
@@ -35,7 +35,8 @@ function VCellReactHook(props) {
     const [omex, setOmex] = React.useState();
     const [omexFile, setOmexFile] = React.useState(dataset.omex);
     const [species, setSpecies] = React.useState([]);
-    const [jobID, setJobID] = React.useState();
+    const [jobID, setJobID] = React.useState(dataset.prevjobid?.trim() || undefined);
+    const [prevJob, clearPrevJob] = React.useState(Boolean(dataset.prevjobid));
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
     function updateSpecies(event, key) {
@@ -111,11 +112,12 @@ function VCellReactHook(props) {
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
         // console.log(filename);
-        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "7.3.0.07"};
+        //TODO: Use https://api.biosimulators.org/simulators/vcell/latest?includeTests=false to get latest version
+        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "latest"};
         formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
         formData.append('simulationRun', JSON.stringify(runMetadata));
         
-        let response = await fetch(`${API_ENDPOINT}/run`, {
+        let response = await fetch(`${API_ENDPOINT}/runs`, {
             method: 'POST',
             body: formData
         });
@@ -124,6 +126,8 @@ function VCellReactHook(props) {
             enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
                 variant: 'success',
             });
+            clearPrevJob(undefined);
+            console.log(`JOB ID: ${response.id}`);
             setJobID(response.id);
         }
         else {
@@ -137,6 +141,7 @@ function VCellReactHook(props) {
     
     //primary render method
     //TODO: Make flex more mobile-friendly
+    //TODO: add attributions for VCell and run.biosimulators.org
     return (
         <div id="biosimulation-render-container" style={{display: 'flex'}}>
             <div style={{flex: 1}}>
@@ -161,7 +166,7 @@ function VCellReactHook(props) {
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
             </div>
             <div style={{flex: 2}}>
-                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} />
+                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} />
             </div>
         </div>
     );
