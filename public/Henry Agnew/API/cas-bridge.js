@@ -26,19 +26,19 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.log(login, payload);
         
         if (login) {
-            $target.replaceWith(`<li><a class="icon-SSO sso-user" title="Logout ${payload.user}" onclick="logoutCAS(event)" style="cursor: pointer; margin: 0">${payload.name}</a></li>`)
+            $target.replaceWith(`<li><a tabindex="0" class="icon-SSO sso-user" title="Logout ${payload.user}" onclick="logoutCAS(event)" style="cursor: pointer; margin: 0">${payload.name}</a></li>`)
             $('.elm-header-user-nav').addClass('authenticated-sso');
             
             const $instructor = $('.mt-icon-quick-sign-in');
             const loginLink = document.getElementById('ssoHolder').innerText;
-            $instructor.replaceWith(`<a id="SSOInstructorIcon" class="mt-icon-quick-sign-in mt-dropdown-link mt-toggle-right" href="${loginLink}" title="Instructor Mode">Instructor Mode</a>`)
+            $instructor.replaceWith(`<a tabindex="0" id="SSOInstructorIcon" class="mt-icon-quick-sign-in mt-dropdown-link mt-toggle-right" href="${loginLink}" title="Instructor Mode">Instructor Mode</a>`)
             
             return;
         }
     }
     
     if ($target) {
-        $target.before(`<li><a class="icon-SSO" title="Single Sign-On" onclick="loginCAS(event)"/></li>`)
+        $target.before(`<li><a tabindex="0" class="icon-SSO" title="Single Sign-On" onclick="loginCAS(event)"/></li>`)
     }
 });
 
