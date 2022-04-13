@@ -908,9 +908,9 @@ puppeteer.launch({
                 pageType = 'Chapter Overview';
               }
               const pageTitle = document.querySelector('#title');
-              pageTitle.setAttribute('style', 'border-bottom: none !important');
-              const pageTitleParent = pageTitle.parentNode;
+              const pageTitleParent = pageTitle?.parentNode;
               if (pageTitle !== null && pageTitleParent !== null) {
+                pageTitle.setAttribute('style', 'border-bottom: none !important');
                 const newTitle = document.createElement('h1');
                 newTitle.appendChild(document.createTextNode(pageType));
                 newTitle.id = 'libre-print-directory-header';
