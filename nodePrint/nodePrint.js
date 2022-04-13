@@ -894,17 +894,17 @@ puppeteer.launch({
           return result;
       }
 
-        async function processDirectoryPage(currentPage, listing) {
+        async function processDirectoryPage(title, tags, listing) {
           let directory = document.querySelector('.mt-guide-content, .mt-category-container');
           if (directory !== null && listing !== null) {
             const newDirectory = document.createElement('div');
             newDirectory.innerHTML = listing;
             directory.replaceWith(newDirectory);
-            if (Array.isArray(currentPage?.tags)) {
+            if (Array.isArray(tags)) {
               let pageType = 'Section Overview';
-              if (currentPage.tags.includes('coverpage:yes') || currentPage.title?.includes('Table of Contents')) {
+              if (tags.includes('coverpage:yes') || title?.includes('Table of Contents')) {
                 pageType = 'Table of Contents';
-              } else if (currentPage.tags.includes('article:topic-guide')) {
+              } else if (tags.includes('article:topic-guide')) {
                 pageType = 'Chapter Overview';
               }
               const pageTitle = document.querySelector('#title');
@@ -994,7 +994,7 @@ puppeteer.launch({
           try {
             await page.evaluate(eagerImageLoader);
             await sleep(1000);
-            await page.evaluate(processDirectoryPage, current, listing);
+            await page.evaluate(processDirectoryPage, current.title, current.tags, listing);
             await sleep(1000);
           } catch (err) {
             console.error(err);
@@ -1262,7 +1262,7 @@ puppeteer.launch({
                     await sleep(1000);
 
                     const listing = await getLevel(current);
-                    await page.evaluate(processDirectoryPage, current, null, listing);
+                    await page.evaluate(processDirectoryPage, current.title, current.tags, listing);
                     await sleep(1000);
                     
                     const out = await page.evaluate(function (url) {
