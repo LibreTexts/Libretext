@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^3.2.0",
+    "async": "^3.2.2",
     "console-timestamp": "^0.3.0",
     "filenamify": "^2.0.0",
     "find-remove": "^1.2.2",
