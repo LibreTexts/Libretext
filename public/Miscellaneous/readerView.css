@@ -1,0 +1,54 @@
+/* Hide header if in iframe*/
+.readerView .elm-header,
+.readerView .elm-meta-icons,
+.readerView div.annotator-frame,
+.adaptView .elm-footer,
+.adaptView article#elm-main-content > header,
+.readerView #custom_open,
+.readerView .sbHeader {
+  display: none;
+}
+
+.readerView #mt-summary {
+  display: none !important;
+}
+
+/* Hide page meta data (print pdf, cite, CC icons, etc.) */
+.readerView .elm-meta-top {
+  display: none;
+}
+
+/* Hide footer feedback **/
+.readerView .elm-article-feedback {
+  display: none;
+}
+
+
+/**
+* Layout
+*/
+
+/* .readerView .elm-content-container,
+.readerView .special-search .elm-content-container {
+  max-width: 1280px;
+  min-width: unset;
+  font-size: 1.5em;
+  padding: 1em;
+} */
+
+
+
+/**
+* Typography
+*/
+.readerView h1#title {
+  color: black;
+  font-weight: 600;
+  margin: 0 !important;
+  padding: 0.75em 0;
+  border-bottom: 0;
+}
+.readerView section.mt-content-container > p {
+  font-size: 1.4em!important;
+  margin-bottom: 1.4em;
+}

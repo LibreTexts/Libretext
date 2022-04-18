@@ -160,6 +160,16 @@
     document.addEventListener('DOMContentLoaded', fn);
     
     //hide headers if within an iframe
+    if (window !== window.top || window.location.href.includes("readerView") || window.location.href.includes("readerView")) {
+        document.body.classList.add("readerView");
+        let pageLinks = document.querySelectorAll("a");
+        pageLinks.forEach(function(el){
+            if (el.href.includes("libretexts.org")){
+              el.href += "?readerView";
+            }
+        console.log(el.href);
+        })
+    }
     if (window !== window.top || window.location.href.includes("contentOnly") || window.location.href.includes("onlyContent")) {
         document.body.classList.add("contentOnly");
     }
