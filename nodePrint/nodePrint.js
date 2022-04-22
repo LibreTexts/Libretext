@@ -919,6 +919,7 @@ puppeteer.launch({
                 typeContainer.id = 'libre-print-directory-header-container';
                 typeContainer.appendChild(newTitle);
                 pageTitleParent.insertBefore(typeContainer, pageTitle);
+                if (pageType === 'Table of Contents') pageTitle.remove();
               }
             }
             return true;
