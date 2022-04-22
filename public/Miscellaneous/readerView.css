@@ -37,6 +37,7 @@ body.readerView {
 .readerView article.elm-content-container {
   background: white;
   max-width: 1000px;
+  min-width: unset !important;
   padding: 1em 2em;
 }
 
