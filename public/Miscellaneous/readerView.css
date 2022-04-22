@@ -31,14 +31,14 @@
 * Layout
 */
 
-/* .readerView .elm-content-container,
-.readerView .special-search .elm-content-container {
-  max-width: 1280px;
-  min-width: unset;
-  font-size: 1.5em;
-  padding: 1em;
-} */
-
+body.readerView {
+  background-color: #fbfbff;
+}
+.readerView article.elm-content-container {
+  background: white;
+  max-width: 1000px;
+  padding: 1em 2em;
+}
 
 
 /**
@@ -62,8 +62,26 @@
   color: #333;
   font-weight: 700;
 }
+.readerView h4 {
+  font-size: 1rem!important;
+  color: black;
+  font-weight: 700;
+}
+
+.readerView h5 {
+  font-size: 1rem!important;
+  color: black;
+  font-style: italic;
+  font-weight: 600;
+  color: #333;
+}
+
 .readerView section.mt-content-container p {
   font-size: 1.1em!important;
+  margin-bottom: 1.4em;
+}
+
+.readerView section.mt-content-container li {
   margin-bottom: 1.4em;
 }
 
@@ -75,4 +93,12 @@
 .readerView figcaption {
   font-size: 1.1em !important;
   padding: 1em !important;
+}
+
+.readerView .MathJax_Display {
+  padding: 1em 0;
+}
+
+.readerView table.mt-responsive-table {
+  margin: 2em 0;
 }
