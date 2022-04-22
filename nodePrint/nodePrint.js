@@ -866,7 +866,7 @@ puppeteer.launch({
                   let child = current.subpages[i];
                   if ((child.title === 'Front Matter' || child.title === 'Back Matter') && (!child.subpages || !child.subpages.length)) {
                       // skip since empty
-                  } else if (child.title === 'Front Matter' || child.title === 'Front Matter') {
+                  } else if (child.title === 'Front Matter') {
                       let tempChildren = child.subpages;
                       tempChildren = tempChildren.filter(subpage => !['TitlePage', 'InfoPage', 'Table of Contents'].includes(subpage.title));
                       pages = pages.concat(tempChildren)
