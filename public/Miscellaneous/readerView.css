@@ -13,6 +13,11 @@
   display: none !important;
 }
 
+/* Hide author byline **/
+.readerView article.elm-content-container .mt-content-header {
+  display: none;
+}
+
 /* Hide page meta data (print pdf, cite, CC icons, etc.) */
 .readerView .elm-meta-top {
   display: none;
@@ -48,7 +53,28 @@
   padding: 0.75em 0;
   border-bottom: 0;
 }
-.readerView section.mt-content-container > p {
-  font-size: 1.4em!important;
+.readerView h2 {
+  font-size: 1.4em !important;
+  color: black;
+  margin: 0 !important;
+  padding: 1em 0 0.5em;
+}
+.readerView h3 {
+  font-size: 1.25rem!important;
+  color: #333;
+  font-weight: 700;
+}
+.readerView section.mt-content-container p {
+  font-size: 1.1em!important;
   margin-bottom: 1.4em;
+}
+
+.readerView figure {
+  margin: 0 !important;
+  padding: 2em 0;
+}
+
+.readerView figcaption {
+  font-size: 1.1em !important;
+  padding: 1em !important;
 }
