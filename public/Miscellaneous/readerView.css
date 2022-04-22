@@ -2,8 +2,8 @@
 .readerView .elm-header,
 .readerView .elm-meta-icons,
 .readerView div.annotator-frame,
-.adaptView .elm-footer,
-.adaptView article#elm-main-content > header,
+.readerView .elm-footer,
+.readerView article#elm-main-content > header,
 .readerView #custom_open,
 .readerView .sbHeader {
   display: none;
