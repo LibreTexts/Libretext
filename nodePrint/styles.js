@@ -35,14 +35,30 @@ const tocStyles = `
   .indent4 {
     margin-left: 30px !important;
   }
+  .libre-print-directory {
+    margin: 0;
+    padding: 0 0 2%;
+  }
   .libre-print-list {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     font-size: 12px;
   }
   .libre-print-list li {
-    padding-bottom: 5px;
+    padding-bottom: 2px;
+  }
+  .libre-print-sublisting0 {
+    padding-bottom: 8px;
+  }
+  .libre-print-sublisting1 {
+    padding-bottom: 4px;
+  }
+  .libre-print-sublisting2 {
+    padding-bottom: 2px;
+  }
+  .libre-print-list h2::before {
+    content: none !important; // MT default styling
   }
 `;
 

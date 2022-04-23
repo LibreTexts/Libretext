@@ -83,10 +83,11 @@ puppeteer.launch({
         Gserver = server;
 
         const viewportSettings = { width: 975, height: 1000 };
+        const pptrPageTimeout = 60000;
         const pptrPageLoadSettings = {
-          timeout: 60000,
+          timeout: pptrPageTimeout,
           waitUntil: ['load', 'domcontentloaded', 'networkidle0']
-        };
+        }
 
         const pptrRequestHandler = (pptrReq) => {
           if (Array.isArray(ignoreList?.list)) {
@@ -737,6 +738,7 @@ puppeteer.launch({
                 width: numPages ? `${getWidth()} in` : '8.5 in',
                 height: numPages ?
                     (options.isHardcover ? '12.75 in' : '11.25 in') : '11 in',
+                timeout: pptrPageTimeout
             });
             
             // console.log(numPages ? getWidth() : '8.5 in', numPages ? (isHardcover ? '12.750 in' : '11.25 in') : '11 in');
@@ -870,6 +872,8 @@ puppeteer.launch({
                       let tempChildren = child.subpages;
                       tempChildren = tempChildren.filter(subpage => !['TitlePage', 'InfoPage', 'Table of Contents'].includes(subpage.title));
                       pages = pages.concat(tempChildren)
+                  } else if (child.title === 'Back Matter') {
+                      pages = pages.concat(child.subpages);
                   } else {
                       pages.push(child);
                   }
@@ -878,18 +882,24 @@ puppeteer.launch({
                   isSubTOC = 'yes';
                   level = 3;
               }
-              const twoColumn = current.tags.includes('columns:two') && current.tags.includes('coverpage:yes') && level === 2;
+              const twoColumn = current.tags?.includes('columns:two') && current.tags?.includes('coverpage:yes') && level === 2;
               const prefix = level === 2 ? 'h2' : 'h';
               // Get subtitles
               let inner = await async.map(pages, async (elem) => {
-                  // elem = await getAPI(elem);
+                  if (!elem.title) elem = await getAPI(elem);
                   if (elem.modified === 'restricted') return ''; // private page 
                   const isSubtopic = level > 2 ? `indent${level - 2}` : null;
-                  return `<li><div class="nobreak ${isSubtopic}"><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}></div>${await getLevel(elem, level + 1, isSubTOC)}</li>`
+                  const subPageDir = await getLevel(elem, level + 1, isSubTOC);
+                  let hasSubpages = false;
+                  if (subPageDir?.length > 0) hasSubpages = true;
+                  const subListSpacing = hasSubpages ? `libre-print-sublisting${level - 2}` : '';
+                  if (elem.url && elem.title) {
+                    return `<li><div class="nobreak ${isSubtopic} ${subListSpacing}"><${prefix}><a href="${elem.url}">${elem.title}</a></${prefix}></div>${subPageDir}</li>`;
+                  }
+                  return '';
               });
               inner = inner.join('');
-              
-              result = `<ul class='libre-print-list' ${twoColumn ? 'style="column-count: 2"' : ''}>${inner}</ul>`;
+              result = `<ul class='libre-print-list' ${twoColumn ? 'style="column-count: 2;"' : ''}>${inner}</ul>`;
           }
           return result;
       }
@@ -899,6 +909,7 @@ puppeteer.launch({
           if (directory !== null && listing !== null) {
             const newDirectory = document.createElement('div');
             newDirectory.innerHTML = listing;
+            newDirectory.classList.add('libre-print-directory');
             directory.replaceWith(newDirectory);
             if (Array.isArray(tags)) {
               let pageType = 'Section Overview';
@@ -1018,7 +1029,8 @@ puppeteer.launch({
               headerTemplate: generatePDFHeader(baseIMG["default"]),
               footerTemplate: generatePDFFooter(color, null, null, prefix),
               printBackground: true,
-              preferCSSPageSize: true
+              preferCSSPageSize: true,
+              timeout: pptrPageTimeout
           });
           const end = performance.now();
           let time = end - start;
@@ -1320,7 +1332,8 @@ puppeteer.launch({
                             headerTemplate: generatePDFHeader(baseIMG['default']),
                             footerTemplate: generatePDFFooter(color, current, license, prefix),
                             printBackground: true,
-                            preferCSSPageSize: true
+                            preferCSSPageSize: true,
+                            timeout: pptrPageTimeout
                         });
                     } catch (e) {
                         console.error(e);
