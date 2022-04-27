@@ -1,65 +1,342 @@
-const express = require('express');
-const app = express();
-const http = require('http');
-const timestamp = require('console-timestamp');
-const server = http.Server(app);
-const io = require('socket.io')(server, {path: '/bot/ws'});
-const cheerio = require('cheerio');
-const fs = require('fs-extra');
-const fetch = require('node-fetch');
-const jsdiff = require('diff');
-require('colors');
-const async = require('async');
-const LibreTexts = require('./reuse.js');
-const tidy = require("tidy-html5").tidy_html5;
+/**
+ * @file Defines bots for authorized users to perform curation
+ *  activities on LibreTexts libraries.
+ * @author LibreTexts <info@libretexts.org>
+ */
 const { performance } = require('perf_hooks');
+const http = require('http');
+const express = require('express');
+const fs = require('fs-extra');
+const timestamp = require('console-timestamp');
+const socketio = require('socket.io');
+const cheerio = require('cheerio');
+const jsdiff = require('diff');
+const fetch = require('node-fetch');
+const async = require('async');
+const tidy = require('tidy-html5').tidy_html5;
 const filenamify = require('filenamify');
 const puppeteer = require('puppeteer');
+const LibreTexts = require('./reuse');
+
+const app = express();
+const server = http.Server(app);
+const io = socketio(server, {
+  path: '/bot/ws',
+  cors: {
+    origin: /libretexts\.org$/,
+    methods: ['GET'],
+  },
+});
 const basePath = '/bot';
 let port = 3006;
-if (process.argv.length >= 3 && parseInt(process.argv[2])) {
-    port = parseInt(process.argv[2]);
+if (process.argv.length >= 3 && parseInt(process.argv[2], 10)) {
+  port = parseInt(process.argv[2], 10);
 }
-const now1 = new Date();
+
+/* Setup log directories */
 fs.emptyDir('BotLogs/Working');
 fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
-server.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} on port ${port}`));
 
-app.use((req, res, next) => {
-    if (!req.get('Referer')?.endsWith('libretexts.org/')) {
-        res.status(401);
-        next(`Unauthorized ${req.get('x-forwarded-for')}`)
+async function jobHandler(jobType, jobInput, socket) {
+  let input = jobInput;
+  function verifyParameters() {
+    switch (jobType) {
+      case 'findReplace':
+        return input.root && input.user && input.find;
+      case 'deadLinks':
+      case 'headerFix':
+      case 'foreignImage':
+      case 'convertContainers':
+      case 'licenseReport':
+        return input.root && input.user;
+      case 'multipreset':
+        return input.root && input.multi;
+      default:
+        return input.root;
     }
-    next()
-});
+  }
+
+  function getParameters() {
+    switch (jobType) {
+      case 'findReplace':
+        return {
+          root: input.root,
+          user: input.user,
+          find: input.find,
+          replace: input.replace,
+        };
+      case 'deadLinks':
+      case 'headerFix':
+      case 'foreignImage':
+      case 'convertContainers':
+        return { root: input.root, user: input.user };
+      case 'licenseReport':
+        return {
+          root: input.root,
+          user: input.user,
+          createReportPage: input.createReportPage,
+          generateReportPDF: input.generateReportPDF,
+        };
+      case 'multipreset':
+        return { root: input.root, multi: input.multi };
+      default:
+        return { root: input.root };
+    }
+  }
+
+  function parallelCount() {
+    if (input.root.endsWith('.libretexts.org') || input.root.endsWith('.libretexts.org/')) {
+      return 2;
+    }
+    switch (jobType) {
+      case 'foreignImage':
+        return 2;
+      case 'findReplace':
+      case 'deadLinks':
+      case 'headerFix':
+      case 'convertContainers':
+      case 'multipreset':
+      case 'licenseReport':
+        return 5;
+      default:
+        return 1;
+    }
+  }
+
+  if (!verifyParameters()) {
+    socket.emit('Body missing parameters');
+    return;
+  }
+  input = {
+    ...input,
+    root: input.root.replace(/\/$/, ''),
+    subdomain: LibreTexts.extractSubdomain(input.root),
+    jobType,
+  };
+  const ID = await logStart(input, input.findOnly);
+  socket.emit('setState', { state: 'starting', ID });
+  console.log(`JOB [${ID}](${input.user}) ${jobType} ${jobType === 'findReplace' ? input.find : ''}`);
+
+  if (jobType === 'licenseReport') {
+    // redirect for new licenseReport infrastructure
+    return licenseReport(input, socket, ID);
+  }
+
+  let pages = await LibreTexts.getSubpages(input.root, input.user, { delay: true, socket: socket, flat: true });
+  // pages = LibreTexts.addLinks(await pages);
+  // console.log(pages);
+  let index = 0;
+  let percentage = 0;
+  let log = [];
+  let backlog = [];
+  let pageSummaryCount = 0;
+  let backlogClearer = setInterval(clearBacklog, 1000);
+  let result = {
+    user: input.user,
+    subdomain: input.subdomain,
+    ID: ID,
+    jobType: input.jobType,
+    params: getParameters(),
+    pages: log,
+  };
+
+  async function clearBacklog() {
+    if (backlog.length) {
+      result = {
+        user: input.user,
+        subdomain: input.subdomain,
+        ID: ID,
+        jobType: input.jobType,
+        params: getParameters(),
+        pages: log,
+      };
+      await logProgress(result, input.findOnly);
+      socket.emit('pages', backlog);
+      backlog = [];
+    }
+  }
+
+  await async.mapLimit(pages, parallelCount(), async (page) => {
+    index++;
+    let currentPercentage = Math.round(index / pages.length * 100);
+    if (percentage < currentPercentage) {
+      percentage = currentPercentage;
+      socket.volatile.emit('setState', { state: 'processing', percentage: currentPercentage });
+    }
+    let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
+    if (!path)
+      return false;
+    let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit&dream.out.format=json', input.subdomain, input.user);
+    if (!content.ok) {
+      console.error('Could not get content from ' + path);
+      let error = await content.text();
+      console.error(error);
+      socket.emit('errorMessage', {
+        noAlert: true,
+        message: error,
+      });
+      return false;
+    }
+    content = await content.json();
+    content = content.body;
+    // content = LibreTexts.decodeHTML(content);
+    // console.log(content);
+
+    let result = content, comment, jobs = [{ jobType: jobType, ...input }];
+
+    if (jobType === 'multipreset' && input.multi) {
+      jobs = input.multi.body;
+      jobs = jobs.map((j) => {
+        if (j.find) {
+          j.regex = Boolean(j.find.match(/^\/[\s\S]*\/$/));
+          j.jobType = 'findReplace';
+        }
+        return j;
+
+      })
+    }
+
+    for (const job of jobs) {
+      let lastResult = result;
+      switch (job.jobType) {
+        case 'findReplace':
+          result = await findReplace(job, result);
+          comment = `[BOT ${ID}] Replaced "${job.find}" with "${job.replace}"`;
+          break;
+        case 'deadLinks':
+          [result, numLinks] = await deadLinks(job, result);
+          comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
+          break;
+        case 'convertContainers':
+          [result, numContainers] = await convertContainers(job, result);
+          comment = `[BOT ${ID}] Upgraded ${numContainers} Containers`;
+          break;
+        case 'headerFix':
+          result = await headerFix(job, result);
+          comment = `[BOT ${ID}] Fixed Headers`;
+          break;
+        case 'foreignImage':
+          [result, count] = await foreignImage(job, result, path);
+          comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
+          // if (job.findOnly && count)
+          //     result = 'findOnly';
+          break;
+        case 'clean':
+          if (result !== content)
+            result = tidy(result); //{indent:'auto','indent-spaces':4}
+          break;
+        case 'addPageIdentifierClass':
+          // if (result !== content)
+          result = await addPageIdentifierClass(input.subdomain, path, result);
+          break;
+      }
+      if (result && result !== lastResult && comment)
+        console.log(comment);
+      result = result || lastResult;
+    }
+
+    if (jobType === 'multipreset')
+      comment = `[BOT ${ID}] Performed Multipreset ${input.multi.name}`;
+
+    //Page summaries
+    if (input.summaries) {
+      let summary = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview', input.subdomain, input.user);
+      if (summary.ok) {
+        summary = await summary.text();
+        summary = LibreTexts.decodeHTML(summary);
+        let summaryResult = summary.replaceAll(input.find, input.replace, input);
+        // summaryResult = LibreTexts.encodeHTML(summaryResult);
+        if (!input.findOnly)
+          await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
+            method: 'PUT',
+            body: summaryResult,
+          });
+        pageSummaryCount++;
+      }
+    }
+
+    if (!result || result === content)
+      return;
+
+    // result = LibreTexts.encodeHTML(result);
+
+    //send update
+    if (input.findOnly) {
+      let item = { path: path, url: page };
+      backlog.unshift(item);
+      log.push(item);
+      return;
+    }
+    // result = LibreTexts.encodeHTML(result);
+    let response = await LibreTexts.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}`, input.subdomain, input.user, {
+      method: 'POST',
+      body: result,
+    });
+    if (response.ok) {
+      let fetchResult = await response.json();
+      let revision = fetchResult.page['@revision'];
+      // console.log(path, revision);
+      let item = { path: path, revision: revision, url: page };
+      backlog.unshift(item);
+      log.push(item);
+    }
+    else {
+      let error = await response.text();
+      console.error(error);
+      socket.emit('errorMessage', error);
+    }
+  });
+
+  clearInterval(backlogClearer);
+  clearBacklog();
+  result = {
+    user: input.user,
+    subdomain: input.subdomain,
+    ID: ID,
+    jobType: input.jobType,
+    params: getParameters(),
+    pages: log.reverse(),
+  };
+  await logCompleted(result, input.findOnly);
+  if (pageSummaryCount)
+    socket.emit('errorMessage', `${input.findOnly ? 'Found' : 'Changed'} ${pageSummaryCount} Summaries`);
+  socket.emit('setState', { state: 'done', ID: input.findOnly ? null : ID, log: log });
+}
+
+
+
+
 
 app.use(express.json());
-
-app.get(basePath + '/websocketclient', (req, res) => {
-    res.sendFile('node_modules/socket.io-client/dist/socket.io.js', {root: '.'})
+app.use((req, res, next) => {
+  if (!req.get('Referrer')?.endsWith('libretexts.org/')) {
+    res.status(401);
+    return next(`Unauthorized ${req.get('x-forwarded-for')}`);
+  }
+  return next();
+});
+app.use(`${basePath}/Logs/`, express.static('BotLogs'));
+app.post(`${basePath}/revert`, (req, res) => {
+  console.log(req.body);
+  const responseSocket = {
+    emit: (type = '', message = '') => {
+      let result = { type };
+      if (typeof message === 'object') {
+        result = { ...result, ...message };
+      } else {
+        result.message = message;
+      }
+      res.write(JSON.stringify(result));
+    },
+  };
+  revert(req.body, responseSocket).then(() => res.end());
 });
 
-app.use(basePath + '/Logs/', express.static('BotLogs'))
 
-app.post(basePath + '/revert', (req, res) => {
-    console.log(req.body);
-    // res.write(JSON.stringify(req.body));
-    // res.end();
-    const responseSocket = {
-        emit: (type = "", message = "") => {
-            let result = {type: type}
-            if (typeof message === 'object')
-                result = {...result, ...message}
-            else
-                result.message = message
-            res.write(JSON.stringify(result))
-        }
-    }
-    revert(req.body, responseSocket).then(() => {
-        res.end()
-    })
-})
+server.listen(port, () => {
+  console.log(`Restarted ${timestamp('MM/DD hh:mm', new Date())} on port ${port}`);
+});
 
 //Set up Websocket connection using Socket.io
 io.on('connection', function (socket) {
@@ -77,251 +354,7 @@ io.on('connection', function (socket) {
     socket.on('revert', (data) => revert(data, socket));
 });
 
-async function jobHandler(jobType, input, socket) {
-    function verifyParameters() {
-        switch (jobType) {
-            case 'findReplace':
-                return input.root && input.user && input.find;
-            case 'deadLinks':
-            case 'headerFix':
-            case 'foreignImage':
-            case 'convertContainers':
-            case 'licenseReport':
-                return input.root && input.user;
-            case 'multipreset':
-                return input.root && input.multi;
-        }
-    }
 
-    function getParameters() {
-        switch (jobType) {
-            case 'findReplace':
-                return {root: input.root, user: input.user, find: input.find, replace: input.replace};
-            case 'deadLinks':
-            case 'headerFix':
-            case 'foreignImage':
-            case 'convertContainers':
-                return {root: input.root, user: input.user};
-            case 'licenseReport':
-                return {root: input.root, user: input.user, createReportPage: input.createReportPage, generateReportPDF: input.generateReportPDF};
-            case 'multipreset':
-                return {root: input.root, multi: input.multi};
-        }
-    }
-
-    function parallelCount() {
-        if (input.root.endsWith('.libretexts.org') || input.root.endsWith('.libretexts.org/'))
-            return 2;
-
-        switch (jobType) {
-            case 'foreignImage':
-                return 2;
-            case 'findReplace':
-            case 'deadLinks':
-            case 'headerFix':
-            case 'convertContainers':
-            case 'multipreset':
-            case 'licenseReport':
-                return 5;
-        }
-    }
-
-    if (!verifyParameters()) {
-        socket.emit('Body missing parameters');
-        return;
-    }
-    input.root = input.root.replace(/\/$/, '');
-    input.subdomain = LibreTexts.extractSubdomain(input.root);
-    input.jobType = jobType;
-    let ID = await logStart(input, input.findOnly);
-    socket.emit('setState', {state: 'starting', ID: ID});
-    console.log(`JOB [${ID}](${input.user}) ${jobType} ${jobType === 'findReplace' ? input.find : ''}`);
-
-    if (jobType === 'licenseReport') {
-        // redirect for new licenseReport infrastructure
-        return licenseReport(input, socket, ID);
-    }
-
-    let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: true});
-    // pages = LibreTexts.addLinks(await pages);
-    // console.log(pages);
-    let index = 0;
-    let percentage = 0;
-    let log = [];
-    let backlog = [];
-    let pageSummaryCount = 0;
-    let backlogClearer = setInterval(clearBacklog, 1000);
-    let result = {
-        user: input.user,
-        subdomain: input.subdomain,
-        ID: ID,
-        jobType: input.jobType,
-        params: getParameters(),
-        pages: log,
-    };
-
-    async function clearBacklog() {
-        if (backlog.length) {
-            result = {
-                user: input.user,
-                subdomain: input.subdomain,
-                ID: ID,
-                jobType: input.jobType,
-                params: getParameters(),
-                pages: log,
-            };
-            await logProgress(result, input.findOnly);
-            socket.emit('pages', backlog);
-            backlog = [];
-        }
-    }
-
-    await async.mapLimit(pages, parallelCount(), async (page) => {
-        index++;
-        let currentPercentage = Math.round(index / pages.length * 100);
-        if (percentage < currentPercentage) {
-            percentage = currentPercentage;
-            socket.volatile.emit('setState', {state: 'processing', percentage: currentPercentage});
-        }
-        let path = page.replace(`https://${input.subdomain}.libretexts.org/`, '');
-        if (!path)
-            return false;
-        let content = await LibreTexts.authenticatedFetch(path, 'contents?mode=edit&dream.out.format=json', input.subdomain, input.user);
-        if (!content.ok) {
-            console.error('Could not get content from ' + path);
-            let error = await content.text();
-            console.error(error);
-            socket.emit('errorMessage', {
-                noAlert: true,
-                message: error,
-            });
-            return false;
-        }
-        content = await content.json();
-        content = content.body;
-        // content = LibreTexts.decodeHTML(content);
-        // console.log(content);
-
-        let result = content, comment, jobs = [{jobType: jobType, ...input}];
-
-        if (jobType === 'multipreset' && input.multi) {
-            jobs = input.multi.body;
-            jobs = jobs.map((j) => {
-                if (j.find) {
-                    j.regex = Boolean(j.find.match(/^\/[\s\S]*\/$/));
-                    j.jobType = 'findReplace';
-                }
-                return j;
-
-            })
-        }
-
-        for (const job of jobs) {
-            let lastResult = result;
-            switch (job.jobType) {
-                case 'findReplace':
-                    result = await findReplace(job, result);
-                    comment = `[BOT ${ID}] Replaced "${job.find}" with "${job.replace}"`;
-                    break;
-                case 'deadLinks':
-                    [result, numLinks] = await deadLinks(job, result);
-                    comment = `[BOT ${ID}] Killed ${numLinks} Dead links`;
-                    break;
-                case 'convertContainers':
-                    [result, numContainers] = await convertContainers(job, result);
-                    comment = `[BOT ${ID}] Upgraded ${numContainers} Containers`;
-                    break;
-                case 'headerFix':
-                    result = await headerFix(job, result);
-                    comment = `[BOT ${ID}] Fixed Headers`;
-                    break;
-                case 'foreignImage':
-                    [result, count] = await foreignImage(job, result, path);
-                    comment = `[BOT ${ID}] Imported ${count} Foreign Images`;
-                    // if (job.findOnly && count)
-                    //     result = 'findOnly';
-                    break;
-                case 'clean':
-                    if (result !== content)
-                        result = tidy(result); //{indent:'auto','indent-spaces':4}
-                    break;
-                case 'addPageIdentifierClass':
-                    // if (result !== content)
-                    result = await addPageIdentifierClass(input.subdomain, path, result);
-                    break;
-            }
-            if (result && result !== lastResult && comment)
-                console.log(comment);
-            result = result || lastResult;
-        }
-
-        if (jobType === 'multipreset')
-            comment = `[BOT ${ID}] Performed Multipreset ${input.multi.name}`;
-
-        //Page summaries
-        if (input.summaries) {
-            let summary = await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview', input.subdomain, input.user);
-            if (summary.ok) {
-                summary = await summary.text();
-                summary = LibreTexts.decodeHTML(summary);
-                let summaryResult = summary.replaceAll(input.find, input.replace, input);
-                // summaryResult = LibreTexts.encodeHTML(summaryResult);
-                if (!input.findOnly)
-                    await LibreTexts.authenticatedFetch(path, 'properties/mindtouch.page%2523overview?dream.out.format=json&abort=never', input.subdomain, input.user, {
-                        method: 'PUT',
-                        body: summaryResult,
-                    });
-                pageSummaryCount++;
-            }
-        }
-
-        if (!result || result === content)
-            return;
-
-        // result = LibreTexts.encodeHTML(result);
-
-        //send update
-        if (input.findOnly) {
-            let item = {path: path, url: page};
-            backlog.unshift(item);
-            log.push(item);
-            return;
-        }
-        // result = LibreTexts.encodeHTML(result);
-        let response = await LibreTexts.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&comment=${encodeURIComponent(comment)}`, input.subdomain, input.user, {
-            method: 'POST',
-            body: result,
-        });
-        if (response.ok) {
-            let fetchResult = await response.json();
-            let revision = fetchResult.page['@revision'];
-            // console.log(path, revision);
-            let item = {path: path, revision: revision, url: page};
-            backlog.unshift(item);
-            log.push(item);
-        }
-        else {
-            let error = await response.text();
-            console.error(error);
-            socket.emit('errorMessage', error);
-        }
-    });
-
-    clearInterval(backlogClearer);
-    clearBacklog();
-    result = {
-        user: input.user,
-        subdomain: input.subdomain,
-        ID: ID,
-        jobType: input.jobType,
-        params: getParameters(),
-        pages: log.reverse(),
-    };
-    await logCompleted(result, input.findOnly);
-    if (pageSummaryCount)
-        socket.emit('errorMessage', `${input.findOnly ? 'Found' : 'Changed'} ${pageSummaryCount} Summaries`);
-    socket.emit('setState', {state: 'done', ID: input.findOnly ? null : ID, log: log});
-}
 
 async function revert(input, socket) {
     if (!input.ID || !input.user) {

@@ -3,7 +3,13 @@ const timestamp = require("console-timestamp");
 const EPub = require("epub");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
-const io = require('socket.io')(server, {path: '/import/ws'});
+const io = require('socket.io')(server, {
+  path: '/import/ws',
+  cors: {
+    origin: /libretexts\.org$/,
+    methods: ['GET'],
+  },
+});
 const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
 const fetch = require("node-fetch");
@@ -39,7 +45,7 @@ function handler(request, response) {
 
     if (url.startsWith('/websocketclient')) {
         //Serve client socket.io Javascript file
-        staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
+        staticFileServer.serveFile('../node_modules/socket.io/client-dist/socket.io.min.js', 200, {}, request, response);
     }
     else {
         responseError('Action not found', 400);

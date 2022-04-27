@@ -33,7 +33,7 @@
     "puppeteer": "^13.0.0",
     "serve-static": "^1.14.1",
     "simple-oauth2": "^4.2.0",
-    "socket.io": "^2.4.1",
+    "socket.io": "^4.5.0",
     "stripe": "^8.130.0",
     "tidy-html5": "^0.1.1",
     "xml-js": "^1.6.11",
