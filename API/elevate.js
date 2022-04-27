@@ -347,11 +347,14 @@ async function fork(req, res) {
       });
       fileResponse = await fileResponse.json();
       const original = file.contents['@href'].replace(`https://${source.subdomain}.libretexts.org`, '');
+      let final = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(destination.path))}/files/${filename}`;
+      if (fileResponse['@id']) final = `/@api/deki/files/${fileResponse['@id']}/${filename}`; // prefer link via ID
       return {
         original,
         oldID: file['@id'],
         newID: fileResponse['@id'],
-        final: `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(destination.path))}/files/${filename}`,
+        final,
+        filename,
       };
     }
 
