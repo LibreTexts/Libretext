@@ -3,7 +3,7 @@
     "ReactSidebar",
     "hypothes.is",
     "libreNavButtons",
-    "batchPrint.js",
+    "libreExportButtons",
     "copyNavigation.js"
   ]
 }

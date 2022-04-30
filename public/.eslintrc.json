@@ -14,7 +14,8 @@
         "LibreEditor": "writable",
         "CKEDITOR": "writable",
         "getCC": "readonly",
-        "tippy": "readonly"
+        "tippy": "readonly",
+        "Popper": "readonly"
     },
     "ignorePatterns": [
         "*.min.js"

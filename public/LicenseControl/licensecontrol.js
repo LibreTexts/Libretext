@@ -450,7 +450,6 @@ function licenseControl() {
    * @param {LicenseInfo} licInfo - An object with information about the current page's license.
    */
   function ccPageLabel(licInfo) {
-    const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     let license;
     if (typeof (licInfo) === 'object') {
       license = licInfo;
@@ -503,28 +502,6 @@ function licenseControl() {
       $('li.elm-last-modified')[0].after(pageNumHolder);
     } else {
       pageNumHolder.style.display = 'none';
-    }
-
-    /** Create batch print options and DonorBox links (if applicable) */
-    if ($('.elm-social-share').length > 0) {
-      let batchHTML = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
-      if (!isAdmin) {
-        batchHTML += '<a href="https://donorbox.org/libretexts" target="_blank" rel="noopener noreferrer" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a>';
-        window.DonorBox = {
-          widgetLinkClassName: 'custom-dbox-popup',
-        };
-      }
-      $('.elm-social-share')[0].innerHTML = `${batchHTML}</div>`;
-    }
-
-    /** Enable DonorBox */
-    if (!isAdmin) {
-      const donorScript = document.createElement('script');
-      donorScript.type = 'text/javascript';
-      donorScript.src = 'https://donorbox.org/install-popup-button.js';
-      if (document.getElementById('donate')) {
-        document.getElementById('donate').append(donorScript);
-      }
     }
   }
 
