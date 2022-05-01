@@ -768,7 +768,7 @@ async function licenseReport(input, socket, botID) {
                 };
             case "notset":
                 return {
-                    label: "Unclassified",
+                    label: "Undeclared",
                     link: "#",
                     raw: "notset"
                 };
