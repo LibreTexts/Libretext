@@ -137,33 +137,35 @@ window.addEventListener('load', () => {
         const b = Math.floor(Math.random() * 256);
 
         const backgroundColor = activated ? `rgba(${r},${g},${b},0.3)` : 'unset';
-        const [, subdomain, pageID] = cls.match(/(?<=^lt-)(\w*?)-(\d*?)$/);
-        if (!loadedPages[cls]) loadedPages[cls] = {};
-        loadedPages[cls].backgroundColor = backgroundColor;
+        const classMatch = cls.match(/(?<=^lt-)(\w*?)-(\d*?)$/);
+        if (classMatch) {
+          const [, subdomain, pageID] = classMatch;
+          if (!loadedPages[cls]) loadedPages[cls] = {};
+          loadedPages[cls].backgroundColor = backgroundColor;
 
-        document.getElementsByClassName(cls).forEach((item) => {
-          // eslint-disable-next-line no-param-reassign
-          item.style.backgroundColor = backgroundColor;
-        });
-        const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
+          document.getElementsByClassName(cls).forEach((item) => {
+            // eslint-disable-next-line no-param-reassign
+            item.style.backgroundColor = backgroundColor;
+          });
+          const pageURL = `https://${subdomain}.libretexts.org/@go/page/${pageID}`;
 
-        if (activated) {
-          LibreTexts.active.libreLens.tippyInstances = LibreTexts.active.libreLens.tippyInstances.concat(tippy(`.${cls}`, {
-            content: `<a href="${pageURL}" target="_blank">From ${cls}</a>`,
-            interactive: true,
-            allowHTML: true,
-            async onShow(instance) {
-              const data = await getPage(cls);
-              instance.setContent(data.error ? `From ${cls} [deleted]` : data.content);
-            },
-          }));
+          if (activated) {
+            LibreTexts.active.libreLens.tippyInstances = LibreTexts.active.libreLens.tippyInstances.concat(tippy(`.${cls}`, {
+              content: `<a href="${pageURL}" target="_blank">From ${cls}</a>`,
+              interactive: true,
+              allowHTML: true,
+              async onShow(instance) {
+                const data = await getPage(cls);
+                instance.setContent(data.error ? `From ${cls} [deleted]` : data.content);
+              },
+            }));
+          }
         }
       }
 
       const summary = document.getElementById('librelens-list');
       let attribution = document.getElementById('librelens-attribution-list');
       if (!attribution) {
-        console.log('no attribution section');
         $('.mt-content-footer').append('<div id="librelens-attribution-list"/>');
         attribution = document.getElementById('librelens-attribution-list');
       }
