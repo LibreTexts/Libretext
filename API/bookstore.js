@@ -401,7 +401,6 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             cover: `${line_item_PDF}/Cover_${item.hardcover === 'true' ? 'Casewrap' : 'PerfectBound'}.pdf`,
             interior: `${line_item_PDF}/Content.pdf`,
             pod_package_id: `0850X1100${item.color === 'true' ? 'FC' : 'BW'}STD${item.hardcover === 'true' ? 'CW' : 'PB'}060UW444MXX`,
-            page_count: parseInt(item.numPages),
             quantity: item.quantity,
         }
     });
@@ -438,7 +437,7 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             "street2": session.shipping.address.line2?.slice(0, 30),
         },
         shipping_level: shippingSpeed,
-    }
+    };
     
     let luluResponse;
     if (sendEmailOnly) {
@@ -472,19 +471,23 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
         sendLuluReceiptEmail(payload, luluResponse, beta);
     }
     else {
-        luluResponse = await luluResponse.json()
-        console.error(JSON.stringify(luluResponse));
-        if (!luluResponse.shipping_address)
-            luluResponse.shipping_address = {}
-        luluResponse.shipping_address.email = session.customer.email;
-        
-        const result = {
-            stripeID: session.id,
-            luluID: luluResponse.id,
-            beta: beta,
-            lulu: luluResponse,
+        try {
+          luluResponse = await luluResponse.json();
+          console.error(JSON.stringify(luluResponse));
+          if (!luluResponse.shipping_address)
+              luluResponse.shipping_address = {}
+          luluResponse.shipping_address.email = session.customer.email;
+          
+          const result = {
+              stripeID: session.id,
+              luluID: luluResponse.id,
+              beta: beta,
+              lulu: luluResponse,
+          }
+          await sendRejectedEmail(result);
+        } catch (e) {
+          console.error(`[LULU API] INVALID RESPONSE FROM LULU. ORDER = ${payload.external_id}`);
         }
-        await sendRejectedEmail(result);
     }
 }
 
