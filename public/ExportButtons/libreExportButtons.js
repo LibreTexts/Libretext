@@ -423,11 +423,11 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           href: `https://batch.libretexts.org/print/url=${window.location.href}.pdf`,
         });
       }
-      /* Compile Page */
+      /* Compile Book (Page + Subpages) */
       if (batchAccess && pdfExportOptions.length > 0) { // don't add option if page is non-content
         pdfExportOptions.push({
-          text: 'Compile Page',
-          title: 'Compile this page (opens in new tab when complete)',
+          text: 'Compile Book',
+          title: 'Compile this page and all subpages (opens in new tab when complete)',
           listener: (e) => {
             e.preventDefault();
             batch();
