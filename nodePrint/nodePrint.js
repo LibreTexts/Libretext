@@ -12,7 +12,7 @@ const Eta = require('node-eta');
 const md5 = require('md5');
 const timestamp = require('console-timestamp');
 const fetch = require('node-fetch');
-const PDFMerger = require('pdf-merger-js');
+const { PDFDocument } = require('pdf-lib');
 const pdf = require('pdf-parse');
 const findRemoveSync = require('find-remove');
 const storage = require('node-persist');
@@ -1746,20 +1746,18 @@ puppeteer.launch({
                 try {
                     const mergeStart = performance.now();
                     if (files && files.length > 2) {
-                        const pdfMerger = new PDFMerger();
-                        for (let i = 0, n = files.length; i < n; i += 1) {
-                            pdfMerger.add(files[i]);
-                        }
-                        await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
+                        const pdfMeta = { title: current.title, author: current.name };
+                        /* Save full document */
+                        const fullOutput = await mergePDFFiles(files, pdfMeta); // current.title current.name
+                        await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Full.pdf`, fullOutput);
+                        /* Save preview and inner content */
                         if (hasCoverpage) {
-                            for (let i = 0, n = 10; i < n; i += 1) {
-                                pdfMerger.add(files[i]);
-                            }
-                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Preview.pdf`);
-                            for (let i = 1, n = files.length; i < n; i += 1) {
-                                pdfMerger.add(files[i]);
-                            }
-                            await pdfMerger.save(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`);
+                          const previewFiles = files.slice(0,10);
+                          const previewOutput = await mergePDFFiles(previewFiles, { ...pdfMeta, isPreview: true });
+                          await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Preview.pdf`, previewOutput);
+                          const contentFiles = files.slice(1);
+                          const contentOutput = await mergePDFFiles(contentFiles, { ...pdfMeta, isContent: true });
+                          await fs.writeFile(`./PDF/Letter/Finished/${zipFilename}/Publication/Content.pdf`, contentOutput);
                         }
                     } else {
                         await fs.copy(files[0], `./PDF/Letter/Finished/${zipFilename}/Full.pdf`);
@@ -2289,6 +2287,44 @@ async function getAPI(page, options = {getContents: false, username: null}) {
         page.modified = 'restricted';
     }
     return page;
+}
+
+/**
+ * Combines all provided PDF files (read by filename) into a single PDF document.
+ * @param {string[]} files - An array of paths/filenames to PDF documents to include.
+ * @param {Object} [metadata=null] - An object containing metadata to attach to the PDF.
+ * @param {string} [metadata.title] - The title of the content.
+ * @param {string} [metadata.author] - The author of the content.
+ * @param {boolean} [metadata.isPreview] - If the output PDF is a LibreText 'preview'.
+ * @param {boolean} [metadata.isContent] - If the output PDF is the LibreText's publication content.
+ * @returns {Promise<Uint8Array>} The bytes of the output document (for filesystem save).
+ */
+async function mergePDFFiles(files, metadata = null) {
+  const outputDocument = await PDFDocument.create();
+  for (let i = 0, n = files.length; i < n; i += 1) {
+    const fileData = await fs.readFile(files[i]);
+    const filePDF = await PDFDocument.load(fileData);
+    const filePages = await outputDocument.copyPages(filePDF, filePDF.getPageIndices());
+    for (let j = 0, k = filePages.length; j < k; j += 1) {
+      outputDocument.addPage(filePages[j]);
+    }
+  }
+  if (metadata) {
+    if (typeof (metadata.title) === 'string') {
+      let pdfTitle = metadata.title;
+      if (metadata.isPreview) {
+        pdfTitle = `${pdfTitle} (Preview)`;
+      } else if (metadata.isContent) {
+        pdfTitle = `${pdfTitle} (Inner Content)`;
+      }
+      outputDocument.setTitle(pdfTitle);
+    }
+    if (typeof (metadata.author) === 'string') outputDocument.setAuthor(metadata.author);
+  }
+  outputDocument.setProducer('LibreTexts nodePrint');
+  outputDocument.setCreator('LibreTexts (libretexts.org)')
+  outputDocument.setCreationDate(new Date());
+  return outputDocument.save();
 }
 
 function clarifySubdomain(url) {
