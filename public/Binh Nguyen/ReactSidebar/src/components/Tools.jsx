@@ -26,7 +26,7 @@ export default function Tools(props) {
                 attribution();
                 props.toggleDrawer(false)();
             }}/>
-            <IconLink title="Get Page Contents" icon="mt-icon-edit-page"
+            <IconLink title="Get Page Source" icon="mt-icon-embed2"
                       href={`/Under_Construction/Sandboxes/Henry/Get_Contents?${document.getElementById('IDHolder')?.innerText}`}/>
             <IconLink title="View Licensing Report" icon="mt-icon-list3" onClick={() => {
                 viewLicensingReport();
