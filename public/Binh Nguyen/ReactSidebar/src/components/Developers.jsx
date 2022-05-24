@@ -81,9 +81,12 @@ export default function Developers(props) {
             }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
+            
             <IconLink title="Jupyter Hub" icon="fas fa-square-root-alt" href="https://jupyter.libretexts.org/hub/login"/>
+
             <IconLink title="RealTime Mathjax" icon="fas fa-square-root-alt"
                       href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax"/>
+
 	    <Button id="referenceModalBtn" onClick={(event) => {
 		document.getElementById("referenceModal").style.display = "block"
 	    }}>Reference Manager</Button>
