@@ -39,6 +39,7 @@ import IconButton from "@material-ui/core/IconButton";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import LinkIcon from '@material-ui/icons/Link';
 import CallMadeIcon from '@material-ui/icons/CallMade';
+import Alert from '@material-ui/lab/Alert';
 
 const target = document.createElement("div");
 // noinspection JSValidateTypes
@@ -86,6 +87,7 @@ function BookstoreSingle(props) {
     const fileSource = `https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore`;
     const APIendpoint = `https://api.libretexts.org/bookstore${window.location.href.includes('/beta/') ? '/beta' : ''}`;
     let validPrice = shippingData.length;
+    let okToCheckout = true;
     const classes = useStyles();
 
     const operatingCost = 0.08; // percentage as decimal!!
@@ -110,6 +112,9 @@ function BookstoreSingle(props) {
         }
     }
     totalCost += shippingSurcharge?.price || 0;
+    if (totalCost > 1000) {
+      okToCheckout = false; // prevent large orders via web
+    }
 
     useEffect(() => {
         (async function () {
@@ -438,8 +443,12 @@ function BookstoreSingle(props) {
                             needs correcting.</p>
                     </Paper>
                 </div>
-
-                <Button autoFocus color="primary" variant='contained' disabled={!validPrice}
+                {!okToCheckout && (
+                  <Alert severity='error' id="bulkOrderAlert">
+                    Orders over $1,000 cannot be placed via the web Bookstore. Please contact <a href='mailto:bookstore@libretexts.org?subject=Bulk Order' target='_blank' rel='noreferrer'>bookstore@libretexts.org</a> to place your bulk order.
+                  </Alert>
+                )}
+                <Button autoFocus color="primary" variant='contained' disabled={!validPrice || !okToCheckout}
                     style={{ width: '80%', fontSize: 20, margin: '1% 10%' }}
                     onClick={() => {
                         createCheckoutSession()
@@ -492,7 +501,7 @@ function BookstoreSingle(props) {
                                         sessionId: data.sessionId,
                                     })
                                         .then(function (result) {
-                                            if (result.error) {
+                                            if (result.error) { 
                                                 alert(result.error.message);
                                             }
                                         });
