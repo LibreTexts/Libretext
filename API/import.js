@@ -19,7 +19,6 @@ const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
 const convert = require('xml-js');
-const cheerio = require('cheerio');
 const secret = require('./secure.json');
 const excelToJson = require('convert-excel-to-json');
 
@@ -790,9 +789,7 @@ async function processEPUB(data, socket) {
                 return [filename, file, prefix + filename];
             }
 
-            const $ = cheerio.load(contents, { xml: { decodeEntities: false } });
-            $('body').append('<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>');
-            contents = $('body').html().trim();
+            contents = `${contents}<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>`
 
             let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
                 method: 'POST',
@@ -1069,14 +1066,12 @@ async function processPretext(data, socket) {
             contents = contents.replace(/<a [^<>]*? class="permalink">¶<\/a>/, '');
 
             if (page.type === 'category') {
-              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">coverpage:yes</a><a href="#">article:topic-category</a></p>`;
+              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">coverpage:yes</a><a href=\"#\">article:topic-category</a></p>`;
             } else if (page.type === 'guide') {
-              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-guide</a></p>`;
+              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`;
             } else if (page.type === 'topic') {
-              contents = `${contents}<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>`;
+              contents = `${contents}<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>`;
             }
-            const $ = cheerio.load(contents, { decodeEntities: false }, false);
-            contents = $.html().trim();
 
             response = await Working.authenticatedFetch(path, `contents?abort=exists&edittime=now&dream.out.format=json&title=${safeTitle}`, {
               method: "POST",
