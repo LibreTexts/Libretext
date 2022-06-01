@@ -6,13 +6,6 @@ This directory is for client-side scripts that are used on the Front-End LibreTe
 
 React.js projects require compilation using Browserify & Babel.
 
-| Deprecated Projects | Description                                                    | Status                          |
-| ----------------- | -------------------------------------------------------------- | ------------------------------- |
-| Aryan/Licenses          | Labels library pages with corresponding content licensing symbols | Awaiting deletion, superceded by `/LicenseControl`             |
-| Aryan/FBButtons         | Hovering front/back navigation buttons                         | Awaiting deletion, superceded by `/NavButtons`            |
-| Aryan/Sidebar           | Blue sidebar containing site links and resources               | Awaiting deletion, superceded by `Binh/ReactSidebar` |
-
-
 | Aryans's Projects | Description                                                    | Status                          |
 | ----------------- | -------------------------------------------------------------- | ------------------------------- |
 | Citation          | Generator for citations and attributions using Citation.js lib | :heavy_check_mark:              |

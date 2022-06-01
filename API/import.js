@@ -3,7 +3,13 @@ const timestamp = require("console-timestamp");
 const EPub = require("epub");
 const filenamify = require('filenamify');
 const server = http.createServer(handler);
-const io = require('socket.io')(server, {path: '/import/ws'});
+const io = require('socket.io')(server, {
+  path: '/import/ws',
+  cors: {
+    origin: /libretexts\.org$/,
+    methods: ['GET'],
+  },
+});
 const findRemoveSync = require('find-remove');
 const fs = require('fs-extra');
 const fetch = require("node-fetch");
@@ -13,6 +19,7 @@ const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
 const convert = require('xml-js');
+const cheerio = require('cheerio');
 const secret = require('./secure.json');
 const excelToJson = require('convert-excel-to-json');
 
@@ -39,7 +46,7 @@ function handler(request, response) {
 
     if (url.startsWith('/websocketclient')) {
         //Serve client socket.io Javascript file
-        staticFileServer.serveFile('../node_modules/socket.io-client/dist/socket.io.js', 200, {}, request, response);
+        staticFileServer.serveFile('../node_modules/socket.io/client-dist/socket.io.min.js', 200, {}, request, response);
     }
     else {
         responseError('Action not found', 400);
@@ -588,14 +595,12 @@ async function processEPUB(data, socket) {
                 indexes = indexes[0];
                 let numbers = indexes.split('.');
                 page.title = page.title.replace(indexes, `${numbers[0]}.${numbers[1].padStart(2,'0')}:`);
-            }
-            else {
+            } else {
                 page.title = `${chapterIndex}.${String(pageIndex).padStart(2,'0')}: ${page.title}`;
             }
             pageIndex++;
             filtered.push({title: page.title, id: page.id, href: page.href});
-        }
-        else if (toc[i].href.includes('-chapter-') || toc[i].href.includes('part-')) {
+        } else if (toc[i].href.includes('-chapter-') || toc[i].href.includes('part-')) {
             chapters.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
             chapterIndex++;
             pageIndex = 1;
@@ -606,7 +611,7 @@ async function processEPUB(data, socket) {
     let filteredChapters = [];
     for (let i = 0; i < chapters.length; i++) {
         let current = chapters[i];
-        if (!current.title.includes('Summary')) {
+        if (!current.title?.includes('Summary')) {
             current.index = i;
             filteredChapters.push(current);
         }
@@ -785,9 +790,13 @@ async function processEPUB(data, socket) {
                 return [filename, file, prefix + filename];
             }
 
+            const $ = cheerio.load(contents, { xml: { decodeEntities: false } });
+            $('body').append('<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>');
+            contents = $('body').html().trim();
+
             let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
                 method: 'POST',
-                body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
+                body: contents,
             });
             if (!response.ok) {
                 let error = await response.text();
@@ -1060,29 +1069,30 @@ async function processPretext(data, socket) {
             contents = contents.replace(/<a [^<>]*? class="permalink">¶<\/a>/, '');
 
             if (page.type === 'category') {
-                response = await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
-                    method: "POST",
-                    body: contents + "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">coverpage:yes</a><a href=\"#\">article:topic-category</a></p>",
-                }, data.subdomain);
-                await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">coverpage:yes</a><a href="#">article:topic-category</a></p>`;
+            } else if (page.type === 'guide') {
+              contents = `${contents}<p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-guide</a></p>`;
+            } else if (page.type === 'topic') {
+              contents = `${contents}<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>`;
             }
-            else if (page.type === 'guide') {
-                response = await Working.authenticatedFetch(path, `contents?abort=exists&title=${safeTitle}`, {
-                    method: "POST",
-                    body: contents + "<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>",
-                }, data.subdomain);
-                await Promise.all(
-                    [Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
-                        Working.putProperty('mindtouch.page#welcomeHidden', true, path),
-                        Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)]);
+            const $ = cheerio.load(contents, { decodeEntities: false }, false);
+            contents = $.html().trim();
 
+            response = await Working.authenticatedFetch(path, `contents?abort=exists&edittime=now&dream.out.format=json&title=${safeTitle}`, {
+              method: "POST",
+              body: contents,
+          }, data.subdomain);
+
+            if (page.type === 'category') {
+              await Working.putProperty('mindtouch.idf#subpageListing', 'simple', path);
+            } else if (page.type === 'guide') {
+              await Promise.all([
+                Working.putProperty("mindtouch.idf#guideDisplay", "single", path),
+                Working.putProperty('mindtouch.page#welcomeHidden', true, path),
+                Working.putProperty("mindtouch#idf.guideTabs", "[{\"templateKey\":\"Topic_hierarchy\",\"templateTitle\":\"Topic hierarchy\",\"templatePath\":\"MindTouch/IDF3/Views/Topic_hierarchy\",\"guid\":\"fc488b5c-f7e1-1cad-1a9a-343d5c8641f5\"}]", path)
+              ]);
             }
-            else if (page.type === 'topic') {
-                response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${safeTitle}`, {
-                    method: 'POST',
-                    body: contents + '<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>'
-                });
-            }
+
             if (!response.ok) {
                 let error = await response.text();
                 console.error(error);

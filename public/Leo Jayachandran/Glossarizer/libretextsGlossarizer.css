@@ -64,7 +64,8 @@ p.glossaryElement {
     }
     p.glossaryElement {
         break-inside: avoid;
-        margin-bottom: 0.5em;
+        margin: 0.4rem 0;
         font-size: 0.9em;
+        line-height: 0.9em;
     }
 }

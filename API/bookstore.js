@@ -105,13 +105,30 @@ async function updateOrder(sessionId, forceUpdate = false, beta = false) {
         
         
         //archive order if completed
-        if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED'].includes(result.status)) {
-            console.log(`[Archiving] ${sessionId}`);
-            if (result.status === 'REJECTED')
-                await sendRejectedEmail(result);
-            else
-                await sendShippingEmail(result);
-            await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
+        if (writePath.startsWith('./bookstore/pending') && ['SHIPPED', 'REJECTED', 'CANCELED', 'CREATED'].includes(result.status)) {
+            console.log(`[Archiving] Attempting to archive ${sessionId}...`);
+            if (result.status === 'REJECTED') {
+              await sendRejectedEmail(result);
+              console.log(`[Archived] Rejected order ${sessionId} archived.`);
+              await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
+            } else if (result.status === 'CANCELED') {
+              await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
+              console.log(`[Archived] Cancelled order ${sessionId} archived.`);
+            } else if (result.status === 'CREATED') {
+              if (typeof (result.lulu?.date_created) === 'string') {
+                const created = new Date(result.lulu.date_created);
+                const now = new Date();
+                if (created instanceof Date && !isNaN(created)) {
+                  const diff = Math.abs(created.getTime() - now.getTime()) / 3600000;
+                  if (diff > 1) {
+                    sendStuckEmail(result);
+                  }
+                }
+              }
+            } else {
+              await sendShippingEmail(result);
+              console.log(`[Archived] Shipped order ${sessionId} archived.`);
+            }            
         }
     }
     return result;
@@ -401,7 +418,6 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             cover: `${line_item_PDF}/Cover_${item.hardcover === 'true' ? 'Casewrap' : 'PerfectBound'}.pdf`,
             interior: `${line_item_PDF}/Content.pdf`,
             pod_package_id: `0850X1100${item.color === 'true' ? 'FC' : 'BW'}STD${item.hardcover === 'true' ? 'CW' : 'PB'}060UW444MXX`,
-            page_count: parseInt(item.numPages),
             quantity: item.quantity,
         }
     });
@@ -438,7 +454,7 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             "street2": session.shipping.address.line2?.slice(0, 30),
         },
         shipping_level: shippingSpeed,
-    }
+    };
     
     let luluResponse;
     if (sendEmailOnly) {
@@ -472,19 +488,23 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
         sendLuluReceiptEmail(payload, luluResponse, beta);
     }
     else {
-        luluResponse = await luluResponse.json()
-        console.error(JSON.stringify(luluResponse));
-        if (!luluResponse.shipping_address)
-            luluResponse.shipping_address = {}
-        luluResponse.shipping_address.email = session.customer.email;
-        
-        const result = {
-            stripeID: session.id,
-            luluID: luluResponse.id,
-            beta: beta,
-            lulu: luluResponse,
+        try {
+          luluResponse = await luluResponse.json();
+          console.error(JSON.stringify(luluResponse));
+          if (!luluResponse.shipping_address)
+              luluResponse.shipping_address = {}
+          luluResponse.shipping_address.email = session.customer.email;
+          
+          const result = {
+              stripeID: session.id,
+              luluID: luluResponse.id,
+              beta: beta,
+              lulu: luluResponse,
+          }
+          await sendRejectedEmail(result);
+        } catch (e) {
+          console.error(`[LULU API] INVALID RESPONSE FROM LULU. ORDER = ${payload.external_id}`);
         }
-        await sendRejectedEmail(result);
     }
 }
 
@@ -599,6 +619,28 @@ ${payload.line_items.map(item => {
             email.makeBody();
         });
     });
+}
+
+/**
+ * Sends an email to bookstore@libretexts.org when an order is stuck on 'Created'.
+ * @param {object} payload - The stuck order payload.
+ */
+function sendStuckEmail(payload) {
+  const to = ['bookstore@libretexts.org'];
+  const sub = `An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.`;
+  fs.readFile('bookstoreConfig.json', async (err, content) => {
+    if (err) return console.error('Error loading client secret file:', err);
+    authorize(JSON.parse(content).GMAIL, (auth) => {
+      const message = `
+        <h1>An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.</h1>
+        <p><em>This is an automated message.</em></p>
+        <p>The Bookstore order with Stripe ID <strong>${payload.stripeID}</strong> and Lulu ID <strong>${payload.luluID}</strong> has been in the <em>Created</em> stage for more than one hour.</p>
+        <p>Please investigate or use the Lulu Dashboard/Reordering Tool to try and force production.</p>
+      `;
+      const email = new CreateMail(auth, to, sub, message);
+      email.makeBody();
+    });
+  });
 }
 
 /**

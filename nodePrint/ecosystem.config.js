@@ -18,7 +18,7 @@ module.exports = {
       cwd	: '/root/nodePrint',
       watch	: "nodePrint.js",
       ignore_watch : ["node_modules","public","PDF"],
-      "cron_restart": "00 12 * * *",
+      "cron_restart": "25 00 * * *",
       "log_date_format"  : "YY/MM/DD HH:mm:ss"
     },
   ],

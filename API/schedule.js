@@ -9,20 +9,20 @@ const timestamp = require('console-timestamp');
 const secure = require('./secure.json');
 
 const batchSchedule = {
-  bio: { day: 'sat', hour: 0 },
-  biz: { day: 'sat', hour: 12 },
-  chem: { day: 'sun', hour: 0 },
-  eng: { day: 'sun', hour: 12 },
-  espanol: { day: 'mon', hour: 0 },
-  geo: { day: 'mon', hour: 12 },
-  human: { day: 'tue', hour: 0 },
-  k12: { day: 'tue', hour: 12 },
-  math: { day: 'wed', hour: 0 },
-  med: { day: 'wed', hour: 12 },
-  phys: { day: 'thu', hour: 0 },
-  socialsci: { day: 'thu', hour: 12 },
-  stats: { day: 'fri', hour: 0 },
-  workforce: { day: 'fri', hour: 12 },
+  bio: '1,15',
+  biz: '2,16',
+  chem: '3,17',
+  eng: '4,18',
+  espanol: '5,19',
+  geo: '6,20',
+  human: '7,21',
+  k12: '8,22',
+  math: '9,23',
+  med: '10,24',
+  phys: '11,25',
+  socialsci: '12,26',
+  stats: '13,27',
+  workforce: '14,28',
 };
 
 /**
@@ -30,11 +30,11 @@ const batchSchedule = {
  *
  * @param {string} library - The LibreTexts library shortened identifier.
  * @param {string} target - The area of the library to batch.
- * @param {object} timeSpec - An object describing the day and time to run the batch job.
- * @param {number} timeOffset - An offset to apply to the batch job's schedule.
+ * @param {string} timeSpec - The days of the month to run the job.
+ * @param {number} [timeOffset=0] - An offset to apply to the batch job's schedule.
  */
-function scheduleLibraryBatch(library, target, timeSpec, timeOffset) {
-  const time = `30 ${timeSpec.hour + timeOffset} * * ${timeSpec.day}`;
+function scheduleLibraryBatch(library, target, timeSpec, timeOffset = 0) {
+  const time = `30 ${timeOffset} ${timeSpec} * *`;
   scheduler.scheduleJob(`${library}-${target}`, time, () => {
     try {
       console.log(`Running Refresh no-cache for ${library}/${target}`);
@@ -145,10 +145,10 @@ function initialize() {
   Object.keys(batchSchedule).forEach((library) => {
     const timeSpec = batchSchedule[library];
     if (library !== 'espanol') {
-      scheduleLibraryBatch(library, 'bookshelves', timeSpec, 0);
-      scheduleLibraryBatch(library, 'courses', timeSpec, 6);
+      scheduleLibraryBatch(library, 'bookshelves', timeSpec);
+      scheduleLibraryBatch(library, 'courses', timeSpec, 12);
     } else {
-      scheduleLibraryBatch(library, 'home', timeSpec, 0);
+      scheduleLibraryBatch(library, 'home', timeSpec);
     }
   });
   // Schedule LibreCommons sync jobs

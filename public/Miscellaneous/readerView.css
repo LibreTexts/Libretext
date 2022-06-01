@@ -1,0 +1,105 @@
+/* Hide header if in iframe*/
+.readerView .elm-header,
+.readerView .elm-meta-icons,
+.readerView div.annotator-frame,
+.readerView #custom_open,
+.readerView .sbHeader {
+  display: none;
+}
+
+.readerView #mt-summary {
+  display: none !important;
+}
+
+/* Hide author byline **/
+.readerView article.elm-content-container .mt-content-header {
+  display: none;
+}
+
+/* Hide page meta data (print pdf, cite, CC icons, etc.) */
+.readerView .elm-meta-top {
+  display: none;
+}
+
+/* Hide footer feedback **/
+.readerView .elm-article-feedback {
+  display: none;
+}
+
+
+/**
+* Layout
+*/
+
+body.readerView {
+  background-color: #fbfbff;
+}
+.readerView article.elm-content-container {
+  background: white;
+  max-width: 1000px;
+  min-width: unset !important;
+  padding: 1em 2em;
+}
+
+
+/**
+* Typography
+*/
+.readerView h1#title {
+  color: black;
+  font-weight: 600;
+  margin: 0 !important;
+  padding: 0.75em 0;
+  border-bottom: 0;
+}
+.readerView h2 {
+  font-size: 1.4em !important;
+  color: black;
+  margin: 0 !important;
+  padding: 1em 0 0.5em;
+}
+.readerView h3 {
+  font-size: 1.25rem!important;
+  color: #333;
+  font-weight: 700;
+}
+.readerView h4 {
+  font-size: 1rem!important;
+  color: black;
+  font-weight: 700;
+}
+
+.readerView h5 {
+  font-size: 1rem!important;
+  color: black;
+  font-style: italic;
+  font-weight: 600;
+  color: #333;
+}
+
+.readerView section.mt-content-container p {
+  font-size: 1.1em!important;
+  margin-bottom: 1.4em;
+}
+
+.readerView section.mt-content-container li {
+  margin-bottom: 1.4em;
+}
+
+.readerView figure {
+  margin: 0 !important;
+  padding: 2em 0;
+}
+
+.readerView figcaption {
+  font-size: 1.1em !important;
+  padding: 1em !important;
+}
+
+.readerView .MathJax_Display {
+  padding: 1em 0;
+}
+
+.readerView table.mt-responsive-table {
+  margin: 2em 0;
+}

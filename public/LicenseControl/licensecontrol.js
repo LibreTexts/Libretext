@@ -12,6 +12,7 @@
  * @typedef {object} LicenseInfo
  * @property {string} label - The license's identifier for label/image rendering.
  * @property {string} title - The license's human-readable, presentation-ready title/name.
+ * @property {string[]} [clauses] - Array of UI-ready strings representing the license clauses.
  * @property {string} link - A link to further information or the license's definition.
  * @property {string} [version] - The license version, if applicable.
  * @property {string} raw - The raw, internal LibreTexts license identifier.
@@ -27,7 +28,14 @@
 function getCC(inputTag) {
   let tags = [];
   if (typeof (inputTag) === 'string') {
-    tags = [inputTag.startsWith('license:') ? inputTag : `license:${inputTag}`];
+    const inputParts = inputTag.split('@');
+    const licenseTag = inputTag.startsWith('license:') ? inputParts[0] : `license:${inputParts[0]}`;
+    let licenseVerTag = '';
+    if (inputParts.length > 1) { // license version was included as part of license tag
+      licenseVerTag = `licenseversion:${inputParts[1]}`;
+    }
+    tags.push(licenseTag);
+    if (licenseVerTag !== '') tags.push(licenseVerTag);
   } else {
     let tagsHolder = document.getElementById('pageTagsHolder');
     if (tagsHolder) {
@@ -56,15 +64,17 @@ function getCC(inputTag) {
       switch (license) {
         case 'publicdomain':
           return {
-            label: 'cc-publicdomain',
+            label: 'pd',
             title: 'Public Domain',
+            clauses: ['pd'],
             link: 'https://en.wikipedia.org/wiki/Public_domain',
             raw: 'publicdomain',
           };
         case 'ccby':
           return {
-            label: 'cc-BY',
+            label: 'cc-by',
             title: 'CC BY',
+            clauses: ['cc', 'by'],
             link: `https://creativecommons.org/licenses/by/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccby',
@@ -73,6 +83,7 @@ function getCC(inputTag) {
           return {
             label: 'cc-by-sa',
             title: 'CC BY-SA',
+            clauses: ['cc', 'by', 'sa'],
             link: `https://creativecommons.org/licenses/by-sa/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccbysa',
@@ -81,6 +92,7 @@ function getCC(inputTag) {
           return {
             label: 'cc-by-nc-sa',
             title: 'CC BY-NC-SA',
+            clauses: ['cc', 'by', 'nc', 'sa'],
             link: `https://creativecommons.org/licenses/by-nc-sa/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccbyncsa',
@@ -89,6 +101,7 @@ function getCC(inputTag) {
           return {
             label: 'cc-by-nc',
             title: 'CC BY-NC',
+            clauses: ['cc', 'by', 'nc'],
             link: `https://creativecommons.org/licenses/by-nc/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccbync',
@@ -97,6 +110,7 @@ function getCC(inputTag) {
           return {
             label: 'cc-by-nd',
             title: 'CC BY-ND',
+            clauses: ['cc', 'by', 'nd'],
             link: `https://creativecommons.org/licenses/by-nd/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccbynd',
@@ -105,6 +119,7 @@ function getCC(inputTag) {
           return {
             label: 'cc-by-nc-nd',
             title: 'CC BY-NC-ND',
+            clauses: ['cc', 'by', 'nc', 'nd'],
             link: `https://creativecommons.org/licenses/by-nc-nd/${licenseVersion}/`,
             version: licenseVersion,
             raw: 'ccbyncnd',
@@ -200,8 +215,8 @@ function licenseControl() {
       license = getCC();
     }
     const licenses = {
-      'cc-publicdomain': 1,
-      'cc-BY': 2,
+      pd: 1,
+      'cc-by': 2,
       'cc-by-sa': 3,
       'cc-by-nc-sa': 4,
       'cc-by-nc': 5,
@@ -352,7 +367,7 @@ function licenseControl() {
       const licLink = `<a href="${license.link}" target="_blank" rel="noopener noreferrer">here</a>`;
       const titleText = `The content you just copied is ${license.title} licensed:`;
       switch (license.label) {
-        case 'cc-BY':
+        case 'cc-by':
           warnModalContent.setAttribute('style', attribStyle);
           warnModalContent.innerHTML = `<span> ${titleText} You can can remix and distribute the work as long as proper attribution is given. Learn more about this license ${licLink}.</span>`;
           break;
@@ -411,12 +426,30 @@ function licenseControl() {
   }
 
   /**
+   * Builds an HTML string with the specified Creative Commons license's icon(s).
+   *
+   * @param {LicenseInfo} licInfo - An object with information about the CC license.
+   * @returns {string} HTML string with license's icon(s) as image/svg.
+   */
+  function ccIcons(licInfo) {
+    if (typeof (licInfo) === 'object' && Array.isArray(licInfo.clauses) && typeof (licInfo.title) === 'string') {
+      let iconString = '';
+      licInfo.clauses.forEach((item) => {
+        let licTitle = item.toUpperCase();
+        if (item === 'pd') licTitle = licInfo.title;
+        iconString = `${iconString}<img src="https://cdn.libretexts.net/LicenseIcons/cc-clauses/${item}.svg" alt="${licTitle}" title="${licTitle}"/>`;
+      });
+      return iconString;
+    }
+    return '';
+  }
+
+  /**
    * Adds the current page's license labeling (icon/image) to the DOM.
    *
    * @param {LicenseInfo} licInfo - An object with information about the current page's license.
    */
   function ccPageLabel(licInfo) {
-    const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     let license;
     if (typeof (licInfo) === 'object') {
       license = licInfo;
@@ -447,7 +480,7 @@ function licenseControl() {
           licIcon = '<span></span>';
           break;
         default: // CC licenses
-          licIcon = `<span style="font-size: 30px"><i class="cc ${license.label}"></i></span>`;
+          licIcon = `<div class='libre-cc-icons'>${ccIcons(license)}</div>`;
           break;
       }
       const licLinkStart = `<a style="width: max-content; width: -moz-max-content; overflow: initial;" href="${license.link}" target="_blank" rel="noopener noreferrer">${licIcon}</a>`;
@@ -469,28 +502,6 @@ function licenseControl() {
       $('li.elm-last-modified')[0].after(pageNumHolder);
     } else {
       pageNumHolder.style.display = 'none';
-    }
-
-    /** Create batch print options and DonorBox links (if applicable) */
-    if ($('.elm-social-share').length > 0) {
-      let batchHTML = '<div class="ssk-group optimize"><div id="batchPrint"></div>';
-      if (!isAdmin) {
-        batchHTML += '<a href="https://donorbox.org/libretexts" target="_blank" rel="noopener noreferrer" class="custom-dbox-popup notSS" id="donate"><span>Donate</span></a>';
-        window.DonorBox = {
-          widgetLinkClassName: 'custom-dbox-popup',
-        };
-      }
-      $('.elm-social-share')[0].innerHTML = `${batchHTML}</div>`;
-    }
-
-    /** Enable DonorBox */
-    if (!isAdmin) {
-      const donorScript = document.createElement('script');
-      donorScript.type = 'text/javascript';
-      donorScript.src = 'https://donorbox.org/install-popup-button.js';
-      if (document.getElementById('donate')) {
-        document.getElementById('donate').append(donorScript);
-      }
     }
   }
 

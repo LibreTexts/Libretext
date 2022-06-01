@@ -1,5 +1,6 @@
 /**
  * @file Exports default branded headers and footers for PDF output.
+ * @author LibreTexts <info@libretexts.org>
  */
 
 const pdfPageMargins = '0.75in 0.625in 0.9in'; // top, left/right, bottom
@@ -108,7 +109,7 @@ function generatePDFFooter(mainColor, currentPage, pageLicense, prefix) {
           display: inline-flex;
           flex: 1;
           align-items: center;
-          justify-content: space-between;
+          justify-content: flex-end;
           color: #F5F5F5;
           padding: 1%;
       }
@@ -128,9 +129,6 @@ function generatePDFFooter(mainColor, currentPage, pageLicense, prefix) {
     <div id="libreFooter">
       <div class="footer-left">
           <a href="${pageLicense ? pageLicense.link : ''}">${pageLicense ? pageLicense.label : ''}</a>
-          ${(currentPage && currentPage.name) ? (
-            `<div>${currentPage.name}</div>`
-          ) : ''}
       </div>
       <div class="footer-center">
             <div class="footer-pagenum">
@@ -138,7 +136,6 @@ function generatePDFFooter(mainColor, currentPage, pageLicense, prefix) {
             </div>
       </div>
       <div class="footer-right">
-          <div><div class="date"></div></div>
           ${currentPage ? (
             `<a href="https://${currentPage.subdomain}.libretexts.org/@go/page/${currentPage.id}?pdf">https://${currentPage.subdomain}.libretexts.org/@go/page/${currentPage.id}</a>`
           ): ''}

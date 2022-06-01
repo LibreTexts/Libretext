@@ -79,9 +79,9 @@ export default function BatchMonitor(props) {
                 
                 let days = Math.floor((new Date() - Date.parse(input.timestamp)) / 86400000);
                 
-                if (days <= 8)
+                if (days <= 15)
                     return <span style={{color: 'green'}}>{days} Days</span>
-                else if (days <= 15)
+                else if (days <= 30)
                     return <span style={{color: 'orange', fontWeight: 'bold'}}>{days} Days</span>
                 else
                     return <span className='mt-icon-warning2'
