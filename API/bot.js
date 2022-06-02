@@ -653,20 +653,48 @@ async function convertContainers(input, content) {
     }
 }
 
-async function licenseReport(input, socket, botID) {
-    let startTime = performance.now();
+/**
+ * @typedef {object} LicenseInfo
+ * @property {string} label - The UI-ready license name.
+ * @property {string} link - A link to information about the license, or '#'.
+ * @property {string} raw - The internal license identifier/name.
+ * @property {string} [version] - The license version, if a Creative Commons license.
+ */
+
+/**
+ * @typedef {object} PageInfo
+ * @property {string} id - The page's (library-scoped) unique identifier.
+ * @property {string} url - The page's live URL.
+ * @property {string} title - The UI-ready page title.
+ * @property {LicenseInfo} [license=null] - The page's license information.
+ * @property {PageInfo[]} [children] - The page's hierarchical children.
+ */
+
+/**
+ * Generates a License Report for a LibreText.
+ *
+ * @param {object} inputData - The input information received from the requester.
+ * @param {socketio} socket - The websocket connection to the bot dashboard.
+ * @param {string} botID - The bot's unique identifier.
+ */
+async function licenseReport(inputData, socket, botID) {
+    const startTime = performance.now();
     let progress = 0;
 
-    input = {
-        ...input,
-        ID: botID
+    const input = {
+        ...inputData,
+        ID: botID,
     };
 
-    socket.emit('setState', {state: 'gettingSubpages', ID: input.ID});
-    let pages = await LibreTexts.getSubpages(input.root, input.user, {delay: true, socket: socket, flat: false});
-    socket.emit('setState', {state: 'gotSubpages', ID: input.ID});
+    socket.emit('setState', { state: 'gettingSubpages', ID: input.ID });
+    const pages = await LibreTexts.getSubpages(
+      input.root,
+      input.user,
+      { delay: true, flat: false, socket },
+    );
+    socket.emit('setState', { state: 'gotSubpages', ID: input.ID });
 
-    if (typeof(pages) === 'object' && pages.hasOwnProperty('id')) {
+    if (typeof (pages) === 'object' && Object.prototype.hasOwnProperty.call(pages, 'id')) {
         input.bookID = pages.id;
     }
 
@@ -674,103 +702,112 @@ async function licenseReport(input, socket, botID) {
     let processedPages = 0;
 
     // 'Most restrictive' to 'least restrictive'
-    let orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ck12', 'ccbyncsa', 'ccbync',
+    const orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ck12', 'ccbyncsa', 'ccbync',
         'ccbysa', 'ccby', 'gnu', 'gnufdl', 'gnudsl', 'publicdomain'];
-    let ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync', 'ck12'];
-    let ndLicenses = ['ccbyncnd', 'ccbynd'];
-    let fuLicenses = ['fairuse'];
+    const ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync', 'ck12'];
+    const ndLicenses = ['ccbyncnd', 'ccbynd'];
+    const fuLicenses = ['fairuse'];
 
+    /**
+     * Retrieves information about a content license given its internal name.
+     *
+     * @param {string} lic - The internal license identifier/name.
+     * @param {string} [version='4.0'] - The license version, only applicable to Creative
+     *  Commons (defaults to 4).
+     * @returns {LicenseInfo} The license information object, returning 'Unknown' name
+     *  fields if not found.
+     */
     function getLicenseInfo(lic, version = '4.0') {
         switch(lic) {
-            case "publicdomain":
+            case 'publicdomain':
                 return {
                     label: 'Public Domain',
-                    link: "#",
-                    raw: 'publicdomain'
+                    link: '#',
+                    raw: 'publicdomain',
                 };
-            case "ccby":
+            case 'ccby':
                 return {
                     label: 'CC BY',
                     link: `https://creativecommons.org/licenses/by/${version}/`,
                     raw: 'ccby',
-                    version: version
+                    version,
                 };
-            case "ccbysa":
+            case 'ccbysa':
                 return {
                     label: 'CC BY-SA',
                     link: `https://creativecommons.org/licenses/by-sa/${version}/`,
                     raw: 'ccbysa',
-                    version: version
+                    version,
                 };
-            case "ccbync":
+            case 'ccbync':
                 return {
                     label: 'CC BY-NC',
                     link: `https://creativecommons.org/licenses/by-nc/${version}/`,
                     raw: 'ccbync',
-                    version: version
+                    version,
                 };
-            case "ccbyncsa":
+            case 'ccbyncsa':
                 return {
                     label: 'CC BY-NC-SA',
                     link: `https://creativecommons.org/licenses/by-nc-sa/${version}/`,
                     raw: 'ccbyncsa',
-                    version: version
+                    version,
                 };
-            case "ccbynd":
+            case 'ccbynd':
                 return {
                     label: 'CC BY-ND',
                     link: `https://creativecommons.org/licenses/by-nd/${version}/`,
                     raw: 'ccbynd',
-                    version: version
+                    version,
                 };
-            case "ccbyncnd":
+            case 'ccbyncnd':
                 return {
                     label: 'CC BY-NC-ND',
                     link: `https://creativecommons.org/licenses/by-nc-nd/${version}/`,
                     raw: 'ccbyncnd',
-                    version: version
+                    version,
                 };
-            case "gnu":
+            case 'gnu':
                 return {
                     label: "GPL",
-                    link: "https://www.gnu.org/licenses/gpl-3.0.en.html",
-                    raw: 'gnu'
+                    link: 'https://www.gnu.org/licenses/gpl-3.0.en.html',
+                    raw: 'gnu',
                 };
-            case "gnudsl":
+            case 'gnudsl':
                 return {
                     label: "GNU Design Science License",
-                    link: "https://www.gnu.org/licenses/dsl.html",
-                    raw: 'gnudsl'
+                    link: 'https://www.gnu.org/licenses/dsl.html',
+                    raw: 'gnudsl',
                 };
-            case "ck12":
+            case 'ck12':
                 return {
                     label: 'CK-12 License',
                     link: 'https://www.ck12info.org/curriculum-materials-license/',
-                    raw: 'ck12'
+                    raw: 'ck12',
                 }
-            case "gnufdl":
+            case 'gnufdl':
                 return {
                     label: "GNU Free Documentation License",
-                    link: "https://www.gnu.org/licenses/fdl-1.3.en.html",
-                    raw: 'gnufdl'
+                    link: 'https://www.gnu.org/licenses/fdl-1.3.en.html',
+                    raw: 'gnufdl',
                 };
-            case "fairuse":
+            case 'fairuse':
                 return {
                     label: "Fair Use",
-                    link: "https://fairuse.stanford.edu/overview/fair-use/what-is-fair-use/",
-                    raw: 'fairuse'
+                    link: 'https://fairuse.stanford.edu/overview/fair-use/what-is-fair-use/',
+                    raw: 'fairuse',
                 };
-            case "arr":
+            case 'arr':
                 return {
-                    label: "Other",
-                    link: "#",
-                    raw: 'arr'
+                    label: 'Other',
+                    link: '#',
+                    raw: 'arr',
                 };
-            case "notset":
+            case 'notset':
                 return {
-                    label: "Undeclared",
-                    link: "#",
-                    raw: "notset"
+                    label: 'Undeclared',
+                    link: '#',
+                    raw: 'notset',
                 };
             default: {
                 return {
@@ -784,46 +821,60 @@ async function licenseReport(input, socket, botID) {
 
     socket.emit('setState', {state: 'processPages', ID: input.ID});
 
-    async function recursiveCount(pageObject) {
+    /**
+     * Recursively counts the number of pages in a book hierarchy.
+     *
+     * @param {object} pageObject - An object with basic information about the page,
+     *  retrieved from the CXone Expert API.
+     * @returns {number} The total number of pages found.
+     */
+    function recursiveCount(pageObject) {
         let count = 1;
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
-            for (let idx = 0; idx < pageObject.children.length; idx++) {
-                let newChildEntry = await recursiveCount(pageObject.children[idx]);
-                count += newChildEntry;
+        if (Array.isArray(pageObject?.children)) {
+            for (let i = 0, n = pageObject.children.length; i < n; i += 1) {
+                count += recursiveCount(pageObject.children[i]);
             }
         }
         return count;
     }
-    let pageCount = await recursiveCount(pages);
 
+    const pageCount = recursiveCount(pages);
+
+    /**
+     * Gathers and processes more detailed information about a page from the CXone Expert API.
+     *
+     * @param {string} pageHref - The URL of the page to process.
+     * @returns {Promise<PageInfo>} Detailed information about the page, including licensing.
+     */
     async function processPage(pageHref) {
-        let newEntry = {
+        const newEntry = {
             license: null
         };
-        let pageInfo = await LibreTexts.getAPI(pageHref, false, input.user);
+        const pageInfo = await LibreTexts.getAPI(pageHref, false, input.user);
         if (pageInfo.hasOwnProperty('tags') && Array.isArray(pageInfo.tags)) {
-            let foundLicTag = pageInfo.tags.find(item => item.includes('license:'));
-            let foundLicVer = pageInfo.tags.find(item => item.includes('licenseversion:'));
+            const foundLicTag = pageInfo.tags.find(item => item.includes('license:'));
+            const foundLicVer = pageInfo.tags.find(item => item.includes('licenseversion:'));
             let license = null;
             let licenseVersion = null;
             if (foundLicTag) {
                 license = foundLicTag.replace('license:', '');
                 licenseVersion = '4.0';
                 if (foundLicVer) {
-                    foundLicVer = foundLicVer.replace('licenseversion:', '');
-                    foundLicVer = foundLicVer.slice(0,1) + '.' + foundLicVer.slice(1);
-                    licenseVersion = foundLicVer;
+                    licenseVersion = foundLicVer.replace('licenseversion:', '');
+                    licenseVersion = licenseVersion.slice(0,1) + '.' + licenseVersion.slice(1);
                 }
-            } else license = 'notset';
-            let existingUnique = uniqueLicenses.find((item) => {
+            } else {
+              license = 'notset';
+            }
+            const existingUnique = uniqueLicenses.find((item) => {
                 if (item.raw === license) {
                     if (!item.version || (item.version && item.version === licenseVersion)) {
                         return item;
                     }
                 }
-                return null;
+                return false;
             });
-            let newLicenseInfo = getLicenseInfo(license, licenseVersion);
+            const newLicenseInfo = getLicenseInfo(license, licenseVersion);
             if (!existingUnique) uniqueLicenses.push(newLicenseInfo);
             newEntry.license = newLicenseInfo;
         }
@@ -833,27 +884,33 @@ async function licenseReport(input, socket, botID) {
         return newEntry;
     }
 
+    /**
+     * Recursively gathers information on a page hierarchy.
+     *
+     * @param {object} pageObject - A page hierarchy containing at least page URLs.
+     * @returns {Promise<PageInfo>} The page hierarchy with detailed information.
+     */
     async function recurseSection(pageObject) {
-        let newEntry = await processPage(pageObject.url);
+        const newEntry = await processPage(pageObject.url);
         newEntry.children = [];
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+        if (Array.isArray(pageObject.children) && pageObject.children.length > 0) {
             await async.mapLimit(pageObject.children, 5, async (subpage) => {
-                let newChildEntry = await recurseSection(subpage);
+                const newChildEntry = await recurseSection(subpage);
                 newEntry.children.push(newChildEntry);
             });
         }
         processedPages += 1;
-        let currentProgress = Math.round(processedPages / pageCount * 100);
+        const currentProgress = Math.round(processedPages / pageCount * 100);
         if (progress < currentProgress) {
             progress = currentProgress;
-            socket.volatile.emit('setState', {state: 'processing', percentage: currentProgress});
+            socket.volatile.emit('setState', { state: 'processing', percentage: currentProgress });
         }
         return newEntry;
     }
 
-    let toc = await recurseSection(pages);
-    socket.emit('setState', {state: 'processedPages', ID: input.ID});
-    socket.emit('setState', {state: 'postProcessing', ID: input.ID});
+    const toc = await recurseSection(pages);
+    socket.emit('setState', { state: 'processedPages', ID: input.ID });
+    socket.emit('setState', { state: 'postProcessing', ID: input.ID });
 
     uniqueLicenses = uniqueLicenses.map((item) => {
         return {
@@ -863,9 +920,14 @@ async function licenseReport(input, socket, botID) {
         }
     });
 
+    /**
+     * Recursively updates unique license counts in a page hierarchy.
+     *
+     * @param {PageInfo} pageObject - The page hierarchy object.
+     */
     async function recurseLicense(pageObject) {
         if (pageObject.license?.raw) {
-            let foundUnique = uniqueLicenses.findIndex((uniqLic) => {
+            const foundUnique = uniqueLicenses.findIndex((uniqLic) => {
                 if (uniqLic.raw === pageObject.license?.raw) {
                     if (!uniqLic.version || (uniqLic.version && uniqLic.version === pageObject.license?.version)) {
                         return true;
@@ -877,7 +939,7 @@ async function licenseReport(input, socket, botID) {
                 uniqueLicenses[foundUnique].count = uniqueLicenses[foundUnique].count + 1;
             }
         }
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+        if (Array.isArray(pageObject.children) && pageObject.children.length > 0) {
             await async.mapLimit(pageObject.children, 5, async (subpage) => {
                 await recurseLicense(subpage);
             });
@@ -891,16 +953,16 @@ async function licenseReport(input, socket, botID) {
         let licensePercent = (item.count / pageCount) * 100;
         if (!isNaN(licensePercent)) licensePercent = parseFloat(licensePercent.toFixed(1));
         uniqueLicenses[idx].percent = licensePercent;
-        let findMostRestr = orderedLicenses.findIndex(lic => lic === item.raw);
+        const findMostRestr = orderedLicenses.findIndex(lic => lic === item.raw);
         if ((findMostRestr >= 0) && (findMostRestr < mostRestrIdx || mostRestrIdx === null)) {
             mostRestrIdx = findMostRestr;
         }
     });
-    let mostRestrictive = getLicenseInfo(orderedLicenses[mostRestrIdx]);
+    const mostRestrictive = getLicenseInfo(orderedLicenses[mostRestrIdx]);
     let ncRestriction = false;
     let ndRestriction = false;
     let fuRestriction = false;
-    let foundSpecialRestrictions = [];
+    const foundSpecialRestrictions = [];
     uniqueLicenses.forEach((item) => {
         if (item.raw) {
             if (!ncRestriction && ncLicenses.includes(item.raw)) {
@@ -937,36 +999,45 @@ async function licenseReport(input, socket, botID) {
         sensitivity: 'base'
     });
 
+    /**
+     * Recursively sorts the pages in a hierarchy by URL.
+     *
+     * @param {PageInfo} pageObject - The page hierarchy to work on.
+     */
     async function recurseSort(pageObject) {
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+        if (Array.isArray(pageObject?.children) && pageObject.children.length > 0) {
             pageObject.children.sort((a,b) => collator.compare(a.url, b.url));
             for (let idx = 0; idx < pageObject.children.length; idx++) {
-                let subpage = pageObject.children[idx];
-                await recurseSort(subpage);
+                await recurseSort(pageObject.children[idx]);
             }
         }
     }
 
     await recurseSort(toc);
 
-    async function recurseOutput(pageObject) {
-        let newString = `<li><span>${pageObject.title}<span>`;
+    /**
+     * Recursively creates an HTML string containing a list of page hierarchy license information.
+     *
+     * @param {PageInfo} pageObject - The page hierarchy to build from
+     * @returns {string} The HTML string of the license information list.
+     */
+    function recurseOutput(pageObject) {
+        let newString = `<li><span>${pageObject.title}</span>`;
         if (pageObject.license) {
-            newString += ` — <a href="${pageObject.license?.link}" target='_blank' rel='noopener noreferrer'><em>${pageObject.license?.label}`;
-            if (pageObject.license?.version) {
-                newString += ` ${pageObject.license?.version}`;
-            }
-            newString += '</em></a>';
+            newString = `
+              ${newString} — <a href="${pageObject.license?.link}" target="_blank" rel="noreferrer">
+                <em>${pageObject.license?.label} ${pageObject.license?.version || ''}</em>
+              </a>
+            `;
         }
-        if (pageObject.children && Array.isArray(pageObject.children) && pageObject.children.length > 0) {
-            newString += '<ul>';
-            for (let idx = 0; idx < pageObject.children.length; idx++) {
-                let subpage = pageObject.children[idx];
-                newString += await recurseOutput(subpage);
+        if (Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+            newString = `${newString}<ul>`;
+            for (let i = 0, n = pageObject.children.length; i < n; i += 1) {
+                newString = `${newString}${recurseOutput(pageObject.children[i])}`;
             }
-            newString += '</ul>';
+            newString = `${newString}</ul>`;
         }
-        newString += '</li>';
+        newString = `${newString}</li>`;
         return newString;
     }
 
@@ -975,64 +1046,89 @@ async function licenseReport(input, socket, botID) {
     if (input.createReportPage === true || input.generateReportPDF === true) {
         socket.emit('setState', { state: 'formattingReport', ID: input.ID });
         reportHTML = `<h2>Overview</h2>`;
-        overviewHTML = `<p><strong>Title:</strong> <a href="${toc.url}" target='_blank' rel='noopener noreferrer'>${toc.title}</a></p><p><strong>Webpages:</strong> ${pageCount}</p>`;
+        overviewHTML = `
+          <p>
+            <strong>Title:</strong> <a href="${toc.url}" target="_blank" rel="noreferrer">${toc.title}</a>
+          </p>
+          <p>
+            <strong>Webpages:</strong> ${pageCount}
+          </p>
+        `;
         if (ncRestriction || ndRestriction || fuRestriction) { // build special restrictions list
             let restrCount = 0;
-            overviewHTML += `<p><strong>Applicable Restrictions:</strong> `;
+            overviewHTML = `${overviewHTML}<p><strong>Applicable Restrictions:</strong> `;
             if (ncRestriction) {
-                if (restrCount > 0) overviewHTML += `, `;
-                overviewHTML += `Noncommercial`;
-                restrCount++;
+                if (restrCount > 0) {
+                  overviewHTML = `${overviewHTML}, `;
+                }
+                overviewHTML = `${overviewHTML}Noncommercial`;
+                restrCount += 1;
             }
             if (ndRestriction) {
-                if (restrCount > 0) overviewHTML += `, `;
-                overviewHTML += `No Derivatives`;
-                restrCount++;
+                if (restrCount > 0) {
+                  overviewHTML = `${overviewHTML}, `;
+                }
+                overviewHTML = `${overviewHTML}No Derivatives`;
+                restrCount += 1;
             }
             if (fuRestriction) {
-                if (restrCount > 0) overviewHTML += `, `;
-                overviewHTML += `Fair Use`;
-                restrCount++;
+                if (restrCount > 0) {
+                  overviewHTML = `${overviewHTML}, `;
+                }
+                overviewHTML = `${overviewHTML}Fair Use`;
+                restrCount += 1;
             }
-            overviewHTML += `</p>`
+            overviewHTML = `${overviewHTML}</p>`
         }
-        overviewHTML += `<p><strong>All licenses found:</strong></p><ul>`;
+        overviewHTML = `${overviewHTML}<p><strong>All licenses found:</strong></p><ul>`;
         uniqueLicenses.forEach((item) => {
-            overviewHTML += `<li><a href="${item.link}" target='_blank' rel='noopener noreferrer'>${item.label}`;
+            overviewHTML = `${overviewHTML}<li><a href="${item.link}" target="_blank" rel="noreferrer">${item.label}`;
             if (item.version) {
-                overviewHTML += ` ${item.version}`;
+                overviewHTML = `${overviewHTML} ${item.version}`;
             }
-            overviewHTML += `</a>: ${item.percent}% (${item.count} ${item.count > 1 ? 'pages': 'page'})</a></li>`;
+            overviewHTML = `${overviewHTML}</a>: ${item.percent}% (${item.count} ${item.count > 1 ? 'pages': 'page'})</a></li>`;
         });
-        overviewHTML += '</ul>';
-        reportHTML += overviewHTML;
+        overviewHTML = `${overviewHTML}</ul>`;
+        reportHTML = `${reportHTML}${overviewHTML}`;
         let detailedLink = input.root;
-        if (!detailedLink.endsWith('/')) detailedLink += '/';
-        detailedLink += 'zz%3A_Back_Matter/30%3A_Detailed_Licensing';
-        overviewHTML += `<p><em>A detailed breakdown of this resource's licensing can be found in <strong><a href="${detailedLink}" rel='noopener noreferrer'>Back Matter/Detailed Licensing</a></strong></em>.</p>`;
-        reportHTML += '<h2>By Page</h2><div style="column-count: 2; margin-top: 1em;"><ul style="margin: 0;">';
-        reportHTML += await recurseOutput(toc);
-        reportHTML += '</ul></div>';
+        if (!detailedLink.endsWith('/')) {
+          detailedLink = `${detailedLink}/`;
+        }
+        detailedLink = `${detailedLink}zz%3A_Back_Matter/30%3A_Detailed_Licensing`;
+        overviewHTML = `
+          <p>
+            <em>A detailed breakdown of this resource's licensing can be found in <strong><a href="${detailedLink}" rel="noreferrer">Back Matter/Detailed Licensing</a></strong></em>.
+          </p>
+        `;
+        reportHTML = `${reportHTML}<h2>By Page</h2><div style="column-count: 2; margin-top: 1em;"><ul style="margin: 0;">`;
+        reportHTML = `${reportHTML}${recurseOutput(toc)}`;
+        reportHTML = `${reportHTML}</ul></div>`;
         socket.emit('setState', { state: 'formattedReport', ID: input.ID });
     }
 
 
     if (input.createReportPage === true) {
         socket.emit('setState', {state: 'updatingReportPage', ID: input.ID});
-        let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
-        let overviewComment = `[BOT ${input.ID}] Updated Licensing Overview`;
-        let detailedComment = `[BOT ${input.ID}] Updated Detailed Licensing`;
-        let createOverview = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing`, `contents?dream.out.format=json&title=Licensing&edittime=now&comment=${encodeURIComponent(overviewComment)}`, input.subdomain, 'LibreBot', {
-            method: 'POST',
-            body: overviewHTML
-        });
-        let createDetailed = await LibreTexts.authenticatedFetch(`${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`, `contents?dream.out.format=json&title=${encodeURIComponent('Detailed Licensing')}&edittime=now&comment=${detailedComment}`, input.subdomain, 'LibreBot', {
-            method: 'POST',
-            body: reportHTML
-        });
+        const rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
+        const overviewComment = `[BOT ${input.ID}] Updated Licensing Overview`;
+        const detailedComment = `[BOT ${input.ID}] Updated Detailed Licensing`;
+        const createOverview = await LibreTexts.authenticatedFetch(
+          `${rootPath}/00:_Front_Matter/04:_Licensing`,
+          `contents?dream.out.format=json&title=Licensing&edittime=now&comment=${encodeURIComponent(overviewComment)}`,
+          input.subdomain,
+          'LibreBot',
+          { method: 'POST', body: overviewHTML },
+        );
+        const createDetailed = await LibreTexts.authenticatedFetch(
+          `${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`,
+          `contents?dream.out.format=json&title=${encodeURIComponent('Detailed Licensing')}&edittime=now&comment=${detailedComment}`,
+          input.subdomain,
+          'LibreBot',
+          { method: 'POST', body: reportHTML },
+        );
         if (!createOverview.ok) {
-            console.error('Could not create licensing overview page.');
-            let error = await createOverview.text();
+            console.error('Could not create licensing overview page:');
+            const error = await createOverview.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
@@ -1040,24 +1136,36 @@ async function licenseReport(input, socket, botID) {
             });
         }
         if (!createDetailed.ok) {
-            console.error('Could not create detailed licensing page.');
-            let error = await createDetailed.text();
+            console.error('Could not create detailed licensing page:');
+            const error = await createDetailed.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
                 message: error
             });
         }
-        let updateOptions = {
+        const updateOptions = {
             method: 'PUT',
             headers: {'content-type': 'application/xml; charset=utf-8'},
             body: `<tags><tag value='article:topic'/></tags>`
         };
-        let updateOverviewTags = await LibreTexts.authenticatedFetch(`${rootPath}/00:_Front_Matter/04:_Licensing`, `tags`, input.subdomain, 'LibreBot', updateOptions);
-        let updateDetailedTags = await LibreTexts.authenticatedFetch(`${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`, `tags`, input.subdomain, 'LibreBot', updateOptions);
+        const updateOverviewTags = await LibreTexts.authenticatedFetch(
+          `${rootPath}/00:_Front_Matter/04:_Licensing`,
+          `tags`,
+          input.subdomain,
+          'LibreBot',
+          updateOptions,
+        );
+        const updateDetailedTags = await LibreTexts.authenticatedFetch(
+          `${rootPath}/zz:_Back_Matter/30:_Detailed_Licensing`,
+          `tags`,
+          input.subdomain,
+          'LibreBot',
+          updateOptions,
+        );
         if (!updateOverviewTags.ok) {
             console.error('Could not update licensing overview tags.');
-            let error = await updateOverviewTags.text();
+            const error = await updateOverviewTags.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
@@ -1066,17 +1174,20 @@ async function licenseReport(input, socket, botID) {
         }
         if (!updateDetailedTags.ok) {
             console.error('Could not update detailed licensing tags.');
-            let error = await updateDetailedTags.text();
+            const error = await updateDetailedTags.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
                 message: error,
             });
         }
-        socket.emit('setState', {state: 'updatedReportPage', ID: input.ID});
+        socket.emit('setState', { state: 'updatedReportPage', ID: input.ID });
     }
 
-
+    /**
+     * Creates a PDF of the new License Report using Puppeteer, then attaches
+     * it to the book coverpage.
+     */
     async function generatePDF() {
         const browser = await puppeteer.launch({
             args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -1121,7 +1232,7 @@ async function licenseReport(input, socket, botID) {
                 </body>
             </html>
         `, {
-            waitUntil: 'networkidle0'
+            waitUntil: ['domcontentloaded', 'networkidle0'],
         });
         const newPDF = await page.pdf({
             format: 'Letter',
@@ -1130,17 +1241,20 @@ async function licenseReport(input, socket, botID) {
                 left: '48px',
                 bottom: '48px',
                 right: '48px'
-            }
+            },
         });
         await browser.close();
-        let rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
-        let attachReport = await LibreTexts.authenticatedFetch(rootPath, `files/content-licensing-report.pdf?dream.out.format=json`, input.subdomain, 'LibreBot', {
-            method: 'PUT',
-            body: newPDF
-        });
+        const rootPath = input.root.replace(`https://${input.subdomain}.libretexts.org/`, '');
+        const attachReport = await LibreTexts.authenticatedFetch(
+          rootPath,
+          `files/content-licensing-report.pdf?dream.out.format=json`,
+          input.subdomain,
+          'LibreBot',
+          { method: 'PUT', body: newPDF },
+        );
         if (!attachReport.ok) {
             console.error('Could not attach licensing report PDF.');
-            let error = await attachReport.text();
+            const error = await attachReport.text();
             console.error(error);
             socket.emit('errorMessage', {
                 noAlert: false,
@@ -1155,8 +1269,8 @@ async function licenseReport(input, socket, botID) {
         socket.emit('setState', {state: 'generatedPDF', ID: input.ID});
     }
 
-    let endTime = performance.now();
-    let licenseReportData = {
+    const endTime = performance.now();
+    const licenseReportData = {
         id: input.bookID,
         library: input.subdomain,
         coverID: `${input.subdomain}-${input.bookID}`,
@@ -1167,10 +1281,10 @@ async function licenseReport(input, socket, botID) {
             specialRestrictions: foundSpecialRestrictions,
             licenses: uniqueLicenses
         },
-        text: toc
+        text: toc,
     };
     if (input.hasOwnProperty('bookID')) {
-        let fileOutName = filenamify(input.subdomain + '-' + input.bookID);
+        const fileOutName = filenamify(input.subdomain + '-' + input.bookID);
         await fs.ensureDir(`./public/licensereports`);
         await fs.writeJSON(`./public/licensereports/${fileOutName}.json`, licenseReportData);
     }
