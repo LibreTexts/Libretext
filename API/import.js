@@ -1,4 +1,5 @@
 const http = require('http');
+const crypto = require('crypto');
 const timestamp = require("console-timestamp");
 const EPub = require("epub");
 const filenamify = require('filenamify');
@@ -19,7 +20,9 @@ const util = require('util');
 const Eta = require('node-eta');
 const zipLocal = require('zip-local');
 const convert = require('xml-js');
+const puppeteer = require('puppeteer');
 const secret = require('./secure.json');
+const authen = require('./authen.json');
 const excelToJson = require('convert-excel-to-json');
 
 const LibreTexts = require("./reuse.js");
@@ -36,6 +39,31 @@ findRemoveSync('./ImportFiles', {
     age: {seconds: 30 * 8.64e+4},
     files: "*.*",
 });
+
+const PPTR_PAGE_TIMEOUT = 60000;
+const PPTR_LOAD_SETTINGS = {
+  timeout: PPTR_PAGE_TIMEOUT,
+  waitUntil: ['load', 'domcontentloaded', 'networkidle0']
+};
+const API_THROTTLE_TIME = 2500;
+
+/**
+ * Creates a Promise blocking thread execution for the specified time when used with `await`.
+ *
+ * @param {number} ms - The time to pause execution, in milliseconds. 
+ * @returns {Promise<null>} A promise resolved when the specified time has passed.
+ */
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Handler to log and dismiss Javascript dialogs encountered when using Puppeteer.
+ *
+ * @param {puppeteer.Dialog} dialog - The dialog that triggered the handler.
+ */
+async function pptrDialogHandler(dialog) {
+  console.log(`[Puppeteer Dialog]: ${dialog.message()}`);
+  await dialog.dismiss();
+}
 
 function handler(request, response) {
     const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -213,6 +241,97 @@ async function listFiles(data, socket) {
         files = files.map(elem => elem.name);
         socket.emit('listFiles', files);
     }
+}
+
+/**
+ * Generates an API token for use with the CXone Expert API.
+ *
+ * @param {string} user - The username to authenticate as.
+ * @param {string} subdomain - The internal library shortname/identifier.
+ * @returns {string} The generated token.
+ */
+function authenticateUser(user, subdomain) {
+  const userName = `=${user}`;
+  const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
+  const epoch = Math.floor(Date.now() / 1000);
+  hmac.update(`${authen[subdomain].key}${epoch}${userName}`);
+  const hash = hmac.digest('hex');
+  return `${authen[subdomain].key}_${epoch}_${userName}_${hash}`;
+}
+
+/**
+ * Creates a Puppeteer Browser and authenticates the provided user in the browser context.
+ *
+ * @param {string} user - The username to authenticate as.
+ * @param {string} subdomain - The internal library shortname/identifier.
+ * @returns {Promise<puppeteer.Browser>} A Browser instance, or null if error encountered.
+ */
+async function initializePuppeteer(user, subdomain) {
+  try {
+    if (typeof (user) !== 'string' || user.length < 1) {
+      throw(new Error('Invalid user provided.'));
+    }
+    if (typeof (subdomain) !== 'string' || subdomain.length < 1) {
+      throw(new Error('Invalid subdomain provided.'));
+    }
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+    });
+    const page = await browser.newPage();
+    const token = authenticateUser(user, subdomain);
+    const redirect = `https://${subdomain}.libretexts.org/?no-cache`;
+    await page.goto(
+      `https://${subdomain}.libretexts.org/@api/deki/users/authenticate?x-deki-token=${token}&redirect=${redirect}`,
+      PPTR_PAGE_TIMEOUT,
+    );
+    await page.close();
+    return browser;
+  } catch (e) {
+    console.error('Error initializing browser instance:');
+    console.error(e);
+  }
+  return null;
+}
+
+/**
+ * Performs HTML preprocessing on a newly created page by using the library's CKEditor instance.
+ * 
+ * @param {object} page - A page object, containing at least a url.
+ * @param {puppeteer.Browser} browser - An authenticated Puppeteer browser instance.
+ * @returns {Promise<boolean>} True if successful, false if errors occurred.
+ */
+async function doHtmlPreprocess(page, browser) {
+  if (typeof (page) !== 'object' || page === null || page === undefined) {
+    console.error('HTML Preprocess: Invalid page provided.');
+    return false;
+  }
+  if (browser === null) {
+    console.error('HTML Preprocess: Invalid browser provided.');
+    return false;
+  }
+  if (typeof (page.url) === 'string') {
+    try {
+      const browserPage = await browser.newPage();
+      browserPage.on('dialog', pptrDialogHandler);
+      await browserPage.goto(page.url, PPTR_LOAD_SETTINGS);
+      await browserPage.keyboard.down('Control');
+      await browserPage.keyboard.press('e');
+      await browserPage.keyboard.up('Control');
+      await sleep(5000); // let CKEditor load
+      await browserPage.keyboard.down('Control');
+      await browserPage.keyboard.press('s');
+      await browserPage.keyboard.up('Control');
+      await browserPage.waitForNavigation(PPTR_LOAD_SETTINGS); // wait for reload-on-save
+      await browserPage.close();
+      await sleep(API_THROTTLE_TIME); // throttle
+    } catch (e) {
+      console.error(`HTML Preprocess: Error preprocessing ${page.url}`);
+    }
+  }
+  return true;
 }
 
 /*processPretext({
@@ -634,6 +753,11 @@ async function processEPUB(data, socket) {
     const eta = new Eta(whole.length, true);
     let backlogClearer = setInterval(clearBacklog, 1000);
 
+    const pptrBrowser = await initializePuppeteer(data.user, data.subdomain);
+    if (pptrBrowser === null) {
+      socket.emit('errorMessage', `Couldn't initialize Importer Browser.`);
+    }
+
     if (await coverPage(onlinePath, isSimple)) {
         if (isSimple) { //falling back to simple import
             socket.emit('errorMessage', 'Warning: Cannot determine structure. Falling back to simple import.');
@@ -652,6 +776,7 @@ async function processEPUB(data, socket) {
         });
         clearInterval(backlogClearer);
         await clearBacklog();
+        console.log(`Finished processing ${data.filename}`);
     }
 
     async function clearBacklog() {
@@ -725,6 +850,12 @@ async function processEPUB(data, socket) {
                 type: 'Chapter',
                 url: `https://${data.subdomain}.libretexts.org/${path}`,
             };
+
+            await sleep(API_THROTTLE_TIME);
+            if (pptrBrowser !== null) {
+              await doHtmlPreprocess(entry, pptrBrowser);
+            }
+
             backlog.push(entry);
             log.push(entry);
             eta.iterate();
@@ -809,6 +940,11 @@ async function processEPUB(data, socket) {
                 type: 'Topic',
                 url: `https://${data.subdomain}.libretexts.org/${path}`,
             };
+
+            if (pptrBrowser !== null) {
+              await doHtmlPreprocess(entry, pptrBrowser);
+            }
+
             backlog.push(entry);
             log.push(entry);
             eta.iterate();
