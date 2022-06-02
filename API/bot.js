@@ -1022,7 +1022,7 @@ async function licenseReport(inputData, socket, botID) {
      * @returns {string} The HTML string of the license information list.
      */
     function recurseOutput(pageObject) {
-        let newString = `<li><span>${pageObject.title}</span>`;
+        let newString = `<li><a href="${pageObject.url}" target="_blank">${pageObject.title}</a>`;
         if (pageObject.license) {
             newString = `
               ${newString} — <a href="${pageObject.license?.link}" target="_blank" rel="noreferrer">
