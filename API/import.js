@@ -896,7 +896,7 @@ async function processEPUB(data, socket) {
 
     if (await coverPage(onlinePath, isSimple)) {
         if (isSimple) { //falling back to simple import
-            socket.emit('errorMessage', 'Warning: Cannot determine structure. Falling back to simple import.');
+            socket.emit('warnMessage', 'Warning: Cannot determine structure. Falling back to simple import.');
             await processPages(whole, onlinePath, null);
         }
         else {
