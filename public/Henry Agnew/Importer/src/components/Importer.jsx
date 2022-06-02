@@ -6,6 +6,8 @@ export default function Importer(props) {
     const [counter, setCounter] = useState(0);
     const [state, setState] = useState('');
     const [results, setResults] = useState([]);
+    const [warnings, setWarnings] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [file, setFile] = useState();
     const [files, setFiles] = useState([]);
     const [seconds, setSeconds] = useState(-1);
@@ -46,10 +48,13 @@ export default function Importer(props) {
                     break;
             }
         });
+        socket.on('warnMessage', function (data) {
+          setWarnings((currWarns) => currWarns.concat(data));
+          console.warn(data.message || data);
+        });
         socket.on('errorMessage', function (data) {
-            if (!data.noAlert)
-                alert(data.message || data);
-            console.error(data.message || data);
+          setErrors((currErrs) => currErrs.concat(data));
+          console.error(data.message || data);
         });
         setSocket(socket);
         socket.emit('listFiles', {user: user, type: props.panel});
@@ -125,9 +130,57 @@ export default function Importer(props) {
             </div>
             <div>
                 {getStatusBar()}
+                <div id="errors">
+                  <AutoSizer disableHeight={true}>
+                    {(_height, width) => (
+                      <List
+                        className="errorList"
+                        height={Math.min(errors.length * 40, 400)}
+                        itemCount={errors.length}
+                        itemSize={15}
+                        width={width}
+                      >
+                        {({ index, style }) => {
+                          const err = errors[index];
+                          const output = err.message || err.toString();
+                          const key = errors.length - index;
+                          return (
+                            <div style={style} key={true}>
+                              <span>{key} Error: {output}</span>
+                            </div>
+                          )
+                        }}
+                      </List>
+                    )}
+                  </AutoSizer>
+                </div>
+                <div id="warnings">
+                  <AutoSizer disableHeight={true}>
+                    {(_height, width) => (
+                      <List
+                        className="warnList"
+                        height={Math.min(warnings.length * 40, 400)}
+                        itemCount={warnings.length}
+                        itemSize={15}
+                        width={width}
+                      >
+                        {({ index, style }) => {
+                          const warn = warnings[index];
+                          const output = warn.message || warn.toString();
+                          const key = warnings.length - index;
+                          return (
+                            <div style={style} key={true}>
+                              <span>{key} Warning: {output}</span>
+                            </div>
+                          )
+                        }}
+                      </List>
+                    )}
+                  </AutoSizer>
+                </div>
                 <div id="results">
                     <AutoSizer disableHeight={true}>
-                        {({height, width}) => (
+                        {({_height, width}) => (
                             <List
                                 className="List"
                                 height={Math.min(results.length * 40, 400)}

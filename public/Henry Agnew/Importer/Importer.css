@@ -34,6 +34,18 @@
 	max-height: 400px;
 }
 
+#errors {
+	white-space: pre;
+	max-height: 400px;
+  color: #A40D0A;
+}
+
+#warnings {
+	white-space: pre;
+	max-height: 400px;
+  color: #D84018;
+}
+
 #FindReplace {
 	display: flex;
 	flex-direction: column;
