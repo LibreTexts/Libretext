@@ -245,6 +245,87 @@ async function listFiles(data, socket) {
 }
 
 /**
+ * Attempts to find an EPUB's license given an identifier of a file with copyright information.
+ *
+ * @param {EPub} epub - The initialized EPub object.
+ * @param {string} copyrightFileID - The internal ID of the copyright information file.
+ * @returns {Promise<object|null>} An object containing the found license, or null if not found.
+ */
+async function getEPUBLicenseFromFile(epub, copyrightFileID) {
+  const generatePotentialLicenses = (version = '4.0') => {
+    return [
+      {
+        label: 'CC BY',
+        link: `https://creativecommons.org/licenses/by/${version}/`,
+        raw: 'ccby',
+        version: version,
+      }, {
+        label: 'CC BY-SA',
+        link: `https://creativecommons.org/licenses/by-sa/${version}/`,
+        raw: 'ccbysa',
+        version: version
+      }, {
+        label: 'CC BY-NC',
+        link: `https://creativecommons.org/licenses/by-nc/${version}/`,
+        raw: 'ccbync',
+        version: version
+      }, {
+        label: 'CC BY-NC-SA',
+        link: `https://creativecommons.org/licenses/by-nc-sa/${version}/`,
+        raw: 'ccbyncsa',
+        version: version
+      }, {
+        label: 'CC BY-ND',
+        link: `https://creativecommons.org/licenses/by-nd/${version}/`,
+        raw: 'ccbynd',
+        version: version
+      }, {
+        label: 'CC BY-NC-ND',
+        link: `https://creativecommons.org/licenses/by-nc-nd/${version}/`,
+        raw: 'ccbyncnd',
+        version: version
+      }, {
+        label: "GPL",
+        link: "https://www.gnu.org/licenses/gpl-3.0.en.html",
+        raw: 'gnu'
+      }, {
+        label: "GNU Design Science License",
+        link: "https://www.gnu.org/licenses/dsl.html",
+        raw: 'gnudsl'
+      }, {
+        label: "GNU Free Documentation License",
+        link: "https://www.gnu.org/licenses/fdl-1.3.en.html",
+        raw: 'gnufdl'
+      },
+    ]
+  };
+  try {
+    const copyrightPage = await epub.getChapterRaw(copyrightFileID);
+    const $ = cheerio.load(copyrightPage, { xml: true, decodeEntities: false }, false);
+    const licenseElem = $('a[rel="license"]');
+    if (licenseElem) {
+      const licenseLink = licenseElem.attr('href');
+      if (licenseLink) {
+        let version;
+        const versionMatches = licenseLink.match(/[0-9].[0-9]/);
+        if (versionMatches && versionMatches.length > 0) {
+          version = versionMatches[0];
+        }
+        const possLic = generatePotentialLicenses(version);
+        const foundMatch = possLic.find((item) => item.link === licenseLink);
+        if (foundMatch) {
+          return foundMatch;
+        }
+      }
+    }
+  } catch (e) {
+    console.error('Get EPUB License: Error encountered:');
+    console.error(e);
+  }
+  return null;
+}
+
+/**
  * Generates an API token for use with the CXone Expert API.
  *
  * @param {string} user - The username to authenticate as.
@@ -733,14 +814,20 @@ async function processEPUB(data, socket) {
     await new Promise((resolve, reject) => {
         epub.on("end", resolve);
     });
-    const title = epub.metadata.title;
 
+    epub.getChapterRaw = util.promisify(epub.getChapterRaw);
+    epub.getImage = util.promisify(epub.getImage);
+    epub.readFile = util.promisify(epub.readFile);
+
+    const title = epub.metadata.title;
     let filtered = [];
     let chapters = [];
     let whole = [];
     const toc = epub.flow;
     let chapterIndex = 0;
     let pageIndex = 1;
+    let license = null;
+    let licTagStrings = '';
 
     for (let i = 0; i < toc.length; i++) {
         if (toc[i].level) {
@@ -761,6 +848,8 @@ async function processEPUB(data, socket) {
             chapters.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
             chapterIndex++;
             pageIndex = 1;
+        } else if (toc[i].href.includes('copyright')) {
+          license = await getEPUBLicenseFromFile(epub, toc[i].id);
         }
         whole.push({title: toc[i].title, id: toc[i].id, href: toc[i].href});
     }
@@ -772,6 +861,14 @@ async function processEPUB(data, socket) {
             current.index = i;
             filteredChapters.push(current);
         }
+    }
+
+    if (license) {
+      socket.emit('warnMessage', `Caution - This file's license was automatically determined and applied to every page. Ensure it has been set properly.`);
+      licTagStrings = `<a href=\"#\">license:${license.raw}</a>`;
+      if (license.version) {
+        licTagStrings = `${licTagStrings}<a href=\"#\">licenseversion:${license.version.replace('.', '')}</a>`;
+      }
     }
 
     let onlinePath = `Sandboxes/${data.user}`;
@@ -826,7 +923,7 @@ async function processEPUB(data, socket) {
     }
 
     async function coverPage(path, isSimple) {
-        let content = `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-${isSimple ? 'guide' : 'category'}</a><a href=\"#\">coverpage:yes</a></p>`;
+        let content = `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-${isSimple ? 'guide' : 'category'}</a><a href=\"#\">coverpage:yes</a>${licTagStrings}</p>`;
         let response = await Working.authenticatedFetch(path, 'contents?edittime=now', {
             method: "POST",
             body: content,
@@ -870,7 +967,7 @@ async function processEPUB(data, socket) {
             path = LibreTexts.cleanPath(path);
             let response = await Working.authenticatedFetch(path, `contents?edittime=now${padded !== title ? `&title=${encodeURIComponent(title)}` : ''}`, {
                 method: "POST",
-                body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a></p>`,
+                body: `<p>{{template.ShowOrg()}}</p><p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic-guide</a>${licTagStrings}</p>`,
             });
             if (!response.ok) {
                 let error = await response.text();
@@ -915,9 +1012,6 @@ async function processEPUB(data, socket) {
         return await async.mapLimit(pageArray, 1, processPage);
 
         async function processPage(page) {
-            epub.getChapterRaw = util.promisify(epub.getChapterRaw);
-            epub.getImage = util.promisify(epub.getImage);
-            epub.readFile = util.promisify(epub.readFile);
             let contents = await epub.getChapterRaw(page.id);
             let pressBooksContent = contents.match(/(?<=class="ugc.*>)[\s\S]*?(?=<\/div>\n+<\/div>\n*<\/body>)/m);
             if (pressBooksContent) {
@@ -969,7 +1063,7 @@ async function processEPUB(data, socket) {
                 return [filename, file, prefix + filename];
             }
 
-            contents = `${contents}<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a></p>`
+            contents = `${contents}<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a>${licTagStrings}</p>`
 
             let response = await Working.authenticatedFetch(path, `contents?edittime=now&dream.out.format=json&title=${encodeURIComponent(title)}`, {
                 method: 'POST',
