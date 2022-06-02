@@ -21,6 +21,7 @@ const Eta = require('node-eta');
 const zipLocal = require('zip-local');
 const convert = require('xml-js');
 const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
 const secret = require('./secure.json');
 const authen = require('./authen.json');
 const excelToJson = require('convert-excel-to-json');
@@ -332,6 +333,44 @@ async function doHtmlPreprocess(page, browser) {
     }
   }
   return true;
+}
+
+/**
+ * @typedef {object} PageTitleExtraction
+ * @property {string} title - The found page title.
+ * @property {string} contents - The updated contents.
+ */
+
+/**
+ * Attempts to determine a page's title from an h1 element. If found, the
+ * element is removed after extraction.
+ *
+ * @param {string} contents - The page's XML/HTML contents.
+ * @returns {[boolean, (PageTitleExtraction|null)]} A 2-tuple containing a success flag (true if
+ *  found), an an object with results (or null if not found).
+ */
+function extractPageTitle(contents) {
+  try {
+    if (!contents || typeof (contents) !== 'string') {
+      throw (new Error('Invalid page contents provided.'));
+    }
+    const $ = cheerio.load(contents, { xml: true, decodeEntities: false }, false);
+    const headingOne = $('h1').first();
+    if (headingOne) {
+      const pageTitle = headingOne.text();
+      if (pageTitle.trim().length > 0) {
+        headingOne.remove();
+        return [true, {
+          title: pageTitle,
+          contents: $.html().trim(),
+        }];
+      }
+    }
+  } catch (e) {
+    console.error('Title Extraction: Error encountered:');
+    console.error(e);
+  }
+  return [false, null];
 }
 
 /*processPretext({
@@ -885,7 +924,17 @@ async function processEPUB(data, socket) {
                 contents = pressBooksContent[0];
             }
 
-            let title = page.title || `Untitled Page ${("" + ++untitled).padStart(2, "0")}`;
+            let title = page.title;
+            if (!title) {
+              const [titleFound, extractResult] = extractPageTitle(contents);
+              if (titleFound) {
+                title = extractResult.title;
+                contents = extractResult.contents;
+              } else {
+                title = `Untitled Page ${("" + ++untitled).padStart(2, "0")}`;
+              }
+            }
+
             let path = LibreTexts.cleanPath(title.replace("/","--"));
 
             let chapterNumber = path.match(/.*?(?=\.)/);
@@ -934,9 +983,9 @@ async function processEPUB(data, socket) {
             await Working.putProperty('mindtouch.page#welcomeHidden', true, path);
 
             //report page upload
-            console.log('Topic', page.title || title);
+            console.log('Topic', title);
             let entry = {
-                title: page.title,
+                title: title,
                 type: 'Topic',
                 url: `https://${data.subdomain}.libretexts.org/${path}`,
             };
