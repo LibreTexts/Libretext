@@ -132,7 +132,7 @@ export default function Importer(props) {
                 {getStatusBar()}
                 <div id="errors">
                   <AutoSizer disableHeight={true}>
-                    {(_height, width) => (
+                    {({ _height, width }) => (
                       <List
                         className="errorList"
                         height={Math.min(errors.length * 40, 400)}
@@ -156,7 +156,7 @@ export default function Importer(props) {
                 </div>
                 <div id="warnings">
                   <AutoSizer disableHeight={true}>
-                    {(_height, width) => (
+                    {({ _height, width }) => (
                       <List
                         className="warnList"
                         height={Math.min(warnings.length * 40, 400)}
@@ -180,7 +180,7 @@ export default function Importer(props) {
                 </div>
                 <div id="results">
                     <AutoSizer disableHeight={true}>
-                        {({_height, width}) => (
+                        {({ _height, width }) => (
                             <List
                                 className="List"
                                 height={Math.min(results.length * 40, 400)}
