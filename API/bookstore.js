@@ -393,16 +393,29 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
     
     // console.log("Fulfilling order", JSON.stringify(session, null, 2));
     let lineItems = session.line_items.data;
-    
-    //optional chaining for validity checking
-    if (!lineItems?.[0]?.price?.product?.metadata?.numPages) {
-        console.error(`[Invalid Lulu order] ${session.id}`);
-        return;
+    if (!Array.isArray(lineItems)) {
+      console.error(`[Invalid Stripe data] ${session.id}`);
+      return;
     }
-    
-    let shippingSpeed = lineItems.pop();
-    shippingSpeed = shippingSpeed.price.product.metadata.shippingSpeed || "MAIL";
-    lineItems = lineItems.filter(item => item?.price?.product?.metadata?.pageID);
+
+    /* Find/validate book in payload */
+    const foundBook = lineItems.find((item) => {
+      return (typeof (item.price?.product?.metadata?.numPages) === 'string');
+    });
+    if (!foundBook) {
+      console.error(`[Invalid Lulu order] ${session.id}`);
+    }
+
+    /* Find/validate shipping option in payload */
+    const foundShipping = lineItems.find((item) => {
+      return (typeof (item.price?.product?.metadata?.shippingSpeed) === 'string');
+    });
+    let shippingSpeed = "MAIL"; // fallback
+    if (foundShipping) {
+      shippingSpeed = foundShipping.price.product.metadata.shippingSpeed;
+    }
+
+    lineItems = [foundBook]; // maintain array shape for Lulu
     lineItems = lineItems.map(item => {
         return {
             quantity: item.quantity,
