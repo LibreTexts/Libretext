@@ -132,14 +132,7 @@ puppeteer.launch({
                 url = url.split('/A4')[1];
             }
             
-            if (request.headers.host === 'home.miniland1333.com' && request.method === 'OPTIONS') { //options checking
-                response.writeHead(200, {
-                    'Access-Control-Allow-Origin': request.headers.origin || null,
-                    'Access-Control-Allow-Methods': 'HEAD, GET, PUT',
-                });
-                response.end();
-            }
-            else if (url.startsWith("/url=")) { //single page
+            if (url.startsWith("/url=")) { //single page
                 url = url.split('/url=')[1];
                 
                 //query string handling
@@ -235,20 +228,8 @@ puppeteer.launch({
                 }
             }
             else if (url === '/' || url.startsWith("/ping")) {
-                if (request.headers.host && request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-                    response.writeHead(200, {
-                        "Access-Control-Allow-Origin": request.headers.origin || null,
-                        "Access-Control-Allow-Methods": "GET",
-                        "Content-Type": " text/plain",
-                    });
-                    response.end();
-                }
-                else if (["GET", "HEAD"].includes(request.method)) {
-                    response.writeHead(200, request.headers.host && request.headers.host.includes(".miniland1333.com") ? {
-                        "Access-Control-Allow-Origin": request.headers.origin || null,
-                        "Access-Control-Allow-Methods": "GET",
-                        "Content-Type": " text/plain",
-                    } : {"Content-Type": " text/plain"});
+                if (["GET", "HEAD"].includes(request.method)) {
+                    response.writeHead(200, {"Content-Type": " text/plain"});
                     response.end();
                 }
                 else {
@@ -342,11 +323,7 @@ puppeteer.launch({
                     return;
                 }
                 else {
-                    response.writeHead(200, request.headers.host.includes('.miniland1333.com') ? {
-                        'Access-Control-Allow-Origin': request.headers.origin || null,
-                        'Access-Control-Allow-Methods': 'PUT',
-                        'Content-Type': 'application/json',
-                    } : {'Content-Type': 'application/json'});
+                    response.writeHead(200, {'Content-Type': 'application/json'});
                 }
                 let body = [];
                 request.on('data', (chunk) => {
@@ -887,7 +864,7 @@ puppeteer.launch({
               // Get subtitles
               let inner = await async.map(pages, async (elem) => {
                   if (!elem.title) elem = await getAPI(elem);
-                  if (elem.modified === 'restricted') return ''; // private page 
+                  if (elem.modified === 'restricted') return ''; // private page
                   const isSubtopic = level > 2 ? `indent${level - 2}` : null;
                   const subPageDir = await getLevel(elem, level + 1, isSubTOC);
                   let hasSubpages = false;
@@ -1195,7 +1172,7 @@ puppeteer.launch({
             let stats, err, compile;
             
             if (ip.startsWith('<<Batch')) {
-              
+            
             }
             if ((working[escapedURL] && Date.now() - working[escapedURL] > 120000)) {
                 delete working[escapedURL];	//2 min timeout for DUPE
@@ -1291,7 +1268,7 @@ puppeteer.launch({
                             }
                             title.innerHTML = `<a style="color:${color}; text-decoration: none" href="${url}">${innerText}</a>`
                         }
-                        let tags = document.getElementById('pageTagsHolder').innerText;                        
+                        let tags = document.getElementById('pageTagsHolder').innerText;
                         return [prefix, innerText, tags];
                     }, url);
                     let prefix = out[0];
@@ -1676,7 +1653,7 @@ puppeteer.launch({
                             title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
                         } else {
                             title = `99999:${String.fromCharCode(64 + page.miniIndex)} ${page.title}`;
-                        }  
+                        }
                     } else if (page.subpages && page.subpages.length > 1 && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
                         filename = `TOC/${await getTOC(page)}.pdf`;
                         
@@ -1859,7 +1836,7 @@ puppeteer.launch({
                     }
                 } catch (e) {
                     console.error(`Error creating zip files ${zipFilename}`);
-                    console.error(e);   
+                    console.error(e);
                 }
             }
             const end = performance.now();
