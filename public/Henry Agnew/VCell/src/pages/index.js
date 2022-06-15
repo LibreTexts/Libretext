@@ -286,7 +286,7 @@ function VCellReactHook(props) {
                     Load File
                 </Button> : null}
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
-                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}><p>Simulation ran using {simulator.simulator} and powered by https://run.biosimulations.org</p></Tooltip>
+                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}><p>Simulation ran using {simulator} and powered by https://run.biosimulations.org</p></Tooltip>
             </div>
             <div style={{flex: 2}}>
                 <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} quickData={quickData}/>
