@@ -22,7 +22,7 @@ export default function BatchMonitor(props) {
     const [toBatch, setToBatch] = React.useState(initializeLibraryObject);
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [allBatch, setAllBatch] = React.useState({courses: 'unchecked', bookshelves: 'unchecked'});
-    const batchEndpoint = props.devMode ? 'https://home.miniland1333.com/print' : 'https://batch.libretexts.org/print'
+    const batchEndpoint = 'https://batch.libretexts.org/print'
     const pathStyle = {cursor: 'pointer', userSelect: 'none'};
     
     useEffect(() => {
