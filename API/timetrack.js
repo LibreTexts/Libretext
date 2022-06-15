@@ -20,20 +20,8 @@ function handler(request, response) {
 	
 	if (url.startsWith("/receive")) {
 		if (request.headers.origin && request.headers.origin.endsWith("libretexts.org")) {
-			if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-				response.writeHead(200, {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " text/plain",
-				});
-				response.end();
-			}
-			else if (request.method === "POST") {
-				response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-					"Access-Control-Allow-Origin": request.headers.origin || null,
-					"Access-Control-Allow-Methods": "POST",
-					"Content-Type": " text/plain",
-				} : {"Content-Type": " text/plain"});
+			if (request.method === "POST") {
+				response.writeHead(200, {"Content-Type": " text/plain"});
 				let body = [];
 				request.on('data', (chunk) => {
 					body.push(chunk);
@@ -70,20 +58,8 @@ function handler(request, response) {
 		}
 	}
 	else if (url.startsWith("/ping")) {
-		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-			response.writeHead(200, {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "GET",
-				"Content-Type": " text/plain",
-			});
-			response.end();
-		}
-		else if (request.method === "GET") {
-			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "GET",
-				"Content-Type": " text/plain",
-			} : {"Content-Type": " text/plain"});
+		if (request.method === "GET") {
+			response.writeHead(200, {"Content-Type": " text/plain"});
 			response.end();
 		}
 		else {
@@ -91,20 +67,8 @@ function handler(request, response) {
 		}
 	}
 	else if (url.startsWith("/editorStats?user=")) {
-		if (request.headers.host.includes(".miniland1333.com") && request.method === "OPTIONS") { //options checking
-			response.writeHead(200, {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "GET",
-				"Content-Type": " text/plain",
-			});
-			response.end();
-		}
-		else if (request.method === "GET") {
-			response.writeHead(200, request.headers.host.includes(".miniland1333.com") ? {
-				"Access-Control-Allow-Origin": request.headers.origin || null,
-				"Access-Control-Allow-Methods": "GET",
-				"Content-Type": " text/plain",
-			} : {"Content-Type": " text/plain"});
+		if (request.method === "GET") {
+			response.writeHead(200, {"Content-Type": " text/plain"});
 			let user = url.split("?user=")[1];
 			user = decodeURIComponent(user);
 			getUserData(user).then((result) => {

@@ -9,7 +9,6 @@ if (!window["analytics.js"]) {
         const root = "api.libretexts.org";
         let coverpage;
         let login = '';
-        // const root = "home.miniland1333.com"
         
         
         if (navigator.webdriver || isUserAutomated || window.matchMedia('print').matches) {

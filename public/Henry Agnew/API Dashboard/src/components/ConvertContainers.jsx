@@ -28,7 +28,8 @@ export default class ConvertContainers extends React.Component {
     }
     
     componentDidMount() {
-        this.socket = io(this.props.devMode ? 'https://home.miniland1333.com/' : 'https://api.libretexts.org/', {path: '/bot/ws'});
+        // this.socket = io(this.props.devMode ? '<dev endpoint>' : 'https://api.libretexts.org/', {path: '/bot/ws'});
+        this.socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
         this.socket.on('pages', (data) => {
             // console.log(data);
             let tempResults = data.concat(this.state.results);

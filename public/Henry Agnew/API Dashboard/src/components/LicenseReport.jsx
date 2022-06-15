@@ -30,7 +30,8 @@ export default class LicenseReport extends React.Component {
     }
 
     componentDidMount() {
-        this.socket = io(this.props.devMode?'https://home.miniland1333.com/':'https://api.libretexts.org/', {path: '/bot/ws'});
+        // this.socket = io(this.props.devMode ? '<dev endpoint>' : 'https://api.libretexts.org/', {path: '/bot/ws'});
+        this.socket = io('https://api.libretexts.org/', {path: '/bot/ws'});
         this.socket.on('setState', (data) => {
             switch (data.state) {
                 case 'starting':
