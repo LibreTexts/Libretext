@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import GraphResults from "../components/GraphResults.jsx";
 import Button from "@material-ui/core/Button";
 import {SnackbarProvider, useSnackbar} from 'notistack';
-import {Accordion, AccordionDetails,AccordionSummary, Tooltip} from "@material-ui/core";
+import {Accordion, AccordionDetails, AccordionSummary, Tooltip} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 
@@ -29,10 +29,14 @@ const dataset = document.currentScript.dataset;
 const AVOGADRO = 6.02214076E23;
 const SLOW_API_ENDPOINT = `https://api.biosimulations.org`;
 const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`;
-const speed = dataset.quick;
-const API_ENDPOINT = Boolean(dataset.quick) ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
-const simulator = dataset.simulator ?? "vcell";
+const isQuick = Boolean(dataset.quick);
+const API_ENDPOINT = isQuick ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
+const simulator = dataset.simulator || "vcell";
 
+let prevjobid = undefined;
+if (!isQuick) { // only allowed for slow jobs
+    prevjobid = dataset.prevjobid?.trim() || undefined
+}
 /*
 React Hook for creating OMEX files based on user inputs and then submitting the jobs to runBioSimulations
 */
@@ -40,8 +44,8 @@ function VCellReactHook(props) {
     const [omex, setOmex] = React.useState();
     const [omexFile, setOmexFile] = React.useState(dataset.omex);
     const [species, setSpecies] = React.useState([]);
-    const [jobID, setJobID] = React.useState(dataset.prevjobid?.trim() || undefined);
-    const [prevJob, clearPrevJob] = React.useState(Boolean(dataset.prevjobid));
+    const [jobID, setJobID] = React.useState(prevjobid);
+    const [prevJob, clearPrevJob] = React.useState(Boolean(prevjobid));
     const [quickData, setQuickData] = React.useState();
     const [parameters, setParameters] = React.useState([]);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -139,12 +143,12 @@ function VCellReactHook(props) {
         await omex.file(sbmlFile, sbml);
         setOmex(omex);
         // return;
-    
+        
         //send data to runBioSimulations API
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
-    
-        if (!speed) { //slow simulation handling
+        
+        if (!isQuick) { // default to slow simulation handling
             // console.log(filename);
             const runMetadata = {"name": name, "email": null, "simulator": simulator, "simulatorVersion": "latest"};
             formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
@@ -177,8 +181,8 @@ function VCellReactHook(props) {
         else {
             formData.append('simulator', "tellurium"); //TODO: replace tellurium with variable
             formData.append('_type', "SimulationRun");
-            formData.append('archiveUrl', "https://bio.libretexts.org/@api/deki/files/38382/test.omex?revision=1");
-            // formData.append('archiveFile', await omex.generateAsync({type: 'blob'}), 'test.omex');
+            // formData.append('archiveUrl', "https://bio.libretexts.org/@api/deki/files/38382/test.omex");
+            formData.append('archiveFile', await omex.generateAsync({type: 'blob'}), 'test.omex');
             formData.append('archiveFile', '');
             formData.append('environment', JSON.stringify({
                 "_type": "Environment",
@@ -186,29 +190,37 @@ function VCellReactHook(props) {
             }))
             
             //send simulation and wait for it to finish
-            let response = await fetch(`${API_ENDPOINT}/run/run`, {
+            let quickResponse = await fetch(`${API_ENDPOINT}/run/run`, {
                 method: 'POST',
                 body: formData,
                 "headers": {
                     "accept": "application/json",
                 },
             });
-            if (response.ok) {
-                response = await response.json(); //results will be in this json
-                enqueueSnackbar(`QUICK plot`, {
-                    variant: 'success',
-                });
+            if (quickResponse.ok) {
+                quickResponse = await quickResponse.json(); //results will be in this json
+                if (quickResponse.log.status === "SUCCEEDED") {
+                    enqueueSnackbar(`QUICK plot`, {
+                        variant: 'success',
+                    });
+                }
+                else {
+                    enqueueSnackbar(`${quickResponse.log.exception.type}: ${quickResponse.log.exception.message}`, {
+                        variant: 'error',
+                    });
+                    console.error(quickResponse.log.exception.message)
+                }
                 clearPrevJob(undefined);
-                setJobID('QUICK');
-                setQuickData(response); //TODO: Think of a better way to pass data to the Graph subcomponent
+                setQuickData(quickResponse); //TODO: Think of a better way to pass data to the Graph subcomponent
+                setJobID(`QUICK-${Math.round(Math.random() * 1E10)}`);
             }
             else {
-                response = await response.json();
-                enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
+                quickResponse = await quickResponse.json();
+                enqueueSnackbar(`Error encountered: ${JSON.stringify(quickResponse)}`, {
                     variant: 'error',
                 });
             }
-            console.log(response);
+            console.log(quickResponse);
         }
     }
     
@@ -220,7 +232,7 @@ function VCellReactHook(props) {
             <div style={{flex: 2}}>
                 <Accordion>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >Species conditions
@@ -245,27 +257,28 @@ function VCellReactHook(props) {
                 </Accordion>
                 <Accordion>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >Parameters
                     </AccordionSummary>
                     <AccordionDetails>
                         <TableContainer component={Paper}>
-                        <Table aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Parameter</TableCell>
-                                    <TableCell>Value</TableCell>
-                                    <TableCell>Units</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key} parameter={value}
-                                                                                                onChange={updateParameter}/>)}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Parameter</TableCell>
+                                        <TableCell>Value</TableCell>
+                                        <TableCell>Units</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key}
+                                                                                                    parameter={value}
+                                                                                                    onChange={updateParameter}/>)}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </AccordionDetails>
                 </Accordion>
                 

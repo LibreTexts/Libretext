@@ -19,8 +19,9 @@ export default function GraphResults(props) {
             setJobReady(false);
             if (!props.jobID)
                 return;
-            else if (props.jobID === "QUICK") {
-                await plotData(); //quick already has data retrieved, so we can use it immediately
+            else if (props.jobID.startsWith("QUICK")) {
+                if (props.quickData)
+                    await plotData(); //quick already has data retrieved, so we can use it immediately
                 return;
             }
             
@@ -81,7 +82,7 @@ export default function GraphResults(props) {
         let response;
         
         //get results
-        if (props.jobID === "QUICK") { //data is passed through a prop for quick simulations
+        if (props.jobID.startsWith("QUICK")) { //data is passed through a prop for quick simulations
             response = props.quickData;
         }
         else {
@@ -93,7 +94,7 @@ export default function GraphResults(props) {
                 variant: 'success',
             });
         }
-    
+        
         //data parsing
         let data = response.outputs[0].data;
         let dataObj = {};
@@ -178,7 +179,7 @@ export default function GraphResults(props) {
                     }],
                 }
             }
-        }/>
+            }/>
             <Button onClick={downloadData} variant="contained">Download CSV</Button>
         </>;
     }
