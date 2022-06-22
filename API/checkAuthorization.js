@@ -5,6 +5,7 @@
 const express = require('express');
 const LibreTexts = require('./reuse.js');
 const authenBrowser = require('./authenBrowser.json');
+const secure = require('./secure.json');
 
 /**
  * Verifies passed Authorization with Mindtouch backend
@@ -13,6 +14,15 @@ const authenBrowser = require('./authenBrowser.json');
  * @param {express.NextFunction} next 
  */
 async function checkAuthorization(req, res, next) {
+    if (req.get('Authorization') && req.path.includes('/elevate')) {
+      const requestKey = req.get('Authorization').replace('Bearer ', '');
+      const elevateKeyBearers = Object.keys(secure.elevate_access);
+      const validKey = elevateKeyBearers.find((key) => secure.elevate_access[key] === requestKey);
+      if (validKey) {
+        return next();
+      }
+    }
+
     if (!req.get('origin')?.endsWith('libretexts.org')) {
         res.status(401);
         next(`Unauthorized ${req.get('x-forwarded-for')}`)

@@ -628,7 +628,8 @@ async function fork(req, res) {
   const readOnly = body.readOnly || false;
   const target = { path: body.path, subdomain: body.subdomain, readOnly };
   const targetInfo = await LibreTexts.getAPI(`https://${target.subdomain}.libretexts.org/${target.path}`, undefined, body.username);
-  let targetContent = await LibreTexts.authenticatedFetch(target.path, 'contents?mode=raw&dream.out.format=json', target.subdomain, body.username);
+  const user = body.username || 'LibreBot';
+  let targetContent = await LibreTexts.authenticatedFetch(target.path, 'contents?mode=raw&dream.out.format=json', target.subdomain, user);
   if (targetContent.ok) {
     try {
       targetContent = await targetContent.json(); // text of target page to work on
@@ -701,7 +702,7 @@ async function fork(req, res) {
       return res.status(500).send(err);
     }
   } else {
-    const err = `[fork] Can't fork https://${target.subdomain}.libretexts/org/${target.path}`;
+    const err = `[fork] Can't fork https://${target.subdomain}.libretexts.org/${target.path}`;
     console.error(`${err} . More info:`);
     console.error(await targetContent.text());
     return res.status(500).send(err);
