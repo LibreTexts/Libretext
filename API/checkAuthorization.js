@@ -1,11 +1,16 @@
+/**
+ * @file Provides a middleware to check authorization passed from CXone Expert in the browser.
+ * @author LibreTexts <info@libretexts.org>
+ */
+const express = require('express');
 const LibreTexts = require('./reuse.js');
 const authenBrowser = require('./authenBrowser.json');
 
 /**
  * Verifies passed Authorization with Mindtouch backend
- * @param {Request} req 
- * @param {Response} res 
- * @param {function} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
 async function checkAuthorization(req, res, next) {
     if (!req.get('origin')?.endsWith('libretexts.org')) {
