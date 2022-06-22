@@ -225,6 +225,25 @@ async function fork(req, res) {
   }
 
   /**
+   * Replaces relative references to the CXone Expert file API with absolute paths to the
+   * current library's file storage.
+   * 
+   * @param {string} contents - The page contents to absolutify.
+   * @param {string} library - The internal LibreTexts library identifier.
+   * @returns {string} The absolutified contents.
+   */
+  function absolutifyFileURLs(contents, library) {
+    if (typeof (contents) !== 'string' || typeof (library) !== 'string') {
+      console.warn('[fork] WARN: Invalid parameters passed to file URL absolutifier.');
+      return contents;
+    }
+    return contents.replace(
+      /"\/@api\/deki\/files\//g,
+      `"https://${library}.libretexts.org/@api/deki/files/`,
+    );
+  }
+
+  /**
    * Retrieves the highest `source[#]` tag number found in an array of tags.
    *
    * @param {string[]} tags - An array of tag values.
@@ -493,7 +512,11 @@ async function fork(req, res) {
       );
       if (success) {
         let content = foundContent;
-        content = await copyFiles(content, sourceInfo, target, request.username);
+        if (!target.readOnly) {
+          content = await copyFiles(content, sourceInfo, target, request.username);
+        } else {
+          content = absolutifyFileURLs(content, sourceInfo.subdomain);
+        }
         const [newIndex, newTag] = getNewSourceTag(sourceInfo.subdomain, info['@id'], tags);
         if (newTag !== null) {
           tags.push(newTag);
@@ -602,13 +625,17 @@ async function fork(req, res) {
   }
 
   const { body } = req;
-  const target = { path: body.path, subdomain: body.subdomain };
+  const readOnly = body.readOnly || false;
+  const target = { path: body.path, subdomain: body.subdomain, readOnly };
   const targetInfo = await LibreTexts.getAPI(`https://${target.subdomain}.libretexts.org/${target.path}`, undefined, body.username);
   let targetContent = await LibreTexts.authenticatedFetch(target.path, 'contents?mode=raw&dream.out.format=json', target.subdomain, body.username);
   if (targetContent.ok) {
     try {
       targetContent = await targetContent.json(); // text of target page to work on
       if (typeof (targetContent.body) === 'string') {
+        if (readOnly) {
+          console.log(`[fork] Performing read-only fork on ${target.subdomain}/${target.path}`);
+        }
         targetContent = LibreTexts.decodeHTML(targetContent.body);
         const sourceTags = targetInfo.tags;
 
@@ -632,6 +659,14 @@ async function fork(req, res) {
         const comment = `[BOT Forker] ${successMsg}`;
         const msg = `[fork] ${successMsg}`;
         if (success) {
+          if (target.readOnly) {
+            const tagArr = Array.from(finalTags);
+            return res.status(200).send({
+              contents: newContent,
+              tags: tagArr,
+              msg,
+            });
+          }
           const api = `contents?edittime=now&comment=${encodeURIComponent(comment)}&dream.out.format=json`;
           const postContent = await LibreTexts.authenticatedFetch(
             target.path,
@@ -651,7 +686,7 @@ async function fork(req, res) {
           const postRes = await postContent.json();
           if (postRes['@status'] === 'success') {
             console.log(msg);
-            res.status(200).send(msg);
+            return res.status(200).send(msg);
           } else {
             throw (new Error('Error updating content!'));
           }
@@ -663,13 +698,13 @@ async function fork(req, res) {
       }
     } catch (err) {
       console.error(err);
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
   } else {
     const err = `[fork] Can't fork https://${target.subdomain}.libretexts/org/${target.path}`;
     console.error(`${err} . More info:`);
     console.error(await targetContent.text());
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 }
 
