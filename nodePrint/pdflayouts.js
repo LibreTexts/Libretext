@@ -54,6 +54,17 @@ function generatePDFHeader(headerImg) {
  * @returns {string} Footer as HTML string with styles.
  */
 function generatePDFFooter(mainColor, currentPage, pageLicense, prefix) {
+  let programLink = null;
+  if (currentPage) {
+    const { programname, programurl, attributionprefix } = currentPage;
+    if (programname && programurl && attributionprefix) {
+      programLink = `
+        <a href="${programurl}" rel="noreferrer">
+          ${attributionprefix} ${programname}
+        </a>
+      `;
+    }
+  }
   return `
     <style>
       * {
@@ -129,8 +140,10 @@ function generatePDFFooter(mainColor, currentPage, pageLicense, prefix) {
     <div id="libreFooter">
       <div class="footer-left">
           <a href="${pageLicense ? pageLicense.link : ''}">${pageLicense ? pageLicense.label : ''}</a>
+          ${programLink ? `<div>${programLink}</div>` : ''}
       </div>
       <div class="footer-center">
+            
             <div class="footer-pagenum">
               ${prefix}<div class="pageNumber"></div>
             </div>
