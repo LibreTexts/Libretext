@@ -362,7 +362,8 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     const isPro = document.getElementById('proHolder').innerText === 'true';
     const groups = document.getElementById('groupHolder').innerText;
-    const batchAccess = isAdmin || (isPro && groups.includes('BatchAccess'));
+    const basicBatchAccess = isAdmin || isPro;
+    const fullBatchAccess = isAdmin || (isPro && (groups.includes('Developer') || groups.includes('BatchAccess')));
     const [subdomain] = LibreTexts.parseURL();
 
     try {
@@ -424,7 +425,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         });
       }
       /* Compile Book (Page + Subpages) */
-      if (batchAccess && pdfExportOptions.length > 0) { // don't add option if page is non-content
+      if (basicBatchAccess && pdfExportOptions.length > 0) { // don't add option if non-content
         pdfExportOptions.push({
           text: 'Compile Book',
           title: 'Compile this page and all subpages (opens in new tab when complete)',
@@ -436,7 +437,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         });
       }
       /* Compile Full Book */
-      if (batchAccess && downloadEntry) {
+      if (fullBatchAccess && downloadEntry) {
         pdfExportOptions.push({
           text: 'Compile Full',
           title: 'Fully recompile this book (opens in new tab when complete)',
