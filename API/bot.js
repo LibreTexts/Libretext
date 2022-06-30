@@ -15,6 +15,7 @@ const fetch = require('node-fetch');
 const async = require('async');
 const tidy = require('tidy-html5').tidy_html5;
 const filenamify = require('filenamify');
+const randomstring = require('randomstring');
 const puppeteer = require('puppeteer');
 const LibreTexts = require('./reuse');
 
@@ -521,6 +522,37 @@ async function foreignImage(input, content, path) {
     let images = content.match(/<img.*?>/g);
     let result = content;
     let count = 0;
+    const currFiles = new Set();
+
+    /* Read current list of files */
+    try {
+      let filesList = await LibreTexts.authenticatedFetch(
+        path,
+        `files?dream.out.format=json`,
+        input.subdomain,
+        input.user,
+      );
+      if (!filesList.ok) {
+        const filesErr = await filesList.text();
+        throw (new Error(filesErr));
+      }
+      filesList = await filesList.json();
+      if (Array.isArray(filesList.file)) {
+        filesList.file.forEach((file) => {
+          if (typeof (file.filename) === 'string') {
+            currFiles.add(file.filename);
+          }
+        });
+      } else if (typeof (filesList.file) === 'object') {
+        if (typeof (filesList.file.filename) === 'string') {
+          currFiles.add(filesList.file.filename);
+        }
+      }
+    } catch (e) {
+      console.warn(`[Foreign Image Importer] WARN: Error retrieving files list. Imported files may not be unique.`);
+      console.warn(e);
+    }
+
     await async.mapLimit(images, 5, async (image) => {
         let url = image.match(/(?<=src=").*?(?=")/);
         let newImage = image;
@@ -570,6 +602,21 @@ async function foreignImage(input, content, path) {
 
                 let filename = contentDisposition || url.match(/(?<=\/)[^/]*?(?=$)/)[0];
                 filename = LibreTexts.cleanPath(filename);
+
+                /* Avoid overwrites of files with same name */
+                if (currFiles.has(filename)) {
+                  const splitName = filename.split('.');
+                  const randomID = randomstring.generate({ length: 4, capitalization: 'lowercase' });
+                  let extension;
+                  let origName;
+                  if (splitName.length > 1) {
+                    origName = splitName.slice(0, splitName.length - 1);
+                    extension = splitName[splitName.length - 1];
+                  }
+                  filename = `${origName ? origName : filename}_${randomID}${extension ? `.${extension}` : ''}`;
+                }
+                currFiles.add(filename);
+
                 response = await LibreTexts.authenticatedFetch(path, `files/${filename}?dream.out.format=json`, input.subdomain, input.user, {
                     method: 'PUT',
                     body: foreignImage,
