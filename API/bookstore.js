@@ -109,8 +109,8 @@ async function updateOrder(sessionId, forceUpdate = false, beta = false) {
             console.log(`[Archiving] Attempting to archive ${sessionId}...`);
             if (result.status === 'REJECTED') {
               await sendRejectedEmail(result);
-              console.log(`[Archived] Rejected order ${sessionId} archived.`);
               await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
+              console.log(`[Archived] Rejected order ${sessionId} archived.`);
             } else if (result.status === 'CANCELED') {
               await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
               console.log(`[Archived] Cancelled order ${sessionId} archived.`);
@@ -127,6 +127,7 @@ async function updateOrder(sessionId, forceUpdate = false, beta = false) {
               }
             } else {
               await sendShippingEmail(result);
+              await fs.move(writePath, `./bookstore/complete/${sessionId}.json`);
               console.log(`[Archived] Shipped order ${sessionId} archived.`);
             }            
         }
