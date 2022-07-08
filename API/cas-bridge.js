@@ -69,7 +69,11 @@ http.createServer(async (req, res) => {
         redirect: redirect,
         attributes: principal?.attributes, //TODO: Disable for staging
     }
-    const token = JWT.sign(payload, key, {issuer: serviceName});
+    const token = JWT.sign(payload, key, {
+      issuer: serviceName,
+      subject: payload.email,
+      expiresIn: '6.5 days'
+    });
     // console.log(payload, token);
     
     res.writeHead(redirect ? 302 : 200, {
