@@ -107,6 +107,28 @@
     background-color: #008000;
 }
 
+.inputError {
+  color: #D03E3E;
+  border: 1px solid #D03E3E;
+}
+
+.inputError::placeholder {
+  color: #D03E3E;
+}
+
+.polyglotEngine-passInput {
+  display: flex;
+}
+
+.polyglotEngine-passInput > input {
+  flex: 1;
+}
+
+.polyglotEngine-submitBtn {
+  margin-left: 0;
+  margin-top: 1em;
+}
+
 /*CSS Spinner*/
 .spinner {
     text-align: center;

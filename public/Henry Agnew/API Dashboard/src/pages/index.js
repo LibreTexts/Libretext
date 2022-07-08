@@ -10,6 +10,7 @@ import BatchMonitor from "../components/BatchMonitor.jsx";
 import ConvertContainers from "../components/ConvertContainers.jsx";
 import Multi from "../components/Multi.jsx";
 import LicenseReport from "../components/LicenseReport.jsx";
+import PolyglotEngine from '../components/PolyglotEngine.jsx';
 import {Tooltip} from "@material-ui/core";
 import Info from "@material-ui/icons/Info";
 
@@ -42,6 +43,7 @@ class Dashboard extends React.Component {
                     <option value={'ConvertContainers'}>Upgrade Containers</option>
                     <option value={'Multistep Preset'}>Multistep Preset</option>
                     <option value={'License Report'}>Licensing Report</option>
+                    <option value={'Polyglot Engine'}>Polyglot Engine</option>
                 </select>
                 <div style={{flex: 1}}><Tooltip placement="right"
                                                 title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}>
@@ -94,6 +96,8 @@ class Dashboard extends React.Component {
                 return <Multi devMode={this.state.devMode}/>;
             case "License Report":
                 return <LicenseReport devMode={this.state.devMode}/>;
+            case "Polyglot Engine":
+                return <PolyglotEngine />;
         }
     }
 
