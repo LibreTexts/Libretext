@@ -87,9 +87,11 @@ export default function Developers(props) {
             <IconLink title="RealTime Mathjax" icon="fas fa-square-root-alt"
                       href="https://chem.libretexts.org/Under_Construction/Development_Details/Misc_Pages/Realtime_MathJax"/>
 
-	    <Button id="referenceModalBtn" onClick={(event) => {
-		document.getElementById("referenceModal").style.display = "block"
-	    }}>Reference Manager</Button>
+        
+	    {/* <Button id="referenceModalBtn" onClick={(event) => { */}
+		{/* document.getElementById("referenceModal").style.display = "block" */}
+	    {/* }}>Reference Manager</Button> */}
+        
         </List>
     );
 }
