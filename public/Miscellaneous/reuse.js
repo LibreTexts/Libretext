@@ -2,7 +2,7 @@
 const LibreEditor = {
   initialized: false,
   pluginNames: ['enableBinder', 'libreTextsQuery', 'libreTextsAdapt', 'a11ychecker', 'a11yButton',
-    'balloonpanel', 'LibreFormat', 'LibreBoxes'],
+    'balloonpanel', 'LibreFormat', 'LibreBoxes', 'LibreQuery'],
   /**
    * Register the individual plugins with the CKEditor instance.
    *
@@ -10,7 +10,10 @@ const LibreEditor = {
    */
   registerPlugins: (config) => {
     Object.keys(LibreEditor).forEach((plugin) => {
-      if (typeof (LibreEditor[plugin]) === 'function' && !['registerPlugins', 'registerAll'].includes(plugin)) {
+      if (
+        typeof (LibreEditor[plugin]) === 'function'
+        && !['registerPlugins', 'registerAll'].includes(plugin)
+      ) {
         try {
           LibreEditor[plugin](config);
         } catch (e) {
