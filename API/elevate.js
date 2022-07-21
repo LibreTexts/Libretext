@@ -322,8 +322,7 @@ async function fork(req, res) {
       pageContent = await pageContent.json();
       pageInfo = await pageInfo.json();
       if (typeof (pageContent.body) === 'string') {
-        pageContent = LibreTexts.decodeHTML(pageContent.body);
-        return [true, pageContent, pageInfo];
+        return [true, pageContent.body, pageInfo];
       }
     }
     return [false, null, null];
