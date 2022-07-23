@@ -8,4 +8,4 @@ Plugins defined here assume the following libraries are already available on any
 
 ### Development
 EditorPlugins should always be minified before a release to production. For example:
-* `terser libreFormatPlugin.js -c -m -o dist/libreFormatPlugin.min.js`
+* `terser libre[PLUGIN_NAME]Plugin.js -c -m -o dist/libre[PLUGIN_NAME]Plugin.min.js`
