@@ -244,56 +244,6 @@ async function fork(req, res) {
   }
 
   /**
-   * Retrieves the highest `source[#]` tag number found in an array of tags.
-   *
-   * @param {string[]} tags - An array of tag values.
-   * @returns {number} The highest tag number found.
-   */
-  function getIndex(tags) {
-    let result = 0;
-    tags.forEach((tag) => {
-      let index = tag.match(/(?<=source\[)[0-9]+?(?=]-)/);
-      if (index) {
-        index = Number.parseInt(index, 10);
-        if (index > result) result = index;
-      }
-    });
-    return result;
-  }
-
-  /**
-   * Generates a new `source[#]-sub-pageID` tag for a given page identifier.
-   *
-   * @param {string} subdomain - The internal LibreTexts library identifier.
-   * @param {string|number} pageID - A library page ID.
-   * @param {string[]} tags - The current set of target page tags.
-   * @returns {[number,string]} A tuple containing the tag's index and the
-   *  new tag to use.
-   */
-  function getNewSourceTag(subdomain, pageID, tags) {
-    const newIndex = getIndex(tags);
-    if (isNonEmptyString(subdomain) && isValidPageID(pageID) && Array.isArray(tags)) {
-      const potentialTagSuffix = `${subdomain}-${pageID}`;
-      const potentialTag = `source[${newIndex + 1}]-${potentialTagSuffix}`;
-      const foundMatchIdx = tags.findIndex((tag) => {
-        if (typeof (tag) === 'string') {
-          return tag.endsWith(potentialTagSuffix);
-        }
-        return false;
-      });
-      if (foundMatchIdx !== -1) { // tag exists
-        const tagNumMatch = tags[foundMatchIdx].match(/\[[0-9]+\]/m);
-        if (tagNumMatch !== null && tagNumMatch.length > 0) {
-          const tagNum = tagNumMatch[0].replace(/(\[|\])/g, '');
-          return [Number.parseInt(tagNum, 10), tags[foundMatchIdx]];
-        }
-      }
-      return [newIndex + 1, potentialTag]; // tag does not exist
-    }
-    return [newIndex, null];
-  }
-
-  /**
    * Retrieves a page's content and metadata from the library API.
    *
    * @param {string} path - The page path.
@@ -440,33 +390,29 @@ async function fork(req, res) {
       const [pageSuccess, foundContent, info] = await getContentAndInfo(path, subdomain);
       if (pageSuccess) {
         let content = foundContent;
-        const [, newTag] = getNewSourceTag(subdomain, info['@id'], tags);
-        if (newTag !== null) {
-          tags.push(newTag);
-          /* Grab specific section from HTML, if necessary */
-          if (section) {
-            const $ = cheerio.load(content);
-            const sections = $('.mt-section');
-            for (let i = 0, n = sections.length; i < n; i += 1) {
-              const sec = $(sections[i]);
-              const secTitle = sec.text();
-              if (secTitle && secTitle.includes(section)) {
-                content = sec.html();
-                break;
-              }
+        /* Grab specific section from HTML, if necessary */
+        if (section) {
+          const $ = cheerio.load(content);
+          const sections = $('.mt-section');
+          for (let i = 0, n = sections.length; i < n; i += 1) {
+            const sec = $(sections[i]);
+            const secTitle = sec.text();
+            if (secTitle && secTitle.includes(section)) {
+              content = sec.html();
+              break;
             }
           }
-          /* recursively check for more transclusions */
-          // eslint-disable-next-line no-use-before-define
-          const [rSuccess, rContent] = await processPageFork(
-            content,
-            subdomain,
-            target,
-            request,
-            tags,
-          );
-          return [rSuccess, rContent];
         }
+        /* recursively check for more transclusions */
+        // eslint-disable-next-line no-use-before-define
+        const [rSuccess, rContent] = await processPageFork(
+          content,
+          subdomain,
+          target,
+          request,
+          tags,
+        );
+        return [rSuccess, rContent];
       }
     }
     return [false, reuseCall, null];
@@ -502,20 +448,16 @@ async function fork(req, res) {
         } else {
           content = absolutifyFileURLs(content, sourceInfo.subdomain);
         }
-        const [, newTag] = getNewSourceTag(sourceInfo.subdomain, info['@id'], tags);
-        if (newTag !== null) {
-          tags.push(newTag);
-          /* recursively check for more transclusions */
-          // eslint-disable-next-line no-use-before-define
-          const [rSuccess, rContent] = await processPageFork(
-            content,
-            sourceInfo.subdomain,
-            target,
-            request,
-            tags,
-          );
-          return [rSuccess, rContent];
-        }
+        /* recursively check for more transclusions */
+        // eslint-disable-next-line no-use-before-define
+        const [rSuccess, rContent] = await processPageFork(
+          content,
+          sourceInfo.subdomain,
+          target,
+          request,
+          tags,
+        );
+        return [rSuccess, rContent];
       }
     }
     return [false, reuseCall, null];
