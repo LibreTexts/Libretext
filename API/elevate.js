@@ -440,10 +440,9 @@ async function fork(req, res) {
       const [pageSuccess, foundContent, info] = await getContentAndInfo(path, subdomain);
       if (pageSuccess) {
         let content = foundContent;
-        const [newIndex, newTag] = getNewSourceTag(subdomain, info['@id'], tags);
+        const [, newTag] = getNewSourceTag(subdomain, info['@id'], tags);
         if (newTag !== null) {
           tags.push(newTag);
-          const sourceID = `${subdomain}-${info['@id']}`;
           /* Grab specific section from HTML, if necessary */
           if (section) {
             const $ = cheerio.load(content);
@@ -457,19 +456,6 @@ async function fork(req, res) {
               }
             }
           }
-          content = `
-              <div class="comment">
-                  <div class="mt-comment-content">
-                      <p>Forker source[${newIndex}] start-${sourceID}</p>
-                  </div>
-              </div>
-              ${content}
-              <div class="comment">
-                  <div class="mt-comment-content">
-                      <p>Forker source[${newIndex}] end-${sourceID}</p>
-                  </div>
-              </div>
-          `;
           /* recursively check for more transclusions */
           // eslint-disable-next-line no-use-before-define
           const [rSuccess, rContent] = await processPageFork(
@@ -516,23 +502,9 @@ async function fork(req, res) {
         } else {
           content = absolutifyFileURLs(content, sourceInfo.subdomain);
         }
-        const [newIndex, newTag] = getNewSourceTag(sourceInfo.subdomain, info['@id'], tags);
+        const [, newTag] = getNewSourceTag(sourceInfo.subdomain, info['@id'], tags);
         if (newTag !== null) {
           tags.push(newTag);
-          const sourceID = `${sourceInfo.subdomain}-${info['@id']}`;
-          content = `
-              <div class="comment">.
-                  <div class="mt-comment-content">
-                      <p>Forker source[${newIndex}] start-${sourceID}</p>
-                  </div>
-              </div>
-              ${content}
-              <div class="comment">
-                  <div class="mt-comment-content">
-                      <p>Forker source[${newIndex}] end-${sourceID}</p>
-                  </div>
-              </div>
-          `;
           /* recursively check for more transclusions */
           // eslint-disable-next-line no-use-before-define
           const [rSuccess, rContent] = await processPageFork(
