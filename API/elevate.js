@@ -198,7 +198,7 @@ async function cleanPath(req, res) {
  */
 async function fork(req, res) {
   const crossLibRegex = /(<p class="mt-script-comment">Cross Library Transclusion<\/p>\s+<pre class="script">\s+template\('CrossTransclude\/Web',)[\S\s]*?(\);<\/pre>)/g;
-  const wikiTemplateRegex = /(<pre class="script">\s*?wiki.page\(&quot;)[\S\s]*?(&quot;\)\s*?<\/pre>)/g; // local reuse
+  const wikiTemplateRegex = /<pre class="script">\s?wiki.page\(.*\)<\/pre>/g; // local reuse
   const reuseTemplateRegex = /(<div class="mt-contentreuse-widget")[\S\s]*?(<\/div>)/g; // local reuse
 
   /**
@@ -368,6 +368,7 @@ async function fork(req, res) {
    *  flag, the content as an HTML string, found lib-pageID identifiers.
    */
   async function getLocalContent(reuseCall, subdomain, target, request, tags) {
+    const quotesRegex = /&quot;|"/g;
     const pageContent = reuseCall;
     let path;
     let section;
@@ -381,9 +382,15 @@ async function fork(req, res) {
         [section] = sectMatch;
       }
     } else if (pageContent.startsWith('<pre class="script">')) {
-      const sectMatch = pageContent.match(/"[\S\s]*?"/, 'g');
-      if (Array.isArray(sectMatch) && sectMatch.length > 2) {
-        section = sectMatch[2].replace(/['"]+/g, '');
+      const wikiReuseCalls = pageContent.match(/(wiki.page\(.*\))/g);
+      if (Array.isArray(wikiReuseCalls)) {
+        const urls = wikiReuseCalls[0]?.match(/(&quot;[^,]*&quot;)|("[^,]*")/g);
+        if (Array.isArray(urls)) {
+          path = urls[0].replace(quotesRegex, '');
+          if (urls[1]) {
+            section = urls[1].replace(quotesRegex, '');
+          }
+        }
       }
     }
     if (typeof (path) === 'string' && path.length > 0) {
@@ -502,14 +509,13 @@ async function fork(req, res) {
         }
       }
       /* Get local-lib transclusions */
-      const localWikiMatches = forkedContent.match(wikiTemplateRegex);
       const localReuseMatches = forkedContent.match(reuseTemplateRegex);
+      const localWikiMatches = forkedContent.match(wikiTemplateRegex);
       let localLibMatches = [];
-      if (Array.isArray(localWikiMatches)) {
-        localLibMatches = [...localLibMatches, ...localReuseMatches];
-      }
       if (Array.isArray(localReuseMatches)) {
         localLibMatches = [...localLibMatches, ...localReuseMatches];
+      } else if (Array.isArray(localWikiMatches)) {
+        localLibMatches = [...localLibMatches, ...localWikiMatches];
       }
       const localForks = [];
       for (let i = 0, n = localLibMatches.length; i < n; i += 1) {
