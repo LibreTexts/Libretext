@@ -24,6 +24,10 @@ LibreEditor.libreBoxes = (libreConfig) => {
           value: 'box-definition',
           text: 'Definition',
         }, {
+          template: 'BoxEmphasis',
+          value: 'box-emphasis',
+          text: 'Emphasis',
+        }, {
           template: 'BoxExample',
           value: 'box-example',
           text: 'Example',
