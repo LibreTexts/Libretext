@@ -715,7 +715,9 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     } catch (e) {
       console.error(`[ExportButtons]: ${e.toString()}`);
     }
+
     LibreTexts.active.exportButtons = true;
+    LibreTexts.batch = batch; // attach to global namespace
   };
 
   window.addEventListener('load', loadExportButtons);
