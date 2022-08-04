@@ -114,6 +114,25 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   };
 
   /**
+   * Submits a request to the LibreTexts Batch server to output the current text's cover and a
+   * selected number of content pages.
+   *
+   * @param {string} target - The URL of the page or book to generate from. 
+   */
+  const cover = (target) => {
+    const numPages = prompt('Number of content pages:');
+    if (numPages && !Number.isNaN(numPages)) {
+      window.open(
+        `https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${numPages}", "hasExtraPadding": true}`,
+        '_blank',
+        'noreferrer',
+      );
+    } else {
+      alert(`${numPages} is not recognized as a number! Please try again.`);
+    }
+  };
+
+  /**
    * Creates a new button with a dropdown element and interactions built in.
    *
    * @param {object} props - Properties to use while building the dropdown.
@@ -717,7 +736,9 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     }
 
     LibreTexts.active.exportButtons = true;
-    LibreTexts.batch = batch; // attach to global namespace
+    /* attach functions to global namespace */
+    LibreTexts.batch = batch;
+    LibreTexts.cover = cover;
   };
 
   window.addEventListener('load', loadExportButtons);
