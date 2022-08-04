@@ -32,7 +32,11 @@ export default function Developers(props) {
 
 	    
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
-                cover(window.location.href)
+              try {
+                LibreTexts.cover(window.location.href);
+              } catch (e) {
+                console.error('COVER GENERATION ERROR:', e);
+              }
             }}/>
             <IconLink title="Reveal Answers" icon="mt-icon-eye3" onClick={() => {
                 $('dd').show();
@@ -77,7 +81,11 @@ export default function Developers(props) {
                 saveAs(new Blob([pages.join('\n')],{type:"text/csv;charset=utf-8"}),`masstagger-${subdomain}-${response.id}.csv`);
             }}/>
             {allowMatter ? <IconLink title="Generate Front/Back Matter" icon="mt-icon-book2" onClick={() => {
-                batch(window.location.href, '&createMatterOnly=true');
+                try {
+                  LibreTexts.batch(window.location.href, '&createMatterOnly=true');
+                } catch (e) {
+                  console.error('MATTER GENERATION ERROR:', e);
+                }
             }}/> : null}
             <IconLink title="Construction Forum" icon="mt-icon-archive"
                       href="https://groups.io/g/Libretexts-ConstructionForum"/>
