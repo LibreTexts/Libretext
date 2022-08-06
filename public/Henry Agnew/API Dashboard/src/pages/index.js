@@ -4,6 +4,7 @@ import Toggle from 'react-toggle';
 import RevisionLog from "../components/RevisionLog.jsx";
 import FindReplace from "../components/FindReplace.jsx";
 import DeadLinks from "../components/DeadLinks.jsx";
+import EditorPreprocess from '../components/EditorPreprocess.jsx';
 import HeaderFix from "../components/HeaderFix.jsx";
 import ForeignImage from "../components/ForeignImage.jsx";
 import BatchMonitor from "../components/BatchMonitor.jsx";
@@ -37,6 +38,7 @@ class Dashboard extends React.Component {
                     <option value={'RevisionLog'}>Revision Log</option>
                     <option value={'FindAndReplace'}>Find and Replace</option>
                     <option value={'DeadLinks'}>Dead link killer</option>
+                    <option value={'EditorPreprocess'}>Editor Preprocess</option>
                     <option value={'HeaderFix'}>Header Fixer</option>
                     <option value={'ForeignImage'}>Foreign Image Importer</option>
                     <option value={'BatchMonitor'}>Batch Monitor</option>
@@ -84,6 +86,8 @@ class Dashboard extends React.Component {
                 return <FindReplace devMode={this.state.devMode}/>;
             case "DeadLinks":
                 return <DeadLinks devMode={this.state.devMode}/>;
+            case "EditorPreprocess":
+                return <EditorPreprocess devMode={this.state.devMode} />;
             case "HeaderFix":
                 return <HeaderFix devMode={this.state.devMode}/>;
             case "ForeignImage":

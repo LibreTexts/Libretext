@@ -34,10 +34,35 @@ if (process.argv.length >= 3 && parseInt(process.argv[2], 10)) {
   port = parseInt(process.argv[2], 10);
 }
 
+const PPTR_PAGE_TIMEOUT = 60000;
+const PPTR_LOAD_SETTINGS = {
+  timeout: PPTR_PAGE_TIMEOUT,
+  waitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+};
+const API_THROTTLE_TIME = 2500;
+
 /* Setup log directories */
 fs.emptyDir('BotLogs/Working');
 fs.ensureDir('BotLogs/Users');
 fs.ensureDir('BotLogs/Completed');
+
+/**
+ * Creates a Promise that "blocks" thread execution for the specified time when used with `await`.
+ *
+ * @param {number} ms - Time to pause execution, in milliseconds.
+ * @returns {Promise<null>} Promise that resolves when the specified time has passed.
+ */
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Handler to log and dismiss Javascript dialogs encountered when using Puppeteer.
+ *
+ * @param {puppeteer.Dialog} dialog - The dialog that triggered the handler.
+ */
+async function pptrDialogHandler(dialog) {
+  console.log(`[Puppeteer Dialog]: ${dialog.message()}`);
+  await dialog.dismiss();
+}
 
 async function jobHandler(jobType, jobInput, socket) {
   let input = jobInput;
@@ -50,6 +75,7 @@ async function jobHandler(jobType, jobInput, socket) {
       case 'foreignImage':
       case 'convertContainers':
       case 'licenseReport':
+      case 'editorPreprocess':
         return input.root && input.user;
       case 'multipreset':
         return input.root && input.multi;
@@ -71,6 +97,7 @@ async function jobHandler(jobType, jobInput, socket) {
       case 'headerFix':
       case 'foreignImage':
       case 'convertContainers':
+      case 'editorPreprocess':
         return { root: input.root, user: input.user };
       case 'licenseReport':
         return {
@@ -92,6 +119,7 @@ async function jobHandler(jobType, jobInput, socket) {
     }
     switch (jobType) {
       case 'foreignImage':
+      case 'editorPreprocess':
         return 2;
       case 'findReplace':
       case 'deadLinks':
@@ -124,6 +152,7 @@ async function jobHandler(jobType, jobInput, socket) {
     return licenseReport(input, socket, ID);
   }
 
+  socket.emit('setState', { state: 'getSubpages', ID: input.ID });
   let pages = await LibreTexts.getSubpages(input.root, input.user, { delay: true, socket: socket, flat: true });
   // pages = LibreTexts.addLinks(await pages);
   // console.log(pages);
@@ -133,6 +162,7 @@ async function jobHandler(jobType, jobInput, socket) {
   let backlog = [];
   let pageSummaryCount = 0;
   let backlogClearer = setInterval(clearBacklog, 1000);
+  let browser;
   let result = {
     user: input.user,
     subdomain: input.subdomain,
@@ -141,6 +171,14 @@ async function jobHandler(jobType, jobInput, socket) {
     params: getParameters(),
     pages: log,
   };
+
+  if (jobType === 'editorPreprocess') {
+    browser = await initializePuppeteer(result.user, result.subdomain, result.ID);
+    if (!browser) {
+      socket.emit('errorMessage', { message: 'Error starting browser instance for bot.' });
+      return;
+    }
+  }
 
   async function clearBacklog() {
     if (backlog.length) {
@@ -223,6 +261,10 @@ async function jobHandler(jobType, jobInput, socket) {
           // if (job.findOnly && count)
           //     result = 'findOnly';
           break;
+        case 'editorPreprocess':
+          result = await editorPreprocess(ID, page, browser);
+          comment = `[BOT ${ID}] Performed HTML Preprocess`;
+          break;
         case 'clean':
           if (result !== content)
             result = tidy(result); //{indent:'auto','indent-spaces':4}
@@ -263,7 +305,7 @@ async function jobHandler(jobType, jobInput, socket) {
     // result = LibreTexts.encodeHTML(result);
 
     //send update
-    if (input.findOnly) {
+    if (input.findOnly || jobType === 'editorPreprocess') {
       let item = { path: path, url: page };
       backlog.unshift(item);
       log.push(item);
@@ -288,6 +330,10 @@ async function jobHandler(jobType, jobInput, socket) {
       socket.emit('errorMessage', error);
     }
   });
+
+  if (browser) {
+    browser.close();
+  }
 
   clearInterval(backlogClearer);
   clearBacklog();
@@ -346,6 +392,7 @@ io.on('connection', function (socket) {
     //Define callback events;
     socket.on('findReplace', (data) => jobHandler('findReplace', data, socket));
     socket.on('deadLinks', (data) => jobHandler('deadLinks', data, socket));
+    socket.on('editorPreprocess', (data) => jobHandler('editorPreprocess', data, socket));
     socket.on('headerFix', (data) => jobHandler('headerFix', data, socket));
     socket.on('foreignImage', (data) => jobHandler('foreignImage', data, socket));
     socket.on('convertContainers', (data) => jobHandler('convertContainers', data, socket));
@@ -355,7 +402,43 @@ io.on('connection', function (socket) {
     socket.on('revert', (data) => revert(data, socket));
 });
 
-
+/**
+ * Creates a Puppeteer Browser and authenticates the provided user in the browser context.
+ *
+ * @param {string} user - Username to authenticate as. 
+ * @param {string} subdomain - Library shortname/identifier. 
+ * @param {string} botID - Identifier of the bot requesting the browser.
+ * @returns {Promise<puppeteer.Browser>} Browser instance, or null if errored.
+ */
+async function initializePuppeteer(user, subdomain, botID) {
+  try {
+    if (typeof (user) !== 'string' || user.length < 1) {
+      throw (new Error(`Invalid user "${user}" provided.`));
+    }
+    if (typeof (subdomain) !== 'string' || subdomain.length < 1) {
+      throw (new Error(`Invalid subdomain "${subdomain}" provided.`));
+    }
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+    });
+    const page = await browser.newPage();
+    const token = LibreTexts.authenticate(user, subdomain);
+    const redirect = `https://${subdomain}.libretexts.org/?no-cache`;
+    await page.goto(
+      `https://${subdomain}.libretexts.org/@api/deki/users/authenticate?x-deki-token=${token}&redirect=${redirect}`,
+      PPTR_PAGE_TIMEOUT,
+    );
+    await page.close();
+    return browser;
+  } catch (e) {
+    console.error(`[BOT ${botID}] Error initializing browser instance:`);
+    console.error(e);
+  }
+  return null;
+}
 
 async function revert(input, socket) {
     if (!input.ID || !input.user) {
@@ -1341,6 +1424,46 @@ async function licenseReport(inputData, socket, botID) {
         ID: (input.createReportPage || input.generateReportPDF) ? input.ID : null
     });
     await logCompleted(input);
+}
+
+/**
+ * Performs HTML preprocessing on an existing page by using the library's CKEditor instance
+ * via Puppeteer.
+ *
+ * @param {object} botID - Identifier of the currently running bot job.
+ * @param {string} url - URL of the page to work on.
+ * @param {puppeteer.Browser} browser - Browser instance to use.
+ * @returns {Promise<boolean>} True if successful, false if errored.
+ */
+async function editorPreprocess(botID, url, browser) {
+  if (typeof (url) !== 'string' || url.length < 1) {
+    console.error(`[BOT ${botID}] Invalid url "${url}" provided.`) // TODO
+    return false;
+  }
+  if (!browser) {
+    console.error(`[BOT ${botID}] Invalid browser instance provided.`);
+    return false;
+  }
+  try {
+    const browserPage = await browser.newPage();
+    browserPage.on('dialog', pptrDialogHandler);
+    await browserPage.goto(url, PPTR_LOAD_SETTINGS);
+    await browserPage.keyboard.down('Control');
+    await browserPage.keyboard.press('e');
+    await browserPage.keyboard.up('Control');
+    await sleep(5000); // let CKEditor load
+    await browserPage.keyboard.down('Control');
+    await browserPage.keyboard.press('s');
+    await browserPage.keyboard.up('Control');
+    await browserPage.waitForNavigation(PPTR_LOAD_SETTINGS); // wait for reload-on-save
+    await browserPage.close();
+    await sleep(API_THROTTLE_TIME); // throttle
+    return true;
+  } catch (e) {
+    console.error(`[BOT ${botID}] Error encountered while performing HTML preprocess:`);
+    console.error(e);
+  }
+  return false;
 }
 
 async function addPageIdentifierClass(subdomain, path, content) {
