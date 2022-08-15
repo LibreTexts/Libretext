@@ -19,9 +19,14 @@ export default function GraphResults(props) {
             setJobReady(false);
             if (!props.jobID)
                 return;
+            else if (props.jobID.startsWith("QUICK")) {
+                if (props.quickData)
+                    await plotData(); //quick already has data retrieved, so we can use it immediately
+                return;
+            }
             
             let counter = 0;
-            while (counter < 60) {
+            while (counter < 60) { //loop while simulation is processing
                 counter++;
                 if (!props.prevJob) //check immediately if using cached job
                     await sleep(5000);
@@ -32,13 +37,17 @@ export default function GraphResults(props) {
                     continue;
                 }
                 response = await response.json();
-                if (response.status === "FAILED") {
+                if (response.status === "SUCCEEDED") {
+                    await plotData();
+                    return;
+                }
+                else if (response.status === "FAILED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'error',
                         autoHideDuration: 5000,
                     });
-                    break;
+                    return;
                 }
                 else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
@@ -48,59 +57,18 @@ export default function GraphResults(props) {
                     });
                     continue;
                 }
-                
-                //get logs
-                /*response = await fetch(`https://home.miniland1333.com/proxy/logs/${props.jobID}`);
-                response = await response.text();
-                console.log(response);*/
-                
-                
-                //get results
-                response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
-                response = await response.json();
-                console.log(response);
-                enqueueSnackbar(`Retrieved ${response.simId}`, {
-                    variant: 'success',
-                });
-                
-                //data parsing
-                let data = response.outputs[0].data;
-                let dataObj = {};
-                for (let series of data) {
-                    dataObj[series.label] = series;
-                }
-                setResultsOBJ(data);
-                
-                const time_label = "time_tsk_0_0";
-                
-                let lineChartData = {
-                    labels: dataObj[time_label].values,
-                    datasets: [],
-                };
-                for (const dataset of data) {
-                    const r = Math.floor(Math.random() * 256);
-                    const g = Math.floor(Math.random() * 256);
-                    const b = Math.floor(Math.random() * 256);
-                    
-                    if (dataset.label !== time_label)
-                        lineChartData.datasets.push({
-                            label: dataset.label.replace("dataGen_tsk_0_0_", ""),
-                            data: dataset.values,
-                            fill: false,
-                            pointStyle: 'circle',
-                            radius: 1,
-                            borderColor: `rgba(${r},${g},${b},0.3)`,
-                        });
-                }
-                
-                setSimulationResults(lineChartData);
-                console.log(lineChartData)
-                setJobReady(true);
-                break;
             }
+            // simulation timed out
+            closeSnackbar()
+            enqueueSnackbar(`$TIMEOUT ERROR ${response.id}`, {
+                variant: 'error',
+                autoHideDuration: 5000,
+            });
+            
         })()
     }, [props.jobID]);
     
+    //export data in CSV format for user download
     function downloadData() {
         let data = resultsOBJ.map(label => label.label) + '\n';
         for (let index in resultsOBJ[0].values) {
@@ -108,6 +76,58 @@ export default function GraphResults(props) {
         }
         
         fileDownload(data, 'simulation_data.csv')
+    }
+    
+    async function plotData() {
+        let response;
+        
+        //get results
+        if (props.jobID.startsWith("QUICK")) { //data is passed through a prop for quick simulations
+            response = props.quickData;
+        }
+        else {
+            //need to fetch the data for slow simulations
+            response = await fetch(`${props.API_ENDPOINT}/results/${props.jobID}?includeData=true`);
+            response = await response.json();
+            console.log(response);
+            enqueueSnackbar(`Retrieved ${response.simId}`, {
+                variant: 'success',
+            });
+        }
+        
+        //data parsing
+        let data = response.outputs[0].data;
+        let dataObj = {};
+        for (let series of data) {
+            dataObj[series.label] = series;
+        }
+        setResultsOBJ(data);
+        
+        const time_label = "time_tsk_0_0";
+        
+        let lineChartData = {
+            labels: dataObj[time_label].values,
+            datasets: [],
+        };
+        for (const dataset of data) {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            
+            if (dataset.label !== time_label)
+                lineChartData.datasets.push({
+                    label: dataset.label.replace("dataGen_tsk_0_0_", ""),
+                    data: dataset.values,
+                    fill: false,
+                    pointStyle: 'circle',
+                    radius: 1,
+                    borderColor: `rgba(${r},${g},${b},0.3)`,
+                });
+        }
+        
+        setSimulationResults(lineChartData);
+        console.log(lineChartData)
+        setJobReady(true);
     }
     
     //requires a jobID to render
@@ -165,6 +185,7 @@ export default function GraphResults(props) {
     }
 }
 
+// sleep promise
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

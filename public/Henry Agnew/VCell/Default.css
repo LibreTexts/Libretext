@@ -10,6 +10,6 @@
 
 @media (orientation: portrait){
     #biosimulation-render-container{
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 }

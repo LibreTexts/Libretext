@@ -13,21 +13,30 @@ import TextField from '@material-ui/core/TextField';
 import GraphResults from "../components/GraphResults.jsx";
 import Button from "@material-ui/core/Button";
 import {SnackbarProvider, useSnackbar} from 'notistack';
+import {Accordion, AccordionDetails, AccordionSummary, Tooltip} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-const AVOGADRO = 6.02214076E23;
-//TODO fix CORS issue. Currently using a proxy
-const API_ENDPOINT = `https://api.biosimulations.org`;
 
 /*
 This code injects your React code into the webpage.
 */
 const target = document.createElement("div");
-// noinspection JSValidateTypes
-target.id = Math.random() * 100;
-// noinspection XHTMLIncompatabilitiesJS
+target.id = String(Math.random() * 100);
 document.currentScript.parentNode.insertBefore(target, document.currentScript);
 const dataset = document.currentScript.dataset;
 
+
+const AVOGADRO = 6.02214076E23;
+const SLOW_API_ENDPOINT = `https://api.biosimulations.org`;
+const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`;
+const isQuick = Boolean(dataset.quick);
+const API_ENDPOINT = isQuick ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
+const simulator = dataset.simulator || "vcell";
+
+let prevjobid = undefined;
+if (!isQuick) { // only allowed for slow jobs
+    prevjobid = dataset.prevjobid?.trim() || undefined
+}
 /*
 React Hook for creating OMEX files based on user inputs and then submitting the jobs to runBioSimulations
 */
@@ -35,11 +44,13 @@ function VCellReactHook(props) {
     const [omex, setOmex] = React.useState();
     const [omexFile, setOmexFile] = React.useState(dataset.omex);
     const [species, setSpecies] = React.useState([]);
-    const [jobID, setJobID] = React.useState(dataset.prevjobid?.trim() || undefined);
-    const [prevJob, clearPrevJob] = React.useState(Boolean(dataset.prevjobid));
+    const [jobID, setJobID] = React.useState(prevjobid);
+    const [prevJob, clearPrevJob] = React.useState(Boolean(prevjobid));
+    const [quickData, setQuickData] = React.useState();
+    const [parameters, setParameters] = React.useState([]);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     
-    function updateSpecies(event, key) {
+    function updateSpecies(event, key) { //updates a species concentration based on user input
         let updated = {...species[key]};
         let newValue = event.target.value * AVOGADRO;
         newValue = Math.max(0, newValue);
@@ -47,6 +58,14 @@ function VCellReactHook(props) {
         updated.initialAmount = newValue;
         species[key] = updated;
         setSpecies(species);
+    }
+    
+    function updateParameter(event, key) { //updates a parameter based on user input
+        let updated = {...parameters[key]};
+        
+        updated.value = event.target.value;
+        parameters[key] = updated;
+        setParameters(parameters);
     }
     
     React.useEffect(() => {
@@ -89,10 +108,20 @@ function VCellReactHook(props) {
             speciesObject[specie['_attributes'].id] = specie['_attributes'];
         });
         setSpecies(speciesObject);
+        //extract parameters so they can also be user-modified
+        const parametersObject = {};
+        sbml.sbml.model.listOfParameters.parameter.forEach(parameter => {
+            parametersObject[parameter['_attributes'].id] = parameter['_attributes'];
+        });
+        setParameters(parametersObject);
     }
     
     //modify omex file and submit to runBioSimulations
     async function submitOmex() {
+        if (!omex) {
+            loadOmex();
+            return false;
+        }
         const sbmlFile = Object.keys(omex.files).find(key => key.endsWith('.xml') && key !== 'manifest.xml');
         let sbml = await omex.file(sbmlFile).async('text');
         
@@ -103,6 +132,13 @@ function VCellReactHook(props) {
         temp = convert.js2xml({listOfSpecies: {species: temp}}, {compact: true, spaces: 2});
         console.log(temp);
         sbml = sbml.replace(/<listOfSpecies>[\s\S]*?<\/listOfSpecies>/, temp);
+        
+        temp = Object.values(parameters).map(sp => {
+            return {"_attributes": sp};
+        });
+        temp = convert.js2xml({listOfParameters: {parameter: temp}}, {compact: true, spaces: 2});
+        console.log(temp);
+        sbml = sbml.replace(/<listOfParameters>[\s\S]*?<\/listOfParameters>/, temp);
         // console.log(sbml);
         await omex.file(sbmlFile, sbml);
         setOmex(omex);
@@ -111,32 +147,81 @@ function VCellReactHook(props) {
         //send data to runBioSimulations API
         const formData = new FormData();
         const name = `LT-${Math.round(Math.random() * 1E10)}`; //-${omexFile.match(/(?<=\/)[^\/]*?\.omex/)?.[0] || 'test.omex'}
-        // console.log(filename);
-        //TODO: Use https://api.biosimulators.org/simulators/vcell/latest?includeTests=false to get latest version
-        const runMetadata = {"name": name, "email": null, "simulator": "vcell", "simulatorVersion": "latest"};
-        formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
-        formData.append('simulationRun', JSON.stringify(runMetadata));
         
-        let response = await fetch(`${API_ENDPOINT}/runs`, {
-            method: 'POST',
-            body: formData
-        });
-        if (response.ok) {
-            response = await response.json();
-            enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
-                variant: 'success',
+        if (!isQuick) { // default to slow simulation handling
+            // console.log(filename);
+            const runMetadata = {"name": name, "email": null, "simulator": simulator, "simulatorVersion": "latest"};
+            formData.append('file', await omex.generateAsync({type: 'blob'}), 'test.omex');
+            formData.append('simulationRun', JSON.stringify(runMetadata));
+            
+            //start the simulation
+            let response = await fetch(`${API_ENDPOINT}/runs`, {
+                method: 'POST',
+                body: formData
             });
-            clearPrevJob(undefined);
-            console.log(`JOB ID: ${response.id}`);
-            setJobID(response.id);
+            //simulation will continue processing in the background. <GraphResults> will listen for completion
+            if (response.ok) {
+                response = await response.json();
+                enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
+                    variant: 'success',
+                });
+                clearPrevJob(undefined);
+                setQuickData(undefined);
+                console.log(`JOB ID: ${response.id}`);
+                setJobID(response.id);
+            }
+            else {
+                response = await response.json();
+                enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
+                    variant: 'error',
+                });
+            }
+            console.log(response);
         }
         else {
-            response = await response.json();
-            enqueueSnackbar(`Error encountered: ${JSON.stringify(response)}`, {
-                variant: 'error',
+            formData.append('simulator', "tellurium"); //TODO: replace tellurium with variable
+            formData.append('_type', "SimulationRun");
+            // formData.append('archiveUrl', "https://bio.libretexts.org/@api/deki/files/38382/test.omex");
+            formData.append('archiveFile', await omex.generateAsync({type: 'blob'}), 'test.omex');
+            formData.append('archiveFile', '');
+            formData.append('environment', JSON.stringify({
+                "_type": "Environment",
+                "variables": []
+            }))
+            
+            //send simulation and wait for it to finish
+            let quickResponse = await fetch(`${API_ENDPOINT}/run/run`, {
+                method: 'POST',
+                body: formData,
+                "headers": {
+                    "accept": "application/json",
+                },
             });
+            if (quickResponse.ok) {
+                quickResponse = await quickResponse.json(); //results will be in this json
+                if (quickResponse.log.status === "SUCCEEDED") {
+                    enqueueSnackbar(`QUICK plot`, {
+                        variant: 'success',
+                    });
+                }
+                else {
+                    enqueueSnackbar(`${quickResponse.log.exception.type}: ${quickResponse.log.exception.message}`, {
+                        variant: 'error',
+                    });
+                    console.error(quickResponse.log.exception.message)
+                }
+                clearPrevJob(undefined);
+                setQuickData(quickResponse); //TODO: Think of a better way to pass data to the Graph subcomponent
+                setJobID(`QUICK-${Math.round(Math.random() * 1E10)}`);
+            }
+            else {
+                quickResponse = await quickResponse.json();
+                enqueueSnackbar(`Error encountered: ${JSON.stringify(quickResponse)}`, {
+                    variant: 'error',
+                });
+            }
+            console.log(quickResponse);
         }
-        console.log(response);
     }
     
     //primary render method
@@ -144,29 +229,67 @@ function VCellReactHook(props) {
     //TODO: add attributions for VCell and run.biosimulators.org
     return (
         <div id="biosimulation-render-container" style={{display: 'flex'}}>
-            <div style={{flex: 1}}>
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Species</TableCell>
-                                <TableCell>Initial Conditions</TableCell>
-                                <TableCell>Units</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Object.entries(species).map(([key, value]) => <SpeciesRow key={key} specie={value}
-                                                                                       onChange={updateSpecies}/>)}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <div style={{flex: 2}}>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >Species conditions
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Species</TableCell>
+                                        <TableCell>Initial Conditions</TableCell>
+                                        <TableCell>Units</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {Object.entries(species).map(([key, value]) => <SpeciesRow key={key} specie={value}
+                                                                                               onChange={updateSpecies}/>)}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >Parameters
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Parameter</TableCell>
+                                        <TableCell>Value</TableCell>
+                                        <TableCell>Units</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {Object.entries(parameters).map(([key, value]) => <ParameterRow key={key}
+                                                                                                    parameter={value}
+                                                                                                    onChange={updateParameter}/>)}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </AccordionDetails>
+                </Accordion>
+                
                 {!dataset.omex ? <Button onClick={loadOmex} variant="contained">
                     Load File
                 </Button> : null}
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
+                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}><p>Simulation ran using {simulator} and powered by https://run.biosimulations.org</p></Tooltip>
             </div>
             <div style={{flex: 2}}>
-                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} />
+                <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} quickData={quickData}/>
             </div>
         </div>
     );
@@ -191,6 +314,26 @@ function SpeciesRow(props) {
         {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
         {/*TODO: make units flexible*/}
         <TableCell>moles per liter</TableCell>
+    </TableRow>;
+}
+
+//each Specie gets a SpeciesRow so its initialAmount can be user-modified
+function ParameterRow(props) {
+    if (props?.parameter?.value === undefined)
+        return null;
+    
+    return <TableRow key={props.parameter.id}>
+        <TableCell scope="row">
+            {props.parameter.id}
+        </TableCell>
+        <TableCell>
+            <TextField type="number"
+                       variant="filled"
+                       defaultValue={(props.parameter.value)}
+                       onChange={(e) => props.onChange(e, props.parameter.id)}
+            />
+        </TableCell>
+        <TableCell>{props.parameter.units}</TableCell>
     </TableRow>;
 }
 
