@@ -9,20 +9,20 @@ const timestamp = require('console-timestamp');
 const secure = require('./secure.json');
 
 const batchSchedule = {
-  bio: '1,15',
-  biz: '2,16',
-  chem: '3,17',
-  eng: '4,18',
-  espanol: '5,19',
-  geo: '6,20',
-  human: '7,21',
-  k12: '8,22',
-  math: '9,23',
-  med: '10,24',
-  phys: '11,25',
-  socialsci: '12,26',
-  stats: '13,27',
-  workforce: '14,28',
+  bio: 1,
+  biz: 3,
+  chem: 5,
+  eng: 7,
+  espanol: 9,
+  geo: 10,
+  human: 12,
+  k12: 14,
+  math: 16,
+  med: 18,
+  phys: 20,
+  socialsci: 22,
+  stats: 24,
+  workforce: 26,
 };
 
 /**
@@ -30,7 +30,7 @@ const batchSchedule = {
  *
  * @param {string} library - The LibreTexts library shortened identifier.
  * @param {string} target - The area of the library to batch.
- * @param {string} timeSpec - The days of the month to run the job.
+ * @param {number|string} timeSpec - The day(s) of the month to run the job.
  * @param {number} [timeOffset=0] - An offset to apply to the batch job's schedule.
  */
 function scheduleLibraryBatch(library, target, timeSpec, timeOffset = 0) {
@@ -146,7 +146,7 @@ function initialize() {
     const timeSpec = batchSchedule[library];
     if (library !== 'espanol') {
       scheduleLibraryBatch(library, 'bookshelves', timeSpec);
-      scheduleLibraryBatch(library, 'courses', timeSpec, 12);
+      scheduleLibraryBatch(library, 'courses', timeSpec + 1);
     } else {
       scheduleLibraryBatch(library, 'home', timeSpec);
     }
