@@ -17,6 +17,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const ID_PDF_DROPDOWN_CONTENT = 'libre-pdf-dropdown-content';
   const ID_DWNLD_DROPDOWN_CONTENT = 'libre-dwnld-dropdown-content';
   const ID_RDBLTY_BTN = 'libre-readability-btn';
+  const ID_COMMONS_ADOPTIONREPORT_BTN = 'libre-commons-adoptionreport-btn';
+  const ID_COMMONS_PEERREVIEW_BTN = 'libre-commons-peerreview-btn';
+  const ID_COMMONS_ADAPT_BTN = 'libre-commons-adapt-btn';
+  const ID_COMMONS_MATERIALS_BTN = 'libre-commons-materials-btn';
 
   const CLASS_DROPDOWN = 'libre-dropdown';
   const CLASS_DROPDOWN_BTN = 'libre-dropdown-btn';
@@ -26,19 +30,64 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const CLASS_DROPDOWN_OPEN_STATE = 'dropdown-open';
   const CLASS_DONORBOX_LINK = 'libretexts-dbox-popup';
 
+  let currentCoverpage = null;
+  let currentSubdomain = null;
+
+  /**
+   * Loads information about the current text's coverpage, if it exists, into memory.
+   *
+   * @returns {Promise<boolean>} True if information loaded, false otherwise.
+   */
+  const loadCoverpage = async () => {
+    const coverPath = await LibreTexts.getCoverpage();
+    if (coverPath) {
+      const [subdomain] = LibreTexts.parseURL();
+      currentSubdomain = subdomain;
+      currentCoverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPath}`);
+      return true;
+    }
+    return false;
+  };
+
   /**
    * Finds the current text's coverpage and retrieves the Full PDF download link.
    *
-   * @returns {string|boolean} The Full PDF download link, or false if not found.
+   * @returns {Promise<string|boolean>} The Full PDF download link, or false if not found.
    */
   const getBook = async () => {
-    let coverpage = await LibreTexts.getCoverpage();
-    if (coverpage) {
-      const [subdomain] = LibreTexts.parseURL();
-      coverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverpage}`);
-      return `https://batch.libretexts.org/print/Finished/${subdomain}-${coverpage.id}/Full.pdf`;
+    if (!currentCoverpage) {
+      await loadCoverpage();
+    }
+    if (currentCoverpage) {
+      return `https://batch.libretexts.org/print/Finished/${currentSubdomain}-${currentCoverpage.id}/Full.pdf`;
     }
     return false;
+  };
+
+  /**
+   * Attempts to retrieve a LibreText's catalog listing in the LibreCommons.
+   *
+   * @returns {Promise<object|null>} The book's listing, or null if not found.
+   */
+  const getBookCommonsEntry = async () => {
+    if (!currentCoverpage) {
+      await loadCoverpage();
+    }
+    if (currentCoverpage) {
+      try {
+        const commonsRes = await fetch(
+          `https://commons.libretexts.org/api/v1/commons/book/${currentSubdomain}-${currentCoverpage.id}`,
+          { headers: { 'X-Requested-With': 'XMLHttpRequest' } },
+        );
+        if (commonsRes.status === 200) {
+          const entryData = await commonsRes.json();
+          return entryData.book;
+        }
+      } catch (e) {
+        console.error(`[ExportButtons]: ${e.toString()}`);
+      }
+    }
+    return null;
   };
 
   /**
@@ -540,6 +589,121 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }));
       }
 
+      /* LibreCommons tools/buttons */
+      const commonsEntry = await getBookCommonsEntry();
+      if (commonsEntry) {
+        const commonsURL = `https://commons.libretexts.org/book/${commonsEntry.bookID}`;
+
+        /**
+         * Opens the text's LibreCommons Catalog entry page in a new tab with the Adoption Report
+         * tool open.
+         *
+         * @param {MouseEvent|KeyboardEvent} e - The event that triggered the handler. 
+         */
+        const openAdoptionReport = (e) => {
+          e.preventDefault();
+          window.open(`${commonsURL}?adoptionreport=show`, '_blank', 'noreferrer');
+        };
+
+        /**
+         * Opens the text's LibreCommons Catalog entry page in a new tab with the Peer Review
+         * submission form open.
+         *
+         * @param {MouseEvent|KeyboardEvent} e - The event that triggered the handler. 
+         */
+        const openPeerReview = (e) => {
+          e.preventDefault();
+          window.open(`${commonsURL}?peerreview=show`, '_blank', 'noreferrer');
+        };
+
+        /**
+         * Opens the text's associated ADAPT course in a new tab using anonymous access.
+         *
+         * @param {MouseEvent|KeyboardEvent} e - The event that triggered the handler. 
+         */
+        const openADAPTCourse = (e) => {
+          e.preventDefault();
+          window.open(
+            `https://adapt.libretexts.org/courses/${commonsEntry.adaptCourseID}/anonymous`,
+            '_blank',
+            'noreferrer',
+          );
+        };
+
+        /**
+         * Opens the text's LibreCommons Catalog entry page in a new tab with the Ancillary
+         * Materials viewer open.
+         *
+         * @param {MouseEvent|KeyboardEvent} e - The event that triggered the handler. 
+         */
+        const openAncillaryMaterials = (e) => {
+          e.preventDefault();
+          window.open(`${commonsURL}?materials=show`, '_blank', 'noreferrer');
+        };
+
+        const adoptionReportButton = document.createElement('button');
+        Object.assign(adoptionReportButton, {
+          id: ID_COMMONS_ADOPTIONREPORT_BTN,
+          title: 'Submit an Adoption Report for this text (opens in new tab)',
+          type: 'button',
+          tabIndex: 0,
+        });
+        adoptionReportButton.appendChild(document.createTextNode('Submit Adoption Report'));
+        adoptionReportButton.addEventListener('click', openAdoptionReport);
+        adoptionReportButton.addEventListener('keydown', (e) => {
+          if (e.key === ENTER_KEY) openAdoptionReport(e);
+        });
+        exportContainer.appendChild(adoptionReportButton);
+
+        if (commonsEntry.hasPeerReviews || commonsEntry.allowAnonPR) {
+          const peerReviewButton = document.createElement('button');
+          Object.assign(peerReviewButton, {
+            id: ID_COMMONS_PEERREVIEW_BTN,
+            title: 'Submit a Peer Review (opens in new tab)',
+            type: 'button',
+            tabIndex: 0,
+          });
+          peerReviewButton.appendChild(document.createTextNode('Peer Review'));
+          peerReviewButton.addEventListener('click', openPeerReview);
+          peerReviewButton.addEventListener('keydown', (e) => {
+            if (e.key === ENTER_KEY) openPeerReview(e);
+          });
+          exportContainer.appendChild(peerReviewButton);
+        }
+
+        if (commonsEntry.hasAdaptCourse) {
+          const adaptButton = document.createElement('button');
+          Object.assign(adaptButton, {
+            id: ID_COMMONS_ADAPT_BTN,
+            title: 'View ADAPT Homework Resources (opens in new tab)',
+            type: 'button',
+            tabIndex: 0,
+          });
+          adaptButton.appendChild(document.createTextNode('Homework'));
+          adaptButton.addEventListener('click', openADAPTCourse);
+          adaptButton.addEventListener('keydown', (e) => {
+            if (e.key === ENTER_KEY) openADAPTCourse(e);
+          });
+          exportContainer.appendChild(adaptButton);
+        }
+
+        if (commonsEntry.hasMaterials) {
+          const materialsButton = document.createElement('button');
+          Object.assign(materialsButton, {
+            id: ID_COMMONS_MATERIALS_BTN,
+            title: 'View Ancillary Materials (opens in new tab)',
+            type: 'button',
+            tabIndex: 0,
+          });
+          materialsButton.appendChild(document.createTextNode('Ancillary Materials'));
+          materialsButton.addEventListener('click', openAncillaryMaterials);
+          materialsButton.addEventListener('keydown', (e) => {
+            if (e.key === ENTER_KEY) openAncillaryMaterials(e);
+          });
+          exportContainer.appendChild(materialsButton);
+        }
+      }
+
       /* Readability Options Button */
       const readabilityButton = document.createElement('button');
       Object.assign(readabilityButton, {
@@ -602,7 +766,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         color: #FFFFFF !important;
         border: none !important;
         border-radius: 0;
-        margin: 0 2.5px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -615,7 +778,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         z-index: 1000;
         position: absolute;
         width: 150px;
-        margin-left: 2.5px;
       `;
       const dropdownOptionsStyles = `
         width: 150px !important;
@@ -632,6 +794,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           flex-wrap: wrap;
           align-items: stretch;
           justify-content: center;
+          gap: 0.25em;
         }
         #${ID_RDBLTY_BTN}, #${ID_RDBLTY_BTN}:hover {
           background-color: #D4D4D4 !important;
@@ -640,7 +803,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           border-radius: 0;
           box-shadow: none !important;
           height: 35px;
-          margin: 0 2.5px;
         }
         #${ID_RDBLTY_BTN}:focus {
           border: 3px solid #30B3F6 !important;
@@ -715,6 +877,34 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         .${CLASS_DWNLD_DROPDOWN_ITEM}:focus {
           border: 3px solid #0B0115 !important;
           box-shadow: none !important;
+        }
+        #${ID_COMMONS_ADOPTIONREPORT_BTN}, #${ID_COMMONS_ADOPTIONREPORT_BTN} {
+          background-color: #088A20 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_COMMONS_ADOPTIONREPORT_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
+        }
+        #${ID_COMMONS_PEERREVIEW_BTN}, #${ID_COMMONS_PEERREVIEW_BTN} {
+          background-color: #CD4D12 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_COMMONS_PEERREVIEW_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
+        }
+        #${ID_COMMONS_ADAPT_BTN}, #${ID_COMMONS_ADAPT_BTN} {
+          background-color: #088488 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_COMMONS_ADAPT_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
+        }
+        #${ID_COMMONS_MATERIALS_BTN}, #${ID_COMMONS_MATERIALS_BTN} {
+          background-color: #2E79C6 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_COMMONS_MATERIALS_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
         }
       </style>
     `);

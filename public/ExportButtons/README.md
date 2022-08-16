@@ -1,6 +1,6 @@
 ## LibreExportButtons
 
-The LibreExportButtons provide quick access to several download options (such as PDFs) while reading on the LibreTexts libraries.
+The LibreExportButtons provide quick access to several download options (such as PDFs) and other LibreVerse tools (such as those from Commons & Conductor) while reading on the LibreTexts libraries.
 
 ### Dependencies
 LibreExportButtons do not have any extraneous dependencies.
