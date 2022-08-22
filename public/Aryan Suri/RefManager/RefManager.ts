@@ -1,6 +1,3 @@
-
-
-
 "use strict";
 window.addEventListener("load", async () => {
     await buildManager();
@@ -40,9 +37,11 @@ async function buildManager() {
     };
     await updateManager();
 }
+
 function updatePrivacy(val) {
     return;
 }
+
 async function updateManager() {
     let userRefJSON = await getRefJSON();
     let style = document.querySelector("#live-tag-citationstyle-select")!.value;
@@ -70,6 +69,7 @@ async function updateManager() {
         return;
     }
 }
+
 async function getRefJSON(cp = false) {
     let coverPage = null;
     let userRefJSON;
@@ -77,7 +77,7 @@ async function getRefJSON(cp = false) {
         coverPage = await LibreTexts.getCoverpage();
     }
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(coverPage, `files/=references.json`, null);
+        userRefJSON = await LibreTexts.authenticatedFetch(coverPage, `info?dream.out.format=json`, null);
         if (userRefJSON.ok) {
             userRefJSON = await userRefJSON.json();
         }
@@ -90,13 +90,14 @@ async function getRefJSON(cp = false) {
     }
     return userRefJSON;
 }
+
 async function putRefJSON(json:any, cp = false) {
     let coverPage = null;
     if (cp) {
         coverPage = await LibreTexts.getCoverpage();
     }
     try {
-        await LibreTexts.authenticatedFetch(coverPage, `files/=references.json`, null, {
+        await LibreTexts.authenticatedFetch(coverPage, `info?dream.out.format=json`, null, {
             method: "PUT",
             body: (JSON.stringify(json))
         });

@@ -6,6 +6,7 @@ window.addEventListener("load", async () => {
 document.querySelector("#live-tag-citationstyle-select").addEventListener("change", async () => {
     await updateManager();
 });
+
 async function buildManager() {
     const referenceModal = document.createElement("div");
     // const referenceButton = document.getElementById("referenceModalBtn");
@@ -40,6 +41,7 @@ async function buildManager() {
 function updatePrivacy(val) {
     return;
 }
+
 async function updateManager() {
     let userRefJSON = await getRefJSON();
     let style = document.querySelector("#live-tag-citationstyle-select").value;
@@ -67,6 +69,7 @@ async function updateManager() {
         return;
     }
 }
+
 async function getRefJSON(cp = false) {
     let coverPage = null;
     let userRefJSON;
@@ -74,7 +77,7 @@ async function getRefJSON(cp = false) {
         coverPage = await LibreTexts.getCoverpage();
     }
     try {
-        userRefJSON = await LibreTexts.authenticatedFetch(coverPage, `files/=references.json`, null);
+        userRefJSON = await LibreTexts.authenticatedFetch(coverPage, `info?dream.out.format=json`, null);
         if (userRefJSON.ok) {
             userRefJSON = await userRefJSON.json();
         }
@@ -87,13 +90,14 @@ async function getRefJSON(cp = false) {
     }
     return userRefJSON;
 }
+
 async function putRefJSON(json, cp = false) {
     let coverPage = null;
     if (cp) {
         coverPage = await LibreTexts.getCoverpage();
     }
     try {
-        await LibreTexts.authenticatedFetch(coverPage, `files/=references.json`, null, {
+        await LibreTexts.authenticatedFetch(coverPage, `info?dream.out.format=json`, null, {
             method: "PUT",
             body: (JSON.stringify(json))
         });
@@ -103,6 +107,7 @@ async function putRefJSON(json, cp = false) {
     }
     return;
 }
+
 async function copyReference() {
     let refID = this.id;
     const el = document.createElement('textarea');
@@ -116,6 +121,7 @@ async function copyReference() {
     document.body.removeChild(el);
     return document.getElementById("referenceModalOutput").innerText = `Citation (${refID}) copied`;
 }
+
 async function deleteReference() {
     const refIDI = this.id;
     const num = refIDI.slice(-1);
@@ -131,6 +137,7 @@ async function deleteReference() {
     document.getElementById(`${refID}`).remove();
     document.getElementById("referenceModalOutput").innerText = "Citation deleted";
 }
+
 function sortReference(refs) {
     let userRefArray = Object.values(refs);
     userRefArray = userRefArray.sort((a, b) => {
@@ -146,6 +153,7 @@ function sortReference(refs) {
     });
     return userRefArray;
 }
+
 function renderReference(json, output) {
     //@ts-ignore
     let style = document.querySelector("#live-tag-citationstyle-select").value;
@@ -167,6 +175,7 @@ function renderReference(json, output) {
         });
     }
 }
+
 async function storeReference(data) {
     const Selector = document.querySelector("#live-tag-citationstyle-select");
     let Style = Selector.value;
@@ -239,8 +248,9 @@ async function storeReference(data) {
         }
     }
 }
+
 async function processReference() {
-    const style = document.querySelector("#live-tag-citationstyle-select").value;
+    // const style = document.querySelector("#live-tag-citationstyle-select").value;
     const reg = new RegExp(/(?:\\#)([\s\S]*?)(?:#\\)/gm);
     let userRefJSON = await getRefJSON();
     console.log(userRefJSON);
@@ -324,6 +334,7 @@ function processBibliography(referenceJSON, anchoredKeys, mode = document.queryS
     managerArea.appendChild(referenceArea);
     document.getElementById("pageText").appendChild(managerArea);
 }
+
 function citeInstance() {
     let c = CitRequire('citation-js');
     let apaname = "citationstyle:apa";
