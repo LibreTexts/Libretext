@@ -1,5 +1,5 @@
 {
-  "name": "Aryan Suri",
+  "name": "reference-manager",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Aryan Suri",
   "license": "ISC",
   "devDependencies": {
     "citation-js": "^0.5.0-alpha.9",
