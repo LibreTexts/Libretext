@@ -44,6 +44,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       const [subdomain] = LibreTexts.parseURL();
       currentSubdomain = subdomain;
       currentCoverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPath}`);
+      LibreTexts.current.coverpage = currentCoverpage;
       return true;
     }
     return false;
@@ -81,7 +82,9 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         );
         if (commonsRes.status === 200) {
           const entryData = await commonsRes.json();
-          return entryData.book;
+          const bookData = entryData.book;
+          LibreTexts.current.commons = bookData;
+          return bookData;
         }
       } catch (e) {
         console.error(`[ExportButtons]: ${e.toString()}`);
@@ -467,6 +470,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
       /* Full PDF Download */
       if (fullBook) {
+        LibreTexts.current.pdf.full = fullBook;
         pdfExportOptions.push({
           text: 'Full Book',
           title: 'Get a PDF of this book (opens in a new tab)',
@@ -486,10 +490,12 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       }
       /* Page PDF Download */
       if (tags.includes('"article:topic"')) {
+        const pagePDF = `https://batch.libretexts.org/print/url=${window.location.href}.pdf`;
+        LibreTexts.current.pdf.page = pagePDF;
         pdfExportOptions.push({
           text: 'Page',
           title: 'Get a PDF of this page (opens in a new tab)',
-          href: `https://batch.libretexts.org/print/url=${window.location.href}.pdf`,
+          href: pagePDF,
         });
       }
       /* Compile Book (Page + Subpages) */

@@ -73,7 +73,16 @@ function LibreTextsReuse() {
     };
     
     return {
-        active: {}, //object which active instances can attach themselves to
+        /**
+         * Object for active tool/feature instances to attach to
+         */
+        active: {},
+        /**
+         * Object for information about the current page/book
+         */
+        current: {
+          pdf: {},
+        },
         debug: {},
         authenticatedFetch: authenticatedFetch,
         // clarifySubdomain: clarifySubdomain,
