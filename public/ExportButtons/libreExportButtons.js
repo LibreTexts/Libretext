@@ -94,6 +94,41 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   };
 
   /**
+   * Attempts to retrieve download availability information from the systemwide downloads listings.
+   *
+   * @returns {Promise<object|null>} The found download listing, or null if not found
+   *  or access denied.
+   */
+  const getDownloadsAvailability = async () => {
+    const isPro = document.getElementById('proHolder').innerText === 'true';
+    if (!currentCoverpage) {
+      await loadCoverpage();
+    }
+    if (currentCoverpage) {
+      const isNonEnglishLib = currentSubdomain === 'espanol';
+      const directoryPath = window.location.href.includes('/Courses') ? 'Courses' : 'Bookshelves';
+      const file = isNonEnglishLib ? 'home' : directoryPath;
+      const listingsURL = `https://api.libretexts.org/DownloadsCenter/${currentSubdomain}/${file}.json`;
+      const listings = await fetch(listingsURL);
+      let foundListings = await listings.json();
+      if (foundListings.items) {
+        foundListings = foundListings.items; // extract listings
+      }
+      const coverIDString = currentCoverpage.id.toString();
+      const foundEntry = foundListings.find((entry) => (
+        entry.id === coverIDString || entry.altID === coverIDString
+      ));
+      if (foundEntry) {
+        const denyProAccess = !isPro && foundEntry.tags.includes('luluPro'); // needs 'pro' access
+        if (!foundEntry.failed && !denyProAccess) {
+          return foundEntry;
+        }
+      }
+    }
+    return null;
+  };
+
+  /**
    * Submits a request to the LibreTexts Batch server to compile the current page or book.
    *
    * @param {string} target - The url of the page or book to compile.
@@ -431,34 +466,14 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
    */
   const loadExportButtons = async () => {
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
-    const isPro = document.getElementById('proHolder').innerText === 'true';
     const groups = document.getElementById('groupHolder').innerText;
     const basicBatchAccess = isAdmin || isPro;
     const fullBatchAccess = isAdmin || (isPro && (groups.includes('Developer') || groups.includes('BatchAccess')));
-    const [subdomain] = LibreTexts.parseURL();
 
     try {
       const tags = document.getElementById('pageTagsHolder').innerText;
-      let downloadEntry = null;
       const url = window.location.href.replace(/#$/, '');
-      if (tags.includes('coverpage:yes')) {
-        const pageID = document.getElementById('pageIDHolder').innerText;
-        const isNonEnglishLib = subdomain === 'espanol';
-        const directoryPath = window.location.href.includes('/Courses') ? 'Courses' : 'Bookshelves';
-        const part = isNonEnglishLib ? 'home' : directoryPath;
-        const downloadsListing = await fetch(`https://api.libretexts.org/DownloadsCenter/${subdomain}/${part}.json`);
-        let downloads = await downloadsListing.json();
-        if (downloads.items) {
-          downloads = downloads.items; // extract listings
-        }
-        const foundListing = downloads.find((ent) => ent.id === pageID || ent.altID === pageID);
-        if (foundListing) {
-          const denyProAccess = !isPro && foundListing.tags.includes('luluPro'); // needs 'pro' access
-          if (!foundListing.failed && !denyProAccess) {
-            downloadEntry = foundListing;
-          }
-        }
-      }
+      const downloadEntry = await getDownloadsAvailability();
       const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
       const fullBook = await getBook();
       const exportFragment = document.createDocumentFragment(); // create in a vDOM first
