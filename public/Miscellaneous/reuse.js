@@ -81,7 +81,9 @@ function LibreTextsReuse() {
          * Object for information about the current page/book
          */
         current: {
-          pdf: {},
+          downloads: {
+            pdf: {},
+          },
         },
         debug: {},
         authenticatedFetch: authenticatedFetch,

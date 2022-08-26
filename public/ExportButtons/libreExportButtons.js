@@ -485,7 +485,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
       /* Full PDF Download */
       if (fullBook) {
-        LibreTexts.current.pdf.full = fullBook;
+        LibreTexts.current.downloads.pdf.full = fullBook;
         pdfExportOptions.push({
           text: 'Full Book',
           title: 'Get a PDF of this book (opens in a new tab)',
@@ -506,7 +506,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       /* Page PDF Download */
       if (tags.includes('"article:topic"')) {
         const pagePDF = `https://batch.libretexts.org/print/url=${window.location.href}.pdf`;
-        LibreTexts.current.pdf.page = pagePDF;
+        LibreTexts.current.downloads.pdf.page = pagePDF;
         pdfExportOptions.push({
           text: 'Page',
           title: 'Get a PDF of this page (opens in a new tab)',
