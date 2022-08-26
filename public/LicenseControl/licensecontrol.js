@@ -486,6 +486,11 @@ function licenseControl() {
       const licLinkStart = `<a style="width: max-content; width: -moz-max-content; overflow: initial;" href="${license.link}" target="_blank" rel="noopener noreferrer">${licIcon}</a>`;
       pageLabel.innerHTML = `<span>${licLinkStart}</span>`;
 
+      LibreTexts.current.license = {
+        ...license,
+        icon: licIcon,
+      };
+
       /** Add the label to DOM */
       if ($('li.elm-last-modified').length > 0) {
         $('li.elm-last-modified')[0].before(pageLabel);
