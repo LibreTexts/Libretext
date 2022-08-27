@@ -45,6 +45,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       currentSubdomain = subdomain;
       currentCoverpage = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${coverPath}`);
       LibreTexts.current.coverpage = currentCoverpage;
+      const coverpageInfoAvailable = new Event('libre-coverpageinfoavailable', {
+        cancelable: true,
+      });
+      window.dispatchEvent(coverpageInfoAvailable);
       return true;
     }
     return false;
@@ -84,6 +88,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           const entryData = await commonsRes.json();
           const bookData = entryData.book;
           LibreTexts.current.commons = bookData;
+          const commonsInfoAvailable = new Event('libre-commonsinfoavailable', {
+            cancelable: true,
+          });
+          window.dispatchEvent(commonsInfoAvailable);
           return bookData;
         }
       } catch (e) {
@@ -96,11 +104,11 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   /**
    * Attempts to retrieve download availability information from the systemwide downloads listings.
    *
+   * @param {boolean} [isPro=false] - Current user has "Pro" access.
    * @returns {Promise<object|null>} The found download listing, or null if not found
    *  or access denied.
    */
-  const getDownloadsAvailability = async () => {
-    const isPro = document.getElementById('proHolder').innerText === 'true';
+  const getDownloadsAvailability = async (isPro = false) => {
     if (!currentCoverpage) {
       await loadCoverpage();
     }
@@ -465,6 +473,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
    *  and the Readability menu toggle into the DOM.
    */
   const loadExportButtons = async () => {
+    const isPro = document.getElementById('proHolder').innerText === 'true';
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
     const groups = document.getElementById('groupHolder').innerText;
     const basicBatchAccess = isAdmin || isPro;
@@ -505,7 +514,22 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       }
       /* Page PDF Download */
       if (tags.includes('"article:topic"')) {
-        const pagePDF = `https://batch.libretexts.org/print/url=${window.location.href}.pdf`;
+        /* Remove query parameters except cache control */
+        let queryParams = '';
+        if (window.location.search) {
+          const params = new URLSearchParams(window.location.search);
+          for (const key of params.keys()) {
+            if (key !== 'no-cache' && key !== 'nocache') {
+              params.delete(key);
+            }
+          }
+          if (params.toString()) {
+            queryParams = `?${params.toString()}`;
+          }
+        }
+        const pageURL = `${window.location.origin}${window.location.pathname}${queryParams}`;
+        const pagePDF = `https://batch.libretexts.org/print/url=${pageURL}.pdf`;
+
         LibreTexts.current.downloads.pdf.page = pagePDF;
         pdfExportOptions.push({
           text: 'Page',
@@ -565,36 +589,50 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }
         const downloadOptions = [
           {
+            key: 'full',
             text: 'Full PDF',
             title: 'Download Full PDF',
             href: `${linkRoot}/Full.pdf`,
             icon: 'mt-icon-file-pdf',
           },
           {
+            key: 'lms',
             text: 'Import into LMS',
             title: 'Download LMS Import File',
             href: `${linkRoot}/LibreText.imscc`,
             icon: 'mt-icon-graduation',
           },
           {
+            key: 'zip',
             text: 'Individual ZIP',
             title: 'Download ZIP of Individual Pages',
             href: `${linkRoot}/Individual.zip`,
             icon: 'mt-icon-file-zip',
           },
           {
+            key: 'bookstore',
             text: 'Buy Print Copy',
             title: 'Buy Paper Copy (opens in new tab)',
             href: `https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}`,
             icon: 'mt-icon-book2',
           },
           {
+            key: 'publication',
             text: 'Print Book Files',
             title: 'Download Publication Files',
             href: `${linkRoot}/Publication.zip`,
             icon: 'mt-icon-book3',
           },
         ];
+
+        downloadOptions.forEach((option) => {
+          LibreTexts.current.downloads[option.key] = option.href;
+        });
+
+        const downloadsInfoAvailable = new Event('libre-downloadsinfoavailable', {
+          cancelable: true,
+        });
+        window.dispatchEvent(downloadsInfoAvailable);
 
         exportContainer.appendChild(createDropdown({
           dropdownClass: CLASS_DROPDOWN,
