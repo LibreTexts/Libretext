@@ -84,6 +84,10 @@ function LibreTextsReuse() {
           downloads: {
             pdf: {},
           },
+          toc: {
+            flat: null,
+            structured: null,
+          }
         },
         debug: {},
         authenticatedFetch: authenticatedFetch,
@@ -103,6 +107,7 @@ function LibreTextsReuse() {
         getAPI: getAPI,
         getCurrentContents: getCurrentContents,
         getCoverpage: getCoverpage,
+        getTOC: getTOC,
         TOC: TOC,
         sleep: sleep,
         libraries: libraries,
@@ -530,6 +535,141 @@ function LibreTextsReuse() {
             }
         }
         return getCoverpage.coverpage;
+    }
+
+    /**
+     * Result object returned from building a book's Table of Contents.
+     *
+     * @typedef {Object} TOCResult
+     * @property {Object} structured - The TOC as an object with arrays of subpages and nesting.
+     * @property {Object[]} flat - The TOC as an array of objects containing individual page
+     *  information (no nesting).
+     */
+
+    /**
+     * Builds a Table of Contents for the current book/text.
+     *
+     * @returns {Promise<TOCResult|null>} The TOC in flat and hierarchical form, or null if
+     *  error encountered.
+     */
+    async function getTOC() {
+      let coverpageData = null;
+
+      // use cached result
+      if (
+        LibreTexts.current?.toc?.structured !== null
+        && Array.isArray(LibreTexts.current?.toc?.flat)
+      ) {
+        return {
+          structured: LibreTexts.current.toc.structured,
+          flat: LibreTexts.current.toc.flat,
+        }
+      }
+
+      if (!LibreTexts.current?.coverpage) {
+        const [subdomain] = parseURL();
+        const coverpageURL = await getCoverpage();
+        if (!coverpageURL) {
+          return null;
+        }
+        coverpageData = await getAPI(`https://${subdomain}.libretexts.org/${coverpageURL}`);
+      } else { // already found
+        coverpageData = LibreTexts.current.coverpage;
+      }
+      if (!coverpageData.id) { // error getting data
+        return null;
+      }
+
+      /**
+       * Recursively builds a page hierarchy by requesting data about a page from the CXone
+       * Expert API and then nesting its child pages.
+       *
+       * @param {Object} page - Information about the page to start building the hierarchy at.
+       * @returns {Object} The transformed page with the complete tree of children.
+       */
+      async function buildHierarchy(page) {
+        const subpageQueries = [];
+        let subpages = [];
+
+        let subpageRes = await authenticatedFetch(
+          page.path,
+          'subpages?dream.out.format=json&limit=all',
+          page.subdomain,
+        );
+        subpageRes = await subpageRes.json();
+
+        /**
+         * Extracts useful data about the page (returned from the API), then continues recursion
+         * if the page has children.
+         *
+         * @param {Object} subpage - The page to transform.
+         * @param {Number} parentID - Identifier of the page's immediate parent.
+         * @returns {Object} Page information, including an array of immediate child pages,
+         *  if found.
+         */
+        async function processSubpage(subpage, parentID) {
+          const hasChildren = subpage['@subpages'] === 'true';
+          const pageData = {
+            parentID,
+            path: subpage.path['#text'],
+            title: subpage.title,
+            id: Number.parseInt(subpage['@id']),
+            modified: new Date(subpage['date.modified']),
+          };
+          if (hasChildren) {
+            const withChildren = await buildHierarchy(pageData);
+            return withChildren;
+          }
+          return pageData;
+        }
+
+        if (Array.isArray(subpageRes['page.subpage'])) {
+          subpageRes['page.subpage'].forEach((child) => {
+            subpageQueries.push(processSubpage(child, page.id));
+          });
+        } else if (typeof (subpageRes['page.subpage']) === 'object') { // single page
+          subpageQueries.push(processSubpage(subpageRes['page.subpage'], page.id));
+        }
+
+        subpages = [...subpages, ...(await Promise.all(subpageQueries))];
+        return {
+          ...page,
+          subpages,
+        };
+      }
+
+      /**
+       * Recursively flattens a page hierachy by extracting any subpages and removing
+       * their container array.
+       *
+       * @param {Object} page - Page at the level of the hierarchy to start flattening at.
+       * @returns {Object[]} The flattened array of page objects.
+       */
+      function flatHierarchy(page) {
+        let pagesArr = [];
+        const pageData = { ...page };
+        if (Array.isArray(pageData.subpages)) {
+          pageData.subpages.forEach((subpage) => {
+            pagesArr = [...pagesArr, ...flatHierarchy(subpage)];
+          });
+        }
+        delete pageData.subpages;
+        pagesArr.unshift(pageData); // add to front to preserve "ordering"
+        return pagesArr;
+      }
+
+      const structured = await buildHierarchy(coverpageData);
+      const flat = flatHierarchy(structured);
+
+      LibreTexts.current.toc.structured = structured;
+      LibreTexts.current.toc.flat = flat;
+
+      const tocAvailable = new Event('libre-tocavailable', {
+        cancelable: true,
+      });
+      window.dispatchEvent(tocAvailable);
+
+      return { structured, flat };
     }
     
     /**
