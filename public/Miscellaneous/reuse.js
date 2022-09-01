@@ -479,12 +479,14 @@ function LibreTextsReuse() {
                 page.parentID = parseInt(response['page.parent']['@id']);
             if (response.security && response.security['permissions.effective']) {
                 let permissions = response.security['permissions.effective'].operations['#text'];
-                if (permissions.includes('CHANGEPERMISSIONS'))
-                    page.security = 'Editor';
-                else if (permissions.includes('UPDATE'))
-                    page.security = 'Author';
-                else if (permissions.includes('READ'))
-                    page.security = 'Viewer';
+                page.restriction = response.security['permissions.page']?.restriction['#text']?.toLowerCase();
+                if (permissions.includes('CHANGEPERMISSIONS')) {
+                  page.security = 'Editor';
+                } else if (permissions.includes('UPDATE')) {
+                  page.security = 'Author';
+                } else if (permissions.includes('READ')) {
+                  page.security = 'Viewer';
+                }  
             }
             
         }
@@ -603,32 +605,25 @@ function LibreTextsReuse() {
          * if the page has children.
          *
          * @param {Object} subpage - The page to transform.
-         * @param {Number} parentID - Identifier of the page's immediate parent.
          * @returns {Object} Page information, including an array of immediate child pages,
          *  if found.
          */
-        async function processSubpage(subpage, parentID) {
+        const processSubpage = async (subpage) => {
           const hasChildren = subpage['@subpages'] === 'true';
-          const pageData = {
-            parentID,
-            path: subpage.path['#text'],
-            title: subpage.title,
-            id: Number.parseInt(subpage['@id']),
-            modified: new Date(subpage['date.modified']),
-          };
+          const pageData = await getAPI(`https://${page.subdomain}.libretexts.org/${subpage.path['#text']}`);
           if (hasChildren) {
             const withChildren = await buildHierarchy(pageData);
             return withChildren;
           }
           return pageData;
-        }
+        };
 
         if (Array.isArray(subpageRes['page.subpage'])) {
           subpageRes['page.subpage'].forEach((child) => {
-            subpageQueries.push(processSubpage(child, page.id));
+            subpageQueries.push(processSubpage(child));
           });
         } else if (typeof (subpageRes['page.subpage']) === 'object') { // single page
-          subpageQueries.push(processSubpage(subpageRes['page.subpage'], page.id));
+          subpageQueries.push(processSubpage(subpageRes['page.subpage']));
         }
 
         subpages = [...subpages, ...(await Promise.all(subpageQueries))];
