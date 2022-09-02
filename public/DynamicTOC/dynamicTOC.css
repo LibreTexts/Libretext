@@ -1,0 +1,77 @@
+#dynamicTOC {
+  --toc-font-family: "Lato", Arial, Helvetica, sans-serif;
+}
+
+#dynamicTOC_title_container {
+  display: none;
+}
+
+.toc li {
+  margin: 0.25em 0 0;
+}
+
+.chapter_level {
+  list-style: none;
+}
+
+.section_level {
+  list-style-type: circle;
+}
+
+.chapter_entry {
+  font-size: 1.5rem !important;
+  font-family: var(--toc-font-family) !important;
+}
+
+.content_entry {
+  font-size: 1.1rem !important;
+  font-family: var(--toc-font-family) !important;
+}
+
+.matter_entry {
+  font-size: 1.25rem !important;
+  font-family: var(--toc-font-family) !important;
+}
+
+@media print {
+  #title {
+    display: none;
+  }
+
+  #dynamicTOC_title_container {
+    display: flex;
+    background: #127BC4;
+    margin: 0 0 2%;
+    padding: 0;
+    width: 100%;
+    align-items: center;
+  }
+  
+  #dynamicTOC_title_heading {
+    color: white !important;
+    font-size: 1.6em !important;
+    font-family: "Lato", Arial, serif !important;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 0 0 1% !important;
+    padding: 1% 0 !important;
+    letter-spacing: .05em !important;
+  }
+
+  .content_entry, .chapter_entry, .matter_entry {
+    font-family: var(--toc-font-family) !important;
+  }
+
+  .chapter_entry {
+    font-size: 1.25rem !important;
+  }
+
+  .content_entry {
+    font-size: 0.75rem !important;
+  }
+
+  .matter_entry {
+    font-size: 1rem !important;
+    margin-bottom: 0.5em !important;
+  }
+}

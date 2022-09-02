@@ -27,6 +27,7 @@ const {
   generatePDFHeader,
   generatePDFFooter
 } = require('./pdflayouts.js');
+const { dynamicTOCLayout } = require('./defaults.js');
 // const merge = util.promisify(require('./PDFMerger.js'));
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
@@ -273,15 +274,6 @@ puppeteer.launch({
                     options = {hasExtraPadding: true};
                 let file = await getCover(current, 216, options); //, url.includes('pad'), url.includes('hard')
                 staticFileServer.serveFile(`../PDF/${size}/Cover/${file}.pdf`, 200, {'cache-control': 'no-cache'}, request, response);
-            }
-            else if (url.startsWith('/tocHTML=')) {
-                url = url.split('/tocHTML=')[1];
-                if (url.endsWith(".pdf")) {
-                    url = url.slice(0, -4);
-                }
-                let file = await getTOC(url, true);
-                response.write(file);
-                response.end();
             }
             else if (url.startsWith('/Finished/')) {
                 url = url.split('/Finished/')[1];
@@ -891,7 +883,7 @@ puppeteer.launch({
             if (Array.isArray(tags)) {
               let pageType = 'Section Overview';
               if (tags.includes('coverpage:yes') || title?.includes('Table of Contents')) {
-                pageType = 'Table of Contents';
+                pageType = 'Table of Contents'; // server-side TOC generation (deprecated)
               } else if (tags.includes('article:topic-guide')) {
                 pageType = 'Chapter Overview';
               }
@@ -916,7 +908,7 @@ puppeteer.launch({
         }
 
         
-        async function getTOC(current, isHTML) {
+        async function getTOC(current) {
           // await fs.ensureDir('./PDF/Letter/TOC');
           await fs.ensureDir('./PDF/Letter/Margin/TOC');
           console.log('Starting TOC');
@@ -927,54 +919,30 @@ puppeteer.launch({
           }
           let escapedURL = `${current.subdomain}-${current.id}`;
           if (current.modified === 'restricted') return 'restricted'; // private page
+          let url = current.url;
           const [subdomain, path] = parseURL(current.url);
+
+          const tocPath = `${path}/00:_Front_Matter/03:_Table_of_Contents`;
+          const tocURL = `https://${subdomain}.libretexts.org/${tocPath}`;
+
+          if (current.tags?.includes('coverpage:yes')) {
+            await authenticatedFetch(
+              tocPath,
+              `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`,
+              subdomain,
+              'LibreBot',
+              { method: 'POST', body: dynamicTOCLayout },
+            );
+          }
+
           const page = await browser.newPage();
           page.setViewport(viewportSettings);
           await page.setRequestInterception(true);
 
-          let url = current.url;
-          let properties = current.properties;
-          properties = properties.find((prop) => prop['@name'] === 'mindtouch.page#overview' ? prop.contents['#text'] : false);
-          properties = properties && properties.contents && properties.contents['#text'] ? safe(properties.contents['#text']) : '';
-
-          let summary = '';
-          if (properties) {
-            summary = properties;
-          } else if (current.content) {
-            let body = current.content.body[0];
-            if (body.includes('class="mt-guide-content"') || body.includes('class="mt-category-container')) {
-              summary = body.match(/^[\s\S]*<\/[a-z1-9].*?>(?=[\s\S]*?(<div[^>]*? class="mt-guide-content[^>]*?>|<div[^>]*? class="mt-category-container[^>]*?>))/);
-              if (summary) summary = summary[0];
-            } else {
-              summary = body;
-            }
-          }
-
-          const listing = await getLevel(current);
-
-          let tocContent = `<div style="padding: 0 0 10px 0" class="summary">${summary || ''}</div></div>${listing}`;
-          if (current.tags?.includes('coverpage:yes')) {
-            const uploadContent = tocContent.replace(/style="column-count: 2"/g, '');
-            await authenticatedFetch(`${path}/00:_Front_Matter/03: Table of Contents`, `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`, subdomain, 'LibreBot', {
-              method: 'POST',
-              body: uploadContent + '<p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic</a></p>\n',
-            });
-          }
-
-          if (isHTML) {
-            const end = performance.now();
-            let time = end - start;
-            time /= 100;
-            time = Math.round(time);
-            time /= 10;
-            console.log(`TOC HTML Created: ${time}s ${escapedURL}`);
-            return listing;
-          }
-
-          try {
+          try { 
             page.on('dialog', pptrDialogHandler);
             page.on('request', pptrRequestHandler);
-            await page.goto(`${url}?no-cache`, pptrPageLoadSettings);
+            await page.goto(`${tocURL}?no-cache`, pptrPageLoadSettings);
           } catch (err) {
             console.error(err);
             console.error(`ERROR TOC - Timeout Exceeded ${url}`)
@@ -983,7 +951,6 @@ puppeteer.launch({
           try {
             await page.evaluate(eagerImageLoader);
             await sleep(1000);
-            await page.evaluate(processDirectoryPage, current.title, current.tags, listing);
             await sleep(1000);
           } catch (err) {
             console.error(err);
@@ -998,7 +965,6 @@ puppeteer.launch({
                   margin: ${pdfPageMargins};
                   padding: 0;
               }
-              ${styles.tocStyles}
           `});
           await page.pdf({ //Lulu Letter
               path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
@@ -1541,6 +1507,12 @@ puppeteer.launch({
                             method: "POST",
                             body: "<p class=\"mt-script-comment\">Cross Library Transclusion</p><pre class=\"script\">template('CrossTransclude/Web',{'Library':'chem','PageID':170365});</pre>" +
                                 "<p class=\"template:tag-insert\"><em>Tags recommended by the template: </em><a href=\"#\">article:topic</a><a href=\"#\">transcluded:yes</a><a href=\"#\">printoptions:no-header-title</a></p>"
+                        });
+
+                        // Create Table Of Contents
+                        await authenticatedFetch(`${path}/${text}_Matter/03:_Table_of_Contents`, `contents?${matterMode}&title=Table of Contents&dream.out.format=json`, current.subdomain, 'LibreBot', {
+                          method: 'POST',
+                          body: dynamicTOCLayout,
                         });
                     }
                     else if (text.includes('Back')) {
