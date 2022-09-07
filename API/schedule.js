@@ -138,6 +138,34 @@ function scheduleConductorDailyAlerts() {
 }
 
 /**
+ * Adds the scheduler job to sync Conductor's local C-ID database with the official list.
+ */
+function scheduleConductorCIDDescriptorsSync() {
+  scheduler.scheduleJob('conductor-cids', '0 1 15 * *', () => {
+    try {
+      console.log('Running Conductor C-ID Descriptors Sync');
+      fetch('https://commons.libretexts.org/api/v1/c-ids/sync/automated', {
+        method: 'PUT',
+        headers: {
+          origin: 'https://api.libretexts.org',
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: `Bearer ${secure.conductor_key}`,
+        },
+      }).then((res) => res.json()).then((descriptorSyncRes) => {
+        if (descriptorSyncRes.err === false) {
+          console.log(`Finished Conductor C-ID Descriptors Sync: ${descriptorSyncRes.msg}`);
+        } else {
+          throw (new Error(descriptorSyncRes.errMsg));
+        }
+      });
+    } catch (e) {
+      console.error('FAILED Conductor C-ID Descriptors Sync');
+      console.error(e);
+    }
+  });
+}
+
+/**
  * Initializes the Schedule service and registers all defined jobs.
  */
 function initialize() {
@@ -156,6 +184,7 @@ function initialize() {
   scheduleCommonsHomeworkSync();
   // Schedule Conductor tasks
   scheduleConductorDailyAlerts();
+  scheduleConductorCIDDescriptorsSync();
   console.log('All jobs scheduled.');
 }
 
