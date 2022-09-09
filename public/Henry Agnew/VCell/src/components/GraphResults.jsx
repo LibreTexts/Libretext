@@ -48,11 +48,11 @@ export default function GraphResults(props) {
                         autoHideDuration: 5000,
                     });
                     return;
+                    // TODO: Have application reset when this error is thrown
                 }
                 else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
-                        variant: 'info',
                         autoHideDuration: 5000,
                     });
                     continue;
@@ -64,6 +64,7 @@ export default function GraphResults(props) {
                 variant: 'error',
                 autoHideDuration: 5000,
             });
+            // TODO: Have application reset when this error is thrown
             
         })()
     }, [props.jobID]);

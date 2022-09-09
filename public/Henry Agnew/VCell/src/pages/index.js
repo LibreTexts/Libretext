@@ -28,7 +28,7 @@ const dataset = document.currentScript.dataset;
 
 const AVOGADRO = 6.02214076E23;
 const SLOW_API_ENDPOINT = `https://api.biosimulations.org`;
-const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`;
+const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`; // eventually replace .dev with .org once endpoint is publicly released
 const isQuick = Boolean(dataset.quick);
 const API_ENDPOINT = isQuick ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
 const simulator = dataset.simulator || "vcell";
@@ -37,6 +37,7 @@ let prevjobid = undefined;
 if (!isQuick) { // only allowed for slow jobs
     prevjobid = dataset.prevjobid?.trim() || undefined
 }
+
 /*
 React Hook for creating OMEX files based on user inputs and then submitting the jobs to runBioSimulations
 */
@@ -53,7 +54,7 @@ function VCellReactHook(props) {
     function updateSpecies(event, key) { //updates a species concentration based on user input
         let updated = {...species[key]};
         let newValue = event.target.value * AVOGADRO;
-        newValue = Math.max(0, newValue);
+        newValue = Math.max(0, newValue); //species amounts must be non-negative
         
         updated.initialAmount = newValue;
         species[key] = updated;
@@ -63,6 +64,7 @@ function VCellReactHook(props) {
     function updateParameter(event, key) { //updates a parameter based on user input
         let updated = {...parameters[key]};
         
+        //TODO: Maybe add parameter validation?
         updated.value = event.target.value;
         parameters[key] = updated;
         setParameters(parameters);
@@ -163,7 +165,7 @@ function VCellReactHook(props) {
             if (response.ok) {
                 response = await response.json();
                 enqueueSnackbar(`Job ${response.id} successfully submitted!`, {
-                    variant: 'success',
+                    variant: 'info',
                 });
                 clearPrevJob(undefined);
                 setQuickData(undefined);
@@ -189,14 +191,20 @@ function VCellReactHook(props) {
                 "variables": []
             }))
             
-            //send simulation and wait for it to finish
-            let quickResponse = await fetch(`${API_ENDPOINT}/run/run`, {
+            //submit simulation
+            let quickResponse = fetch(`${API_ENDPOINT}/run/run`, {
                 method: 'POST',
                 body: formData,
                 "headers": {
                     "accept": "application/json",
                 },
             });
+            const submittedId = enqueueSnackbar(`QUICK simulation successfully submitted!`, {
+                variant: 'info'
+            });
+            
+            quickResponse = await quickResponse // wait for it to finish
+            closeSnackbar(submittedId)
             if (quickResponse.ok) {
                 quickResponse = await quickResponse.json(); //results will be in this json
                 if (quickResponse.log.status === "SUCCEEDED") {
@@ -286,7 +294,12 @@ function VCellReactHook(props) {
                     Load File
                 </Button> : null}
                 <Button onClick={submitOmex} variant="contained" color="primary">Submit OMEX</Button>
-                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}><p>Simulation ran using {simulator} and powered by https://run.biosimulations.org</p></Tooltip>
+                <Tooltip title={`Version ${new Date("REPLACEWITHDATE")}. Coded with ❤`}>
+                    <p>Simulation ran using {isQuick ? <><a target='_blank' href='https://vcell.org/'>VCell</a> & <a
+                        target='_blank' href='https://tellurium.analogmachine.org/'>Tellurium</a></> : simulator} and
+                       powered by <a target="_blank"
+                                     href="https://run.biosimulations.org">https://run.biosimulations.org</a>
+                    </p></Tooltip>
             </div>
             <div style={{flex: 2}}>
                 <GraphResults jobID={jobID} API_ENDPOINT={API_ENDPOINT} prevJob={prevJob} quickData={quickData}/>
@@ -312,7 +325,7 @@ function SpeciesRow(props) {
             />
         </TableCell>
         {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
-        {/*TODO: make units flexible*/}
+        {/*TODO: make units flexible. Waiting on VCell 7.5.0*/}
         <TableCell>moles per liter</TableCell>
     </TableRow>;
 }
@@ -333,6 +346,7 @@ function ParameterRow(props) {
                        onChange={(e) => props.onChange(e, props.parameter.id)}
             />
         </TableCell>
+        {/*TODO: make units flexible. Waiting on VCell 7.5.0*/}
         <TableCell>{props.parameter.units}</TableCell>
     </TableRow>;
 }
