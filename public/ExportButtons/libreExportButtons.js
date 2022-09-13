@@ -16,7 +16,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const ID_DWNLD_DROPDOWN_BTN = 'libre-dwnld-dropdown-btn';
   const ID_PDF_DROPDOWN_CONTENT = 'libre-pdf-dropdown-content';
   const ID_DWNLD_DROPDOWN_CONTENT = 'libre-dwnld-dropdown-content';
-  const ID_RDBLTY_BTN = 'libre-readability-btn';
   const ID_COMMONS_ADOPTIONREPORT_BTN = 'libre-commons-adoptionreport-btn';
   const ID_COMMONS_PEERREVIEW_BTN = 'libre-commons-peerreview-btn';
   const ID_COMMONS_ADAPT_BTN = 'libre-commons-adapt-btn';
@@ -763,40 +762,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }
       }
 
-      /* Readability Options Button */
-      const readabilityButton = document.createElement('button');
-      Object.assign(readabilityButton, {
-        id: ID_RDBLTY_BTN,
-        title: 'Open Readability Menu',
-        type: 'button',
-        tabIndex: 0,
-      });
-      const readabilityIcon = document.createElement('span');
-      Object.assign(readabilityIcon, { classList: 'mt-icon-binoculars', ariaHidden: true });
-      readabilityButton.appendChild(readabilityIcon);
-      const readabilityText = document.createElement('span');
-      Object.assign(readabilityText, { classList: CLASS_BUTTON_ICON_TEXT, ariaHidden: true });
-      readabilityText.appendChild(document.createTextNode('Readability'));
-      readabilityButton.appendChild(readabilityText);
-
-      /**
-       * Opens the Readability menu in the global sidebar.
-       *
-       * @param {MouseEvent} e - The event that triggered the listener.
-       */
-      const openReadabilityMenu = (e) => {
-        e.preventDefault();
-        if (typeof (LibreTexts.active?.sidebarToggleDrawer('readability')) === 'function') {
-          LibreTexts.active?.sidebarToggleDrawer('readability')();
-        }
-      };
-
-      readabilityButton.addEventListener('click', openReadabilityMenu);
-      readabilityButton.addEventListener('keydown', (e) => {
-        if (e.key === ENTER_KEY) openReadabilityMenu(e);
-      });
-      exportContainer.appendChild(readabilityButton);
-
       /* Add DonorBox links (if applicable) */
       if (!isAdmin) {
         const donorBoxLink = document.createElement('a');
@@ -854,17 +819,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           align-items: stretch;
           justify-content: center;
           gap: 0.25em;
-        }
-        #${ID_RDBLTY_BTN}, #${ID_RDBLTY_BTN}:hover {
-          background-color: #D4D4D4 !important;
-          color: #000000 !important;
-          border: none !important;
-          border-radius: 0;
-          box-shadow: none !important;
-          height: 35px;
-        }
-        #${ID_RDBLTY_BTN}:focus {
-          border: 3px solid #30B3F6 !important;
         }
         .${CLASS_BUTTON_ICON_TEXT} {
           margin-left: 5px;
