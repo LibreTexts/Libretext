@@ -157,6 +157,7 @@ function VCellReactHook(props) {
             formData.append('simulationRun', JSON.stringify(runMetadata));
             
             //start the simulation
+            closeSnackbar()
             let response = await fetch(`${API_ENDPOINT}/runs`, {
                 method: 'POST',
                 body: formData

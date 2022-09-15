@@ -45,7 +45,7 @@ export default function GraphResults(props) {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'error',
-                        autoHideDuration: 5000,
+                        persist: true
                     });
                     return;
                     // TODO: Have application reset when this error is thrown
@@ -62,7 +62,7 @@ export default function GraphResults(props) {
             closeSnackbar()
             enqueueSnackbar(`$TIMEOUT ERROR ${response.id}`, {
                 variant: 'error',
-                autoHideDuration: 5000,
+                persist: true
             });
             // TODO: Have application reset when this error is thrown
             
