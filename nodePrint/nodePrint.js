@@ -921,11 +921,12 @@ puppeteer.launch({
           if (current.modified === 'restricted') return 'restricted'; // private page
           let url = current.url;
           const [subdomain, path] = parseURL(current.url);
+          const isMainToc = current.tags?.includes('coverpage:yes');
 
-          const tocPath = `${path}/00:_Front_Matter/03:_Table_of_Contents`;
-          const tocURL = `https://${subdomain}.libretexts.org/${tocPath}`;
-
-          if (current.tags?.includes('coverpage:yes')) {
+          if (isMainToc) {
+            const tocPath = `${path}${path.endsWith('/') ? '' : '/'}00:_Front_Matter/03:_Table_of_Contents`;
+            url = `https://${subdomain}.libretexts.org/${tocPath}`;
+            console.log(`Creating Main TOC at ${url}`);
             await authenticatedFetch(
               tocPath,
               `contents?title=Table of Contents&edittime=now&comment=[PrintBot] Weekly Batch ${timestamp('MM/DD', new Date())}`,
@@ -942,7 +943,7 @@ puppeteer.launch({
           try { 
             page.on('dialog', pptrDialogHandler);
             page.on('request', pptrRequestHandler);
-            await page.goto(`${tocURL}?no-cache`, pptrPageLoadSettings);
+            await page.goto(`${url}?no-cache`, pptrPageLoadSettings);
           } catch (err) {
             console.error(err);
             console.error(`ERROR TOC - Timeout Exceeded ${url}`)
@@ -951,6 +952,10 @@ puppeteer.launch({
           try {
             await page.evaluate(eagerImageLoader);
             await sleep(1000);
+            if (!isMainToc) { // don't overwrite Main TOC
+                const listing = await getLevel(current);
+                await page.evaluate(processDirectoryPage, current.title, current.tags, listing);
+            }
             await sleep(1000);
           } catch (err) {
             console.error(err);
@@ -959,13 +964,17 @@ puppeteer.launch({
 
           const color = "#127bc4";
           const prefix = '';
-          await page.addStyleTag({ content: `
-              @page {
-                  size: letter portrait;
-                  margin: ${pdfPageMargins};
-                  padding: 0;
-              }
-          `});
+          let styleTag = `
+            @page {
+                size: letter portrait;
+                margin: ${pdfPageMargins};
+                padding: 0;
+            }
+          `;
+          if (!isMainToc) {
+            styleTag = `${styleTag}${styles.tocStyles}`;
+          }
+          await page.addStyleTag({ content: styleTag });
           await page.pdf({ //Lulu Letter
               path: `./PDF/Letter/Margin/TOC/${escapedURL}.pdf`,
               displayHeaderFooter: true,
@@ -1614,13 +1623,9 @@ puppeteer.launch({
                     page = await getAPI(page);
                     let filename, title = page.title;
                     if (page.matter) {
-                        if (page.title === 'Table of Contents') {
-                          filename = `TOC/${await getTOC(current)}.pdf`;
-                        } else {
-                            let temp = await getPDF(page, options.ip, isNoCache);
-                            filename = temp.filename;
-                            if (temp.lastModified) updateTimes.push(temp.lastModified);
-                        }
+                        let temp = await getPDF(page, options.ip, isNoCache);
+                        filename = temp.filename;
+                        if (temp.lastModified) updateTimes.push(temp.lastModified);
                         if (page.matter !== 'Back') {
                             title = `00000:${String.fromCharCode(64 + page.index)} ${page.title}`;
                         } else {
