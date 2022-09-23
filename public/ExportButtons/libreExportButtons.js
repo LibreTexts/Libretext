@@ -518,21 +518,16 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       }
       /* Page PDF Download */
       if (tags.includes('"article:topic"')) {
-        /* Remove query parameters except cache control */
-        let queryParams = '';
+        // Remove query parameters except cache control
+        let noCache = '';
         if (window.location.search) {
           const params = new URLSearchParams(window.location.search);
-          for (const key of params.keys()) {
-            if (key !== 'no-cache' && key !== 'nocache') {
-              params.delete(key);
-            }
-          }
-          if (params.toString()) {
-            queryParams = `?${params.toString()}`;
+          if (params.get('no-cache') !== null || params.get('nocache') !== null) {
+            noCache = '?no-cache';
           }
         }
-        const pageURL = `${window.location.origin}${window.location.pathname}${queryParams}`;
-        const pagePDF = `https://batch.libretexts.org/print/url=${pageURL}.pdf`;
+        const pageURL = `${window.location.origin}${window.location.pathname}`;
+        const pagePDF = `https://batch.libretexts.org/print/url=${pageURL}.pdf${noCache}`;
 
         LibreTexts.current.downloads.pdf.page = pagePDF;
         pdfExportOptions.push({
