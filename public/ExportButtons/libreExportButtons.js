@@ -477,12 +477,17 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     const groups = document.getElementById('groupHolder').innerText;
     const basicBatchAccess = isAdmin || isPro;
     const fullBatchAccess = isAdmin || (isPro && (groups.includes('Developer') || groups.includes('BatchAccess')));
+    const pageID = Number.parseInt(document.getElementById('pageIDHolder').innerText);
 
     try {
       const tags = document.getElementById('pageTagsHolder').innerText;
       const url = window.location.href.replace(/#$/, '');
       const downloadEntry = await getDownloadsAvailability();
-      const isChapter = !downloadEntry && tags.includes('"article:topic-guide"');
+      const topicGuide = tags.includes('"article:topic-guide"');
+      const isChapter = (
+        (!downloadEntry && topicGuide)
+        || (downloadEntry && downloadEntry.id !== pageID && topicGuide)
+      );
       const fullBook = await getBook();
       const exportFragment = document.createDocumentFragment(); // create in a vDOM first
       const exportContainer = document.createElement('div');
