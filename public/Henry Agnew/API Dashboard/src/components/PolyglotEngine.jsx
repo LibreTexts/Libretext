@@ -56,7 +56,7 @@ export default function PolyglotEngine() {
       valid = false;
       setURLErr(true);
     }
-    if (!isNonEmptyString(language) || language.length > 4) {
+    if (!isNonEmptyString(language) || language.length > 5) {
       valid = false;
       setLanguageErr(true);
     }
@@ -169,7 +169,8 @@ export default function PolyglotEngine() {
   }
 
   /**
-   * Suppresses the default action of a given DOM event. 
+   * Suppresses the default action of a given DOM event.
+   *
    * @param {React.SyntheticEvent} e - The event that activated the handler.
    */
   function preventDefault(e) {
@@ -181,7 +182,12 @@ export default function PolyglotEngine() {
       <div className="topPanel">
         <div>
           <p>
-            Enter the URL of the text to translate:
+            <strong>Note:</strong>
+            {` As of the beta release, only a single text (with coverpage set) can be
+             translated per invocation.`}
+          </p>
+          <p className="polyglotEngine-instruction">
+            Enter the URL of the <strong>text to translate:</strong>
             <em> (all subpages will be included!)</em>
           </p>
           <input
@@ -191,7 +197,7 @@ export default function PolyglotEngine() {
             onChange={handleURLChange}
             className={urlErr ? 'inputError' : ''}
           />
-          <p>
+          <p className="polyglotEngine-instruction">
             Enter the URL of the new <strong>parent directory</strong> for the translated text.
             <em> (e.g. https://socialsci.libretexts.org/Sandboxes/TranslatedTexts)</em>
           </p>
@@ -202,7 +208,7 @@ export default function PolyglotEngine() {
             onChange={handleTargetChange}
             className={targetPathErr ? 'inputError' : ''}
           />
-          <p>
+          <p className="polyglotEngine-instruction">
             Enter the desired <strong>language code</strong>.
             <em> A full list of supported codes can be found
               <a
@@ -221,7 +227,7 @@ export default function PolyglotEngine() {
             onChange={handleLanguageChange}
             className={languageErr ? 'inputError' : ''}
           />
-          <p>
+          <p className="polyglotEngine-instruction">
             Enter a <strong>comma-separated</strong> list of emails to notify upon completion.{' '}
             <em>
               As of the beta release, these must be @libretexts.org addresses. This is optional.
