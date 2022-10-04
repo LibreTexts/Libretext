@@ -1,0 +1,3 @@
+[submodule "public/ReaderView"]
+	path = public/ReaderView
+	url = git@github.com:LibreTexts/readerview.git
