@@ -45,14 +45,14 @@ export default function GraphResults(props) {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
                         variant: 'error',
-                        autoHideDuration: 5000,
+                        persist: true
                     });
                     return;
+                    // TODO: Have application reset when this error is thrown
                 }
                 else if (response.status !== "SUCCEEDED") {
                     closeSnackbar()
                     enqueueSnackbar(`${response.status} ${response.id}`, {
-                        variant: 'info',
                         autoHideDuration: 5000,
                     });
                     continue;
@@ -62,8 +62,9 @@ export default function GraphResults(props) {
             closeSnackbar()
             enqueueSnackbar(`$TIMEOUT ERROR ${response.id}`, {
                 variant: 'error',
-                autoHideDuration: 5000,
+                persist: true
             });
+            // TODO: Have application reset when this error is thrown
             
         })()
     }, [props.jobID]);
