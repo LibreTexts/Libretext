@@ -27,7 +27,11 @@ const {
   generatePDFHeader,
   generatePDFFooter
 } = require('./pdflayouts.js');
-const { dynamicTOCLayout } = require('./defaults.js');
+const {
+    dynamicTOCLayout,
+    dynamicLicensingLayout,
+    dynamicDetailedLicensingLayout,
+} = require('./defaults.js');
 // const merge = util.promisify(require('./PDFMerger.js'));
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
@@ -1523,6 +1527,12 @@ puppeteer.launch({
                           method: 'POST',
                           body: dynamicTOCLayout,
                         });
+
+                        // Create Licensing
+                        await authenticatedFetch(`${path}/${text}_Matter/04:_Licensing`, `contents?${matterMode}&title=Licensing&dream.out.format=json`, current.subdomain, 'LibreBot', {
+                            method: 'POST',
+                            body: dynamicLicensingLayout,
+                        });
                     }
                     else if (text.includes('Back')) {
                         //Create Index
@@ -1545,6 +1555,12 @@ puppeteer.launch({
                         } catch (e) {
                             console.error('Glossary Error', e);
                         }
+
+                        // Create Detailed Licensing
+                        await authenticatedFetch(`${path}/${text}_Matter/30:_Detailed_Licensing`, `contents?${matterMode}&title=Detailed Licensing&dream.out.format=json`, current.subdomain, 'LibreBot', {
+                            method: 'POST',
+                            body: dynamicDetailedLicensingLayout,
+                        });
                     }
                 }
                 

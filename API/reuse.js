@@ -1,5 +1,7 @@
+const { performance } = require('perf_hooks');
 const fs = require('fs-extra');
 const fetch = require("node-fetch");
+const filenamify = require('filenamify');
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
 const he = require('he');
@@ -24,6 +26,7 @@ let LibreTextsFunctions = {
     authenticatedFetch: authenticatedFetch,
     getSubpages: getSubpages,
     getSubpagesAlternate: getSubpagesAlternate,
+    getLicenseReport: getLicenseReport,
     clarifySubdomain: clarifySubdomain,
     encodeHTML: encodeHTML,
     decodeHTML: decodeHTML,
@@ -245,12 +248,13 @@ async function getSubpages(rootURL, username, options = {}) {
                     await subpage(subpageArray[i], i, {
                         delay: options.delay,
                         depth: options.depth + 1,
-                        getContents: options.getContents
+                        getContents: options.getContents,
+                        getDetails: options.getDetails,
                     });
                 }
                 else {
                     // console.log(subpageArray[i]["uri.ui"]);
-                    promiseArray[i] = subpage(subpageArray[i], i, {getContents: options.getContents});
+                    promiseArray[i] = subpage(subpageArray[i], i, { getContents: options.getContents, getDetails: options.getDetails });
                 }
             }
             await Promise.all(promiseArray);
@@ -297,6 +301,425 @@ async function getSubpages(rootURL, username, options = {}) {
         
         return {info: info, tags: tags, properties: properties, contents: contents}
     }
+}
+
+/**
+ * @typedef {object} LicenseInfo
+ * @property {string} label - The UI-ready license name.
+ * @property {string} link - A link to information about the license, or '#'.
+ * @property {string} raw - The internal license identifier/name.
+ * @property {string} [version] - The license version, if a Creative Commons license.
+ */
+
+/**
+ * @typedef {object} PageInfo
+ * @property {string} id - The page's (library-scoped) unique identifier.
+ * @property {string} url - The page's live URL.
+ * @property {string} title - The UI-ready page title.
+ * @property {LicenseInfo} [license=null] - The page's license information.
+ * @property {PageInfo[]} [children] - The page's hierarchical children.
+ */
+
+/**
+ * Generates and saves a License Report for a LibreText.
+ *
+ * @param {object} inputData - Request information.
+ * @returns {Promise<object|null>} License report data. Null indicates the URL is not a coverpage.
+ */
+async function getLicenseReport(input) {
+    const startTime = performance.now();
+    let progress = 0;
+
+    let infoRes = await authenticatedFetch(
+        input.path,
+        '?dream.out.format=json',
+        input.subdomain,
+        input.user
+    );
+    infoRes = await infoRes.json();
+    if (!infoRes.tags || infoRes.tags['@count'] === '0') {
+        return null;
+    }
+
+    let rootTags = infoRes.tags.tag.length ? infoRes.tags.tag : [infoRes.tags.tag];
+    rootTags = rootTags.map((elem) => elem.title);
+
+    const pageID = infoRes['@id'];
+    const coverID = `${input.subdomain}-${infoRes['@id']}`;
+    input.pageID = pageID;
+
+    const isCoverpage = rootTags.includes('coverpage:yes') || rootTags.includes('coverpage:toc');
+    if (!isCoverpage) {
+        return null;
+    }
+
+    const fileName = filenamify(coverID);
+    const filePath = `./public/licensereports/${fileName}.json`;
+
+    // Check if a cached report exists
+    if (!input.noCache) {
+        try {
+            const foundFile = await fs.readJSON(filePath);
+            if (foundFile) {
+                const fileStat = await fs.stat(filePath);
+                if (fileStat.mtime) {
+                    const now = new Date();
+                    const diff = Math.abs(fileStat.mtime.getTime() - now.getTime());
+                    if (diff <= 1800000) { // 30 minutes
+                        console.log(`Cached licensing report for ${coverID} exists.`);
+                        return foundFile;
+                    }
+                    console.log(`Licensing report cache has expired for ${coverID}. Refreshing...`);
+                }
+            }
+        } catch (e) {
+            if (e.code === 'ENOENT') {
+                console.log(`Licensing report for ${coverID} does not yet exist. Creating it now...`);
+            } else {
+                console.error(e);
+            }
+        }
+    }
+
+    const pages = await getSubpages(
+        input.root,
+        input.user,
+        { delay: true, flat: false, getDetails: true },
+    );
+
+    let uniqueLicenses = [];
+    let processedPages = 0;
+
+    // 'Most restrictive' to 'least restrictive'
+    const orderedLicenses = ['arr', 'fairuse', 'ccbyncnd', 'ccbynd', 'ck12', 'ccbyncsa', 'ccbync',
+        'ccbysa', 'ccby', 'gnu', 'gnufdl', 'gnudsl', 'publicdomain'];
+    const ncLicenses = ['ccbyncnd', 'ccbyncsa', 'ccbync', 'ck12'];
+    const ndLicenses = ['ccbyncnd', 'ccbynd'];
+    const fuLicenses = ['fairuse'];
+
+    /**
+     * Retrieves information about a content license given its internal name.
+     *
+     * @param {string} lic - The internal license identifier/name.
+     * @param {string} [version='4.0'] - The license version, only applicable to Creative
+     *  Commons (defaults to 4).
+     * @returns {LicenseInfo} The license information object, returning 'Unknown' name
+     *  fields if not found.
+     */
+    function getLicenseInfo(lic, version = '4.0') {
+        switch(lic) {
+            case 'publicdomain':
+                return {
+                    label: 'Public Domain',
+                    link: '#',
+                    raw: 'publicdomain',
+                };
+            case 'ccby':
+                return {
+                    label: 'CC BY',
+                    link: `https://creativecommons.org/licenses/by/${version}/`,
+                    raw: 'ccby',
+                    version,
+                };
+            case 'ccbysa':
+                return {
+                    label: 'CC BY-SA',
+                    link: `https://creativecommons.org/licenses/by-sa/${version}/`,
+                    raw: 'ccbysa',
+                    version,
+                };
+            case 'ccbync':
+                return {
+                    label: 'CC BY-NC',
+                    link: `https://creativecommons.org/licenses/by-nc/${version}/`,
+                    raw: 'ccbync',
+                    version,
+                };
+            case 'ccbyncsa':
+                return {
+                    label: 'CC BY-NC-SA',
+                    link: `https://creativecommons.org/licenses/by-nc-sa/${version}/`,
+                    raw: 'ccbyncsa',
+                    version,
+                };
+            case 'ccbynd':
+                return {
+                    label: 'CC BY-ND',
+                    link: `https://creativecommons.org/licenses/by-nd/${version}/`,
+                    raw: 'ccbynd',
+                    version,
+                };
+            case 'ccbyncnd':
+                return {
+                    label: 'CC BY-NC-ND',
+                    link: `https://creativecommons.org/licenses/by-nc-nd/${version}/`,
+                    raw: 'ccbyncnd',
+                    version,
+                };
+            case 'gnu':
+                return {
+                    label: "GPL",
+                    link: 'https://www.gnu.org/licenses/gpl-3.0.en.html',
+                    raw: 'gnu',
+                };
+            case 'gnudsl':
+                return {
+                    label: "GNU Design Science License",
+                    link: 'https://www.gnu.org/licenses/dsl.html',
+                    raw: 'gnudsl',
+                };
+            case 'ck12':
+                return {
+                    label: 'CK-12 License',
+                    link: 'https://www.ck12info.org/curriculum-materials-license/',
+                    raw: 'ck12',
+                }
+            case 'gnufdl':
+                return {
+                    label: "GNU Free Documentation License",
+                    link: 'https://www.gnu.org/licenses/fdl-1.3.en.html',
+                    raw: 'gnufdl',
+                };
+            case 'fairuse':
+                return {
+                    label: "Fair Use",
+                    link: 'https://fairuse.stanford.edu/overview/fair-use/what-is-fair-use/',
+                    raw: 'fairuse',
+                };
+            case 'arr':
+                return {
+                    label: 'Other',
+                    link: '#',
+                    raw: 'arr',
+                };
+            case 'notset':
+                return {
+                    label: 'Undeclared',
+                    link: '#',
+                    raw: 'notset',
+                };
+            default: {
+                return {
+                    label: 'Unknown License',
+                    link: '#',
+                    raw: 'unknown'
+                };
+            }
+        }
+    }
+
+    /**
+     * Recursively counts the number of pages in a book hierarchy.
+     *
+     * @param {object} pageObject - An object with basic information about the page,
+     *  retrieved from the CXone Expert API.
+     * @returns {number} The total number of pages found.
+     */
+    function recursiveCount(pageObject) {
+        let count = 1;
+        if (Array.isArray(pageObject?.children)) {
+            for (let i = 0, n = pageObject.children.length; i < n; i += 1) {
+                count += recursiveCount(pageObject.children[i]);
+            }
+        }
+        return count;
+    }
+
+    const pageCount = recursiveCount(pages);
+
+    /**
+     * Processes information about a page's licensing and transforms it to the report shape.
+     *
+     * @param {object} pageInfo - Gathered information about the page to process.
+     * @returns {PageInfo} Detailed information about the page, including licensing.
+     */
+    function processPage(pageInfo) {
+        const newEntry = {
+            license: null
+        };
+        if (Array.isArray(pageInfo.tags)) {
+            const foundLicTag = pageInfo.tags.find(item => item.includes('license:'));
+            const foundLicVer = pageInfo.tags.find(item => item.includes('licenseversion:'));
+            let license = null;
+            let licenseVersion = null;
+            if (foundLicTag) {
+                license = foundLicTag.replace('license:', '');
+                licenseVersion = '4.0';
+                if (foundLicVer) {
+                    licenseVersion = foundLicVer.replace('licenseversion:', '');
+                    licenseVersion = licenseVersion.slice(0,1) + '.' + licenseVersion.slice(1);
+                }
+            } else {
+              license = 'notset';
+            }
+            const existingUnique = uniqueLicenses.find((item) => {
+                if (item.raw === license) {
+                    if (!item.version || (item.version && item.version === licenseVersion)) {
+                        return item;
+                    }
+                }
+                return false;
+            });
+            const newLicenseInfo = getLicenseInfo(license, licenseVersion);
+            if (!existingUnique) {
+                uniqueLicenses.push(newLicenseInfo);
+            }
+            newEntry.license = newLicenseInfo;
+        }
+        if (pageInfo.id) newEntry.id = pageInfo.id;
+        if (pageInfo.url) newEntry.url = pageInfo.url;
+        if (pageInfo.title) newEntry.title = pageInfo.title;
+        return newEntry;
+    }
+
+    /**
+     * Recursively gathers information on a page hierarchy.
+     *
+     * @param {object} pageObject - A page hierarchy containing at least page URLs.
+     * @returns {PageInfo} The page hierarchy with detailed information.
+     */
+    function recurseSection(pageObject) {
+        const newEntry = processPage(pageObject);
+        newEntry.children = [];
+        if (Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+            pageObject.children.forEach((subpage) => {
+                newEntry.children.push(recurseSection(subpage));
+            });
+        }
+        processedPages += 1;
+        const currentProgress = Math.round(processedPages / pageCount * 100);
+        if (progress < currentProgress) {
+            progress = currentProgress;
+        }
+        return newEntry;
+    }
+
+    const toc = recurseSection(pages);
+
+    uniqueLicenses = uniqueLicenses.map((item) => {
+        return {
+            ...item,
+            count: 0,
+            percent: 0,
+        }
+    });
+
+    /**
+     * Recursively updates unique license counts in a page hierarchy.
+     *
+     * @param {PageInfo} pageObject - The page hierarchy object.
+     */
+    function recurseLicense(pageObject) {
+        if (pageObject.license?.raw) {
+            const foundUnique = uniqueLicenses.findIndex((uniqLic) => {
+                if (uniqLic.raw === pageObject.license?.raw) {
+                    if (!uniqLic.version || (uniqLic.version && uniqLic.version === pageObject.license?.version)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            if (foundUnique >= 0) {
+                uniqueLicenses[foundUnique].count = uniqueLicenses[foundUnique].count + 1;
+            }
+        }
+        if (Array.isArray(pageObject.children) && pageObject.children.length > 0) {
+            pageObject.children.forEach((subpage) => recurseLicense(subpage));
+        }
+    }
+
+    recurseLicense(toc);
+
+    let mostRestrIdx = null;
+    uniqueLicenses.forEach((item, idx) => {
+        let licensePercent = (item.count / pageCount) * 100;
+        if (!isNaN(licensePercent)) licensePercent = parseFloat(licensePercent.toFixed(1));
+        uniqueLicenses[idx].percent = licensePercent;
+        const findMostRestr = orderedLicenses.findIndex(lic => lic === item.raw);
+        if ((findMostRestr >= 0) && (findMostRestr < mostRestrIdx || mostRestrIdx === null)) {
+            mostRestrIdx = findMostRestr;
+        }
+    });
+    const mostRestrictive = getLicenseInfo(orderedLicenses[mostRestrIdx]);
+    let ncRestriction = false;
+    let ndRestriction = false;
+    let fuRestriction = false;
+    const foundSpecialRestrictions = [];
+    uniqueLicenses.forEach((item) => {
+        if (item.raw) {
+            if (!ncRestriction && ncLicenses.includes(item.raw)) {
+                ncRestriction = true;
+                foundSpecialRestrictions.push('noncommercial');
+            }
+            if (!ndRestriction && ndLicenses.includes(item.raw)) {
+                ndRestriction = true;
+                foundSpecialRestrictions.push('noderivatives');
+            }
+            if (!fuRestriction && fuLicenses.includes(item.raw)) {
+                fuRestriction = true;
+                foundSpecialRestrictions.push('fairuse');
+            }
+        }
+    });
+
+    uniqueLicenses.sort((a, b) => {
+        if (a.percent > b.percent) {
+            return -1;
+        }
+        if (a.percent < b.percent) {
+            return 1;
+        }
+        return 0;
+    });
+
+    toc.totalPages = pageCount;
+
+    const collator = new Intl.Collator(undefined, {
+        numeric: true,
+        sensitivity: 'base'
+    });
+
+    /**
+     * Recursively sorts the pages in a hierarchy by URL.
+     *
+     * @param {PageInfo} pageObject - The page hierarchy to work on.
+     */
+    function recurseSort(pageObject) {
+        if (Array.isArray(pageObject?.children) && pageObject.children.length > 0) {
+            pageObject.children.sort((a,b) => collator.compare(a.url, b.url));
+            for (let idx = 0; idx < pageObject.children.length; idx++) {
+                recurseSort(pageObject.children[idx]);
+            }
+        }
+    }
+
+    recurseSort(toc);
+
+    const endTime = performance.now();
+    const licenseReportData = {
+        coverID,
+        id: pageID,
+        library: input.subdomain,
+        timestamp: new Date(),
+        runtime: `${endTime - startTime} ms`,
+        meta: {
+            mostRestrictiveLicense: mostRestrictive, // TODO: Deprecated?,
+            specialRestrictions: foundSpecialRestrictions,
+            licenses: uniqueLicenses
+        },
+        text: toc,
+    };
+
+    // Save report data
+    try {
+        await fs.ensureDir(`./public/licensereports`);
+        await fs.writeJSON(filePath, licenseReportData);
+    } catch (e) {
+        console.error(e);
+    }
+
+    console.log(`Generated license report for ${coverID}.`);
+    return licenseReportData;
 }
 
 /**

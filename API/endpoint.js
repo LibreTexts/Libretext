@@ -253,6 +253,44 @@ async function handler(request, response) {
         } else {
             responseError(request.method + 'Not Acceptable', 406);
         }
+    } else if (url.startsWith('/licensereport/')) {
+        let [, root] = url.split('/licensereport/');
+        if (!root) {
+            return responseError('No root URL provided.', 400);
+        }
+
+        // Handle cache control and URL encoding
+        let noCache = false;
+        try {
+            const splitRoot = root.split('?');
+            root = decodeURIComponent(splitRoot[0]);
+            if (splitRoot.length > 1 && (splitRoot[1] === 'no-cache' || splitRoot[1] === 'nocache')) {
+                noCache = true;
+            }
+        } catch (e) {
+            return responseError('Invalid URL provided.', 400);
+        }
+
+        const [subdomain, path] = LibreTexts.parseURL(root);
+        const allSubdomains = Object.values(LibreTexts.libraries);
+        if (!subdomain || !allSubdomains.includes(subdomain)) {
+            return responseError('Invalid URL provided.', 400);
+        }
+
+        const input = {
+            root,
+            path,
+            subdomain,
+            noCache,
+            user: 'LibreBot',
+        };
+        const licenseReportData = await LibreTexts.getLicenseReport(input);
+
+        if (licenseReportData === null) {
+            return responseError('Provided URL is not a coverpage!', 400);
+        }
+
+        return response.end(JSON.stringify(licenseReportData));
     }
     else {
         responseError('Action not found', 400);
