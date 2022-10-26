@@ -63,7 +63,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       await loadCoverpage();
     }
     if (currentCoverpage) {
-      return `https://batch.libretexts.org/print/Finished/${currentSubdomain}-${currentCoverpage.id}/Full.pdf`;
+      return `https://batch.libretexts.org/print/Letter/Finished/${currentSubdomain}-${currentCoverpage.id}/Full.pdf`;
     }
     return false;
   };
@@ -582,7 +582,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
       /* Prepared Download Dropdown */
       if (downloadEntry) {
-        let linkRoot = 'https://batch.libretexts.org/print/Finished/';
+        let linkRoot = 'https://batch.libretexts.org/print/Letter/Finished';
         if (downloadEntry.zipFilename) {
           linkRoot += downloadEntry.zipFilename.replace('/Full.pdf', '');
         }
