@@ -584,7 +584,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       if (downloadEntry) {
         let linkRoot = 'https://batch.libretexts.org/print/Letter/Finished';
         if (downloadEntry.zipFilename) {
-          linkRoot += downloadEntry.zipFilename.replace('/Full.pdf', '');
+          linkRoot = `${linkRoot}/${downloadEntry.zipFilename.replace('/Full.pdf', '')}`;
         }
         const downloadOptions = [
           {
