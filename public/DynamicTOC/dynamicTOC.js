@@ -113,7 +113,7 @@ async function buildTable(hierarchy, subdomain, containerRef) {
   const getLevel = async (page, level = 1) => {
     const pages = generateContentsList(page);
     if (Array.isArray(pages)) {
-      const childRenders = pages.map(async (item) => {
+      const renderChild = async (item) => {
         const subpageDir = await getLevel(item, level + 1);
         const prefix = level === 1 ? 'h2' : 'span';
         let fontClass = 'content_entry';
@@ -145,8 +145,8 @@ async function buildTable(hierarchy, subdomain, containerRef) {
             ${subpageDir}
           </li>
         `;
-      });
-      const children = await Promise.all(childRenders);
+      };
+      const children = await Promise.all(pages.map((item) => renderChild(item)));
       if (children.length > 0) {
         return `
           <ul class="${level === 1 ? 'toc chapter_level' : 'section_level'}">
