@@ -126,7 +126,7 @@ async function buildTable(hierarchy, subdomain, containerRef) {
         if (!item.path || !item.title) {
           return null;
         }
-        if (['semi-private', 'private'].includes(item.restriction)) {
+        if (['semi-private', 'private'].includes(item.restriction) && !item.path.includes('Sandboxes/')) {
           return null;
         }
         /*
