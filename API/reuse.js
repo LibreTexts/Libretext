@@ -37,6 +37,7 @@ let LibreTextsFunctions = {
     cleanPath: cleanPath,
     getAPI: getAPI,
     getUser: getUser,
+    addProperty: addProperty,
     sleep: sleep,
     libraries: libraries,
 };
@@ -952,6 +953,34 @@ async function getUser(username, subdomain, requester = username) {
     }
     
     return user;
+}
+
+/**
+ * Add a property to a library page.
+ *
+ * @param {string} subdomain - Library identifier.
+ * @param {string|number} page - Target page path or ID.
+ * @param {string} property - Name of the property to add/set.
+ * @param {string} value - Value of the new property.
+ * @returns {Promise<boolean>} True if successfully set, false if error encountered.
+ */
+async function addProperty(subdomain, page, property, value) {
+    try {
+        const addRes = await authenticatedFetch(
+            page,
+            'properties?dream.out.format=json',
+            subdomain,
+            'LibreBot',
+            { method: 'POST', body: value, headers: { 'Slug': property } },
+        );
+        if (addRes.ok) {
+            return true;
+        }
+    } catch (e) {
+        console.error('[putProperty] Error encountered:');
+        console.error(e);
+    }
+    return false;
 }
 
 /**

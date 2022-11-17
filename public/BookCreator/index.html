@@ -1,0 +1,26 @@
+<div id="book-creator" aria-hidden="true">
+  <div id="book-creator__overlay" tabindex="-1" data-micromodal-close>
+    <div id="book-creator__container" role="dialog" aria-modal="true" aria-labelledby="book-creator__title" aria-live="polite" aria-busy="false">
+      <header id="book-creator__header">
+        <h2 id="book-creator__title">New Book</h2>
+        <button id="book-creator__close_iconbtn" aria-label="Cancel" data-micromodal-close></button>
+      </header>
+      <div id="book-creator__content">
+        <form id="book-creator__form">
+          <label for="book-creator__title_input" class="book-creator__form_label">
+            Title
+            <span class="book-creator__form_label_detail"> (required, max. 125 characters)</span>
+          </label>
+          <input id="book-creator__title_input" type="text" aria-required="true" />
+          <div id="book-creator__action_buttons_container">
+            <button id="book_creator__close" class="book-creator__action_button" data-micromodal-close>Cancel</button>
+            <button id="book-creator__submit" class="book-creator__action_button" type="submit">Create</button>
+          </div>
+        </form>
+        <div id="book-creator__loader" aria-hidden="true">
+          <span>Creating book, this may take a moment...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

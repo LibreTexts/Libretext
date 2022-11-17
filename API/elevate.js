@@ -24,9 +24,14 @@ const now1 = new Date();
 app.listen(port, () => console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`));
 const prefix = '/elevate';
 const botUsername = 'LibreBot';
+const defaultImagesURL = 'https://cdn.libretexts.net/DefaultImages';
+
+let defaultSandboxImage = null;
+let defaultBookImage = null;
 
 // express.js endpoints
 app.put(`${prefix}/createSandbox`, createSandbox);
+app.post(`${prefix}/createBook`, createBook);
 app.put(`${prefix}/cleanPath`, cleanPath);
 app.put(`${prefix}/fork`, fork);
 app.put(`${prefix}/manageUser/:method`, manageUser);
@@ -34,96 +39,282 @@ app.put(`${prefix}/getUsers/:group.:format`, getUsersInGroup);
 app.get(`${prefix}`, (req, res) => res.send('Hello World!'));
 
 /**
- * Creates a user sandbox and limits permissions to just that user
- * @param {Request} req 
- * @param {Response} res 
+ * Documents results from creating or finding a user's library Sandbox area.
+ * @typedef {object} SandboxResult
+ * @property {string} path - URL/path of the Sandbox, relative to the library domain.
+ * @property {boolean} exists - Indicates the Sandbox already existed.
+ * @property {boolean} created - Indicates the Sandbox was just created.
+ * @property {boolean} permsUpdated - Indicates the newly created Sandbox's page
+ *  permissions were updated.
+ * @property {null|string} error - An error message, if one was encountered.
+ */
+
+/**
+ * Checks for the existence of a user's Sandbox, and creates it if not found.
+ *
+ * @param {string} subdomain - LibreTexts library identifier.
+ * @param {object} user - Current user.
+ * @param {string|number} user.userID - Internal CXone user identifier.
+ * @param {string} user.username - User's display username. 
+ * @returns {Promise<SandboxResult>} Results from creating or finding Sandbox.
+ */
+async function ensureSandbox(subdomain, { userID, username }) {
+  const originalPath = `Sandboxes/${username}`;
+  const path = originalPath.replace('@', '_at_');
+  const result = { path, exists: false, created: false, permsUpdated: false, error: null };
+  try {
+    // Migrate legacy Sandboxes with '@' in path
+    if (username.includes('@')) {
+      const migrate = await LibreTexts.authenticatedFetch(
+        originalPath,
+        `move?name=${username.replace('@', '_at_')}&allow=deleteredirects&dream.out.format=json`,
+        subdomain,
+        botUsername,
+        { method: 'POST' },
+      );
+      console.log(`Migrated legacy Sandbox "${username}": ${(await migrate.json())["@count"]} pages`);
+    }
+
+    // Create Sandbox page
+    const createRes = await LibreTexts.authenticatedFetch(
+      path,
+      `contents?title=${username}`,
+      subdomain,
+      botUsername,
+      {
+        method: 'POST',
+        body: `
+          <p>Welcome to Libretexts&nbsp;{{user.displayname}}!</p>
+          <p class="mt-script-comment">Welcome Message</p>
+          <pre class="script">template('CrossTransclude/Web', { 'Library': 'chem', 'PageID': 207047 });</pre>
+          <p>{{template.ShowOrg()}}</p>
+          <p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>
+        `,
+      },
+    );
+    if (createRes.ok) {
+      result.created = true;
+
+      // Add thumbnail
+      if (defaultSandboxImage === null) {
+        const imageRes = await fetch(`${defaultImagesURL}/sandbox.jpg`);
+        defaultSandboxImage = await imageRes.blob();
+      }
+      const existingImage = await LibreTexts.authenticatedFetch(
+        path,
+        'files/=mindtouch.page%2523thumbnail?dream.out.format=json',
+        subdomain,
+      );
+      if (!existingImage.ok) {
+        await LibreTexts.authenticatedFetch(
+          path,
+          "files/=mindtouch.page%2523thumbnail",
+          subdomain,
+          botUsername,
+          { method: 'PUT', body: defaultSandboxImage },
+        );
+      }
+
+      // Change permissions
+      const groups = await getGroups(subdomain);
+      const developerGroup = groups.find((g) => g.name === 'Developer');
+      const permsRes = await LibreTexts.authenticatedFetch(
+        path,
+        'security?dream.out.format=json',
+        subdomain,
+        botUsername,
+        { 
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+          body: `
+            <security>
+              <permissions.page>
+                <restriction>Semi-Private</restriction>
+              </permissions.page>
+              <grants>
+                ${developerGroup
+                  ? `<grant>
+                      <group id="${developerGroup.id}"></group>
+                      <permissions><role>Manager</role></permissions>
+                    </grant>`
+                  : ''}
+                <grant>
+                  <user id="${userID}"></user>
+                  <permissions><role>Manager</role></permissions>
+                </grant>
+              </grants>
+            </security>
+          `,
+        },
+      );
+      if (permsRes.ok) {
+        result.permsUpdated = true;
+      } else {
+        result.error = await permsRes.text();
+        console.error(`Error updating permissions for Sandbox "${username}":`);
+        console.error(result.error);
+      }
+    } else {
+      result.exists = true;
+    }
+  } catch (e) {
+    result.error = e.toString();
+    console.error(`Error creating Sandbox for ${username}:`);
+    console.error(e);
+  }
+  return result;
+}
+
+/**
+ * Creates a user Sandbox and limits permissions to just that user.
+ *
+ * @param {express.Request} req - Incoming request.
+ * @param {express.Response} res - Outgoing response. 
  */
 async function createSandbox(req, res) {
-    const body = req.body;
-    // console.log(body);
+  const { subdomain, user, username } = req.body;
+  const sandbox = await ensureSandbox(subdomain, { username, userID: user.id });
+  const resultMsg = `${subdomain}/${username}`;
+  console.log(`[createSandbox] (${subdomain} - ${username}): ${JSON.stringify(sandbox)}`);
+  if (sandbox.error) {
+    return res.status(500).send(`${resultMsg}: Error encountered: ${sandbox.error}`);
+  }
+  if (sandbox.created) {
+    return res.send(`${resultMsg}: Sandbox created and permissions updated.`);
+  }
+  return res.send(`${resultMsg}: Sandbox already exists.`);
+}
 
-    let originalPath = `Sandboxes/${body.username}`;
-    let path = originalPath.replace('@', '_at_');
-    let result = `${body.subdomain}/${body.username}`;
-
-    //replace any '@' in username
-    if (body.username.includes('@')) {
-        let migrate = await LibreTexts.authenticatedFetch(originalPath, `move?name=${body.username.replace('@', '_at_')}&allow=deleteredirects&dream.out.format=json`, body.subdomain, botUsername, {
-            method: 'POST',
-        });
-        console.log(`Migrate ${body.username} pages: ${(await migrate.json())["@count"]}`);
-    }
-
-    //create sandbox page
-    let response = await LibreTexts.authenticatedFetch(path, `contents?title=${body.username}`, body.subdomain, botUsername, {
-        method: 'POST',
-        body: '<p>Welcome to LibreTexts&nbsp;{{user.displayname}}!</p><p class="mt-script-comment">Welcome Message</p><pre class="script">\ntemplate(\'CrossTransclude/Web\',{\'Library\':\'chem\',\'PageID\':207047});</pre><p>{{template.ShowOrg()}}</p><p class="template:tag-insert"><em>Tags recommended by the template: </em><a href="#">article:topic-category</a></p>'
+/**
+ * Creates a new book with default features in a user's sandbox.
+ *
+ * @param {express.Request} req - Incoming request.
+ * @param {express.Response} res - Outgoing response.
+ */
+ async function createBook(req, res) {
+  const { subdomain, user, username, title } = req.body;
+  const sandbox = await ensureSandbox(subdomain, { username, userID: user.id });
+  if (sandbox.error && !(sandbox.created || sandbox.exists)) {
+    return res.status(500).send({
+      errors: [{
+        status: 500,
+        code: 'ensure_sandbox',
+        title: 'Unable to Ensure Sandbox',
+        detail: sandbox.error,
+      }],
     });
-    if (!response.ok && !body.force) {
-        result += ' Sandbox Already Exists.';
-        res.status(200);
-    }
-    else {
-        result += ' Sandbox Created.';
+  }
 
-        //add thumbnail
-        if (typeof createSandbox.image === 'undefined') {
-            let image = 'https://cdn.libretexts.net/DefaultImages/sandbox.jpg';
-            image = await fetch(image);
-            image = await image.blob();
-            createSandbox.image = image;
-        }
-        let imageExists = await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail?dream.out.format=json", body.subdomain);
-        if (!imageExists.ok)
-            await LibreTexts.authenticatedFetch(path, "files/=mindtouch.page%2523thumbnail", body.subdomain, botUsername, {
-                method: "PUT",
-                body: createSandbox.image,
-            });
+  // Create book coverpage
+  const bookPath = `${sandbox.path}/${encodeURIComponent(title)}`;
+  const bookURL = `https://${subdomain}.libretexts.org/${bookPath}`;
+  const createBookRes = await LibreTexts.authenticatedFetch(
+    bookPath,
+    `contents?title=${encodeURIComponent(title)}&dream.out.format=json`,
+    subdomain,
+    botUsername,
+    {
+      method: 'POST',
+      body: `
+        <p>{{template.ShowOrg()}}</p>
+        <p class="template:tag-insert">
+          <a href="#">article:topic-category</a><a href="#">coverpage:yes</a>
+        </p>
+      `,
+    },
+  );
+  const createBook = await createBookRes.json();
+  if (!createBookRes.ok) {
+    console.error(createBook);
+    return res.status(500).send({
+      errors: [{
+        status: 500,
+        code: 'create_book_coverpage',
+        title: 'Unable to Create New Coverpage',
+      }],
+    });
+  }
+  await Promise.all([
+    LibreTexts.addProperty(subdomain, bookPath, 'mindtouch.page#welcomeHidden', true),
+    LibreTexts.addProperty(subdomain, bookPath, 'mindtouch.idf#subpageListing', 'simple'),
+  ]);
 
-        //change permissions
-        const groups = await getGroups(body.subdomain);
-        const developerGroup = groups.find((e) => e.name === 'Developer');
+  if (defaultBookImage === null) {
+    const imageRes = await fetch(`${defaultImagesURL}/default.png`);
+    defaultBookImage = await imageRes.blob();
+  }
+  await LibreTexts.authenticatedFetch(
+    bookPath,
+    "files/=mindtouch.page%2523thumbnail",
+    subdomain,
+    botUsername,
+    { method: 'PUT', body: defaultBookImage },
+  ).catch((e) => {
+    console.warn('[createBook] Error setting coverpage thumbnail:');
+    console.warn(e);
+  });
 
-        response = await LibreTexts.authenticatedFetch(path, 'security?dream.out.format=json', body.subdomain, botUsername, {
-            method: 'PUT',
-            headers: { 'content-type': 'application/xml; charset=utf-8' },
-            body: `<security>
-	    <permissions.page>
-	        <restriction>Semi-Private</restriction>
-	    </permissions.page>
-	    <grants>
-	        ${developerGroup ? `<grant><group id="${developerGroup.id}"></group><permissions><role>Manager</role></permissions></grant>` : ''}
-	        <grant>
-	            <user id="${body.user.id}"></user>
-	            <permissions>
-	                <role>Manager</role>
-	            </permissions>
-	        </grant>
-	    </grants>
-	</security>`
-        });
+  // Create first chapter
+  const chapterContents = `
+    <p>{{template.ShowOrg()}}</p>
+    <p class="template:tag-insert"><a href="#">article:topic-guide</a></p>
+  `;
+  const guideTabs = `[{
+    "templateKey": "Topic_heirarchy",
+    "templateTitle": "Topic hierarchy",
+    "templatePath": "MindTouch/IDF3/Views/Topic_hierarchy",
+    "guid": "fc488b5c-f7e1-1cad-1a9a-343d5c8641f5"
+  }]`;
 
-        if (response.ok) {
-            result += ' Set to Semi-Private.';
-            res.status(200);
-        }
-        else {
-            result += `\nError: ${await response.text()}`;
-            res.status(500);
-            console.error(result);
-        }
+  const chapterOnePath = `${bookPath}/01:_First_Chapter`;
+  const chapterOneRes = await LibreTexts.authenticatedFetch(
+    chapterOnePath,
+    `contents?title=${encodeURIComponent('1: First Chapter')}&dream.out.format=json`,
+    subdomain,
+    botUsername,
+    { method: 'POST', body: chapterContents },
+  );
+  if (chapterOneRes.ok) {
+    await Promise.all([
+      LibreTexts.addProperty(subdomain, chapterOnePath, 'mindtouch.page#welcomeHidden', true),
+      LibreTexts.addProperty(subdomain, chapterOnePath, 'mindtouch.idf#guideDisplay', 'single'),
+      LibreTexts.addProperty(subdomain, chapterOnePath, 'mindtouch#idf.guideTabs', guideTabs),
+    ]);
+    await LibreTexts.authenticatedFetch(
+      chapterOnePath,
+      "files/=mindtouch.page%2523thumbnail",
+      subdomain,
+      botUsername,
+      { method: 'PUT', body: defaultBookImage },
+    ).catch((e) => {
+      console.warn('[createBook] Error setting Chapter 1 thumbnail:');
+      console.warn(e);
+    });
+  }
 
-    }
+  // Create Front & Back Matter
+  const matterRes = await fetch(`https://batch.libretexts.org/print/Libretext=${bookURL}?createMatterOnly=true`, {
+    headers: { origin: 'api.libretexts.org' },
+  });
+  if (matterRes.status !== 200) {
+    console.warn('[createBook] Error creating matter.');
+  }
 
-
-    console.log(`[createSandbox] ${result}`);
-    res.send(result);
+  await LibreTexts.sleep(2500); // let CXone catch up with page creations
+  
+  console.log(`[createBook] Created ${bookPath}.`);
+  return res.send({
+    data: {
+      path: bookPath,
+      url: `https://${subdomain}.libretexts.org/${bookPath}`,
+    },
+  });
 }
 
 /**
  * Lists all of the groups for a particular subdomain
  * @param {string} subdomain 
- * @returns {array} groups for that subdomain
+ * @returns {Promise<object[]>} groups for that subdomain
  */
 async function getGroups(subdomain) {
     let groups;

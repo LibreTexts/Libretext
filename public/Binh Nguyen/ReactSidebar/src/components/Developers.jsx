@@ -30,7 +30,10 @@ export default function Developers(props) {
 		</AccordionDetails>
 	    </Accordion>
 
-	    
+            <IconLink title="New Book" icon="mt-icon-add" onClick={() => {
+                props.toggleDrawer(false)();
+                LibreTexts.bookCreator();
+            }}/>
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
               try {
                 LibreTexts.cover(window.location.href);
