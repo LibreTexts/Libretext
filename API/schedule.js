@@ -8,33 +8,44 @@ const fetch = require('node-fetch');
 const timestamp = require('console-timestamp');
 const secure = require('./secure.json');
 
+const MONTHS = { ODD: '1,3,5,7,9,11', EVEN: '2,4,6,8,10,12' };
+const BATCH_START_TIME = '30 0';
+
 const batchSchedule = {
-  bio: 1,
-  biz: 3,
-  chem: 5,
-  eng: 7,
-  espanol: 9,
-  geo: 10,
-  human: 12,
-  k12: 14,
-  math: 16,
-  med: 18,
-  phys: 20,
-  socialsci: 22,
-  stats: 24,
-  workforce: 26,
+  bio: { pattern: 'ODD', start: 1 },
+  biz: { pattern: 'ODD', start: 5 },
+  chem: { pattern: 'ODD', start: 9 },
+  eng: { pattern: 'ODD', start: 13 },
+  espanol: { pattern: 'ODD', start: 17, customTargets: ['home'] },
+  geo: { pattern: 'ODD', start: 19 },
+  human: { pattern: 'ODD', start: 23 },
+  k12: { pattern: 'ODD', start: 27 },
+  math: { pattern: 'EVEN', start: 1 },
+  med: { pattern: 'EVEN', start: 5 },
+  phys: { pattern: 'EVEN', start: 9 },
+  socialsci: { pattern: 'EVEN', start: 13 },
+  stats: { pattern: 'EVEN', start: 17 },
+  workforce: { pattern: 'EVEN', start: 21 },
 };
+
+/**
+ * @typedef {object} BatchScheduleConfig
+ * @property {('EVEN'|'ODD')} pattern - Run in even or odd months.
+ * @property {number} start - Day of month to start batch on.
+ * @property {string[]} [customTargets] - Custom list of batch targets.
+ */
 
 /**
  * Adds the scheduler job for a given library and target.
  *
  * @param {string} library - The LibreTexts library shortened identifier.
  * @param {string} target - The area of the library to batch.
- * @param {number|string} timeSpec - The day(s) of the month to run the job.
- * @param {number} [timeOffset=0] - An offset to apply to the batch job's schedule.
+ * @param {BatchScheduleConfig} config - The library's schedule configuration. 
  */
-function scheduleLibraryBatch(library, target, timeSpec, timeOffset = 0) {
-  const time = `30 ${timeOffset} ${timeSpec} * *`;
+function scheduleLibraryBatch(library, target, config) {
+  const months = MONTHS[config.pattern];
+  const date = target === 'courses' ? config.start + 2 : config.start;
+  const time = `${BATCH_START_TIME} ${date} ${months} *`;
   scheduler.scheduleJob(`${library}-${target}`, time, () => {
     try {
       console.log(`Running Refresh no-cache for ${library}/${target}`);
@@ -171,13 +182,9 @@ function scheduleConductorCIDDescriptorsSync() {
 function initialize() {
   // Schedule Library Batch jobs
   Object.keys(batchSchedule).forEach((library) => {
-    const timeSpec = batchSchedule[library];
-    if (library !== 'espanol') {
-      scheduleLibraryBatch(library, 'bookshelves', timeSpec);
-      scheduleLibraryBatch(library, 'courses', timeSpec + 1);
-    } else {
-      scheduleLibraryBatch(library, 'home', timeSpec);
-    }
+    const config = batchSchedule[library];
+    const targets = config.customTargets || ['bookshelves', 'courses'];
+    targets.forEach((target) => scheduleLibraryBatch(library, target, config));
   });
   // Schedule LibreCommons sync jobs
   scheduleCommonsLibrarySync();
