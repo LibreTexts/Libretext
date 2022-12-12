@@ -15,7 +15,7 @@
     "diff": "^4.0.2",
     "dotenv": "^8.0.0",
     "epub": "^1.2.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "filenamify": "^2.1.0",
     "finalhandler": "^1.1.2",
     "find-remove": "^2.0.3",
