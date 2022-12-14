@@ -25,6 +25,7 @@
     "http-cas-client": "^0.4.2",
     "jose": "^2.0.6",
     "md5": "^2.3.0",
+    "memory-cache-node": "^1.4.0",
     "mongodb": "^4.3.0",
     "node-eta": "^0.9.0",
     "node-fetch": "^2.6.7",

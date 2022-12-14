@@ -11,6 +11,7 @@ const authenBrowser = require('./authenBrowser.json');
 const secure = require('./secure.json');
 const fs = require('fs-extra');
 const md5 = require('md5');
+const { MemoryCache } = require('memory-cache-node');
 const { performance } = require('perf_hooks');
 const LibreTexts = require('./reuse.js');
 let port = 3005;
@@ -18,6 +19,11 @@ if (process.argv.length >= 3 && parseInt(process.argv[2])) {
     port = parseInt(process.argv[2]);
 }
 server.listen(port);
+
+const expireCheckInterval = 300; // 5 minutes
+const maxItemCount = 20;
+const authorsCache = new MemoryCache(expireCheckInterval, maxItemCount);
+
 const now1 = new Date();
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
 
@@ -218,23 +224,27 @@ async function handler(request, response) {
     // get a library's author's information
     else if (url.startsWith('/getAuthors/')) {
         if (request.method === 'GET') {
-            response.writeHead(200, {'Content-Type': ' application/json', 'Cache-Control': 'public, max-age=36000'});
+            response.writeHead(200, {'Content-Type': ' application/json', 'Cache-Control': 'public, max-age=43200'});
             
-            let subdomain = url.split('/getAuthors/')[1];
-            let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen['getAuthors']);
-            if (contents.ok) {
-                contents = await contents.text();
-                let match = contents.match(/^var authors = {[\s\S]*?^}/m);
-                if (match) {
-                    contents = match[0];
-                    contents = contents.replace('var authors = ', '');
-                    contents = LibreTexts.decodeHTML(contents);
-                    contents = LibreTexts.decodeHTML(contents);
-                    response.write(contents);
+            const subdomain = url.split('/getAuthors/')[1];
+            if (authorsCache.hasItem(subdomain)) {
+                response.write(authorsCache.retrieveItemValue(subdomain));
+            } else {
+                let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen['getAuthors']);
+                if (contents.ok) {
+                    contents = await contents.text();
+                    let match = contents.match(/^var authors = {[\s\S]*?^}/m);
+                    if (match) {
+                        contents = match[0];
+                        contents = contents.replace('var authors = ', '');
+                        contents = LibreTexts.decodeHTML(contents);
+                        contents = LibreTexts.decodeHTML(contents);
+                        authorsCache.storeExpiringItem(subdomain, contents, 3600);
+                        response.write(contents);
+                    }
+                } else {
+                    console.error(await contents.text());
                 }
-            }
-            else {
-                console.error(await contents.text());
             }
             response.end();
         }
