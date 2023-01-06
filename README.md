@@ -8,8 +8,7 @@ This is the primary repository for LibreTexts Javascript integrations and modifi
 | Directory     | Description |
 | ----------- | ----------- |
 | API     | Various backend services |
-| Front    | Scripts for directing web traffic |
-| install     | Files for installing nodePrint |
 | Kubeconfig     | Files for setting up nodePrint in Kubernetes |
+| install     | Files for installing nodePrint |
 | nodePrint     | Dynamic PDF generation |
 | public     | Client-side javascript files |
