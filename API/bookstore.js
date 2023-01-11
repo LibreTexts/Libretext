@@ -120,7 +120,7 @@ async function updateOrder(sessionId, forceUpdate = false, beta = false) {
                 const now = new Date();
                 if (created instanceof Date && !isNaN(created)) {
                   const diff = Math.abs(created.getTime() - now.getTime()) / 3600000;
-                  if (diff > 1) {
+                  if (diff > 12) {
                     sendStuckEmail(result);
                   }
                 }
