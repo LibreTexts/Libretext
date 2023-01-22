@@ -529,7 +529,7 @@ function LibreTextsReuse() {
                     else {
                         tags = tags.tag["@value"];
                     }
-                    if (tags.includes("coverpage:yes") || tags.includes("coverpage:toc")) {
+                    if (tags.includes("coverpage:yes") || tags.includes("coverpage:toc") || tags.includes("coverpage:nocommons")) {
                         getCoverpage.coverpage = path;
                         break;
                     }
