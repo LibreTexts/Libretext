@@ -349,7 +349,7 @@ async function getLicenseReport(input) {
     const coverID = `${input.subdomain}-${infoRes['@id']}`;
     input.pageID = pageID;
 
-    const isCoverpage = rootTags.includes('coverpage:yes') || rootTags.includes('coverpage:toc');
+    const isCoverpage = rootTags.includes('coverpage:yes') || rootTags.includes('coverpage:toc') || rootTags.includes('coverpage:nocommons');
     if (!isCoverpage) {
         return null;
     }
