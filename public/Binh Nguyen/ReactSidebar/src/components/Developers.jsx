@@ -10,7 +10,7 @@ import {saveAs} from 'file-saver';
 
 export default function Developers(props) {
     let tags = document.getElementById('pageTagsHolder').innerText;
-    const allowMatter = tags.includes('coverpage:yes') || tags.includes('coverpage:toc');
+    const allowMatter = tags.includes('coverpage:yes') || tags.includes('coverpage:toc') || tags.includes('coverpage:nocommons');
     
     return (<List>
 	 
