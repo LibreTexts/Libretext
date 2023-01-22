@@ -207,7 +207,7 @@ puppeteer.launch({
                         let finished = await getLibretext(url, response, params);
                         let [subdomain, path] = parseURL(url);
                         
-                        if (finished && finished.tags && finished.tags.includes("coverpage:yes")) {
+                        if (finished && finished.tags && (finished.tags.includes("coverpage:yes") || finished.tags.includes('coverpage:nocommons'))) {
                             // console.log(JSON.stringify(finished, null, 2));
                             await fetch('https://api.libretexts.org/endpoint/refreshListAdd', {
                                 method: 'PUT',
@@ -393,7 +393,7 @@ puppeteer.launch({
                                     if (page.title === 'Remixer University')
                                         page.subpages = page.subpages.filter((item) => item.title === "Contruction Guide");
                                     
-                                    if (page.tags.includes('coverpage:yes')) {
+                                    if (page.tags.includes('coverpage:yes') || page.tags.includes('coverpage:nocommons')) {
                                         texts.push(page);
                                     }
                                     else if (page.tags.includes('coverpage:toc')) {
@@ -855,7 +855,7 @@ puppeteer.launch({
                   isSubTOC = 'yes';
                   level = 3;
               }
-              const twoColumn = current.tags?.includes('columns:two') && current.tags?.includes('coverpage:yes') && level === 2;
+              const twoColumn = current.tags?.includes('columns:two') && (current.tags?.includes('coverpage:yes') || current.tags?.includes('coverpage:nocommons')) && level === 2;
               const prefix = level === 2 ? 'h2' : 'h';
               // Get subtitles
               let inner = await async.map(pages, async (elem) => {
@@ -886,7 +886,7 @@ puppeteer.launch({
             directory.replaceWith(newDirectory);
             if (Array.isArray(tags)) {
               let pageType = 'Section Overview';
-              if (tags.includes('coverpage:yes') || title?.includes('Table of Contents')) {
+              if (tags.includes('coverpage:yes') || tags.includes('coverpage:nocommons') || title?.includes('Table of Contents')) {
                 pageType = 'Table of Contents'; // server-side TOC generation (deprecated)
               } else if (tags.includes('article:topic-guide')) {
                 pageType = 'Chapter Overview';
@@ -925,7 +925,7 @@ puppeteer.launch({
           if (current.modified === 'restricted') return 'restricted'; // private page
           let url = current.url;
           const [subdomain, path] = parseURL(current.url);
-          const isMainToc = current.tags?.includes('coverpage:yes');
+          const isMainToc = current.tags?.includes('coverpage:yes') || current.tags?.includes('coverpage:nocommons');
 
           if (isMainToc) {
             const tocPath = `${path}${path.endsWith('/') ? '' : '/'}00:_Front_Matter/03:_Table_of_Contents`;
@@ -1406,7 +1406,7 @@ puppeteer.launch({
             console.log(`Getting LibreText ${options.index ? `[${options.index}] ` : ''}${current.title}`);
             const zipFilename = `${current.subdomain}-${current.id}`;
             const thinName = md5(zipFilename).slice(0, 6);
-            const hasCoverpage = current.tags.includes('coverpage:yes');
+            const hasCoverpage = current.tags.includes('coverpage:yes') || current.tags.includes('coverpage:nocommons');
             let privatePages = [];
             
             //Try to get special files
@@ -1650,7 +1650,7 @@ puppeteer.launch({
                     } else if (page.subpages && page.subpages.length > 1 && page.tags && (page.tags.includes('article:topic-category') || page.tags.includes('article:topic-guide'))) {
                         filename = `TOC/${await getTOC(page)}.pdf`;
                         
-                        if (page.tags.includes('coverpage:yes')) {//no Front Matter TOC
+                        if (page.tags.includes('coverpage:yes') || page.tags.includes('coverpage:nocommons')) {//no Front Matter TOC
                             if (uploadedTOC)
                                 return;
                             page.index = TOCIndex;
