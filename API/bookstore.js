@@ -185,7 +185,8 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
                         "country_code": "US",
                         "postcode": "95616",
                         "state_code": "CA",
-                        "street1": "One Shields Avenue"
+                        "street1": "One Shields Avenue",
+                        "phone_number": bookstoreConfig.DEFAULT_PHONE_NUMBER,
                     },
                     "shipping_level": shippingSpeed
                 })
@@ -211,7 +212,8 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
                         "country_code": "CA",
                         "postcode": "T9S 3A3",
                         "state_code": "AB",
-                        "street1": "1 University Dr, Athabasca"
+                        "street1": "1 University Dr, Athabasca",
+                        "phone_number": bookstoreConfig.DEFAULT_PHONE_NUMBER,
                     },
                     "shipping_level": shippingSpeed
                 })
