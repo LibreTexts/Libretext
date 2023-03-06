@@ -1,3 +1,4 @@
+require('dotenv').config();
 const http = require('http');
 const util = require('util');
 const events = require('events');
@@ -19,6 +20,7 @@ const storage = require('node-persist');
 const JSZip = require('jszip');
 const he = require('he');
 const convert = require('xml-js');
+const { MongoClient } = require('mongodb');
 const baseIMG = require('./baseIMG.js');
 const styles = require('./styles.js');
 const colors = require('./colors');
@@ -55,6 +57,9 @@ puppeteer.launch({
         const server = http.createServer(handler);
         const localServer = http.createServer(handler);
         const staticFileServer = new nodeStatic.Server('./public');
+        const dbClient = new MongoClient(process.env.MONGODB_URI);
+        const database = dbClient.db(process.env.MONGODB_DB_NAME);
+        const downloadEvents = database.collection('download-events');
         let port = 3001;
         keys = authenBrowser;
         server.listen(port);
@@ -287,16 +292,31 @@ puppeteer.launch({
                     url = url.replace('?view=true', '');
                     forceView = true;
                 }
+                const splitURL = url.split('/');
                 if (await fs.exists(`./PDF/${size}/Finished/${url}`)) {
                     staticFileServer.serveFile(`../PDF/${size}/Finished/${url}`, 200, {
                         'Content-Disposition': forceView ? '' : 'attachment',
                         'cache-control': 'no-cache'
                     }, request, response);
                     try {
+                        if (splitURL.length > 1) {
+                            const identifier = splitURL[0];
+                            const fileSplit = splitURL[1].split('.');
+                            const extension = fileSplit.length > 1 ? fileSplit[1] : null;
+                            if (identifier && extension) {
+                                downloadEvents.insertOne({
+                                    identifier,
+                                    format: extension.toLowerCase(),
+                                    timestamp: new Date(),
+                                });
+                            }
+                        }
+                        // old total download count
                         let count = await storage.getItem('downloadCount') || 0;
                         await storage.setItem('downloadCount', count + 1);
                     } catch (e) {
-                    
+                        console.warn('Error inserting download event record in database.');
+                        console.warn(e);
                     }
                     let now2 = new Date();
                     // await fs.appendFile(`./public/StatsFull.txt`, `${timestamp('MM/DD hh:mm', now2)}: ${ip} ${url}\n`);
