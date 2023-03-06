@@ -301,11 +301,12 @@ puppeteer.launch({
                     try {
                         if (splitURL.length > 1) {
                             const identifier = splitURL[0];
-                            const fileSplit = splitURL[1].split('.');
-                            const extension = fileSplit.length > 1 ? fileSplit[1] : null;
-                            if (identifier && extension) {
+                            const file = splitURL.slice(1).join('/');
+                            const extension = file.split('.')[1];
+                            if (identifier && file && extension) {
                                 downloadEvents.insertOne({
                                     identifier,
+                                    file,
                                     format: extension.toLowerCase(),
                                     timestamp: new Date(),
                                 });
