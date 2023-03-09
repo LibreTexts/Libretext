@@ -112,7 +112,7 @@ function BookstoreSingle(props) {
         }
     }
     totalCost += shippingSurcharge?.price || 0;
-    if (totalCost > 1000) {
+    if (totalCost > 2500) {
       okToCheckout = false; // prevent large orders via web
     }
 
