@@ -445,7 +445,7 @@ function BookstoreSingle(props) {
                 </div>
                 {!okToCheckout && (
                   <Alert severity='error' id="bulkOrderAlert">
-                    Orders over $1,000 cannot be placed via the web Bookstore. Please contact <a href='mailto:bookstore@libretexts.org?subject=Bulk Order' target='_blank' rel='noreferrer'>bookstore@libretexts.org</a> to place your bulk order.
+                    Orders over $2,500 cannot be placed via the web Bookstore. Please contact <a href='mailto:bookstore@libretexts.org?subject=Bulk Order' target='_blank' rel='noreferrer'>bookstore@libretexts.org</a> to place your bulk order.
                   </Alert>
                 )}
                 <Button autoFocus color="primary" variant='contained' disabled={!validPrice || !okToCheckout}
