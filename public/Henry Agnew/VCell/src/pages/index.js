@@ -31,7 +31,7 @@ const SLOW_API_ENDPOINT = `https://api.biosimulations.org`;
 const QUICK_API_ENDPOINT = `https://combine.api.biosimulations.dev`; // eventually replace .dev with .org once endpoint is publicly released
 const isQuick = Boolean(dataset.quick);
 const API_ENDPOINT = isQuick ? QUICK_API_ENDPOINT : SLOW_API_ENDPOINT; //currently defaults to slow
-const simulator = dataset.simulator || "vcell";
+const simulator = dataset.simulator || isQuick ? 'copasi' : "vcell";
 
 let prevjobid = undefined;
 if (!isQuick) { // only allowed for slow jobs
@@ -53,10 +53,10 @@ function VCellReactHook(props) {
     
     function updateSpecies(event, key) { //updates a species concentration based on user input
         let updated = {...species[key]};
-        let newValue = event.target.value * AVOGADRO;
+        let newValue = event.target.value;
         newValue = Math.max(0, newValue); //species amounts must be non-negative
         
-        updated.initialAmount = newValue;
+        updated.initialConcentration = newValue;
         species[key] = updated;
         setSpecies(species);
     }
@@ -107,7 +107,17 @@ function VCellReactHook(props) {
         //allows script to modify these values
         const speciesObject = {};
         sbml.sbml.model.listOfSpecies.species.forEach(specie => {
-            speciesObject[specie['_attributes'].id] = specie['_attributes'];
+            let attributes = specie['_attributes'];
+            
+            //convert amount to concentration
+            if (attributes?.initialAmount) {
+                attributes.initialConcentration = attributes.initialAmount / AVOGADRO;
+            }
+            else { //new format
+                attributes.initialConcentration = parseFloat(attributes.initialConcentration)
+            }
+            
+            speciesObject[specie['_attributes'].id] = attributes;
         });
         setSpecies(speciesObject);
         //extract parameters so they can also be user-modified
@@ -129,7 +139,14 @@ function VCellReactHook(props) {
         
         //substitute modified species values into XML
         let temp = Object.values(species).map(sp => {
-            return {"_attributes": sp};
+            let attributes = {...sp}
+            
+            if (attributes?.initialAmount) { // if old format, convert moles back into raw molecules
+                attributes.initialAmount = attributes.initialConcentration * AVOGADRO;
+                delete attributes.initialConcentration;
+            }
+            
+            return {"_attributes": attributes};
         });
         temp = convert.js2xml({listOfSpecies: {species: temp}}, {compact: true, spaces: 2});
         console.log(temp);
@@ -182,7 +199,7 @@ function VCellReactHook(props) {
             console.log(response);
         }
         else {
-            formData.append('simulator', "tellurium"); //TODO: replace tellurium with variable
+            formData.append('simulator', simulator);
             formData.append('_type', "SimulationRun");
             // formData.append('archiveUrl', "https://bio.libretexts.org/@api/deki/files/38382/test.omex");
             formData.append('archiveFile', await omex.generateAsync({type: 'blob'}), 'test.omex');
@@ -309,9 +326,9 @@ function VCellReactHook(props) {
     );
 }
 
-//each Specie gets a SpeciesRow so its initialAmount can be user-modified
+//each Specie gets a SpeciesRow so its initialConcentration can be user-modified
 function SpeciesRow(props) {
-    if (props?.specie?.initialAmount === undefined)
+    if (props?.specie?.initialConcentration === undefined)
         return null;
     
     return <TableRow key={props.specie.id}>
@@ -321,17 +338,15 @@ function SpeciesRow(props) {
         <TableCell>
             <TextField type="number"
                        variant="filled"
-                       defaultValue={(props.specie.initialAmount / AVOGADRO).toPrecision(4)}
+                       defaultValue={(props.specie.initialConcentration).toPrecision(4)}
                        onChange={(e) => props.onChange(e, props.specie.id)}
             />
         </TableCell>
-        {/*<TableCell>{props.specie.substanceUnits}</TableCell>*/}
-        {/*TODO: make units flexible. Waiting on VCell 7.5.0*/}
-        <TableCell>moles per liter</TableCell>
+        <TableCell>{props?.specie?.substanceUnits?.startsWith("Unit_") ? props.specie.substanceUnits : "moles per liter"}</TableCell>
     </TableRow>;
 }
 
-//each Specie gets a SpeciesRow so its initialAmount can be user-modified
+//each Specie gets a SpeciesRow so its initialConcentration can be user-modified
 function ParameterRow(props) {
     if (props?.parameter?.value === undefined)
         return null;
@@ -347,7 +362,6 @@ function ParameterRow(props) {
                        onChange={(e) => props.onChange(e, props.parameter.id)}
             />
         </TableCell>
-        {/*TODO: make units flexible. Waiting on VCell 7.5.0*/}
         <TableCell>{props.parameter.units}</TableCell>
     </TableRow>;
 }
