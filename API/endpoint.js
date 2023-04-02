@@ -230,21 +230,26 @@ async function handler(request, response) {
             if (authorsCache.hasItem(subdomain)) {
                 response.write(authorsCache.retrieveItemValue(subdomain));
             } else {
+                let authors = '{}';
                 let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen['getAuthors']);
                 if (contents.ok) {
                     contents = await contents.text();
-                    let match = contents.match(/^var authors = {[\s\S]*?^}/m);
+                    const match = contents.match(/^var authors = {([\s\S]*)?}(?=;)/m);
                     if (match) {
-                        contents = match[0];
-                        contents = contents.replace('var authors = ', '');
-                        contents = LibreTexts.decodeHTML(contents);
-                        contents = LibreTexts.decodeHTML(contents);
-                        authorsCache.storeExpiringItem(subdomain, contents, 3600);
-                        response.write(contents);
+                        try {
+                            contents = match[0];
+                            contents = contents.replace('var authors = ', '');
+                            contents = LibreTexts.decodeHTML(contents);
+                            authors = LibreTexts.decodeHTML(contents);
+                            authorsCache.storeExpiringItem(subdomain, authors, 3600);
+                        } catch (e) {
+                            console.error('Error parsing author information:', e);
+                        }
                     }
                 } else {
                     console.error(await contents.text());
                 }
+                response.write(authors);
             }
             response.end();
         }
