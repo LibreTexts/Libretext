@@ -303,6 +303,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,
         cancel_url: `${domainURL}/Purchase_Canceled.html`,
         metadata: {
+            application: 'bookstore',
             sessionType: 'create-lulu-checkout-session'
         }
     });
