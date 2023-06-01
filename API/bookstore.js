@@ -339,9 +339,15 @@ app.post(basePath + '/publish-order/', async (req, res) => {
         data = event.data
         eventType = event.type;
     }
-    if (eventType && eventType === 'checkout.session.completed') {
+
+    const session = data?.object;
+    if (
+        eventType
+        && session
+        && eventType === 'checkout.session.completed'
+        && session.metadata?.application === 'bookstore'
+    ) {
         // console.log(`🔔  Payment received!`);
-        const session = data.object;
         // console.log(session);
         
         // Fulfill the purchase...
