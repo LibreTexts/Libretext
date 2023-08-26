@@ -70,6 +70,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     // </authenticated to CAS Bridge>
     
     if ($target) {
-        $target.before(`<li><a tabindex="0" class="icon-SSO" title="Single Sign-On" onclick="window.LibreTextsLoginCAS(event)"/></li>`)
+        $target.before(`<li><a tabindex="0" class="mt-icon-quick-sign-in" title="Single Sign-On" onclick="window.LibreTextsLoginCAS(event)"/>Sign in</li>`)
     }
 });
