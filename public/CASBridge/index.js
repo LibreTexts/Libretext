@@ -15,6 +15,8 @@ async function verifyJWT(overlayJWT) {
     }
 }
 
+window.LibreTextsCASBridgeVerifyJWT = verifyJWT;
+
 window.LibreTextsLoginCAS = (event) => {
     event.preventDefault();
     cookieJar.set('cas_bridge_source', window.location.host, { domain: 'libretexts.org', sameSite:'lax' });
