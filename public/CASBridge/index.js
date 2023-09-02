@@ -62,7 +62,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     }
     if (login) {
-        $target.replaceWith(`<li><a tabindex="0" class="icon-SSO sso-user" title="Logout ${login.first_name} ${login.last_name}" onclick="window.LibreTextsLogoutCAS(event)" style="cursor: pointer; margin: 0">${login.first_name} ${login.last_name}</a></li>`);
+        $target.replaceWith(`<li><a tabindex="0" class="sso-user mt-icon-user3" title="Logout ${login.first_name} ${login.last_name}" onclick="window.LibreTextsLogoutCAS(event)" style="cursor: pointer; margin: 0">${login.first_name} ${login.last_name}</a></li>`);
         $('.elm-header-user-nav').addClass('authenticated-sso');
 
         const $nativeSignIn = $('.mt-icon-quick-sign-in');
@@ -72,6 +72,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     // </authenticated to CAS Bridge>
     
     if ($target) {
-        $target.before(`<li><a tabindex="0" class="mt-icon-quick-sign-in" title="Single Sign-On" onclick="window.LibreTextsLoginCAS(event)"/>Sign in</li>`)
+        $target.before(`<li style="cursor:pointer;"><a tabindex="0" class="mt-icon-quick-sign-in" title="Single Sign-On" onclick="window.LibreTextsLoginCAS(event)">Sign in</a></li>`)
     }
 });
