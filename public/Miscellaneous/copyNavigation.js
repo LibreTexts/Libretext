@@ -136,23 +136,12 @@
             let copy = original.cloneNode(true);
             let copyTarget = copy.getElementsByTagName("a")[0];
             copyTarget.href = '#';
-            copyTarget.onclick = goToSandbox;
+            copyTarget.onclick = LibreTexts.openSandbox();
             copyTarget.innerText = "Your Sandbox";
             copyTarget.classList.add("mt-icon-select-all");
             copyTarget.classList.remove("mt-icon-my-contributions");
             copyTarget.title = "Go to your personal Sandbox";
             original.parentNode.insertBefore(copy, original);
-        }
-        
-        async function goToSandbox() {
-            let username = document.getElementById('usernameHolder').innerText;
-            let isAdmin = document.getElementById('adminHolder').innerText;
-            const groups = document.getElementById("groupHolder").innerText.toLowerCase();
-            username = username.replace('@','_at_');
-            const sandboxLocation = (isAdmin === 'true' || groups.includes('developer')) ? `/${username}` : '';
-            
-            await LibreTexts.sendAPI('createSandbox');
-            document.location.replace(`/Sandboxes${sandboxLocation}`);
         }
     }
     
