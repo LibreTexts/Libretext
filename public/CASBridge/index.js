@@ -29,7 +29,7 @@ window.LibreTextsLogoutCAS = (event) => {
     cookieJar.remove('overlayJWT', { domain: 'libretexts.org' });
     cookieJar.remove('cas_bridge_redirect', { domain: 'libretexts.org' });
     cookieJar.remove('cas_bridge_source', { domain: 'libretexts.org' });
-    window.location.href = 'https://sso.libretexts.org/cas/logout';
+    window.location.href = 'https://auth.libretexts.org/cas/logout';
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
