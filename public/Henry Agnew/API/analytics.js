@@ -21,17 +21,17 @@ if (!window["analytics.js"]) {
             const pageTitle = $("#deki-page-title, #title").last();
             if (login && login.user) {
                 if (!login.educational) {
-                    pageTitle.prepend(`<a class="icon-SSO" title="Single Sign-On" onclick="logoutCAS(event)" style="color:red"/>`);
-                    $content.before(`<div style="font-size: x-large">Access Denied: ${login.user} is not part of an institution. Please log in with your institutional <a class="icon-SSO" title="Single Sign-On Logout" onclick="logoutCAS(event)"/> or your LibreLogin.</div>`);
+                    pageTitle.prepend(`<a class="mt-icon-user3" title="Single Sign-On" onclick="window.LibreTextsLogoutCAS(event)" style="color:red"/>`);
+                    $content.before(`<div style="font-size: x-large">Access Denied: ${login.user} is not part of an institution. Please log in with your institutional LibreOne account.</div>`);
                     return;
                 }
                 // $content.before(`<p>Thank you ${login} for authenticating with the LibreTexts SSO!</p>`);
                 $content.show()
-                pageTitle.prepend(`<a class="icon-SSO" title="Logged in with SSO as ${login.user}" style="color:green"></a>`);
+                pageTitle.prepend(`<a class="mt-icon-user3" title="Logged in with LibreOne as ${login.user}" style="color:green"></a>`);
             }
             else { //invalid session, user must log in
-                pageTitle.prepend(`<a class="icon-SSO" title="Single Sign-On" onclick="loginCAS(event)" style="color:red"/>`);
-                $content.before(`<div style="font-size: x-large">Content is hidden. Please log in with your institutional <a class="icon-SSO" title="Single Sign-On" onclick="loginCAS(event)"/> or your LibreLogin.</div>`);
+                pageTitle.prepend(`<a class="mt-icon-user3" title="Single Sign-On" onclick="window.LibreTextsLoginCAS(event)" style="color:red"/>`);
+                $content.before(`<div style="font-size: x-large">Content is hidden. Please log in with your institutional <a onclick="window.LibreTextsLoginCAS(event)">LibreOne account.</a></div>`);
                 return;
             }
             
@@ -63,19 +63,13 @@ if (!window["analytics.js"]) {
             }
             
             if (payload && payload.overlayJWT) { //cas-overlayJWT login
-                payload = payload.overlayJWT;
-                
-                let pubKey = await fetch('https://api.libretexts.org/cas-bridge/public');
-                pubKey = await pubKey.text();
-                try {
-                    login = KJUR.jws.JWS.verify(payload, pubKey, ["PS256"]);
-                    if (login) {
-                        payload = KJUR.jws.JWS.parse(payload).payloadObj;
-                        console.log(payload.user, payload);
-                        return payload;
-                    }
-                } catch (e) {
-                    console.error(e);
+                const casBridgeUserInfo = await window.LibreTextsCASBridgeVerifyJWT(payload.overlayJWT);
+                if (casBridgeUserInfo && casBridgeUserInfo.email) {
+                    login = casBridgeUserInfo.email;
+                    return {
+                        user: casBridgeUserInfo.email,
+                        educational: casBridgeUserInfo.educational ?? false,
+                    };
                 }
             }
             
