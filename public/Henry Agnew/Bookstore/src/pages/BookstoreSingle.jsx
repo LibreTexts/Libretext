@@ -90,7 +90,7 @@ function BookstoreSingle(props) {
     let okToCheckout = true;
     const classes = useStyles();
 
-    const operatingCost = 0.08; // percentage as decimal!!
+    const operatingCost = 0.16; // percentage as decimal!!
 
     const taxesMultiplier = 1.2;
     const HI_AK_surcharge = { name: 'Hawaii/Alaska', price: 5 };

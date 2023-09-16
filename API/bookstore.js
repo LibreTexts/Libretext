@@ -148,7 +148,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     const {shoppingCart, shippingSpeed, shippingLocation = 'US', shippingSurcharge = false} = req.body;
     const beta = req.query.beta;
     let totalQuantity = 0;
-    const operatingCost = 0.08; // percent in decimal!!
+    const operatingCost = 0.16; // percent in decimal!!
     
     //turn items into lineItems
     let lineItems = shoppingCart;
