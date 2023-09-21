@@ -86,7 +86,8 @@ export default function GetOrder(props) {
     });
     
     function renderListItems() {
-        let trackingURLS = [];
+        const trackingNumbers = [];
+        const trackingURLS = [];
         return <>
             <table className="items" style={{width: '100%', borderSpacing: 0, borderCollapse: 'collapse'}}>
                 <thead>
@@ -109,8 +110,12 @@ export default function GetOrder(props) {
                 <tbody>
                 {order?.lulu?.line_items.map((item, index) => {
                     const [lib, pageID] = item.external_id.split('-');
-                    if (item?.tracking_id)
-                        trackingURLS.push(item?.tracking_id)
+                    if (item?.tracking_id) {
+                        trackingNumbers.push(item?.tracking_id);
+                    }
+                    if (Array.isArray(item?.tracking_urls)) {
+                        item.tracking_urls.forEach((url) => trackingURLS.push(url));
+                    }
                     return <tr key={index}>
                         <td>
                             <img
@@ -138,11 +143,10 @@ export default function GetOrder(props) {
             </table>
             <Divider/>
             {order?.status === "SHIPPED" ? <>
-                <p>Tracking numbers: {trackingURLS}</p>
-                <a target="_blank"
-                   href={`https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=${trackingURLS.join()}`}>
-                    {`https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=${trackingURLS.join()}`}
-                </a>
+                <p>Tracking numbers: {trackingNumbers.join(', ')}</p>
+                {trackingURLS.map((url, idx) => (
+                    <a key={idx} target="_blank" rel="noopener noreferrer" href={url}>{url}</a>
+                ))}
                 <Divider/>
             </> : null}
         </>
