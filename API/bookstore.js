@@ -305,6 +305,9 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         metadata: {
             application: 'bookstore',
             sessionType: 'create-lulu-checkout-session'
+        },
+        phone_number_collection: {
+            enabled: true
         }
     });
     
@@ -469,7 +472,9 @@ async function fulfillOrder(session, beta = false, sendEmailOnly) { //sends live
             "city": session.shipping.address.city,
             "country_code": session.shipping.address.country,
             "name": session.shipping.name?.slice(0, 35),
-            // "phone_number": "844-212-0689",
+            ...(session.customer.phone && {
+                "phone_number": session.customer.phone,
+            }),
             "email": session.customer.email,
             "postcode": session.shipping.address.postal_code,
             "state_code": session.shipping.address.state,
