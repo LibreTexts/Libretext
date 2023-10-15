@@ -165,7 +165,7 @@
     height: 2px;
 }
 
-@media (min-width: 500px) and (min-height: 500px) {
+@media (min-width: 769px) and (min-height: 500px) {
     #LibreTextsSidebar > .MuiDrawer-paper {
         padding-left: 30px;
     }
@@ -179,7 +179,7 @@
     }
 }
 
-@media screen and (min-width: 500px) and (max-width: 1330px) {
+@media screen and (min-width: 769px) and (max-width: 1330px) {
     #elm-main-content {
         padding-left: 30px !important;
     }
