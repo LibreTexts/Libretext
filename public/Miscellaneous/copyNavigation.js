@@ -135,8 +135,7 @@
             original = original[0];
             let copy = original.cloneNode(true);
             let copyTarget = copy.getElementsByTagName("a")[0];
-            copyTarget.href = '#';
-            copyTarget.onclick = LibreTexts.openSandbox;
+            copyTarget.href = `https://${LibreTexts.extractSubdomain()}.libretexts.org/Sandboxes`;
             copyTarget.innerText = "Your Sandbox";
             copyTarget.classList.add("mt-icon-select-all");
             copyTarget.classList.remove("mt-icon-my-contributions");
