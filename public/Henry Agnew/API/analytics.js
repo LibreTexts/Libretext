@@ -62,8 +62,8 @@ if (!window["analytics.js"]) {
                 return {user: login, educational: true};
             }
             
-            if (payload && payload.overlayJWT) { //cas-overlayJWT login
-                const casBridgeUserInfo = await window.LibreTextsCASBridgeVerifyJWT(payload.overlayJWT);
+            if (payload && payload[`cas_bridge_token_${window.location.host}`]) { // CAS Bridge login
+                const casBridgeUserInfo = await window.LibreTextsCASBridgeVerifyJWT(payload[`cas_bridge_token_${window.location.host}`]);
                 if (casBridgeUserInfo && casBridgeUserInfo.email) {
                     login = casBridgeUserInfo.email;
                     return {

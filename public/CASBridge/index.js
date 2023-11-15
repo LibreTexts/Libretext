@@ -1,10 +1,10 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { default as cookieJar } from 'js-cookie';
 
-async function verifyJWT(overlayJWT) {
+async function verifyJWT(token) {
     try {
         const jwks = await createRemoteJWKSet(new URL('https://one.libretexts.org/api/v1/auth/cas-bridge/jwks'));
-        const { payload } = await jwtVerify(overlayJWT, jwks, {
+        const { payload } = await jwtVerify(token, jwks, {
             issuer: 'https://one.libretexts.org',
             audience: 'libretexts.org',
         });
@@ -19,14 +19,14 @@ window.LibreTextsCASBridgeVerifyJWT = verifyJWT;
 
 window.LibreTextsLoginCAS = (event) => {
     event.preventDefault();
-    cookieJar.set('cas_bridge_source', window.location.host, { domain: 'libretexts.org', sameSite:'lax' });
-    cookieJar.set('cas_bridge_redirect', window.location.href, { domain: 'libretexts.org', sameSite:'lax' });
+    cookieJar.set('cas_bridge_source', window.location.host, { domain: 'libretexts.org', sameSite: 'lax' });
+    cookieJar.set('cas_bridge_redirect', window.location.href, { domain: 'libretexts.org', sameSite: 'lax' });
     window.location.href = 'https://one.libretexts.org/api/v1/auth/cas-bridge';
 };
 
 window.LibreTextsLogoutCAS = (event) => {
     event.preventDefault();
-    cookieJar.remove('overlayJWT', { domain: 'libretexts.org' });
+    cookieJar.remove(`cas_bridge_token_${window.location.host}`, { domain: 'libretexts.org' });
     cookieJar.remove('cas_bridge_redirect', { domain: 'libretexts.org' });
     cookieJar.remove('cas_bridge_source', { domain: 'libretexts.org' });
     window.location.href = 'https://auth.libretexts.org/cas/logout';
@@ -54,9 +54,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     // </check if known to be able to authenticate to CXone>
 
     // <authenticated to CAS Bridge>
-    const overlayJWT = cookieJar.get('overlayJWT');
-    if (overlayJWT) {
-        const payload = await verifyJWT(overlayJWT);
+    const casBridgeToken = cookieJar.get(`cas_bridge_token_${window.location.host}`);
+    if (casBridgeToken) {
+        const payload = await verifyJWT(casBridgeToken);
         if (payload && payload.sub) {
             login = payload;
         }
