@@ -766,7 +766,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       if (!isAdmin) {
         const donorBoxLink = document.createElement('a');
         Object.assign(donorBoxLink, {
-          href: 'https://donorbox.org/libretexts',
+          href: 'https://donorbox.org/15-000-for-15-years',
           target: '_blank',
           rel: 'noreferrer',
           classList: `${CLASS_DONORBOX_LINK} notSS`,
