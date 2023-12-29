@@ -29,11 +29,6 @@ export default function Developers(props) {
 			coverpageURL={"https://chem.libretexts.org/Courses/Remixer_University/LibreTexts_Construction_Guide"}/>
 		</AccordionDetails>
 	    </Accordion>
-
-            <IconLink title="New Book" icon="mt-icon-add" onClick={() => {
-                props.toggleDrawer(false)();
-                LibreTexts.bookCreator();
-            }}/>
             <IconLink title="Get Text Cover" icon="mt-icon-book" onClick={() => {
               try {
                 LibreTexts.cover(window.location.href);
