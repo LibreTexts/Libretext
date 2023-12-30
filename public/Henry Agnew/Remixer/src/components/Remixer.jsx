@@ -24,8 +24,8 @@ class Remixer extends React.Component {
 	constructor(props) {
 		super(props);
 		const defaultState = {
-			mode: 'Remix',
-			stage: 'Remixing',
+			mode: 'ReRemix',
+			stage: 'ReRemixing',
 			permission: RemixerFunctions.userPermissions(), //nonpermanent
 			user: document.getElementById('usernameHolder').innerText, //nonpermanent
 			href: window.location.href, //nonpermanent
@@ -191,15 +191,6 @@ class Remixer extends React.Component {
 					<Info/>
 				</Tooltip></div>
 				{this.state.permission !== 'Demonstration' ?
-					<>
-						<div style={{fontSize: '130%', cursor: 'pointer'}}
-						     onClick={(e) => this.setState({swapDialog: this.state.mode === 'ReRemix' ? 'Remix' : 'ReRemix'})}
-						>
-							New Remix Mode
-							<Switch
-								checked={this.state.mode === 'ReRemix'} color="default"/>
-							Edit Remix Mode
-						</div>
 						<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
 							<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
 								<Button variant="contained" onClick={this.loadAutosave}
@@ -207,7 +198,7 @@ class Remixer extends React.Component {
 									Load from previous session</Button>
 							</div>
 						</Tooltip>
-					</> : null}
+					: null}
 			</div>
 			
 			{this.renderState()}
