@@ -131,8 +131,8 @@ class Remixer extends React.Component {
 		if (autosave) {
 			autosave = JSON.parse(autosave);
 			let newState = {
-				mode: autosave.mode,
-				stage: autosave.stage,
+				mode: 'ReRemix',
+				stage: 'ReRemixing',
 				defaultCopyMode: autosave.defaultCopyMode,
 				RemixTree: autosave.RemixTree,
 				currentlyActive: '',
@@ -149,29 +149,29 @@ class Remixer extends React.Component {
 		}
 	};
 	
-	handleSwap = (doSwap) => {
-		let result = {swapDialog: false};
-		if (doSwap === true) {
-			result = {
-				...result, ...{
-					mode: this.state.swapDialog,
-					undoArray: [],
-					redoArray: [],
-					currentlyActive: '',
-					RemixTree: RemixerFunctions.generateDefault(0, 0)
-				}
-			};
-			switch (this.state.swapDialog) {
-				case 'Remix':
-					result.stage = 'Remixing';
-					break;
-				case 'ReRemix':
-					result.stage = 'ReRemixing';
-					break;
-			}
-		}
-		this.setState(result);
-	};
+	// handleSwap = (doSwap) => {
+	// 	let result = {swapDialog: false};
+	// 	if (doSwap === true) {
+	// 		result = {
+	// 			...result, ...{
+	// 				mode: this.state.swapDialog,
+	// 				undoArray: [],
+	// 				redoArray: [],
+	// 				currentlyActive: '',
+	// 				RemixTree: RemixerFunctions.generateDefault(0, 0)
+	// 			}
+	// 		};
+	// 		switch (this.state.swapDialog) {
+	// 			case 'Remix':
+	// 				result.stage = 'Remixing';
+	// 				break;
+	// 			case 'ReRemix':
+	// 				result.stage = 'ReRemixing';
+	// 				break;
+	// 		}
+	// 	}
+	// 	this.setState(result);
+	// };
 	
 	render() {
 		// console.log(this.state, 'Rerender');
@@ -203,7 +203,7 @@ class Remixer extends React.Component {
 			
 			{this.renderState()}
 			
-			<Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.mode} onClose={this.handleSwap}
+			{/* <Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.mode} onClose={this.handleSwap}
 			        aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Want to swap Remixer modes?</DialogTitle>
 				<DialogContent>
@@ -221,7 +221,7 @@ class Remixer extends React.Component {
 						Swap to {this.state.swapDialog} mode
 					</Button>
 				</DialogActions>
-			</Dialog>
+			</Dialog> */}
 		</ThemeProvider>;
 	}
 	
@@ -231,11 +231,11 @@ class Remixer extends React.Component {
 				return <>
 					<ReRemixerPanel {...this.state} updateRemixer={this.updateRemixer}/>
 				</>;
-			case 'Remixing':
-				return <>
-					<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
-					<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
-				</>;
+			// case 'Remixing':
+			// 	return <>
+			// 		<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
+			// 		<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
+			// 	</>;
 			case 'Publishing':
 				if (this.state.permission === 'Demonstration')
 					return <><DemoEnd {...this.state} updateRemixer={this.updateRemixer}/></>
