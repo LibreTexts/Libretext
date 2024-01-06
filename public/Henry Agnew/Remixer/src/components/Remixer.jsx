@@ -231,11 +231,11 @@ class Remixer extends React.Component {
 				return <>
 					<ReRemixerPanel {...this.state} updateRemixer={this.updateRemixer}/>
 				</>;
-			// case 'Remixing':
-			// 	return <>
-			// 		<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
-			// 		<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
-			// 	</>;
+			case 'Remixing':
+			 	return <>
+			 		<RemixerOptions {...this.state} updateRemixer={this.updateRemixer}/>
+			 		<RemixerPanel {...this.state} updateRemixer={this.updateRemixer} undo={this.undo} redo={this.redo}/>
+			 	</>;
 			case 'Publishing':
 				if (this.state.permission === 'Demonstration')
 					return <><DemoEnd {...this.state} updateRemixer={this.updateRemixer}/></>
