@@ -300,8 +300,8 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
         billing_address_collection: 'required',
         shipping_address_collection: {allowed_countries: [shippingLocation]},
         // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-        success_url: `${domainURL}/Order_Success.html?order={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${domainURL}/Purchase_Canceled.html`,
+        success_url: `${domainURL}/order-status?order={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${domainURL}/purchase-canceled`,
         metadata: {
             application: 'bookstore',
             sessionType: 'create-lulu-checkout-session'
@@ -609,7 +609,7 @@ function sendLuluReceiptEmail(payload, luluResponse, beta = false) {
             const message = `<h1>Thank you for your order from the LibreTexts bookstore!</h1>
 <p>This email is confirmation that your payment has been approved and that the printer has received your order.</p>
 <p> You can view the live status of your order on this page:
-<a href="https://libretexts.org/bookstore/Order_Success.html?order=${payload.external_id}">https://libretexts.org/bookstore/Order_Success.html?order=${payload.external_id}</a></p>
+<a href="https://libretexts.org/bookstore/order-status?order=${payload.external_id}">https://libretexts.org/bookstore/order-status?order=${payload.external_id}</a></p>
 <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
 <thead><tr>
 <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
@@ -777,7 +777,7 @@ ${payload.lulu?.line_items.map(item => {
 </table>
 <br/>
 <p> You can also review the status of your order on this page:
-<a href="https://libretexts.org/bookstore/Order_Success.html?order=${payload.stripeID}">https://libretexts.org/bookstore/Order_Success.html?order=${payload.stripeID}</a></p>
+<a href="https://libretexts.org/bookstore/order-status?order=${payload.stripeID}">https://libretexts.org/bookstore/order-status?order=${payload.stripeID}</a></p>
 <br/>
 <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
 <p>Please remember to include your order identifier [${payload.stripeID}].</p>

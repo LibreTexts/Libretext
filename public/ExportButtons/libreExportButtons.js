@@ -612,7 +612,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
             key: 'bookstore',
             text: 'Buy Print Copy',
             title: 'Buy Paper Copy (opens in new tab)',
-            href: `https://libretexts.org/bookstore/single.html?${downloadEntry.zipFilename}`,
+            href: `https://libretexts.org/bookstore/order?${downloadEntry.zipFilename}`,
             icon: 'mt-icon-book2',
           },
           {
