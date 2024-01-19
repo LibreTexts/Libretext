@@ -7,7 +7,6 @@
             let media = document.getElementsByClassName("elm-social-share")[0];
             media.parentElement.insertBefore(nav, media);
         }
-        sandboxOption();
         if (!window.location.hostname.startsWith('query')) {
             propagatorOption();
             copyContentOption(); //Forker
@@ -128,22 +127,6 @@
             }
         }
     }
-    
-    function sandboxOption() {
-        let original = document.getElementsByClassName("mt-user-menu-my-contributions");
-        if (original.length) {
-            original = original[0];
-            let copy = original.cloneNode(true);
-            let copyTarget = copy.getElementsByTagName("a")[0];
-            copyTarget.href = `https://${LibreTexts.extractSubdomain()}.libretexts.org/Sandboxes`;
-            copyTarget.innerText = "Your Sandbox";
-            copyTarget.classList.add("mt-icon-select-all");
-            copyTarget.classList.remove("mt-icon-my-contributions");
-            copyTarget.title = "Go to your personal Sandbox";
-            original.parentNode.insertBefore(copy, original);
-        }
-    }
-    
     
     document.addEventListener('DOMContentLoaded', fn);
     
