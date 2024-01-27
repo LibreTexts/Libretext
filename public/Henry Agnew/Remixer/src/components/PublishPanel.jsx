@@ -466,7 +466,7 @@ function PublishSubPanel(props) {
         });
         setSeconds(0);
         setResults([]);
-        await LibreTexts.sendAPI('createSandbox');
+        // await LibreTexts.sendAPI('createSandbox');
         setIsActive(true);
         console.log(props);
         let writeMode = 'edittime=now';

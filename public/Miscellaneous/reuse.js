@@ -108,7 +108,6 @@ function LibreTextsReuse() {
         getCurrentContents: getCurrentContents,
         getCoverpage: getCoverpage,
         getTOC: getTOC,
-        openSandbox: openSandbox,
         TOC: TOC,
         sleep: sleep,
         libraries: libraries,
@@ -666,28 +665,6 @@ function LibreTextsReuse() {
       window.dispatchEvent(tocAvailable);
 
       return { structured, flat };
-    }
-
-    /**
-     * Retrieves the user's Sandbox URL from the LibreOne API and directs the window to it.
-     */
-    async function openSandbox() {
-        try {
-            const username = document.getElementById('usernameHolder').innerText;
-            const libraryID = LibreTexts.extractSubdomain();
-            const sandboxRes = await fetch(`https://one.libretexts.org/api/v1/users/${username}/libraries/${libraryID}/sandbox-url`);
-            if (!sandboxRes.ok) {
-                throw new Error('Unexpected response code');
-            }
-            const sandboxData = await sandboxRes.json();
-            if (!sandboxData?.data || typeof sandboxData.data !== 'string') {
-                throw new Error('Unexpected response data');
-            }
-            window.location.assign(sandboxData.data);
-        } catch (err) {
-            console.error({ msg: 'Error retrieving Sandbox URL', error: err });
-            window.location.replace('/Sandboxes');
-        }
     }
     
     /**

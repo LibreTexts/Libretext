@@ -48,8 +48,6 @@ class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 		};
-		if (defaultState.permission !== 'Demonstration')
-			LibreTexts.sendAPI('createSandbox').then();
 		let state = defaultState;
 		
 		/*if (localStorage.getItem('RemixerState')) {
