@@ -49,7 +49,9 @@ class ReRemixerPanel extends React.Component {
                         break;
                 }*/
         
-        
+        const searchStr = window.location.search;
+        const urlParams = new URLSearchParams(searchStr);
+
         let content = await RemixerFunctions.getSubpages(path, this.state.subdomain, {
             linkTitle: true,
             includeMatter: true
@@ -82,10 +84,16 @@ class ReRemixerPanel extends React.Component {
                 children: sandboxes
             });
         }
-        let lastText
-        if (localStorage.getItem('RemixerLastText')) {
-            lastText = JSON.parse(localStorage.getItem('RemixerLastText'));
-            lastText = await LibreTexts.getAPI(lastText.url);
+
+        let lastText;
+        let lastTextURL;
+        if (urlParams.get('remixURL')) {
+            lastTextURL = urlParams.get('remixURL');
+        } else if (localStorage.getItem('RemixerLastText')) {
+            lastTextURL = JSON.parse(localStorage.getItem('RemixerLastText'));
+        }
+        if (lastTextURL) {
+            lastText = await LibreTexts.getAPI(lastTextURL);
             
             //cleanPath for the page. Does not modify parent paths!
             //removes url restricted or non-ascii characters
@@ -116,6 +124,7 @@ class ReRemixerPanel extends React.Component {
             });
             lastText.lazy = lastText.children && lastText.children.length;
             lastText.extraClasses = `security-${lastText.security} `;
+            lastText.isLastText = true;
         }
         else
             lastText = {title: 'No Last Linked Text'};
@@ -210,6 +219,9 @@ class ReRemixerPanel extends React.Component {
         $('#LTLeftAlert').hide();
         this.updateLeft();
         this.setState({initialized: true});
+        if (urlParams.get('autoLoad') === 'true') {
+            this.autoLoadLastText();
+        }
     }
     
     render() {
@@ -353,6 +365,23 @@ class ReRemixerPanel extends React.Component {
             },
         });
         this.props.updateRemixer({stage: 'Remixing', RemixTree: currentlyActive, currentlyActive: ''});
+    }
+
+    autoLoadLastText() {
+        const LTLeft = $('#LTLeft').fancytree('getTree');
+        let lastTextNode;
+        LTLeft.getRootNode().visit((node) => {
+            if (node.data.isLastText === true) {
+                lastTextNode = node;
+                return false;
+            }
+        });
+        if (!lastTextNode) {
+            console.error('Could not autoload text to remix: node not found.');
+            return;
+        }
+        this.props.updateRemixer({ currentlyActive: lastTextNode.key });
+        this.handleReRemix();
     }
 }
 
