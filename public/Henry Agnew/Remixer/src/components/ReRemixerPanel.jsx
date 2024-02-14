@@ -116,6 +116,10 @@ class ReRemixerPanel extends React.Component {
                 }
             }
             
+            // overwrite url to resolved path rather than @go link
+            if (urlParams.get('remixURL') && cleanedPath) {
+                lastText.url = `https://${lastText.subdomain}.libretexts.org/${cleanedPath}`;
+            }
             
             lastText.title = `<b>Last Linked: </b>${lastText.title}<a href="${lastText.url}" target="_blank"><span class="mt-icon-link" style="font-size: 90%; margin-left: 5px"></a>`;
             lastText.children = await RemixerFunctions.getSubpages(lastText.path, this.state.subdomain, {
