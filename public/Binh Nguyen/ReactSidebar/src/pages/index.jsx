@@ -21,7 +21,6 @@ import {blue, grey} from "@material-ui/core/colors/index.js";
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
-import Libraries from "../components/Libraries.jsx";
 import Tools from "../components/Tools.jsx";
 import Developers from "../components/Developers.jsx";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft.js';
@@ -80,7 +79,7 @@ function SidebarComponent(props) {
     }, [])
 
 
-    const tabs = ['contents', 'readability', 'resources', 'libraries', 'tools'];
+    const tabs = ['contents', 'readability', 'resources', 'tools'];
     const isPro = document.getElementById("proHolder")?.innerText === 'true';
     if (isPro)
         tabs.push('developers');
@@ -121,9 +120,6 @@ function SidebarComponent(props) {
                 break;
             case "tools":
                 currentPanel = <Tools toggleDrawer={toggleDrawer}/>;
-                break;
-            case "libraries":
-                currentPanel = <Libraries toggleDrawer={toggleDrawer}/>;
                 break;
             case "developers":
                 currentPanel = <Developers toggleDrawer={toggleDrawer}/>;
