@@ -254,7 +254,7 @@ class ReRemixerPanel extends React.Component {
                 </Tooltip></div>
                 <Button variant="contained" onClick={this.handleReRemix} disabled={!currentlyActive}
                         className={'expandedLabel'}>
-                    <span>ReRemix selection</span><DoubleArrowIcon/>
+                    <span>Load selection</span><DoubleArrowIcon/>
                 </Button>
             </div>
             <div id='LTFormContainer'>
@@ -266,7 +266,7 @@ class ReRemixerPanel extends React.Component {
             </div>
             <Dialog open={!this.state.initialized} aria-labelledby="form-dialog-title"
                     id="editDialog">
-                <DialogTitle id="form-dialog-title">Loading ReRemixer
+                <DialogTitle id="form-dialog-title">Loading Remixer
                 </DialogTitle>
                 <DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
                     <CircularProgress size={100}/>
@@ -274,7 +274,7 @@ class ReRemixerPanel extends React.Component {
             </Dialog>
             <Dialog open={this.state.transferring} aria-labelledby="form-dialog-title"
                     id="editDialog">
-                <DialogTitle id="form-dialog-title">Loading Content for ReRemix
+                <DialogTitle id="form-dialog-title">Loading Content for Remix
                 </DialogTitle>
                 <DialogContent style={{display: 'flex', justifyContent: 'center', padding: 50}}>
                     <CircularProgress size={100}/>
@@ -293,7 +293,7 @@ class ReRemixerPanel extends React.Component {
         let [, destination] = LibreTexts.parseURL();
         destination = `https://${subdomain}.libretexts.org/${destination}`;
         
-        if (confirm(`The ReRemixer requires you to be on the same library as your content. Would you like to be navigated to ${destination}?`))
+        if (confirm(`The Remixer requires you to be on the same library as your content. Would you like to be navigated to ${destination}?`))
             window.location.href = destination;
     };
     
@@ -361,7 +361,7 @@ class ReRemixerPanel extends React.Component {
             currentlyActive.children = [];
         RemixerFunctions.ReRemixTree(currentlyActive, rootPath);
         
-        this.props.enqueueSnackbar(`${currentlyActive.title} is ready for ReRemixing!`, {
+        this.props.enqueueSnackbar(`${currentlyActive.title} is ready for Remixing!`, {
             variant: 'success',
             anchorOrigin: {
                 vertical: 'bottom',

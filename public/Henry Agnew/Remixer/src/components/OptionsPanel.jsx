@@ -71,10 +71,10 @@ export default function OptionsPanel(props) {
 					if (textFromFileLoaded && textFromFileLoaded.href && textFromFileLoaded.mode === 'ReRemix' && !textFromFileLoaded.href.startsWith(`https://${current}.libretexts.org`)) {
 						//ReRemixes must be on their original library
 						const destination = textFromFileLoaded.href;
-						if (confirm(`The ReRemixer requires you to use the library originally used to create this file. Would you like to navigate to ${destination}?`))
+						if (confirm(`The Remixer requires you to use the library originally used to create this file. Would you like to navigate to ${destination}?`))
 							window.location.href = destination;
 						else {
-							enqueueSnackbar(`ReRemix originally created at ${destination}. Please use that library instead!`, {
+							enqueueSnackbar(`Remix originally created at ${destination}. Please use that library instead!`, {
 								variant: 'error',
 								anchorOrigin: {
 									vertical: 'bottom',

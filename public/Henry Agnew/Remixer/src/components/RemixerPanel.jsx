@@ -654,7 +654,7 @@ class RemixerPanel extends React.Component {
             </Dialog>
             <Dialog open={!!this.state.reRemixDialog} onClose={() => this.setState({reRemixDialog: false})}
                     aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Start ReRemix over?</DialogTitle>
+                <DialogTitle id="form-dialog-title">Start Remix over?</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         This action will clear your work in the Remix Panel and your undo history. Consider saving your
@@ -1152,7 +1152,7 @@ class RemixerPanel extends React.Component {
         RemixerFunctions.ReRemixTree(current, current.data.path);
         
         this.props.updateRemixer({stage: 'Remixing', RemixTree: current, currentlyActive: ''});
-        this.props.enqueueSnackbar(`${current.title} is ready for ReRemixing!`, {
+        this.props.enqueueSnackbar(`${current.title} is ready for Remixing!`, {
             variant: 'success',
             anchorOrigin: {
                 vertical: 'bottom',

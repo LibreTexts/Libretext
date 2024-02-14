@@ -189,7 +189,7 @@ export default function PublishPanel(props) {
         });
         RemixerFunctions.ReRemixTree(current, current.data.path);
         props.updateRemixer({stage: 'Remixing', RemixTree: current, currentlyActive: ''});
-        enqueueSnackbar(`${current.title} is ready for ReRemixing!`, {
+        enqueueSnackbar(`${current.title} is ready for Remixing!`, {
             variant: 'success',
             anchorOrigin: {
                 vertical: 'bottom',

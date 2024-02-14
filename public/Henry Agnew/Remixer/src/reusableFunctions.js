@@ -112,7 +112,7 @@ function userPermissions(full) {
 		Demonstration: '#767676',
 	};
 	const descriptions = {
-		Admin: 'Administrators have full access to the Remixer and ReRemixer everywhere',
+		Admin: 'Administrators have full access to the Remixer everywhere',
 		Developer: 'Developer users are LibreTexts employees',
 		// Faculty: 'Registered Faculty can use the Remixer in the course shells.',
 		Basic: 'Basic users can work on Remixes in their sandbox',
