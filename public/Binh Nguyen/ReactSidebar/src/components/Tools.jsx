@@ -8,13 +8,7 @@ export default function Tools(props) {
     const [annotation, setAnnotation] = React.useState(localStorage.getItem("annotationType"));
     
     return (<List>
-            <IconLink title="OER Remixer" icon="mt-icon-tree" onClick={() => {
-                localStorage.setItem('RemixerLastText', JSON.stringify({
-                    title: document.getElementById('titleHolder').innerText,
-                    url: window.location.href
-                }));
-                window.location.assign("/Under_Construction/Development_Details/OER_Remixer");
-            }}/>
+            <IconLink title="OER Remixer" icon="mt-icon-tree" onClick={openRemixer}/>
             <IconLink title="Page Citation" icon="mt-icon-quote" onClick={() => {
                 buildcite();
                 props.toggleDrawer(false)();
@@ -84,6 +78,23 @@ export default function Tools(props) {
                         <a onclick="event.preventDefault()">&nbsp;Note Bene</a>
                     </div>
                 </div>*/
+}
+
+async function openRemixer() {
+    localStorage.setItem('RemixerLastText', JSON.stringify({
+        title: document.getElementById('titleHolder').innerText,
+        url: window.location.href
+    }));
+    const coverpage = await LibreTexts.getCoverpage();
+    if (coverpage) {
+        const searchParams = new URLSearchParams({
+            remixURL: `${window.location.protocol}//${window.location.host}/${coverpage}`,
+            autoLoad: true,
+        });
+        window.location.assign(`/Under_Construction/Development_Details/OER_Remixer?${searchParams.toString()}`);
+        return;
+    }
+    window.location.assign("/Under_Construction/Development_Details/OER_Remixer");
 }
 
 
