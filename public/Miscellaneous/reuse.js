@@ -177,6 +177,7 @@ function LibreTextsReuse() {
      */
     function cleanPath(path) {
         let front = "", back = path;
+        path = path.replace(/\r?\n/g, '');
         if (path.includes('/'))
             [, front, back] = path.match(/(^.*[^\/]\/)([^\/].*?$)/); //only modifying page, not whole path
         try {
