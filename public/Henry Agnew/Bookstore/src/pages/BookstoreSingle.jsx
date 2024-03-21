@@ -129,29 +129,47 @@ function BookstoreSingle(props) {
         })();
     }, []);
 
+    /**
+     * Update selected shipping speed if no longer available after quantity/options updates.
+     */
+    useEffect(() => {
+        if (shippingData?.length) {
+            const foundSpeed = shippingData.find((s) => s.level === shippingSpeed);
+            const defaultSpeed = shippingData[shippingData.length - 1]?.level;
+            if (!foundSpeed && defaultSpeed !== shippingSpeed) {
+                setShippingSpeed(defaultSpeed);
+            }
+        }
+    }, [shippingData, shippingSpeed]);
+
     useEffect(() => {
         (async function () {
             try {
-                let shipping;
                 setShippingData([]);
-                switch (shippingLocation) {
-                    case "CA":
-                        shipping = 'iso_country_code=CA';
-                        break;
-                    case "US":
-                    default:
-                        shipping = 'iso_country_code=US&state_code=US-CA';
-                }
-                shipping = await fetch(`https://api.lulu.com/print-shipping-options?${shipping}&quantity=${quantity}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
+                let shipping = await fetch('https://api.lulu.com/shipping-options', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        line_items: [{
+                            page_count: props.item.numPages,
+                            pod_package_id: '0850X1100BWSTDCW060UW444MXX',
+                            quantity,
+                        }],
+                        shipping_address: {
+                            country: shippingLocation,
+                            ...(shippingLocation === 'US' && { state_code: 'US-CA' }),
+                        },
+                    }),
                     headers: {
                         // 'Cache-Control': 'no-cache',
                         'Content-Type': 'application/json'
                     }
                 });
                 shipping = await shipping.json()
-                shipping = shipping.results.sort((a, b) => b.cost_excl_tax - a.cost_excl_tax);
-                setShippingData(shipping);
-                setShippingSurcharge(false);
+                if (Array.isArray(shipping)) {
+                    shipping.sort((a, b) => b.cost_excl_tax - a.cost_excl_tax);
+                    setShippingData(shipping);
+                    setShippingSurcharge(false);
+                }
             } catch (e) {
                 console.error(e)
             }

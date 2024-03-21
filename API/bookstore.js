@@ -149,29 +149,47 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     const beta = req.query.beta;
     let totalQuantity = 0;
     const operatingCost = 0.16; // percent in decimal!!
-    
+
     //turn items into lineItems
     let lineItems = shoppingCart;
+    let maxNumPages = 1;
     let costCalculation = lineItems.map((item) => {
         totalQuantity += item.quantity;
+        if (item.metadata.numPages > maxNumPages) {
+            maxNumPages = item.metadata.numPages;
+        }
         return {
-            "page_count": item.metadata.numPages,
-            "pod_package_id": `0850X1100${item.color ? 'FC' : 'BW'}STD${item.hardcover ? 'CW' : 'PB'}060UW444MXX`,
-            "quantity": item.quantity
+            page_count: item.metadata.numPages,
+            pod_package_id: `0850X1100${item.color ? 'FC' : 'BW'}STD${item.hardcover ? 'CW' : 'PB'}060UW444MXX`,
+            quantity: item.quantity
         }
     });
     
     //calculate shipping cost using Lulu API
     let shipping;
+
+    const generateShippingOptionsRequest = (country, state_code) => fetch('https://api.lulu.com/shipping-options', {
+        method: 'POST',
+        body: JSON.stringify({
+            line_items: [{
+                page_count: maxNumPages,
+                pod_package_id: '0850X1100BWSTDCW060UW444MXX',
+                quantity: totalQuantity,
+            }],
+            shipping_address: {
+                country,
+                ...(state_code && { state_code }),
+            }
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
     switch (shippingLocation) {
         default:
         case "US": //United States
-            shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=US&state_code=US-CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
-                headers: {
-                    // 'Cache-Control': 'no-cache',
-                    'Content-Type': 'application/json'
-                }
-            });
+            shipping = generateShippingOptionsRequest('US', 'US-CA');
             costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
                 method: 'POST',
                 headers: {
@@ -193,12 +211,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
             });
             break;
         case "CA": //Canada
-            shipping = fetch(`https://api.lulu.com/print-shipping-options?iso_country_code=CA&quantity=${totalQuantity}&level=${shippingSpeed}&pod_package_id=0850X1100BWSTDCW060UW444MXX`, {
-                headers: {
-                    // 'Cache-Control': 'no-cache',
-                    'Content-Type': 'application/json'
-                }
-            });
+            shipping = generateShippingOptionsRequest('CA');
             costCalculation = await LuluAPI('https://api.lulu.com/print-job-cost-calculations/', {
                 method: 'POST',
                 headers: {
@@ -258,7 +271,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
     })
     /* Process shipping */
     shipping = await (await shipping).json();
-    shipping = shipping.results[0];
+    shipping = shipping.find((s) => s.level === shippingSpeed);
     lineItems.push({
         price_data: {
             currency: 'usd',
@@ -268,7 +281,7 @@ app.post(basePath + '/create-lulu-checkout-session', async (req, res) => {
             },
             unit_amount: Math.ceil(costCalculation.shipping_cost.total_cost_excl_tax * 100 * taxMultiplier) + (shippingSurcharge ? shippingSurcharge.price * 100 : 0) //amount in cents
         },
-        description: `Estimated arrival in ${shipping.total_days_min}-${shipping.total_days_max} days. ${shippingSurcharge ? `Includes ${shippingSurcharge.name} surcharge` : ''}`,
+        description: `Estimated arrival in ${shipping?.total_days_min}-${shipping?.total_days_max} days. ${shippingSurcharge ? `Includes ${shippingSurcharge.name} surcharge` : ''}`,
         quantity: 1,
     });
     /* Add Operating Cost */
@@ -557,7 +570,7 @@ async function LuluAPI(url, options, beta) {
     const client = new ClientCredentials(config);
     let accessToken;
     try {
-        accessToken = await client.getToken();
+        accessToken = await client.getToken(undefined, { json: 'force' });
     } catch (error) {
         console.log('Access Token error', error);
     }
