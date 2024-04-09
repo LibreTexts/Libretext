@@ -609,43 +609,47 @@ async function sendLuluReceiptEmail(payload, luluResponse, beta = false) {
             ToAddresses: [toAddr],
         },
         Message: {
-            Subject: `Thank you for your ${beta ? 'BETA ' : ''}order from the LibreTexts Bookstore!`,
+            Subject: {
+                Data: `Thank you for your ${beta ? 'BETA ' : ''}order from the LibreTexts Bookstore!`,
+            },
             Body: {
-                Html: `<h1>Thank you for your order from the LibreTexts bookstore!</h1>
-                <p>This email is confirmation that your payment has been approved and that the printer has received your order.</p>
-                <p> You can view the live status of your order on this page:
-                <a href="https://libretexts.org/bookstore/order-status?order=${payload.external_id}">https://libretexts.org/bookstore/order-status?order=${payload.external_id}</a></p>
-                <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                <thead><tr>
-                <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
-                </tr></thead>
-                <tbody>
-                ${payload.line_items.map(item => {
-                                const [lib, pageID] = item.external_id.split('-');
-                                return `<tr>
-                        <td>
-                        <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
-                        </td>
-                        <td>
-                        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
-                        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
-                        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
-                        </td>
-                        <td style="text-align: right">
-                        <p>Shipping to <u>${payload.shipping_address.city}, ${payload.shipping_address.state_code}</u> via <i>${payload.shipping_level}</i></p>
-                        <p>Estimated arrival from <b>${luluResponse?.estimated_shipping_dates?.arrival_min}</b> to ${luluResponse?.estimated_shipping_dates?.arrival_max}</p>
-                        </td>
-                </tr>`
-                            })}
-                </tbody>
-                </table>
-                
-                <br/>
-                <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
-                <p>Please remember to include your order identifier [${payload.external_id}].</p>
-                <p>Do note that orders are printed on-demand, and as such you order has already been finalized.</p>
-                <h3>Enjoy your purchase!</h3>
-                <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`,
+                Html: {
+                    Data: `<h1>Thank you for your order from the LibreTexts bookstore!</h1>
+                    <p>This email is confirmation that your payment has been approved and that the printer has received your order.</p>
+                    <p> You can view the live status of your order on this page:
+                    <a href="https://libretexts.org/bookstore/order-status?order=${payload.external_id}">https://libretexts.org/bookstore/order-status?order=${payload.external_id}</a></p>
+                    <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                    <thead><tr>
+                    <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+                    </tr></thead>
+                    <tbody>
+                    ${payload.line_items.map(item => {
+                                    const [lib, pageID] = item.external_id.split('-');
+                                    return `<tr>
+                            <td>
+                            <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+                            </td>
+                            <td>
+                            <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+                            <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+                            <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+                            </td>
+                            <td style="text-align: right">
+                            <p>Shipping to <u>${payload.shipping_address.city}, ${payload.shipping_address.state_code}</u> via <i>${payload.shipping_level}</i></p>
+                            <p>Estimated arrival from <b>${luluResponse?.estimated_shipping_dates?.arrival_min}</b> to ${luluResponse?.estimated_shipping_dates?.arrival_max}</p>
+                            </td>
+                    </tr>`
+                                })}
+                    </tbody>
+                    </table>
+                    
+                    <br/>
+                    <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
+                    <p>Please remember to include your order identifier [${payload.external_id}].</p>
+                    <p>Do note that orders are printed on-demand, and as such you order has already been finalized.</p>
+                    <h3>Enjoy your purchase!</h3>
+                    <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`,
+                },
             },
         },
         Source: bookstoreConfig.RECEIPT_EMAIL,
@@ -669,14 +673,18 @@ async function sendStuckEmail(payload) {
             ToAddresses: [toAddr],
         },
         Message: {
-            Subject: `An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.`,
+            Subject: {
+                Data: `An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.`,
+            },
             Body: {
-                Html: `
-                <h1>An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.</h1>
-                <p><em>This is an automated message.</em></p>
-                <p>The Bookstore order with Stripe ID <strong>${payload.stripeID}</strong> and Lulu ID <strong>${payload.luluID}</strong> has been in the <em>Created</em> stage for more than one hour.</p>
-                <p>Please investigate or use the Lulu Dashboard/Reordering Tool to try and force production.</p>
-              `
+                Html: {
+                    Data: `
+                    <h1>An order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore is stuck in processing.</h1>
+                    <p><em>This is an automated message.</em></p>
+                    <p>The Bookstore order with Stripe ID <strong>${payload.stripeID}</strong> and Lulu ID <strong>${payload.luluID}</strong> has been in the <em>Created</em> stage for more than one hour.</p>
+                    <p>Please investigate or use the Lulu Dashboard/Reordering Tool to try and force production.</p>
+                  `,
+                },
             },
         },
         Source: bookstoreConfig.RECEIPT_EMAIL,
@@ -701,39 +709,43 @@ async function sendRejectedEmail(payload) {
             BccAddresses: [bookstoreConfig.RECEIPT_EMAIL]
         },
         Message: {
-            Subject: `Your order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore has encountered an error.`,
+            Subject: {
+                Data: `Your order from the ${payload.beta ? 'BETA ' : ''}LibreTexts Bookstore has encountered an error.`,
+            },
             Body: {
-                Html: `<h1>Your order from the ${payload.beta ? 'BETA ' : ''} LibreTexts Bookstore has encountered an error.</h1>
-                <p>This email is an automated alert that your order has encountered an error.</p>
-                <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                <thead><tr>
-                <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
-                </tr></thead>
-                <tbody>
-                ${payload.lulu?.line_items?.map(item => {
-                                const [lib, pageID] = item.external_id.split('-');
-                                return `<tr>
-                        <td>
-                        <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
-                        </td>
-                        <td>
-                        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
-                        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
-                        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
-                        </td>
-                        <td style="text-align: right">
-                        <p>Status:</p>
-                        <p>${item.status.name}</p>
-                        <p>${JSON.stringify(item.status.messages)}</p>
-                        </td>
-                </tr>`
-                            }) || "Error, cannot list items"}
-                </tbody>
-                </table>
-                <br/>
-                <p><b>This email is also being sent to bookstore@libretexts.org, who will respond to this issue as soon as possible.</b></p>
-                <p>${JSON.stringify(payload)}</p>
-                <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`,
+                Html: {
+                    Data: `<h1>Your order from the ${payload.beta ? 'BETA ' : ''} LibreTexts Bookstore has encountered an error.</h1>
+                    <p>This email is an automated alert that your order has encountered an error.</p>
+                    <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                    <thead><tr>
+                    <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+                    </tr></thead>
+                    <tbody>
+                    ${payload.lulu?.line_items?.map(item => {
+                                    const [lib, pageID] = item.external_id.split('-');
+                                    return `<tr>
+                            <td>
+                            <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+                            </td>
+                            <td>
+                            <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+                            <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+                            <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+                            </td>
+                            <td style="text-align: right">
+                            <p>Status:</p>
+                            <p>${item.status.name}</p>
+                            <p>${JSON.stringify(item.status.messages)}</p>
+                            </td>
+                    </tr>`
+                                }) || "Error, cannot list items"}
+                    </tbody>
+                    </table>
+                    <br/>
+                    <p><b>This email is also being sent to bookstore@libretexts.org, who will respond to this issue as soon as possible.</b></p>
+                    <p>${JSON.stringify(payload)}</p>
+                    <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`,
+                },
             },
         },
         Source: bookstoreConfig.RECEIPT_EMAIL,
@@ -757,43 +769,47 @@ async function sendShippingEmail(payload) {
             ToAddresses: [toAddr],
         },
         Message: {
-            Subject: 'Your order from the LibreTexts Bookstore has shipped.',
+            Subject: {
+                Data: 'Your order from the LibreTexts Bookstore has shipped.'
+            },
             Body: {
-                Html: `<h1>Your order from the LibreTexts Bookstore has shipped.</h1>
-                <p>This email is confirmation that your order has been printed and shipped.</p>
-                <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                <thead><tr>
-                <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
-                </tr></thead>
-                <tbody>
-                ${payload.lulu?.line_items.map(item => {
-                                const [lib, pageID] = item.external_id.split('-');
-                                return `<tr>
-                        <td>
-                        <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
-                        </td>
-                        <td>
-                        <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
-                        <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
-                        <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
-                        </td>
-                        <td style="text-align: right">
-                        <p>Shipping to <u>${payload.lulu.shipping_address.city}, ${payload.lulu.shipping_address.state_code}</u> via <i>${payload.lulu.shipping_option_level}</i></p>
-                        <p>Estimated arrival from <b>${payload.lulu?.estimated_shipping_dates?.arrival_min}</b> to ${payload.lulu?.estimated_shipping_dates?.arrival_max}</p>
-                        <p>Tracking link for <a href=${item.tracking_urls?.[0]}>${item?.tracking_id}</a></p>
-                        </td>
-                </tr>`
-                            })}
-                </tbody>
-                </table>
-                <br/>
-                <p> You can also review the status of your order on this page:
-                <a href="https://libretexts.org/bookstore/order-status?order=${payload.stripeID}">https://libretexts.org/bookstore/order-status?order=${payload.stripeID}</a></p>
-                <br/>
-                <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
-                <p>Please remember to include your order identifier [${payload.stripeID}].</p>
-                <h3>Enjoy your purchase!</h3>
-                <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`,
+                Html: {
+                    Data: `<h1>Your order from the LibreTexts Bookstore has shipped.</h1>
+                    <p>This email is confirmation that your order has been printed and shipped.</p>
+                    <table class="items" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                    <thead><tr>
+                    <th colspan="3" style="font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; background-color: #f8f8f8; border-radius: 0px 0px 0px 0px; border: solid 0px #eaecec; padding: 12px; color: #325f74; font-size: 18px; font-weight: bold; border-bottom: solid 2px #eaecec;">Products Ordered</th>
+                    </tr></thead>
+                    <tbody>
+                    ${payload.lulu?.line_items.map(item => {
+                                    const [lib, pageID] = item.external_id.split('-');
+                                    return `<tr>
+                            <td>
+                            <img src="https://${lib}.libretexts.org/@api/deki/pages/${pageID}/files/=mindtouch.page%2523thumbnail" style="height: 150px; width: 150px; object-fit: contain"/>
+                            </td>
+                            <td>
+                            <p class="item-qty" style="margin-top: 0; margin-bottom: 0px;">QTY: ${item.quantity}</p>
+                            <h3 class="product-name-custom" style="margin-top: 0; margin-bottom: 0px; color: #0080ac; font-weight: bold;">${item.title}</h3>
+                            <p class="sku-custom" style="margin-top: 0; margin-bottom: 0px;"><em style="font-style: italic;">${item.external_id}</em></p>
+                            </td>
+                            <td style="text-align: right">
+                            <p>Shipping to <u>${payload.lulu.shipping_address.city}, ${payload.lulu.shipping_address.state_code}</u> via <i>${payload.lulu.shipping_option_level}</i></p>
+                            <p>Estimated arrival from <b>${payload.lulu?.estimated_shipping_dates?.arrival_min}</b> to ${payload.lulu?.estimated_shipping_dates?.arrival_max}</p>
+                            <p>Tracking link for <a href=${item.tracking_urls?.[0]}>${item?.tracking_id}</a></p>
+                            </td>
+                    </tr>`
+                                })}
+                    </tbody>
+                    </table>
+                    <br/>
+                    <p> You can also review the status of your order on this page:
+                    <a href="https://libretexts.org/bookstore/order-status?order=${payload.stripeID}">https://libretexts.org/bookstore/order-status?order=${payload.stripeID}</a></p>
+                    <br/>
+                    <p>If you encounter any issues with your order, don't hesitate contact us at bookstore@libretexts.org.</p>
+                    <p>Please remember to include your order identifier [${payload.stripeID}].</p>
+                    <h3>Enjoy your purchase!</h3>
+                    <img src="https://test.libretexts.org/hagnew/development/public/Henry%20Agnew/Bookstore/images/libretexts_section_complete_bookstore_header.png" alt="LibreTexts" class="linkIcon" title="LibreTexts Bookstore" width="350" height="124">`
+                },
             },
         },
         Source: bookstoreConfig.RECEIPT_EMAIL,
