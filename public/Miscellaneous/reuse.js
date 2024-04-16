@@ -569,69 +569,53 @@ function LibreTextsReuse() {
         }
       }
 
-      if (!LibreTexts.current?.coverpage) {
+      if (!LibreTexts?.current?.coverpage) {
         const [subdomain] = parseURL();
         const coverpageURL = await getCoverpage();
         if (!coverpageURL) {
           return null;
         }
         coverpageData = await getAPI(`https://${subdomain}.libretexts.org/${coverpageURL}`);
-      } else { // already found
+      } else if (LibreTexts?.current?.coverPage) { // already found
         coverpageData = LibreTexts.current.coverpage;
       }
-      if (!coverpageData.id) { // error getting data
+      if (!coverpageData?.id) { // error getting data
         return null;
       }
 
-      /**
-       * Recursively builds a page hierarchy by requesting data about a page from the CXone
-       * Expert API and then nesting its child pages.
-       *
-       * @param {Object} page - Information about the page to start building the hierarchy at.
-       * @returns {Object} The transformed page with the complete tree of children.
-       */
-      async function buildHierarchy(page) {
-        const subpageQueries = [];
-        let subpages = [];
-
-        let subpageRes = await authenticatedFetch(
+      async function getRawTOC(page) {
+        let res = await authenticatedFetch(
           page.path,
-          'subpages?dream.out.format=json&limit=all',
+          'tree?dream.out.format=json&include=properties,lastmodified',
           page.subdomain,
         );
-        subpageRes = await subpageRes.json();
+        res = await res.json();
+        return res?.page ?? null;
+      }
 
-        /**
-         * Extracts useful data about the page (returned from the API), then continues recursion
-         * if the page has children.
-         *
-         * @param {Object} subpage - The page to transform.
-         * @returns {Object} Page information, including an array of immediate child pages,
-         *  if found.
-         */
-        const processSubpage = async (subpage) => {
-          const hasChildren = subpage['@subpages'] === 'true';
-          const pageData = await getAPI(`https://${page.subdomain}.libretexts.org/${subpage.path['#text']}`);
-          if (hasChildren) {
-            const withChildren = await buildHierarchy(pageData);
-            return withChildren;
-          }
-          return pageData;
-        };
+      function buildHierarchy(page, parentID) {
+        const pageID = Number.parseInt(page['@id']);
+        let subpages = [];
 
-        if (Array.isArray(subpageRes['page.subpage'])) {
-          subpageRes['page.subpage'].forEach((child) => {
-            subpageQueries.push(processSubpage(child));
-          });
-        } else if (typeof (subpageRes['page.subpage']) === 'object') { // single page
-          subpageQueries.push(processSubpage(subpageRes['page.subpage']));
+        const processPage = (p) => ({
+          ...p,
+          id: pageID,
+          subdomain: LibreTexts.extractSubdomain(p['uri.ui']),
+          url: p['uri.ui'],
+      });
+
+        if (Array.isArray(page?.subpages?.page)) {
+          page.subpages.page.forEach((p) => subpages.push(buildHierarchy(p, pageID)));
+        } else if (typeof page?.subpages?.page === 'object') {
+          // single page
+          subpages.push(buildHierarchy(page.subpages.page, pageID));
         }
 
-        subpages = [...subpages, ...(await Promise.all(subpageQueries))];
-        return {
+        return processPage({
           ...page,
-          subpages,
-        };
+          ...(parentID && { parentID }),
+          ...(subpages.length && { subpages }),
+        });
       }
 
       /**
@@ -654,7 +638,9 @@ function LibreTextsReuse() {
         return pagesArr;
       }
 
-      const structured = await buildHierarchy(coverpageData);
+      const rawTOC = await getRawTOC(coverpageData);
+      if (!rawTOC) return null;
+      const structured = buildHierarchy(rawTOC);
       const flat = flatHierarchy(structured);
 
       LibreTexts.current.toc.structured = structured;
