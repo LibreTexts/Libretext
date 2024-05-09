@@ -140,7 +140,7 @@ async function buildTable(hierarchy, subdomain, containerRef) {
         return `
           <li>
             <${prefix} class="${fontClass}">
-              <a href="https://${subdomain}.libretexts.org/${item.path}">${item.title}</a>
+              <a href="https://${subdomain}.libretexts.org/${item.path['#text']}">${item.title}</a>
             </${prefix}>
             ${subpageDir}
           </li>
