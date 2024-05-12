@@ -36,6 +36,7 @@ let LibreTextsFunctions = {
     parseURL: parseURL,
     cleanPath: cleanPath,
     getAPI: getAPI,
+    getTOC: getTOC,
     getUser: getUser,
     addProperty: addProperty,
     sleep: sleep,
@@ -922,6 +923,78 @@ async function getAPI(page, getContents, username = undefined) {
         page.error = error;
     }
     return page;
+}
+
+/**
+ * Builds a Table of Contents for a book/text.
+ *
+ * The TOC in flat and hierarchical form, or null if error encountered.
+ */
+async function getTOC(rootURL, username) {
+    const coverpageData = await getAPI(rootURL, false, username);
+
+    async function getRawTOC(page) {
+        let res = await authenticatedFetch(
+            page.id,
+            'tree?dream.out.format=json&include=properties,lastmodified',
+            page.subdomain,
+            username,
+        );
+        res = await res.json();
+        return res?.page ?? null;
+    }
+
+    function buildHierarchy(page, parentID) {
+        const pageID = Number.parseInt(page['@id'], 10);
+        const subpages = [];
+
+        const processPage = (p) => ({
+            ...p,
+            id: pageID,
+            subdomain: extractSubdomain(p['uri.ui']),
+            url: p['uri.ui'],
+        });
+
+        if (Array.isArray(page?.subpages?.page)) {
+            page.subpages.page.forEach((p) => subpages.push(buildHierarchy(p, pageID)));
+        } else if (typeof page?.subpages?.page === 'object') {
+            // single page
+            subpages.push(buildHierarchy(page.subpages.page, pageID));
+        }
+
+        return processPage({
+            ...page,
+            ...(parentID && { parentID }),
+            ...(subpages.length && { subpages }),
+        });
+    }
+
+    /**
+     * Recursively flattens a page hierachy by extracting any subpages and removing
+     * their container array.
+     *
+     * @param {Object} page - Page at the level of the hierarchy to start flattening at.
+     * @returns {Object[]} The flattened array of page objects.
+     */
+    function flatHierarchy(page) {
+        let pagesArr = [];
+        const pageData = { ...page };
+        if (Array.isArray(pageData.subpages)) {
+            pageData.subpages.forEach((subpage) => {
+                pagesArr = [...pagesArr, ...flatHierarchy(subpage)];
+            });
+        }
+        delete pageData.subpages;
+        pagesArr.unshift(pageData); // add to front to preserve "ordering"
+        return pagesArr;
+    }
+
+    const rawTOC = await getRawTOC(coverpageData);
+    if (!rawTOC) return null;
+    const structured = buildHierarchy(rawTOC);
+    const flat = flatHierarchy(structured);
+
+    return { structured, flat };
 }
 
 /**

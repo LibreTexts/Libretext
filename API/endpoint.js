@@ -255,18 +255,17 @@ async function handler(request, response) {
         }
     } else if (url.startsWith('/getTOC/')) {
         if (request.method === 'GET') {
-            let start = performance.now();
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            let resourceURL = url.split('/getTOC/')[1];
-            resourceURL.replace('%3A', ':');
-            let pages = await LibreTexts.getSubpages(resourceURL, 'LibreBot', { flat: false });
-            let end = performance.now();
+            const start = performance.now();
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            const resourceURL = url.split('/getTOC/')[1];
+            const toc = await LibreTexts.getTOC(resourceURL, 'LibreBot');
+            const end = performance.now();
             response.end(JSON.stringify({
                 time: `${end - start} ms`,
-                toc: pages
+                toc,
             }));
         } else {
-            responseError(request.method + 'Not Acceptable', 406);
+            responseError(`${request.method} Not Acceptable`, 406);
         }
     } else if (url.startsWith('/licensereport/')) {
         let [, root] = url.split('/licensereport/');

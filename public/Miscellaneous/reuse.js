@@ -585,7 +585,7 @@ function LibreTextsReuse() {
 
       async function getRawTOC(page) {
         let res = await authenticatedFetch(
-          page.path,
+          page.id,
           'tree?dream.out.format=json&include=properties,lastmodified',
           page.subdomain,
         );
@@ -594,8 +594,8 @@ function LibreTextsReuse() {
       }
 
       function buildHierarchy(page, parentID) {
-        const pageID = Number.parseInt(page['@id']);
-        let subpages = [];
+        const pageID = Number.parseInt(page['@id'], 10);
+        const subpages = [];
 
         const processPage = (p) => ({
           ...p,
