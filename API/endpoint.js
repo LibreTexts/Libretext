@@ -231,7 +231,7 @@ async function handler(request, response) {
                 response.write(authorsCache.retrieveItemValue(subdomain));
             } else {
                 let authors = '{}';
-                let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentHeader/LibrarySpecific', 'contents', subdomain, authen['getAuthors']);
+                let contents = await LibreTexts.authenticatedFetch('Template:Custom/Views/ContentFooter', 'contents', subdomain, authen['getAuthors']);
                 if (contents.ok) {
                     contents = await contents.text();
                     const match = contents.match(/^var authors = {([\s\S]*)?}(?=;)/m);
