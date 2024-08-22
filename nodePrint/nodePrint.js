@@ -124,6 +124,13 @@ puppeteer.launch({
           }
         };
 
+        const detailsOpener = () => {
+          const detailsElems = document.getElementsByTagName('details');
+          for (let elem of detailsElems) {
+              elem.open = true;
+          }
+        };
+
         function safe(input) {
           if (input) return he.encode(input, { 'useNamedReferences': true });
           return '';
@@ -1249,6 +1256,7 @@ puppeteer.launch({
                     }
                     
                     await page.evaluate(eagerImageLoader);
+                    await page.evaluate(detailsOpener);
                     await sleep(1000);
 
                     const listing = await getLevel(current);
