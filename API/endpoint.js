@@ -221,6 +221,52 @@ async function handler(request, response) {
             responseError(request.method + ' Not Acceptable', 406);
         }
     }
+    // remove a single JSON Commons book
+    else if (url === '/refreshListRemove') {
+        if (request.method === 'PUT') {
+            if (!request.headers.authorization) {
+                return responseError('Bad Request\nMissing Authorization Header', 401);
+            }
+
+            const requestKey = request.headers.authorization.replace('Bearer ', '');
+            const endpointKeys = Object.values(secure.endpoint_access);
+            const validKey = endpointKeys.find((key) => key === requestKey);
+            if (!validKey) {
+                return responseError('Bad Request\nIncorrect Authorization Token', 403);
+            }
+
+            let body = [];
+            request.on('data', (chunk) => {
+                body.push(chunk);
+            }).on('end', async () => {
+                body = Buffer.concat(body).toString();
+
+                let input = JSON.parse(body);
+                console.log(`Remove ${input.subdomain}/${input.path}/${input.id}`);
+                if (input && ['Courses', 'Bookshelves', 'home'].includes(input.path) && input.id) {
+                    await fs.ensureDir(`./public/DownloadsCenter/${input.subdomain}`);
+                    if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
+                        let content = await fs.readJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`);
+                        if (content) {
+                            let array = content.items || content;
+                            let index = array.findIndex(elem => elem.id === String(input.id));
+                            if (index && index !== -1) {
+                                array.splice(index, 1);
+                            }
+                            await fs.writeJSON(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`, content);
+                        }
+                    }
+                }
+                else {
+                    responseError(`Bad Request\nRejected path ${input.path}`, 400);
+                }
+
+                response.end();
+            });
+        } else {
+            responseError(request.method + ' Not Acceptable', 406);
+        }
+    }
     // get a library's author's information
     else if (url.startsWith('/getAuthors/')) {
         if (request.method === 'GET') {
