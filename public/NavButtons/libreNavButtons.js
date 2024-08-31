@@ -8,7 +8,7 @@
 /**
  * Instantiates navigation buttons and adds them to the DOM, if applicable.
  */
-function libreNavButtons() {
+async function libreNavButtons() {
   if (window !== window.top) {
     // don't show in iFrame
     return;
@@ -21,9 +21,6 @@ function libreNavButtons() {
     )
     && !window.location.pathname.includes('OER_Remixer')
   ) {
-    let displayPrev = true;
-    let displayNext = true;
-
     const prevArticle = $('a.mt-icon-previous-article').first();
     const nextArticle = $('a.mt-icon-next-article').first();
 
@@ -31,22 +28,30 @@ function libreNavButtons() {
     const nextPage = nextArticle.attr('href');
 
     // Attempt to disable navigation button(s) if they lead outside of the current LibreText
-    try {
-      const breadCrumbs = $('ol.mt-breadcrumbs').first();
-      const breadCrumbsList = breadCrumbs.find('li');
-      if (breadCrumbsList.length >= 4) {
-        const bookCrumb = breadCrumbsList.get(3);
-        if (bookCrumb) {
-          const bookHref = $(bookCrumb).find('a').first().attr('href');
-          if (bookHref) {
-            displayPrev = prevPage.includes(bookHref);
-            displayNext = nextPage.includes(bookHref);
-          }
+    const resolveShouldDisplayPageButton = async (pageHref) => {
+      try {
+        if (!pageHref) {
+          return false;
         }
+        const pageData = await LibreTexts.getAPI(pageHref);
+        if (!pageData) {
+          return false;
+        }
+        const pageTags = pageData.tags || [];
+        return !(
+          pageTags.includes('coverpage:yes')
+          || pageTags.includes('coverpage:toc')
+          || pageTags.includes('coverpage:nocommons')
+        );
+      } catch (e) {
+        console.log('[ERROR] LibreNavButtons - resolveShouldDisplayPageButton: ', e.message);
+        return false;
       }
-    } catch (e) {
-      console.log('[ERROR] LibreNavButtons: ', e.message);
-    }
+    };
+    const [displayPrev, displayNext] = await Promise.all([
+      resolveShouldDisplayPageButton(prevPage),
+      resolveShouldDisplayPageButton(nextPage),
+    ]);
 
     const prevPageTitle = prevArticle.attr('title');
     const nextPageTitle = nextArticle.attr('title');
