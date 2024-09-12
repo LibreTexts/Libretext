@@ -859,7 +859,7 @@ async function getAPI(page, getContents, username = undefined) {
     if (response.ok) {
         response = await response.json();
         let {properties, tags, files} = response;
-        if (properties['@count'] !== '0' && properties.property) {
+        if (properties && properties['@count'] !== '0' && properties.property) {
             properties = properties.property.length ? properties.property : [properties.property]
             properties = properties.map((prop) => {
                 if (prop['@revision']) return {name: prop['@name'], value: prop.contents['#text']};
