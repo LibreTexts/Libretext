@@ -869,13 +869,13 @@ async function getAPI(page, getContents, username = undefined) {
         else {
             properties = [];
         }
-        if (tags.tag) {
+        if (tags && tags.tag) {
             tags = tags.tag.length ? tags.tag : [tags.tag];
         }
         else {
             tags = []
         }
-        if (files.file) {
+        if (files && files.file) {
             files = files.file.length ? files.file : [files.file];
             files = files.map((file) => {
                 return {
