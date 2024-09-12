@@ -87,7 +87,10 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
         if (arbitraryPage)
             return await fetch(path, options);
         else
-            return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+            return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options).catch((error) => {
+                console.error(error);
+                return error
+            })
     }
     else {
         const user = "=" + username;
@@ -101,9 +104,15 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
         options = optionsMerge({'x-deki-token': token}, options);
         
         if (arbitraryPage)
-            return await fetch(path, options);
+            return await fetch(path, options).catch((error) => {
+                console.error(error);
+                return error
+            });
         else
-            return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options);
+            return await fetch(`https://${subdomain}.libretexts.org/@api/deki/pages/${isNumber ? '' : '='}${encodeURIComponent(encodeURIComponent(path))}${api}`, options).catch((error) => {
+                console.error(error);
+                return error
+            });
     }
     
     function optionsMerge(headers, options) {
@@ -943,8 +952,9 @@ async function getTOC(rootURL, username) {
                 page.subdomain,
                 username,
             );
-            res = await res.json();
-            return res?.page ?? null;
+            const resData = await res.json();
+            console.log(resData)
+            return resData?.page ?? null;
         } catch (err) {
             console.error(err);
             return null;
@@ -996,10 +1006,7 @@ async function getTOC(rootURL, username) {
         return pagesArr;
     }
 
-    const rawTOC = await getRawTOC(coverpageData).catch((e) => {
-        console.error(e);
-        return null;
-    });
+    const rawTOC = await getRawTOC(coverpageData);
     if (!rawTOC) return null;
     const structured = buildHierarchy(rawTOC);
     const flat = flatHierarchy(structured);
