@@ -858,6 +858,8 @@ async function getAPI(page, getContents, username = undefined) {
     // page.response = response;
     if (response.ok) {
         response = await response.json();
+        if (!response) return null; // return null if empty response
+        
         let {properties, tags, files} = response;
         if (properties && properties['@count'] !== '0' && properties.property) {
             properties = properties.property.length ? properties.property : [properties.property]
