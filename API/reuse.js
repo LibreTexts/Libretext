@@ -93,6 +93,7 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
             })
     }
     else {
+        console.log('USING SERVER AUTH')
         const user = "=" + username;
         const crypto = require('crypto');
         const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
