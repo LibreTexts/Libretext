@@ -900,7 +900,7 @@ async function getAPI(page, getContents, username = undefined) {
         page.properties = page.properties || properties;
         page.subdomain = subdomain;
         page.files = page.files || files;
-        page.path = response.path['#text'];
+        page.path = response.path ? response.path['#text'] : path;
         page.modified = new Date(response['date.modified']);
         page.content = response.content;
         if (response['page.parent'])
