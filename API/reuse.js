@@ -936,14 +936,19 @@ async function getTOC(rootURL, username) {
     const coverpageData = await getAPI(rootURL, false, username);
 
     async function getRawTOC(page) {
-        let res = await authenticatedFetch(
-            page.id,
-            'tree?dream.out.format=json&include=properties,lastmodified',
-            page.subdomain,
-            username,
-        );
-        res = await res.json();
-        return res?.page ?? null;
+        try {
+            let res = await authenticatedFetch(
+                page.id,
+                'tree?dream.out.format=json&include=properties,lastmodified',
+                page.subdomain,
+                username,
+            );
+            res = await res.json();
+            return res?.page ?? null;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
     }
 
     function buildHierarchy(page, parentID) {
@@ -991,7 +996,10 @@ async function getTOC(rootURL, username) {
         return pagesArr;
     }
 
-    const rawTOC = await getRawTOC(coverpageData);
+    const rawTOC = await getRawTOC(coverpageData).catch((e) => {
+        console.error(e);
+        return null;
+    });
     if (!rawTOC) return null;
     const structured = buildHierarchy(rawTOC);
     const flat = flatHierarchy(structured);
