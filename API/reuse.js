@@ -93,7 +93,6 @@ async function authenticatedFetch(path, api, subdomain, username, options = {}) 
             })
     }
     else {
-        console.log('USING SERVER AUTH')
         const user = "=" + username;
         const crypto = require('crypto');
         const hmac = crypto.createHmac('sha256', authen[subdomain].secret);
@@ -954,7 +953,6 @@ async function getTOC(rootURL, username) {
                 username,
             );
             const resData = await res.json();
-            console.log(resData)
             return resData?.page ?? null;
         } catch (err) {
             console.error(err);
