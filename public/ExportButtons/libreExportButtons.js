@@ -20,6 +20,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const ID_COMMONS_PEERREVIEW_BTN = 'libre-commons-peerreview-btn';
   const ID_COMMONS_ADAPT_BTN = 'libre-commons-adapt-btn';
   const ID_COMMONS_MATERIALS_BTN = 'libre-commons-materials-btn';
+  const ID_CONDUCTOR_PROJECT_BTN = 'libre-conductor-project-btn';
 
   const CLASS_DROPDOWN = 'libre-dropdown';
   const CLASS_DROPDOWN_BTN = 'libre-dropdown-btn';
@@ -99,6 +100,50 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     }
     return null;
   };
+
+  const getBookProjectID = async () => {
+    try {
+      if(!currentCoverpage){
+        await loadCoverpage();
+      }
+      if(currentCoverpage){
+        const projectInfoAvailable = new Event('libre-projectinfoavailable', {
+          cancelable: true,
+        });
+
+        // Check local storage for projectID first
+        const projectID = localStorage.getItem(`projectID-${currentSubdomain}-${currentCoverpage.id}`);
+        if(projectID){
+          LibreTexts.current.projectID = projectID;
+          window.dispatchEvent(projectInfoAvailable);
+          return projectID;
+        }
+
+        // If not found in local storage, fetch from conductor
+        const conductorRes = await fetch(
+          `https://commons.libretexts.org/api/v1/project/find-by-book/${currentSubdomain}-${currentCoverpage.id}`,
+          { headers: { 'X-Requested-With': 'XMLHttpRequest' } },
+        );
+
+        if(conductorRes.status === 200){
+          const projectData = await conductorRes.json();
+          const projectID = projectData.projectID;
+          LibreTexts.current.projectID = projectID;
+          window.dispatchEvent(projectInfoAvailable);
+
+          // Save projectID to local storage
+          if(projectID){
+            localStorage.setItem(`projectID-${currentSubdomain}-${currentCoverpage.id}`, projectID);
+          }
+
+          return projectID;
+        }
+      }
+    } catch (e) {
+      console.error(`[ExportButtons]: ${e.toString()}`);
+    }
+    return null;
+  }
 
   /**
    * Attempts to retrieve download availability information from the systemwide downloads listings.
@@ -785,6 +830,34 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         document.body.append(donorBoxScript);
       }
 
+      const conductorProjectID = await getBookProjectID();
+      if(conductorProjectID){
+        /* Add Conductor Project button */
+        const conductorButton = document.createElement('button');
+        Object.assign(conductorButton, {
+          id: ID_CONDUCTOR_PROJECT_BTN,
+          ariaLabel: 'View Conductor Project (opens in new tab)',
+          title: 'View Conductor Project (opens in new tab)',
+          type: 'button',
+          target: '_blank',
+          rel: 'noreferrer',
+          href: 'https://conductor.libretexts.org',
+        });
+
+        const openConductorProject = (e) => {
+          e.preventDefault();
+          window.open(`https://commons.libretexts.org/projects/${conductorProjectID}`, '_blank', 'noreferrer');
+        }
+
+        conductorButton.addEventListener('click', openConductorProject);
+        conductorButton.addEventListener('keydown', (e) => {
+          if (e.key === ENTER_KEY) openConductorProject(e);
+        });
+
+        conductorButton.appendChild(document.createTextNode('Conductor Project'));
+        exportContainer.appendChild(conductorButton);
+      }
+
       /* Styles */
       const commonButtonStyles = `
         color: #FFFFFF !important;
@@ -917,6 +990,13 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           ${commonButtonStyles}
         }
         #${ID_COMMONS_MATERIALS_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
+        }
+        #${ID_CONDUCTOR_PROJECT_BTN}, #${ID_CONDUCTOR_PROJECT_BTN} {
+          background-color: #2441E7 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_CONDUCTOR_PROJECT_BTN}:focus {
           border: 3px solid #30B3F6 !important;
         }
       </style>
