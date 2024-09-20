@@ -831,7 +831,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       }
 
       const conductorProjectID = await getBookProjectID();
-      if(conductorProjectID){
+      if(conductorProjectID && isPro){
         /* Add Conductor Project button */
         const conductorButton = document.createElement('button');
         Object.assign(conductorButton, {
