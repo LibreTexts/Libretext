@@ -21,6 +21,7 @@ const JSZip = require('jszip');
 const he = require('he');
 const convert = require('xml-js');
 const { MongoClient } = require('mongodb');
+const { RateLimiterMemory } = require("rate-limiter-flexible");
 const baseIMG = require('./baseIMG.js');
 const styles = require('./styles.js');
 const colors = require('./colors');
@@ -44,6 +45,25 @@ let Gserver;
 let keys;
 const maxAge = 100; // in days
 const maxFreshAge = 60; // in days
+
+const cxOneRateLimiter = new RateLimiterMemory({
+    duration: process.env.CXONE_RATE_LIMITER_DURATION ?? 60,
+    keyPrefix: 'cxone',
+    points: process.env.CXONE_RATE_LIMITER_POINTS ?? 800,
+});
+const waitUntilCXOneAPIAvailable = async (points = 1) => {
+    let retry = true;
+    while (retry) {
+        try {
+            await cxOneRateLimiter.consume('cxone', points);
+            retry = false;
+        } catch (e) {
+            const waitTime = e.msBeforeNext;
+            console.warn(`CXone rate limit exceeded. Retrying in ${waitTime} ms.`);
+            await sleep(waitTime);
+        }
+    }
+};
 
 puppeteer.launch({
     args: [
@@ -975,6 +995,7 @@ puppeteer.launch({
           try { 
             page.on('dialog', pptrDialogHandler);
             page.on('request', pptrRequestHandler);
+            await waitUntilCXOneAPIAvailable(2);
             await page.goto(`${url}?no-cache`, pptrPageLoadSettings);
           } catch (err) {
             console.error(err);
@@ -1236,6 +1257,7 @@ puppeteer.launch({
             
             try {
                 let renderPDF = new Promise(async (resolve, reject) => {
+                    await waitUntilCXOneAPIAvailable(2);
                     timeout = setTimeout(() => reject(new Error(`Render Timeout Reached  ${url}`)), 200000);
                     try {
                         page.on('dialog', pptrDialogHandler);
@@ -1930,6 +1952,7 @@ function authenticate(user, subdomain) {
 }
 
 async function authenticatedFetch(path, api, subdomain, username, options = {}) {
+    await waitUntilCXOneAPIAvailable();
     let isNumber;
     
     let arbitraryPage = !api && !subdomain && path.startsWith('https://');
@@ -1992,7 +2015,8 @@ async function getGroups(subdomain) {
     if (typeof getGroups.groups[subdomain] !== "undefined" && getGroups.groups[subdomain].length) { //reuse old data
         return getGroups.groups[subdomain];
     }
-    
+
+    await waitUntilCXOneAPIAvailable();
     groups = await LibreTexts.authenticatedFetch(`https://${subdomain}.libretexts.org/@api/deki/groups?dream.out.format=json`, null, null, 'LibreBot');
     
     groups = await groups.json();
@@ -2105,6 +2129,7 @@ async function getSubpagesFull(rootURL) { //More performant for entire libraries
     return full;
     
     async function getSitemap() {
+        await waitUntilCXOneAPIAvailable();
         let map = await fetch(`https://${subdomain}.libretexts.org/sitemap.xml`);
         if (map.ok) {
             map = await map.text();

@@ -27,6 +27,7 @@
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
     "puppeteer": "^8.0.0",
+    "rate-limiter-flexible": "^5.0.4",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
