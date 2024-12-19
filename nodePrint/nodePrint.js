@@ -864,7 +864,7 @@ puppeteer.launch({
                 else if (options.isHardcover) {
                     let result = '';
                     for (let number in sizes) {
-                        if (numPages >= parseInt(number)) {
+                        if (numPages > parseInt(number)) {
                             result = sizes[parseInt(number)];
                         }
                     }
