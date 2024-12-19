@@ -47,6 +47,7 @@ class Remixer extends React.Component {
 			swapDialog: false,
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
+			useDemonstration: false,
 		};
 		let state = defaultState;
 		
@@ -146,6 +147,14 @@ class Remixer extends React.Component {
 			});
 		}
 	};
+
+	handleSignIn = (e) => {
+		window.LibreTextsLoginCAS(e);
+	};
+
+	handleUseDemonstration = () => {
+		this.setState({ useDemonstration: true });
+	};
 	
 	// handleSwap = (doSwap) => {
 	// 	let result = {swapDialog: false};
@@ -188,6 +197,25 @@ class Remixer extends React.Component {
 				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`} placement="right">
 					<Info/>
 				</Tooltip></div>
+				{this.state.permission === 'Demonstration' && !this.state.useDemonstration && (
+					<Dialog open onBackdropClick={this.handleUseDemonstration}>
+						<DialogTitle>Demonstration Mode</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								It looks like you're not signed in to this library yet. Please sign in to save your changes.
+								Or, you can continue exploring the Remixer in Demonstration Mode.
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={this.handleUseDemonstration}>
+								Use Demonstration Mode
+							</Button>
+							<Button onClick={this.handleSignIn}>
+								Sign In
+							</Button>
+						</DialogActions>
+					</Dialog>
+				)}
 				{this.state.permission !== 'Demonstration' ?
 						<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
 							<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
