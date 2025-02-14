@@ -1037,6 +1037,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           border: 3px solid #30B3F6 !important;
         }
         .${CLASS_BUY_PRINT_COPY_BTN} {
+          display: inline-block !important;
           background-color: #57116A !important;
         ${commonButtonStyles}
         }
