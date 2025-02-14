@@ -714,7 +714,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
           // Create the span element for the icon
           const iconSpan = document.createElement('span');
-          iconSpan.classList.add('mt-icon-book2'); // Add the icon class
+          iconSpan.classList.add('mt-icon-book2', `${CLASS_BUY_PRINT_COPY_BTN}-icon-span`); // Add the icon class
           iconSpan.setAttribute('aria-hidden', 'true');
 
           // Create the text node
@@ -857,7 +857,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
         // Create the span element for the icon
         const donateIconSpan = document.createElement('span');
-        donateIconSpan.classList.add('mt-icon-support-hands'); // Add the icon class
+        donateIconSpan.classList.add('mt-icon-support-hands', '.donate-icon-span'); // Add the icon class
         donateIconSpan.setAttribute('aria-hidden', 'true');
         donorBoxLink.appendChild(donateIconSpan);
 
@@ -924,7 +924,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       const dropdownOptionsStyles = `
         width: 150px !important;
         border: none !important;
-        border-radius: 0 !important;
+        border-radius: 0.25em !important;
         box-shadow: none !important;
         color: #FFFFFF !important;
         height: 40px !important;
@@ -1055,6 +1055,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           padding: 8px !important;
           height: 19px !important;
           box-shadow: none !important;
+          gap: 6px !important;
+        }
+        .${CLASS_BUY_PRINT_COPY_BTN}-icon-span {
+          padding-top: 3px
         }
         #donate {
           padding: 8px !important;
@@ -1062,7 +1066,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           height: 19px !important;
           gap: 6px !important;
         }
-        #donate-icon-span {
+        .donate-icon-span {
           padding-top: 3px
         }
       </style>
