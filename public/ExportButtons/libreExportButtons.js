@@ -699,15 +699,18 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
         /* Also add "Buy Print Copy" as a standalone button */
         if(downloadEntry.zipFilename){
-          const buyPrintCopyButton = document.createElement('button');
-          Object.assign(buyPrintCopyButton, {
-            id: 'buyPrintCopy',
+          const buyPrintCopyLink = document.createElement('a');
+          Object.assign(buyPrintCopyLink, {
             title: 'Buy Print Copy (opens in new tab)',
-            type: 'button',
-            tabIndex: 0,
+            href: bookstoreURL,
+            target: '_blank',
+            rel: 'noreferrer',
+            classList: CLASS_BUY_PRINT_COPY_BTN,
+            id: 'buyPrintCopy',
+            ariaLabel: 'Buy Print Copy',
           });
 
-          buyPrintCopyButton.classList.add(CLASS_BUY_PRINT_COPY_BTN);
+          buyPrintCopyLink.classList.add(CLASS_BUY_PRINT_COPY_BTN);
 
           // Create the span element for the icon
           const iconSpan = document.createElement('span');
@@ -718,14 +721,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           const buttonText = document.createTextNode(' Buy Print Copy'); // Space for separation
 
           // Append icon and text to the button
-          buyPrintCopyButton.appendChild(iconSpan);
-          buyPrintCopyButton.appendChild(buttonText);
+          buyPrintCopyLink.appendChild(iconSpan);
+          buyPrintCopyLink.appendChild(buttonText);
 
-          buyPrintCopyButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.open(bookstoreURL, '_blank', 'noreferrer');
-          });
-          exportContainer.appendChild(buyPrintCopyButton);
+          exportContainer.appendChild(buyPrintCopyLink);
         }
       }
 
@@ -854,8 +853,18 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           classList: `${CLASS_DONORBOX_LINK} notSS`,
           id: 'donate',
           ariaLabel: 'Donate to LibreTexts (opens in modal)',
+          style: 'border-radius: 0.25em !important;',
         });
-        donorBoxLink.appendChild(document.createTextNode('Donate'));
+
+        // Create the span element for the icon
+        const donateIconSpan = document.createElement('span');
+        donateIconSpan.classList.add('mt-icon-support-hands'); // Add the icon class
+        donateIconSpan.setAttribute('aria-hidden', 'true');
+        donorBoxLink.appendChild(donateIconSpan);
+
+        // Create the text node
+        donorBoxLink.appendChild(document.createTextNode(' Donate')); // Space for separation
+
         exportContainer.appendChild(donorBoxLink);
         window.DonorBox = { widgetLinkClassName: CLASS_DONORBOX_LINK };
         const donorBoxScript = document.createElement('script');
