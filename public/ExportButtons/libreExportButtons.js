@@ -853,7 +853,6 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           classList: `${CLASS_DONORBOX_LINK} notSS`,
           id: 'donate',
           ariaLabel: 'Donate to LibreTexts (opens in modal)',
-          style: 'border-radius: 0.25em !important;',
         });
 
         // Create the span element for the icon
@@ -1046,9 +1045,25 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           border: 3px solid #30B3F6 !important;
         }
         .${CLASS_BUY_PRINT_COPY_BTN} {
-          display: inline-block !important;
           background-color: #57116A !important;
-        ${commonButtonStyles}
+          color: #FFFFFF !important;
+          border: none !important;
+          border-radius: 0.25em !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          padding: 8px !important;
+          height: 19px !important;
+          box-shadow: none !important;
+        }
+        #donate {
+          padding: 8px !important;
+          border-radius: 0.25em !important;
+          height: 19px !important;
+          gap: 6px !important;
+        }
+        #donate-icon-span {
+          padding-top: 3px
         }
       </style>
     `);
