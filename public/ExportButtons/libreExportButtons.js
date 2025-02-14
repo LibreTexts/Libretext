@@ -29,6 +29,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const CLASS_BUTTON_ICON_TEXT = 'libre-icon-btn-text';
   const CLASS_DROPDOWN_OPEN_STATE = 'dropdown-open';
   const CLASS_DONORBOX_LINK = 'libretexts-dbox-popup';
+  const CLASS_BUY_PRINT_COPY_BTN = 'libre-buy-print-copy-btn';
 
   let currentCoverpage = null;
   let currentSubdomain = null;
@@ -660,7 +661,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
             {
               key: 'bookstore',
               text: 'Buy Print Copy',
-              title: 'Buy Paper Copy (opens in new tab)',
+              title: 'Buy Print Copy (opens in new tab)',
               href: bookstoreURL,
               icon: 'mt-icon-book2',
             }              
@@ -705,8 +706,21 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
             type: 'button',
             tabIndex: 0,
           });
-          buyPrintCopyButton.classList.add(CLASS_DROPDOWN_BTN);
-          buyPrintCopyButton.appendChild(document.createTextNode('Buy Print Copy'));
+
+          buyPrintCopyButton.classList.add(CLASS_BUY_PRINT_COPY_BTN);
+
+          // Create the span element for the icon
+          const iconSpan = document.createElement('span');
+          iconSpan.classList.add('mt-icon-book2'); // Add the icon class
+          iconSpan.setAttribute('aria-hidden', 'true');
+
+          // Create the text node
+          const buttonText = document.createTextNode(' Buy Print Copy'); // Space for separation
+
+          // Append icon and text to the button
+          buyPrintCopyButton.appendChild(iconSpan);
+          buyPrintCopyButton.appendChild(buttonText);
+
           buyPrintCopyButton.addEventListener('click', (e) => {
             e.preventDefault();
             window.open(bookstoreURL, '_blank', 'noreferrer');
@@ -1021,6 +1035,10 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }
         #${ID_CONDUCTOR_PROJECT_BTN}:focus {
           border: 3px solid #30B3F6 !important;
+        }
+        .${CLASS_BUY_PRINT_COPY_BTN} {
+          background-color: #57116A !important;
+        ${commonButtonStyles}
         }
       </style>
     `);
