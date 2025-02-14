@@ -631,6 +631,9 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         if (downloadEntry.zipFilename) {
           linkRoot = `${linkRoot}/${downloadEntry.zipFilename.replace('/Full.pdf', '')}`;
         }
+
+        const bookstoreURL = `https://libretexts.org/bookstore/order?${downloadEntry.zipFilename}`;
+
         const downloadOptions = [
           {
             key: 'full',
@@ -653,13 +656,15 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
             href: `${linkRoot}/Individual.zip`,
             icon: 'mt-icon-file-zip',
           },
-          {
-            key: 'bookstore',
-            text: 'Buy Print Copy',
-            title: 'Buy Paper Copy (opens in new tab)',
-            href: `https://libretexts.org/bookstore/order?${downloadEntry.zipFilename}`,
-            icon: 'mt-icon-book2',
-          },
+          ...(downloadEntry.zipFilename && [
+            {
+              key: 'bookstore',
+              text: 'Buy Print Copy',
+              title: 'Buy Paper Copy (opens in new tab)',
+              href: bookstoreURL,
+              icon: 'mt-icon-book2',
+            }              
+          ]),
           {
             key: 'publication',
             text: 'Print Book Files',
@@ -690,6 +695,24 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           dropdownOptsBtnTxtClass: CLASS_BUTTON_ICON_TEXT,
           dropdownOptions: downloadOptions,
         }));
+
+        /* Also add "Buy Print Copy" as a standalone button */
+        if(downloadEntry.zipFilename){
+          const buyPrintCopyButton = document.createElement('button');
+          Object.assign(buyPrintCopyButton, {
+            id: 'buyPrintCopy',
+            title: 'Buy Print Copy (opens in new tab)',
+            type: 'button',
+            tabIndex: 0,
+          });
+          buyPrintCopyButton.classList.add(CLASS_DROPDOWN_BTN);
+          buyPrintCopyButton.appendChild(document.createTextNode('Buy Print Copy'));
+          buyPrintCopyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(bookstoreURL, '_blank', 'noreferrer');
+          });
+          exportContainer.appendChild(buyPrintCopyButton);
+        }
       }
 
       /* LibreCommons tools/buttons */
