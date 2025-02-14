@@ -899,7 +899,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       const commonButtonStyles = `
         color: #FFFFFF !important;
         border: none !important;
-        border-radius: 0;
+        border-radius: 0.25em !important;
         display: flex;
         flex-direction: column;
         align-items: center;
