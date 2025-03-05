@@ -35,6 +35,12 @@ class ReRemixerPanel extends React.Component {
     
     async componentDidMount() {
         const LTLeft = $('#LTLeft');
+        // check if fancy tree is loaded
+        if (!LTLeft.fancytree) {
+            console.error('Fancytree not loaded');
+            return;
+        }
+        
         let LeftAlert = $('#LTLeftAlert');
         LeftAlert.text(`Loading ${name}`);
         LeftAlert.slideDown();

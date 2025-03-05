@@ -96,7 +96,7 @@ function scheduleCommonsLibrarySync() {
  * Adds the scheduler job to sync LibreCommons with LibreTexts homework/assessment systems.
  */
 function scheduleCommonsHomeworkSync() {
-  scheduler.scheduleJob('commons-homework', '30 0 * * *', () => {
+  scheduler.scheduleJob('commons-homework', '0 6 * * *', () => {
     try {
       console.log('Running LibreCommons Homework Sync');
       fetch('https://commons.libretexts.org/api/v1/commons/homework/sync/automated', {
