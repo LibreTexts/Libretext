@@ -35,6 +35,7 @@ const {
     dynamicLicensingLayout,
     dynamicDetailedLicensingLayout,
 } = require('./defaults.js');
+const pdfPostProcessor = require('./pdfPostProcessor.js');
 // const merge = util.promisify(require('./PDFMerger.js'));
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
@@ -113,21 +114,18 @@ puppeteer.launch({
         Gserver = server;
 
         const viewportSettings = { width: 975, height: 1000 };
-        const pptrPageTimeout = 60000;
+        const pptrPageTimeout = 120000;
         const pptrPageLoadSettings = {
           timeout: pptrPageTimeout,
           waitUntil: ['load', 'domcontentloaded', 'networkidle0']
-        }
+        };
 
         const pptrRequestHandler = (pptrReq) => {
           if (Array.isArray(ignoreList?.list)) {
-            let i = 0;
-            const listLen = ignoreList.list.length;
-            while (i < listLen) {
-              if (pptrReq.url().indexOf(ignoreList.list[i]) !== -1) {
+            const pptrURL = pptrReq.url();
+            const foundURL = ignoreList.list.find((u) => pptrURL.includes(u));
+            if (foundURL) {
                 return pptrReq.abort();
-              }
-              i += 1;
             }
           }
           return pptrReq.continue();
@@ -1841,6 +1839,14 @@ puppeteer.launch({
                     }
                 } catch (e) {
                     console.error(`Error saving log of private pages ${zipFilename}`);
+                    console.error(e);
+                }
+
+                // postprocess PDFs
+                try {
+                    await pdfPostProcessor(`./PDF/Letter/Finished/${zipFilename}`);
+                } catch (e) {
+                    console.error(`Error performing PDF postprocess ${zipFilename}`);
                     console.error(e);
                 }
 
