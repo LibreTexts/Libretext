@@ -480,6 +480,9 @@ and (max-device-width : 1024px)  {
 
 @media only screen and (max-width: 1335px) {
   #elm-main-content {
+    padding-left: 50px !important;
+  }
+  #elm-header {
     padding-left: 30px !important;
   }
 }
