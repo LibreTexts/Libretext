@@ -1142,7 +1142,7 @@ puppeteer.launch({
         </resource>`;
                             zip.file(`${identifier}_F.xml`,
                                 `<?xml version="1.0" encoding="UTF-8"?>
-<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http: //www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
+<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
 	<title>${escapeTitle(resource.title)}</title>
 	<url href="${resource.url.replace(/%3F/g, '%253F')}" target="_iframe"/>
 </webLink>`);
