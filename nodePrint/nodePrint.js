@@ -35,6 +35,7 @@ const {
     dynamicLicensingLayout,
     dynamicDetailedLicensingLayout,
 } = require('./defaults.js');
+const pdfPostProcessor = require('./pdfPostProcessor.js');
 // const merge = util.promisify(require('./PDFMerger.js'));
 const authen = require('./authen.json');
 const authenBrowser = require('./authenBrowser.json');
@@ -113,21 +114,18 @@ puppeteer.launch({
         Gserver = server;
 
         const viewportSettings = { width: 975, height: 1000 };
-        const pptrPageTimeout = 60000;
+        const pptrPageTimeout = 120000;
         const pptrPageLoadSettings = {
           timeout: pptrPageTimeout,
           waitUntil: ['load', 'domcontentloaded', 'networkidle0']
-        }
+        };
 
         const pptrRequestHandler = (pptrReq) => {
           if (Array.isArray(ignoreList?.list)) {
-            let i = 0;
-            const listLen = ignoreList.list.length;
-            while (i < listLen) {
-              if (pptrReq.url().indexOf(ignoreList.list[i]) !== -1) {
+            const pptrURL = pptrReq.url();
+            const foundURL = ignoreList.list.find((u) => pptrURL.includes(u));
+            if (foundURL) {
                 return pptrReq.abort();
-              }
-              i += 1;
             }
           }
           return pptrReq.continue();
@@ -787,7 +785,7 @@ puppeteer.launch({
                     '501': 1.4375,
                     '529': 1.5,
                     '557': 1.5625,
-                    '583': 1.625,
+                    '582': 1.625,
                     '611': 1.6875,
                     '639': 1.75,
                     '667': 1.8125,
@@ -837,14 +835,14 @@ puppeteer.launch({
                     '307': 1,
                     '335': 1.0625,
                     '361': 1.125,
-                    '389': 1.1875,
+                    '388': 1.1875,
                     '417': 1.25,
                     '445': 1.3125,
                     '473': 1.375,
                     '501': 1.4375,
                     '529': 1.5,
                     '557': 1.5625,
-                    '583': 1.625,
+                    '582': 1.625,
                     '611': 1.6875,
                     '639': 1.75,
                     '667': 1.8125,
@@ -1144,7 +1142,7 @@ puppeteer.launch({
         </resource>`;
                             zip.file(`${identifier}_F.xml`,
                                 `<?xml version="1.0" encoding="UTF-8"?>
-<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http: //www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
+<webLink xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imswl_v1p1 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_imswl_v1p1.xsd">
 	<title>${escapeTitle(resource.title)}</title>
 	<url href="${resource.url.replace(/%3F/g, '%253F')}" target="_iframe"/>
 </webLink>`);
@@ -1841,6 +1839,14 @@ puppeteer.launch({
                     }
                 } catch (e) {
                     console.error(`Error saving log of private pages ${zipFilename}`);
+                    console.error(e);
+                }
+
+                // postprocess PDFs
+                try {
+                    await pdfPostProcessor(`./PDF/Letter/Finished/${zipFilename}`);
+                } catch (e) {
+                    console.error(`Error performing PDF postprocess ${zipFilename}`);
                     console.error(e);
                 }
 

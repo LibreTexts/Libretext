@@ -19,6 +19,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Info from "@material-ui/icons/Info";
 import {withSnackbar} from "notistack";
 import DemoEnd from "./DemoEnd";
+import WarningIcon from "@material-ui/icons/Warning"
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 class Remixer extends React.Component {
 	constructor(props) {
@@ -48,6 +50,7 @@ class Remixer extends React.Component {
 			RemixTree: RemixerFunctions.generateDefault(5, 0),
 			currentlyActive: '',
 			useDemonstration: false,
+			missingParams: true
 		};
 		let state = defaultState;
 		
@@ -77,6 +80,16 @@ class Remixer extends React.Component {
 			localStorage.setItem('lastRemixerAutosave', JSON.stringify(this.state));
 			console.log('Shutting down Remixer!');
 		})
+	}
+
+	componentDidMount() {
+		// Check if remixURL param was passed in the URL
+		const searchStr = window.location.search;
+		const params = new URLSearchParams(searchStr);
+		const remixURL = params.get('remixURL');
+		if(remixURL) {
+			this.setState({missingParams: false});
+		}
 	}
 	
 	updateRemixer = (newState, updateUndo) => {
@@ -191,45 +204,94 @@ class Remixer extends React.Component {
 				default: grey,
 			},
 		});
-		return <ThemeProvider theme={theme}>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-			<div className="navigationBar">
-				<div style={{flex: 1}}><Tooltip title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`} placement="right">
-					<Info/>
-				</Tooltip></div>
-				{this.state.permission === 'Demonstration' && !this.state.useDemonstration && (
-					<Dialog open onBackdropClick={this.handleUseDemonstration}>
-						<DialogTitle>Demonstration Mode</DialogTitle>
-						<DialogContent>
-							<DialogContentText>
-								It looks like you're not signed in to this library yet. Please sign in to save your changes.
-								Or, you can continue exploring the Remixer in Demonstration Mode.
-							</DialogContentText>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={this.handleUseDemonstration}>
-								Use Demonstration Mode
-							</Button>
-							<Button onClick={this.handleSignIn}>
-								Sign In
-							</Button>
-						</DialogActions>
-					</Dialog>
-				)}
-				{this.state.permission !== 'Demonstration' ?
-						<Tooltip title={'Loads an autosave from when you last closed the Remixer'}>
-							<div style={{flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
-								<Button variant="contained" onClick={this.loadAutosave}
-								        disabled={!localStorage.getItem('lastRemixerAutosave')}>
-									Load from previous session</Button>
-							</div>
-						</Tooltip>
-					: null}
-			</div>
-			
-			{this.renderState()}
-			
-			{/* <Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.mode} onClose={this.handleSwap}
+		return (
+      <ThemeProvider theme={theme}>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        {this.state.missingParams && (
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+			  backgroundColor: "#ffc107",
+			  borderRadius: 5,
+			  padding: 10,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", flexDirection: "row"}}>
+              <WarningIcon style={{ color: "white" }} />
+              <p style={{marginLeft: 10, fontSize: 16}}>
+                Did you mean to access this page directly? Use
+                the "OER Remixer" link on your project's Conductor page to
+                access the Remixer. Otherwise, you may not be able to save your
+                work.
+              </p>
+            </div>
+            <Button
+              variant="contained"
+              onClick={() => {
+				window.open("https://conductor.libretexts.org", "_blank")
+			  }}
+			  style={{whiteSpace: "nowrap", paddingLeft: 30, paddingRight: 30}}
+            >
+              <span>Go to Conductor</span>
+              <OpenInNewIcon style={{ marginLeft: 10 }} />
+            </Button>
+          </div>
+        )}
+        <div className="navigationBar">
+          <div style={{ flex: 1 }}>
+            <Tooltip
+              title={`Version ${new Date("REPLACEWITHDATE")}\nMade with ❤`}
+              placement="right"
+            >
+              <Info />
+            </Tooltip>
+          </div>
+          {this.state.permission === "Demonstration" &&
+            !this.state.useDemonstration && (
+              <Dialog open onBackdropClick={this.handleUseDemonstration}>
+                <DialogTitle>Demonstration Mode</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    It looks like you're not signed in to this library yet.
+                    Please sign in to save your changes. Or, you can continue
+                    exploring the Remixer in Demonstration Mode.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleUseDemonstration}>
+                    Use Demonstration Mode
+                  </Button>
+                  <Button onClick={this.handleSignIn}>Sign In</Button>
+                </DialogActions>
+              </Dialog>
+            )}
+          {this.state.permission !== "Demonstration" ? (
+            <Tooltip
+              title={"Loads an autosave from when you last closed the Remixer"}
+            >
+              <div
+                style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={this.loadAutosave}
+                  disabled={!localStorage.getItem("lastRemixerAutosave")}
+                >
+                  Load from previous session
+                </Button>
+              </div>
+            </Tooltip>
+          ) : null}
+        </div>
+
+        {this.renderState()}
+
+        {/* <Dialog open={this.state.swapDialog && this.state.swapDialog !== this.state.mode} onClose={this.handleSwap}
 			        aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Want to swap Remixer modes?</DialogTitle>
 				<DialogContent>
@@ -248,7 +310,8 @@ class Remixer extends React.Component {
 					</Button>
 				</DialogActions>
 			</Dialog> */}
-		</ThemeProvider>;
+      </ThemeProvider>
+    );
 	}
 	
 	renderState() {
