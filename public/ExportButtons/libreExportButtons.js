@@ -16,16 +16,20 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const ID_DWNLD_DROPDOWN_BTN = 'libre-dwnld-dropdown-btn';
   const ID_PDF_DROPDOWN_CONTENT = 'libre-pdf-dropdown-content';
   const ID_DWNLD_DROPDOWN_CONTENT = 'libre-dwnld-dropdown-content';
+  const ID_REVIEW_DROPDOWN_BTN = 'libre-review-dropdown-btn';
+  const ID_REVIEW_DROPDOWN_CONTENT = 'libre-review-dropdown-content';
   const ID_COMMONS_ADOPTIONREPORT_BTN = 'libre-commons-adoptionreport-btn';
   const ID_COMMONS_PEERREVIEW_BTN = 'libre-commons-peerreview-btn';
   const ID_COMMONS_ADAPT_BTN = 'libre-commons-adapt-btn';
   const ID_COMMONS_MATERIALS_BTN = 'libre-commons-materials-btn';
+  const ID_COMMONS_BTN = 'libre-commons-btn';
   const ID_CONDUCTOR_PROJECT_BTN = 'libre-conductor-project-btn';
 
   const CLASS_DROPDOWN = 'libre-dropdown';
   const CLASS_DROPDOWN_BTN = 'libre-dropdown-btn';
   const CLASS_PDF_DROPDOWN_ITEM = 'libre-pdf-dropdown-item';
   const CLASS_DWNLD_DROPDOWN_ITEM = 'libre-dwnld-dropdown-item';
+  const CLASS_REVIEW_DROPDOWN_ITEM = 'libre-review-dropdown-item';
   const CLASS_BUTTON_ICON_TEXT = 'libre-icon-btn-text';
   const CLASS_DROPDOWN_OPEN_STATE = 'dropdown-open';
   const CLASS_DONORBOX_LINK = 'libretexts-dbox-popup';
@@ -780,35 +784,41 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           window.open(`${commonsURL}?materials=show`, '_blank', 'noreferrer');
         };
 
-        const adoptionReportButton = document.createElement('button');
-        Object.assign(adoptionReportButton, {
-          id: ID_COMMONS_ADOPTIONREPORT_BTN,
-          title: 'Submit an Adoption Report for this text (opens in new tab)',
-          type: 'button',
-          tabIndex: 0,
-        });
-        adoptionReportButton.appendChild(document.createTextNode('Submit Adoption Report'));
-        adoptionReportButton.addEventListener('click', openAdoptionReport);
-        adoptionReportButton.addEventListener('keydown', (e) => {
-          if (e.key === ENTER_KEY) openAdoptionReport(e);
-        });
-        exportContainer.appendChild(adoptionReportButton);
 
-        if (commonsEntry.hasPeerReviews || commonsEntry.allowAnonPR) {
-          const peerReviewButton = document.createElement('button');
-          Object.assign(peerReviewButton, {
-            id: ID_COMMONS_PEERREVIEW_BTN,
-            title: 'Submit a Peer Review (opens in new tab)',
-            type: 'button',
-            tabIndex: 0,
-          });
-          peerReviewButton.appendChild(document.createTextNode('Peer Review'));
-          peerReviewButton.addEventListener('click', openPeerReview);
-          peerReviewButton.addEventListener('keydown', (e) => {
-            if (e.key === ENTER_KEY) openPeerReview(e);
-          });
-          exportContainer.appendChild(peerReviewButton);
+        const reviewOptions = [{
+          text: 'Submit Adoption Report',
+          title: 'Submit an Adoption Report for this text (opens in new tab)',
+          listener: (e) => {
+            e.preventDefault();
+            openAdoptionReport(e);
+          },
+          icon: "mt-icon-user-activity"
+        }];
+
+        if(commonsEntry.hasPeerReviews || commonsEntry.allowAnonPR){
+          reviewOptions.push({
+            text: 'Submit a Peer Review',
+            title: 'Submit a Peer Review for this text (opens in new tab)',
+            listener: (e) => {
+              e.preventDefault();
+              openPeerReview(e);
+            },
+            icon: "mt-icon-support-man"
+          })
         }
+
+        exportContainer.appendChild(createDropdown({
+          dropdownClass: CLASS_DROPDOWN,
+          dropdownBtnId: ID_REVIEW_DROPDOWN_BTN,
+          dropdownBtnClass: CLASS_REVIEW_DROPDOWN_ITEM,
+          dropdownBtnTitle: 'Review & Adopt Options',
+          dropdownText: 'Review / Adopt',
+          dropdownOptsId: ID_REVIEW_DROPDOWN_CONTENT,
+          dropdownOptsOpenClass: CLASS_DROPDOWN_OPEN_STATE,
+          dropdownOptsBtnClass: CLASS_REVIEW_DROPDOWN_ITEM,
+          dropdownOptsBtnTxtClass: CLASS_BUTTON_ICON_TEXT,
+          dropdownOptions: reviewOptions,
+        }));
 
         if (commonsEntry.hasAdaptCourse) {
           const adaptButton = document.createElement('button');
@@ -841,6 +851,20 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           });
           exportContainer.appendChild(materialsButton);
         }
+
+        /* Add Commons button */
+        const commonsButton = document.createElement('a');
+        Object.assign(commonsButton, {
+          id: ID_COMMONS_BTN,
+          ariaLabel: 'View LibreCommons Catalog Entry (opens in new tab)',
+          title: 'View LibreCommons Catalog Entry (opens in new tab)',
+          type: 'button',
+          target: '_blank',
+          rel: 'noreferrer',
+          href: commonsURL,
+        });
+        commonsButton.appendChild(document.createTextNode('View on Commons'));
+        exportContainer.appendChild(commonsButton);
       }
 
       /* Add DonorBox links (if applicable) */
@@ -878,7 +902,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       const conductorProjectID = await getBookProjectID();
       if(conductorProjectID && isPro){
         /* Add Conductor Project button */
-        const conductorButton = document.createElement('button');
+        const conductorButton = document.createElement('a');
         Object.assign(conductorButton, {
           id: ID_CONDUCTOR_PROJECT_BTN,
           ariaLabel: 'View Conductor Project (opens in new tab)',
@@ -886,18 +910,18 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           type: 'button',
           target: '_blank',
           rel: 'noreferrer',
-          href: 'https://conductor.libretexts.org',
+          href: `https://conductor.libretexts.org/projects/${conductorProjectID}`,
         });
 
-        const openConductorProject = (e) => {
-          e.preventDefault();
-          window.open(`https://commons.libretexts.org/projects/${conductorProjectID}`, '_blank', 'noreferrer');
-        }
+        // const openConductorProject = (e) => {
+        //   e.preventDefault();
+        //   window.open(`https://commons.libretexts.org/projects/${conductorProjectID}`, '_blank', 'noreferrer');
+        // }
 
-        conductorButton.addEventListener('click', openConductorProject);
-        conductorButton.addEventListener('keydown', (e) => {
-          if (e.key === ENTER_KEY) openConductorProject(e);
-        });
+        // conductorButton.addEventListener('click', openConductorProject);
+        // conductorButton.addEventListener('keydown', (e) => {
+        //   if (e.key === ENTER_KEY) openConductorProject(e);
+        // });
 
         conductorButton.appendChild(document.createTextNode('Conductor Project'));
         exportContainer.appendChild(conductorButton);
@@ -912,7 +936,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 35px;
+        height: 35px !important;
         box-shadow: none !important;
       `;
       const dropdownListStyles = `
@@ -973,6 +997,42 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }
         .${CLASS_PDF_DROPDOWN_ITEM}:focus {
           border: 3px solid #30B3F6 !important;
+          box-shadow: none !important;
+        }
+        #${ID_COMMONS_BTN}, #${ID_COMMONS_BTN} {
+          background-color: #088A20 !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+          ${commonButtonStyles}
+        }
+        #${ID_REVIEW_DROPDOWN_BTN} {
+          background-color: #CD4D12 !important;
+          ${commonButtonStyles}
+        }
+        #${ID_REVIEW_DROPDOWN_BTN}:focus {
+          border: 3px solid #30B3F6 !important;
+        }
+        #${ID_REVIEW_DROPDOWN_CONTENT} {
+          display: none;
+          background-color: #CD4D12;
+          color: #FFFFFF;
+          font-size: 14px;
+        }
+        #${ID_REVIEW_DROPDOWN_CONTENT}.${CLASS_DROPDOWN_OPEN_STATE} {
+          ${dropdownListStyles}
+        }
+        .${CLASS_REVIEW_DROPDOWN_ITEM}, .${CLASS_REVIEW_DROPDOWN_ITEM}:hover {
+          background-color: #CD4D12 !important;
+          ${dropdownOptionsStyles}
+        }
+        .${CLASS_REVIEW_DROPDOWN_ITEM}:hover {
+          background-color: #a13706 !important;
+        }
+        .${CLASS_REVIEW_DROPDOWN_ITEM}:not(:first-child) {
+          border-top: 1px solid white !important;
+        }
+        .${CLASS_REVIEW_DROPDOWN_ITEM}:focus {
+          border: 3px solid #0B0115 !important;
           box-shadow: none !important;
         }
         #${ID_DWNLD_DROPDOWN_BTN} {
@@ -1039,6 +1099,8 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         }
         #${ID_CONDUCTOR_PROJECT_BTN}, #${ID_CONDUCTOR_PROJECT_BTN} {
           background-color: #2441E7 !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
           ${commonButtonStyles}
         }
         #${ID_CONDUCTOR_PROJECT_BTN}:focus {
