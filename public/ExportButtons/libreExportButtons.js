@@ -637,7 +637,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           linkRoot = `${linkRoot}/${downloadEntry.zipFilename.replace('/Full.pdf', '')}`;
         }
 
-        const bookstoreURL = `https://libretexts.org/bookstore/order?${downloadEntry.zipFilename}`;
+        const bookstoreURL = `https://commons.libretexts.org/store/product/${currentSubdomain}-${currentCoverpage.id}/${downloadEntry.zipFilename}`;
 
         const downloadOptions = [
           {
