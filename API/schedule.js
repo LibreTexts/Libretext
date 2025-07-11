@@ -177,6 +177,34 @@ function scheduleConductorCIDDescriptorsSync() {
 }
 
 /**
+ * Adds the scheduler job to sync Conductor's Store.
+ */
+function scheduleConductorStoreSync() {
+  scheduler.scheduleJob('conductor-store', '30 7 * * *', () => {
+    try {
+      console.log('Running Conductor Store Sync');
+      fetch('https://commons.libretexts.org/api/v1/store/sync', {
+        method: 'PUT',
+        headers: {
+          origin: 'https://api.libretexts.org',
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: `Bearer ${secure.conductor_key}`,
+        },
+      }).then((res) => res.json()).then((storeSyncRes) => {
+        if (storeSyncRes.err === false) {
+          console.log(`Finished Conductor Store Sync: ${storeSyncRes.msg}`);
+        } else {
+          throw (new Error(storeSyncRes.errMsg));
+        }
+      });
+    } catch (e) {
+      console.error('FAILED Conductor Store Sync');
+      console.error(e);
+    }
+  });
+}
+
+/**
  * Initializes the Schedule service and registers all defined jobs.
  */
 function initialize() {
@@ -192,6 +220,7 @@ function initialize() {
   // Schedule Conductor tasks
   scheduleConductorDailyAlerts();
   scheduleConductorCIDDescriptorsSync();
+  scheduleConductorStoreSync();
   console.log('All jobs scheduled.');
 }
 
