@@ -399,17 +399,17 @@ puppeteer.launch({
                     response.end();
                     
                     //Remove all files older than 2 months.
-                    console.log(`Cleaning...`);
+                    // console.log(`Cleaning...`);
                     /*let count = 0;
                     let heartbeat = setInterval(() => {
                         if (response && !response.finished)
                             response.write(`${(++count)}s\r\n`.padStart(5, ' '))
                     }, 1000);*/
-                    findRemoveSync('./PDF', {
-                        age: {seconds: maxAge * 8.64e+4},
-                        // dir: "*",
-                        files: "*.*",
-                    });
+                    // findRemoveSync('./PDF', {
+                    //     age: {seconds: maxAge * 8.64e+4},
+                    //     // dir: "*",
+                    //     files: "*.*",
+                    // });
                     
                     
                     for (const library of toBatch) {
