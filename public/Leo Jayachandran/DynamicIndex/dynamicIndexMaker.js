@@ -241,7 +241,7 @@
 		let termPos = 0;
                 let totalTerms = pageList.taggedTerms.length;
                 //Start indexing from the term that starts with A and ignore terms starting with non-letter characters
-                while (termPos < totalTerms && (pageList.taggedTerms[termPos].name.charAt(0).toUpperCase() < "A")) {
+                while (termPos < totalTerms && !/^[A-Z]$/i.test(pageList.taggedTerms[termPos].name.charAt(0))) {
                         termPos++;
                 }
                 //Start assigning terms by first letter
