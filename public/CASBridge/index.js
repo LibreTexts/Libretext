@@ -61,6 +61,7 @@ window.LibreTextsLogoutCAS = (event) => {
   }
   // </check if known to be able to authenticate to CXone>
 
+  /*
   // <attempt gateway (silent) authentication>
   const currentPath = window.location.pathname;
   const gatewayCheckKey = `cas_bridge_gateway_check_${window.location.host}`;
@@ -70,6 +71,7 @@ window.LibreTextsLogoutCAS = (event) => {
     return;
   }
   // </attempt gateway (silent) authentication>
+   */
 
   // <authenticated to CAS Bridge>
   const casBridgeToken = cookieJar.get(`cas_bridge_token_${window.location.host}`);
