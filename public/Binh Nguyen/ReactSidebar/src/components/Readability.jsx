@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {Button, Divider, Grid, Slider, Switch} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import Slider from "@material-ui/core/Slider";
+import Switch from "@material-ui/core/Switch";
 import CheckIcon from '@material-ui/icons/Check';
 import NightsStay from "@material-ui/icons/NightsStay";
 import TextFieldsIcon from '@material-ui/icons/TextFields';

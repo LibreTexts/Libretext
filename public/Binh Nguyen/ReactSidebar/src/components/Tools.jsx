@@ -1,6 +1,12 @@
 import React from 'react';
 import {IconLink} from "./Common.jsx";
-import {Button, FormControl, FormControlLabel, FormLabel, List, Radio, RadioGroup} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormLabel from "@material-ui/core/FormLabel";
+import List from "@material-ui/core/List";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 
 export default function Tools(props) {
     const [glossarySource, setGlossarySource] = React.useState(localStorage.getItem("glossarizerType"));

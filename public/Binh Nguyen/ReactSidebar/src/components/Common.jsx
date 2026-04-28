@@ -1,4 +1,7 @@
-import {Link, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
 import Hashes from 'jshashes';
