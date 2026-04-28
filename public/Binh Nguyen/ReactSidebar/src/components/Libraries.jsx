@@ -1,5 +1,9 @@
 import React from 'react';
-import {Link, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import {LibraryItem} from "./Common.jsx";
 import {TableOfContents} from "./Common.jsx";
 import PropTypes from "prop-types";

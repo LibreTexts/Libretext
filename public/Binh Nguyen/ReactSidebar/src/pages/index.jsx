@@ -6,18 +6,16 @@ Always place your imports at the top of files!
 import '../Sidebar.css';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {
-    Button,
-    Divider,
-    IconButton,
-    MenuItem,
-    Portal,
-    Select,
-    SwipeableDrawer,
-    useMediaQuery,
-} from "@material-ui/core";
-import {createTheme, StylesProvider, ThemeProvider} from '@material-ui/core/styles/index.js';
-import {blue, grey} from "@material-ui/core/colors/index.js";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import Portal from "@material-ui/core/Portal";
+import Select from "@material-ui/core/Select";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import {createTheme, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
+import blue from "@material-ui/core/colors/blue";
+import grey from "@material-ui/core/colors/grey";
 import Contents from "../components/Contents.jsx";
 import Readability from "../components/Readability.jsx";
 import Resources from "../components/Resources.jsx";
