@@ -56,13 +56,15 @@ window.addEventListener('load', () => {
           if (author) {
             author = author.replace('authorname:', '');
 
-            if (!loadedAuthors[data.subdomain]) {
-              const authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${data.subdomain}`, { headers: { origin: 'print.libretexts.org' } });
-              loadedAuthors[data.subdomain] = await authors.json();
+            if (!loadedAuthors[author]) {
+              const resp = await fetch(`https://commons.libretexts.org/api/v1/authors/key/${author}`);
+              const result = await resp.json();
+              if (!result.err && result.author) {
+                loadedAuthors[author] = result.author;
+              }
             }
 
-            author = loadedAuthors[data.subdomain][author];
-            data.author = author;
+            data.author = loadedAuthors[author];
           }
           if (sourceAuthors.length > 0) {
             const authorOverrides = [];
@@ -102,8 +104,8 @@ window.addEventListener('load', () => {
           let content = `<a href="${pageURL}" target="_blank" rel="noopener">${data.currentPage ? '<b>Current page</b>' : `<b>${data.title}</b>`}</a>`;
 
           if (data.author) {
-            if (data.author.nameurl) {
-              content += ` by <a id="attr-author-link" href="${data.author.nameurl}" rel="noopener">${data.author.name}</a>`;
+            if (data.author.nameURL) {
+              content += ` by <a id="attr-author-link" href="${data.author.nameURL}" rel="noopener">${data.author.name}</a>`;
             } else {
               content += ` by ${data.author.name}`;
             }

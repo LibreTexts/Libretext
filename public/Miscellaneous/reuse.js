@@ -331,14 +331,24 @@ function LibreTextsReuse() {
                 }
                 else if (tag.startsWith('authorname:')) { //get some information from authorbar
                     citationInformation.authorTag = tag.replace('authorname:', '');
-                    
+
                     if (!citationInformation.name) {
-                        if (typeof getCitationInformation.libreAuthors === 'undefined') {
-                            let authors = await fetch(`https://api.libretexts.org/endpoint/getAuthors/${page.subdomain}`);
-                            getCitationInformation.libreAuthors = await authors.json();
+                        if (!getCitationInformation.authorCache) {
+                            getCitationInformation.authorCache = {};
                         }
-                        
-                        let information = getCitationInformation.libreAuthors[citationInformation.authorTag];
+
+                        let information;
+                        if (getCitationInformation.authorCache[citationInformation.authorTag]) {
+                            information = getCitationInformation.authorCache[citationInformation.authorTag];
+                        } else {
+                            let resp = await fetch(`https://commons.libretexts.org/api/v1/authors/key/${citationInformation.authorTag}`);
+                            let data = await resp.json();
+                            if (!data.err && data.author) {
+                                information = data.author;
+                                getCitationInformation.authorCache[citationInformation.authorTag] = information;
+                            }
+                        }
+
                         if (information) {
                             Object.assign(citationInformation, information);
                         }
