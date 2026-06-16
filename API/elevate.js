@@ -315,15 +315,58 @@ async function fork(req, res) {
         let content = foundContent;
         /* Grab specific section from HTML, if necessary */
         if (section) {
-          const $ = cheerio.load(content);
-          const sections = $('.mt-section');
-          for (let i = 0, n = sections.length; i < n; i += 1) {
-            const sec = $(sections[i]);
-            const secTitle = sec.text();
-            if (secTitle && secTitle.includes(section)) {
-              content = sec.html();
-              break;
+          const $ = cheerio.load(content, null, false);
+          let extracted = null;
+
+          // Current template: <section class="box-*"><h5 class="box-legend">Title</h5>body...</section>
+          // The target page already provides its own <section> + <h5>, so we extract
+          // only the section body (inner HTML minus the legend) to avoid duplicating both.
+          $('section[class^="box-"], section[class*=" box-"]').each((_, el) => {
+            const title = $(el).find('h5.box-legend').first().text().trim();
+            if (title && (title === section || title.includes(section))) {
+              const clone = $(el).clone();
+              clone.find('h5.box-legend').first().remove();
+              extracted = clone.html();
+              return false;
             }
+            return undefined;
+          });
+
+          // Legacy template: <div class="mt-section">
+          if (!extracted) {
+            $('.mt-section').each((_, el) => {
+              const t = $(el).text();
+              if (t && t.includes(section)) {
+                extracted = $(el).html();
+                return false;
+              }
+              return undefined;
+            });
+          }
+
+          // Heading-anchored sections: <hN>Title</hN> ... up to next same-level <hN>
+          if (!extracted) {
+            const heading = $('h1, h2, h3, h4').filter(
+              (_, el) => $(el).text().trim() === section,
+            ).first();
+            if (heading.length) {
+              const stopAt = heading.prop('tagName');
+              const buf = [$.html(heading)];
+              let n = heading[0].nextSibling;
+              while (n) {
+                if (n.type === 'tag' && n.name && n.name.toUpperCase() === stopAt) break;
+                buf.push($.html(n));
+                n = n.nextSibling;
+              }
+              extracted = buf.join('');
+            }
+          }
+
+          if (extracted) {
+            content = extracted;
+          } else {
+            console.warn(`[fork] Section "${section}" not found in ${path} — skipping transclusion`);
+            return [false, reuseCall, null];
           }
         }
         /* recursively check for more transclusions */
