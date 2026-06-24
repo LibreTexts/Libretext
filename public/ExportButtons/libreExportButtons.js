@@ -35,8 +35,34 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const CLASS_DONORBOX_LINK = 'libretexts-dbox-popup';
   const CLASS_BUY_PRINT_COPY_BTN = 'libre-buy-print-copy-btn';
 
+  // Shapeshift export service (replaces the retired batch.libretexts.org server).
+  const SHAPESHIFT_API = 'https://downloads.libretexts.org/api/v1';
+  const JOB_POLL_INTERVAL_MS = 5000;
+  const MAX_JOB_POLL_ATTEMPTS = 360; // ~30 min at JOB_POLL_INTERVAL_MS; bounds runaway polling
+
+  // Export jobs currently being polled, keyed by target URL. Prevents repeated clicks from
+  // submitting duplicate jobs and spawning parallel poll loops against the Shapeshift API.
+  const activeBatchJobs = new Set();
+
   let currentCoverpage = null;
   let currentSubdomain = null;
+
+  /**
+   * Builds the Shapeshift book identifier (e.g. "chem-12345") for the current text.
+   *
+   * @returns {string} The library-prefixed book ID.
+   */
+  const getBookID = () => currentSubdomain && currentCoverpage ? `${currentSubdomain}-${currentCoverpage.id}` : '';
+
+  /**
+   * Builds a Shapeshift download URL for a given book and export format. The endpoint
+   * responds with a 302 redirect to a short-lived signed CloudFront URL.
+   *
+   * @param {string} bookID - The library-prefixed book ID (e.g. "chem-12345").
+   * @param {string} format - The export format (pdf, epub, thincc, pages, publication).
+   * @returns {string} The Shapeshift download URL.
+   */
+  const getDownloadURL = (bookID, format) => `${SHAPESHIFT_API}/download/${bookID}/${format}`;
 
   /**
    * Loads information about the current text's coverpage, if it exists, into memory.
@@ -69,7 +95,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       await loadCoverpage();
     }
     if (currentCoverpage) {
-      return `https://batch.libretexts.org/print/Letter/Finished/${currentSubdomain}-${currentCoverpage.id}/Full.pdf`;
+      return getDownloadURL(getBookID(), 'pdf');
     }
     return false;
   };
@@ -186,95 +212,127 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   };
 
   /**
-   * Submits a request to the LibreTexts Batch server to compile the current page or book.
+   * Submits an export job to the Shapeshift service to compile the current page or book,
+   * then polls for completion. Shapeshift doesn't stream progress like legacy Batch, so 
+   * the PDF dropdown button shows a generic "Compiling" state until the job finishes, at
+   * which point the resulting PDF is opened. Completed jobs are memoized per target to
+   * avoid recompiling.
    *
-   * @param {string} target - The url of the page or book to compile.
-   * @param {string} [additionalParameters=''] - Additional parameters to add to the request URL.
+   * @param {string} [target] - The URL of the page or book to compile. Defaults to the
+   *  current page URL.
    */
-  const batch = (target, additionalParameters = '') => {
-    if (window.LibreTextsBatchCompleted) {
-      window.open(window.LibreTextsBatchCompleted, '_blank', 'noreferrer');
-    } else {
-      /**
-       * Handles a progress event from the bach network request and updates the provided
-       * HTML element with the estimated progress.
-       *
-       * @param {Element} progressIndicator - An Element to update with the progress.
-       * @param {XMLHttpRequest} origRequest - The original network request.
-       */
-      const receiveBatchProgress = (progressIndicator, origRequest) => {
-        const progressButton = progressIndicator;
-        const newData = origRequest?.responseText?.match(/^{.+}$(?!\s*^.*}$)/m);
-        if (newData) {
-          const progressData = JSON.parse(newData[0]);
-          if (progressButton) {
-            progressButton.innerText = `${progressData.percent}% ${progressData.eta}`;
-          }
-        }
-      };
+  const batch = async (target) => {
+    const jobTarget = target || window.location.href;
+    if (!window.LibreTextsBatchCompleted) {
+      window.LibreTextsBatchCompleted = {};
+    }
+    // Already compiled this target: just reopen the finished file.
+    if (window.LibreTextsBatchCompleted[jobTarget]) {
+      window.open(window.LibreTextsBatchCompleted[jobTarget], '_blank', 'noreferrer');
+      return;
+    }
+    // Already compiling this target: ignore the click so we don't submit a duplicate job
+    // or start a second poll loop.
+    if (activeBatchJobs.has(jobTarget)) {
+      return;
+    }
+    activeBatchJobs.add(jobTarget);
 
-      /**
-       * Handles a completion event from the bach network request, updates the provided
-       * HTML element a completion message, and opens the completed file.
-       *
-       * @param {Element} progressIndicator - An Element to update with the completion message.
-       * @param {XMLHttpRequest} origRequest - The original network request.
-       */
-      const downloadBatchOutput = (progressIndicator, origRequest) => {
-        const progressButton = progressIndicator;
-        const newData = origRequest?.responseText?.match(/^{.+}$(?!\s*^.*}$)/m)[0];
-        if (newData) {
-          const output = JSON.parse(newData);
-          if (output.filename === 'refreshOnly') {
-            progressButton.innerText = 'Refresh complete.';
-            return;
-          }
-          if (output.filename === 'createMatterOnly') {
-            progressButton.innerText = 'Done creating front/back matter.';
-            return;
-          }
-          if (output.message === 'error') {
-            alert(output.text);
-            return;
-          }
-          if (output.filename) {
-            progressButton.innerText = 'Finished';
-            const fileLocation = `https://batch.libretexts.org/print/Finished/${output.filename}/Full.pdf`;
-            window.open(fileLocation, '_blank', 'noreferrer');
-            window.LibreTextsBatchCompleted = fileLocation;
-          }
-        }
-      };
+    const batchButton = document.getElementById(ID_PDF_DROPDOWN_BTN);
+    batchButton.classList.remove('material-icons');
+    batchButton.innerText = 'Request sent...';
 
-      const batchButton = document.getElementById(ID_PDF_DROPDOWN_BTN);
-      batchButton.classList.remove('material-icons');
-      batchButton.innerText = 'Request sent...';
-      const request = new XMLHttpRequest();
-      request.open('GET', `https://batch.libretexts.org/print/Libretext=${target ? `${target}?no-cache${additionalParameters}` : window.location.href}`, true);
-      request.addEventListener('progress', () => receiveBatchProgress(batchButton, request));
-      request.addEventListener('load', () => downloadBatchOutput(batchButton, request));
-      request.send();
+    /**
+     * Marks the job for this target as no longer in-flight (allowing a future retry) and
+     * updates the dropdown button label. Called on every terminal outcome.
+     *
+     * @param {string} label - The text to display on the dropdown button.
+     */
+    const endBatchJob = (label) => {
+      activeBatchJobs.delete(jobTarget);
+      batchButton.innerText = label;
+    };
+
+    /**
+     * Polls Shapeshift for the status of a job until it finishes, fails, or exceeds the
+     * attempt cap, opening the resulting PDF on success.
+     *
+     * @param {string} jobID - The Shapeshift job identifier to poll.
+     * @param {number} [attempt=1] - The current poll attempt number.
+     */
+    const pollJob = async (jobID, attempt = 1) => {
+      try {
+        const statusRes = await fetch(`${SHAPESHIFT_API}/job/${jobID}`);
+        const statusBody = await statusRes.json();
+        const job = statusBody?.data;
+        if (!statusRes.ok || !job) {
+          throw new Error(statusBody?.msg || 'Failed to retrieve export job status.');
+        }
+        if (job.status === 'finished') {
+          const fileLocation = getDownloadURL(job.bookID, 'pdf');
+          window.LibreTextsBatchCompleted[jobTarget] = fileLocation;
+          window.open(fileLocation, '_blank', 'noreferrer');
+          endBatchJob('Finished');
+          return;
+        }
+        if (job.status === 'failed') {
+          endBatchJob('Export failed');
+          alert('The export job failed. Please try again later.');
+          return;
+        }
+        // Still 'created' or 'inprogress': keep polling until the attempt cap is reached.
+        if (attempt >= MAX_JOB_POLL_ATTEMPTS) {
+          endBatchJob('Export timed out');
+          alert('The export is taking longer than expected. Please try again later.');
+          return;
+        }
+        setTimeout(() => pollJob(jobID, attempt + 1), JOB_POLL_INTERVAL_MS);
+      } catch (e) {
+        // Stop polling on any error rather than hammering the API on transient failures.
+        endBatchJob('Export failed');
+        console.error(`[ExportButtons]: ${e.toString()}`);
+        alert('Something went wrong while exporting. Please try again later.');
+      }
+    };
+
+    try {
+      const jobRes = await fetch(`${SHAPESHIFT_API}/job`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: jobTarget }),
+      });
+      const jobBody = await jobRes.json();
+      const jobID = jobBody?.data?.id;
+      if (!jobRes.ok || !jobID) {
+        throw new Error(jobBody?.msg || 'Failed to create export job.');
+      }
+      batchButton.innerText = 'Compiling…';
+      pollJob(jobID);
+    } catch (e) {
+      endBatchJob('Export failed');
+      console.error(`[ExportButtons]: ${e.toString()}`);
+      alert('Something went wrong while exporting. Please try again later.');
     }
   };
 
-  /**
-   * Submits a request to the LibreTexts Batch server to output the current text's cover and a
-   * selected number of content pages.
+  /*
+   * Cover-page rendering is not yet supported by Shapeshift (no cover endpoint exists in
+   * the API). The legacy batch.libretexts.org implementation is preserved below, commented
+   * out, so it can be revived if/when Shapeshift adds an equivalent.
    *
-   * @param {string} target - The URL of the page or book to generate from. 
+   * const cover = (target) => {
+   *   const numPages = prompt('Number of content pages:');
+   *   if (numPages && !Number.isNaN(numPages)) {
+   *     window.open(
+   *       `https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${numPages}", "hasExtraPadding": true}`,
+   *       '_blank',
+   *       'noreferrer',
+   *     );
+   *   } else {
+   *     alert(`${numPages} is not recognized as a number! Please try again.`);
+   *   }
+   * };
    */
-  const cover = (target) => {
-    const numPages = prompt('Number of content pages:');
-    if (numPages && !Number.isNaN(numPages)) {
-      window.open(
-        `https://batch.libretexts.org/print/cover=${target}&options={"numPages":"${numPages}", "hasExtraPadding": true}`,
-        '_blank',
-        'noreferrer',
-      );
-    } else {
-      alert(`${numPages} is not recognized as a number! Please try again.`);
-    }
-  };
 
   /**
    * Creates a new button with a dropdown element and interactions built in.
@@ -524,14 +582,11 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
   const loadExportButtons = async () => {
     const isPro = document.getElementById('proHolder').innerText === 'true';
     const isAdmin = document.getElementById('adminHolder').innerText === 'true';
-    const groups = document.getElementById('groupHolder').innerText;
     const basicBatchAccess = isAdmin || isPro;
-    const fullBatchAccess = isAdmin || (isPro && (groups.includes('Developer') || groups.includes('BatchAccess')));
     const pageID = Number.parseInt(document.getElementById('pageIDHolder').innerText);
 
     try {
       const tags = document.getElementById('pageTagsHolder').innerText;
-      const url = window.location.href.replace(/#$/, '');
       const downloadEntry = await getDownloadsAvailability();
       const topicGuide = tags.includes('"article:topic-guide"');
       const isChapter = (
@@ -568,22 +623,15 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
       }
       /* Page PDF Download */
       if (tags.includes('"article:topic"')) {
-        // Remove query parameters except cache control
-        let noCache = '';
-        if (window.location.search) {
-          const params = new URLSearchParams(window.location.search);
-          if (params.get('no-cache') !== null || params.get('nocache') !== null) {
-            noCache = '?no-cache';
-          }
-        }
-        const pageURL = `${window.location.origin}${window.location.pathname}`;
-        const pagePDF = `https://batch.libretexts.org/print/url=${pageURL}.pdf${noCache}`;
-
-        LibreTexts.current.downloads.pdf.page = pagePDF;
+        // Shapeshift has no direct single-page download, so compile this page on demand
+        // via the job flow (opens in a new tab when complete).
         pdfExportOptions.push({
           text: 'Page',
-          title: 'Get a PDF of this page (opens in a new tab)',
-          href: pagePDF,
+          title: 'Get a PDF of this page (opens in a new tab when complete)',
+          listener: (e) => {
+            e.preventDefault();
+            batch();
+          },
         });
       }
       /* Compile Book (Page + Subpages) */
@@ -598,21 +646,11 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
           icon: 'mt-icon-spinner6',
         });
       }
-      /* Compile Full Book */
-      if (fullBatchAccess && downloadEntry) {
-        pdfExportOptions.push({
-          text: 'Compile Full',
-          title: 'Fully recompile this book (opens in new tab when complete)',
-          listener: (e) => {
-            e.preventDefault();
-            const confirmMsg = 'This will refresh all of the pages and will take quite a while. Are you sure?';
-            if (window.confirm(confirmMsg)) {
-              batch(window.location.href);
-            }
-          },
-          icon: 'mt-icon-spinner6',
-        });
-      }
+      /*
+       * The legacy "Compile Full" option forced a no-cache full recompile via
+       * batch.libretexts.org. Shapeshift has no cache-control, so this option is dropped;
+       * "Compile Book" above submits a standard job that covers recompilation.
+       */
 
       if (pdfExportOptions.length > 0) {
         exportContainer.appendChild(createDropdown({
@@ -632,11 +670,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
 
       /* Prepared Download Dropdown */
       if (downloadEntry) {
-        let linkRoot = 'https://batch.libretexts.org/print/Letter/Finished';
-        if (downloadEntry.zipFilename) {
-          linkRoot = `${linkRoot}/${downloadEntry.zipFilename.replace('/Full.pdf', '')}`;
-        }
-
+        const bookID = getBookID();
         const bookstoreURL = `https://commons.libretexts.org/store/product/${currentSubdomain}-${currentCoverpage.id}`;
 
         const downloadOptions = [
@@ -644,21 +678,21 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
             key: 'full',
             text: 'Full PDF',
             title: 'Download Full PDF',
-            href: `${linkRoot}/Full.pdf`,
+            href: getDownloadURL(bookID, 'pdf'),
             icon: 'mt-icon-file-pdf',
           },
           {
             key: 'lms',
-            text: 'Import into LMS',
-            title: 'Download LMS Import File',
-            href: `${linkRoot}/LibreText.imscc`,
+            text: 'Import into LMS (Thin CC)',
+            title: 'Download Thin CC File for LMS Import',
+            href: getDownloadURL(bookID, 'thincc'),
             icon: 'mt-icon-graduation',
           },
           {
             key: 'zip',
             text: 'Individual ZIP',
             title: 'Download ZIP of Individual Pages',
-            href: `${linkRoot}/Individual.zip`,
+            href: getDownloadURL(bookID, 'pages'),
             icon: 'mt-icon-file-zip',
           },
           ...(downloadEntry.zipFilename && [
@@ -668,13 +702,13 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
               title: 'Buy Print Copy (opens in new tab)',
               href: bookstoreURL,
               icon: 'mt-icon-book2',
-            }              
+            }
           ]),
           {
             key: 'publication',
             text: 'Print Book Files',
             title: 'Download Publication Files',
-            href: `${linkRoot}/Publication.zip`,
+            href: getDownloadURL(bookID, 'publication'),
             icon: 'mt-icon-book3',
           },
         ];
@@ -1141,11 +1175,18 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
         cxSocialShare.replaceChildren(exportFragment);
       }
 
-      const getTOCLink = document.getElementById('getTOCLink');
-      if (getTOCLink) {
-        getTOCLink.rel = 'noopener nofollow';
-        getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
-      }
+      /*
+       * The TOC link is not yet supported by Shapeshift (no toc endpoint exists in the API).
+       * The legacy batch.libretexts.org implementation is preserved below, commented out, so
+       * it can be revived if/when Shapeshift adds an equivalent.
+       *
+       * const url = window.location.href.replace(/#$/, '');
+       * const getTOCLink = document.getElementById('getTOCLink');
+       * if (getTOCLink) {
+       *   getTOCLink.rel = 'noopener nofollow';
+       *   getTOCLink.href = `https://batch.libretexts.org/print/toc=${url}`;
+       * }
+       */
     } catch (e) {
       console.error(`[ExportButtons]: ${e.toString()}`);
     }
@@ -1153,7 +1194,7 @@ if (!(navigator.webdriver || window.matchMedia('print').matches) && !LibreTexts?
     LibreTexts.active.exportButtons = true;
     /* attach functions to global namespace */
     LibreTexts.batch = batch;
-    LibreTexts.cover = cover;
+    // LibreTexts.cover = cover; // disabled: Shapeshift has no cover endpoint (see above)
   };
 
   window.addEventListener('load', loadExportButtons);
