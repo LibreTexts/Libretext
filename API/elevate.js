@@ -195,6 +195,145 @@ async function fork(req, res) {
   }
 
   /**
+   * Replaces every literal occurrence of a substring (no regex, no escaping needed).
+   * Native String.prototype.replace with a string argument only replaces the first match,
+   * which leaves later references to a multiply-used image pointing at the source library.
+   *
+   * @param {string} haystack - The string to search within.
+   * @param {string} needle - The literal substring to replace.
+   * @param {string} replacement - The replacement string.
+   * @returns {string} The string with all occurrences replaced.
+   */
+  function replaceAll(haystack, needle, replacement) {
+    if (typeof (haystack) !== 'string' || !needle) return haystack;
+    return haystack.split(needle).join(replacement);
+  }
+
+  /**
+   * Scans page content for every referenced CXone Expert file, keyed by numeric file ID.
+   * Captures both `/@api/deki/files/<id>/<filename>` URLs and bare `fileid="<id>"` attributes.
+   *
+   * @param {string} content - The page HTML to scan.
+   * @returns {Array<{id: string, filename: (string|undefined)}>} De-duplicated file references.
+   */
+  function collectFileRefs(content) {
+    const refs = new Map();
+    if (typeof (content) !== 'string') return [];
+    const urlRegex = /\/@api\/deki\/files\/(\d+)\/([^"'?\s>\\]+)/g;
+    let match = urlRegex.exec(content);
+    while (match !== null) {
+      if (!refs.has(match[1])) {
+        let filename = match[2];
+        try {
+          filename = decodeURIComponent(filename);
+        } catch (err) {
+          // leave filename as-is if it is not valid percent-encoding
+        }
+        refs.set(match[1], filename);
+      }
+      match = urlRegex.exec(content);
+    }
+    const idRegex = /fileid="(\d+)"/g;
+    match = idRegex.exec(content);
+    while (match !== null) {
+      if (!refs.has(match[1])) refs.set(match[1], undefined);
+      match = idRegex.exec(content);
+    }
+    return Array.from(refs, ([id, filename]) => ({ id, filename }));
+  }
+
+  /**
+   * Chooses a filename to write to the destination page that will not clobber an unrelated
+   * attachment that already occupies that name. If the name is free (or genuinely absent) the
+   * original name is kept; otherwise a `_srcref` suffix is appended before the extension.
+   *
+   * @param {string} filename - The source file's name.
+   * @param {object} destination - Destination page object.
+   * @param {string} user - Current user performing the operation.
+   * @returns {Promise<string>} A safe destination filename.
+   */
+  async function resolveDestFilename(filename, destination, user) {
+    const existing = await LibreTexts.authenticatedFetch(
+      destination.path,
+      `files/${encodeURIComponent(filename)}/info?dream.out.format=json`,
+      destination.subdomain,
+      user,
+    );
+    if (!existing || !existing.ok) return filename; // name is free
+    const dot = filename.lastIndexOf('.');
+    const base = dot > 0 ? filename.slice(0, dot) : filename;
+    const ext = dot > 0 ? filename.slice(dot) : '';
+    return `${base}_srcref${ext}`;
+  }
+
+  /**
+   * Copies a single file from the source library to the destination page, addressing the file
+   * by its numeric ID against the source library (which resolves IDs inherited from ancestor
+   * pages). Used by the second pass of copyFiles to recover references the attachment
+   * enumeration misses.
+   *
+   * @param {{id: string, filename: (string|undefined)}} ref - Referenced source file.
+   * @param {object} source - Source page object.
+   * @param {object} destination - Destination page object.
+   * @param {string} user - Current user performing the operation.
+   * @returns {Promise<object|null>} Mapping metadata for rewriting, or null on failure.
+   */
+  async function copyFileById(ref, source, destination, user) {
+    const infoRes = await LibreTexts.authenticatedFetch(
+      `https://${source.subdomain}.libretexts.org/@api/deki/files/${ref.id}/info?dream.out.format=json`,
+      null,
+      null,
+      'LibreBot',
+    );
+    if (!infoRes || !infoRes.ok) {
+      console.error(`[fork] Could not resolve inherited source file ${ref.id} on ${source.subdomain}`);
+      return null;
+    }
+    const info = await infoRes.json();
+    const filename = (info && info.filename) || ref.filename;
+    if (!filename) {
+      console.error(`[fork] No filename for inherited source file ${ref.id} on ${source.subdomain}`);
+      return null;
+    }
+
+    const binRes = await LibreTexts.authenticatedFetch(
+      `https://${source.subdomain}.libretexts.org/@api/deki/files/${ref.id}`,
+      null,
+      null,
+      'LibreBot',
+    );
+    if (!binRes || !binRes.ok) {
+      console.error(`[fork] Could not download inherited source file ${ref.id} on ${source.subdomain}`);
+      return null;
+    }
+    const blob = await binRes.blob();
+
+    const putName = await resolveDestFilename(filename, destination, user);
+    const putRes = await LibreTexts.authenticatedFetch(
+      destination.path,
+      `files/${encodeURIComponent(putName)}?dream.out.format=json`,
+      destination.subdomain,
+      user,
+      { method: 'PUT', body: blob },
+    );
+    if (!putRes || !putRes.ok) {
+      console.error(`[fork] Failed to copy inherited file "${putName}" to ${destination.subdomain}/${destination.path}`);
+      return null;
+    }
+    const putJson = await putRes.json();
+    const newID = putJson && putJson['@id'];
+    const final = newID
+      ? `/@api/deki/files/${newID}/${encodeURIComponent(putName)}`
+      : `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(destination.path))}/files/${encodeURIComponent(putName)}`;
+    return {
+      oldID: ref.id,
+      newID,
+      final,
+      filename,
+    };
+  }
+
+  /**
    * Copies files and attachments from one library page to another.
    *
    * @param {string} content - Target page's HTML that will be modified .
@@ -229,6 +368,10 @@ async function fork(req, res) {
         method: 'PUT',
         body: image,
       });
+      if (!fileResponse || !fileResponse.ok) {
+        console.error(`[fork] Failed to copy attachment "${filename}" to ${destination.subdomain}/${destination.path}`);
+        return false;
+      }
       fileResponse = await fileResponse.json();
       const original = file.contents['@href'].replace(`https://${source.subdomain}.libretexts.org`, '');
       let final = `/@api/deki/pages/=${encodeURIComponent(encodeURIComponent(destination.path))}/files/${filename}`;
@@ -243,6 +386,7 @@ async function fork(req, res) {
     }
 
     let updatedContent = content;
+    const handledNewIDs = new Set(); // destination IDs written by pass 1, skipped by the sweep
     const response = await LibreTexts.authenticatedFetch(source.path, 'files?dream.out.format=json', source.subdomain, 'LibreBot');
     if (response.ok) {
       let files = await response.json();
@@ -263,10 +407,37 @@ async function fork(req, res) {
       promiseArray = await Promise.all(promiseArray);
       /* Replace HTML references to file URLs with the updated URLs */
       for (let i = 0; i < promiseArray.length; i += 1) {
-        if (promiseArray[i]) {
-          updatedContent = updatedContent.replace(promiseArray[i].original, promiseArray[i].final);
-          updatedContent = updatedContent.replace(`fileid="${promiseArray[i].oldID}"`, `fileid="${promiseArray[i].newID}"`);
+        const p = promiseArray[i];
+        if (p) {
+          updatedContent = replaceAll(updatedContent, p.original, p.final);
+          updatedContent = replaceAll(updatedContent, `fileid="${p.oldID}"`, `fileid="${p.newID}"`);
+          if (p.newID) handledNewIDs.add(String(p.newID));
         }
+      }
+    }
+
+    /*
+     * Second pass: catch inherited file references. When the source page was itself forked
+     * from an ancestor, its content references some files by numeric ID (e.g.
+     * /@api/deki/files/734/foo.jpg) that are attached to the ancestor, not the source page,
+     * so they are absent from the attachment enumeration above and never get copied. Left
+     * alone, those relative IDs resolve against the destination library and render the wrong
+     * image. Here we scan the (already partially-rewritten) content for any remaining
+     * source-library file references and copy each one by ID. IDs already written by pass 1
+     * are skipped, since those now point at the destination library, not the source.
+     */
+    const sweepRefs = collectFileRefs(updatedContent).filter((ref) => !handledNewIDs.has(ref.id));
+    const sweepResults = await Promise.all(
+      sweepRefs.map((ref) => copyFileById(ref, source, destination, user)),
+    );
+    for (let i = 0; i < sweepResults.length; i += 1) {
+      const r = sweepResults[i];
+      if (r) {
+        /* Rewrite by numeric ID regardless of the cosmetic filename slug, which the platform
+         * derives from the ID and may differ from the source name. */
+        const urlByID = new RegExp(`/@api/deki/files/${r.oldID}/[^"'?\\s>\\\\]*`, 'g');
+        updatedContent = updatedContent.replace(urlByID, r.final);
+        if (r.newID) updatedContent = replaceAll(updatedContent, `fileid="${r.oldID}"`, `fileid="${r.newID}"`);
       }
     }
     return updatedContent;
@@ -308,6 +479,13 @@ async function fork(req, res) {
           }
         }
       }
+    }
+    // MindTouch emits the literal tokens "data-section"/"data-show" as the section value when
+    // the Content Reuse widget reuses an ENTIRE page (no section selected). Treat those as
+    // "no section" so the whole page transcludes, instead of hard-failing the fork trying to
+    // find a section literally named "data-section".
+    if (section === 'data-section' || section === 'data-show') {
+      section = undefined;
     }
     if (typeof (path) === 'string' && path.length > 0) {
       const [pageSuccess, foundContent, info] = await getContentAndInfo(path, subdomain);
@@ -367,6 +545,20 @@ async function fork(req, res) {
           } else {
             console.warn(`[fork] Section "${section}" not found in ${path} — skipping transclusion`);
             return [false, reuseCall, null];
+          }
+        }
+        /*
+         * Copy referenced files when the reuse resolves against a different library than the
+         * destination (e.g. a cross-lib transclusion whose source page itself reuses another
+         * library's page). The resolved content carries file references relative to `subdomain`;
+         * left alone they resolve against the destination library and render the wrong image.
+         * Within the same library, file IDs already resolve correctly, so no copy is needed.
+         */
+        if (subdomain && subdomain !== target.subdomain) {
+          if (!target.readOnly) {
+            content = await copyFiles(content, { subdomain, path }, target, request.username);
+          } else {
+            content = absolutifyFileURLs(content, subdomain);
           }
         }
         /* recursively check for more transclusions */
