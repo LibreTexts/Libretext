@@ -36,7 +36,7 @@ LibreTextsGlossarizer = class {
         });
         localStorage.setItem("glossarizerType", "none");
     }
-    getTermCols(rowText) { // tableRows[r]
+    getTermCols(rowText, headerMap) { // tableRows[r]
         let cols = {};
         let colStart = [
             [/(\<td[^\>]*?data-th="Word\(s\)"[^\>]*?\>)((.|\s)*?)(?=\<\/td>)/, "word"],
@@ -56,7 +56,52 @@ LibreTextsGlossarizer = class {
                 cols[colStart[t][1]] = tag.exec(rowText)[2].trim();
             }
         }
+        //Fallback: cross-library transclusion (see API/endpoint.js /cross-library) re-serializes
+        //the table through Dekiscript web.html(web.xml()) and drops the data-th markers the regexes
+        //above rely on. When a headerMap is supplied, recover any missing columns by cell position.
+        if (headerMap && Object.keys(headerMap).length) {
+            let cellRegex = /<td[^>]*?>([\s\S]*?)<\/td>/g;
+            let match;
+            let idx = 0;
+            while ((match = cellRegex.exec(rowText)) !== null) {
+                let field = headerMap[idx];
+                if (field && cols[field] === undefined) {
+                    cols[field] = match[1].trim();
+                }
+                idx++;
+            }
+        }
         return cols;
+    }
+    getHeaderMap(tableHtml) {
+        //Build a { columnIndex -> field } map from the table's header row so getTermCols can fall
+        //back to positional parsing when data-th markers are absent. Field names mirror getTermCols.
+        let labelToField = {
+            "word(s)": "word",
+            "definition": "definition",
+            "image": "image",
+            "caption": "caption",
+            "link": "link",
+            "source": "source",
+            "source license": "license",
+            "author url": "sourceURL",
+        };
+        let headerMap = {};
+        if (!tableHtml) return headerMap;
+        //The first row of the table is the header row
+        let firstRow = /<tr[^>]*?>((.|\s)*?)<\/tr>/.exec(tableHtml);
+        if (!firstRow) return headerMap;
+        let cellRegex = /<t[hd][^>]*?>([\s\S]*?)<\/t[hd]>/g;
+        let match;
+        let idx = 0;
+        while ((match = cellRegex.exec(firstRow[1])) !== null) {
+            let text = match[1].replace(/<[^>]*?>/g, "").replace(/&nbsp;/g, " ").trim().toLowerCase();
+            if (labelToField[text] !== undefined) {
+                headerMap[idx] = labelToField[text];
+            }
+            idx++;
+        }
+        return headerMap;
     }
     async makeGlossary(inputSourceOption) {
         if (!this.isArticleTopicPage()) { //If article isn't a topic page, don't do anything
@@ -66,6 +111,7 @@ LibreTextsGlossarizer = class {
         let pluginName = this.pluginName;
         let defaults = this.defaults;
         let getTermCols = this.getTermCols;
+        let getHeaderMap = this.getHeaderMap;
         this.removeGlossary();
         let retrievedGlossary = [];
         switch ((sourceOption || "").trim().toLowerCase()) {
@@ -143,13 +189,29 @@ LibreTextsGlossarizer = class {
                 bodycontent = "";
                 return [];
             }
-            
-            //Trim up to the start of the table body
-            bodycontent = bodycontent.substring(bodycontent.search(/<tbody[^>]*?>[^<]*<tr[^>]*?>[^<]*<td[^>]*?data-th="Word\(s\)"/));
+
+            //Locate the glossary entries table by its exact "Word(s)" marker. This is present both
+            //same-library (as data-th="Word(s)" on cells) and cross-library (as the <th> header),
+            //so it does not depend on data-th, and it scopes out the preceding hidden
+            //"Example and Directions" table.
+            let markerIdx = bodycontent.search(/Word\(s\)/);
+            let tableStart = bodycontent.lastIndexOf('<table', markerIdx);
+            let tableEnd = bodycontent.indexOf('</table>', markerIdx);
+            if (tableStart === -1 || tableEnd === -1) {
+                return [];
+            }
+            let glossaryTableHTML = bodycontent.substring(tableStart, tableEnd);
+
+            //Map the header row for positional fallback when data-th markers are absent (cross-library)
+            let headerMap = getHeaderMap(glossaryTableHTML);
 
             //Find the contents table body of the glossary table
             let tbodyregex = /<tbody[^>]*?>(.|\s)*?(?=<\/tbody>)/;
-            let tBody = tbodyregex.exec(bodycontent)[0];
+            let tbodyMatch = tbodyregex.exec(glossaryTableHTML);
+            if (tbodyMatch == null) {
+                return [];
+            }
+            let tBody = tbodyMatch[0];
             tBody = tBody.substring(tBody.search(/<tbody[^>]*?>/)).replace(/&nbsp;/g, " ").trim();
             
             //Generate the rows of the table
@@ -180,7 +242,9 @@ LibreTextsGlossarizer = class {
                     "description": ""
                 };
                 //Get data from the columns in the row
-                let cols = getTermCols(tableRows[r]);
+                let cols = getTermCols(tableRows[r], headerMap);
+                cols["word"] = cols["word"] || "";
+                cols["definition"] = cols["definition"] || "";
                 newTerm["term"] = cols["word"].toLowerCase().replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
 
                 //Make Description
@@ -539,6 +603,8 @@ LibreTextsGlossarizer = class {
         //Build the backend
         let $glossaryTable = $("table:contains('Word" + "(s)')")
         let tBody = $glossaryTable.html().replace(/&nbsp;/g, " ").replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
+        //Map the header row before slicing to the tbody, for positional fallback parsing
+        let headerMap = this.getHeaderMap(tBody);
         tBody = tBody.substring(tBody.search("<tbody"), tBody.search("</tbody>")).trim();
         let tableRows = [];
         for (let i = 0; i < tBody.length;) {
@@ -557,8 +623,8 @@ LibreTextsGlossarizer = class {
                 "description": ""
             };
             //Get cells in the 3 columns
-            let cols = this.getTermCols(tableRows[r]);
-            if (cols["definition"].trim().length === 0 || cols["word"].trim().length === 0) continue; // Handle empty terms and definitions
+            let cols = this.getTermCols(tableRows[r], headerMap);
+            if (!cols["definition"]?.trim().length || !cols["word"]?.trim().length) continue; // Handle empty/missing terms and definitions
             let termSource = "";
             if (cols["license"]?.length) {
                 termSource += cols["license"].replace(/<p>/g, " ").replace(/<\/p>/g, " ").trim();
