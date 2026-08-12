@@ -4,7 +4,15 @@
  * @author LibreTexts <info@libretexts.org>
  */
 
-import './dynamicTOC.css';
+import css from './dynamicTOC.css';
+
+// Inject component styles once at runtime (previously handled by webpack's style-loader).
+if (typeof document !== 'undefined' && !document.getElementById('dynamicTOC_styles')) {
+  const style = document.createElement('style');
+  style.id = 'dynamicTOC_styles';
+  style.textContent = css;
+  document.head.appendChild(style);
+}
 
 const matterPages = [];
 
