@@ -123,7 +123,6 @@ async function buildTable(hierarchy, subdomain, containerRef) {
     if (Array.isArray(pages)) {
       const renderChild = async (item) => {
         const subpageDir = await getLevel(item, level + 1);
-        const prefix = level === 1 ? 'h2' : 'span';
         let fontClass = 'content_entry';
         if (level === 1) {
           fontClass = 'chapter_entry';
@@ -145,11 +144,16 @@ async function buildTable(hierarchy, subdomain, containerRef) {
           }
         }
         */
+        /*
+         * Entries are spans, never headings: the platform's "Autonumber Section Headings"
+         * setting (autonumheader tag) prefixes numbers onto every heading in the rendered
+         * page, which would number Front/Back Matter entries as if they were chapters.
+         */
         return `
           <li>
-            <${prefix} class="${fontClass}">
+            <span class="${fontClass}">
               <a href="https://${subdomain}.libretexts.org/${item.path['#text']}">${item.title}</a>
-            </${prefix}>
+            </span>
             ${subpageDir}
           </li>
         `;

@@ -31,6 +31,6 @@ await esbuild.build({
   minify: true,
   format: 'iife',
   target: 'es2020',
-  outfile: path.resolve(dirName, 'dist', 'dynamicTOC.min.js'),
+  outfile: path.resolve(dirName, 'dist', 'dynamic-toc.min.js'),
   plugins: [cssTextPlugin],
 });
