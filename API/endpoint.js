@@ -2,6 +2,7 @@
  * Miscellanous LibreTexts API services & endpoints.
  * @file Defines various LibreTexts API endpoints.
  */
+require('dotenv').config();
 const http = require('http');
 const timestamp = require('console-timestamp');
 const filenamify = require('filenamify');
@@ -23,6 +24,8 @@ server.listen(port);
 const expireCheckInterval = 300; // 5 minutes
 const maxItemCount = 20;
 const authorsCache = new MemoryCache(expireCheckInterval, maxItemCount);
+
+const SHAPESHIFT_API_KEY = process.env.SHAPESHIFT_API_KEY;
 
 const now1 = new Date();
 console.log(`Restarted ${timestamp('MM/DD hh:mm', now1)} ${port}`);
@@ -190,7 +193,7 @@ async function handler(request, response) {
                 
                 let input = JSON.parse(body);
                 console.log(`Add ${input.subdomain}/${input.path}`);
-                if (input && input.identifier === md5(authenBrowser[input.subdomain])
+                if (input && (input.identifier === md5(authenBrowser[input.subdomain] || input.identifier === SHAPESHIFT_API_KEY))
                     && ['Courses', 'Bookshelves', 'home'].includes(input.path) && input.content) {
                     await fs.ensureDir(`./public/DownloadsCenter/${input.subdomain}`);
                     if (await fs.exists(`./public/DownloadsCenter/${input.subdomain}/${filenamify(input.path)}.json`)) {
