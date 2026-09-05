@@ -717,7 +717,7 @@ async function convertContainers(input, content) {
     if (!content.includes('boxtitle') && !content.includes('note1'))
         return [false, 0];
 
-    const $ = cheerio.load(content);
+    const $ = cheerio.load(content, null, false);
 
     let result = '';
     let count = 0;
@@ -807,7 +807,7 @@ async function editorPreprocess(botID, url, browser) {
 }
 
 async function addPageIdentifierClass(subdomain, path, content) {
-    const $ = cheerio.load(content);
+    const $ = cheerio.load(content, null, false);
 
     let result = '';
     let current = await LibreTexts.getAPI(`https://${subdomain}.libretexts.org/${path}`, false, 'LibreBot');
