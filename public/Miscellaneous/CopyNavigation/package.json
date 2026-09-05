@@ -1,0 +1,14 @@
+{
+  "name": "copynavigation",
+  "version": "1.0.0",
+  "description": "Navigation cloning, propagation, and forking utilities",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "devDependencies": {
+    "rollup": "^4.0.0",
+    "rollup-plugin-esbuild": "^6.0.0"
+  }
+}
