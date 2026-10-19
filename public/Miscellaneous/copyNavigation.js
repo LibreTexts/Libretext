@@ -134,6 +134,9 @@
     if (window !== window.top || window.location.href.includes("contentOnly") || window.location.href.includes("onlyContent")) {
         document.body.classList.add("contentOnly");
     }
+    if (window !== window.top || window.location.href.includes("embed") || window.location.href.includes("embedView")) {
+        document.body.classList.add("embedView");
+    }
     if (window.location.href.includes("adaptView")
         || (document.referrer && document.referrer.match(/^https:\/\/[-.\w]*?adapt\.libretexts\.org/))) {
         document.body.classList.add("contentOnly");

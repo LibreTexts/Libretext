@@ -718,7 +718,43 @@ figcaption {
  .contentOnly #sidebarDiv{
      display:none;
  }
- 
+
+ /* Hide most supporting content when in embed mode */
+ .embedView .elm-header,
+ .embedView .elm-meta-icons,
+ .embedView div.annotator-frame,
+ .embedView .elm-footer,
+ .embedView article#elm-main-content > *:not(:first-child, .mt-content-container),
+ .embedView hypothesis-sidebar,
+ .embedView #custom_open,
+ .embedView #libretexts-ai-assistant,
+ .embedView #mt-summary,
+ .embedView #backButton,
+ .embedView #nextButton,
+ /* hide first button that appears in librelens attribution list */
+ .embedView #librelens-attribution-list > button:first-of-type,
+ .embedView .elm-content-footer,
+ .embedView .sbHeader {
+     display:none!important;
+ }
+
+ /* Hide everything except the first child that is or contains .pageInfo */
+ .embedView .elm-meta-data > *:not(.pageInfo):not(:has(.pageInfo)),
+ .embedView .elm-meta-data > :is(.pageInfo, :has(.pageInfo)) ~ :is(.pageInfo, :has(.pageInfo)) {
+   display: none !important;
+ }
+
+ /* Move the remaining .elm-meta-data content to right and "up" (bring in line with title) */
+ .embedView .elm-meta-data {
+   display: flex;
+   justify-content: end;
+   margin-top: -35px;
+ }
+
+ .embedView #title {
+    border-bottom: none !important;
+ }
+
  .contentOnly #mt-summary {
      display:none!important;
  }
