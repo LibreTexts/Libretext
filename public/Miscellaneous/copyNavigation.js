@@ -130,10 +130,10 @@
     document.addEventListener('DOMContentLoaded', fn);
     
     //hide headers if within an iframe
-    if (window !== window.top || window.location.href.includes("contentOnly") || window.location.href.includes("onlyContent")) {
+    if (window !== window.top || window.location.search.includes("contentOnly") || window.location.search.includes("onlyContent")) {
         document.body.classList.add("contentOnly");
     }
-    if (window !== window.top || window.location.href.includes("embed") || window.location.href.includes("embedView")) {
+    if (window !== window.top || window.location.search.includes("embed") || window.location.search.includes("embedView")) {
         document.body.classList.add("embedView");
     }
     if (window.location.href.includes("adaptView")
